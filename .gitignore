@@ -1,3 +1,14 @@
+*.project
+/bin
+/data
+/source
+/launch*
+junk
+.thumbnails
+__pycache__
+/lib
+/fbx
+
 # Prerequisites
 *.d
 

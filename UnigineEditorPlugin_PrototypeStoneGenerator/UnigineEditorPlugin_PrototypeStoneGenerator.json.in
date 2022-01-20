@@ -1,0 +1,8 @@
+{
+    "Name" : "UnigineEditorPlugin_PrototypeStoneGenerator",
+    "Vendor" : "Evgenii Sopov",
+    "Description" : "Prototype plugin for stone generator (Expected UNIGINE 2.14)",
+    "Version" : "@PLUGIN_VERSION@",
+    "CompatVersion" : "@PLUGIN_COMPAT_VERSION@",
+    "Dependencies" : []
+}
