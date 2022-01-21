@@ -8,6 +8,10 @@ DialogConfigurator::DialogConfigurator(
 ) : QDialog(parent) {
 	m_nSliderTrianglesValue = 80000;
 	m_nSliderRadius = 2.0f;
+	m_nSliderRandom = 0.0f;
+
+	
+
 	m_pStoneGenerator = new StoneGenerator();
 
     m_pRemoveButton = new QPushButton(tr("Remove"));
@@ -41,6 +45,16 @@ DialogConfigurator::DialogConfigurator(
 	connect(m_pSliderRadius, SIGNAL(valueChanged(int)), this, SLOT(sliderRadius_valuesChanged(int)));
 	leftLayout->addWidget(m_pSliderRadius);
 
+
+	m_pLabelSliderRandom = new QLabel(tr("Random: ") + QString::number(m_nSliderRandom));
+	leftLayout->addWidget(m_pLabelSliderRandom);
+	
+	m_pSliderRandom = new QSlider(Qt::Horizontal);
+    m_pSliderRandom->setRange(0.1 * 100, 4 * 100);
+    m_pSliderRandom->setValue(m_nSliderRandom*100);
+	connect(m_pSliderRandom, SIGNAL(valueChanged(int)), this, SLOT(sliderRandom_valuesChanged(int)));
+	leftLayout->addWidget(m_pSliderRandom);
+
 	QHBoxLayout *buttonsLayout = new QHBoxLayout;
 	// buttonsLayout->addWidget(m_pRemoveButton);
 	buttonsLayout->addWidget(new QWidget);
@@ -70,6 +84,11 @@ void DialogConfigurator::sliderRadius_valuesChanged(int nNewValue) {
 	this->regenerateGeometry();
 }
 
+void DialogConfigurator::sliderRandom_valuesChanged(int nNewValue) {
+	m_nSliderRandom = float(nNewValue) / 100;
+	m_pLabelSliderRadius->setText(tr("Random: ") + QString::number(m_nSliderRandom));
+	this->regenerateGeometry();
+}
 
 // void DialogConfigurator::createConnections(){
     // QObject::connect(widget, SIGNAL(itemChanged(QListWidgetItem*)),
@@ -111,6 +130,7 @@ void DialogConfigurator::regenerateGeometry() {
 
 	m_pStoneGenerator->setRaidus(m_nSliderRadius);
 	m_pStoneGenerator->setEstimatedExpectedTriangles(m_nSliderTrianglesValue);
+	// m_pStoneGenerator->setRandom(m_nSliderRandom);
 	m_pStoneGenerator->generate();
 
 	m_pMesh->clearSurfaces();

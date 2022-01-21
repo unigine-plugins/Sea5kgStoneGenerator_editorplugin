@@ -35,20 +35,27 @@ private slots:
     void removeClicked();
     void sliderTriangles_valuesChanged(int nNewValue);
     void sliderRadius_valuesChanged(int nNewValue);
+    void sliderRandom_valuesChanged(int nNewValue);
 
 private:
-    // 1
+    QPushButton *m_pRemoveButton;
+    QPushButton *m_pCloseButton;
+
+    // number of triangles
     QLabel *m_pLabelSliderTriangles;
     QSlider *m_pSliderTriangles;
     int m_nSliderTrianglesValue;
 
-    // 2
+    // radius
     QLabel *m_pLabelSliderRadius;
     QSlider *m_pSliderRadius;
     float m_nSliderRadius;
 
-    QPushButton *m_pRemoveButton;
-    QPushButton *m_pCloseButton;
+    // random
+    QLabel *m_pLabelSliderRandom;
+    QSlider *m_pSliderRandom;
+    float m_nSliderRandom;
+    
 
     StoneGenerator *m_pStoneGenerator;
     Unigine::ObjectMeshDynamicPtr m_pMesh;
