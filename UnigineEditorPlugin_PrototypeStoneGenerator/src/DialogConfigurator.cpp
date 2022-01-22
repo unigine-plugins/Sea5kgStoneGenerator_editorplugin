@@ -160,20 +160,23 @@ void DialogConfigurator::regenerateGeometry() {
 			pTriangle->p1()->y(),
 			pTriangle->p1()->z()
 		));
-
+		m_pMesh->addTexCoord(Unigine::Math::vec4(0, 0, 0, 0));
+		// m_pMesh->addColor(Unigine::Math::vec4(0, 1, 1, 1));
 		m_pMesh->addVertex(Unigine::Math::vec3(
 			pTriangle->p2()->x(),
 			pTriangle->p2()->y(),
 			pTriangle->p2()->z()
 		));
+		m_pMesh->addTexCoord(Unigine::Math::vec4(1, 0, 0, 0));
+		// m_pMesh->addColor(Unigine::Math::vec4(1, 0, 1, 1));
 
 		m_pMesh->addVertex(Unigine::Math::vec3(
 			pTriangle->p3()->x(),
 			pTriangle->p3()->y(),
 			pTriangle->p3()->z()
 		));
-
-		// mesh0->addTexCoord(Unigine::Math::vec4(0, 0, 0, 0));
+		m_pMesh->addTexCoord(Unigine::Math::vec4(1, 1, 0, 0));
+		// m_pMesh->addColor(Unigine::Math::vec4(1, 1, 0, 1));
 	}
 
 	m_pMesh->updateTangents();

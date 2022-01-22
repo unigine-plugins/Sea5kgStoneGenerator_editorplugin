@@ -138,24 +138,49 @@ struct ZLevel {
 };
 
 bool StoneGenerator::generate() {
+    std::cout << "m_nExpectedTriangles = " << m_nExpectedTriangles << std::endl;
     int nK = m_nExpectedTriangles/2;
+    std::cout << "nK = " << nK << std::endl;
     nK = sqrt(nK);
+    std::cout << "nK = " << nK << std::endl;
+    if (nK % 2 == 1) {
+        // kostyl
+        nK += 1; // to even number 
+    }
+    std::cout << "nK = " << nK << std::endl;
 
     // calculate coordinates
-    float spp = M_PI*2 / float(nK);
+    float spp = 2*M_PI / float(nK);
+    float z_spp = M_PI / float(nK);
+    std::cout << "spp = " << spp << std::endl;
 	// int nTexX = 0.2;
 	// int nTexY = 0.2;
     std::vector<ZLevel> levels_z;
     for (int zz0 = 0; zz0 < nK; zz0++) {
         ZLevel lvl;
-        lvl.z_radius = m_nRadius * sin( spp * float(zz0) );
-        lvl.z = m_nRadius * cos( spp * float(zz0) );
+        lvl.xy_sectors.clear();
+        float z_angel = z_spp * float(zz0);
+        lvl.z_radius = m_nRadius * sin( z_angel );
+        lvl.z = m_nRadius * cos( z_angel );
         for (int rr0 = 0; rr0 < nK; rr0++) {
             XYPoint xy;
-            xy.x = lvl.z_radius * sin( spp * float(rr0) );
-			xy.y = lvl.z_radius * cos( spp * float(rr0) );
+            float angel = spp * float(rr0);
+            xy.x = lvl.z_radius * cos( angel);
+			xy.y = lvl.z_radius * sin( angel);
             lvl.xy_sectors.push_back(xy);
         }
+        // int sorted = 1;
+        // while(sorted > 0) {
+        //     sorted = 0;
+        //     for (int rr0 = 0; rr0 < lvl.xy_sectors.size()-1; rr0++) {
+        //         if (lvl.xy_sectors[rr0].x > lvl.xy_sectors[rr0+1].x) {
+        //             XYPoint xy0 = lvl.xy_sectors[rr0];
+        //             lvl.xy_sectors[rr0] = lvl.xy_sectors[rr0+1];
+        //             lvl.xy_sectors[rr0+1] = xy0;
+        //             sorted++;
+        //         }
+        //     }
+        // }
         levels_z.push_back(lvl);
     }
 
@@ -165,10 +190,7 @@ bool StoneGenerator::generate() {
         
         std::vector<XYPoint> xy_sectors = lvl_z.xy_sectors;
         for (int i_xy = 0; i_xy < xy_sectors.size(); i_xy++) {
-            
             int i_xy_next = (i_xy+1) % nK;
-            // std::cout << "i_xy = " << i_xy << std::endl;
-            // std::cout << "i_xy_next = " << i_xy_next << std::endl;
             XYPoint x0y0 = xy_sectors[i_xy];
             XYPoint x0y1 = xy_sectors[i_xy_next];
             XYPoint x1y0 = lvl_z_next.xy_sectors[i_xy];
@@ -181,22 +203,24 @@ bool StoneGenerator::generate() {
             // 00 * ----- * 01
             //    |       | 
             // 10 * ----- * 11
-
-            m_vTriangles.push_back(new StoneTriangle(
+            StoneTriangle *pTriangle1 = new StoneTriangle(
+                pPoint01,
                 pPoint00,
-                pPoint11,
                 pPoint10
-            ));
 
-            // first and last sector
-            if (zz0 > 0 && zz0 < levels_z.size() - 1) {
-                m_vTriangles.push_back(new StoneTriangle(
-                    pPoint00,
-                    pPoint01,
-                    pPoint11
-                ));
-            }
-            
+                // pPoint00,
+                // pPoint01,
+                // pPoint10
+            );
+            m_vTriangles.push_back(pTriangle1);
+            StoneTriangle *pTriangle2 = new StoneTriangle(
+                pPoint01,
+                pPoint10,
+                pPoint11
+            );
+
+            // delete pTriangle2;
+            m_vTriangles.push_back(pTriangle2);
 
             // TODO text coord 
             // TODO normales
@@ -232,7 +256,7 @@ StonePoint *StoneGenerator::addPoint(float x, float y, float z) {
     int nX = x*100;
     int nY = y*100;
     int nZ = z*100;
-    int nThreshold = 5; // 0.05
+    int nThreshold = 15; // 0.15
     for (int i = 0; i < m_vPoints.size(); i++) {
         if (m_vPoints[i]->compare(nX, nY, nZ, nThreshold)) {
             pPoint = m_vPoints[i];
