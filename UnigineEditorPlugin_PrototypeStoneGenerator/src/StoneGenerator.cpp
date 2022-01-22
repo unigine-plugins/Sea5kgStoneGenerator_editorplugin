@@ -156,7 +156,7 @@ bool StoneGenerator::generate() {
 	// int nTexX = 0.2;
 	// int nTexY = 0.2;
     std::vector<ZLevel> levels_z;
-    for (int zz0 = 0; zz0 < nK; zz0++) {
+    for (int zz0 = 0; zz0 <= nK; zz0++) {
         ZLevel lvl;
         lvl.xy_sectors.clear();
         float z_angel = z_spp * float(zz0);
