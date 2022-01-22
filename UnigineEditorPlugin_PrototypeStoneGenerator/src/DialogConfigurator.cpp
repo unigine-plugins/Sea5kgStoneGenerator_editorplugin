@@ -6,20 +6,21 @@
 DialogConfigurator::DialogConfigurator(
 	QWidget *parent
 ) : QDialog(parent) {
-	m_nSliderTrianglesValue = 80000;
+	// m_nSliderTrianglesValue = 80000;
+	// m_nSliderTrianglesValue = 6774;
+	m_nSliderTrianglesValue = 100;
 	m_nSliderRadius = 2.0f;
-	m_nSliderRandom = 0.0f;
-
-	
+	m_nSliderRandomOffsetMin = 0.0f;
+	m_nSliderRandomOffsetMax = 0.0f;
 
 	m_pStoneGenerator = new StoneGenerator();
 
-    m_pRemoveButton = new QPushButton(tr("Remove"));
-	m_pRemoveButton->setDefault(true);
+    m_pRegenerateButton = new QPushButton(tr("Regenerate"));
+	m_pRegenerateButton->setDefault(true);
 
 	m_pCloseButton = new QPushButton(tr("Close"));
 	
-	connect(m_pRemoveButton, SIGNAL(clicked()),this, SLOT(removeClicked()));
+	connect(m_pRegenerateButton, SIGNAL(clicked()),this, SLOT(regenerateButton_clicked()));
 	connect(m_pCloseButton, SIGNAL(clicked()),this, SLOT(close()));
 
 	QVBoxLayout *leftLayout = new QVBoxLayout;
@@ -31,7 +32,7 @@ DialogConfigurator::DialogConfigurator(
 	leftLayout->addWidget(m_pLabelSliderTriangles);
 
 	m_pSliderTriangles = new QSlider(Qt::Horizontal);
-    m_pSliderTriangles->setRange(100, m_nSliderTrianglesValue);
+    m_pSliderTriangles->setRange(100, 80000);
     m_pSliderTriangles->setValue(m_nSliderTrianglesValue);
 	connect(m_pSliderTriangles, SIGNAL(valueChanged(int)), this, SLOT(sliderTriangles_valuesChanged(int)));
 	leftLayout->addWidget(m_pSliderTriangles);
@@ -45,21 +46,37 @@ DialogConfigurator::DialogConfigurator(
 	connect(m_pSliderRadius, SIGNAL(valueChanged(int)), this, SLOT(sliderRadius_valuesChanged(int)));
 	leftLayout->addWidget(m_pSliderRadius);
 
-
-	m_pLabelSliderRandom = new QLabel(tr("Random: ") + QString::number(m_nSliderRandom));
-	leftLayout->addWidget(m_pLabelSliderRandom);
+	// random min
+	m_pLabelSliderRandomOffsetMin = new QLabel(tr("Random Offset (min): ") + QString::number(m_nSliderRandomOffsetMin));
+	leftLayout->addWidget(m_pLabelSliderRandomOffsetMin);
 	
-	m_pSliderRandom = new QSlider(Qt::Horizontal);
-    m_pSliderRandom->setRange(0.1 * 100, 4 * 100);
-    m_pSliderRandom->setValue(m_nSliderRandom*100);
-	connect(m_pSliderRandom, SIGNAL(valueChanged(int)), this, SLOT(sliderRandom_valuesChanged(int)));
-	leftLayout->addWidget(m_pSliderRandom);
+	m_pSliderRandomOffsetMin = new QSlider(Qt::Horizontal);
+    m_pSliderRandomOffsetMin->setRange(-4 * 100, 4 * 100);
+    m_pSliderRandomOffsetMin->setValue(m_nSliderRandomOffsetMin*100);
+	connect(m_pSliderRandomOffsetMin, SIGNAL(valueChanged(int)), this, SLOT(sliderRandomOffsetMin_valuesChanged(int)));
+	leftLayout->addWidget(m_pSliderRandomOffsetMin);
+
+	// random max
+	m_pLabelSliderRandomOffsetMax = new QLabel(tr("Random Offset (max): ") + QString::number(m_nSliderRandomOffsetMax));
+	leftLayout->addWidget(m_pLabelSliderRandomOffsetMax);
+	
+	m_pSliderRandomOffsetMax = new QSlider(Qt::Horizontal);
+    m_pSliderRandomOffsetMax->setRange(-4 * 100, 4 * 100);
+    m_pSliderRandomOffsetMax->setValue(m_nSliderRandomOffsetMax*100);
+	connect(m_pSliderRandomOffsetMax, SIGNAL(valueChanged(int)), this, SLOT(sliderRandomOffsetMax_valuesChanged(int)));
+	leftLayout->addWidget(m_pSliderRandomOffsetMax);
+
+	m_pProgress = new QProgressBar(this);
+	m_pProgress->setValue(0);
+	m_pProgress->setMinimum(0);
+	m_pProgress->setMaximum(100);
+	leftLayout->addWidget(m_pProgress);
 
 	QHBoxLayout *buttonsLayout = new QHBoxLayout;
-	// buttonsLayout->addWidget(m_pRemoveButton);
+	buttonsLayout->addWidget(m_pRegenerateButton);
 	buttonsLayout->addWidget(new QWidget);
-	buttonsLayout->addWidget(m_pCloseButton);
 	buttonsLayout->addStretch();
+	buttonsLayout->addWidget(m_pCloseButton);
 	leftLayout->addLayout(buttonsLayout);
 
 	QHBoxLayout *mainLayout = new QHBoxLayout;
@@ -84,31 +101,21 @@ void DialogConfigurator::sliderRadius_valuesChanged(int nNewValue) {
 	this->regenerateGeometry();
 }
 
-void DialogConfigurator::sliderRandom_valuesChanged(int nNewValue) {
-	m_nSliderRandom = float(nNewValue) / 100;
-	m_pLabelSliderRadius->setText(tr("Random: ") + QString::number(m_nSliderRandom));
+void DialogConfigurator::sliderRandomOffsetMin_valuesChanged(int nNewValue) {
+	m_nSliderRandomOffsetMin = float(nNewValue) / 100;
+	m_pLabelSliderRandomOffsetMin->setText(tr("Random Offset (min): ") + QString::number(m_nSliderRandomOffsetMin));
 	this->regenerateGeometry();
 }
 
-// void DialogConfigurator::createConnections(){
-    // QObject::connect(widget, SIGNAL(itemChanged(QListWidgetItem*)),
-    //                  this, SLOT(highlightChecked(QListWidgetItem*)));
-    // QObject::connect(saveButton, SIGNAL(clicked()), this, SLOT(save()));
-    // QObject::connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
-// }
-
-// void DialogConfigurator::highlightChecked(QListWidgetItem *item){
-//     if(item->checkState() == Qt::Checked)
-//         item->setBackgroundColor(QColor("#ffffb2"));
-//     else
-//         item->setBackgroundColor(QColor("#ffffff"));
-// }
-
-void DialogConfigurator::removeClicked() {
-	// m_sExtensionName = m_pLineEditExtensionName->text();
-	// done(QDialog::Accepted);
+void DialogConfigurator::sliderRandomOffsetMax_valuesChanged(int nNewValue) {
+	m_nSliderRandomOffsetMax = float(nNewValue) / 100;
+	m_pLabelSliderRandomOffsetMax->setText(tr("Random Offset (max): ") + QString::number(m_nSliderRandomOffsetMax));
+	this->regenerateGeometry();
 }
 
+void DialogConfigurator::regenerateButton_clicked() {
+	this->regenerateGeometry();
+}
 
 void DialogConfigurator::createNode() {
 	m_pMesh = Unigine::ObjectMeshDynamic::create();
@@ -126,14 +133,18 @@ void DialogConfigurator::createNode() {
 
 void DialogConfigurator::regenerateGeometry() {
 	Unigine::Log::message("DialogConfigurator::regenerateGeometry start\n");
+	m_pProgress->setValue(0);
+	m_pProgress->setMinimum(0);
+	m_pProgress->setMaximum(m_nSliderTrianglesValue);
+
 	m_pStoneGenerator->clear();
 
 	m_pStoneGenerator->setRaidus(m_nSliderRadius);
 	m_pStoneGenerator->setEstimatedExpectedTriangles(m_nSliderTrianglesValue);
-	// m_pStoneGenerator->setRandom(m_nSliderRandom);
+	m_pStoneGenerator->setRandomOffsetMin(m_nSliderRandomOffsetMin);
+	m_pStoneGenerator->setRandomOffsetMax(m_nSliderRandomOffsetMax);
 	m_pStoneGenerator->generate();
 
-	m_pMesh->clearSurfaces();
 	m_pMesh->clearVertex();
 	m_pMesh->clearIndices(); // here triangles like some one
 	m_pMesh->flushIndices();
@@ -167,7 +178,7 @@ void DialogConfigurator::regenerateGeometry() {
 
 	m_pMesh->updateTangents();
 	// // optimize vertex and index buffers, if necessary
-	m_pMesh->updateIndices(); 
+	// m_pMesh->updateIndices(); 
 
 	// // calculate a mesh bounding box
 	m_pMesh->updateBounds();

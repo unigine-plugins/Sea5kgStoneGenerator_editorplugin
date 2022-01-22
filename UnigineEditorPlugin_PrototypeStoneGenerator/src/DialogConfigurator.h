@@ -12,6 +12,7 @@
 #include <QAbstractItemView>
 #include <QComboBox>
 #include <QSlider>
+#include <QProgressBar>
 
 #include <UnigineNode.h>
 #include <UnigineObjects.h>
@@ -32,13 +33,14 @@ signals:
     
 
 private slots:
-    void removeClicked();
+    void regenerateButton_clicked();
     void sliderTriangles_valuesChanged(int nNewValue);
     void sliderRadius_valuesChanged(int nNewValue);
-    void sliderRandom_valuesChanged(int nNewValue);
+    void sliderRandomOffsetMin_valuesChanged(int nNewValue);
+    void sliderRandomOffsetMax_valuesChanged(int nNewValue);
 
 private:
-    QPushButton *m_pRemoveButton;
+    QPushButton *m_pRegenerateButton;
     QPushButton *m_pCloseButton;
 
     // number of triangles
@@ -51,11 +53,17 @@ private:
     QSlider *m_pSliderRadius;
     float m_nSliderRadius;
 
-    // random
-    QLabel *m_pLabelSliderRandom;
-    QSlider *m_pSliderRandom;
-    float m_nSliderRandom;
+    // random min
+    QLabel *m_pLabelSliderRandomOffsetMin;
+    QSlider *m_pSliderRandomOffsetMin;
+    float m_nSliderRandomOffsetMin;
+
+    // random max
+    QLabel *m_pLabelSliderRandomOffsetMax;
+    QSlider *m_pSliderRandomOffsetMax;
+    float m_nSliderRandomOffsetMax;
     
+    QProgressBar *m_pProgress;
 
     StoneGenerator *m_pStoneGenerator;
     Unigine::ObjectMeshDynamicPtr m_pMesh;
