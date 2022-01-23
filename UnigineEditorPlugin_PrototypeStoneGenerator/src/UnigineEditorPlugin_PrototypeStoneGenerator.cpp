@@ -70,121 +70,6 @@ void UnigineEditorPlugin_PrototypeStoneGenerator::shutdown() {
 	// }
 }
 
-// void UnigineEditorPlugin_PrototypeStoneGenerator::slot_executeRunner(Python3Runner *pRunner) {
-// 	// std::cout << "slot_executeRunner, QThread::currentThreadId(): " << QThread::currentThread() << std::endl;
-// 	// std::cout << "slot_executeRunner, QCoreApplication::instance()->thread(): " << QCoreApplication::instance()->thread() << std::endl;
-// 	if (QThread::currentThread() != QCoreApplication::instance()->thread()) {
-// 		log_error("UnigineEditorPlugin_PrototypeStoneGenerator::slot_executeRunner Not main thread!!!");
-// 	}
-// 	pRunner->run();
-// 	pRunner->mutexAsync.unlock();
-// }
-
-void UnigineEditorPlugin_PrototypeStoneGenerator::editExtension() {
-	QObject* obj = sender();
-	QAction *pAction = dynamic_cast<QAction *>(obj);
-	if (pAction == nullptr) {
-		log_error("editExtension. Could not cast to QAction");
-		return;
-	}
-	QVariant userData = pAction->data();
-	QString sExtensionId = userData.toString();
-	log_info("editExtension. sExtensionId == " + sExtensionId);
-
-	// ModelExtension *pModel = nullptr;
-	// for (int i = 0; i < m_vScripts.size(); i++) {
-	// 	if (m_vScripts[i]->getId() == sExtensionId) {
-	// 		pModel = m_vScripts[i];
-	// 		break;
-	// 	}
-	// }
-	// if (pModel == nullptr) {
-	// 	log_error("UnigineEditorPlugin_PrototypeStoneGenerator::editExtension(), Not found model");
-	// 	return;
-	// }
-
-	// auto *pEdit = getEditDialog();
-	// pEdit->setModelExtension(pModel);
-	// pEdit->show();
-    // sd.setModal(true);
-    /*if (sd.exec() == QDialog::Accepted) {
-
-    }*/
-}
-
-/*
-void UnigineEditorPlugin_PrototypeStoneGenerator::createNewExtension() {
-	// QString strPaths = listRemove.join("\n");
-	// QWidget *pWin = QApplication::activeWindow();
-	QString strPaths = "";
-    CreateExtensionDialog sd(m_pMainWindow, strPaths);
-    sd.setModal(true);
-    if (sd.exec() == QDialog::Accepted){
-		QString sName = sd.getExtensionName();
-		QString sFor = sd.getExtensionFor();
-		log_info("createNewExtension. Next with " + sFor + ": " + sName);
-
-		// normalize extension id
-		QString sExtensionId = sFor + "_";
-		for (int i = 0; i < sName.length(); i++) {
-			if (sName[i].isNumber()
-				|| (sName[i] >= 'a' && sName[i] <= 'z')
-				|| (sName[i] >= 'A' && sName[i] <= 'Z')
-			) {
-				sExtensionId += sName[i].toLower(); 
-			} else {
-				sExtensionId += '_';
-			}
-		}
-		log_info("createNewExtension. Next sExtensionId == " + sExtensionId);
-
-		// preapre extension folder
-		QDir newExtDir(m_sPython3ScriptingDirPath + "/" + sExtensionId);
-		int num = 0;
-		while (newExtDir.exists()) {
-			newExtDir = QDir(m_sPython3ScriptingDirPath + "/" + sExtensionId + "_" + QString::number(num));
-		}
-		sExtensionId = newExtDir.dirName();
-		QDir(m_sPython3ScriptingDirPath).mkdir(sExtensionId);
-		
-		QString sPython3ScriptingMainPyPath = newExtDir.absolutePath() + "/main.py";
-		QFile fileMainPy(sPython3ScriptingMainPyPath);
-		if (!fileMainPy.exists()) {
-			fileMainPy.open(QFile::WriteOnly);
-			fileMainPy.write(
-				"import unigine\r\n"
-				"print('￼Disable shadows')\r\n"
-				"for mat in LIST_MATERIALS:\r\n"
-				"    print(mat.get_name())\r\n"
-				"    mat.set_shadow_mask(￼0x00000000)\r\n"
-			);
-			fileMainPy.close();
-		}
-		auto pModel = new ModelExtension(newExtDir.absolutePath());
-		pModel->setId(sExtensionId);
-		pModel->setName(sName);
-		pModel->setFor(sFor);
-		pModel->setEnabled(true);
-		m_vScripts.push_back(pModel);
-		// saveAndReloadExtensions();
-
-		// auto *pEdit = getEditDialog();
-		// pEdit->setModelExtension(pModel);
-		// pEdit->show();
-    }
-}*/
-
-void UnigineEditorPlugin_PrototypeStoneGenerator::manageScripts() {
-	QString strPaths = "";
-    // ManageScriptsDialog sd(m_pMainWindow, &m_vScripts);
-    // sd.setModal(true);
-    // if (sd.exec() == QDialog::Accepted) {
-	// 	// QString sName = sd.getExtensionName();
-	// 	
-	// 	// saveAndReloadExtensions();
-    // }
-}
-
 void UnigineEditorPlugin_PrototypeStoneGenerator::about() {
 	QMessageBox msgBox;
     msgBox.setStyleSheet("QLabel{min-width: 700px;}");
@@ -194,7 +79,7 @@ void UnigineEditorPlugin_PrototypeStoneGenerator::about() {
     msgBox.setText(
         "<h2>PrototypeStoneGenerator</h2> <br>"
         "Version: " + QString(PrototypeStoneGenerator_VERSION) + " <br>"
-        "Source-code: <a href='https://github.com/unigine-plugins/unigine-editor-commands-from-outside'>https://github.com/unigine-plugins/unigine-editor-commands-from-outside</a> <br>"
+        "Source-code: <a href='https://github.com/unigine-plugins/unigine-editor-prototype-stone-generator'>https://github.com/unigine-plugins/unigine-editor-prototype-stone-generator</a> <br>"
         "<hr/>"
         "Components and author(s):<ul>"
 		"  <li>Evgenii Sopov (mrseakg@gmail.com) </li>"

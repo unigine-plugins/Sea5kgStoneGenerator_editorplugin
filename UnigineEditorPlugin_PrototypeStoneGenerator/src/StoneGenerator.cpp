@@ -1,6 +1,10 @@
 #include "StoneGenerator.h"
-#include <math.h>
+
+// #include <math.h>
 #include <iostream>
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 // StonePoint
 
 StonePoint::StonePoint(float x, float y, float z) {

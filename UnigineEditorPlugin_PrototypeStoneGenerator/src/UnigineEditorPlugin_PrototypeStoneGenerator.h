@@ -33,9 +33,6 @@ private slots:
 	void processEdit();
 	void processSelectedProperties();
 	void processSelectedRuntimes();
-	void createNewExtension();
-	void manageScripts();
-	void editExtension();
 	void about();
 
 	void globalSelectionChanged();
