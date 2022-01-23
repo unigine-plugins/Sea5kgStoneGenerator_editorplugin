@@ -160,27 +160,15 @@ bool StoneGenerator::generate() {
         ZLevel lvl;
         lvl.xy_sectors.clear();
         float z_angel = z_spp * float(zz0);
-        lvl.z_radius = m_nRadius * sin( z_angel );
+        lvl.z_radius = m_nRadius * sin( z_angel ); // todo scale z
         lvl.z = m_nRadius * cos( z_angel );
         for (int rr0 = 0; rr0 < nK; rr0++) {
             XYPoint xy;
             float angel = spp * float(rr0);
-            xy.x = lvl.z_radius * cos( angel);
-			xy.y = lvl.z_radius * sin( angel);
+            xy.x = lvl.z_radius * cos( angel); // todo scale x
+			xy.y = lvl.z_radius * sin( angel); // todo scale y
             lvl.xy_sectors.push_back(xy);
         }
-        // int sorted = 1;
-        // while(sorted > 0) {
-        //     sorted = 0;
-        //     for (int rr0 = 0; rr0 < lvl.xy_sectors.size()-1; rr0++) {
-        //         if (lvl.xy_sectors[rr0].x > lvl.xy_sectors[rr0+1].x) {
-        //             XYPoint xy0 = lvl.xy_sectors[rr0];
-        //             lvl.xy_sectors[rr0] = lvl.xy_sectors[rr0+1];
-        //             lvl.xy_sectors[rr0+1] = xy0;
-        //             sorted++;
-        //         }
-        //     }
-        // }
         levels_z.push_back(lvl);
     }
 
@@ -213,14 +201,14 @@ bool StoneGenerator::generate() {
                 // pPoint10
             );
             m_vTriangles.push_back(pTriangle1);
-            StoneTriangle *pTriangle2 = new StoneTriangle(
-                pPoint01,
-                pPoint10,
-                pPoint11
-            );
-
-            // delete pTriangle2;
-            m_vTriangles.push_back(pTriangle2);
+            if (i_xy > 0 || i_xy < xy_sectors.size() - 1) {
+                StoneTriangle *pTriangle2 = new StoneTriangle(
+                    pPoint01,
+                    pPoint10,
+                    pPoint11
+                );
+                m_vTriangles.push_back(pTriangle2);
+            }
 
             // TODO text coord 
             // TODO normales
