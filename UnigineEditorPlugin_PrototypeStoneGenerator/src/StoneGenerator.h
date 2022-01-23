@@ -45,11 +45,17 @@ class StoneGenerator {
         ~StoneGenerator();
         void setRaidus(float nRadius);
         float getRaidus();
-
         void setRandomOffsetMin(float nRandomOffsetMin);
         int getRandomOffsetMin();
         void setRandomOffsetMax(float nRandomOffsetMax);
         int getRandomOffsetMax();
+
+        void setScaleX(float nScaleX);
+        float getScaleX();
+        void setScaleY(float nScaleY);
+        float getScaleY();
+        void setScaleZ(float nScaleZ);
+        float getScaleZ();
 
         void setEstimatedExpectedTriangles(int nExpected);
         int getEstimatedExpectedTriangles();
@@ -66,4 +72,7 @@ class StoneGenerator {
         int m_nExpectedTriangles;
         float m_nRandomOffsetMin;
         float m_nRandomOffsetMax;
+        float m_nScaleX;
+        float m_nScaleY;
+        float m_nScaleZ;
 };

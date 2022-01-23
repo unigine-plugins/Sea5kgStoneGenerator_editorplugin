@@ -38,6 +38,9 @@ private slots:
     void sliderRadius_valuesChanged(int nNewValue);
     void sliderRandomOffsetMin_valuesChanged(int nNewValue);
     void sliderRandomOffsetMax_valuesChanged(int nNewValue);
+    void sliderScaleX_valuesChanged(int nNewValue);
+    void sliderScaleY_valuesChanged(int nNewValue);
+    void sliderScaleZ_valuesChanged(int nNewValue);
 
 private:
     QPushButton *m_pRegenerateButton;
@@ -62,6 +65,21 @@ private:
     QLabel *m_pLabelSliderRandomOffsetMax;
     QSlider *m_pSliderRandomOffsetMax;
     float m_nSliderRandomOffsetMax;
+
+    // scale x
+    QLabel *m_pLabelSliderScaleX;
+    QSlider *m_pSliderScaleX;
+    float m_nSliderScaleX;
+
+    // scale y
+    QLabel *m_pLabelSliderScaleY;
+    QSlider *m_pSliderScaleY;
+    float m_nSliderScaleY;
+
+    // scale z
+    QLabel *m_pLabelSliderScaleZ;
+    QSlider *m_pSliderScaleZ;
+    float m_nSliderScaleZ;
     
     QProgressBar *m_pProgress;
 

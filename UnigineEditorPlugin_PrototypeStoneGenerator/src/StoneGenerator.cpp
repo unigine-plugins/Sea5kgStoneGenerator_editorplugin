@@ -72,6 +72,9 @@ StoneGenerator::StoneGenerator() {
     m_nRandomOffsetMax = 0.0f;
     m_nRadius = 2.0f;
     m_nExpectedTriangles = 300;
+    m_nScaleX = 1.0f;
+    m_nScaleY = 1.0f;
+    m_nScaleZ = 1.0f;
 }
 
 StoneGenerator::~StoneGenerator() {
@@ -100,6 +103,30 @@ void StoneGenerator::setRandomOffsetMax(float nRandomOffsetMax) {
 
 int StoneGenerator::getRandomOffsetMax() {
     return m_nRandomOffsetMax;
+}
+
+void StoneGenerator::setScaleX(float nScaleX) {
+    m_nScaleX = nScaleX;
+}
+
+float StoneGenerator::getScaleX() {
+    return m_nScaleX;
+}
+
+void StoneGenerator::setScaleY(float nScaleY) {
+    m_nScaleY = nScaleY;
+}
+
+float StoneGenerator::getScaleY() {
+    return m_nScaleY;
+}
+
+void StoneGenerator::setScaleZ(float nScaleZ) {
+    m_nScaleZ = nScaleZ;
+}
+
+float StoneGenerator::getScaleZ() {
+    return m_nScaleZ;
 }
 
 void StoneGenerator::setEstimatedExpectedTriangles(int nExpected) {
@@ -139,6 +166,7 @@ struct ZLevel {
 
 bool StoneGenerator::generate() {
     std::cout << "m_nExpectedTriangles = " << m_nExpectedTriangles << std::endl;
+    // TODO redesign
     int nK = m_nExpectedTriangles/2;
     std::cout << "nK = " << nK << std::endl;
     nK = sqrt(nK);
@@ -183,10 +211,10 @@ bool StoneGenerator::generate() {
             XYPoint x0y1 = xy_sectors[i_xy_next];
             XYPoint x1y0 = lvl_z_next.xy_sectors[i_xy];
             XYPoint x1y1 = lvl_z_next.xy_sectors[i_xy_next];
-            StonePoint *pPoint00 = addPoint(x0y0.x, x0y0.y, lvl_z.z);
-            StonePoint *pPoint01 = addPoint(x0y1.x, x0y1.y, lvl_z.z);
-            StonePoint *pPoint10 = addPoint(x1y0.x, x1y0.y, lvl_z_next.z);
-            StonePoint *pPoint11 = addPoint(x1y1.x, x1y1.y, lvl_z_next.z);
+            StonePoint *pPoint00 = addPoint(m_nScaleX * x0y0.x, m_nScaleY * x0y0.y, m_nScaleZ * lvl_z.z);
+            StonePoint *pPoint01 = addPoint(m_nScaleX * x0y1.x, m_nScaleY * x0y1.y, m_nScaleZ * lvl_z.z);
+            StonePoint *pPoint10 = addPoint(m_nScaleX * x1y0.x, m_nScaleY * x1y0.y, m_nScaleZ * lvl_z_next.z);
+            StonePoint *pPoint11 = addPoint(m_nScaleX * x1y1.x, m_nScaleY * x1y1.y, m_nScaleZ * lvl_z_next.z);
 
             // 00 * ----- * 01
             //    |       | 
