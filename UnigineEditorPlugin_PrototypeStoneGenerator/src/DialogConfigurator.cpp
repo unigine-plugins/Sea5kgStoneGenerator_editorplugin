@@ -206,63 +206,47 @@ void DialogConfigurator::regenerateGeometry() {
 	m_pMesh->flushIndices();
 	m_pMesh->flushVertex();
 
-	const std::vector<StoneTriangle *> &v = m_pStoneGenerator->triangles();
-	m_pMesh->addTriangles(v.size());
-	for (int i = 0; i < v.size(); i++) {
-		StoneTriangle *pTriangle = v[i];
+	
 
+	const std::vector<StonePoint *> &vPoints = m_pStoneGenerator->points();
+	for (int i = 0; i < vPoints.size(); i++) {
 		m_pMesh->addVertex(Unigine::Math::vec3(
-			pTriangle->p1()->x(),
-			pTriangle->p1()->y(),
-			pTriangle->p1()->z()
+			vPoints[i]->x(),
+			vPoints[i]->y(),
+			vPoints[i]->z()
 		));
-		// m_pMesh->addTangent(Unigine::Math::quat(
-		// 	Unigine::Math::vec3(
-		// 		pTriangle->p1()->x() + 0.2,
-		// 		pTriangle->p1()->y() + 0.2,
-		// 		pTriangle->p1()->z() + 0.2
-		// 	)
-		// ));
-		m_pMesh->addTexCoord(Unigine::Math::vec4(0, 0, 0, 0));
-		
-		// m_pMesh->addColor(Unigine::Math::vec4(0, 1, 1, 1));
-		m_pMesh->addVertex(Unigine::Math::vec3(
-			pTriangle->p2()->x(),
-			pTriangle->p2()->y(),
-			pTriangle->p2()->z()
-		));
-		// m_pMesh->addTangent(Unigine::Math::quat(
-		// 	Unigine::Math::vec3(
-		// 		pTriangle->p1()->x() + 0.2,
-		// 		pTriangle->p1()->y() + 0.2,
-		// 		pTriangle->p1()->z() + 0.2
-		// 	)
-		// ));
-		m_pMesh->addTexCoord(Unigine::Math::vec4(1, 0, 0, 0));
-		// m_pMesh->addColor(Unigine::Math::vec4(1, 0, 1, 1));
-
-		m_pMesh->addVertex(Unigine::Math::vec3(
-			pTriangle->p3()->x(),
-			pTriangle->p3()->y(),
-			pTriangle->p3()->z()
-		));
-		// m_pMesh->addTangent(Unigine::Math::quat(
-		// 	Unigine::Math::vec3(
-		// 		pTriangle->p1()->x() + 0.2,
-		// 		pTriangle->p1()->y() + 0.2,
-		// 		pTriangle->p1()->z() + 0.2
-		// 	)
-		// ));
-		m_pMesh->addTexCoord(Unigine::Math::vec4(1, 1, 0, 0));
-		// m_pMesh->addColor(Unigine::Math::vec4(1, 1, 0, 1));
+		// m_pMesh->addColor(Unigine::Math::vec4(256, 256, 256, 256));
+		if (i%3 == 0) {
+			// std::random()
+			m_pMesh->addTexCoord(Unigine::Math::vec4(0, 0, 0, 0));
+		} else if (i%3 == 1) {
+			m_pMesh->addTexCoord(Unigine::Math::vec4(1, 0, 0, 0));
+		} else if (i%3 == 2) {
+			m_pMesh->addTexCoord(Unigine::Math::vec4(1, 1, 0, 0));
+		}
 	}
 
-	m_pMesh->updateTangents();
-	// // optimize vertex and index buffers, if necessary
-	// m_pMesh->updateIndices(); 
+	const std::vector<StoneTriangle *> &vTriangles = m_pStoneGenerator->triangles();
+	m_pMesh->addTriangles(vTriangles.size());
+	m_pMesh->allocateIndices(vTriangles.size()*3);
+	for (int i = 0; i < vTriangles.size(); i++) {
+		StoneTriangle *pTriangle = vTriangles[i];
+		m_pMesh->setIndex(i*3 + 0, pTriangle->p1()->getIndex());
+		m_pMesh->setIndex(i*3 + 1, pTriangle->p2()->getIndex());
+		m_pMesh->setIndex(i*3 + 2, pTriangle->p3()->getIndex());
+		m_pMesh->addTexCoord(Unigine::Math::vec4(0, 0, 0, 0));
+		m_pMesh->addTexCoord(Unigine::Math::vec4(1, 0, 0, 0));
+		m_pMesh->addTexCoord(Unigine::Math::vec4(1, 1, 0, 0));
+	}
 
-	// // calculate a mesh bounding box
+	// // optimize vertex and index buffers, if necessary
+	m_pMesh->updateIndices();
+
+	// calculate a mesh bounding box for editor I guess
 	m_pMesh->updateBounds();
+
+	// 
+	m_pMesh->updateTangents();
 
 	m_pMesh->flushIndices();
 	m_pMesh->flushVertex();

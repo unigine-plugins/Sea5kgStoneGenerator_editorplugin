@@ -18,8 +18,6 @@
 #include <QCoreApplication>
 #include <UnigineMaterials.h>
 
-#
-
 #include "UnigineFileSystem.h"
 
 // ------------------------------------------------------------------------------------------

@@ -13,12 +13,15 @@ class StonePoint {
         void addOffset(float x, float y, float z);
 
         bool compare(int nX, int nY, int nZ, int nThreshold);
+        void setIndex(int nIndex);
+        int getIndex();
 
     private:
         float m_nX, m_nY, m_nZ;
         int m_nX100;
         int m_nY100;
         int m_nZ100;
+        int m_nIndex;
 };
 
 class StoneTriangle {
@@ -63,6 +66,7 @@ class StoneGenerator {
         void clear();
         bool generate();
         const std::vector<StoneTriangle *> &triangles();
+        const std::vector<StonePoint *> &points();
 
         StonePoint *addPoint(float x, float y, float z);
     private:

@@ -14,6 +14,7 @@ StonePoint::StonePoint(float x, float y, float z) {
     m_nX100 = m_nX*100;
     m_nY100 = m_nY*100;
     m_nZ100 = m_nZ*100;
+    m_nIndex = 0;
 }
 
 float StonePoint::x() {
@@ -42,6 +43,14 @@ bool StonePoint::compare(int nX, int nY, int nZ, int nThreshold) {
         && std::abs(nY - m_nY100) < nThreshold 
         && std::abs(nZ - m_nZ100) < nThreshold 
     ;
+}
+
+void StonePoint::setIndex(int nIndex) {
+    m_nIndex = nIndex;
+}
+
+int StonePoint::getIndex() {
+    return m_nIndex;
 }
 
 // StoneTriangle
@@ -271,13 +280,18 @@ const std::vector<StoneTriangle *> &StoneGenerator::triangles() {
     return m_vTriangles;
 }
 
+const std::vector<StonePoint *> &StoneGenerator::points() {
+    return m_vPoints;
+}
+
 StonePoint *StoneGenerator::addPoint(float x, float y, float z) {
     StonePoint *pPoint = nullptr;
     int nX = x*100;
     int nY = y*100;
     int nZ = z*100;
     int nThreshold = 15; // 0.15
-    for (int i = 0; i < m_vPoints.size(); i++) {
+    int nSize = m_vPoints.size();
+    for (int i = 0; i < nSize; i++) {
         if (m_vPoints[i]->compare(nX, nY, nZ, nThreshold)) {
             pPoint = m_vPoints[i];
             break;
@@ -286,6 +300,7 @@ StonePoint *StoneGenerator::addPoint(float x, float y, float z) {
     if (pPoint == nullptr) {
         pPoint = new StonePoint(x,y,z);
         m_vPoints.push_back(pPoint);
+        pPoint->setIndex(nSize);
     }
     return pPoint;
 }
