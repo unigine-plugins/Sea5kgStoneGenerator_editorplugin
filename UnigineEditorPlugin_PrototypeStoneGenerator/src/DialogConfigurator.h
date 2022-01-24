@@ -15,6 +15,8 @@
 #include <QProgressBar>
 
 #include <UnigineNode.h>
+#include <UnigineMaterials.h>
+#include <UnigineTextures.h>
 #include <UnigineObjects.h>
 #include <editor/Selector.h>
 #include <editor/Selection.h>
@@ -45,6 +47,7 @@ private slots:
     void sliderScaleZ_valuesChanged(int nNewValue);
 
 private:
+    QString m_sRandomName;
     QPushButton *m_pRegenerateButton;
     QPushButton *m_pCloseButton;
 
@@ -87,5 +90,8 @@ private:
 
     StoneGenerator *m_pStoneGenerator;
     Unigine::ObjectMeshDynamicPtr m_pMesh;
+    Unigine::MaterialPtr m_pMaterial;
+    Unigine::ImagePtr m_pImage;
+    // Unigine::TexturePtr m_pTexture;
 };
 

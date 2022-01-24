@@ -2,6 +2,8 @@
 #include <iostream>
 
 #include "DialogConfigurator.h"
+#include "UnigineFileSystem.h"
+#include <UnigineEditor.h>
 
 DialogConfigurator::DialogConfigurator(
 	QWidget *parent
@@ -171,15 +173,45 @@ void DialogConfigurator::regenerateButton_clicked() {
 }
 
 void DialogConfigurator::createNode() {
+	m_sRandomName = "stone_" + QString::number(std::rand() % 10000);
+
 	m_pMesh = Unigine::ObjectMeshDynamic::create();
 	// TODO select position by a camera
 	m_pMesh->setWorldTransform(translate(Unigine::Math::Vec3(0.0f, 0.0f, 2.0f)));
 	m_pMesh->setShowInEditorEnabledRecursive(1);
 	m_pMesh->setSaveToWorldEnabledRecursive(1);
+	m_pMesh->setName(QString(m_sRandomName).toStdString().c_str());
 	QVector<Unigine::NodePtr> pNodes;
 	pNodes.push_back(m_pMesh);
 	Editor::SelectorNodes *pSelected = Editor::SelectorNodes::createObjectsSelector(pNodes);
 	Editor::Selection::setSelector(pSelected);
+
+	// m_pMaterial = Unigine::Material::create();
+	auto mesh_base = Unigine::Materials::findMaterial("mesh_base");
+	m_pMaterial = mesh_base->inherit();
+	m_pMaterial->setParent(mesh_base);
+	std::string sMaterialPath = QString(m_sRandomName + ".mat").toStdString();
+	m_pMaterial->setName(QString(m_sRandomName).toStdString().c_str());
+	m_pMaterial->setPath(sMaterialPath.c_str());
+	m_pMaterial->save();
+
+	Unigine::UGUID guid;
+	guid.generate();
+	// const char *string_id = guid.getFileSystemString();
+	std::cout << "Guid: " << guid.get() << std::endl;
+	// log_info("Guid: " + QString(guid.get()));
+
+	// Unigine::FileSystem::setGUID(sMaterialPath.c_str(), guid);
+	// emit Editor::AssetManager::instance()->added(guid);
+
+	m_pMesh->setMaterial(m_pMaterial, 0);
+	
+	// MaterialPtr material = mesh->getMaterialInherit(0);
+	
+
+	m_pImage = Unigine::Image::create();
+	// m_pImage->setName(QString(m_sRandomName + ".png").toStdString().c_str());
+	// m_pTexture = Unigine::Texture::create();
 
 	this->regenerateGeometry();
 }
@@ -217,12 +249,11 @@ void DialogConfigurator::regenerateGeometry() {
 		));
 		// m_pMesh->addColor(Unigine::Math::vec4(256, 256, 256, 256));
 		if (i%3 == 0) {
-			// std::random()
-			m_pMesh->addTexCoord(Unigine::Math::vec4(0, 0, 0, 0));
+			m_pMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
 		} else if (i%3 == 1) {
-			m_pMesh->addTexCoord(Unigine::Math::vec4(1, 0, 0, 0));
+			m_pMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
 		} else if (i%3 == 2) {
-			m_pMesh->addTexCoord(Unigine::Math::vec4(1, 1, 0, 0));
+			m_pMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
 		}
 	}
 
@@ -270,11 +301,34 @@ void DialogConfigurator::regenerateGeometry() {
 	// // set the name of the mesh
 	// mesh1->setName("Dynamic Mesh");
 	// mesh1->saveMesh("box_24567.mesh");
+	// Unigine::UGUID guid;
+	// guid.generate();
+	// const char *string_id = guid.getFileSystemString();
+	// log_info("Guid: " + QString(guid.get()));
 	// Unigine::FileSystem::setGUID("box_24567.mesh", guid);
 	// emit Editor::AssetManager::instance()->added(guid);
 	TextureStoneGenerator tex;
 	tex.generate();
+	m_pImage->clear();
+	m_pImage->load("stone.png");
+	if (m_pImage->isLoaded()) {
+		std::cout << "Image loaded" << std::endl;
+		// add to button - save texture
+		m_pImage->save(QString(m_sRandomName + ".png").toStdString().c_str());
+	}
+	// m_pTexture->clear();
+	// m_pTexture->setImage(m_pImage);
 
+	int num = m_pMaterial->findTexture("albedo");
+	if (num != -1) {
+		std::cout << "Set albedo" << std::endl;
+		m_pMaterial->setTexturePath(num, QString(m_sRandomName + ".png").toStdString().c_str());
+
+		// m_pMaterial->setTextureImage(num, m_pImage);
+	}
+	// m_pMesh->setMaterial(m_pMaterial, 0);
+	// add to button - save mesh
+	// m_pMesh->saveMesh(QString(m_sRandomName + ".mesh").toStdString().c_str());
 
 	Unigine::Log::message("DialogConfigurator::regenerateGeometry end\n");
 }
