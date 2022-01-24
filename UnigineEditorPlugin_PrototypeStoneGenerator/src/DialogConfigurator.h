@@ -20,7 +20,9 @@
 #include <editor/Selection.h>
 
 #include "DialogConfigurator.h"
+
 #include "StoneGenerator.h"
+#include "TextureStoneGenerator.h"
 
 class DialogConfigurator : public QDialog {
     Q_OBJECT

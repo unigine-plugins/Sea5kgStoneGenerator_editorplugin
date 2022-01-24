@@ -272,6 +272,9 @@ void DialogConfigurator::regenerateGeometry() {
 	// mesh1->saveMesh("box_24567.mesh");
 	// Unigine::FileSystem::setGUID("box_24567.mesh", guid);
 	// emit Editor::AssetManager::instance()->added(guid);
+	TextureStoneGenerator tex;
+	tex.generate();
+
 
 	Unigine::Log::message("DialogConfigurator::regenerateGeometry end\n");
 }
