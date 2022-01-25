@@ -15,6 +15,8 @@ StonePoint::StonePoint(float x, float y, float z) {
     m_nY100 = m_nY*100;
     m_nZ100 = m_nZ*100;
     m_nIndex = 0;
+    m_nU = 0.0f;
+    m_nV = 0.0f;
 }
 
 float StonePoint::x() {
@@ -52,6 +54,20 @@ void StonePoint::setIndex(int nIndex) {
 int StonePoint::getIndex() {
     return m_nIndex;
 }
+
+void StonePoint::setTextureCoordinates(float nU, float nV) {
+    m_nU = nU;
+    m_nV = nV;
+}
+
+float StonePoint::getTextureCoordinateU() {
+    return m_nU;
+}
+
+float StonePoint::getTextureCoordinateV() {
+    return m_nV;
+}
+
 
 // StoneTriangle
 
@@ -294,6 +310,52 @@ bool StoneGenerator::generate(const StoneGeneratorConfig &conf) {
         }
     }
     
+    // TODO calculate texture coordinates
+    float tk = std::sin(1.570796327);
+    float nMaxU = 0.0f;
+    float nMinU = 0.0f;
+    float nMaxV = 0.0f;
+    float nMinV = 0.0f;
+    for (int i = 0; i < m_vTriangles.size(); i++) {
+        StoneTriangle *pTriangle = m_vTriangles[i];
+        float nLength12 = this->distance(pTriangle->p1(), pTriangle->p2());
+        float nAngle12 = this->angelXY(pTriangle->p1(), pTriangle->p2());
+
+        float nU2 = nLength12 * tk * std::sin(nAngle12);
+        float nV2 = nLength12 * tk * std::cos(nAngle12);
+        nU2 += pTriangle->p1()->getTextureCoordinateU();
+        nV2 += pTriangle->p1()->getTextureCoordinateV();
+        nMaxU = std::max(nMaxU, nU2);
+        nMinU = std::max(nMinU, nU2);
+        nMaxV = std::max(nMaxV, nV2);
+        nMinV = std::max(nMinV, nV2);
+        pTriangle->p2()->setTextureCoordinates(nU2, nV2);
+
+        float nLength13 = this->distance(pTriangle->p1(), pTriangle->p3());
+        float nAngle13 = this->angelXY(pTriangle->p1(), pTriangle->p3());
+
+        float nU3 = nLength13 * tk * std::sin(nAngle13);
+        float nV3 = nLength13 * tk * std::cos(nAngle13);
+        nU3 += pTriangle->p1()->getTextureCoordinateU();
+        nV3 += pTriangle->p1()->getTextureCoordinateV();
+        nMaxU = std::max(nMaxU, nU3);
+        nMinU = std::max(nMinU, nU3);
+        nMaxV = std::max(nMaxV, nV3);
+        nMinV = std::max(nMinV, nV3);
+        pTriangle->p3()->setTextureCoordinates(nU3, nV3);
+    }
+
+    // normalize coordinates to 0..1
+    float dU = nMaxU - nMinU;
+    float dV = nMaxV - nMinV;
+    for (int i = 0; i < m_vPoints.size(); i++) {
+        float u = m_vPoints[i]->getTextureCoordinateU();
+        float v = m_vPoints[i]->getTextureCoordinateV();
+        u = (u - nMinU) / dU;
+        v = (v - nMinV) / dV;
+        m_vPoints[i]->setTextureCoordinates(u,v);
+    }
+
     return true;
 }
 
@@ -324,4 +386,25 @@ StonePoint *StoneGenerator::addPoint(float x, float y, float z) {
         pPoint->setIndex(nSize);
     }
     return pPoint;
+}
+
+float StoneGenerator::distance(StonePoint *p1, StonePoint *p2) {
+    float dx = p1->x() - p2->x();
+    float dy = p1->y() - p2->y();
+    float dz = p1->z() - p2->z();
+    return std::sqrt(dx*dx + dy*dy + dz*dz);
+}
+
+float StoneGenerator::angelXY(StonePoint *p1, StonePoint *p2) {
+    float dx = p1->x() - p2->x();
+    float dy = p1->y() - p2->y();
+    if (dx == 0) {
+        // TODO check it later
+        if (dy > 0) {
+            return M_PI / 2;
+        } else {
+            return 3 * M_PI / 2;
+        }
+    }
+    return std::asin(dy/dx);
 }

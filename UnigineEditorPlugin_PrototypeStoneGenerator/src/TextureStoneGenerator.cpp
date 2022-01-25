@@ -17,8 +17,8 @@
 #include "TextureStoneGenerator.h"
 
 TextureStoneGenerator::TextureStoneGenerator() {
-    m_nWidth = 200;
-    m_nHeight = 200;
+    m_nWidth = 512;
+    m_nHeight = 512;
 }
 
 

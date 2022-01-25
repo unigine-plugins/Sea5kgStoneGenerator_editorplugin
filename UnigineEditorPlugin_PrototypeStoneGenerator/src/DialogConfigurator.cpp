@@ -272,14 +272,14 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 			vPoints[i]->y(),
 			vPoints[i]->z()
 		));
-		// m_pMesh->addColor(Unigine::Math::vec4(256, 256, 256, 256));
-		if (i%3 == 0) {
-			m_pMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
-		} else if (i%3 == 1) {
-			m_pMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
-		} else if (i%3 == 2) {
-			m_pMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
-		}
+		m_pMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
+
+		// m_pMesh->addTexCoord(Unigine::Math::vec4(
+		// 	vPoints[i]->getTextureCoordinateU(),
+		// 	vPoints[i]->getTextureCoordinateV(),
+		// 	0,
+		// 	0
+		// ));
 	}
 
 	const std::vector<StoneTriangle *> &vTriangles = pStoneGenerator->triangles();
@@ -290,9 +290,6 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 		m_pMesh->setIndex(i*3 + 0, pTriangle->p1()->getIndex());
 		m_pMesh->setIndex(i*3 + 1, pTriangle->p2()->getIndex());
 		m_pMesh->setIndex(i*3 + 2, pTriangle->p3()->getIndex());
-		m_pMesh->addTexCoord(Unigine::Math::vec4(0, 0, 0, 0));
-		m_pMesh->addTexCoord(Unigine::Math::vec4(1, 0, 0, 0));
-		m_pMesh->addTexCoord(Unigine::Math::vec4(1, 1, 0, 0));
 	}
 
 	// // optimize vertex and index buffers, if necessary

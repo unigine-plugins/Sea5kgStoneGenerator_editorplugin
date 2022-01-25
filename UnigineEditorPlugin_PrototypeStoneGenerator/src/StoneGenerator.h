@@ -16,8 +16,14 @@ class StonePoint {
         void setIndex(int nIndex);
         int getIndex();
 
+        void setTextureCoordinates(float nU, float nV);
+        float getTextureCoordinateU();
+        float getTextureCoordinateV();
+
     private:
         float m_nX, m_nY, m_nZ;
+        float m_nU;
+        float m_nV;
         int m_nX100;
         int m_nY100;
         int m_nZ100;
@@ -85,6 +91,8 @@ class StoneGenerator {
 
         StonePoint *addPoint(float x, float y, float z);
     private:
+        float distance(StonePoint *p1, StonePoint *p2);
+        float angelXY(StonePoint *p1, StonePoint *p2);
         std::vector<StonePoint *> m_vPoints;
         std::vector<StoneTriangle *> m_vTriangles;
 };
