@@ -8,6 +8,8 @@ junk
 __pycache__
 /lib
 /fbx
+linux_UnigineEditorPlugin_PrototypeStoneGenerator_*.zip
+windows_UnigineEditorPlugin_PrototypeStoneGenerator_*.zip
 
 # Prerequisites
 *.d
