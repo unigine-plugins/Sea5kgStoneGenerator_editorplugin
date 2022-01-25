@@ -41,6 +41,7 @@ ENDIF()
 
 add_library(${proj_name} SHARED
 	${PROJECT_SOURCE_DIR}/src/UnigineEditorPlugin_PrototypeStoneGenerator.cpp
+	${PROJECT_SOURCE_DIR}/src/AsyncRunGenerator.cpp
 	${PROJECT_SOURCE_DIR}/src/StoneGenerator.cpp
 	${PROJECT_SOURCE_DIR}/src/TextureStoneGenerator.cpp
 	${PROJECT_SOURCE_DIR}/src/DialogConfigurator.cpp

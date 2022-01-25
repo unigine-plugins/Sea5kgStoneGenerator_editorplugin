@@ -22,76 +22,85 @@
 #include <editor/Selection.h>
 
 #include "DialogConfigurator.h"
-
+#include "AsyncRunGenerator.h"
 #include "StoneGenerator.h"
 #include "TextureStoneGenerator.h"
+#include "ISignalGun.h"
 
-class DialogConfigurator : public QDialog {
+class DialogConfigurator : public QDialog, public ISignalGun {
     Q_OBJECT
-public:
-    DialogConfigurator(QWidget *parent);
-    void createNode();
-    void regenerateGeometry();
 
-signals:
-    
+    public:
+        DialogConfigurator(QWidget *parent);
+        void createNode();
+        void regenerateGeometry();
 
-private slots:
-    void regenerateButton_clicked();
-    void sliderTriangles_valuesChanged(int nNewValue);
-    void sliderRadius_valuesChanged(int nNewValue);
-    void sliderRandomOffsetMin_valuesChanged(int nNewValue);
-    void sliderRandomOffsetMax_valuesChanged(int nNewValue);
-    void sliderScaleX_valuesChanged(int nNewValue);
-    void sliderScaleY_valuesChanged(int nNewValue);
-    void sliderScaleZ_valuesChanged(int nNewValue);
+        // ISignalGun
+        virtual void generationComplited(QString sDone) override;
 
-private:
-    QString m_sRandomName;
-    QPushButton *m_pRegenerateButton;
-    QPushButton *m_pCloseButton;
+    Q_SIGNALS:
+        void signal_generationComplited(QString sDone);
 
-    // number of triangles
-    QLabel *m_pLabelSliderTriangles;
-    QSlider *m_pSliderTriangles;
-    int m_nSliderTrianglesValue;
 
-    // radius
-    QLabel *m_pLabelSliderRadius;
-    QSlider *m_pSliderRadius;
-    float m_nSliderRadius;
+    private slots:
+        void regenerateButton_clicked();
+        void sliderTriangles_valuesChanged(int nNewValue);
+        void sliderRadius_valuesChanged(int nNewValue);
+        void sliderRandomOffsetMin_valuesChanged(int nNewValue);
+        void sliderRandomOffsetMax_valuesChanged(int nNewValue);
+        void sliderScaleX_valuesChanged(int nNewValue);
+        void sliderScaleY_valuesChanged(int nNewValue);
+        void sliderScaleZ_valuesChanged(int nNewValue);
 
-    // random min
-    QLabel *m_pLabelSliderRandomOffsetMin;
-    QSlider *m_pSliderRandomOffsetMin;
-    float m_nSliderRandomOffsetMin;
+        void slot_generationComplited(QString sDone);
 
-    // random max
-    QLabel *m_pLabelSliderRandomOffsetMax;
-    QSlider *m_pSliderRandomOffsetMax;
-    float m_nSliderRandomOffsetMax;
+    private:
+        QString m_sRandomName;
+        QPushButton *m_pRegenerateButton;
+        QPushButton *m_pCloseButton;
 
-    // scale x
-    QLabel *m_pLabelSliderScaleX;
-    QSlider *m_pSliderScaleX;
-    float m_nSliderScaleX;
+        // number of triangles
+        QLabel *m_pLabelSliderTriangles;
+        QSlider *m_pSliderTriangles;
+        int m_nSliderTrianglesValue;
 
-    // scale y
-    QLabel *m_pLabelSliderScaleY;
-    QSlider *m_pSliderScaleY;
-    float m_nSliderScaleY;
+        // radius
+        QLabel *m_pLabelSliderRadius;
+        QSlider *m_pSliderRadius;
+        float m_nSliderRadius;
 
-    // scale z
-    QLabel *m_pLabelSliderScaleZ;
-    QSlider *m_pSliderScaleZ;
-    float m_nSliderScaleZ;
-    
-    QProgressBar *m_pProgress;
+        // random min
+        QLabel *m_pLabelSliderRandomOffsetMin;
+        QSlider *m_pSliderRandomOffsetMin;
+        float m_nSliderRandomOffsetMin;
 
-    StoneGenerator *m_pStoneGenerator;
-    Unigine::ObjectMeshDynamicPtr m_pMesh;
-    Unigine::MaterialPtr m_pMaterial;
-    Unigine::ImagePtr m_pImage;
-    // Unigine::TexturePtr m_pTexture;
+        // random max
+        QLabel *m_pLabelSliderRandomOffsetMax;
+        QSlider *m_pSliderRandomOffsetMax;
+        float m_nSliderRandomOffsetMax;
+
+        // scale x
+        QLabel *m_pLabelSliderScaleX;
+        QSlider *m_pSliderScaleX;
+        float m_nSliderScaleX;
+
+        // scale y
+        QLabel *m_pLabelSliderScaleY;
+        QSlider *m_pSliderScaleY;
+        float m_nSliderScaleY;
+
+        // scale z
+        QLabel *m_pLabelSliderScaleZ;
+        QSlider *m_pSliderScaleZ;
+        float m_nSliderScaleZ;
+        
+        QProgressBar *m_pProgress;
+        AsyncRunGenerator *m_pAsyncRunGenerator;
+        Unigine::ObjectMeshDynamicPtr m_pMesh;
+        Unigine::MaterialPtr m_pMaterial;
+        Unigine::ImagePtr m_pImage;
+        // Unigine::TexturePtr m_pTexture;
+        bool m_bWannaUpdate;
+        bool m_bInProgress;
 };
 

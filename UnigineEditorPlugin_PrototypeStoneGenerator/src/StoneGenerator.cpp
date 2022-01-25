@@ -77,10 +77,9 @@ StonePoint *StoneTriangle::p3() {
     return m_p3;
 }
 
+// StoneGeneratorConfig
 
-// StoneGenerator
-
-StoneGenerator::StoneGenerator() {
+StoneGeneratorConfig::StoneGeneratorConfig() {
     m_nRandomOffsetMin = 0.0f;
     m_nRandomOffsetMax = 0.0f;
     m_nRadius = 2.0f;
@@ -90,64 +89,70 @@ StoneGenerator::StoneGenerator() {
     m_nScaleZ = 1.0f;
 }
 
-StoneGenerator::~StoneGenerator() {
-    this->clear();
-}
-
-void StoneGenerator::setRaidus(float nRadius) {
-    m_nRadius = nRadius;
-}
-
-float StoneGenerator::getRaidus() {
-    return m_nRadius;
-}
-
-void StoneGenerator::setRandomOffsetMin(float nRandomOffsetMin) {
-    m_nRandomOffsetMin = nRandomOffsetMin;
-}
-
-int StoneGenerator::getRandomOffsetMin() {
-    return m_nRandomOffsetMin;
-}
-
-void StoneGenerator::setRandomOffsetMax(float nRandomOffsetMax) {
-    m_nRandomOffsetMax = nRandomOffsetMax;
-}
-
-int StoneGenerator::getRandomOffsetMax() {
-    return m_nRandomOffsetMax;
-}
-
-void StoneGenerator::setScaleX(float nScaleX) {
-    m_nScaleX = nScaleX;
-}
-
-float StoneGenerator::getScaleX() {
-    return m_nScaleX;
-}
-
-void StoneGenerator::setScaleY(float nScaleY) {
-    m_nScaleY = nScaleY;
-}
-
-float StoneGenerator::getScaleY() {
-    return m_nScaleY;
-}
-
-void StoneGenerator::setScaleZ(float nScaleZ) {
-    m_nScaleZ = nScaleZ;
-}
-
-float StoneGenerator::getScaleZ() {
-    return m_nScaleZ;
-}
-
-void StoneGenerator::setEstimatedExpectedTriangles(int nExpected) {
+void StoneGeneratorConfig::setEstimatedExpectedTriangles(int nExpected) {
     m_nExpectedTriangles = nExpected;
 }
 
-int StoneGenerator::getEstimatedExpectedTriangles() {
+int StoneGeneratorConfig::getEstimatedExpectedTriangles() const {
     return m_nExpectedTriangles;
+}
+
+void StoneGeneratorConfig::setRadius(float nRadius) {
+    m_nRadius = nRadius;
+}
+
+float StoneGeneratorConfig::getRadius() const {
+    return m_nRadius;
+}
+
+void StoneGeneratorConfig::setRandomOffsetMin(float nRandomOffsetMin) {
+    m_nRandomOffsetMin = nRandomOffsetMin;
+}
+
+float StoneGeneratorConfig::getRandomOffsetMin() const {
+    return m_nRandomOffsetMin;
+}
+
+void StoneGeneratorConfig::setRandomOffsetMax(float nRandomOffsetMax) {
+    m_nRandomOffsetMax = nRandomOffsetMax;
+}
+
+float StoneGeneratorConfig::getRandomOffsetMax() const {
+    return m_nRandomOffsetMax;
+}
+
+void StoneGeneratorConfig::setScaleX(float nScaleX) {
+    m_nScaleX = nScaleX;
+}
+
+float StoneGeneratorConfig::getScaleX() const {
+    return m_nScaleX;
+}
+
+void StoneGeneratorConfig::setScaleY(float nScaleY) {
+    m_nScaleY = nScaleY;
+}
+
+float StoneGeneratorConfig::getScaleY() const {
+    return m_nScaleY;
+}
+
+void StoneGeneratorConfig::setScaleZ(float nScaleZ) {
+    m_nScaleZ = nScaleZ;
+}
+
+float StoneGeneratorConfig::getScaleZ() const {
+    return m_nScaleZ;
+}
+
+
+// StoneGenerator
+
+StoneGenerator::StoneGenerator() {
+}
+
+StoneGenerator::~StoneGenerator() {
+    this->clear();
 }
 
 void StoneGenerator::clear() {
@@ -177,10 +182,10 @@ struct ZLevel {
     std::vector<XYPoint> xy_sectors;
 };
 
-bool StoneGenerator::generate() {
-    std::cout << "m_nExpectedTriangles = " << m_nExpectedTriangles << std::endl;
+bool StoneGenerator::generate(const StoneGeneratorConfig &conf) {
+    std::cout << "m_nExpectedTriangles = " << conf.getEstimatedExpectedTriangles() << std::endl;
     // TODO redesign
-    int nK = m_nExpectedTriangles/2;
+    int nK = conf.getEstimatedExpectedTriangles()/2;
     std::cout << "nK = " << nK << std::endl;
     nK = sqrt(nK);
     std::cout << "nK = " << nK << std::endl;
@@ -201,8 +206,8 @@ bool StoneGenerator::generate() {
         ZLevel lvl;
         lvl.xy_sectors.clear();
         float z_angel = z_spp * float(zz0);
-        lvl.z_radius = m_nRadius * sin( z_angel ); // todo scale z
-        lvl.z = m_nRadius * cos( z_angel );
+        lvl.z_radius = conf.getRadius() * sin( z_angel ); // todo scale z
+        lvl.z = conf.getRadius() * cos( z_angel );
         for (int rr0 = 0; rr0 < nK; rr0++) {
             XYPoint xy;
             float angel = spp * float(rr0);
@@ -224,10 +229,26 @@ bool StoneGenerator::generate() {
             XYPoint x0y1 = xy_sectors[i_xy_next];
             XYPoint x1y0 = lvl_z_next.xy_sectors[i_xy];
             XYPoint x1y1 = lvl_z_next.xy_sectors[i_xy_next];
-            StonePoint *pPoint00 = addPoint(m_nScaleX * x0y0.x, m_nScaleY * x0y0.y, m_nScaleZ * lvl_z.z);
-            StonePoint *pPoint01 = addPoint(m_nScaleX * x0y1.x, m_nScaleY * x0y1.y, m_nScaleZ * lvl_z.z);
-            StonePoint *pPoint10 = addPoint(m_nScaleX * x1y0.x, m_nScaleY * x1y0.y, m_nScaleZ * lvl_z_next.z);
-            StonePoint *pPoint11 = addPoint(m_nScaleX * x1y1.x, m_nScaleY * x1y1.y, m_nScaleZ * lvl_z_next.z);
+            StonePoint *pPoint00 = addPoint(
+                conf.getScaleX() * x0y0.x,
+                conf.getScaleY() * x0y0.y,
+                conf.getScaleZ() * lvl_z.z
+            );
+            StonePoint *pPoint01 = addPoint(
+                conf.getScaleX() * x0y1.x,
+                conf.getScaleY() * x0y1.y,
+                conf.getScaleZ() * lvl_z.z
+            );
+            StonePoint *pPoint10 = addPoint(
+                conf.getScaleX() * x1y0.x,
+                conf.getScaleY() * x1y0.y,
+                conf.getScaleZ() * lvl_z_next.z
+            );
+            StonePoint *pPoint11 = addPoint(
+                conf.getScaleX() * x1y1.x,
+                conf.getScaleY() * x1y1.y,
+                conf.getScaleZ() * lvl_z_next.z
+            );
 
             // 00 * ----- * 01
             //    |       | 
@@ -262,13 +283,13 @@ bool StoneGenerator::generate() {
 			// textCoord.push_back(Unigine::Math::vec4(nTexX + 0.2, nTexY + 0.2, 0, 0));
         }
 	}
-
-    int nRandomDiff = (m_nRandomOffsetMax - m_nRandomOffsetMin)*100;
+    int nRandomDiff = 100.0 * (conf.getRandomOffsetMax() - conf.getRandomOffsetMin());
+    std::cout << "nRandomDiff: " << nRandomDiff << std::endl;
     if (nRandomDiff > 0) {
         for (int i = 0; i < m_vPoints.size(); i++) {
-            float nOffsetX = m_nRandomOffsetMin + float(std::rand() % nRandomDiff) / 100;
-            float nOffsetY = m_nRandomOffsetMin + float(std::rand() % nRandomDiff) / 100;
-            float nOffsetZ = m_nRandomOffsetMin + float(std::rand() % nRandomDiff) / 100;
+            float nOffsetX = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
+            float nOffsetY = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
+            float nOffsetZ = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
             m_vPoints[i]->addOffset(nOffsetX, nOffsetY, nOffsetZ);
         }
     }

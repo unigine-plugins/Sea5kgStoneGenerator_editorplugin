@@ -42,36 +42,28 @@ class StoneTriangle {
         StonePoint *m_p3;
 };
 
-class StoneGenerator {
+class StoneGeneratorConfig {
     public:
-        StoneGenerator();
-        ~StoneGenerator();
-        void setRaidus(float nRadius);
-        float getRaidus();
-        void setRandomOffsetMin(float nRandomOffsetMin);
-        int getRandomOffsetMin();
-        void setRandomOffsetMax(float nRandomOffsetMax);
-        int getRandomOffsetMax();
-
-        void setScaleX(float nScaleX);
-        float getScaleX();
-        void setScaleY(float nScaleY);
-        float getScaleY();
-        void setScaleZ(float nScaleZ);
-        float getScaleZ();
+        StoneGeneratorConfig();
 
         void setEstimatedExpectedTriangles(int nExpected);
-        int getEstimatedExpectedTriangles();
+        int getEstimatedExpectedTriangles() const;
+        
+        void setRadius(float nRadius);
+        float getRadius() const;
+        void setRandomOffsetMin(float nRandomOffsetMin);
+        float getRandomOffsetMin() const;
+        void setRandomOffsetMax(float nRandomOffsetMax);
+        float getRandomOffsetMax() const;
 
-        void clear();
-        bool generate();
-        const std::vector<StoneTriangle *> &triangles();
-        const std::vector<StonePoint *> &points();
+        void setScaleX(float nScaleX);
+        float getScaleX() const;
+        void setScaleY(float nScaleY);
+        float getScaleY() const;
+        void setScaleZ(float nScaleZ);
+        float getScaleZ() const;
 
-        StonePoint *addPoint(float x, float y, float z);
     private:
-        std::vector<StonePoint *> m_vPoints;
-        std::vector<StoneTriangle *> m_vTriangles;
         float m_nRadius;
         int m_nExpectedTriangles;
         float m_nRandomOffsetMin;
@@ -79,4 +71,20 @@ class StoneGenerator {
         float m_nScaleX;
         float m_nScaleY;
         float m_nScaleZ;
+};
+
+class StoneGenerator {
+    public:
+        StoneGenerator();
+        ~StoneGenerator();
+
+        void clear();
+        bool generate(const StoneGeneratorConfig &conf);
+        const std::vector<StoneTriangle *> &triangles();
+        const std::vector<StonePoint *> &points();
+
+        StonePoint *addPoint(float x, float y, float z);
+    private:
+        std::vector<StonePoint *> m_vPoints;
+        std::vector<StoneTriangle *> m_vTriangles;
 };

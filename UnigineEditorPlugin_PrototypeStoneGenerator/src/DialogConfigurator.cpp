@@ -4,12 +4,15 @@
 #include "DialogConfigurator.h"
 #include "UnigineFileSystem.h"
 #include <UnigineEditor.h>
+#include <QThreadPool>
 
 DialogConfigurator::DialogConfigurator(
 	QWidget *parent
 ) : QDialog(parent) {
 	// m_nSliderTrianglesValue = 80000;
 	// m_nSliderTrianglesValue = 6774;
+	m_bWannaUpdate = false;
+	m_bInProgress = false;
 	m_nSliderTrianglesValue = 100;
 	m_nSliderRadius = 2.0f;
 	m_nSliderRandomOffsetMin = 0.0f;
@@ -18,8 +21,8 @@ DialogConfigurator::DialogConfigurator(
 	m_nSliderScaleY = 1.0f;
 	m_nSliderScaleZ = 1.0f;
 
-	m_pStoneGenerator = new StoneGenerator();
-
+	m_pAsyncRunGenerator = new AsyncRunGenerator(this);
+	m_pAsyncRunGenerator->setAutoDelete(false);
     m_pRegenerateButton = new QPushButton(tr("Regenerate"));
 	m_pRegenerateButton->setDefault(true);
 
@@ -124,6 +127,8 @@ DialogConfigurator::DialogConfigurator(
 	setWindowTitle(tr("Prototype Stone Generator - Configurator"));
 	setFixedWidth(800);
 	setFixedHeight(sizeHint().height());
+
+	connect(this, &DialogConfigurator::signal_generationComplited, this, &DialogConfigurator::slot_generationComplited);
 }
 
 void DialogConfigurator::sliderTriangles_valuesChanged(int nNewValue) {
@@ -217,30 +222,50 @@ void DialogConfigurator::createNode() {
 }
 
 void DialogConfigurator::regenerateGeometry() {
-	Unigine::Log::message("DialogConfigurator::regenerateGeometry start\n");
+	if (m_bInProgress) {
+		m_bWannaUpdate = true;
+		return;
+	}
+	m_bInProgress = true;
+	m_bWannaUpdate = false;
+	
+	// TODO update process
 	m_pProgress->setValue(0);
 	m_pProgress->setMinimum(0);
 	m_pProgress->setMaximum(m_nSliderTrianglesValue);
 
-	m_pStoneGenerator->clear();
+	StoneGeneratorConfig newConf;
+	newConf.setEstimatedExpectedTriangles(m_nSliderTrianglesValue);
+	newConf.setRadius(m_nSliderRadius);
+	newConf.setRandomOffsetMin(m_nSliderRandomOffsetMin);
+	newConf.setRandomOffsetMax(m_nSliderRandomOffsetMax);
+	newConf.setScaleX(m_nSliderScaleX);
+	newConf.setScaleY(m_nSliderScaleY);
+	newConf.setScaleZ(m_nSliderScaleZ);
+	
+	m_pAsyncRunGenerator->setConfig(newConf);
+	QThreadPool::globalInstance()->start(m_pAsyncRunGenerator);
+}
 
-	m_pStoneGenerator->setRaidus(m_nSliderRadius);
-	m_pStoneGenerator->setEstimatedExpectedTriangles(m_nSliderTrianglesValue);
-	m_pStoneGenerator->setRandomOffsetMin(m_nSliderRandomOffsetMin);
-	m_pStoneGenerator->setRandomOffsetMax(m_nSliderRandomOffsetMax);
-	m_pStoneGenerator->setScaleX(m_nSliderScaleX);
-	m_pStoneGenerator->setScaleY(m_nSliderScaleY);
-	m_pStoneGenerator->setScaleZ(m_nSliderScaleZ);
-	m_pStoneGenerator->generate();
+void DialogConfigurator::generationComplited(QString sDone) {
+	emit signal_generationComplited(sDone);
+}
+
+void DialogConfigurator::slot_generationComplited(QString sDone) {
+	Unigine::Log::message("DialogConfigurator::generationComplited start\n");
+
+	if (QThread::currentThread() != QCoreApplication::instance()->thread()) {
+		Unigine::Log::error("UnigineEditorPlugin_Python3Scripting::slot_executeRunner Not main thread!!!");
+	}
+	std::cout << sDone.toStdString() << std::endl;
 
 	m_pMesh->clearVertex();
 	m_pMesh->clearIndices(); // here triangles like some one
 	m_pMesh->flushIndices();
 	m_pMesh->flushVertex();
+	auto *pStoneGenerator = m_pAsyncRunGenerator->getStoneGenerator();
 
-	
-
-	const std::vector<StonePoint *> &vPoints = m_pStoneGenerator->points();
+	const std::vector<StonePoint *> &vPoints = pStoneGenerator->points();
 	for (int i = 0; i < vPoints.size(); i++) {
 		m_pMesh->addVertex(Unigine::Math::vec3(
 			vPoints[i]->x(),
@@ -257,7 +282,7 @@ void DialogConfigurator::regenerateGeometry() {
 		}
 	}
 
-	const std::vector<StoneTriangle *> &vTriangles = m_pStoneGenerator->triangles();
+	const std::vector<StoneTriangle *> &vTriangles = pStoneGenerator->triangles();
 	m_pMesh->addTriangles(vTriangles.size());
 	m_pMesh->allocateIndices(vTriangles.size()*3);
 	for (int i = 0; i < vTriangles.size(); i++) {
@@ -293,10 +318,10 @@ void DialogConfigurator::regenerateGeometry() {
 	// Unigine::ObjectMeshDynamicPtr mesh1 = Unigine::Primitives::createBox(size);
 	// mesh1->setMaterial("mesh_base", "*");
 	// mesh1->setEnabled(1);
-	
+
 	// mesh1->setShowInEditorEnabledRecursive(1);
 	// mesh1->setSaveToWorldEnabledRecursive(1);
-	
+
 	// mesh1->setWorldTransform(translate(Unigine::Math::Vec3(1.0f, 1.0f, 1.0f)));
 	// // set the name of the mesh
 	// mesh1->setName("Dynamic Mesh");
@@ -330,5 +355,10 @@ void DialogConfigurator::regenerateGeometry() {
 	// add to button - save mesh
 	// m_pMesh->saveMesh(QString(m_sRandomName + ".mesh").toStdString().c_str());
 
-	Unigine::Log::message("DialogConfigurator::regenerateGeometry end\n");
+	Unigine::Log::message("DialogConfigurator::generationComplited end\n");
+	m_bInProgress = false;
+	if (m_bWannaUpdate) {
+		Unigine::Log::message("regenerate geometry again\n");
+		this->regenerateGeometry();
+	}
 }
