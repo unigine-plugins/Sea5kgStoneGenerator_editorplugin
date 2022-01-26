@@ -13,6 +13,8 @@ DialogConfigurator::DialogConfigurator(
 	// m_nSliderTrianglesValue = 6774;
 	m_bWannaUpdate = false;
 	m_bInProgress = false;
+	m_bRegenerateGeometry = false;
+    m_bRegenerateTexture = false;
 	m_nSliderTrianglesValue = 100;
 	m_nSliderRadius = 2.0f;
 	m_nSliderRandomOffsetMin = 0.0f;
@@ -135,46 +137,54 @@ DialogConfigurator::DialogConfigurator(
 void DialogConfigurator::sliderTriangles_valuesChanged(int nNewValue) {
 	m_nSliderTrianglesValue = nNewValue;
 	m_pLabelSliderTriangles->setText(tr("Triangles: ") + QString::number(m_nSliderTrianglesValue));
+	m_bRegenerateGeometry = true;
 	this->regenerateGeometry();
 }
 
 void DialogConfigurator::sliderRadius_valuesChanged(int nNewValue) {
 	m_nSliderRadius = float(nNewValue) / 100;
 	m_pLabelSliderRadius->setText(tr("Radius: ") + QString::number(m_nSliderRadius));
+	m_bRegenerateGeometry = true;
 	this->regenerateGeometry();
 }
 
 void DialogConfigurator::sliderRandomOffsetMin_valuesChanged(int nNewValue) {
 	m_nSliderRandomOffsetMin = float(nNewValue) / 100;
 	m_pLabelSliderRandomOffsetMin->setText(tr("Random Offset (min): ") + QString::number(m_nSliderRandomOffsetMin));
+	m_bRegenerateGeometry = true;
 	this->regenerateGeometry();
 }
 
 void DialogConfigurator::sliderRandomOffsetMax_valuesChanged(int nNewValue) {
 	m_nSliderRandomOffsetMax = float(nNewValue) / 100;
 	m_pLabelSliderRandomOffsetMax->setText(tr("Random Offset (max): ") + QString::number(m_nSliderRandomOffsetMax));
+	m_bRegenerateGeometry = true;
 	this->regenerateGeometry();
 }
 
 void DialogConfigurator::sliderScaleX_valuesChanged(int nNewValue) {
 	m_nSliderScaleX = float(nNewValue) / 100;
 	m_pLabelSliderScaleX->setText(tr("Scale X: ") + QString::number(m_nSliderScaleX));
+	m_bRegenerateGeometry = true;
 	this->regenerateGeometry();
 }
 
 void DialogConfigurator::sliderScaleY_valuesChanged(int nNewValue) {
 	m_nSliderScaleY = float(nNewValue) / 100;
 	m_pLabelSliderScaleY->setText(tr("Scale Y: ") + QString::number(m_nSliderScaleY));
+	m_bRegenerateGeometry = true;
 	this->regenerateGeometry();
 }
 
 void DialogConfigurator::sliderScaleZ_valuesChanged(int nNewValue) {
 	m_nSliderScaleZ = float(nNewValue) / 100;
 	m_pLabelSliderScaleZ->setText(tr("Scale Z: ") + QString::number(m_nSliderScaleZ));
+	m_bRegenerateGeometry = true;
 	this->regenerateGeometry();
 }
 
 void DialogConfigurator::regenerateButton_clicked() {
+	m_bRegenerateGeometry = true;
 	this->regenerateGeometry();
 }
 
@@ -218,7 +228,10 @@ void DialogConfigurator::createNode() {
 	m_pImage = Unigine::Image::create();
 	// m_pImage->setName(QString(m_sRandomName + ".png").toStdString().c_str());
 	// m_pTexture = Unigine::Texture::create();
-
+	
+	// on first start regenerate all
+	m_bRegenerateGeometry = true;
+    m_bRegenerateTexture = true;
 	this->regenerateGeometry();
 }
 
@@ -235,6 +248,10 @@ void DialogConfigurator::regenerateGeometry() {
 	m_pProgress->setMinimum(0);
 	m_pProgress->setMaximum(m_nSliderTrianglesValue);
 
+	TextureStoneGeneratorConfig texConf;
+	texConf.setFilepath(m_sFilePath1);
+	m_pAsyncRunGenerator->setTextureStoneGeneratorConfig(texConf);
+
 	StoneGeneratorConfig newConf;
 	newConf.setEstimatedExpectedTriangles(m_nSliderTrianglesValue);
 	newConf.setRadius(m_nSliderRadius);
@@ -244,7 +261,12 @@ void DialogConfigurator::regenerateGeometry() {
 	newConf.setScaleY(m_nSliderScaleY);
 	newConf.setScaleZ(m_nSliderScaleZ);
 	
-	m_pAsyncRunGenerator->setConfig(newConf);
+	m_pAsyncRunGenerator->setStoneGeneratorConfig(newConf);
+	m_pAsyncRunGenerator->setRegenerateGeometry(m_bRegenerateGeometry);
+	m_pAsyncRunGenerator->setRegenerateTexture(m_bRegenerateTexture);
+	m_bRegenerateGeometry = false;
+    m_bRegenerateTexture = false;
+
 	QThreadPool::globalInstance()->start(m_pAsyncRunGenerator);
 }
 
@@ -335,30 +357,31 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 	// Unigine::FileSystem::setGUID("box_24567.mesh", guid);
 	// emit Editor::AssetManager::instance()->added(guid);
 
-	TextureStoneGeneratorConfig texConf;
-	texConf.setFilepath(m_sFilePath1);
+	// TextureStoneGeneratorConfig texConf;
+	// texConf.setFilepath(m_sFilePath1);
 
-	m_pAsyncRunGenerator->setTextureStoneGeneratorConfig(texConf);
+	// TextureStoneGenerator tex;
+	// tex.generate(texConf);
+	if (m_pAsyncRunGenerator->getRegenerateTexture()) {
+		m_pImage->clear();
+		m_pImage->load(m_sFilePath1.toStdString().c_str());
+		if (m_pImage->isLoaded()) {
+			std::cout << "Image loaded" << std::endl;
+			// add to button - save texture
+			m_pImage->save(QString(m_sRandomName + ".png").toStdString().c_str());
+		}
+		// m_pTexture->clear();
+		// m_pTexture->setImage(m_pImage);
 
-	TextureStoneGenerator tex;
-	tex.generate(texConf);
-	m_pImage->clear();
-	m_pImage->load(m_sFilePath1.toStdString().c_str());
-	if (m_pImage->isLoaded()) {
-		std::cout << "Image loaded" << std::endl;
-		// add to button - save texture
-		m_pImage->save(QString(m_sRandomName + ".png").toStdString().c_str());
+		int num = m_pMaterial->findTexture("albedo");
+		if (num != -1) {
+			std::cout << "Set albedo" << std::endl;
+			m_pMaterial->setTexturePath(num, QString(m_sRandomName + ".png").toStdString().c_str());
+
+			// m_pMaterial->setTextureImage(num, m_pImage);
+		}
 	}
-	// m_pTexture->clear();
-	// m_pTexture->setImage(m_pImage);
 
-	int num = m_pMaterial->findTexture("albedo");
-	if (num != -1) {
-		std::cout << "Set albedo" << std::endl;
-		m_pMaterial->setTexturePath(num, QString(m_sRandomName + ".png").toStdString().c_str());
-
-		// m_pMaterial->setTextureImage(num, m_pImage);
-	}
 	// m_pMesh->setMaterial(m_pMaterial, 0);
 	// add to button - save mesh
 	// m_pMesh->saveMesh(QString(m_sRandomName + ".mesh").toStdString().c_str());

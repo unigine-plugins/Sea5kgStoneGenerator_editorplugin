@@ -108,5 +108,8 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         // Unigine::TexturePtr m_pTexture;
         bool m_bWannaUpdate;
         bool m_bInProgress;
+
+        bool m_bRegenerateGeometry;
+        bool m_bRegenerateTexture;
 };
 
