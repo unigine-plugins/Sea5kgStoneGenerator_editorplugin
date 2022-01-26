@@ -6,12 +6,22 @@
 #include <QPaintDevice>
 #include <vector>
 
+class TextureStoneGeneratorConfig {
+    public:
+        TextureStoneGeneratorConfig();
+        void setFilepath(QString sPath);
+        QString getFilepath() const;
+
+    private:
+        QString m_sFilepath;
+};
+
 class TextureStoneGenerator {
 
     public:
         TextureStoneGenerator();
 
-        void generate();
+        void generate(const TextureStoneGeneratorConfig &conf);
         
     private:
         int randInt(int low, int high);

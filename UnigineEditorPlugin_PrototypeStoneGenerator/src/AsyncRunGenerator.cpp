@@ -17,6 +17,10 @@ void AsyncRunGenerator::setConfig(const StoneGeneratorConfig &conf) {
     m_conf = conf;
 }
 
+void AsyncRunGenerator::setTextureStoneGeneratorConfig(const TextureStoneGeneratorConfig &conf) {
+    m_texConf = conf;
+}
+
 StoneGenerator *AsyncRunGenerator::getStoneGenerator() {
     return m_pStoneGenerator;
 }

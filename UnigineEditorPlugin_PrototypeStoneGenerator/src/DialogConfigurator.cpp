@@ -20,6 +20,7 @@ DialogConfigurator::DialogConfigurator(
 	m_nSliderScaleX = 1.0f;
 	m_nSliderScaleY = 1.0f;
 	m_nSliderScaleZ = 1.0f;
+	m_sFilePath1 = m_temporaryDir.filePath("stone.png");
 
 	m_pAsyncRunGenerator = new AsyncRunGenerator(this);
 	m_pAsyncRunGenerator->setAutoDelete(false);
@@ -272,14 +273,18 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 			vPoints[i]->y(),
 			vPoints[i]->z()
 		));
-		m_pMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
-
-		// m_pMesh->addTexCoord(Unigine::Math::vec4(
-		// 	vPoints[i]->getTextureCoordinateU(),
-		// 	vPoints[i]->getTextureCoordinateV(),
-		// 	0,
-		// 	0
-		// ));
+		// m_pMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
+		std::cout << "tx coord uv: " <<
+			vPoints[i]->getTextureCoordinateU()
+			<< " " << 
+			vPoints[i]->getTextureCoordinateV()
+			<< std::endl;
+		m_pMesh->addTexCoord(Unigine::Math::vec4(
+			vPoints[i]->getTextureCoordinateU(),
+			vPoints[i]->getTextureCoordinateV(),
+			0,
+			0
+		));
 	}
 
 	const std::vector<StoneTriangle *> &vTriangles = pStoneGenerator->triangles();
@@ -329,10 +334,16 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 	// log_info("Guid: " + QString(guid.get()));
 	// Unigine::FileSystem::setGUID("box_24567.mesh", guid);
 	// emit Editor::AssetManager::instance()->added(guid);
+
+	TextureStoneGeneratorConfig texConf;
+	texConf.setFilepath(m_sFilePath1);
+
+	m_pAsyncRunGenerator->setTextureStoneGeneratorConfig(texConf);
+
 	TextureStoneGenerator tex;
-	tex.generate();
+	tex.generate(texConf);
 	m_pImage->clear();
-	m_pImage->load("stone.png");
+	m_pImage->load(m_sFilePath1.toStdString().c_str());
 	if (m_pImage->isLoaded()) {
 		std::cout << "Image loaded" << std::endl;
 		// add to button - save texture

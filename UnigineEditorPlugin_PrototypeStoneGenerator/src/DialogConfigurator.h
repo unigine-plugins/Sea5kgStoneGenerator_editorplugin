@@ -13,6 +13,7 @@
 #include <QComboBox>
 #include <QSlider>
 #include <QProgressBar>
+#include <QTemporaryDir>
 
 #include <UnigineNode.h>
 #include <UnigineMaterials.h>
@@ -26,6 +27,7 @@
 #include "StoneGenerator.h"
 #include "TextureStoneGenerator.h"
 #include "ISignalGun.h"
+
 
 class DialogConfigurator : public QDialog, public ISignalGun {
     Q_OBJECT
@@ -99,6 +101,10 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         Unigine::ObjectMeshDynamicPtr m_pMesh;
         Unigine::MaterialPtr m_pMaterial;
         Unigine::ImagePtr m_pImage;
+
+        QTemporaryDir m_temporaryDir;
+        QString m_sFilePath1;
+
         // Unigine::TexturePtr m_pTexture;
         bool m_bWannaUpdate;
         bool m_bInProgress;

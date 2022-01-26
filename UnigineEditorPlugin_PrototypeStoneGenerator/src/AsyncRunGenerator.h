@@ -2,6 +2,7 @@
 
 #include <QRunnable>
 #include "StoneGenerator.h"
+#include "TextureStoneGenerator.h"
 #include "ISignalGun.h"
 
 class AsyncRunGenerator : public QRunnable {
@@ -10,6 +11,7 @@ class AsyncRunGenerator : public QRunnable {
         ~AsyncRunGenerator();
 
         void setConfig(const StoneGeneratorConfig &conf);
+        void setTextureStoneGeneratorConfig(const TextureStoneGeneratorConfig &conf);
         StoneGenerator *getStoneGenerator();
 
     private:
@@ -18,4 +20,5 @@ class AsyncRunGenerator : public QRunnable {
         StoneGenerator *m_pStoneGenerator;
         ISignalGun *m_pSignalGun;
         StoneGeneratorConfig m_conf;
+        TextureStoneGeneratorConfig m_texConf;
 };

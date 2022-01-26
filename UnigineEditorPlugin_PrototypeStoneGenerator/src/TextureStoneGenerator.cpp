@@ -16,13 +16,30 @@
 
 #include "TextureStoneGenerator.h"
 
-TextureStoneGenerator::TextureStoneGenerator() {
-    m_nWidth = 512;
-    m_nHeight = 512;
+// TextureStoneGeneratorConfig
+
+TextureStoneGeneratorConfig::TextureStoneGeneratorConfig() {
+
+}
+
+void TextureStoneGeneratorConfig::setFilepath(QString sFilepath) {
+	m_sFilepath = sFilepath;
+}
+
+QString TextureStoneGeneratorConfig::getFilepath() const {
+	return m_sFilepath;
 }
 
 
-void TextureStoneGenerator::generate() {
+// TextureStoneGenerator
+
+TextureStoneGenerator::TextureStoneGenerator() {
+    m_nWidth = 1024;
+    m_nHeight = 1024;
+}
+
+
+void TextureStoneGenerator::generate(const TextureStoneGeneratorConfig &conf) {
 	std::cout << "\t ::: << start !!!!\n\n\n";
 	
 	// Create seed for the random
@@ -125,8 +142,8 @@ void TextureStoneGenerator::generate() {
 			color
 		);
 	}
-	QString filename = "stone.png";
-	outputImage.save(filename);
+
+	outputImage.save(conf.getFilepath());
 
 	std::cout << "\t ::: >>> generated!!!!\n\n\n";
 }
