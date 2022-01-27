@@ -109,6 +109,15 @@ DialogConfigurator::DialogConfigurator(
 	connect(m_pSliderScaleZ, SIGNAL(valueChanged(int)), this, SLOT(sliderScaleZ_valuesChanged(int)));
 	leftLayout->addWidget(m_pSliderScaleZ);
 
+	// texture resolution
+	m_pTextureResolution = new QComboBox();
+	m_pTextureResolution->addItem(tr("128x128"), 128);
+    m_pTextureResolution->addItem(tr("256x256"), 256);
+    m_pTextureResolution->addItem(tr("512x512"), 512);
+    m_pTextureResolution->addItem(tr("1024x1024"), 1024);
+    connect(m_pTextureResolution, SIGNAL(currentIndexChanged(int)), this, SLOT(comboboxTextureResolution_Changed(int)));
+	leftLayout->addWidget(m_pTextureResolution);
+
 	m_pProgress = new QProgressBar(this);
 	m_pProgress->setValue(0);
 	m_pProgress->setMinimum(0);
@@ -181,6 +190,10 @@ void DialogConfigurator::sliderScaleZ_valuesChanged(int nNewValue) {
 	m_pLabelSliderScaleZ->setText(tr("Scale Z: ") + QString::number(m_nSliderScaleZ));
 	m_bRegenerateGeometry = true;
 	this->regenerateGeometry();
+}
+
+void DialogConfigurator::comboboxTextureResolution_Changed(int nNewValue) {
+	std::cout << "comboboxTextureResolution_Changed " << nNewValue << std::endl;
 }
 
 void DialogConfigurator::regenerateButton_clicked() {

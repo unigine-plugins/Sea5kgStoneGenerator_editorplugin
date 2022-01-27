@@ -53,6 +53,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         void sliderScaleX_valuesChanged(int nNewValue);
         void sliderScaleY_valuesChanged(int nNewValue);
         void sliderScaleZ_valuesChanged(int nNewValue);
+        void comboboxTextureResolution_Changed(int nNewValue);
 
         void slot_generationComplited(QString sDone);
 
@@ -96,6 +97,10 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         QSlider *m_pSliderScaleZ;
         float m_nSliderScaleZ;
         
+        //
+        QComboBox *m_pTextureResolution;
+
+
         QProgressBar *m_pProgress;
         AsyncRunGenerator *m_pAsyncRunGenerator;
         Unigine::ObjectMeshDynamicPtr m_pMesh;
