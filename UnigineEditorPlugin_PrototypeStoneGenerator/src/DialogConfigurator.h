@@ -28,6 +28,35 @@
 #include "TextureStoneGenerator.h"
 #include "ISignalGun.h"
 
+class CustomIntSlider : public QSlider {
+    public:
+        CustomIntSlider(Qt::Orientation orientation) : QSlider(orientation) {};
+        void setPoiterValue(int *pValue) { m_pValue = pValue; };
+        void updateValue(int nValue) {
+            *m_pValue = nValue;
+            m_pLabelValue->setText("(" + QString::number(nValue) + ")");
+        };
+        
+        void setLabelValue(QLabel *pLabelValue) { m_pLabelValue = pLabelValue; };
+    private:
+        QLabel *m_pLabelValue;
+        int *m_pValue;
+};
+
+class CustomFloatSlider : public QSlider {
+    public:
+        CustomFloatSlider(Qt::Orientation orientation) : QSlider(orientation) {};
+        void setPoiterValue(float *pValue) { m_pValue = pValue; };
+        void updateValue(float nValue) {
+            *m_pValue = nValue;
+            m_pLabelValue->setText("(" + QString::number(nValue) + ")");
+        };
+        
+        void setLabelValue(QLabel *pLabelValue) { m_pLabelValue = pLabelValue; };
+    private:
+        QLabel *m_pLabelValue;
+        float *m_pValue;
+};
 
 class DialogConfigurator : public QDialog, public ISignalGun {
     Q_OBJECT
@@ -46,55 +75,33 @@ class DialogConfigurator : public QDialog, public ISignalGun {
 
     private slots:
         void regenerateButton_clicked();
-        void sliderTriangles_valuesChanged(int nNewValue);
-        void sliderRadius_valuesChanged(int nNewValue);
-        void sliderRandomOffsetMin_valuesChanged(int nNewValue);
-        void sliderRandomOffsetMax_valuesChanged(int nNewValue);
-        void sliderScaleX_valuesChanged(int nNewValue);
-        void sliderScaleY_valuesChanged(int nNewValue);
-        void sliderScaleZ_valuesChanged(int nNewValue);
+        void sliderInt_valuesChanged(int nNewValue);
+        void sliderFloat_valuesChanged(int nNewValue);
+
         void comboboxTextureResolution_Changed(int nNewValue);
 
         void slot_generationComplited(QString sDone);
 
     private:
+
+        QHBoxLayout *createIntSliderParameterUI(QString sLabel, int *nValue, int nMin, int nMax);
+        QHBoxLayout *createFloatSliderParameterUI(QString sLabel, float *nValue, float nMin, float nMax);
+
+        int m_nLabelSize;
+        int m_nLabelValueSize;
+
         QString m_sRandomName;
         QPushButton *m_pRegenerateButton;
         QPushButton *m_pCloseButton;
-
-        // number of triangles
-        QLabel *m_pLabelSliderTriangles;
-        QSlider *m_pSliderTriangles;
+        // QVector<QLabel *> m_Labels;
+        
+        
         int m_nSliderTrianglesValue;
-
-        // radius
-        QLabel *m_pLabelSliderRadius;
-        QSlider *m_pSliderRadius;
         float m_nSliderRadius;
-
-        // random min
-        QLabel *m_pLabelSliderRandomOffsetMin;
-        QSlider *m_pSliderRandomOffsetMin;
         float m_nSliderRandomOffsetMin;
-
-        // random max
-        QLabel *m_pLabelSliderRandomOffsetMax;
-        QSlider *m_pSliderRandomOffsetMax;
         float m_nSliderRandomOffsetMax;
-
-        // scale x
-        QLabel *m_pLabelSliderScaleX;
-        QSlider *m_pSliderScaleX;
         float m_nSliderScaleX;
-
-        // scale y
-        QLabel *m_pLabelSliderScaleY;
-        QSlider *m_pSliderScaleY;
         float m_nSliderScaleY;
-
-        // scale z
-        QLabel *m_pLabelSliderScaleZ;
-        QSlider *m_pSliderScaleZ;
         float m_nSliderScaleZ;
         
         //

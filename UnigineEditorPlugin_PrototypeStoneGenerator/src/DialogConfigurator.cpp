@@ -23,6 +23,8 @@ DialogConfigurator::DialogConfigurator(
 	m_nSliderScaleY = 1.0f;
 	m_nSliderScaleZ = 1.0f;
 	m_sFilePath1 = m_temporaryDir.filePath("stone.png");
+	m_nLabelSize = 120;
+	m_nLabelValueSize = 50;
 
 	m_pAsyncRunGenerator = new AsyncRunGenerator(this);
 	m_pAsyncRunGenerator->setAutoDelete(false);
@@ -36,78 +38,13 @@ DialogConfigurator::DialogConfigurator(
 
 	QVBoxLayout *leftLayout = new QVBoxLayout;
 
-	// leftLayout->addWidget(m_pLineEditSearch);
-	// leftLayout->addStretch();
-
-	m_pLabelSliderTriangles = new QLabel(tr("Triangles: ") + QString::number(m_nSliderTrianglesValue));
-	leftLayout->addWidget(m_pLabelSliderTriangles);
-
-	m_pSliderTriangles = new QSlider(Qt::Horizontal);
-    m_pSliderTriangles->setRange(100, 80000);
-    m_pSliderTriangles->setValue(m_nSliderTrianglesValue);
-	connect(m_pSliderTriangles, SIGNAL(valueChanged(int)), this, SLOT(sliderTriangles_valuesChanged(int)));
-	leftLayout->addWidget(m_pSliderTriangles);
-
-	m_pLabelSliderRadius = new QLabel(tr("Radius: ") + QString::number(m_nSliderRadius));
-	leftLayout->addWidget(m_pLabelSliderRadius);
-
-	m_pSliderRadius = new QSlider(Qt::Horizontal);
-    m_pSliderRadius->setRange(0.1 * 100, 4 * 100);
-    m_pSliderRadius->setValue(m_nSliderRadius*100);
-	connect(m_pSliderRadius, SIGNAL(valueChanged(int)), this, SLOT(sliderRadius_valuesChanged(int)));
-	leftLayout->addWidget(m_pSliderRadius);
-
-	// random min
-	m_pLabelSliderRandomOffsetMin = new QLabel(tr("Random Offset (min): ") + QString::number(m_nSliderRandomOffsetMin));
-	leftLayout->addWidget(m_pLabelSliderRandomOffsetMin);
-	
-	m_pSliderRandomOffsetMin = new QSlider(Qt::Horizontal);
-    m_pSliderRandomOffsetMin->setRange(-2 * 100, 2 * 100);
-    m_pSliderRandomOffsetMin->setValue(m_nSliderRandomOffsetMin*100);
-	connect(m_pSliderRandomOffsetMin, SIGNAL(valueChanged(int)), this, SLOT(sliderRandomOffsetMin_valuesChanged(int)));
-	leftLayout->addWidget(m_pSliderRandomOffsetMin);
-
-	// random max
-	m_pLabelSliderRandomOffsetMax = new QLabel(tr("Random Offset (max): ") + QString::number(m_nSliderRandomOffsetMax));
-	leftLayout->addWidget(m_pLabelSliderRandomOffsetMax);
-	
-	m_pSliderRandomOffsetMax = new QSlider(Qt::Horizontal);
-    m_pSliderRandomOffsetMax->setRange(-2 * 100, 2 * 100);
-    m_pSliderRandomOffsetMax->setValue(m_nSliderRandomOffsetMax*100);
-	connect(m_pSliderRandomOffsetMax, SIGNAL(valueChanged(int)), this, SLOT(sliderRandomOffsetMax_valuesChanged(int)));
-	leftLayout->addWidget(m_pSliderRandomOffsetMax);
-
-
-	// scale x
-	m_pLabelSliderScaleX = new QLabel(tr("Scale X: ") + QString::number(m_nSliderScaleX));
-	leftLayout->addWidget(m_pLabelSliderScaleX);
-	
-	m_pSliderScaleX = new QSlider(Qt::Horizontal);
-    m_pSliderScaleX->setRange(10, 10 * 100);
-    m_pSliderScaleX->setValue(m_nSliderScaleX*100);
-	connect(m_pSliderScaleX, SIGNAL(valueChanged(int)), this, SLOT(sliderScaleX_valuesChanged(int)));
-	leftLayout->addWidget(m_pSliderScaleX);
-
-
-	// scale y
-	m_pLabelSliderScaleY = new QLabel(tr("Scale Y: ") + QString::number(m_nSliderScaleY));
-	leftLayout->addWidget(m_pLabelSliderScaleY);
-	
-	m_pSliderScaleY = new QSlider(Qt::Horizontal);
-    m_pSliderScaleY->setRange(10, 10 * 100);
-    m_pSliderScaleY->setValue(m_nSliderScaleY*100);
-	connect(m_pSliderScaleY, SIGNAL(valueChanged(int)), this, SLOT(sliderScaleY_valuesChanged(int)));
-	leftLayout->addWidget(m_pSliderScaleY);
-
-	// scale z
-	m_pLabelSliderScaleZ = new QLabel(tr("Scale Z: ") + QString::number(m_nSliderScaleZ));
-	leftLayout->addWidget(m_pLabelSliderScaleZ);
-	
-	m_pSliderScaleZ = new QSlider(Qt::Horizontal);
-    m_pSliderScaleZ->setRange(10, 10 * 100);
-    m_pSliderScaleZ->setValue(m_nSliderScaleZ*100);
-	connect(m_pSliderScaleZ, SIGNAL(valueChanged(int)), this, SLOT(sliderScaleZ_valuesChanged(int)));
-	leftLayout->addWidget(m_pSliderScaleZ);
+	leftLayout->addLayout(  createIntSliderParameterUI("Expected triangles: ", &m_nSliderTrianglesValue, 100, 80000));
+	leftLayout->addLayout(createFloatSliderParameterUI("Radius: ", &m_nSliderRadius, 0.1, 4.0));
+	leftLayout->addLayout(createFloatSliderParameterUI("Random Offset (min): ", &m_nSliderRandomOffsetMin, -2.0, 2.0));
+	leftLayout->addLayout(createFloatSliderParameterUI("Random Offset (max): ", &m_nSliderRandomOffsetMax, -2.0, 2.0));
+	leftLayout->addLayout(createFloatSliderParameterUI("Scale X: ", &m_nSliderScaleX, 0.1, 10.0));
+	leftLayout->addLayout(createFloatSliderParameterUI("Scale Y: ", &m_nSliderScaleY, 0.1, 10.0));
+	leftLayout->addLayout(createFloatSliderParameterUI("Scale Z: ", &m_nSliderScaleZ, 0.1, 10.0));
 
 	// texture resolution
 	m_pTextureResolution = new QComboBox();
@@ -143,51 +80,26 @@ DialogConfigurator::DialogConfigurator(
 	connect(this, &DialogConfigurator::signal_generationComplited, this, &DialogConfigurator::slot_generationComplited);
 }
 
-void DialogConfigurator::sliderTriangles_valuesChanged(int nNewValue) {
-	m_nSliderTrianglesValue = nNewValue;
-	m_pLabelSliderTriangles->setText(tr("Triangles: ") + QString::number(m_nSliderTrianglesValue));
+void DialogConfigurator::sliderInt_valuesChanged(int nNewValue) {
+	QObject* obj = sender();
+	CustomIntSlider *pSlider = dynamic_cast<CustomIntSlider *>(obj);
+	if (pSlider == nullptr) {
+	 	std::cerr << "Could not cast" << std::endl;
+	 	return;
+	}
+	pSlider->updateValue(nNewValue);
 	m_bRegenerateGeometry = true;
 	this->regenerateGeometry();
 }
 
-void DialogConfigurator::sliderRadius_valuesChanged(int nNewValue) {
-	m_nSliderRadius = float(nNewValue) / 100;
-	m_pLabelSliderRadius->setText(tr("Radius: ") + QString::number(m_nSliderRadius));
-	m_bRegenerateGeometry = true;
-	this->regenerateGeometry();
-}
-
-void DialogConfigurator::sliderRandomOffsetMin_valuesChanged(int nNewValue) {
-	m_nSliderRandomOffsetMin = float(nNewValue) / 100;
-	m_pLabelSliderRandomOffsetMin->setText(tr("Random Offset (min): ") + QString::number(m_nSliderRandomOffsetMin));
-	m_bRegenerateGeometry = true;
-	this->regenerateGeometry();
-}
-
-void DialogConfigurator::sliderRandomOffsetMax_valuesChanged(int nNewValue) {
-	m_nSliderRandomOffsetMax = float(nNewValue) / 100;
-	m_pLabelSliderRandomOffsetMax->setText(tr("Random Offset (max): ") + QString::number(m_nSliderRandomOffsetMax));
-	m_bRegenerateGeometry = true;
-	this->regenerateGeometry();
-}
-
-void DialogConfigurator::sliderScaleX_valuesChanged(int nNewValue) {
-	m_nSliderScaleX = float(nNewValue) / 100;
-	m_pLabelSliderScaleX->setText(tr("Scale X: ") + QString::number(m_nSliderScaleX));
-	m_bRegenerateGeometry = true;
-	this->regenerateGeometry();
-}
-
-void DialogConfigurator::sliderScaleY_valuesChanged(int nNewValue) {
-	m_nSliderScaleY = float(nNewValue) / 100;
-	m_pLabelSliderScaleY->setText(tr("Scale Y: ") + QString::number(m_nSliderScaleY));
-	m_bRegenerateGeometry = true;
-	this->regenerateGeometry();
-}
-
-void DialogConfigurator::sliderScaleZ_valuesChanged(int nNewValue) {
-	m_nSliderScaleZ = float(nNewValue) / 100;
-	m_pLabelSliderScaleZ->setText(tr("Scale Z: ") + QString::number(m_nSliderScaleZ));
+void DialogConfigurator::sliderFloat_valuesChanged(int nNewValue) {
+	QObject* obj = sender();
+	CustomFloatSlider *pSlider = dynamic_cast<CustomFloatSlider *>(obj);
+	if (pSlider == nullptr) {
+	 	std::cerr << "Could not cast" << std::endl;
+	 	return;
+	}
+	pSlider->updateValue(float(nNewValue) / 100);
 	m_bRegenerateGeometry = true;
 	this->regenerateGeometry();
 }
@@ -405,4 +317,50 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 		Unigine::Log::message("regenerate geometry again\n");
 		this->regenerateGeometry();
 	}
+}
+
+
+QHBoxLayout *DialogConfigurator::createIntSliderParameterUI(QString sLabel, int *nValue, int nMin, int nMax) {
+	CustomIntSlider *pSlider = new CustomIntSlider(Qt::Horizontal);
+
+	QHBoxLayout *pLayout = new QHBoxLayout();
+
+	QLabel *pLabel = new QLabel(sLabel);
+	pLabel->setFixedWidth(m_nLabelSize);
+	pLayout->addWidget(pLabel);
+
+	QLabel *pLabelValue = new QLabel("(" + QString::number(*nValue) + ")");
+	pLabelValue->setFixedWidth(m_nLabelValueSize);
+	pSlider->setLabelValue(pLabelValue);
+	pLayout->addWidget(pLabelValue);
+    pSlider->setRange(nMin, nMax);
+	pSlider->setValue(*nValue);
+    pSlider->setPoiterValue(nValue);
+	connect(pSlider, SIGNAL(valueChanged(int)), this, SLOT(sliderInt_valuesChanged(int)));
+	pLayout->addWidget(pSlider);
+	
+	return pLayout;
+}
+
+QHBoxLayout *DialogConfigurator::createFloatSliderParameterUI(QString sLabel, float *nValue, float nMin, float nMax) {
+	CustomFloatSlider *pSlider = new CustomFloatSlider(Qt::Horizontal);
+
+	QHBoxLayout *pLayout = new QHBoxLayout();
+
+	QLabel *pLabel = new QLabel(sLabel);
+	pLabel->setFixedWidth(m_nLabelSize);
+	pLayout->addWidget(pLabel);
+
+	QLabel *pLabelValue = new QLabel("(" + QString::number(*nValue) + ")");
+	pLabelValue->setFixedWidth(m_nLabelValueSize);
+	pSlider->setLabelValue(pLabelValue);
+	pLayout->addWidget(pLabelValue);
+    pSlider->setRange(nMin*100, nMax*100);
+	pSlider->setValue((*nValue)*100);
+    pSlider->setPoiterValue(nValue);
+
+	connect(pSlider, SIGNAL(valueChanged(int)), this, SLOT(sliderFloat_valuesChanged(int)));
+	pLayout->addWidget(pSlider);
+	
+	return pLayout;
 }
