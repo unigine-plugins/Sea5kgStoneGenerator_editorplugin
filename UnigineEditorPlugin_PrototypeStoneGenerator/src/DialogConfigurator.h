@@ -14,6 +14,7 @@
 #include <QSlider>
 #include <QProgressBar>
 #include <QTemporaryDir>
+#include <QListWidget>
 
 #include <UnigineNode.h>
 #include <UnigineMaterials.h>
@@ -82,15 +83,24 @@ class DialogConfigurator : public QDialog, public ISignalGun {
 
         void slot_generationComplited(QString sDone);
 
+        void triangles_itemSelectionChanged();
+
+
     private:
 
         QHBoxLayout *createIntSliderParameterUI(QString sLabel, int *nValue, int nMin, int nMax);
         QHBoxLayout *createFloatSliderParameterUI(QString sLabel, float *nValue, float nMin, float nMax);
 
+        void updateTextureImageView(const QString &sHeighlightTriangle = "");
+
         int m_nLabelSize;
         int m_nLabelValueSize;
 
         QString m_sRandomName;
+        QLabel *m_pImageView;
+        QListWidget *m_pTrianlesList;
+        QPixmap m_pixmapImageOrigin;
+        QPixmap m_pixmapImageHiglighted;
         QPushButton *m_pRegenerateButton;
         QPushButton *m_pCloseButton;
         // QVector<QLabel *> m_Labels;
@@ -116,6 +126,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
 
         QTemporaryDir m_temporaryDir;
         QString m_sFilePath1;
+        QString m_sFilePathHighlighted;
 
         // Unigine::TexturePtr m_pTexture;
         bool m_bWannaUpdate;

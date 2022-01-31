@@ -5,6 +5,7 @@
 #include "UnigineFileSystem.h"
 #include <UnigineEditor.h>
 #include <QThreadPool>
+#include <QPixmap>
 
 DialogConfigurator::DialogConfigurator(
 	QWidget *parent
@@ -23,20 +24,18 @@ DialogConfigurator::DialogConfigurator(
 	m_nSliderScaleY = 1.0f;
 	m_nSliderScaleZ = 1.0f;
 	m_sFilePath1 = m_temporaryDir.filePath("stone.png");
+	m_sFilePathHighlighted = m_temporaryDir.filePath("stone_high.png");
 	m_nLabelSize = 120;
 	m_nLabelValueSize = 50;
 
 	m_pAsyncRunGenerator = new AsyncRunGenerator(this);
 	m_pAsyncRunGenerator->setAutoDelete(false);
-    m_pRegenerateButton = new QPushButton(tr("Regenerate"));
-	m_pRegenerateButton->setDefault(true);
-
-	m_pCloseButton = new QPushButton(tr("Close"));
-	
-	connect(m_pRegenerateButton, SIGNAL(clicked()),this, SLOT(regenerateButton_clicked()));
-	connect(m_pCloseButton, SIGNAL(clicked()),this, SLOT(close()));
+    
 
 	QVBoxLayout *leftLayout = new QVBoxLayout;
+
+	auto *pGeometry = new QLabel("Geometry:");
+	leftLayout->addWidget(pGeometry);
 
 	leftLayout->addLayout(  createIntSliderParameterUI("Expected triangles: ", &m_nSliderTrianglesValue, 100, 80000));
 	leftLayout->addLayout(createFloatSliderParameterUI("Radius: ", &m_nSliderRadius, 0.1, 4.0));
@@ -45,6 +44,9 @@ DialogConfigurator::DialogConfigurator(
 	leftLayout->addLayout(createFloatSliderParameterUI("Scale X: ", &m_nSliderScaleX, 0.1, 10.0));
 	leftLayout->addLayout(createFloatSliderParameterUI("Scale Y: ", &m_nSliderScaleY, 0.1, 10.0));
 	leftLayout->addLayout(createFloatSliderParameterUI("Scale Z: ", &m_nSliderScaleZ, 0.1, 10.0));
+
+	auto *pTexture = new QLabel("Texture:");
+	leftLayout->addWidget(pTexture);
 
 	// texture resolution
 	m_pTextureResolution = new QComboBox();
@@ -55,6 +57,23 @@ DialogConfigurator::DialogConfigurator(
     connect(m_pTextureResolution, SIGNAL(currentIndexChanged(int)), this, SLOT(comboboxTextureResolution_Changed(int)));
 	leftLayout->addWidget(m_pTextureResolution);
 
+	QHBoxLayout *texturesLayout = new QHBoxLayout;
+
+	// m_pPixmapImageOrigin = new QPixmap();
+	// m_pPixmapImageHiglighted = new QPixmap();
+	m_pImageView = new QLabel();
+	m_pImageView->setPixmap(m_pixmapImageHiglighted);
+	m_pImageView->setFixedWidth(512);
+	m_pImageView->setFixedHeight(512);
+	m_pImageView->setScaledContents(true);
+	texturesLayout->addWidget(m_pImageView);
+	
+	m_pTrianlesList = new QListWidget();
+	connect(m_pTrianlesList, SIGNAL(itemSelectionChanged()),this, SLOT(triangles_itemSelectionChanged()));
+	texturesLayout->addWidget(m_pTrianlesList);
+
+	leftLayout->addLayout(texturesLayout);
+
 	m_pProgress = new QProgressBar(this);
 	m_pProgress->setValue(0);
 	m_pProgress->setMinimum(0);
@@ -62,9 +81,17 @@ DialogConfigurator::DialogConfigurator(
 	leftLayout->addWidget(m_pProgress);
 
 	QHBoxLayout *buttonsLayout = new QHBoxLayout;
+
+	m_pRegenerateButton = new QPushButton(tr("Regenerate"));
+	m_pRegenerateButton->setDefault(true);
+	connect(m_pRegenerateButton, SIGNAL(clicked()),this, SLOT(regenerateButton_clicked()));
 	buttonsLayout->addWidget(m_pRegenerateButton);
+
 	buttonsLayout->addWidget(new QWidget);
 	buttonsLayout->addStretch();
+
+	m_pCloseButton = new QPushButton(tr("Close"));
+	connect(m_pCloseButton, SIGNAL(clicked()),this, SLOT(close()));
 	buttonsLayout->addWidget(m_pCloseButton);
 	leftLayout->addLayout(buttonsLayout);
 
@@ -290,10 +317,12 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 	if (m_pAsyncRunGenerator->getRegenerateTexture()) {
 		m_pImage->clear();
 		m_pImage->load(m_sFilePath1.toStdString().c_str());
+		m_pixmapImageOrigin.load(m_sFilePath1);
 		if (m_pImage->isLoaded()) {
 			std::cout << "Image loaded" << std::endl;
 			// add to button - save texture
 			m_pImage->save(QString(m_sRandomName + ".png").toStdString().c_str());
+			// m_pImageView->setScaledContents(true);
 		}
 		// m_pTexture->clear();
 		// m_pTexture->setImage(m_pImage);
@@ -307,6 +336,10 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 		}
 	}
 
+	// reload preview texture image
+	
+	this->updateTextureImageView("");
+
 	// m_pMesh->setMaterial(m_pMaterial, 0);
 	// add to button - save mesh
 	// m_pMesh->saveMesh(QString(m_sRandomName + ".mesh").toStdString().c_str());
@@ -319,6 +352,115 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 	}
 }
 
+void DialogConfigurator::triangles_itemSelectionChanged() {
+	std::cout << "triangles_itemSelectionChanged" << std::endl;
+	QList<QListWidgetItem *> listItems = m_pTrianlesList->selectedItems();
+
+	// auto *pStoneGenerator = m_pAsyncRunGenerator->getStoneGenerator();
+	QStringList highllightTriangles;
+	for (int i = 0; i < listItems.size(); i++) {
+		QListWidgetItem *pItem = listItems.at(i);
+		std::cout << pItem->text().toStdString() << std::endl;
+		highllightTriangles.append(pItem->text());
+		updateTextureImageView(pItem->text());
+		return;
+	}
+}
+
+void DialogConfigurator::updateTextureImageView(const QString &sHeighlightTriangle) {
+	// reload preview texture image
+	m_pixmapImageHiglighted = m_pixmapImageOrigin;
+
+	auto *pStoneGenerator = m_pAsyncRunGenerator->getStoneGenerator();
+	const std::vector<StoneTriangle *> &vTriangles = pStoneGenerator->triangles();
+
+	// print uv map
+	QPainter painter(&m_pixmapImageHiglighted);
+	QBrush brush( 0xffff00 /*Qt::white*/, Qt::SolidPattern);
+	QPen pen(0xffff00 /*Qt::white*/);
+	painter.setPen(pen);
+	painter.setBrush(brush);
+	int nImageHeight = m_pixmapImageHiglighted.height();
+	int nImageWidth = m_pixmapImageHiglighted.width();
+	if (sHeighlightTriangle == "") {
+		m_pTrianlesList->clear();
+	}
+	bool bSaveImage = false;
+	for (int i = 0; i < vTriangles.size(); i++) {
+		StoneTriangle *pTriangle = vTriangles[i];
+		int nX0 = nImageHeight * pTriangle->p1()->getTextureCoordinateU();
+		int nY0 = nImageWidth * pTriangle->p1()->getTextureCoordinateV();
+		int nX1 = nImageHeight * pTriangle->p2()->getTextureCoordinateU();
+		int nY1 = nImageWidth * pTriangle->p2()->getTextureCoordinateV();
+		int nX2 = nImageHeight * pTriangle->p3()->getTextureCoordinateU();
+		int nY2 = nImageWidth * pTriangle->p3()->getTextureCoordinateV();
+		painter.drawLine(nX0, nY0, nX1, nY1);
+		painter.drawLine(nX1, nY1, nX2, nY2);
+		painter.drawLine(nX2, nY2, nX0, nY0);
+		QString sTrianle = 
+			"(" + QString::number(nX0) + "," + QString::number(nY0) + ")"
+			+ "(" + QString::number(nX1) + "," + QString::number(nY1) + ")"
+			+ "(" + QString::number(nX2) + "," + QString::number(nY2) + ")";
+		if (sHeighlightTriangle == "") {
+			m_pTrianlesList->addItem(sTrianle);
+		} else {
+			if (sTrianle == sHeighlightTriangle) {
+				QPainterPath path;
+				// Set pen to this point.
+				path.moveTo (nX0, nY0);
+				// Draw line from pen point to this point.
+				path.lineTo (nX1, nY1);
+				// path.moveTo (endPointX1, endPointY1); // <- no need to move
+				path.lineTo (nX2, nY2);
+				// path.moveTo (endPointX2,   endPointY2); // <- no need to move
+				path.lineTo (nX0, nY0);
+				// painter.setPen (Qt :: NoPen);
+				painter.fillPath (path, QBrush (QColor ("blue")));
+				// TODO draw higlighted triangul
+				bSaveImage = true;
+			}
+		}
+		
+	}
+	m_pImageView->setPixmap(m_pixmapImageHiglighted);
+	if (bSaveImage) {
+		m_pixmapImageHiglighted.save(m_sFilePathHighlighted);
+		m_pImage->load(m_sFilePathHighlighted.toStdString().c_str());
+		if (m_pImage->isLoaded()) {
+			std::cout << "Image loaded" << std::endl;
+			// add to button - save texture
+			// m_pImage->save(QString(m_sRandomName + ".png").toStdString().c_str());
+
+			int num = m_pMaterial->findTexture("albedo");
+			if (num != -1) {
+				std::cout << "Set albedo" << std::endl;
+				// set runtime
+				m_pMaterial->setTextureImage(num, m_pImage);
+
+				// m_pMaterial->setTextureImage(num, m_pImage);
+			}
+		}
+	} else {
+		m_pImage->load(m_sFilePath1.toStdString().c_str());
+		if (m_pImage->isLoaded()) {
+			std::cout << "Image loaded" << std::endl;
+			// add to button - save texture
+			// m_pImage->save(QString(m_sRandomName + ".png").toStdString().c_str());
+			// m_pImageView->setScaledContents(true);
+			int num = m_pMaterial->findTexture("albedo");
+			if (num != -1) {
+				std::cout << "Set albedo (reset picture)" << std::endl;
+				// NOT work here
+				m_pMaterial->setTexturePath(num, QString(m_sRandomName + ".png").toStdString().c_str());
+
+				// m_pMaterial->setTextureImage(num, m_pImage);
+			}
+		}
+		// m_pTexture->clear();
+		// m_pTexture->setImage(m_pImage);
+	}
+
+}
 
 QHBoxLayout *DialogConfigurator::createIntSliderParameterUI(QString sLabel, int *nValue, int nMin, int nMax) {
 	CustomIntSlider *pSlider = new CustomIntSlider(Qt::Horizontal);
