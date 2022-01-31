@@ -367,6 +367,17 @@ void DialogConfigurator::triangles_itemSelectionChanged() {
 	}
 }
 
+int DialogConfigurator::normalizeTextureCoordinates(int nWidth, float nVal) {
+	int nRet = nWidth * nVal;
+	if (nRet > nWidth) {
+		nRet = nWidth;
+	}
+	if (nRet < 0) {
+		nRet = 0;
+	}
+	return nRet;
+}
+
 void DialogConfigurator::updateTextureImageView(const QString &sHeighlightTriangle) {
 	// reload preview texture image
 	m_pixmapImageHiglighted = m_pixmapImageOrigin;
@@ -388,12 +399,13 @@ void DialogConfigurator::updateTextureImageView(const QString &sHeighlightTriang
 	bool bSaveImage = false;
 	for (int i = 0; i < vTriangles.size(); i++) {
 		StoneTriangle *pTriangle = vTriangles[i];
-		int nX0 = nImageHeight * pTriangle->p1()->getTextureCoordinateU();
-		int nY0 = nImageWidth * pTriangle->p1()->getTextureCoordinateV();
-		int nX1 = nImageHeight * pTriangle->p2()->getTextureCoordinateU();
-		int nY1 = nImageWidth * pTriangle->p2()->getTextureCoordinateV();
-		int nX2 = nImageHeight * pTriangle->p3()->getTextureCoordinateU();
-		int nY2 = nImageWidth * pTriangle->p3()->getTextureCoordinateV();
+		int nX0 = normalizeTextureCoordinates(nImageHeight, pTriangle->p1()->getTextureCoordinateU());
+		int nY0 = normalizeTextureCoordinates(nImageWidth, pTriangle->p1()->getTextureCoordinateV());
+		int nX1 = normalizeTextureCoordinates(nImageHeight, pTriangle->p2()->getTextureCoordinateU());
+		int nY1 = normalizeTextureCoordinates(nImageWidth, pTriangle->p2()->getTextureCoordinateV());
+		int nX2 = normalizeTextureCoordinates(nImageHeight, pTriangle->p3()->getTextureCoordinateU());
+		int nY2 = normalizeTextureCoordinates(nImageWidth, pTriangle->p3()->getTextureCoordinateV());
+
 		painter.drawLine(nX0, nY0, nX1, nY1);
 		painter.drawLine(nX1, nY1, nX2, nY2);
 		painter.drawLine(nX2, nY2, nX0, nY0);

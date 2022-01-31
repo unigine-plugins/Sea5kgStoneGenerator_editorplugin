@@ -91,6 +91,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         QHBoxLayout *createIntSliderParameterUI(QString sLabel, int *nValue, int nMin, int nMax);
         QHBoxLayout *createFloatSliderParameterUI(QString sLabel, float *nValue, float nMin, float nMax);
 
+        int normalizeTextureCoordinates(int nWidth, float nVal);
         void updateTextureImageView(const QString &sHeighlightTriangle = "");
 
         int m_nLabelSize;

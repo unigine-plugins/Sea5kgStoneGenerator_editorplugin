@@ -93,6 +93,8 @@ class StoneGenerator {
     private:
         float distance(StonePoint *p1, StonePoint *p2);
         float angelXY(StonePoint *p1, StonePoint *p2);
+        void setTextureCoordinates(StonePoint *pCenter, StonePoint *p1);
+        void minmaxUV(StonePoint *p1, float &nMinU, float &nMaxU, float &nMinV, float &nMaxV);
         std::vector<StonePoint *> m_vPoints;
         std::vector<StoneTriangle *> m_vTriangles;
 };
