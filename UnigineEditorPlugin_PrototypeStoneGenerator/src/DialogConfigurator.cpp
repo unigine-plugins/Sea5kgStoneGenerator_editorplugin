@@ -27,6 +27,8 @@ DialogConfigurator::DialogConfigurator(
 	m_sFilePathHighlighted = m_temporaryDir.filePath("stone_high.png");
 	m_nLabelSize = 120;
 	m_nLabelValueSize = 50;
+	m_bGenerateMesh = true;
+    m_bGenerateMaterial = true;
 
 	m_pAsyncRunGenerator = new AsyncRunGenerator(this);
 	m_pAsyncRunGenerator->setAutoDelete(false);
@@ -45,19 +47,19 @@ DialogConfigurator::DialogConfigurator(
 	leftLayout->addLayout(createFloatSliderParameterUI("Scale Y: ", &m_nSliderScaleY, 0.1, 10.0));
 	leftLayout->addLayout(createFloatSliderParameterUI("Scale Z: ", &m_nSliderScaleZ, 0.1, 10.0));
 
-	auto *pTexture = new QLabel("Texture:");
-	leftLayout->addWidget(pTexture);
+	m_pTextureLabel = new QLabel("Texture:");
+	leftLayout->addWidget(m_pTextureLabel);
 
 	// texture resolution
-	m_pTextureResolution = new QComboBox();
-	m_pTextureResolution->addItem(tr("128x128"), 128);
-    m_pTextureResolution->addItem(tr("256x256"), 256);
-    m_pTextureResolution->addItem(tr("512x512"), 512);
-    m_pTextureResolution->addItem(tr("1024x1024"), 1024);
-    connect(m_pTextureResolution, SIGNAL(currentIndexChanged(int)), this, SLOT(comboboxTextureResolution_Changed(int)));
-	leftLayout->addWidget(m_pTextureResolution);
+	// m_pTextureResolution = new QComboBox();
+	// m_pTextureResolution->addItem(tr("128x128"), 128);
+    // m_pTextureResolution->addItem(tr("256x256"), 256);
+    // m_pTextureResolution->addItem(tr("512x512"), 512);
+    // m_pTextureResolution->addItem(tr("1024x1024"), 1024);
+    // connect(m_pTextureResolution, SIGNAL(currentIndexChanged(int)), this, SLOT(comboboxTextureResolution_Changed(int)));
+	// leftLayout->addWidget(m_pTextureResolution);
 
-	QHBoxLayout *texturesLayout = new QHBoxLayout;
+	m_pTexturesLayout = new QHBoxLayout();
 
 	// m_pPixmapImageOrigin = new QPixmap();
 	// m_pPixmapImageHiglighted = new QPixmap();
@@ -66,13 +68,13 @@ DialogConfigurator::DialogConfigurator(
 	m_pImageView->setFixedWidth(512);
 	m_pImageView->setFixedHeight(512);
 	m_pImageView->setScaledContents(true);
-	texturesLayout->addWidget(m_pImageView);
+	m_pTexturesLayout->addWidget(m_pImageView);
 	
 	m_pTrianlesList = new QListWidget();
 	connect(m_pTrianlesList, SIGNAL(itemSelectionChanged()),this, SLOT(triangles_itemSelectionChanged()));
-	texturesLayout->addWidget(m_pTrianlesList);
+	m_pTexturesLayout->addWidget(m_pTrianlesList);
 
-	leftLayout->addLayout(texturesLayout);
+	leftLayout->addLayout(m_pTexturesLayout);
 
 	m_pProgress = new QProgressBar(this);
 	m_pProgress->setValue(0);
@@ -86,6 +88,10 @@ DialogConfigurator::DialogConfigurator(
 	m_pRegenerateButton->setDefault(true);
 	connect(m_pRegenerateButton, SIGNAL(clicked()),this, SLOT(regenerateButton_clicked()));
 	buttonsLayout->addWidget(m_pRegenerateButton);
+
+	m_pSaveMeshButton = new QPushButton(tr("Save Mesh"));
+	connect(m_pSaveMeshButton, SIGNAL(clicked()),this, SLOT(click_saveMesh()));
+	buttonsLayout->addWidget(m_pSaveMeshButton);
 
 	buttonsLayout->addWidget(new QWidget);
 	buttonsLayout->addStretch();
@@ -102,9 +108,21 @@ DialogConfigurator::DialogConfigurator(
 	// setLayout(leftLayout);
 	setWindowTitle(tr("Prototype Stone Generator - Configurator"));
 	setFixedWidth(800);
-	setFixedHeight(sizeHint().height());
+	// setFixedHeight(sizeHint().height());
 
 	connect(this, &DialogConfigurator::signal_generationComplited, this, &DialogConfigurator::slot_generationComplited);
+}
+
+void DialogConfigurator::setGenerateMesh(bool bGenerateMesh) {
+	m_bGenerateMesh = bGenerateMesh;
+}
+
+void DialogConfigurator::setGenerateMaterial(bool bGenerateMaterial) {
+	m_bGenerateMaterial = bGenerateMaterial;
+	m_pTextureLabel->setVisible(m_bGenerateMaterial);
+	// m_pTextureResolution->setVisible(m_bGenerateMaterial);
+	m_pImageView->setVisible(m_bGenerateMaterial);
+    m_pTrianlesList->setVisible(m_bGenerateMaterial);
 }
 
 void DialogConfigurator::sliderInt_valuesChanged(int nNewValue) {
@@ -135,6 +153,11 @@ void DialogConfigurator::comboboxTextureResolution_Changed(int nNewValue) {
 	std::cout << "comboboxTextureResolution_Changed " << nNewValue << std::endl;
 }
 
+void DialogConfigurator::click_saveMesh() {
+	// add to button - save mesh
+	m_pMesh->saveMesh(QString(m_sRandomName + ".mesh").toStdString().c_str());
+}
+
 void DialogConfigurator::regenerateButton_clicked() {
 	m_bRegenerateGeometry = true;
 	this->regenerateGeometry();
@@ -153,37 +176,27 @@ void DialogConfigurator::createNode() {
 	pNodes.push_back(m_pMesh);
 	Editor::SelectorNodes *pSelected = Editor::SelectorNodes::createObjectsSelector(pNodes);
 	Editor::Selection::setSelector(pSelected);
-
-	// m_pMaterial = Unigine::Material::create();
-	auto mesh_base = Unigine::Materials::findMaterial("mesh_base");
-	m_pMaterial = mesh_base->inherit();
-	m_pMaterial->setParent(mesh_base);
-	std::string sMaterialPath = QString(m_sRandomName + ".mat").toStdString();
-	m_pMaterial->setName(QString(m_sRandomName).toStdString().c_str());
-	m_pMaterial->setPath(sMaterialPath.c_str());
-	m_pMaterial->save();
-
-	Unigine::UGUID guid;
-	guid.generate();
-	// const char *string_id = guid.getFileSystemString();
-	std::cout << "Guid: " << guid.get() << std::endl;
-	// log_info("Guid: " + QString(guid.get()));
-
-	// Unigine::FileSystem::setGUID(sMaterialPath.c_str(), guid);
-	// emit Editor::AssetManager::instance()->added(guid);
-
-	m_pMesh->setMaterial(m_pMaterial, 0);
 	
-	// MaterialPtr material = mesh->getMaterialInherit(0);
-	
-
-	m_pImage = Unigine::Image::create();
-	// m_pImage->setName(QString(m_sRandomName + ".png").toStdString().c_str());
-	// m_pTexture = Unigine::Texture::create();
-	
-	// on first start regenerate all
 	m_bRegenerateGeometry = true;
-    m_bRegenerateTexture = true;
+	m_bRegenerateTexture = false;
+
+	if (m_bGenerateMaterial) {
+		auto mesh_base = Unigine::Materials::findMaterial("mesh_base");
+		m_pMaterial = mesh_base->inherit();
+		m_pMaterial->setParent(mesh_base);
+		std::string sMaterialPath = QString(m_sRandomName + ".mat").toStdString();
+		m_pMaterial->setName(QString(m_sRandomName).toStdString().c_str());
+		m_pMaterial->setPath(sMaterialPath.c_str());
+		m_pMaterial->save();
+
+		m_pMesh->setMaterial(m_pMaterial, 0);
+		
+		m_pImage = Unigine::Image::create();
+		
+		// on first start regenerate all
+		m_bRegenerateTexture = true;
+	}
+	
 	this->regenerateGeometry();
 }
 
@@ -277,43 +290,11 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 	// calculate a mesh bounding box for editor I guess
 	m_pMesh->updateBounds();
 
-	// 
 	m_pMesh->updateTangents();
 
 	m_pMesh->flushIndices();
 	m_pMesh->flushVertex();
 
-	// I expect an approximate number of triangles 
-
-	// Unigine::UGUID guid;
-	// guid.generate();
-	// const char *string_id = guid.getFileSystemString();
-	// log_info("Guid: " + QString(guid.get()));
-	// auto size = Unigine::Math::vec3(1.0f, 1.0f, 1.0f);
-
-	// Unigine::ObjectMeshDynamicPtr mesh1 = Unigine::Primitives::createBox(size);
-	// mesh1->setMaterial("mesh_base", "*");
-	// mesh1->setEnabled(1);
-
-	// mesh1->setShowInEditorEnabledRecursive(1);
-	// mesh1->setSaveToWorldEnabledRecursive(1);
-
-	// mesh1->setWorldTransform(translate(Unigine::Math::Vec3(1.0f, 1.0f, 1.0f)));
-	// // set the name of the mesh
-	// mesh1->setName("Dynamic Mesh");
-	// mesh1->saveMesh("box_24567.mesh");
-	// Unigine::UGUID guid;
-	// guid.generate();
-	// const char *string_id = guid.getFileSystemString();
-	// log_info("Guid: " + QString(guid.get()));
-	// Unigine::FileSystem::setGUID("box_24567.mesh", guid);
-	// emit Editor::AssetManager::instance()->added(guid);
-
-	// TextureStoneGeneratorConfig texConf;
-	// texConf.setFilepath(m_sFilePath1);
-
-	// TextureStoneGenerator tex;
-	// tex.generate(texConf);
 	if (m_pAsyncRunGenerator->getRegenerateTexture()) {
 		m_pImage->clear();
 		m_pImage->load(m_sFilePath1.toStdString().c_str());
@@ -336,13 +317,10 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 		}
 	}
 
-	// reload preview texture image
-	
-	this->updateTextureImageView("");
-
-	// m_pMesh->setMaterial(m_pMaterial, 0);
-	// add to button - save mesh
-	// m_pMesh->saveMesh(QString(m_sRandomName + ".mesh").toStdString().c_str());
+	if (m_bGenerateMaterial) {
+		// reload preview texture image
+		this->updateTextureImageView("");
+	}
 
 	Unigine::Log::message("DialogConfigurator::generationComplited end\n");
 	m_bInProgress = false;

@@ -88,11 +88,15 @@ void UnigineEditorPlugin_PrototypeStoneGenerator::click_about() {
 }
 
 void UnigineEditorPlugin_PrototypeStoneGenerator::click_createMeshAndMaterial() {
+	m_pDialog->setGenerateMesh(true);
+    m_pDialog->setGenerateMaterial(true);
 	m_pDialog->show();
 	m_pDialog->createNode();
 }
 
 void UnigineEditorPlugin_PrototypeStoneGenerator::click_createOnlyMesh() {
+	m_pDialog->setGenerateMesh(true);
+    m_pDialog->setGenerateMaterial(false);
 	m_pDialog->show();
 	m_pDialog->createNode();
 }

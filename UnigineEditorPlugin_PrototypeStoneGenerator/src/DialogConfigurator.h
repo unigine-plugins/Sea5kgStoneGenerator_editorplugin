@@ -64,6 +64,8 @@ class DialogConfigurator : public QDialog, public ISignalGun {
 
     public:
         DialogConfigurator(QWidget *parent);
+        void setGenerateMesh(bool bGenerateMesh);
+        void setGenerateMaterial(bool bGenerateMaterial);
         void createNode();
         void regenerateGeometry();
 
@@ -76,6 +78,8 @@ class DialogConfigurator : public QDialog, public ISignalGun {
 
     private slots:
         void regenerateButton_clicked();
+        void click_saveMesh();
+        
         void sliderInt_valuesChanged(int nNewValue);
         void sliderFloat_valuesChanged(int nNewValue);
 
@@ -103,8 +107,10 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         QPixmap m_pixmapImageOrigin;
         QPixmap m_pixmapImageHiglighted;
         QPushButton *m_pRegenerateButton;
+        QPushButton *m_pSaveMeshButton;
         QPushButton *m_pCloseButton;
-        // QVector<QLabel *> m_Labels;
+        QLabel *m_pTextureLabel;
+        QHBoxLayout *m_pTexturesLayout;
         
         
         int m_nSliderTrianglesValue;
@@ -135,5 +141,8 @@ class DialogConfigurator : public QDialog, public ISignalGun {
 
         bool m_bRegenerateGeometry;
         bool m_bRegenerateTexture;
+
+        bool m_bGenerateMesh;
+        bool m_bGenerateMaterial;
 };
 
