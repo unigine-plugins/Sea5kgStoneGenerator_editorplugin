@@ -68,11 +68,11 @@ void UnigineEditorPlugin_PrototypeStoneGenerator::shutdown() {
 	// }
 }
 
-void UnigineEditorPlugin_PrototypeStoneGenerator::about() {
+void UnigineEditorPlugin_PrototypeStoneGenerator::click_about() {
 	QMessageBox msgBox;
     msgBox.setStyleSheet("QLabel{min-width: 700px;}");
     msgBox.setModal( true );
-    msgBox.setWindowTitle("Python3Scripting: About");
+    msgBox.setWindowTitle("Prototype Stone Gnerator: About");
     msgBox.setTextFormat(Qt::RichText);
     msgBox.setText(
         "<h2>PrototypeStoneGenerator</h2> <br>"
@@ -87,33 +87,14 @@ void UnigineEditorPlugin_PrototypeStoneGenerator::about() {
     msgBox.exec();
 }
 
-void UnigineEditorPlugin_PrototypeStoneGenerator::processCreate() {
+void UnigineEditorPlugin_PrototypeStoneGenerator::click_createMeshAndMaterial() {
 	m_pDialog->show();
 	m_pDialog->createNode();
 }
 
-void UnigineEditorPlugin_PrototypeStoneGenerator::processEdit() {
-	// ModelExtension *pModel = findModelExtensionByAction(sender());
-	// if (pModel == nullptr) {
-	// 	log_error("processSelectedNodes Could not find model for this action");
-	// 	return;
-	// }
-}
-
-void UnigineEditorPlugin_PrototypeStoneGenerator::processSelectedProperties() {
-	// ModelExtension *pModel = findModelExtensionByAction(sender());
-	// if (pModel == nullptr) {
-	// 	log_error("processSelectedProperties Could not find model for this action");
-	// 	return;
-	// }
-}
-
-void UnigineEditorPlugin_PrototypeStoneGenerator::processSelectedRuntimes() {
-	// ModelExtension *pModel = findModelExtensionByAction(sender());
-	// if (pModel == nullptr) {
-	// 	log_error("processSelectedRuntimes Could not find model for this action");
-	// 	return;
-	// }
+void UnigineEditorPlugin_PrototypeStoneGenerator::click_createOnlyMesh() {
+	m_pDialog->show();
+	m_pDialog->createNode();
 }
 
 void UnigineEditorPlugin_PrototypeStoneGenerator::globalSelectionChanged() {
@@ -131,48 +112,43 @@ void UnigineEditorPlugin_PrototypeStoneGenerator::globalSelectionChanged() {
 }
 
 bool UnigineEditorPlugin_PrototypeStoneGenerator::safeCreateMenuCustom() {
-	QString sMenuName = Constants::MM_TOOLS;
-	QMenu *pMenu = Editor::WindowManager::findMenu(sMenuName);
-	if (pMenu == nullptr) {
-		log_error(" Not found menu: " + sMenuName);
+	QMenu *pMenuCreate = Editor::WindowManager::findMenu(Constants::MM_CREATE);
+	if (pMenuCreate == nullptr) {
+		log_error(" Not found menu: " + Constants::MM_CREATE);
 		return false;
-		
+
 	}
-	// log_info(" Found menu " + sMenuName);
-	// get main menu
+
 	if (m_pMenuCustom == nullptr) {
-		QWidget* pMenuTools = dynamic_cast<QWidget*>(pMenu);
-		QMenuBar* pMenuBar = dynamic_cast<QMenuBar*>(pMenuTools->parentWidget());
-		m_pMenuCustom = pMenuBar->addMenu(tr("Prototype Stone Generator"));
+		m_pMenuCustom = pMenuCreate->addMenu(tr("Prototype Stone Generator"));
+
+		// menu create
+		m_pActionCreateOnlyMesh = new QAction("Create Only Mesh", this);
+		connect(m_pActionCreateOnlyMesh, &QAction::triggered, this, &UnigineEditorPlugin_PrototypeStoneGenerator::click_createOnlyMesh);
+		m_pMenuCustom->addAction(m_pActionCreateOnlyMesh);
+
+		m_pActionCreateMeshAndMaterial = new QAction("Create Mesh And Material", this);
+		connect(m_pActionCreateMeshAndMaterial, &QAction::triggered, this, &UnigineEditorPlugin_PrototypeStoneGenerator::click_createMeshAndMaterial);
+		m_pMenuCustom->addAction(m_pActionCreateMeshAndMaterial);
+
+		m_pActionAbout = new QAction(tr("About PrototypeStoneGenerator Plugin"), this);
+		connect(m_pActionAbout, &QAction::triggered, this, &UnigineEditorPlugin_PrototypeStoneGenerator::click_about);
+		m_pMenuCustom->addAction(m_pActionAbout);
+
+		QWidget* pMenuTools = dynamic_cast<QWidget*>(pMenuCreate);
 		m_pMainWindow = pMenuTools->parentWidget()->parentWidget();
 		QString sClassname  = m_pMainWindow->metaObject()->className();
 		log_info(" Found  " + sClassname);
 		m_pDialog = new DialogConfigurator(m_pMainWindow);
 		Qt::WindowFlags flags = m_pDialog->windowFlags();
 		m_pDialog->setWindowFlags(flags | Qt::Tool);
-
-		// menu create
-		m_pActionCreate = new QAction("Create", this);
-		connect(m_pActionCreate, &QAction::triggered, this, &UnigineEditorPlugin_PrototypeStoneGenerator::processCreate);
-		m_pMenuCustom->addAction(m_pActionCreate);
-
-		// menu edit
-		// m_pActionEdit = new QAction("Edit", this);
-		// connect(m_pActionEdit, &QAction::triggered, this, &UnigineEditorPlugin_PrototypeStoneGenerator::processEdit);
-		// m_pMenuCustom->addAction(m_pActionEdit);
 	}
+
 	return true;
 }
 
 bool UnigineEditorPlugin_PrototypeStoneGenerator::reloadMenuForSelected() {
 
-	return true;
-}
-
-bool UnigineEditorPlugin_PrototypeStoneGenerator::initMenuForAbout() {
-	m_pActionAbout = new QAction(tr("About PrototypeStoneGenerator Plugin"), this);
-	connect(m_pActionAbout, &QAction::triggered, this, &UnigineEditorPlugin_PrototypeStoneGenerator::about);
-	m_pMenuCustom->addAction(m_pActionAbout);
 	return true;
 }
 

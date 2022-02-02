@@ -29,11 +29,9 @@ public:
 	void shutdown() override;
 
 private slots:
-	void processCreate();
-	void processEdit();
-	void processSelectedProperties();
-	void processSelectedRuntimes();
-	void about();
+	void click_createMeshAndMaterial();
+	void click_createOnlyMesh();
+	void click_about();
 
 	void globalSelectionChanged();
 
@@ -48,7 +46,8 @@ private:
 	QString m_sPython3ScriptingJsonFilePath;
 	QWidget *m_pMainWindow;
 	QMenu *m_pMenuCustom;
-	QAction *m_pActionCreate;
+	QAction *m_pActionCreateMeshAndMaterial;
+	QAction *m_pActionCreateOnlyMesh;
 	QAction *m_pActionAbout;
 	QAction *m_pActionEdit;
 
