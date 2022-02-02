@@ -248,11 +248,11 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 			vPoints[i]->z()
 		));
 		// m_pMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
-		std::cout << "tx coord uv: " <<
-			vPoints[i]->getTextureCoordinateU()
-			<< " " << 
-			vPoints[i]->getTextureCoordinateV()
-			<< std::endl;
+		// std::cout << "tx coord uv: " <<
+		// 	vPoints[i]->getTextureCoordinateU()
+		// 	<< " " << 
+		// 	vPoints[i]->getTextureCoordinateV()
+		// 	<< std::endl;
 		m_pMesh->addTexCoord(Unigine::Math::vec4(
 			vPoints[i]->getTextureCoordinateU(),
 			vPoints[i]->getTextureCoordinateV(),
@@ -272,7 +272,7 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 	}
 
 	// // optimize vertex and index buffers, if necessary
-	m_pMesh->updateIndices();
+	// m_pMesh->updateIndices();
 
 	// calculate a mesh bounding box for editor I guess
 	m_pMesh->updateBounds();

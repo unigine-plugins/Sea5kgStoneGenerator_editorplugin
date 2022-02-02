@@ -37,6 +37,7 @@ class StoneTriangle {
             StonePoint *p2,
             StonePoint *p3
         );
+        ~StoneTriangle();
         
         StonePoint *p1();
         StonePoint *p2();
@@ -92,9 +93,11 @@ class StoneGenerator {
         StonePoint *addPoint(float x, float y, float z);
     private:
         float distance(StonePoint *p1, StonePoint *p2);
+        float distanceUV(StonePoint *p1, StonePoint *p2);
         float angelXY(StonePoint *p1, StonePoint *p2);
-        void setTextureCoordinates(StonePoint *pCenter, StonePoint *p1);
+        float angelZX(StonePoint *p1, StonePoint *p2);
         void minmaxUV(StonePoint *p1, float &nMinU, float &nMaxU, float &nMinV, float &nMaxV);
+        void setTextureCoordinatesFirst(StonePoint *p1, StonePoint *p2);
         std::vector<StonePoint *> m_vPoints;
         std::vector<StoneTriangle *> m_vTriangles;
 };
