@@ -105,6 +105,7 @@ StoneGeneratorConfig::StoneGeneratorConfig() {
     m_nScaleX = 1.0f;
     m_nScaleY = 1.0f;
     m_nScaleZ = 1.0f;
+    m_nBasicGeometry = 0;
 }
 
 void StoneGeneratorConfig::setEstimatedExpectedTriangles(int nExpected) {
@@ -163,6 +164,13 @@ float StoneGeneratorConfig::getScaleZ() const {
     return m_nScaleZ;
 }
 
+void StoneGeneratorConfig::setBasicGeometry(int nBasicGeometry) {
+    m_nBasicGeometry = nBasicGeometry;
+}
+
+int StoneGeneratorConfig::getBasicGeometry() const {
+    return m_nBasicGeometry;
+}
 
 // StoneGenerator
 
@@ -202,6 +210,95 @@ struct ZLevel {
 
 bool StoneGenerator::generate(const StoneGeneratorConfig &conf) {
     std::cout << "m_nExpectedTriangles = " << conf.getEstimatedExpectedTriangles() << std::endl;
+    
+    if (conf.getBasicGeometry() == 0) {
+        if (!this->generateBasicSpheres(conf)) {
+            return false;
+        }
+    } else if (conf.getBasicGeometry() == 1) {
+        if (!this->generateBasicCubes(conf)) {
+            return false;
+        }
+    } else {
+        std::cout << "Unknown basic geometry" << std::endl;
+        return false;
+    }
+    
+
+    int nRandomDiff = 100.0 * (conf.getRandomOffsetMax() - conf.getRandomOffsetMin());
+    std::cout << "nRandomDiff: " << nRandomDiff << std::endl;
+    if (nRandomDiff > 0) {
+        for (int i = 0; i < m_vPoints.size(); i++) {
+            float nOffsetX = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
+            float nOffsetY = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
+            float nOffsetZ = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
+            m_vPoints[i]->addOffset(nOffsetX, nOffsetY, nOffsetZ);
+        }
+    }
+    
+    // calculate texture coordinates
+    for (int i = 0; i < m_vTriangles.size(); i++) {
+        StoneTriangle *pTriangle = m_vTriangles[i];
+        setTextureCoordinatesFirst(pTriangle->p1(), pTriangle->p2());
+        setTextureCoordinatesFirst(pTriangle->p1(), pTriangle->p3());
+    }
+
+    // min max uv
+    float nMaxU = 0.0f;
+    float nMinU = 0.0f;
+    float nMaxV = 0.0f;
+    float nMinV = 0.0f;
+    for (int i = 0; i < m_vTriangles.size(); i++) {
+        StoneTriangle *pTriangle = m_vTriangles[i];
+        this->minmaxUV(pTriangle->p1(), nMinU, nMaxU, nMinV, nMaxV);
+        this->minmaxUV(pTriangle->p2(), nMinU, nMaxU, nMinV, nMaxV);
+        this->minmaxUV(pTriangle->p3(), nMinU, nMaxU, nMinV, nMaxV);
+    }
+
+    // normalize coordinates to 0..1
+    float dU = nMaxU - nMinU;
+    float dV = nMaxV - nMinV;
+    for (int i = 0; i < m_vPoints.size(); i++) {
+        float u = m_vPoints[i]->getTextureCoordinateU();
+        float v = m_vPoints[i]->getTextureCoordinateV();
+        u = (u - nMinU) / dU;
+        v = (v - nMinV) / dV;
+        m_vPoints[i]->setTextureCoordinates(u,v);
+    }
+
+    return true;
+}
+
+const std::vector<StoneTriangle *> &StoneGenerator::triangles() {
+    return m_vTriangles;
+}
+
+const std::vector<StonePoint *> &StoneGenerator::points() {
+    return m_vPoints;
+}
+
+StonePoint *StoneGenerator::addPoint(float x, float y, float z) {
+    StonePoint *pPoint = nullptr;
+    int nX = x*100;
+    int nY = y*100;
+    int nZ = z*100;
+    int nThreshold = 15; // 0.15
+    int nSize = m_vPoints.size();
+    for (int i = 0; i < nSize; i++) {
+        if (m_vPoints[i]->compare(nX, nY, nZ, nThreshold)) {
+            pPoint = m_vPoints[i];
+            break;
+        }
+    }
+    if (pPoint == nullptr) {
+        pPoint = new StonePoint(x,y,z);
+        m_vPoints.push_back(pPoint);
+        pPoint->setIndex(nSize);
+    }
+    return pPoint;
+}
+
+bool StoneGenerator::generateBasicSpheres(const StoneGeneratorConfig &conf) {
     // TODO redesign
     int nK = conf.getEstimatedExpectedTriangles()/2;
     std::cout << "nK = " << nK << std::endl;
@@ -285,105 +382,123 @@ bool StoneGenerator::generate(const StoneGeneratorConfig &conf) {
             }
             
             if (i_xy > 0 || i_xy < xy_sectors.size() - 1) {
-                StoneTriangle *pTriangle2 = new StoneTriangle(
-                    pPoint01,
-                    pPoint10,
-                    pPoint11
-                );
-                m_vTriangles.push_back(pTriangle2);
+                // if (pPoint00 != pPoint01 && pPoint01 != pPoint10 && pPoint10 != pPoint00) {
+                    StoneTriangle *pTriangle2 = new StoneTriangle(
+                        pPoint01,
+                        pPoint10,
+                        pPoint11
+                    );
+                    m_vTriangles.push_back(pTriangle2);
+                // }
             }
-
-            // TODO text coord 
-            // TODO normales
-			// textCoord.push_back(Unigine::Math::vec4(nTexX, 0, 0, 0));
-			// textCoord.push_back(Unigine::Math::vec4(nTexX + 0.2, 0, 0, 0));
-			// textCoord.push_back(Unigine::Math::vec4(nTexX + 0.2, nTexY + 0.2, 0, 0));
-
-			// textCoord.push_back(Unigine::Math::vec4(nTexX, 0, 0, 0));
-			// textCoord.push_back(Unigine::Math::vec4(nTexX + 0.2, 0, 0, 0));
-			// textCoord.push_back(Unigine::Math::vec4(nTexX + 0.2, nTexY + 0.2, 0, 0));
         }
 	}
-    int nRandomDiff = 100.0 * (conf.getRandomOffsetMax() - conf.getRandomOffsetMin());
-    std::cout << "nRandomDiff: " << nRandomDiff << std::endl;
-    // float nCenterX = 0.0;
-    // float nCenterY = 0.0;
-    // float nCenterZ = 0.0;
-    if (nRandomDiff > 0) {
-        for (int i = 0; i < m_vPoints.size(); i++) {
-            float nOffsetX = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
-            float nOffsetY = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
-            float nOffsetZ = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
-            m_vPoints[i]->addOffset(nOffsetX, nOffsetY, nOffsetZ);
-            // nCenterX += m_vPoints[i]->x();
-            // nCenterY += m_vPoints[i]->y();
-            // nCenterZ += m_vPoints[i]->z();
-        }
-    }
-    // nCenterX = nCenterX / m_vPoints.size();
-    // nCenterY = nCenterY / m_vPoints.size();
-    // nCenterZ = nCenterZ / m_vPoints.size();
-    // StonePoint pCenter(nCenterX, nCenterY, nCenterZ);
-   
-    for (int i = 0; i < m_vTriangles.size(); i++) {
-        StoneTriangle *pTriangle = m_vTriangles[i];
-        setTextureCoordinatesFirst(pTriangle->p1(), pTriangle->p2());
-        setTextureCoordinatesFirst(pTriangle->p1(), pTriangle->p3());
-    }
-
-    // min max uv
-    float nMaxU = 0.0f;
-    float nMinU = 0.0f;
-    float nMaxV = 0.0f;
-    float nMinV = 0.0f;
-    for (int i = 0; i < m_vTriangles.size(); i++) {
-        StoneTriangle *pTriangle = m_vTriangles[i];
-        this->minmaxUV(pTriangle->p1(), nMinU, nMaxU, nMinV, nMaxV);
-        this->minmaxUV(pTriangle->p2(), nMinU, nMaxU, nMinV, nMaxV);
-        this->minmaxUV(pTriangle->p3(), nMinU, nMaxU, nMinV, nMaxV);
-    }
-
-    // normalize coordinates to 0..1
-    float dU = nMaxU - nMinU;
-    float dV = nMaxV - nMinV;
-    for (int i = 0; i < m_vPoints.size(); i++) {
-        float u = m_vPoints[i]->getTextureCoordinateU();
-        float v = m_vPoints[i]->getTextureCoordinateV();
-        u = (u - nMinU) / dU;
-        v = (v - nMinV) / dV;
-        m_vPoints[i]->setTextureCoordinates(u,v);
-    }
-
     return true;
 }
 
-const std::vector<StoneTriangle *> &StoneGenerator::triangles() {
-    return m_vTriangles;
-}
+bool StoneGenerator::generateBasicCubes(const StoneGeneratorConfig &conf) {
+    float nRadius = conf.getRadius();
 
-const std::vector<StonePoint *> &StoneGenerator::points() {
-    return m_vPoints;
-}
+    float nK = conf.getEstimatedExpectedTriangles() / 6.0; // 6 sides
+    nK = std::sqrt(nK); // squares on each side; 
+    float nStep = 2*nRadius / nK;
 
-StonePoint *StoneGenerator::addPoint(float x, float y, float z) {
-    StonePoint *pPoint = nullptr;
-    int nX = x*100;
-    int nY = y*100;
-    int nZ = z*100;
-    int nThreshold = 15; // 0.15
-    int nSize = m_vPoints.size();
-    for (int i = 0; i < nSize; i++) {
-        if (m_vPoints[i]->compare(nX, nY, nZ, nThreshold)) {
-            pPoint = m_vPoints[i];
-            break;
+    float nX0 = -nRadius;
+    float nX1 = nRadius;
+
+    float nY0 = -nRadius;
+    float nY1 = nRadius;
+
+    float nZ0 = -nRadius;
+    float nZ1 = nRadius;
+
+    for (float x = nX0; x < nX1 - nStep; x += nStep) {
+        for (float y = nY0; y < nY1 - nStep; y += nStep) {
+            // bottom
+            {
+                StonePoint *pPoint00 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * (y        ), conf.getScaleZ() * nZ0);
+                StonePoint *pPoint01 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * (y + nStep), conf.getScaleZ() * nZ0);
+                StonePoint *pPoint10 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * (y        ), conf.getScaleZ() * nZ0);
+                StonePoint *pPoint11 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * (y + nStep), conf.getScaleZ() * nZ0);
+                StoneTriangle *pTriangle1 = new StoneTriangle(pPoint00, pPoint01, pPoint11);
+                m_vTriangles.push_back(pTriangle1);
+                StoneTriangle *pTriangle2 = new StoneTriangle(pPoint00, pPoint11, pPoint10);
+                m_vTriangles.push_back(pTriangle2);
+            }
+            
+            // top
+            {
+                StonePoint *pPoint00 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * (y        ), conf.getScaleZ() * nZ1);
+                StonePoint *pPoint01 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * (y + nStep), conf.getScaleZ() * nZ1);
+                StonePoint *pPoint10 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * (y        ), conf.getScaleZ() * nZ1);
+                StonePoint *pPoint11 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * (y + nStep), conf.getScaleZ() * nZ1);
+                StoneTriangle *pTriangle1 = new StoneTriangle(pPoint11, pPoint01, pPoint00);
+                m_vTriangles.push_back(pTriangle1);
+                StoneTriangle *pTriangle2 = new StoneTriangle(pPoint10, pPoint11, pPoint00);
+                m_vTriangles.push_back(pTriangle2);
+            }
+            
         }
     }
-    if (pPoint == nullptr) {
-        pPoint = new StonePoint(x,y,z);
-        m_vPoints.push_back(pPoint);
-        pPoint->setIndex(nSize);
+
+    for (float z = nZ0; z < nZ1 - nStep; z += nStep) {
+        for (float y = nY0; y < nY1 - nStep; y += nStep) {
+            // left
+            {
+                StonePoint *pPoint00 = addPoint(conf.getScaleX() * nX0, conf.getScaleY() * (y        ), conf.getScaleZ() * (z        ));
+                StonePoint *pPoint01 = addPoint(conf.getScaleX() * nX0, conf.getScaleY() * (y        ), conf.getScaleZ() * (z + nStep));
+                StonePoint *pPoint10 = addPoint(conf.getScaleX() * nX0, conf.getScaleY() * (y + nStep), conf.getScaleZ() * (z        ));
+                StonePoint *pPoint11 = addPoint(conf.getScaleX() * nX0, conf.getScaleY() * (y + nStep), conf.getScaleZ() * (z + nStep));
+                StoneTriangle *pTriangle1 = new StoneTriangle(pPoint00, pPoint01, pPoint11);
+                m_vTriangles.push_back(pTriangle1);
+                StoneTriangle *pTriangle2 = new StoneTriangle(pPoint00, pPoint11, pPoint10);
+                m_vTriangles.push_back(pTriangle2);
+            }
+            
+            // right
+            {
+                StonePoint *pPoint00 = addPoint(conf.getScaleX() * nX1, conf.getScaleY() * (y        ), conf.getScaleZ() * (z        ));
+                StonePoint *pPoint01 = addPoint(conf.getScaleX() * nX1, conf.getScaleY() * (y        ), conf.getScaleZ() * (z + nStep));
+                StonePoint *pPoint10 = addPoint(conf.getScaleX() * nX1, conf.getScaleY() * (y + nStep), conf.getScaleZ() * (z        ));
+                StonePoint *pPoint11 = addPoint(conf.getScaleX() * nX1, conf.getScaleY() * (y + nStep), conf.getScaleZ() * (z + nStep));
+                StoneTriangle *pTriangle1 = new StoneTriangle(pPoint11, pPoint01, pPoint00);
+                m_vTriangles.push_back(pTriangle1);
+                StoneTriangle *pTriangle2 = new StoneTriangle(pPoint10, pPoint11, pPoint00);
+                m_vTriangles.push_back(pTriangle2);
+            }
+        }
     }
-    return pPoint;
+
+    for (float z = nZ0; z < nZ1 - nStep; z += nStep) {
+        for (float x = nX0; x < nX1 - nStep; x += nStep) {
+            // front
+            {
+                StonePoint *pPoint00 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * nY1, conf.getScaleZ() * (z        ));
+                StonePoint *pPoint01 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * nY1, conf.getScaleZ() * (z + nStep));
+                StonePoint *pPoint10 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * nY1, conf.getScaleZ() * (z        ));
+                StonePoint *pPoint11 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * nY1, conf.getScaleZ() * (z + nStep));
+                StoneTriangle *pTriangle1 = new StoneTriangle(pPoint00, pPoint01, pPoint11);
+                m_vTriangles.push_back(pTriangle1);
+                StoneTriangle *pTriangle2 = new StoneTriangle(pPoint00, pPoint11, pPoint10);
+                m_vTriangles.push_back(pTriangle2);
+            }
+            
+            // end
+            {
+                StonePoint *pPoint00 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * nY0, conf.getScaleZ() * (z        ));
+                StonePoint *pPoint01 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * nY0, conf.getScaleZ() * (z + nStep));
+                StonePoint *pPoint10 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * nY0, conf.getScaleZ() * (z        ));
+                StonePoint *pPoint11 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * nY0, conf.getScaleZ() * (z + nStep));
+                StoneTriangle *pTriangle1 = new StoneTriangle(pPoint11, pPoint01, pPoint00);
+                m_vTriangles.push_back(pTriangle1);
+                StoneTriangle *pTriangle2 = new StoneTriangle(pPoint10, pPoint11, pPoint00);
+                m_vTriangles.push_back(pTriangle2);
+            }
+        }
+    }
+
+
+    return true;
 }
 
 float StoneGenerator::distance(StonePoint *p1, StonePoint *p2) {

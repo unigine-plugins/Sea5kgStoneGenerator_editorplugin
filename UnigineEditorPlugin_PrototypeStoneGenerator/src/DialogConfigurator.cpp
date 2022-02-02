@@ -27,6 +27,7 @@ DialogConfigurator::DialogConfigurator(
 	m_sFilePathHighlighted = m_temporaryDir.filePath("stone_high.png");
 	m_nLabelSize = 120;
 	m_nLabelValueSize = 50;
+	m_nBasicGeometry = 0;
 	m_bGenerateMesh = true;
     m_bGenerateMaterial = true;
 
@@ -38,6 +39,12 @@ DialogConfigurator::DialogConfigurator(
 
 	auto *pGeometry = new QLabel("Geometry:");
 	leftLayout->addWidget(pGeometry);
+
+	m_pBasicGemometry = new QComboBox();
+	m_pBasicGemometry->addItem(tr("Sphere"), 1);
+    m_pBasicGemometry->addItem(tr("Cube"), 2);
+	connect(m_pBasicGemometry, SIGNAL(currentIndexChanged(int)), this, SLOT(comboboxBasicGeometry_Changed(int)));
+	leftLayout->addWidget(m_pBasicGemometry);
 
 	leftLayout->addLayout(  createIntSliderParameterUI("Expected triangles: ", &m_nSliderTrianglesValue, 100, 80000));
 	leftLayout->addLayout(createFloatSliderParameterUI("Radius: ", &m_nSliderRadius, 0.1, 4.0));
@@ -153,6 +160,13 @@ void DialogConfigurator::comboboxTextureResolution_Changed(int nNewValue) {
 	std::cout << "comboboxTextureResolution_Changed " << nNewValue << std::endl;
 }
 
+void DialogConfigurator::comboboxBasicGeometry_Changed(int nNewValue) {
+	std::cout << "comboboxBasicGeometry_Changed " << nNewValue << std::endl;
+	m_nBasicGeometry = nNewValue;
+	m_bRegenerateGeometry = true;
+	this->regenerateGeometry();
+}
+
 void DialogConfigurator::click_saveMesh() {
 	// add to button - save mesh
 	m_pMesh->saveMesh(QString(m_sRandomName + ".mesh").toStdString().c_str());
@@ -225,7 +239,8 @@ void DialogConfigurator::regenerateGeometry() {
 	newConf.setScaleX(m_nSliderScaleX);
 	newConf.setScaleY(m_nSliderScaleY);
 	newConf.setScaleZ(m_nSliderScaleZ);
-	
+	newConf.setBasicGeometry(m_nBasicGeometry);
+
 	m_pAsyncRunGenerator->setStoneGeneratorConfig(newConf);
 	m_pAsyncRunGenerator->setRegenerateGeometry(m_bRegenerateGeometry);
 	m_pAsyncRunGenerator->setRegenerateTexture(m_bRegenerateTexture);

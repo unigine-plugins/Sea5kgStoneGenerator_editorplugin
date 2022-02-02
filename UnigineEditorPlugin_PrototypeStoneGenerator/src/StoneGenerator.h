@@ -70,7 +70,11 @@ class StoneGeneratorConfig {
         void setScaleZ(float nScaleZ);
         float getScaleZ() const;
 
+        void setBasicGeometry(int nBasicGeometry);
+        int getBasicGeometry() const;
+
     private:
+        int m_nBasicGeometry;
         float m_nRadius;
         int m_nExpectedTriangles;
         float m_nRandomOffsetMin;
@@ -90,8 +94,14 @@ class StoneGenerator {
         const std::vector<StoneTriangle *> &triangles();
         const std::vector<StonePoint *> &points();
 
-        StonePoint *addPoint(float x, float y, float z);
+        
     private:
+        StonePoint *addPoint(float x, float y, float z);
+
+        bool generateBasicSpheres(const StoneGeneratorConfig &conf);
+        bool generateBasicCubes(const StoneGeneratorConfig &conf);
+
+
         float distance(StonePoint *p1, StonePoint *p2);
         float distanceUV(StonePoint *p1, StonePoint *p2);
         float angelXY(StonePoint *p1, StonePoint *p2);

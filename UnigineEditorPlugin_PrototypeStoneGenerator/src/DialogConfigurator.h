@@ -84,6 +84,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         void sliderFloat_valuesChanged(int nNewValue);
 
         void comboboxTextureResolution_Changed(int nNewValue);
+        void comboboxBasicGeometry_Changed(int nNewValue);
 
         void slot_generationComplited(QString sDone);
 
@@ -102,17 +103,21 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         int m_nLabelValueSize;
 
         QString m_sRandomName;
+        QComboBox *m_pBasicGemometry;
+
+        QLabel *m_pTextureLabel;
+        QHBoxLayout *m_pTexturesLayout;
         QLabel *m_pImageView;
         QListWidget *m_pTrianlesList;
         QPixmap m_pixmapImageOrigin;
         QPixmap m_pixmapImageHiglighted;
+
         QPushButton *m_pRegenerateButton;
         QPushButton *m_pSaveMeshButton;
         QPushButton *m_pCloseButton;
-        QLabel *m_pTextureLabel;
-        QHBoxLayout *m_pTexturesLayout;
         
         
+        int m_nBasicGeometry;
         int m_nSliderTrianglesValue;
         float m_nSliderRadius;
         float m_nSliderRandomOffsetMin;
