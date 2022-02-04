@@ -28,6 +28,7 @@ DialogConfigurator::DialogConfigurator(
 	m_nLabelSize = 120;
 	m_nLabelValueSize = 50;
 	m_nBasicGeometry = 0;
+	m_nPointsOfAttraction = 0;
 	m_bGenerateMesh = true;
     m_bGenerateMaterial = true;
 
@@ -47,6 +48,7 @@ DialogConfigurator::DialogConfigurator(
 	leftLayout->addWidget(m_pBasicGemometry);
 
 	leftLayout->addLayout(  createIntSliderParameterUI("Expected triangles: ", &m_nSliderTrianglesValue, 100, 80000));
+	leftLayout->addLayout(  createIntSliderParameterUI("Points Of Attraction:", &m_nPointsOfAttraction, 0, 25));
 	leftLayout->addLayout(createFloatSliderParameterUI("Radius: ", &m_nSliderRadius, 0.1, 4.0));
 	leftLayout->addLayout(createFloatSliderParameterUI("Random Offset (min): ", &m_nSliderRandomOffsetMin, -2.0, 2.0));
 	leftLayout->addLayout(createFloatSliderParameterUI("Random Offset (max): ", &m_nSliderRandomOffsetMax, -2.0, 2.0));
@@ -233,6 +235,7 @@ void DialogConfigurator::regenerateGeometry() {
 
 	StoneGeneratorConfig newConf;
 	newConf.setEstimatedExpectedTriangles(m_nSliderTrianglesValue);
+	newConf.setPointsOfAttraction(m_nPointsOfAttraction);
 	newConf.setRadius(m_nSliderRadius);
 	newConf.setRandomOffsetMin(m_nSliderRandomOffsetMin);
 	newConf.setRandomOffsetMax(m_nSliderRandomOffsetMax);
@@ -292,6 +295,7 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 	const std::vector<StoneTriangle *> &vTriangles = pStoneGenerator->triangles();
 	m_pMesh->addTriangles(vTriangles.size());
 	m_pMesh->allocateIndices(vTriangles.size()*3);
+	std::cout << "Got triangles: " << vTriangles.size() << std::endl;
 	for (int i = 0; i < vTriangles.size(); i++) {
 		StoneTriangle *pTriangle = vTriangles[i];
 		m_pMesh->setIndex(i*3 + 0, pTriangle->p1()->getIndex());
@@ -390,6 +394,7 @@ void DialogConfigurator::updateTextureImageView(const QString &sHeighlightTriang
 		m_pTrianlesList->clear();
 	}
 	bool bSaveImage = false;
+
 	for (int i = 0; i < vTriangles.size(); i++) {
 		StoneTriangle *pTriangle = vTriangles[i];
 		int nX0 = normalizeTextureCoordinates(nImageHeight, pTriangle->p1()->getTextureCoordinateU());

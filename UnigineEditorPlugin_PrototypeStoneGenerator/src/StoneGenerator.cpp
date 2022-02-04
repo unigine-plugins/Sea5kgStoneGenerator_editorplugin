@@ -116,6 +116,14 @@ int StoneGeneratorConfig::getEstimatedExpectedTriangles() const {
     return m_nExpectedTriangles;
 }
 
+void StoneGeneratorConfig::setPointsOfAttraction(int nPointsOfAttraction) {
+    m_nPointsOfAttraction = nPointsOfAttraction;
+}
+
+int StoneGeneratorConfig::getPointsOfAttraction() const {
+    return m_nPointsOfAttraction;
+}
+
 void StoneGeneratorConfig::setRadius(float nRadius) {
     m_nRadius = nRadius;
 }
@@ -277,8 +285,11 @@ const std::vector<StonePoint *> &StoneGenerator::points() {
     return m_vPoints;
 }
 
-StonePoint *StoneGenerator::addPoint(float x, float y, float z) {
+StonePoint *StoneGenerator::addPoint(const StoneGeneratorConfig &conf, float x, float y, float z) {
     StonePoint *pPoint = nullptr;
+    x = conf.getScaleX() * x;
+    y = conf.getScaleY() * y;
+    z = conf.getScaleZ() * z;
     int nX = x*100;
     int nY = y*100;
     int nZ = z*100;
@@ -291,7 +302,7 @@ StonePoint *StoneGenerator::addPoint(float x, float y, float z) {
         }
     }
     if (pPoint == nullptr) {
-        pPoint = new StonePoint(x,y,z);
+        pPoint = new StonePoint(x, y, z);
         m_vPoints.push_back(pPoint);
         pPoint->setIndex(nSize);
     }
@@ -344,26 +355,10 @@ bool StoneGenerator::generateBasicSpheres(const StoneGeneratorConfig &conf) {
             XYPoint x0y1 = xy_sectors[i_xy_next];
             XYPoint x1y0 = lvl_z_next.xy_sectors[i_xy];
             XYPoint x1y1 = lvl_z_next.xy_sectors[i_xy_next];
-            StonePoint *pPoint00 = addPoint(
-                conf.getScaleX() * x0y0.x,
-                conf.getScaleY() * x0y0.y,
-                conf.getScaleZ() * lvl_z.z
-            );
-            StonePoint *pPoint01 = addPoint(
-                conf.getScaleX() * x0y1.x,
-                conf.getScaleY() * x0y1.y,
-                conf.getScaleZ() * lvl_z.z
-            );
-            StonePoint *pPoint10 = addPoint(
-                conf.getScaleX() * x1y0.x,
-                conf.getScaleY() * x1y0.y,
-                conf.getScaleZ() * lvl_z_next.z
-            );
-            StonePoint *pPoint11 = addPoint(
-                conf.getScaleX() * x1y1.x,
-                conf.getScaleY() * x1y1.y,
-                conf.getScaleZ() * lvl_z_next.z
-            );
+            StonePoint *pPoint00 = addPoint(conf, x0y0.x, x0y0.y, lvl_z.z);
+            StonePoint *pPoint01 = addPoint(conf, x0y1.x, x0y1.y, lvl_z.z);
+            StonePoint *pPoint10 = addPoint(conf, x1y0.x, x1y0.y, lvl_z_next.z);
+            StonePoint *pPoint11 = addPoint(conf, x1y1.x, x1y1.y, lvl_z_next.z);
 
             // 00 * ----- * 01
             //    |       | 
@@ -399,8 +394,11 @@ bool StoneGenerator::generateBasicSpheres(const StoneGeneratorConfig &conf) {
 bool StoneGenerator::generateBasicCubes(const StoneGeneratorConfig &conf) {
     float nRadius = conf.getRadius();
 
-    float nK = conf.getEstimatedExpectedTriangles() / 6.0; // 6 sides
-    nK = std::sqrt(nK); // squares on each side; 
+    float fK = conf.getEstimatedExpectedTriangles() / 6.0; // 6 sides
+    fK = fK / 2.0;
+    fK = std::sqrt(fK); // squares on each side;
+    int nK = std::round(fK);
+
     float nStep = 2*nRadius / nK;
 
     float nX0 = -nRadius;
@@ -412,14 +410,18 @@ bool StoneGenerator::generateBasicCubes(const StoneGeneratorConfig &conf) {
     float nZ0 = -nRadius;
     float nZ1 = nRadius;
 
-    for (float x = nX0; x < nX1 - nStep; x += nStep) {
-        for (float y = nY0; y < nY1 - nStep; y += nStep) {
+    for (int a = 0; a < nK; a++) {
+        for (int b = 0; b < nK; b++) {
+            float fA0 = float(a)*nStep - nRadius;
+            float fB0 = float(b)*nStep - nRadius;
+            float fA1 = fA0 + nStep;
+            float fB1 = fB0 + nStep;
             // bottom
             {
-                StonePoint *pPoint00 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * (y        ), conf.getScaleZ() * nZ0);
-                StonePoint *pPoint01 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * (y + nStep), conf.getScaleZ() * nZ0);
-                StonePoint *pPoint10 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * (y        ), conf.getScaleZ() * nZ0);
-                StonePoint *pPoint11 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * (y + nStep), conf.getScaleZ() * nZ0);
+                StonePoint *pPoint00 = addPoint(conf, fA0, fB0, nZ0);
+                StonePoint *pPoint01 = addPoint(conf, fA0, fB1, nZ0);
+                StonePoint *pPoint10 = addPoint(conf, fA1, fB0, nZ0);
+                StonePoint *pPoint11 = addPoint(conf, fA1, fB1, nZ0);
                 StoneTriangle *pTriangle1 = new StoneTriangle(pPoint00, pPoint01, pPoint11);
                 m_vTriangles.push_back(pTriangle1);
                 StoneTriangle *pTriangle2 = new StoneTriangle(pPoint00, pPoint11, pPoint10);
@@ -428,27 +430,22 @@ bool StoneGenerator::generateBasicCubes(const StoneGeneratorConfig &conf) {
             
             // top
             {
-                StonePoint *pPoint00 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * (y        ), conf.getScaleZ() * nZ1);
-                StonePoint *pPoint01 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * (y + nStep), conf.getScaleZ() * nZ1);
-                StonePoint *pPoint10 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * (y        ), conf.getScaleZ() * nZ1);
-                StonePoint *pPoint11 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * (y + nStep), conf.getScaleZ() * nZ1);
+                StonePoint *pPoint00 = addPoint(conf, fA0, fB0, nZ1);
+                StonePoint *pPoint01 = addPoint(conf, fA0, fB1, nZ1);
+                StonePoint *pPoint10 = addPoint(conf, fA1, fB0, nZ1);
+                StonePoint *pPoint11 = addPoint(conf, fA1, fB1, nZ1);
                 StoneTriangle *pTriangle1 = new StoneTriangle(pPoint11, pPoint01, pPoint00);
                 m_vTriangles.push_back(pTriangle1);
                 StoneTriangle *pTriangle2 = new StoneTriangle(pPoint10, pPoint11, pPoint00);
                 m_vTriangles.push_back(pTriangle2);
             }
-            
-        }
-    }
 
-    for (float z = nZ0; z < nZ1 - nStep; z += nStep) {
-        for (float y = nY0; y < nY1 - nStep; y += nStep) {
             // left
             {
-                StonePoint *pPoint00 = addPoint(conf.getScaleX() * nX0, conf.getScaleY() * (y        ), conf.getScaleZ() * (z        ));
-                StonePoint *pPoint01 = addPoint(conf.getScaleX() * nX0, conf.getScaleY() * (y        ), conf.getScaleZ() * (z + nStep));
-                StonePoint *pPoint10 = addPoint(conf.getScaleX() * nX0, conf.getScaleY() * (y + nStep), conf.getScaleZ() * (z        ));
-                StonePoint *pPoint11 = addPoint(conf.getScaleX() * nX0, conf.getScaleY() * (y + nStep), conf.getScaleZ() * (z + nStep));
+                StonePoint *pPoint00 = addPoint(conf, nX0, fB0, fA0);
+                StonePoint *pPoint01 = addPoint(conf, nX0, fB0, fA1);
+                StonePoint *pPoint10 = addPoint(conf, nX0, fB1, fA0);
+                StonePoint *pPoint11 = addPoint(conf, nX0, fB1, fA1);
                 StoneTriangle *pTriangle1 = new StoneTriangle(pPoint00, pPoint01, pPoint11);
                 m_vTriangles.push_back(pTriangle1);
                 StoneTriangle *pTriangle2 = new StoneTriangle(pPoint00, pPoint11, pPoint10);
@@ -457,26 +454,22 @@ bool StoneGenerator::generateBasicCubes(const StoneGeneratorConfig &conf) {
             
             // right
             {
-                StonePoint *pPoint00 = addPoint(conf.getScaleX() * nX1, conf.getScaleY() * (y        ), conf.getScaleZ() * (z        ));
-                StonePoint *pPoint01 = addPoint(conf.getScaleX() * nX1, conf.getScaleY() * (y        ), conf.getScaleZ() * (z + nStep));
-                StonePoint *pPoint10 = addPoint(conf.getScaleX() * nX1, conf.getScaleY() * (y + nStep), conf.getScaleZ() * (z        ));
-                StonePoint *pPoint11 = addPoint(conf.getScaleX() * nX1, conf.getScaleY() * (y + nStep), conf.getScaleZ() * (z + nStep));
+                StonePoint *pPoint00 = addPoint(conf, nX1, fB0, fA0);
+                StonePoint *pPoint01 = addPoint(conf, nX1, fB0, fA1);
+                StonePoint *pPoint10 = addPoint(conf, nX1, fB1, fA0);
+                StonePoint *pPoint11 = addPoint(conf, nX1, fB1, fA1);
                 StoneTriangle *pTriangle1 = new StoneTriangle(pPoint11, pPoint01, pPoint00);
                 m_vTriangles.push_back(pTriangle1);
                 StoneTriangle *pTriangle2 = new StoneTriangle(pPoint10, pPoint11, pPoint00);
                 m_vTriangles.push_back(pTriangle2);
             }
-        }
-    }
 
-    for (float z = nZ0; z < nZ1 - nStep; z += nStep) {
-        for (float x = nX0; x < nX1 - nStep; x += nStep) {
             // front
             {
-                StonePoint *pPoint00 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * nY1, conf.getScaleZ() * (z        ));
-                StonePoint *pPoint01 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * nY1, conf.getScaleZ() * (z + nStep));
-                StonePoint *pPoint10 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * nY1, conf.getScaleZ() * (z        ));
-                StonePoint *pPoint11 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * nY1, conf.getScaleZ() * (z + nStep));
+                StonePoint *pPoint00 = addPoint(conf, fB0, nY1, fA0);
+                StonePoint *pPoint01 = addPoint(conf, fB0, nY1, fA1);
+                StonePoint *pPoint10 = addPoint(conf, fB1, nY1, fA0);
+                StonePoint *pPoint11 = addPoint(conf, fB1, nY1, fA1);
                 StoneTriangle *pTriangle1 = new StoneTriangle(pPoint00, pPoint01, pPoint11);
                 m_vTriangles.push_back(pTriangle1);
                 StoneTriangle *pTriangle2 = new StoneTriangle(pPoint00, pPoint11, pPoint10);
@@ -485,10 +478,10 @@ bool StoneGenerator::generateBasicCubes(const StoneGeneratorConfig &conf) {
             
             // end
             {
-                StonePoint *pPoint00 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * nY0, conf.getScaleZ() * (z        ));
-                StonePoint *pPoint01 = addPoint(conf.getScaleX() * (x        ), conf.getScaleY() * nY0, conf.getScaleZ() * (z + nStep));
-                StonePoint *pPoint10 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * nY0, conf.getScaleZ() * (z        ));
-                StonePoint *pPoint11 = addPoint(conf.getScaleX() * (x + nStep), conf.getScaleY() * nY0, conf.getScaleZ() * (z + nStep));
+                StonePoint *pPoint00 = addPoint(conf, fB0, nY0, fA0);
+                StonePoint *pPoint01 = addPoint(conf, fB0, nY0, fA1);
+                StonePoint *pPoint10 = addPoint(conf, fB1, nY0, fA0);
+                StonePoint *pPoint11 = addPoint(conf, fB1, nY0, fA1);
                 StoneTriangle *pTriangle1 = new StoneTriangle(pPoint11, pPoint01, pPoint00);
                 m_vTriangles.push_back(pTriangle1);
                 StoneTriangle *pTriangle2 = new StoneTriangle(pPoint10, pPoint11, pPoint00);
@@ -496,8 +489,6 @@ bool StoneGenerator::generateBasicCubes(const StoneGeneratorConfig &conf) {
             }
         }
     }
-
-
     return true;
 }
 

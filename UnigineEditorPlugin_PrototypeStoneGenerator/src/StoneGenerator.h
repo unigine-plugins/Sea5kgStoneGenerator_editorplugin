@@ -55,7 +55,8 @@ class StoneGeneratorConfig {
 
         void setEstimatedExpectedTriangles(int nExpected);
         int getEstimatedExpectedTriangles() const;
-        
+        void setPointsOfAttraction(int nPointsOfAttraction);
+        int getPointsOfAttraction() const;
         void setRadius(float nRadius);
         float getRadius() const;
         void setRandomOffsetMin(float nRandomOffsetMin);
@@ -77,6 +78,7 @@ class StoneGeneratorConfig {
         int m_nBasicGeometry;
         float m_nRadius;
         int m_nExpectedTriangles;
+        int m_nPointsOfAttraction;
         float m_nRandomOffsetMin;
         float m_nRandomOffsetMax;
         float m_nScaleX;
@@ -96,7 +98,7 @@ class StoneGenerator {
 
         
     private:
-        StonePoint *addPoint(float x, float y, float z);
+        StonePoint *addPoint(const StoneGeneratorConfig &conf, float x, float y, float z);
 
         bool generateBasicSpheres(const StoneGeneratorConfig &conf);
         bool generateBasicCubes(const StoneGeneratorConfig &conf);
