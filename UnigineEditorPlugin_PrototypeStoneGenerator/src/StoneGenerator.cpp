@@ -8,12 +8,7 @@
 // StonePoint
 
 StonePoint::StonePoint(float x, float y, float z) {
-    m_nX = x;
-    m_nY = y;
-    m_nZ = z;
-    m_nX100 = m_nX*100;
-    m_nY100 = m_nY*100;
-    m_nZ100 = m_nZ*100;
+    setXYZ(x,y,z);
     m_nIndex = 0;
     m_nU = 0.0f;
     m_nV = 0.0f;
@@ -35,6 +30,15 @@ void StonePoint::addOffset(float x, float y, float z) {
     m_nX = m_nX + x;
     m_nY = m_nY + y;
     m_nZ = m_nZ + z;
+    m_nX100 = m_nX*100;
+    m_nY100 = m_nY*100;
+    m_nZ100 = m_nZ*100;
+}
+
+void StonePoint::setXYZ(float x, float y, float z) {
+    m_nX = x;
+    m_nY = y;
+    m_nZ = z;
     m_nX100 = m_nX*100;
     m_nY100 = m_nY*100;
     m_nZ100 = m_nZ*100;
@@ -235,6 +239,7 @@ bool StoneGenerator::generate(const StoneGeneratorConfig &conf) {
     
     this->processAttraction(conf);
     this->processRandom(conf);
+    this->processNormalize(conf);
     
     
     // calculate texture coordinates
@@ -551,7 +556,45 @@ bool StoneGenerator::processRandom(const StoneGeneratorConfig &conf) {
 }
 
 bool StoneGenerator::processNormalize(const StoneGeneratorConfig &conf) {
-    // TODO 
+    if (m_vPoints.size() == 0) {
+        return false;
+    }
+
+    float fDiameter = conf.getRadius()*2.0;
+    float nSizeX = fDiameter * conf.getScaleX();
+    float nSizeY = fDiameter * conf.getScaleY();
+    float nSizeZ = fDiameter * conf.getScaleZ();
+
+    float fMinX = m_vPoints[0]->x();
+    float fMinY = m_vPoints[0]->y();
+    float fMinZ = m_vPoints[0]->z();
+    float fMaxX = m_vPoints[0]->x();
+    float fMaxY = m_vPoints[0]->y();
+    float fMaxZ = m_vPoints[0]->z();
+
+    for (int i = 0; i < m_vPoints.size(); i++) {
+        this->minXYZ(m_vPoints[i], fMinX, fMinY, fMinZ);
+        this->maxXYZ(m_vPoints[i], fMaxX, fMaxY, fMaxZ);
+    }
+
+    // resize
+    float fKX = nSizeX / (fMaxX - fMinX);
+    float fKY = nSizeY / (fMaxY - fMinY);
+    float fKZ = nSizeZ / (fMaxZ - fMinZ);
+
+    // shift
+    float fSX = -1.0 * (fMinX + (fMaxX - fMinX) / 2.0);
+    float fSY = -1.0 * (fMinY + (fMaxY - fMinY) / 2.0);
+    float fSZ = -1.0 * (fMinZ + (fMaxZ - fMinZ) / 2.0);
+
+    for (int i = 0; i < m_vPoints.size(); i++) {
+        m_vPoints[i]->setXYZ(
+            fKX * (m_vPoints[i]->x() + fSX),
+            fKY * (m_vPoints[i]->y() + fSY),
+            fKZ * (m_vPoints[i]->z() + fSZ)
+        );
+    }
+
     return true;
 }
 

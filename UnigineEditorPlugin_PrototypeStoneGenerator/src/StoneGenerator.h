@@ -11,6 +11,7 @@ class StonePoint {
         float z();
 
         void addOffset(float x, float y, float z);
+        void setXYZ(float x, float y, float z);
 
         bool compare(int nX, int nY, int nZ, int nThreshold);
         void setIndex(int nIndex);
