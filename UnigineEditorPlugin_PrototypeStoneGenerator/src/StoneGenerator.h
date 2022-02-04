@@ -61,11 +61,8 @@ class StoneGeneratorConfig {
         float getStrongOfAttraction() const;
         void setRadius(float nRadius);
         float getRadius() const;
-        void setRandomOffsetMin(float nRandomOffsetMin);
-        float getRandomOffsetMin() const;
-        void setRandomOffsetMax(float nRandomOffsetMax);
-        float getRandomOffsetMax() const;
-
+        void setSurfaceDistortion(float nSurfaceDistortion);
+        float getSurfaceDistortion() const;
         void setScaleX(float nScaleX);
         float getScaleX() const;
         void setScaleY(float nScaleY);
@@ -82,8 +79,7 @@ class StoneGeneratorConfig {
         int m_nExpectedTriangles;
         int m_nPointsOfAttraction;
         float m_nStrongOfAttraction;
-        float m_nRandomOffsetMin;
-        float m_nRandomOffsetMax;
+        float m_nSurfaceDistortion;
         float m_nScaleX;
         float m_nScaleY;
         float m_nScaleZ;

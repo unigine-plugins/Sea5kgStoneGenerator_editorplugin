@@ -98,8 +98,7 @@ StonePoint *StoneTriangle::p3() {
 // StoneGeneratorConfig
 
 StoneGeneratorConfig::StoneGeneratorConfig() {
-    m_nRandomOffsetMin = 0.0f;
-    m_nRandomOffsetMax = 0.0f;
+    m_nSurfaceDistortion = 0.0f;
     m_nRadius = 2.0f;
     m_nExpectedTriangles = 300;
     m_nScaleX = 1.0f;
@@ -142,20 +141,12 @@ float StoneGeneratorConfig::getRadius() const {
     return m_nRadius;
 }
 
-void StoneGeneratorConfig::setRandomOffsetMin(float nRandomOffsetMin) {
-    m_nRandomOffsetMin = nRandomOffsetMin;
+void StoneGeneratorConfig::setSurfaceDistortion(float nSurfaceDistortion) {
+    m_nSurfaceDistortion = nSurfaceDistortion;
 }
 
-float StoneGeneratorConfig::getRandomOffsetMin() const {
-    return m_nRandomOffsetMin;
-}
-
-void StoneGeneratorConfig::setRandomOffsetMax(float nRandomOffsetMax) {
-    m_nRandomOffsetMax = nRandomOffsetMax;
-}
-
-float StoneGeneratorConfig::getRandomOffsetMax() const {
-    return m_nRandomOffsetMax;
+float StoneGeneratorConfig::getSurfaceDistortion() const {
+    return m_nSurfaceDistortion;
 }
 
 void StoneGeneratorConfig::setScaleX(float nScaleX) {
@@ -545,13 +536,14 @@ bool StoneGenerator::processAttraction(const StoneGeneratorConfig &conf) {
 }
 
 bool StoneGenerator::processRandom(const StoneGeneratorConfig &conf) {
-    int nRandomDiff = 100.0 * (conf.getRandomOffsetMax() - conf.getRandomOffsetMin());
+    int nRandomDiff = 100.0 * conf.getSurfaceDistortion();
+    float fMin = conf.getSurfaceDistortion();
     std::cout << "nRandomDiff: " << nRandomDiff << std::endl;
     if (nRandomDiff > 0) {
         for (int i = 0; i < m_vPoints.size(); i++) {
-            float nOffsetX = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
-            float nOffsetY = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
-            float nOffsetZ = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
+            float nOffsetX = fMin + float(std::rand() % nRandomDiff) / 100.0;
+            float nOffsetY = fMin + float(std::rand() % nRandomDiff) / 100.0;
+            float nOffsetZ = fMin + float(std::rand() % nRandomDiff) / 100.0;
             m_vPoints[i]->addOffset(nOffsetX, nOffsetY, nOffsetZ);
         }
     }

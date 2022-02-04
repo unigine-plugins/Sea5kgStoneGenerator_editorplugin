@@ -121,8 +121,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         float m_nStrongOfAttraction;
         int m_nSliderTrianglesValue;
         float m_nSliderRadius;
-        float m_nSliderRandomOffsetMin;
-        float m_nSliderRandomOffsetMax;
+        float m_nSliderSurfaceDistortion;
         float m_nSliderScaleX;
         float m_nSliderScaleY;
         float m_nSliderScaleZ;

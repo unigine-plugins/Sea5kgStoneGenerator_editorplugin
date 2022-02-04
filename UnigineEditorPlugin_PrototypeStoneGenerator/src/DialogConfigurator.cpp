@@ -18,8 +18,7 @@ DialogConfigurator::DialogConfigurator(
     m_bRegenerateTexture = false;
 	m_nSliderTrianglesValue = 100;
 	m_nSliderRadius = 2.0f;
-	m_nSliderRandomOffsetMin = 0.0f;
-	m_nSliderRandomOffsetMax = 0.0f;
+	m_nSliderSurfaceDistortion = 0.05f;
 	m_nSliderScaleX = 1.0f;
 	m_nSliderScaleY = 1.0f;
 	m_nSliderScaleZ = 1.0f;
@@ -51,9 +50,8 @@ DialogConfigurator::DialogConfigurator(
 	leftLayout->addLayout(  createIntSliderParameterUI("Expected triangles: ", &m_nSliderTrianglesValue, 100, 15000));
 	leftLayout->addLayout(createFloatSliderParameterUI("Radius: ", &m_nSliderRadius, 0.1, 4.0));
 	leftLayout->addLayout(  createIntSliderParameterUI("Attraction Points:", &m_nPointsOfAttraction, 0, 25));
-	leftLayout->addLayout(createFloatSliderParameterUI("Attraction Strong (%): ", &m_nStrongOfAttraction, 1.0, 50.0));
-	leftLayout->addLayout(createFloatSliderParameterUI("Random Offset (min): ", &m_nSliderRandomOffsetMin, -2.0, 2.0));
-	leftLayout->addLayout(createFloatSliderParameterUI("Random Offset (max): ", &m_nSliderRandomOffsetMax, -2.0, 2.0));
+	leftLayout->addLayout(createFloatSliderParameterUI("Attraction Strong: ", &m_nStrongOfAttraction, 1.0, 50.0));
+	leftLayout->addLayout(createFloatSliderParameterUI("Surface distortion : ", &m_nSliderSurfaceDistortion, 0.0, 2.0));
 	leftLayout->addLayout(createFloatSliderParameterUI("Scale X: ", &m_nSliderScaleX, 0.1, 10.0));
 	leftLayout->addLayout(createFloatSliderParameterUI("Scale Y: ", &m_nSliderScaleY, 0.1, 10.0));
 	leftLayout->addLayout(createFloatSliderParameterUI("Scale Z: ", &m_nSliderScaleZ, 0.1, 10.0));
@@ -240,8 +238,7 @@ void DialogConfigurator::regenerateGeometry() {
 	newConf.setPointsOfAttraction(m_nPointsOfAttraction);
 	newConf.setStrongOfAttraction(m_nStrongOfAttraction);
 	newConf.setRadius(m_nSliderRadius);
-	newConf.setRandomOffsetMin(m_nSliderRandomOffsetMin);
-	newConf.setRandomOffsetMax(m_nSliderRandomOffsetMax);
+	newConf.setSurfaceDistortion(m_nSliderSurfaceDistortion);
 	newConf.setScaleX(m_nSliderScaleX);
 	newConf.setScaleY(m_nSliderScaleY);
 	newConf.setScaleZ(m_nSliderScaleZ);
