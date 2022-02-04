@@ -271,36 +271,69 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 	m_pMesh->flushVertex();
 	auto *pStoneGenerator = m_pAsyncRunGenerator->getStoneGenerator();
 
-	const std::vector<StonePoint *> &vPoints = pStoneGenerator->points();
-	for (int i = 0; i < vPoints.size(); i++) {
-		m_pMesh->addVertex(Unigine::Math::vec3(
-			vPoints[i]->x(),
-			vPoints[i]->y(),
-			vPoints[i]->z()
-		));
-		// m_pMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
-		// std::cout << "tx coord uv: " <<
-		// 	vPoints[i]->getTextureCoordinateU()
-		// 	<< " " << 
-		// 	vPoints[i]->getTextureCoordinateV()
-		// 	<< std::endl;
-		m_pMesh->addTexCoord(Unigine::Math::vec4(
-			vPoints[i]->getTextureCoordinateU(),
-			vPoints[i]->getTextureCoordinateV(),
-			0,
-			0
-		));
-	}
+	// const std::vector<StonePoint *> &vPoints = pStoneGenerator->points();
+	// for (int i = 0; i < vPoints.size(); i++) {
+	// 	m_pMesh->addVertex(Unigine::Math::vec3(
+	// 		vPoints[i]->x(),
+	// 		vPoints[i]->y(),
+	// 		vPoints[i]->z()
+	// 	));
+	// 	// m_pMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
+	// 	// std::cout << "tx coord uv: " <<
+	// 	// 	vPoints[i]->getTextureCoordinateU()
+	// 	// 	<< " " << 
+	// 	// 	vPoints[i]->getTextureCoordinateV()
+	// 	// 	<< std::endl;
+	// 	m_pMesh->addTexCoord(Unigine::Math::vec4(
+	// 		vPoints[i]->getTextureCoordinateU(),
+	// 		vPoints[i]->getTextureCoordinateV(),
+	// 		0,
+	// 		0
+	// 	));
+	// }
 
 	const std::vector<StoneTriangle *> &vTriangles = pStoneGenerator->triangles();
 	m_pMesh->addTriangles(vTriangles.size());
-	m_pMesh->allocateIndices(vTriangles.size()*3);
+	// m_pMesh->allocateIndices(vTriangles.size()*3);
 	std::cout << "Got triangles: " << vTriangles.size() << std::endl;
 	for (int i = 0; i < vTriangles.size(); i++) {
 		StoneTriangle *pTriangle = vTriangles[i];
-		m_pMesh->setIndex(i*3 + 0, pTriangle->p1()->getIndex());
-		m_pMesh->setIndex(i*3 + 1, pTriangle->p2()->getIndex());
-		m_pMesh->setIndex(i*3 + 2, pTriangle->p3()->getIndex());
+		m_pMesh->addVertex(Unigine::Math::vec3(
+	 		pTriangle->p1()->x(),
+	 		pTriangle->p1()->y(),
+	 		pTriangle->p1()->z()
+	 	));
+		m_pMesh->addTexCoord(Unigine::Math::vec4(
+			pTriangle->t1().x(),
+			pTriangle->t1().y(),
+			0,
+			0
+		));
+		m_pMesh->addVertex(Unigine::Math::vec3(
+	 		pTriangle->p2()->x(),
+	 		pTriangle->p2()->y(),
+	 		pTriangle->p2()->z()
+	 	));
+		m_pMesh->addTexCoord(Unigine::Math::vec4(
+			pTriangle->t2().x(),
+			pTriangle->t2().y(),
+			0,
+			0
+		));
+		m_pMesh->addVertex(Unigine::Math::vec3(
+	 		pTriangle->p3()->x(),
+	 		pTriangle->p3()->y(),
+	 		pTriangle->p3()->z()
+	 	));
+		m_pMesh->addTexCoord(Unigine::Math::vec4(
+			pTriangle->t3().x(),
+			pTriangle->t3().y(),
+			0,
+			0
+		));
+		// m_pMesh->setIndex(i*3 + 0, pTriangle->p1()->getIndex());
+		// m_pMesh->setIndex(i*3 + 1, pTriangle->p2()->getIndex());
+		// m_pMesh->setIndex(i*3 + 2, pTriangle->p3()->getIndex());
 	}
 
 	// // optimize vertex and index buffers, if necessary
@@ -397,12 +430,12 @@ void DialogConfigurator::updateTextureImageView(const QString &sHeighlightTriang
 
 	for (int i = 0; i < vTriangles.size(); i++) {
 		StoneTriangle *pTriangle = vTriangles[i];
-		int nX0 = normalizeTextureCoordinates(nImageHeight, pTriangle->p1()->getTextureCoordinateU());
-		int nY0 = normalizeTextureCoordinates(nImageWidth, pTriangle->p1()->getTextureCoordinateV());
-		int nX1 = normalizeTextureCoordinates(nImageHeight, pTriangle->p2()->getTextureCoordinateU());
-		int nY1 = normalizeTextureCoordinates(nImageWidth, pTriangle->p2()->getTextureCoordinateV());
-		int nX2 = normalizeTextureCoordinates(nImageHeight, pTriangle->p3()->getTextureCoordinateU());
-		int nY2 = normalizeTextureCoordinates(nImageWidth, pTriangle->p3()->getTextureCoordinateV());
+		int nX0 = normalizeTextureCoordinates(nImageHeight, pTriangle->t1().x());
+		int nY0 = normalizeTextureCoordinates(nImageWidth,  pTriangle->t1().y());
+		int nX1 = normalizeTextureCoordinates(nImageHeight, pTriangle->t2().x());
+		int nY1 = normalizeTextureCoordinates(nImageWidth,  pTriangle->t2().y());
+		int nX2 = normalizeTextureCoordinates(nImageHeight, pTriangle->t3().x());
+		int nY2 = normalizeTextureCoordinates(nImageWidth,  pTriangle->t3().y());
 
 		painter.drawLine(nX0, nY0, nX1, nY1);
 		painter.drawLine(nX1, nY1, nX2, nY2);
