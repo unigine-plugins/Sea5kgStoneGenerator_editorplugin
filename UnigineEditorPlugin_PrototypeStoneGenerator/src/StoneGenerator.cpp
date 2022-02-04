@@ -106,6 +106,8 @@ StoneGeneratorConfig::StoneGeneratorConfig() {
     m_nScaleY = 1.0f;
     m_nScaleZ = 1.0f;
     m_nBasicGeometry = 0;
+    m_nStrongOfAttraction = 1.0f;
+    m_nPointsOfAttraction = 0;
 }
 
 void StoneGeneratorConfig::setEstimatedExpectedTriangles(int nExpected) {
@@ -122,6 +124,14 @@ void StoneGeneratorConfig::setPointsOfAttraction(int nPointsOfAttraction) {
 
 int StoneGeneratorConfig::getPointsOfAttraction() const {
     return m_nPointsOfAttraction;
+}
+
+void StoneGeneratorConfig::setStrongOfAttraction(float nStrongOfAttraction) {
+    m_nStrongOfAttraction = nStrongOfAttraction;
+}
+
+float StoneGeneratorConfig::getStrongOfAttraction() const {
+    return m_nStrongOfAttraction;
 }
 
 void StoneGeneratorConfig::setRadius(float nRadius) {
@@ -232,17 +242,9 @@ bool StoneGenerator::generate(const StoneGeneratorConfig &conf) {
         return false;
     }
     
-
-    int nRandomDiff = 100.0 * (conf.getRandomOffsetMax() - conf.getRandomOffsetMin());
-    std::cout << "nRandomDiff: " << nRandomDiff << std::endl;
-    if (nRandomDiff > 0) {
-        for (int i = 0; i < m_vPoints.size(); i++) {
-            float nOffsetX = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
-            float nOffsetY = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
-            float nOffsetZ = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
-            m_vPoints[i]->addOffset(nOffsetX, nOffsetY, nOffsetZ);
-        }
-    }
+    this->processAttraction(conf);
+    this->processRandom(conf);
+    
     
     // calculate texture coordinates
     for (int i = 0; i < m_vTriangles.size(); i++) {
@@ -492,6 +494,75 @@ bool StoneGenerator::generateBasicCubes(const StoneGeneratorConfig &conf) {
     return true;
 }
 
+bool StoneGenerator::processAttraction(const StoneGeneratorConfig &conf) {
+    if (conf.getPointsOfAttraction() == 0) {
+        return true;
+    }
+    std::vector<StonePoint *> vAttractionPoints;
+    float nStrongAttraction = conf.getStrongOfAttraction();
+    float rk = 2.0;
+    float fDiametr = conf.getRadius() * 2.0;
+    int nWidth = fDiametr * rk * 100.0;
+    for (int i = 0; i < conf.getPointsOfAttraction(); i++) {
+        float x = float(std::rand() % nWidth) / 100.0;
+        x = x - rk * conf.getRadius();
+        x = x * conf.getScaleX();
+        float y = float(std::rand() % nWidth) / 100.0;
+        y = y - rk * conf.getRadius();
+        y = y * conf.getScaleY();
+        float z = float(std::rand() % nWidth) / 100.0;
+        z = z - rk * conf.getRadius();
+        z = z * conf.getScaleZ();
+        vAttractionPoints.push_back(new StonePoint(x,y,z));
+        std::cout << "i = " << i << "; x = " << x << "; y = " << y << "; z = " << z << std::endl;
+    }
+
+    for (int i = 0; i < m_vPoints.size(); i++) {
+        float dx = 0.0f;
+        float dy = 0.0f;
+        float dz = 0.0f;
+        int nCloseA = 0;
+        float fMaxDistance = 50000.0;
+        for (int a = 0; a < vAttractionPoints.size(); a++) {
+            float fDistance = this->distance(m_vPoints[i], vAttractionPoints[a]);
+            if (fDistance < fMaxDistance) {
+                nCloseA = a;
+                fMaxDistance = fDistance;
+            }
+        }
+        float fK = std::exp(-1 * fMaxDistance / nStrongAttraction );
+        m_vPoints[i]->addOffset(
+            fK * (vAttractionPoints[nCloseA]->x() - m_vPoints[i]->x()),
+            fK * (vAttractionPoints[nCloseA]->y() - m_vPoints[i]->y()),
+            fK * (vAttractionPoints[nCloseA]->z() - m_vPoints[i]->z())
+        );
+    }
+    for (int i = 0; i < vAttractionPoints.size(); i++) {
+        delete vAttractionPoints[i];
+    }
+    vAttractionPoints.clear();
+    return true;
+}
+
+bool StoneGenerator::processRandom(const StoneGeneratorConfig &conf) {
+    int nRandomDiff = 100.0 * (conf.getRandomOffsetMax() - conf.getRandomOffsetMin());
+    std::cout << "nRandomDiff: " << nRandomDiff << std::endl;
+    if (nRandomDiff > 0) {
+        for (int i = 0; i < m_vPoints.size(); i++) {
+            float nOffsetX = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
+            float nOffsetY = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
+            float nOffsetZ = conf.getRandomOffsetMin() + float(std::rand() % nRandomDiff) / 100.0;
+            m_vPoints[i]->addOffset(nOffsetX, nOffsetY, nOffsetZ);
+        }
+    }
+    return true;
+}
+
+bool StoneGenerator::processNormalize(const StoneGeneratorConfig &conf) {
+    // TODO 
+    return true;
+}
+
 float StoneGenerator::distance(StonePoint *p1, StonePoint *p2) {
     float dx = p1->x() - p2->x();
     float dy = p1->y() - p2->y();
@@ -537,6 +608,19 @@ void StoneGenerator::minmaxUV(StonePoint *p1, float &nMinU, float &nMaxU, float 
     nMinV = std::min(nMinV, p1->getTextureCoordinateV());
     nMaxV = std::max(nMaxV, p1->getTextureCoordinateV());
 }
+
+void StoneGenerator::minXYZ(StonePoint *p1, float &nMinX, float &nMinY, float &nMinZ) {
+    nMinX = std::min(nMinX, p1->x());
+    nMinY = std::min(nMinY, p1->y());
+    nMinZ = std::min(nMinZ, p1->z());
+}
+
+void StoneGenerator::maxXYZ(StonePoint *p1, float &nMaxX, float &nMaxY, float &nMaxZ) {
+    nMaxX = std::max(nMaxX, p1->x());
+    nMaxY = std::max(nMaxY, p1->y());
+    nMaxZ = std::max(nMaxZ, p1->z());
+}
+
 
 void StoneGenerator::setTextureCoordinatesFirst(StonePoint *p1, StonePoint *p2) {
     // first

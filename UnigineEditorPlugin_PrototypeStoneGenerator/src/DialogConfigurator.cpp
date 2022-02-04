@@ -25,10 +25,11 @@ DialogConfigurator::DialogConfigurator(
 	m_nSliderScaleZ = 1.0f;
 	m_sFilePath1 = m_temporaryDir.filePath("stone.png");
 	m_sFilePathHighlighted = m_temporaryDir.filePath("stone_high.png");
-	m_nLabelSize = 120;
+	m_nLabelSize = 130;
 	m_nLabelValueSize = 50;
 	m_nBasicGeometry = 0;
-	m_nPointsOfAttraction = 0;
+	m_nPointsOfAttraction = 3;
+	m_nStrongOfAttraction = 3.14f;
 	m_bGenerateMesh = true;
     m_bGenerateMaterial = true;
 
@@ -47,9 +48,10 @@ DialogConfigurator::DialogConfigurator(
 	connect(m_pBasicGemometry, SIGNAL(currentIndexChanged(int)), this, SLOT(comboboxBasicGeometry_Changed(int)));
 	leftLayout->addWidget(m_pBasicGemometry);
 
-	leftLayout->addLayout(  createIntSliderParameterUI("Expected triangles: ", &m_nSliderTrianglesValue, 100, 80000));
-	leftLayout->addLayout(  createIntSliderParameterUI("Points Of Attraction:", &m_nPointsOfAttraction, 0, 25));
+	leftLayout->addLayout(  createIntSliderParameterUI("Expected triangles: ", &m_nSliderTrianglesValue, 100, 15000));
 	leftLayout->addLayout(createFloatSliderParameterUI("Radius: ", &m_nSliderRadius, 0.1, 4.0));
+	leftLayout->addLayout(  createIntSliderParameterUI("Attraction Points:", &m_nPointsOfAttraction, 0, 25));
+	leftLayout->addLayout(createFloatSliderParameterUI("Attraction Strong (%): ", &m_nStrongOfAttraction, 1.0, 50.0));
 	leftLayout->addLayout(createFloatSliderParameterUI("Random Offset (min): ", &m_nSliderRandomOffsetMin, -2.0, 2.0));
 	leftLayout->addLayout(createFloatSliderParameterUI("Random Offset (max): ", &m_nSliderRandomOffsetMax, -2.0, 2.0));
 	leftLayout->addLayout(createFloatSliderParameterUI("Scale X: ", &m_nSliderScaleX, 0.1, 10.0));
@@ -236,6 +238,7 @@ void DialogConfigurator::regenerateGeometry() {
 	StoneGeneratorConfig newConf;
 	newConf.setEstimatedExpectedTriangles(m_nSliderTrianglesValue);
 	newConf.setPointsOfAttraction(m_nPointsOfAttraction);
+	newConf.setStrongOfAttraction(m_nStrongOfAttraction);
 	newConf.setRadius(m_nSliderRadius);
 	newConf.setRandomOffsetMin(m_nSliderRandomOffsetMin);
 	newConf.setRandomOffsetMax(m_nSliderRandomOffsetMax);

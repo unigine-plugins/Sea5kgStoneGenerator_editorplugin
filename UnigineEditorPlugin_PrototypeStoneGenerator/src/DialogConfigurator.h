@@ -90,7 +90,6 @@ class DialogConfigurator : public QDialog, public ISignalGun {
 
         void triangles_itemSelectionChanged();
 
-
     private:
 
         QHBoxLayout *createIntSliderParameterUI(QString sLabel, int *nValue, int nMin, int nMax);
@@ -119,6 +118,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         
         int m_nBasicGeometry;
         int m_nPointsOfAttraction;
+        float m_nStrongOfAttraction;
         int m_nSliderTrianglesValue;
         float m_nSliderRadius;
         float m_nSliderRandomOffsetMin;

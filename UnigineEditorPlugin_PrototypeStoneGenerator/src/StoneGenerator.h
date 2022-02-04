@@ -57,6 +57,8 @@ class StoneGeneratorConfig {
         int getEstimatedExpectedTriangles() const;
         void setPointsOfAttraction(int nPointsOfAttraction);
         int getPointsOfAttraction() const;
+        void setStrongOfAttraction(float nStrongOfAttraction);
+        float getStrongOfAttraction() const;
         void setRadius(float nRadius);
         float getRadius() const;
         void setRandomOffsetMin(float nRandomOffsetMin);
@@ -79,6 +81,7 @@ class StoneGeneratorConfig {
         float m_nRadius;
         int m_nExpectedTriangles;
         int m_nPointsOfAttraction;
+        float m_nStrongOfAttraction;
         float m_nRandomOffsetMin;
         float m_nRandomOffsetMax;
         float m_nScaleX;
@@ -102,13 +105,17 @@ class StoneGenerator {
 
         bool generateBasicSpheres(const StoneGeneratorConfig &conf);
         bool generateBasicCubes(const StoneGeneratorConfig &conf);
-
+        bool processAttraction(const StoneGeneratorConfig &conf);
+        bool processRandom(const StoneGeneratorConfig &conf);
+        bool processNormalize(const StoneGeneratorConfig &conf);
 
         float distance(StonePoint *p1, StonePoint *p2);
         float distanceUV(StonePoint *p1, StonePoint *p2);
         float angelXY(StonePoint *p1, StonePoint *p2);
         float angelZX(StonePoint *p1, StonePoint *p2);
         void minmaxUV(StonePoint *p1, float &nMinU, float &nMaxU, float &nMinV, float &nMaxV);
+        void minXYZ(StonePoint *p1, float &nMinX, float &nMinY, float &nMinZ);
+        void maxXYZ(StonePoint *p1, float &nMaxX, float &nMaxY, float &nMaxZ);
         void setTextureCoordinatesFirst(StonePoint *p1, StonePoint *p2);
         std::vector<StonePoint *> m_vPoints;
         std::vector<StoneTriangle *> m_vTriangles;
