@@ -4,11 +4,12 @@
 
 class StonePoint {
     public:
+        StonePoint();
         StonePoint(float x, float y, float z);
 
-        float x();
-        float y();
-        float z();
+        float x() const;
+        float y() const;
+        float z() const;
 
         void addOffset(float x, float y, float z);
         void setXYZ(float x, float y, float z);
@@ -53,6 +54,12 @@ class StoneTriangle {
         StoneTexturePoint &t1();
         StoneTexturePoint &t2();
         StoneTexturePoint &t3();
+
+        void calculateMiddlePointAndNormal(StonePoint &middle_p, StonePoint &middle_p_normal);
+        void rotateInXAxisAroundPoint(StonePoint &p1, float fRot);
+        void rotateInYAxisAroundPoint(StonePoint &p1, float fRot);
+        
+        void copy(StoneTriangle *p);
 
     private:
         StonePoint *m_p1;
@@ -118,17 +125,25 @@ class StoneGenerator {
         bool generateBasicCubes(const StoneGeneratorConfig &conf);
         bool processAttraction(const StoneGeneratorConfig &conf);
         bool processRandom(const StoneGeneratorConfig &conf);
-        bool processNormalize(const StoneGeneratorConfig &conf);
+        bool processResizeAndShift(const StoneGeneratorConfig &conf);
+        bool processRemoveUnusefulTriangles(const StoneGeneratorConfig &conf);
+        bool processTexturing(const StoneGeneratorConfig &conf);
 
         float distance(StonePoint *p1, StonePoint *p2);
         float distanceUV(StoneTexturePoint &p1, StoneTexturePoint &p2);
+
+        float angel(float x1, float y1, float x2, float y2);
+        float angelXAxis(const StonePoint &p1, const StonePoint &p2);
+        float angelYAxis(const StonePoint &p1, const StonePoint &p2);
+
         float angelXY(StonePoint *p1, StonePoint *p2);
         float angelZX(StonePoint *p1, StonePoint *p2);
+        float angelZY(StonePoint *p1, StonePoint *p2);
         void minmaxUV(StoneTexturePoint &p1, float &nMinU, float &nMaxU, float &nMinV, float &nMaxV);
         void normalizeUV(StoneTexturePoint &p1, float &nMinU, float &nMaxU, float &nMinV, float &nMaxV);
         void minXYZ(StonePoint *p1, float &nMinX, float &nMinY, float &nMinZ);
         void maxXYZ(StonePoint *p1, float &nMaxX, float &nMaxY, float &nMaxZ);
-        void setTextureCoordinatesFirst(StonePoint *p1, StonePoint *p2, StoneTexturePoint &t1, StoneTexturePoint &t2);
+
         std::vector<StonePoint *> m_vPoints;
         std::vector<StoneTriangle *> m_vTriangles;
 };

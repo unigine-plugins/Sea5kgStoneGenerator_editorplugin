@@ -7,20 +7,25 @@
 
 // StonePoint
 
+StonePoint::StonePoint() {
+    setXYZ(0,0,0);
+    m_nIndex = 0;
+}
+
 StonePoint::StonePoint(float x, float y, float z) {
     setXYZ(x,y,z);
     m_nIndex = 0;
 }
 
-float StonePoint::x() {
+float StonePoint::x() const {
     return m_nX;
 }
 
-float StonePoint::y() {
+float StonePoint::y() const {
     return m_nY;
 }
 
-float StonePoint::z() {
+float StonePoint::z() const {
     return m_nZ;
 }
 
@@ -110,6 +115,114 @@ StoneTexturePoint &StoneTriangle::t2() {
 
 StoneTexturePoint &StoneTriangle::t3() {
     return m_t3;
+}
+
+void StoneTriangle::calculateMiddlePointAndNormal(StonePoint &middle_p, StonePoint &middle_p_normal) {
+    middle_p.setXYZ(
+        (m_p1->x() + m_p2->x() + m_p3->x()) / 3.0,
+        (m_p1->y() + m_p2->y() + m_p3->y()) / 3.0,
+        (m_p1->z() + m_p2->z() + m_p3->z()) / 3.0
+    );
+    float x10 = m_p2->x() - m_p1->x();
+    float y10 = m_p2->y() - m_p1->y();
+    float z10 = m_p2->z() - m_p1->z();
+    float x20 = m_p3->x() - m_p1->x();
+    float y20 = m_p3->y() - m_p1->y();
+    float z20 = m_p3->z() - m_p1->z();
+
+    middle_p_normal.setXYZ(
+        middle_p.x() + (y10*z20 - y20*z10),
+        middle_p.y() - (x10*z20 - x20*z10),
+        middle_p.z() + (x10*y20 - x20*y10)
+    );
+}
+
+void StoneTriangle::rotateInXAxisAroundPoint(StonePoint &p1, float fRot) {
+
+    // help here:
+    // https://stackoverflow.com/questions/14607640/rotating-a-vector-in-3d-space
+    
+    // x axis
+    // |1     0           0| |x|   |        x        |   |x'|
+    // |0   cos θ    −sin θ| |y| = |y cos θ − z sin θ| = |y'|
+    // |0   sin θ     cos θ| |z|   |y sin θ + z cos θ|   |z'|
+
+    float dx1 = m_p1->x() - p1.x();
+    float dy1 = m_p1->y() - p1.y();
+    float dz1 = m_p1->z() - p1.z();
+
+    m_p1->setXYZ(
+        p1.x() + dx1,
+        p1.y() + dy1 * std::cos(fRot) - dz1 * std::sin(fRot),
+        p1.z() + dy1 * std::sin(fRot) + dz1 * std::cos(fRot)
+    );
+    
+    float dx2 = m_p2->x() - p1.x();
+    float dy2 = m_p2->y() - p1.y();
+    float dz2 = m_p2->z() - p1.z();
+
+    m_p2->setXYZ(
+        p1.x() + dx2,
+        p1.y() + dy2 * std::cos(fRot) - dz2 * std::sin(fRot),
+        p1.z() + dy2 * std::sin(fRot) + dz2 * std::cos(fRot)
+    );
+
+    float dx3 = m_p3->x() - p1.x();
+    float dy3 = m_p3->y() - p1.y();
+    float dz3 = m_p3->z() - p1.z();
+
+    m_p3->setXYZ(
+        p1.x() + dx3,
+        p1.y() + dy3 * std::cos(fRot) - dz3 * std::sin(fRot),
+        p1.z() + dy3 * std::sin(fRot) + dz3 * std::cos(fRot)
+    );
+}
+
+void StoneTriangle::rotateInYAxisAroundPoint(StonePoint &p1, float fRot) {
+    
+    // help here:
+    // https://stackoverflow.com/questions/14607640/rotating-a-vector-in-3d-space
+    
+    // y axis
+    // | cos θ    0   sin θ| |x|   | x cos θ + z sin θ|   |x'|
+    // |   0      1       0| |y| = |         y        | = |y'|
+    // |−sin θ    0   cos θ| |z|   |−x sin θ + z cos θ|   |z'|
+
+    float dx1 = m_p1->x() - p1.x();
+    float dy1 = m_p1->y() - p1.y();
+    float dz1 = m_p1->z() - p1.z();
+
+    m_p1->setXYZ(
+        p1.x() + dx1 * std::cos(fRot) + dz1 * std::sin(fRot),
+        p1.y() + dy1,
+        p1.z() - dx1 * std::sin(fRot) + dz1 * std::cos(fRot)
+    );
+
+    float dx2 = m_p2->x() - p1.x();
+    float dy2 = m_p2->y() - p1.y();
+    float dz2 = m_p2->z() - p1.z();
+
+    m_p2->setXYZ(
+        p1.x() + dx2 * std::cos(fRot) + dz2 * std::sin(fRot),
+        p1.y() + dy2,
+        p1.z() - dx2 * std::sin(fRot) + dz2 * std::cos(fRot)
+    );
+
+    float dx3 = m_p3->x() - p1.x();
+    float dy3 = m_p3->y() - p1.y();
+    float dz3 = m_p3->z() - p1.z();
+
+    m_p3->setXYZ(
+        p1.x() + dx3 * std::cos(fRot) + dz3 * std::sin(fRot),
+        p1.y() + dy3,
+        p1.z() - dx3 * std::sin(fRot) + dz3 * std::cos(fRot)
+    );
+}
+
+void StoneTriangle::copy(StoneTriangle *pTriangle) {
+    m_p1->setXYZ(pTriangle->p1()->x(), pTriangle->p1()->y(), pTriangle->p1()->z());
+    m_p2->setXYZ(pTriangle->p2()->x(), pTriangle->p2()->y(), pTriangle->p2()->z());
+    m_p3->setXYZ(pTriangle->p3()->x(), pTriangle->p3()->y(), pTriangle->p3()->z());
 }
 
 // StoneGeneratorConfig
@@ -252,38 +365,9 @@ bool StoneGenerator::generate(const StoneGeneratorConfig &conf) {
     
     this->processAttraction(conf);
     this->processRandom(conf);
-    this->processNormalize(conf);
+    this->processResizeAndShift(conf);
     
-    
-    // calculate texture coordinates
-    for (int i = 0; i < m_vTriangles.size(); i++) {
-        StoneTriangle *pTriangle = m_vTriangles[i];
-        setTextureCoordinatesFirst(pTriangle->p1(), pTriangle->p2(), pTriangle->t1(), pTriangle->t2());
-        setTextureCoordinatesFirst(pTriangle->p1(), pTriangle->p3(), pTriangle->t1(), pTriangle->t3());
-    }
-
-    // min max uv
-    float nMaxU = 0.0f;
-    float nMinU = 0.0f;
-    float nMaxV = 0.0f;
-    float nMinV = 0.0f;
-    for (int i = 0; i < m_vTriangles.size(); i++) {
-        StoneTriangle *pTriangle = m_vTriangles[i];
-        this->minmaxUV(pTriangle->t1(), nMinU, nMaxU, nMinV, nMaxV);
-        this->minmaxUV(pTriangle->t2(), nMinU, nMaxU, nMinV, nMaxV);
-        this->minmaxUV(pTriangle->t3(), nMinU, nMaxU, nMinV, nMaxV);
-    }
-
-    // normalize coordinates to 0..1
-    float dU = nMaxU - nMinU;
-    float dV = nMaxV - nMinV;
-    for (int i = 0; i < m_vTriangles.size(); i++) {
-        StoneTriangle *pTriangle = m_vTriangles[i];
-        this->normalizeUV(pTriangle->t1(), nMinU, nMaxU, nMinV, nMaxV);
-        this->normalizeUV(pTriangle->t2(), nMinU, nMaxU, nMinV, nMaxV);
-        this->normalizeUV(pTriangle->t3(), nMinU, nMaxU, nMinV, nMaxV);
-    }
-
+    this->processTexturing(conf);
     return true;
 }
 
@@ -567,7 +651,7 @@ bool StoneGenerator::processRandom(const StoneGeneratorConfig &conf) {
     return true;
 }
 
-bool StoneGenerator::processNormalize(const StoneGeneratorConfig &conf) {
+bool StoneGenerator::processResizeAndShift(const StoneGeneratorConfig &conf) {
     if (m_vPoints.size() == 0) {
         return false;
     }
@@ -610,6 +694,64 @@ bool StoneGenerator::processNormalize(const StoneGeneratorConfig &conf) {
     return true;
 }
 
+bool StoneGenerator::processRemoveUnusefulTriangles(const StoneGeneratorConfig &conf) {
+    return true;
+}
+
+bool StoneGenerator::processTexturing(const StoneGeneratorConfig &conf) {
+    // calculate texture coordinates
+    StonePoint *p1 = new StonePoint();
+    StonePoint *p2 = new StonePoint();
+    StonePoint *p3 = new StonePoint();
+    StoneTriangle *pTriangle = new StoneTriangle(p1, p2, p3);
+
+    // min max uv
+    float nMaxU = 0.0f;
+    float nMinU = 0.0f;
+    float nMaxV = 0.0f;
+    float nMinV = 0.0f;
+
+    for (int i = 0; i < m_vTriangles.size(); i++) {
+        std::cout << "i " << i << std::endl;
+        pTriangle->copy(m_vTriangles[i]);
+
+        StonePoint middle_p;
+        StonePoint middle_p_normal;
+        pTriangle->calculateMiddlePointAndNormal(middle_p, middle_p_normal);
+        float fRotX = this->angelXAxis(middle_p, middle_p_normal);
+        pTriangle->rotateInXAxisAroundPoint(middle_p, fRotX);
+    
+        float fRotY = this->angelYAxis(middle_p, middle_p_normal);
+        pTriangle->rotateInYAxisAroundPoint(middle_p, fRotY);
+
+        m_vTriangles[i]->t1().setXY(pTriangle->p1()->x(), pTriangle->p1()->y());
+        m_vTriangles[i]->t2().setXY(pTriangle->p2()->x(), pTriangle->p2()->y());
+        m_vTriangles[i]->t3().setXY(pTriangle->p3()->x(), pTriangle->p3()->y());
+    }
+    delete p1;
+    delete p2;
+    delete p3;
+    delete pTriangle;
+
+    for (int i = 0; i < m_vTriangles.size(); i++) {
+        StoneTriangle *pTri = m_vTriangles[i];
+        this->minmaxUV(pTri->t1(), nMinU, nMaxU, nMinV, nMaxV);
+        this->minmaxUV(pTri->t2(), nMinU, nMaxU, nMinV, nMaxV);
+        this->minmaxUV(pTri->t3(), nMinU, nMaxU, nMinV, nMaxV);
+    }
+
+    // normalize coordinates to 0..1
+    float dU = nMaxU - nMinU;
+    float dV = nMaxV - nMinV;
+    for (int i = 0; i < m_vTriangles.size(); i++) {
+        StoneTriangle *pTri = m_vTriangles[i];
+        this->normalizeUV(pTri->t1(), nMinU, nMaxU, nMinV, nMaxV);
+        this->normalizeUV(pTri->t2(), nMinU, nMaxU, nMinV, nMaxV);
+        this->normalizeUV(pTri->t3(), nMinU, nMaxU, nMinV, nMaxV);
+    }
+    return true;
+}
+
 float StoneGenerator::distance(StonePoint *p1, StonePoint *p2) {
     float dx = p1->x() - p2->x();
     float dy = p1->y() - p2->y();
@@ -623,15 +765,38 @@ float StoneGenerator::distanceUV(StoneTexturePoint &p1, StoneTexturePoint &p2) {
     return std::sqrt(dx*dx + dy*dy);
 }
 
+float StoneGenerator::angel(float x1, float y1, float x2, float y2) {
+    float dx = x2 - x1;
+    float dy = y2 - y1;
+    float _len = std::sqrt(dx * dx + dy * dy);
+    int nLen = std::abs(_len*100000);
+    if (nLen < 1000) {
+        return 0.0;
+    }
+    float ret = std::asin(dx / _len);
+    if (dy < 0) {
+        ret = -1 * ret;
+    } else {
+        ret = ret;
+    }
+    return ret;
+}
+
+float StoneGenerator::angelXAxis(const StonePoint &p1, const StonePoint &p2) {
+    float rot = angel(p1.y(), p1.z(), p2.y(), p2.z());
+    return rot;
+}
+
+float StoneGenerator::angelYAxis(const StonePoint &p1, const StonePoint &p2) {
+    float rot = this->angel(p1.x(), p1.z(), p2.x(), p2.z());
+    rot = -1.0 * rot;
+    return rot;
+}
+
 float StoneGenerator::angelXY(StonePoint *p1, StonePoint *p2) {
     float dy = p2->y() - p1->y();
     float dx = p2->x() - p1->x();
     float c = std::sqrt(dx*dx + dy*dy);
-    // std::cout << "dy = " << dy << std::endl;
-    // std::cout << "dx = " << dx << std::endl;
-    // std::cout << "c = " << c << std::endl;
-    // std::cout << "std::asin(dy/c) = " << std::asin(dy/c) << std::endl;
-    // std::cout << "std::acos(dy/c) = " << std::acos(dx/c) << std::endl;
     return std::asin(dx/c);
 }
 
@@ -639,13 +804,13 @@ float StoneGenerator::angelZX(StonePoint *p1, StonePoint *p2) {
     float dz = p2->z() - p1->z();
     float dx = p2->x() - p1->x();
     float c = std::sqrt(dx*dx + dz*dz);
-    // float dx = p2->x() - p1->x();
-    // float c = distance(p1,p2);
-    // std::cout << "dz = " << dz << std::endl;
-    // std::cout << "dx = " << dx << std::endl;
-    // std::cout << "c = " << c << std::endl;
-    // std::cout << "std::asin(dy/c) = " << std::asin(dy/c) << std::endl;
-    // std::cout << "std::acos(dy/c) = " << std::acos(dx/c) << std::endl;
+    return std::acos(dz/c);
+}
+
+float StoneGenerator::angelZY(StonePoint *p1, StonePoint *p2) {
+    float dz = p2->z() - p1->z();
+    float dy = p2->y() - p1->y();
+    float c = std::sqrt(dy*dy + dz*dz);
     return std::acos(dz/c);
 }
 
@@ -657,12 +822,14 @@ void StoneGenerator::minmaxUV(StoneTexturePoint &p1, float &nMinU, float &nMaxU,
 }
 
 void StoneGenerator::normalizeUV(StoneTexturePoint &p1, float &nMinU, float &nMaxU, float &nMinV, float &nMaxV) {
-    float dU = nMaxU - nMinU;
+    float fMainSide = nMaxU - nMinU;
     float dV = nMaxV - nMinV;
+    float vK = fMainSide / dV;
+
     float u = p1.x();
     float v = p1.y();
-    u = (u - nMinU) / dU;
-    v = (v - nMinV) / dV;
+    u = (u - nMinU) / fMainSide;
+    v = ((v - vK * nMinV) / fMainSide);
     p1.setXY(u, v);
 }
 
@@ -676,38 +843,4 @@ void StoneGenerator::maxXYZ(StonePoint *p1, float &nMaxX, float &nMaxY, float &n
     nMaxX = std::max(nMaxX, p1->x());
     nMaxY = std::max(nMaxY, p1->y());
     nMaxZ = std::max(nMaxZ, p1->z());
-}
-
-
-void StoneGenerator::setTextureCoordinatesFirst(StonePoint *p1, StonePoint *p2, StoneTexturePoint &t1, StoneTexturePoint &t2) {
-    // first
-    float nLength = this->distance(p1, p2);
-    float nAngleXY = this->angelXY(p1, p2);
-    float nAngleZX = this->angelZX(p1, p2);
-
-    // nAngleZX = (M_PI/2 - nAngleZX); // + 2*M_PI;
-    // if (nAngleZX < 0) {
-    //     nAngleZX += M_PI;
-    // }
-
-    // nAngleXY = M_PI/2 - nAngleXY + 2*M_PI;
-
-
-    // std::cout << "nLength12 " << nLength12 << std::endl;
-    // std::cout << "nAngle12 " << nAngle12 << std::endl;
-
-    float nU = nLength * std::sin(-1*nAngleZX) * std::sin(nAngleXY);
-    float nV = nLength * std::sin(-1*nAngleZX) * std::cos(nAngleXY);
-
-    // float nU = nLength * std::sin(nAngleXY);
-    // float nV = nLength * std::cos(nAngleXY);
-
-    
-    // nU += p1->x(); // pTriangle->p1()->getTextureCoordinateU();
-    // nV += p1->x(); // pTriangle->p1()->getTextureCoordinateV();
-    nU += t1.x();
-    nV += t1.y();
-    // std::cout << "offset nU2 " << nU2 << std::endl;
-    // std::cout << "offset nV2 " << nV2 << std::endl;
-    t2.setXY(nU, nV);
 }
