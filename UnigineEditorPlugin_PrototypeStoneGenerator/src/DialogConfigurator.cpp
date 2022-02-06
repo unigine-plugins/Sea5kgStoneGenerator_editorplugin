@@ -309,6 +309,13 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 			0,
 			0
 		));
+		m_pMesh->addTangent(Unigine::Math::quat(
+			pTriangle->p1()->getTangentX(), 
+			pTriangle->p1()->getTangentY(),
+			pTriangle->p1()->getTangentZ(),
+			60 // any angel here
+		));
+
 		m_pMesh->addVertex(Unigine::Math::vec3(
 	 		pTriangle->p2()->x(),
 	 		pTriangle->p2()->y(),
@@ -320,6 +327,13 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 			0,
 			0
 		));
+		m_pMesh->addTangent(Unigine::Math::quat(
+			pTriangle->p2()->getTangentX(), 
+			pTriangle->p2()->getTangentY(),
+			pTriangle->p2()->getTangentZ(),
+			60 // any angel here
+		));
+
 		m_pMesh->addVertex(Unigine::Math::vec3(
 	 		pTriangle->p3()->x(),
 	 		pTriangle->p3()->y(),
@@ -331,9 +345,12 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 			0,
 			0
 		));
-		// m_pMesh->setIndex(i*3 + 0, pTriangle->p1()->getIndex());
-		// m_pMesh->setIndex(i*3 + 1, pTriangle->p2()->getIndex());
-		// m_pMesh->setIndex(i*3 + 2, pTriangle->p3()->getIndex());
+		m_pMesh->addTangent(Unigine::Math::quat(
+			pTriangle->p3()->getTangentX(), 
+			pTriangle->p3()->getTangentY(),
+			pTriangle->p3()->getTangentZ(),
+			60 // any angel here
+		));
 	}
 
 	// // optimize vertex and index buffers, if necessary
@@ -342,6 +359,7 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 	// calculate a mesh bounding box for editor I guess
 	m_pMesh->updateBounds();
 
+	// lighting
 	m_pMesh->updateTangents();
 
 	m_pMesh->flushIndices();

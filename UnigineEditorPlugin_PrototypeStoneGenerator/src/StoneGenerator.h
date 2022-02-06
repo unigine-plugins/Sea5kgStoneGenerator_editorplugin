@@ -18,12 +18,18 @@ class StonePoint {
         void setIndex(int nIndex);
         int getIndex();
 
+        void setTangent(float nX, float nY, float nZ);
+        float getTangentX();
+        float getTangentY();
+        float getTangentZ();
+
     private:
         float m_nX, m_nY, m_nZ;
         int m_nX100;
         int m_nY100;
         int m_nZ100;
         int m_nIndex;
+        float m_nTangentX, m_nTangentY, m_nTangentZ;
 };
 
 class StoneTexturePoint {
@@ -50,6 +56,8 @@ class StoneTriangle {
         StonePoint *p1();
         StonePoint *p2();
         StonePoint *p3();
+
+        bool hasPoint(StonePoint *p);
 
         StoneTexturePoint &t1();
         StoneTexturePoint &t2();
@@ -127,7 +135,11 @@ class StoneGenerator {
         bool processRandom(const StoneGeneratorConfig &conf);
         bool processResizeAndShift(const StoneGeneratorConfig &conf);
         bool processRemoveUnusefulTriangles(const StoneGeneratorConfig &conf);
+        bool processTangents(const StoneGeneratorConfig &conf);
         bool processTexturing(const StoneGeneratorConfig &conf);
+
+        StoneTriangle *findTriangleByPoints2(StonePoint *p1, StonePoint *p2, StoneTriangle *pExclude);
+        void findTrianglesByPoint(StonePoint *p1, std::vector<StoneTriangle *> &vTriangles);
 
         float distance(StonePoint *p1, StonePoint *p2);
         float distanceUV(StoneTexturePoint &p1, StoneTexturePoint &p2);

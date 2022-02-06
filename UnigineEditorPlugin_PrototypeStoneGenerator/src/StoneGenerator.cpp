@@ -62,6 +62,25 @@ int StonePoint::getIndex() {
     return m_nIndex;
 }
 
+void StonePoint::setTangent(float nX, float nY, float nZ) {
+    m_nTangentX = nX;
+    m_nTangentY = nY;
+    m_nTangentZ = nZ;
+}
+
+float StonePoint::getTangentX() {
+    return m_nTangentX;
+}
+
+float StonePoint::getTangentY() {
+    return m_nTangentY;
+}
+
+float StonePoint::getTangentZ() {
+    return m_nTangentZ;
+}
+
+
 // StoneTexturePoint
 
 StoneTexturePoint::StoneTexturePoint() {
@@ -103,6 +122,10 @@ StonePoint *StoneTriangle::p2() {
 
 StonePoint *StoneTriangle::p3() {
     return m_p3;
+}
+
+bool StoneTriangle::hasPoint(StonePoint *p) {
+    return m_p1 == p || m_p2 == p || m_p3 == p;
 }
 
 StoneTexturePoint &StoneTriangle::t1() {
@@ -366,7 +389,8 @@ bool StoneGenerator::generate(const StoneGeneratorConfig &conf) {
     this->processAttraction(conf);
     this->processRandom(conf);
     this->processResizeAndShift(conf);
-    
+    this->processTangents(conf);
+
     this->processTexturing(conf);
     return true;
 }
@@ -695,6 +719,71 @@ bool StoneGenerator::processResizeAndShift(const StoneGeneratorConfig &conf) {
 }
 
 bool StoneGenerator::processRemoveUnusefulTriangles(const StoneGeneratorConfig &conf) {
+    // TODO
+    return true;
+}
+
+bool StoneGenerator::processTangents(const StoneGeneratorConfig &conf) {
+    std::cout << "processTangents start" << std::endl;
+    std::vector<StoneTriangle *> vFoundTriangles;
+    for (int i = 0; i < m_vPoints.size(); i++) {
+        std::cout << "processTangents " << i << std::endl;
+
+        StonePoint *p0 = m_vPoints[i];
+        
+        vFoundTriangles.clear();
+        findTrianglesByPoint(p0, vFoundTriangles);
+        std::cout << "processTangents vFoundTriangles.size() = " << vFoundTriangles.size() << std::endl;
+        if (vFoundTriangles.size() == 0) {
+            continue;
+        }
+        float x = 0.0;
+        float y = 0.0;
+        float z = 0.0;
+        float x_n = 0.0;
+        float y_n = 0.0;
+        float z_n = 0.0;
+        StonePoint middle_p;
+        StonePoint middle_p_normal;
+        for (int n = 0; n < vFoundTriangles.size(); n++) {
+            /// std::cout << "processTangents n = " << n << std::endl;
+            vFoundTriangles[n]->calculateMiddlePointAndNormal(middle_p, middle_p_normal);
+            x += middle_p.x();
+            y += middle_p.y();
+            z += middle_p.z();
+            x_n += middle_p_normal.x();
+            y_n += middle_p_normal.y();
+            z_n += middle_p_normal.z();
+        }
+        float size = vFoundTriangles.size();
+        std::cout << "processTangents vFoundTriangles.size() 2 = " << size << std::endl;
+        x /= size;
+        y /= size;
+        z /= size;
+        x_n /= size;
+        y_n /= size;
+        z_n /= size;
+
+        // by x to 90
+        float dx1 = x_n - x;
+        float dy1 = y_n - y;
+        float dz1 = z_n - z;
+        x_n = x + dx1;
+        y_n = y + dy1 * std::cos(M_PI/2) - dz1 * std::sin(M_PI/2);
+        z_n = z + dy1 * std::sin(M_PI/2) + dz1 * std::cos(M_PI/2);
+
+        // by y to 90
+        dx1 = x_n - x;
+        dy1 = y_n - y;
+        dz1 = z_n - z;
+        x_n = x + dx1 * std::cos(M_PI/2) + dz1 * std::sin(M_PI/2);
+        y_n = y + dy1;
+        z_n = z - dx1 * std::sin(M_PI/2) + dz1 * std::cos(M_PI/2);
+
+        p0->setTangent(x_n - x, y_n - y, z_n - z);
+
+    }
+    std::cout << "processTangents end" << std::endl;
     return true;
 }
 
@@ -712,7 +801,6 @@ bool StoneGenerator::processTexturing(const StoneGeneratorConfig &conf) {
     float nMinV = 0.0f;
 
     for (int i = 0; i < m_vTriangles.size(); i++) {
-        std::cout << "i " << i << std::endl;
         pTriangle->copy(m_vTriangles[i]);
 
         StonePoint middle_p;
@@ -733,6 +821,33 @@ bool StoneGenerator::processTexturing(const StoneGeneratorConfig &conf) {
     delete p3;
     delete pTriangle;
 
+    // for (int i = 0; i < m_vTriangles.size(); i++) {
+    //     StoneTriangle *pTri = m_vTriangles[i];
+    //     int x = std::rand() % m_vTriangles.size();
+    //     StoneTriangle *pTriFound = m_vTriangles[x];
+    //     // StoneTriangle *pTriFound = findTriangleByPoints2(pTri->p1(), pTri->p2(), pTri);
+    //     if (pTriFound != nullptr) {
+    //         float dx1 = pTriFound->t1().x() - pTri->t1().x();
+    //         float dy1 = pTriFound->t1().y() - pTri->t1().y();
+
+    //         pTri->t1().setXY(
+    //             pTri->t1().x() + dx1,
+    //             pTri->t1().y() + dy1
+    //         );
+
+    //         pTri->t2().setXY(
+    //             pTri->t2().x() + dx1,
+    //             pTri->t2().y() + dy1
+    //         );
+
+    //         pTri->t3().setXY(
+    //             pTri->t3().x() + dx1,
+    //             pTri->t3().y() + dy1
+    //         );
+    //     }
+    // }
+
+
     for (int i = 0; i < m_vTriangles.size(); i++) {
         StoneTriangle *pTri = m_vTriangles[i];
         this->minmaxUV(pTri->t1(), nMinU, nMaxU, nMinV, nMaxV);
@@ -750,6 +865,29 @@ bool StoneGenerator::processTexturing(const StoneGeneratorConfig &conf) {
         this->normalizeUV(pTri->t3(), nMinU, nMaxU, nMinV, nMaxV);
     }
     return true;
+}
+
+StoneTriangle *StoneGenerator::findTriangleByPoints2(StonePoint *p1, StonePoint *p2, StoneTriangle *pExclude) {
+    StoneTriangle *pRet = nullptr;
+    for (int i = 0; i < m_vTriangles.size(); i++) {
+        StoneTriangle *pTri = m_vTriangles[i];
+        if (pExclude == pTri) {
+            continue;
+        }
+        if (pTri->hasPoint(p1) && pTri->hasPoint(p2)) {
+            pRet = pTri;
+            break;
+        }
+    }
+    return pRet;
+}
+
+void StoneGenerator::findTrianglesByPoint(StonePoint *p1, std::vector<StoneTriangle *> &vTriangles) {
+    for (int i = 0; i < m_vTriangles.size(); i++) {
+        if (m_vTriangles[i]->hasPoint(p1)) {
+            vTriangles.push_back(m_vTriangles[i]);
+        }
+    }
 }
 
 float StoneGenerator::distance(StonePoint *p1, StonePoint *p2) {
