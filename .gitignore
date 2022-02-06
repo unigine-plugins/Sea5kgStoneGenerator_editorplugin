@@ -7,6 +7,7 @@ junk
 .thumbnails
 __pycache__
 /lib
+/tmp
 /fbx
 linux_UnigineEditorPlugin_PrototypeStoneGenerator_*.zip
 windows_UnigineEditorPlugin_PrototypeStoneGenerator_*.zip
