@@ -138,8 +138,8 @@ class StoneGenerator {
         bool processNormals(const StoneGeneratorConfig &conf);
         bool processTexturing(const StoneGeneratorConfig &conf);
 
-        StoneTriangle *findTriangleByPoints2(StonePoint *p1, StonePoint *p2, StoneTriangle *pExclude);
         void findTrianglesByPoint(StonePoint *p1, std::vector<StoneTriangle *> &vTriangles);
+        void findTrianglesByPoints2(StonePoint *p1, StonePoint *p2, std::vector<StoneTriangle *> &vTriangles);
 
         float distance(StonePoint *p1, StonePoint *p2);
         float distanceUV(StoneTexturePoint &p1, StoneTexturePoint &p2);

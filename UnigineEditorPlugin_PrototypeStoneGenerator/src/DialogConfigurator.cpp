@@ -347,7 +347,7 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 	m_pDynamicMesh->updateBounds();
 
 	// lighting
-	m_pDynamicMesh->updateTangents();
+	// m_pDynamicMesh->updateTangents();
 
 
 	if (m_pAsyncRunGenerator->getRegenerateTexture()) {
