@@ -18,10 +18,10 @@ class StonePoint {
         void setIndex(int nIndex);
         int getIndex();
 
-        void setTangent(float nX, float nY, float nZ);
-        float getTangentX();
-        float getTangentY();
-        float getTangentZ();
+        void setNormal(float nX, float nY, float nZ);
+        float getNormalX();
+        float getNormalY();
+        float getNormalZ();
 
     private:
         float m_nX, m_nY, m_nZ;
@@ -29,7 +29,7 @@ class StonePoint {
         int m_nY100;
         int m_nZ100;
         int m_nIndex;
-        float m_nTangentX, m_nTangentY, m_nTangentZ;
+        float m_nNormalX, m_nNormalY, m_nNormalZ;
 };
 
 class StoneTexturePoint {
@@ -135,7 +135,7 @@ class StoneGenerator {
         bool processRandom(const StoneGeneratorConfig &conf);
         bool processResizeAndShift(const StoneGeneratorConfig &conf);
         bool processRemoveUnusefulTriangles(const StoneGeneratorConfig &conf);
-        bool processTangents(const StoneGeneratorConfig &conf);
+        bool processNormals(const StoneGeneratorConfig &conf);
         bool processTexturing(const StoneGeneratorConfig &conf);
 
         StoneTriangle *findTriangleByPoints2(StonePoint *p1, StonePoint *p2, StoneTriangle *pExclude);

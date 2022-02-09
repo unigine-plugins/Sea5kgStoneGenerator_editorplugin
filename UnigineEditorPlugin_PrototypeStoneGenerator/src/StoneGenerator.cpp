@@ -62,22 +62,22 @@ int StonePoint::getIndex() {
     return m_nIndex;
 }
 
-void StonePoint::setTangent(float nX, float nY, float nZ) {
-    m_nTangentX = nX;
-    m_nTangentY = nY;
-    m_nTangentZ = nZ;
+void StonePoint::setNormal(float nX, float nY, float nZ) {
+    m_nNormalX = nX;
+    m_nNormalY = nY;
+    m_nNormalZ = nZ;
 }
 
-float StonePoint::getTangentX() {
-    return m_nTangentX;
+float StonePoint::getNormalX() {
+    return m_nNormalX;
 }
 
-float StonePoint::getTangentY() {
-    return m_nTangentY;
+float StonePoint::getNormalY() {
+    return m_nNormalY;
 }
 
-float StonePoint::getTangentZ() {
-    return m_nTangentZ;
+float StonePoint::getNormalZ() {
+    return m_nNormalZ;
 }
 
 
@@ -386,12 +386,14 @@ bool StoneGenerator::generate(const StoneGeneratorConfig &conf) {
         return false;
     }
     
+    this->processRemoveUnusefulTriangles(conf);
     this->processAttraction(conf);
     this->processRandom(conf);
     this->processResizeAndShift(conf);
-    this->processTangents(conf);
-
+    this->processNormals(conf);
     this->processTexturing(conf);
+
+    std::cout << "got triangles = " << m_vTriangles.size() << std::endl;
     return true;
 }
 
@@ -719,24 +721,55 @@ bool StoneGenerator::processResizeAndShift(const StoneGeneratorConfig &conf) {
 }
 
 bool StoneGenerator::processRemoveUnusefulTriangles(const StoneGeneratorConfig &conf) {
-    // TODO
+    std::vector<int> m_nRemoveTriangles;
+    for (int i = 0; i < m_vTriangles.size(); i++) {
+        StoneTriangle *pTri = m_vTriangles[i];
+        if (pTri->p1() == pTri->p2() || pTri->p1() == pTri->p3() || pTri->p2() == pTri->p3()) {
+            m_nRemoveTriangles.push_back(i);
+        }
+    }
+    for (int i = m_nRemoveTriangles.size()-1; i >= 0; i--) {
+        int nIndex = m_nRemoveTriangles[i];
+        std::cout << "Removing triangle " << nIndex << std::endl;
+        StoneTriangle *pTri = m_vTriangles[nIndex];
+        delete pTri;
+        m_vTriangles[nIndex] = nullptr;
+        m_vTriangles.erase(m_vTriangles.begin() + nIndex);
+    }
+    std::cout << "Removed " << m_nRemoveTriangles.size() << std::endl;
     return true;
 }
 
-bool StoneGenerator::processTangents(const StoneGeneratorConfig &conf) {
-    std::cout << "processTangents start" << std::endl;
+bool StoneGenerator::processNormals(const StoneGeneratorConfig &conf) {
+    std::cout << "processNormals start" << std::endl;
     std::vector<StoneTriangle *> vFoundTriangles;
+    StonePoint pCenter(0.0, 0.0, 0.0);
+    float nPointsSize = m_vPoints.size();
     for (int i = 0; i < m_vPoints.size(); i++) {
-        std::cout << "processTangents " << i << std::endl;
+        pCenter.addOffset(
+            m_vPoints[i]->x(),
+            m_vPoints[i]->y(),
+            m_vPoints[i]->z()
+        );
+    }
+    pCenter.setXYZ(
+        pCenter.x() / nPointsSize,
+        pCenter.y() / nPointsSize,
+        pCenter.z() / nPointsSize
+    );
+
+    for (int i = 0; i < m_vPoints.size(); i++) {
+        // std::cout << "processNormals " << i << std::endl;
 
         StonePoint *p0 = m_vPoints[i];
         
         vFoundTriangles.clear();
         findTrianglesByPoint(p0, vFoundTriangles);
-        std::cout << "processTangents vFoundTriangles.size() = " << vFoundTriangles.size() << std::endl;
+        // std::cout << "processNormals vFoundTriangles.size() = " << vFoundTriangles.size() << std::endl;
         if (vFoundTriangles.size() == 0) {
             continue;
         }
+        StonePoint pNormal(0.0, 0.0, 0.0);
         float x = 0.0;
         float y = 0.0;
         float z = 0.0;
@@ -746,44 +779,56 @@ bool StoneGenerator::processTangents(const StoneGeneratorConfig &conf) {
         StonePoint middle_p;
         StonePoint middle_p_normal;
         for (int n = 0; n < vFoundTriangles.size(); n++) {
-            /// std::cout << "processTangents n = " << n << std::endl;
+            /// std::cout << "processNormals n = " << n << std::endl;
             vFoundTriangles[n]->calculateMiddlePointAndNormal(middle_p, middle_p_normal);
-            x += middle_p.x();
-            y += middle_p.y();
-            z += middle_p.z();
-            x_n += middle_p_normal.x();
-            y_n += middle_p_normal.y();
-            z_n += middle_p_normal.z();
+            float fDistance1 = distance(&pCenter, &middle_p);
+            float fDistance2 = distance(&pCenter, &middle_p_normal);
+            float fM = 1.0;
+            if (fDistance1 > fDistance2) {
+                fM *= -1.0;
+            }
+
+            pNormal.addOffset(
+                fM * (middle_p_normal.x() - middle_p.x()),
+                fM * (middle_p_normal.y() - middle_p.y()),
+                fM * (middle_p_normal.z() - middle_p.z())
+            );
         }
+        
         float size = vFoundTriangles.size();
-        std::cout << "processTangents vFoundTriangles.size() 2 = " << size << std::endl;
-        x /= size;
-        y /= size;
-        z /= size;
-        x_n /= size;
-        y_n /= size;
-        z_n /= size;
+        // // std::cout << "processNormals vFoundTriangles.size() 2 = " << size << std::endl;
+        pNormal.setXYZ(
+            pNormal.x() / size,
+            pNormal.y() / size,
+            pNormal.z() / size
+        );
 
-        // by x to 90
-        float dx1 = x_n - x;
-        float dy1 = y_n - y;
-        float dz1 = z_n - z;
-        x_n = x + dx1;
-        y_n = y + dy1 * std::cos(M_PI/2) - dz1 * std::sin(M_PI/2);
-        z_n = z + dy1 * std::sin(M_PI/2) + dz1 * std::cos(M_PI/2);
+        // tangent
+        // // by x to 90
+        // float dx1 = x_n - x;
+        // float dy1 = y_n - y;
+        // float dz1 = z_n - z;
+        // x_n = x + dx1;
+        // y_n = y + dy1 * std::cos(M_PI/2) - dz1 * std::sin(M_PI/2);
+        // z_n = z + dy1 * std::sin(M_PI/2) + dz1 * std::cos(M_PI/2);
 
-        // by y to 90
-        dx1 = x_n - x;
-        dy1 = y_n - y;
-        dz1 = z_n - z;
-        x_n = x + dx1 * std::cos(M_PI/2) + dz1 * std::sin(M_PI/2);
-        y_n = y + dy1;
-        z_n = z - dx1 * std::sin(M_PI/2) + dz1 * std::cos(M_PI/2);
-
-        p0->setTangent(x_n - x, y_n - y, z_n - z);
+        // // by y to 90
+        // dx1 = x_n - x;
+        // dy1 = y_n - y;
+        // dz1 = z_n - z;
+        // x_n = x + dx1 * std::cos(M_PI/2) + dz1 * std::sin(M_PI/2);
+        // y_n = y + dy1;
+        // z_n = z - dx1 * std::sin(M_PI/2) + dz1 * std::cos(M_PI/2);
+        // p0
+        // normal
+        p0->setNormal(
+            pNormal.x(),
+            pNormal.y(),
+            pNormal.z()
+        );
 
     }
-    std::cout << "processTangents end" << std::endl;
+    std::cout << "processNormals end" << std::endl;
     return true;
 }
 

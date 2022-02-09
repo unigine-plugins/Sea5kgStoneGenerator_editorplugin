@@ -32,6 +32,11 @@ DialogConfigurator::DialogConfigurator(
 	m_bGenerateMesh = true;
     m_bGenerateMaterial = true;
 
+
+	// m_nPointsOfAttraction = 0;
+	// m_nSliderSurfaceDistortion = 0.0f;
+	// m_nSliderTrianglesValue = 250;
+
 	m_pAsyncRunGenerator = new AsyncRunGenerator(this);
 	m_pAsyncRunGenerator->setAutoDelete(false);
     
@@ -171,7 +176,7 @@ void DialogConfigurator::comboboxBasicGeometry_Changed(int nNewValue) {
 
 void DialogConfigurator::click_saveMesh() {
 	// add to button - save mesh
-	m_pMesh->saveMesh(QString(m_sRandomName + ".mesh").toStdString().c_str());
+	m_pDynamicMesh->saveMesh(QString(m_sRandomName + ".mesh").toStdString().c_str());
 }
 
 void DialogConfigurator::regenerateButton_clicked() {
@@ -182,14 +187,14 @@ void DialogConfigurator::regenerateButton_clicked() {
 void DialogConfigurator::createNode() {
 	m_sRandomName = "stone_" + QString::number(std::rand() % 10000);
 
-	m_pMesh = Unigine::ObjectMeshDynamic::create();
+	m_pDynamicMesh = Unigine::ObjectMeshDynamic::create();
 	// TODO select position by a camera
-	m_pMesh->setWorldTransform(translate(Unigine::Math::Vec3(0.0f, 0.0f, 2.0f)));
-	m_pMesh->setShowInEditorEnabledRecursive(1);
-	m_pMesh->setSaveToWorldEnabledRecursive(1);
-	m_pMesh->setName(QString(m_sRandomName).toStdString().c_str());
+	m_pDynamicMesh->setWorldTransform(translate(Unigine::Math::Vec3(0.0f, 0.0f, 2.0f)));
+	m_pDynamicMesh->setShowInEditorEnabledRecursive(1);
+	m_pDynamicMesh->setSaveToWorldEnabledRecursive(1);
+	m_pDynamicMesh->setName(QString(m_sRandomName).toStdString().c_str());
 	QVector<Unigine::NodePtr> pNodes;
-	pNodes.push_back(m_pMesh);
+	pNodes.push_back(m_pDynamicMesh);
 	Editor::SelectorNodes *pSelected = Editor::SelectorNodes::createObjectsSelector(pNodes);
 	Editor::Selection::setSelector(pSelected);
 	
@@ -205,7 +210,7 @@ void DialogConfigurator::createNode() {
 		m_pMaterial->setPath(sMaterialPath.c_str());
 		m_pMaterial->save();
 
-		m_pMesh->setMaterial(m_pMaterial, 0);
+		m_pDynamicMesh->setMaterial(m_pMaterial, 0);
 		
 		m_pImage = Unigine::Image::create();
 		
@@ -257,6 +262,24 @@ void DialogConfigurator::generationComplited(QString sDone) {
 	emit signal_generationComplited(sDone);
 }
 
+void DialogConfigurator::addVertex(int nIndex, StonePoint *p1, StoneTexturePoint &t1, int nSurface) {
+	m_pMeshTemp->addVertex(Unigine::Math::vec3(
+		p1->x(),
+		p1->y(),
+		p1->z()
+	), nSurface);
+	m_pMeshTemp->addTexCoord0(Unigine::Math::vec2(
+		t1.x(),
+		t1.y()
+	), nSurface);
+	// m_pMeshTemp->addColor(Unigine::Math::vec4(0,0,0,255), nSurface);
+	m_pMeshTemp->addNormal(Unigine::Math::vec3(
+	 	p1->getNormalX(), 
+	 	p1->getNormalY(),
+	 	p1->getNormalZ()
+	), nSurface);
+}
+
 void DialogConfigurator::slot_generationComplited(QString sDone) {
 	Unigine::Log::message("DialogConfigurator::generationComplited start\n");
 
@@ -264,27 +287,27 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 		Unigine::Log::error("UnigineEditorPlugin_Python3Scripting::slot_executeRunner Not main thread!!!");
 	}
 	std::cout << sDone.toStdString() << std::endl;
-
-	m_pMesh->clearVertex();
-	m_pMesh->clearIndices(); // here triangles like some one
-	m_pMesh->flushIndices();
-	m_pMesh->flushVertex();
+	
+	m_pDynamicMesh->clearVertex();
+	m_pDynamicMesh->clearIndices(); // here triangles like some one
+	m_pDynamicMesh->flushIndices();
+	m_pDynamicMesh->flushVertex();
 	auto *pStoneGenerator = m_pAsyncRunGenerator->getStoneGenerator();
 
 	// const std::vector<StonePoint *> &vPoints = pStoneGenerator->points();
 	// for (int i = 0; i < vPoints.size(); i++) {
-	// 	m_pMesh->addVertex(Unigine::Math::vec3(
+	// 	m_pDynamicMesh->addVertex(Unigine::Math::vec3(
 	// 		vPoints[i]->x(),
 	// 		vPoints[i]->y(),
 	// 		vPoints[i]->z()
 	// 	));
-	// 	// m_pMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
+	// 	// m_pDynamicMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
 	// 	// std::cout << "tx coord uv: " <<
 	// 	// 	vPoints[i]->getTextureCoordinateU()
 	// 	// 	<< " " << 
 	// 	// 	vPoints[i]->getTextureCoordinateV()
 	// 	// 	<< std::endl;
-	// 	m_pMesh->addTexCoord(Unigine::Math::vec4(
+	// 	m_pDynamicMesh->addTexCoord(Unigine::Math::vec4(
 	// 		vPoints[i]->getTextureCoordinateU(),
 	// 		vPoints[i]->getTextureCoordinateV(),
 	// 		0,
@@ -293,77 +316,39 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 	// }
 
 	const std::vector<StoneTriangle *> &vTriangles = pStoneGenerator->triangles();
-	m_pMesh->addTriangles(vTriangles.size());
-	// m_pMesh->allocateIndices(vTriangles.size()*3);
+	m_pMeshTemp = Unigine::Mesh::create();
+	// int nSurface = m_pMeshTemp->addEmptySurface("0", vTriangles.size()*3, vTriangles.size()*3);
+	int nSurface = m_pMeshTemp->addSurface("0");
+	// m_pDynamicMesh->addTriangles(vTriangles.size());
+	// m_pDynamicMesh->allocateIndices(vTriangles.size()*3);
 	std::cout << "Got triangles: " << vTriangles.size() << std::endl;
 	for (int i = 0; i < vTriangles.size(); i++) {
 		StoneTriangle *pTriangle = vTriangles[i];
-		m_pMesh->addVertex(Unigine::Math::vec3(
-	 		pTriangle->p1()->x(),
-	 		pTriangle->p1()->y(),
-	 		pTriangle->p1()->z()
-	 	));
-		m_pMesh->addTexCoord(Unigine::Math::vec4(
-			pTriangle->t1().x(),
-			pTriangle->t1().y(),
-			0,
-			0
-		));
-		m_pMesh->addTangent(Unigine::Math::quat(
-			pTriangle->p1()->getTangentX(), 
-			pTriangle->p1()->getTangentY(),
-			pTriangle->p1()->getTangentZ(),
-			60 // any angel here
-		));
-
-		m_pMesh->addVertex(Unigine::Math::vec3(
-	 		pTriangle->p2()->x(),
-	 		pTriangle->p2()->y(),
-	 		pTriangle->p2()->z()
-	 	));
-		m_pMesh->addTexCoord(Unigine::Math::vec4(
-			pTriangle->t2().x(),
-			pTriangle->t2().y(),
-			0,
-			0
-		));
-		m_pMesh->addTangent(Unigine::Math::quat(
-			pTriangle->p2()->getTangentX(), 
-			pTriangle->p2()->getTangentY(),
-			pTriangle->p2()->getTangentZ(),
-			60 // any angel here
-		));
-
-		m_pMesh->addVertex(Unigine::Math::vec3(
-	 		pTriangle->p3()->x(),
-	 		pTriangle->p3()->y(),
-	 		pTriangle->p3()->z()
-	 	));
-		m_pMesh->addTexCoord(Unigine::Math::vec4(
-			pTriangle->t3().x(),
-			pTriangle->t3().y(),
-			0,
-			0
-		));
-		m_pMesh->addTangent(Unigine::Math::quat(
-			pTriangle->p3()->getTangentX(), 
-			pTriangle->p3()->getTangentY(),
-			pTriangle->p3()->getTangentZ(),
-			60 // any angel here
-		));
+		this->addVertex(i*3 + 0, pTriangle->p1(), pTriangle->t1(), nSurface);
+		this->addVertex(i*3 + 1, pTriangle->p2(), pTriangle->t2(), nSurface);
+		this->addVertex(i*3 + 2, pTriangle->p3(), pTriangle->t3(), nSurface);
+		m_pMeshTemp->addIndex(i*3 + 0, nSurface);
+		m_pMeshTemp->addIndex(i*3 + 1, nSurface);
+		m_pMeshTemp->addIndex(i*3 + 2, nSurface);
 	}
-
+	m_pMeshTemp->createTangents();
 	// // optimize vertex and index buffers, if necessary
-	// m_pMesh->updateIndices();
+	Unigine::MaterialPtr pPrevMeterial = m_pDynamicMesh->getMaterial(0);
 
+	m_pDynamicMesh->setMesh(m_pMeshTemp);
+	// return material
+	m_pDynamicMesh->setMaterial(pPrevMeterial, 0);
+
+	m_pDynamicMesh->flushIndices();
+	m_pDynamicMesh->flushVertex();
+
+	// m_pDynamicMesh->updateIndices();
 	// calculate a mesh bounding box for editor I guess
-	m_pMesh->updateBounds();
+	m_pDynamicMesh->updateBounds();
 
 	// lighting
-	m_pMesh->updateTangents();
+	m_pDynamicMesh->updateTangents();
 
-	m_pMesh->flushIndices();
-	m_pMesh->flushVertex();
 
 	if (m_pAsyncRunGenerator->getRegenerateTexture()) {
 		m_pImage->clear();
@@ -385,6 +370,7 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 
 			// m_pMaterial->setTextureImage(num, m_pImage);
 		}
+		// m_pMaterial->fl
 	}
 
 	if (m_bGenerateMaterial) {
@@ -398,6 +384,7 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 		Unigine::Log::message("regenerate geometry again\n");
 		this->regenerateGeometry();
 	}
+	m_pMeshTemp = nullptr;
 }
 
 void DialogConfigurator::triangles_itemSelectionChanged() {

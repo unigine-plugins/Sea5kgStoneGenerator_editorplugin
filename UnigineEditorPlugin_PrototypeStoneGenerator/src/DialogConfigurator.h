@@ -98,6 +98,8 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         int normalizeTextureCoordinates(int nWidth, float nVal);
         void updateTextureImageView(const QString &sHeighlightTriangle = "");
 
+        void addVertex(int nIndex, StonePoint *p1, StoneTexturePoint &t1, int nSurface);
+
         int m_nLabelSize;
         int m_nLabelValueSize;
 
@@ -132,7 +134,8 @@ class DialogConfigurator : public QDialog, public ISignalGun {
 
         QProgressBar *m_pProgress;
         AsyncRunGenerator *m_pAsyncRunGenerator;
-        Unigine::ObjectMeshDynamicPtr m_pMesh;
+        Unigine::ObjectMeshDynamicPtr m_pDynamicMesh;
+        Unigine::MeshPtr m_pMeshTemp;
         Unigine::MaterialPtr m_pMaterial;
         Unigine::ImagePtr m_pImage;
 
