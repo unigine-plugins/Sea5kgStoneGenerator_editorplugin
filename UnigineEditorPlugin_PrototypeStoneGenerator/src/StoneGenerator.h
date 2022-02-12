@@ -2,6 +2,8 @@
 
 #include <vector>
 
+class StoneTriangle;
+
 class StonePoint {
     public:
         StonePoint();
@@ -23,6 +25,9 @@ class StonePoint {
         float getNormalY();
         float getNormalZ();
 
+        void addLinkToTriangle(StoneTriangle *pTriangle);
+        void removeLinkToTriangle(StoneTriangle *pTriangle);
+
     private:
         float m_nX, m_nY, m_nZ;
         int m_nX100;
@@ -30,6 +35,7 @@ class StonePoint {
         int m_nZ100;
         int m_nIndex;
         float m_nNormalX, m_nNormalY, m_nNormalZ;
+        std::vector<StoneTriangle *> m_vLinkedTriangles;
 };
 
 class StoneTexturePoint {
@@ -52,7 +58,8 @@ class StoneTriangle {
             StonePoint *p2,
             StonePoint *p3
         );
-        
+        ~StoneTriangle();
+
         StonePoint *p1();
         StonePoint *p2();
         StonePoint *p3();
@@ -130,7 +137,7 @@ class StoneGenerator {
         StonePoint *addPoint(const StoneGeneratorConfig &conf, float x, float y, float z);
 
         bool generateBasicSpheres(const StoneGeneratorConfig &conf);
-        bool generateBasicCubes(const StoneGeneratorConfig &conf);
+        bool generateBasicCube(const StoneGeneratorConfig &conf);
         bool processAttraction(const StoneGeneratorConfig &conf);
         bool processRandom(const StoneGeneratorConfig &conf);
         bool processResizeAndShift(const StoneGeneratorConfig &conf);
@@ -147,10 +154,11 @@ class StoneGenerator {
         float angel(float x1, float y1, float x2, float y2);
         float angelXAxis(const StonePoint &p1, const StonePoint &p2);
         float angelYAxis(const StonePoint &p1, const StonePoint &p2);
-
         float angelXY(StonePoint *p1, StonePoint *p2);
         float angelZX(StonePoint *p1, StonePoint *p2);
         float angelZY(StonePoint *p1, StonePoint *p2);
+        float angelTex(StoneTexturePoint &t11, StoneTexturePoint &t12, StoneTexturePoint &t21, StoneTexturePoint &t22);
+        bool hasTriangle(const std::vector<StoneTriangle *> &vTriangles, StoneTriangle *p);
         void minmaxUV(StoneTexturePoint &p1, float &nMinU, float &nMaxU, float &nMinV, float &nMaxV);
         void normalizeUV(StoneTexturePoint &p1, float &nMinU, float &nMaxU, float &nMinV, float &nMaxV);
         void minXYZ(StonePoint *p1, float &nMinX, float &nMinY, float &nMinZ);

@@ -32,7 +32,7 @@ DialogConfigurator::DialogConfigurator(
 	m_bGenerateMesh = true;
     m_bGenerateMaterial = true;
 
-
+	// m_nBasicGeometry = 1;
 	// m_nPointsOfAttraction = 0;
 	// m_nSliderSurfaceDistortion = 0.0f;
 	// m_nSliderTrianglesValue = 250;
@@ -278,6 +278,52 @@ void DialogConfigurator::addVertex(int nIndex, StonePoint *p1, StoneTexturePoint
 	 	p1->getNormalY(),
 	 	p1->getNormalZ()
 	), nSurface);
+	m_pMeshTemp->addIndex(nIndex, nSurface);
+}
+
+void DialogConfigurator::showNormal(int nLastIndex, int nIndex, StonePoint *p1, int nSurface) {
+	
+	std::vector<Unigine::Math::vec3> points;
+
+	points.push_back(Unigine::Math::vec3(
+		p1->x(),
+		p1->y(),
+		p1->z()
+	));
+	points.push_back(Unigine::Math::vec3(
+		p1->x() + p1->getNormalX() + 0.1,
+		p1->y() + p1->getNormalY() + 0.1,
+		p1->z() + p1->getNormalZ()
+	));
+	points.push_back(Unigine::Math::vec3(
+		p1->x() + p1->getNormalX() - 0.1,
+		p1->y() + p1->getNormalY() + 0.1,
+		p1->z() + p1->getNormalZ()
+	));
+	points.push_back(Unigine::Math::vec3(
+		p1->x() + p1->getNormalX(),
+		p1->y() + p1->getNormalY() - 0.1,
+		p1->z() + p1->getNormalZ()
+	));
+
+	int nSize = points.size();
+	int nKI = nSize*3;
+	for (int i = 0; i < nSize; i++) {
+		Unigine::Math::vec3 p1 = points[(i+0)%nSize];
+		Unigine::Math::vec3 p2 = points[(i+1)%nSize];
+		Unigine::Math::vec3 p3 = points[(i+2)%nSize];
+		m_pMeshTemp->addVertex(p1, nSurface);
+		m_pMeshTemp->addIndex(nLastIndex + nIndex*nKI + i*3 + 0, nSurface);
+		m_pMeshTemp->addNormal(Unigine::Math::vec3(0.0, 0.0, 0.0), nSurface);
+
+		m_pMeshTemp->addVertex(p2, nSurface);
+		m_pMeshTemp->addIndex(nLastIndex + nIndex*nKI + i*3 + 1, nSurface);
+		m_pMeshTemp->addNormal(Unigine::Math::vec3(0.0, 0.0, 0.0), nSurface);
+
+		m_pMeshTemp->addVertex(p3, nSurface);
+		m_pMeshTemp->addIndex(nLastIndex + nIndex*nKI + i*3 + 2, nSurface);
+		m_pMeshTemp->addNormal(Unigine::Math::vec3(0.0, 0.0, 0.0), nSurface);
+	}
 }
 
 void DialogConfigurator::slot_generationComplited(QString sDone) {
@@ -322,15 +368,23 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 	// m_pDynamicMesh->addTriangles(vTriangles.size());
 	// m_pDynamicMesh->allocateIndices(vTriangles.size()*3);
 	std::cout << "Got triangles: " << vTriangles.size() << std::endl;
+	int nLastIndex = 0;
 	for (int i = 0; i < vTriangles.size(); i++) {
 		StoneTriangle *pTriangle = vTriangles[i];
 		this->addVertex(i*3 + 0, pTriangle->p1(), pTriangle->t1(), nSurface);
 		this->addVertex(i*3 + 1, pTriangle->p2(), pTriangle->t2(), nSurface);
 		this->addVertex(i*3 + 2, pTriangle->p3(), pTriangle->t3(), nSurface);
-		m_pMeshTemp->addIndex(i*3 + 0, nSurface);
-		m_pMeshTemp->addIndex(i*3 + 1, nSurface);
-		m_pMeshTemp->addIndex(i*3 + 2, nSurface);
+		nLastIndex = i*3 + 2;
 	}
+
+	// show normals
+	// nLastIndex = nLastIndex + 1;
+	// const std::vector<StonePoint *> &vPoints = pStoneGenerator->points();
+	// for (int i = 0; i < vPoints.size(); i++) {
+	// 	StonePoint *p1 = vPoints[i];
+	// 	this->showNormal(nLastIndex, i, vPoints[i], nSurface);
+	// }
+
 	m_pMeshTemp->createTangents();
 	// // optimize vertex and index buffers, if necessary
 	Unigine::MaterialPtr pPrevMeterial = m_pDynamicMesh->getMaterial(0);

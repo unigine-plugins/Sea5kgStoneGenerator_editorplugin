@@ -99,6 +99,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         void updateTextureImageView(const QString &sHeighlightTriangle = "");
 
         void addVertex(int nIndex, StonePoint *p1, StoneTexturePoint &t1, int nSurface);
+        void showNormal(int nLastIndex, int nIndex, StonePoint *p1, int nSurface);
 
         int m_nLabelSize;
         int m_nLabelValueSize;
