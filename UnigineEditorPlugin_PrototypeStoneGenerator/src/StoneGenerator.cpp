@@ -92,6 +92,37 @@ void StonePoint::removeLinkToTriangle(StoneTriangle *pTriangle) {
     // m_vLinkedTriangles.push_back(pTriangle);
 }
 
+// StoneLine
+
+StoneLine::StoneLine(StonePoint *p1, StonePoint *p2) {
+    m_p1 = p1;
+    m_p2 = p2;
+}
+
+bool StoneLine::equals(const StoneLine& line) const {
+    return 
+        (m_p1 == line.p1() && m_p2 == line.p2())
+        || (m_p1 == line.p2() && m_p2 == line.p1())
+    ;
+}
+
+StonePoint *StoneLine::p1() const {
+    return m_p1;
+}
+
+StonePoint *StoneLine::p2() const {
+    return m_p2;
+}
+
+StonePoint *StoneLine::crossPoint(const StoneLine& line) const {
+    if (m_p1 == line.p1() || m_p1 == line.p2()) {
+        return m_p1;
+    }
+    if (m_p2 == line.p1() || m_p2 == line.p2()) {
+        return m_p2;
+    }
+    return nullptr;
+}
 
 // StoneTexturePoint
 
@@ -99,11 +130,11 @@ StoneTexturePoint::StoneTexturePoint() {
     setXY(0.0f,0.0f);
 }
 
-float StoneTexturePoint::x() {
+float StoneTexturePoint::x() const {
     return m_nX;
 }
 
-float StoneTexturePoint::y() {
+float StoneTexturePoint::y() const {
     return m_nY;
 }
 
@@ -119,46 +150,58 @@ StoneTriangle::StoneTriangle(
     StonePoint *p2,
     StonePoint *p3
 ) {
-    m_p1 = p1;
-    m_p2 = p2;
-    m_p3 = p3;
-    m_p1->addLinkToTriangle(this);
-    m_p2->addLinkToTriangle(this);
-    m_p3->addLinkToTriangle(this);
+    m_points = new StonePoint* [3];
+    m_pTexPoints = new StoneTexturePoint [3];
+    m_points[0] = p1;
+    m_points[1] = p2;
+    m_points[2] = p3;
+    m_points[0]->addLinkToTriangle(this);
+    m_points[1]->addLinkToTriangle(this);
+    m_points[2]->addLinkToTriangle(this);
 }
 
 StoneTriangle::~StoneTriangle() {
-    m_p1->removeLinkToTriangle(this);
-    m_p2->removeLinkToTriangle(this);
-    m_p3->removeLinkToTriangle(this);
+    m_points[0]->removeLinkToTriangle(this);
+    m_points[1]->removeLinkToTriangle(this);
+    m_points[2]->removeLinkToTriangle(this);
+    delete[] m_points;
+    delete[] m_pTexPoints;
 }
 
 StonePoint *StoneTriangle::p1() {
-    return m_p1;
+    return m_points[0];
 }
 
 StonePoint *StoneTriangle::p2() {
-    return m_p2;
+    return m_points[1];
 }
 
 StonePoint *StoneTriangle::p3() {
-    return m_p3;
+    return m_points[2];
 }
 
 bool StoneTriangle::hasPoint(StonePoint *p) {
-    return m_p1 == p || m_p2 == p || m_p3 == p;
+    return m_points[0] == p || m_points[1] == p || m_points[2] == p;
+}
+
+StonePoint *StoneTriangle::getPointByIndex(int nIndex) {
+    return m_points[nIndex];
 }
 
 StoneTexturePoint &StoneTriangle::t1() {
-    return m_t1;
+    return m_pTexPoints[0];
 }
 
 StoneTexturePoint &StoneTriangle::t2() {
-    return m_t2;
+    return m_pTexPoints[1];
 }
 
 StoneTexturePoint &StoneTriangle::t3() {
-    return m_t3;
+    return m_pTexPoints[2];
+}
+
+StoneTexturePoint &StoneTriangle::getTexPointByIndex(int nIndex) {
+    return m_pTexPoints[nIndex];
 }
 
 void StoneTriangle::calculateMiddlePointAndNormal(StonePoint &middle_p, StonePoint &middle_p_normal) {
@@ -166,9 +209,9 @@ void StoneTriangle::calculateMiddlePointAndNormal(StonePoint &middle_p, StonePoi
     // http://mathprofi.ru/uravnenie_ploskosti.html
 
     middle_p.setXYZ(
-        (m_p1->x() + m_p2->x() + m_p3->x()) / 3.0,
-        (m_p1->y() + m_p2->y() + m_p3->y()) / 3.0,
-        (m_p1->z() + m_p2->z() + m_p3->z()) / 3.0
+        (m_points[0]->x() + m_points[1]->x() + m_points[2]->x()) / 3.0,
+        (m_points[0]->y() + m_points[1]->y() + m_points[2]->y()) / 3.0,
+        (m_points[0]->z() + m_points[1]->z() + m_points[2]->z()) / 3.0
     );
     // 
     // | x - x1, x2 - x1, x3 - x1 | 
@@ -185,12 +228,12 @@ void StoneTriangle::calculateMiddlePointAndNormal(StonePoint &middle_p, StonePoi
     // b = - ((x2 - x1)*(z3 - z1) - (x3 - x1)*(z2 - z1))
     // c = ((x2 - x1)*(y3 - y1) - (x3 - x1)*(y2 - y1))
 
-    float x21 = m_p2->x() - m_p1->x();
-    float y21 = m_p2->y() - m_p1->y();
-    float z21 = m_p2->z() - m_p1->z();
-    float x31 = m_p3->x() - m_p1->x();
-    float y31 = m_p3->y() - m_p1->y();
-    float z31 = m_p3->z() - m_p1->z();
+    float x21 = m_points[1]->x() - m_points[0]->x();
+    float y21 = m_points[1]->y() - m_points[0]->y();
+    float z21 = m_points[1]->z() - m_points[0]->z();
+    float x31 = m_points[2]->x() - m_points[0]->x();
+    float y31 = m_points[2]->y() - m_points[0]->y();
+    float z31 = m_points[2]->z() - m_points[0]->z();
 
     middle_p_normal.setXYZ(
         middle_p.x() + (y21*z31 - z21*y31),
@@ -209,31 +252,31 @@ void StoneTriangle::rotateInXAxisAroundPoint(StonePoint &p1, float fRot) {
     // |0   cos θ    −sin θ| |y| = |y cos θ − z sin θ| = |y'|
     // |0   sin θ     cos θ| |z|   |y sin θ + z cos θ|   |z'|
 
-    float dx1 = m_p1->x() - p1.x();
-    float dy1 = m_p1->y() - p1.y();
-    float dz1 = m_p1->z() - p1.z();
+    float dx1 = m_points[0]->x() - p1.x();
+    float dy1 = m_points[0]->y() - p1.y();
+    float dz1 = m_points[0]->z() - p1.z();
 
-    m_p1->setXYZ(
+    m_points[0]->setXYZ(
         p1.x() + dx1,
         p1.y() + dy1 * std::cos(fRot) - dz1 * std::sin(fRot),
         p1.z() + dy1 * std::sin(fRot) + dz1 * std::cos(fRot)
     );
     
-    float dx2 = m_p2->x() - p1.x();
-    float dy2 = m_p2->y() - p1.y();
-    float dz2 = m_p2->z() - p1.z();
+    float dx2 = m_points[1]->x() - p1.x();
+    float dy2 = m_points[1]->y() - p1.y();
+    float dz2 = m_points[1]->z() - p1.z();
 
-    m_p2->setXYZ(
+    m_points[1]->setXYZ(
         p1.x() + dx2,
         p1.y() + dy2 * std::cos(fRot) - dz2 * std::sin(fRot),
         p1.z() + dy2 * std::sin(fRot) + dz2 * std::cos(fRot)
     );
 
-    float dx3 = m_p3->x() - p1.x();
-    float dy3 = m_p3->y() - p1.y();
-    float dz3 = m_p3->z() - p1.z();
+    float dx3 = m_points[2]->x() - p1.x();
+    float dy3 = m_points[2]->y() - p1.y();
+    float dz3 = m_points[2]->z() - p1.z();
 
-    m_p3->setXYZ(
+    m_points[2]->setXYZ(
         p1.x() + dx3,
         p1.y() + dy3 * std::cos(fRot) - dz3 * std::sin(fRot),
         p1.z() + dy3 * std::sin(fRot) + dz3 * std::cos(fRot)
@@ -250,31 +293,31 @@ void StoneTriangle::rotateInYAxisAroundPoint(StonePoint &p1, float fRot) {
     // |   0      1       0| |y| = |         y        | = |y'|
     // |−sin θ    0   cos θ| |z|   |−x sin θ + z cos θ|   |z'|
 
-    float dx1 = m_p1->x() - p1.x();
-    float dy1 = m_p1->y() - p1.y();
-    float dz1 = m_p1->z() - p1.z();
+    float dx1 = m_points[0]->x() - p1.x();
+    float dy1 = m_points[0]->y() - p1.y();
+    float dz1 = m_points[0]->z() - p1.z();
 
-    m_p1->setXYZ(
+    m_points[0]->setXYZ(
         p1.x() + dx1 * std::cos(fRot) + dz1 * std::sin(fRot),
         p1.y() + dy1,
         p1.z() - dx1 * std::sin(fRot) + dz1 * std::cos(fRot)
     );
 
-    float dx2 = m_p2->x() - p1.x();
-    float dy2 = m_p2->y() - p1.y();
-    float dz2 = m_p2->z() - p1.z();
+    float dx2 = m_points[1]->x() - p1.x();
+    float dy2 = m_points[1]->y() - p1.y();
+    float dz2 = m_points[1]->z() - p1.z();
 
-    m_p2->setXYZ(
+    m_points[1]->setXYZ(
         p1.x() + dx2 * std::cos(fRot) + dz2 * std::sin(fRot),
         p1.y() + dy2,
         p1.z() - dx2 * std::sin(fRot) + dz2 * std::cos(fRot)
     );
 
-    float dx3 = m_p3->x() - p1.x();
-    float dy3 = m_p3->y() - p1.y();
-    float dz3 = m_p3->z() - p1.z();
+    float dx3 = m_points[2]->x() - p1.x();
+    float dy3 = m_points[2]->y() - p1.y();
+    float dz3 = m_points[2]->z() - p1.z();
 
-    m_p3->setXYZ(
+    m_points[2]->setXYZ(
         p1.x() + dx3 * std::cos(fRot) + dz3 * std::sin(fRot),
         p1.y() + dy3,
         p1.z() - dx3 * std::sin(fRot) + dz3 * std::cos(fRot)
@@ -282,9 +325,55 @@ void StoneTriangle::rotateInYAxisAroundPoint(StonePoint &p1, float fRot) {
 }
 
 void StoneTriangle::copy(StoneTriangle *pTriangle) {
-    m_p1->setXYZ(pTriangle->p1()->x(), pTriangle->p1()->y(), pTriangle->p1()->z());
-    m_p2->setXYZ(pTriangle->p2()->x(), pTriangle->p2()->y(), pTriangle->p2()->z());
-    m_p3->setXYZ(pTriangle->p3()->x(), pTriangle->p3()->y(), pTriangle->p3()->z());
+    m_points[0]->setXYZ(pTriangle->p1()->x(), pTriangle->p1()->y(), pTriangle->p1()->z());
+    m_points[1]->setXYZ(pTriangle->p2()->x(), pTriangle->p2()->y(), pTriangle->p2()->z());
+    m_points[2]->setXYZ(pTriangle->p3()->x(), pTriangle->p3()->y(), pTriangle->p3()->z());
+}
+
+void StoneTriangle::rotateTexPointsBy(int nIndex0, float fAngle) {
+    float ca = std::cos(fAngle);
+    float sa = std::sin(fAngle);
+
+    float x0 = m_pTexPoints[nIndex0].x();
+    float y0 = m_pTexPoints[nIndex0].y();
+
+    int nIndex1 = (nIndex0 + 1) % 3;
+    float dX1 = m_pTexPoints[nIndex1].x() - x0;
+    float dY1 = m_pTexPoints[nIndex1].y() - y0;
+    m_pTexPoints[nIndex1].setXY(
+        x0 + (dX1 * ca - dY1 * sa),
+        y0 + (dX1 * sa + dY1 * ca)
+    );
+
+    int nIndex2 = (nIndex0 + 2) % 3;
+    float dX2 = m_pTexPoints[nIndex2].x() - x0;
+    float dY2 = m_pTexPoints[nIndex2].y() - y0;
+    m_pTexPoints[nIndex2].setXY(
+        x0 + (dX2 * ca - dY2 * sa),
+        y0 + (dX2 * sa + dY2 * ca)
+    );
+}
+
+void StoneTriangle::moveTexPointsBy(int nIndex0, const StoneTexturePoint &t) {
+    float dx = t.x() - m_pTexPoints[nIndex0].x();
+    float dy = t.y() - m_pTexPoints[nIndex0].y();
+
+    m_pTexPoints[nIndex0].setXY(
+        t.x(),
+        t.y()
+    );
+
+    int nIndex1 = (nIndex0 + 1) % 3;
+    m_pTexPoints[nIndex1].setXY(
+        m_pTexPoints[nIndex1].x() + dx,
+        m_pTexPoints[nIndex1].y() + dy
+    );
+
+    int nIndex2 = (nIndex0 + 2) % 3;
+    m_pTexPoints[nIndex2].setXY(
+        m_pTexPoints[nIndex2].x() + dx,
+        m_pTexPoints[nIndex2].y() + dy
+    );
 }
 
 // StoneGeneratorConfig
@@ -811,7 +900,7 @@ bool StoneGenerator::processNormals(const StoneGeneratorConfig &conf) {
         StonePoint pNormal(0.0, 0.0, 0.0);
         StonePoint middle_p;
         StonePoint middle_p_normal;
-        std::cout << "processNormals vFoundTriangles.size() = " << vFoundTriangles.size() << std::endl;
+        // std::cout << "processNormals vFoundTriangles.size() = " << vFoundTriangles.size() << std::endl;
         for (int n = 0; n < vFoundTriangles.size(); n++) {
             vFoundTriangles[n]->calculateMiddlePointAndNormal(middle_p, middle_p_normal);
             pNormal.addOffset(
@@ -916,119 +1005,80 @@ bool StoneGenerator::processTexturing(const StoneGeneratorConfig &conf) {
     // moving trinagles for pazzle
     std::vector<StoneTriangle *> vTrianglesHandled;
     std::vector<StoneTriangle *> vTrianglesHandling;
-    std::vector<StoneTriangle *> vTriFounds;
-    vTrianglesHandling.push_back(m_vTriangles[0]);
+    vTrianglesHandling.push_back(m_vTriangles[m_vTriangles.size()/2]);
     while (vTrianglesHandling.size() > 0) {
         StoneTriangle *pTri = vTrianglesHandling[vTrianglesHandling.size()-1];
         vTrianglesHandling.pop_back();
-
-        vTriFounds.clear();
-        bool bFoundP12 = false;
-        bool bFoundP23 = false;
-        bool bFoundP31 = false;
+        
         for (int i = 0; i < m_vTriangles.size(); i++) {
             StoneTriangle *pTri2 = m_vTriangles[i];
-            if (hasTriangle(vTrianglesHandled, pTri2)) {
+            if (pTri2 == pTri) {
+                // std::cout << "Skip same trinagle" << std::endl;
                 continue;
             }
-            if (pTri2->p1() == pTri->p1() && pTri2->p2() == pTri->p2()) {
-                if (bFoundP12) {
-                    std::cout << "processTexturing. Already bFoundP12" << std::endl;
-                }
-                bFoundP12 = true;
-                vTrianglesHandling.push_back(pTri2);
-                float fAngle = this->angelTex(pTri->t1(), pTri->t2(), pTri2->t1(), pTri2->t2());
-
-            } else if (pTri2->p2() == pTri->p2() && pTri2->p3() == pTri->p3()) {
-                if (bFoundP23) {
-                    std::cout << "processTexturing. Already bFoundP23" << std::endl;
-                }
-                bFoundP23 = true;
-                vTrianglesHandling.push_back(pTri2);
-            } else if (pTri2->p3() == pTri->p3() && pTri2->p1() == pTri->p1()) {
-                if (bFoundP31) {
-                    std::cout << "processTexturing. Already bFoundP31" << std::endl;
-                }
-                bFoundP31 = true;
-                vTrianglesHandling.push_back(pTri2);
+            if (hasTriangle(vTrianglesHandled, pTri2)) {
+                // std::cout << "Skip handled trinagle" << std::endl;
+                continue;
             }
-        }
-
-        if (!bFoundP12) {
-            std::cout << "processTexturing. Not found bFoundP12" << std::endl;
-        }
-
-        if (!bFoundP23) {
-            std::cout << "processTexturing. Not found bFoundP23" << std::endl;
-        }
-
-        if (!bFoundP31) {
-            std::cout << "processTexturing. Not found bFoundP31" << std::endl;
+            bool bFound = false;
+            for (int nT11 = 0; nT11 < 3; nT11++) {
+                if (bFound) {
+                    break;
+                }
+                for (int nT21 = 0; nT21 < 3; nT21++) {
+                    if (pTri->getPointByIndex(nT11) == pTri2->getPointByIndex(nT21)) {
+                        bFound = true;
+                        int nT12 = -1;
+                        int nT22 = -1;
+                        if (pTri->getPointByIndex((nT11 + 1) % 3) == pTri2->getPointByIndex((nT21 + 1) % 3)) {
+                            nT12 = (nT11 + 1) % 3;
+                            nT22 = (nT21 + 1) % 3;
+                        } else if (pTri->getPointByIndex((nT11 + 1) % 3) == pTri2->getPointByIndex((nT21 - 1) % 3)) {
+                            nT12 = (nT11 + 1) % 3;
+                            nT22 = (nT21 - 1) % 3;
+                        } else if (pTri->getPointByIndex((nT11 - 1) % 3) == pTri2->getPointByIndex((nT21 + 1) % 3)) {
+                            nT12 = (nT11 - 1) % 3;
+                            nT22 = (nT21 + 1) % 3;
+                        } else if (pTri->getPointByIndex((nT11 - 1) % 3) == pTri2->getPointByIndex((nT21 - 1) % 3)) {
+                            nT12 = (nT11 - 1) % 3;
+                            nT22 = (nT21 - 1) % 3;
+                        }
+                        if (nT12 == -1 || nT22 == -1)  {
+                            bFound = false;
+                            // std::cout << "Failed " << std::endl;
+                            continue;
+                        } else {
+                            if (!hasTriangle(vTrianglesHandling, pTri2)) {
+                                vTrianglesHandling.push_back(pTri2);
+                            }
+                            float fAngle = this->angelTex(
+                                pTri->getTexPointByIndex(nT11),
+                                pTri->getTexPointByIndex(nT12),
+                                pTri2->getTexPointByIndex(nT21),
+                                pTri2->getTexPointByIndex(nT22)
+                            );
+                            if (isnan(fAngle)) {
+                                // std::cout << "fAngle " << fAngle << std::endl;
+                                fAngle = 0.0;
+                            }
+                            pTri2->rotateTexPointsBy(nT21, fAngle);
+                            pTri2->moveTexPointsBy(nT21, pTri->getTexPointByIndex(nT11));
+                            break;
+                        }
+                    }
+                }
+            }
         }
         vTrianglesHandled.push_back(pTri);        
     }
-    //     this->findTrianglesByPoints2(pTri->p1(), pTri->p2(), vTriFounds);
-    //     this->findTrianglesByPoints2(pTri->p2(), pTri->p3(), vTriFounds);
-    //     this->findTrianglesByPoints2(pTri->p3(), pTri->p1(), vTriFounds);
-    //     for (int i = 0; i < vTriFounds.size(); i++) {
-    //         StoneTriangle *pTriFound = vTriFounds[i];
-    //         // if (pTriFound == nullptr) {
-    //         //     continue;
-    //         // }
 
-    //         // exclude already handled triangles
-    //         bool bAlreadySet = false;
-    //         for (int x = 0; x < vTrianglesHandled.size(); x++) {
-    //             if (vTrianglesHandled[x] == pTriFound) {
-    //                 bAlreadySet = true;
-    //                 break;
-    //             }
-    //         }
-    //         if (bAlreadySet == true) {
-    //             continue;
-    //         }
-
-    //         vTrianglesHandling.push_back(pTriFound);
-    //         float diff_x = 0.0;
-    //         float diff_y = 0.0;
-    //         if (pTriFound->p1() == pTri->p1() && pTriFound->p2() == pTri->p2()) {
-    //             diff_x = pTri->t1().x() - pTriFound->t1().x();
-    //             diff_y = pTri->t1().y() - pTriFound->t1().y();
-    //         } else if (pTriFound->p2() == pTri->p2() && pTriFound->p3() == pTri->p3()) {
-    //             diff_x = pTri->t2().x() - pTriFound->t2().x();
-    //             diff_y = pTri->t2().y() - pTriFound->t2().y();
-    //         } else if (pTriFound->p3() == pTri->p3() && pTriFound->p1() == pTri->p1()) {
-    //             diff_x = pTri->t3().x() - pTriFound->t3().x();
-    //             diff_y = pTri->t3().y() - pTriFound->t3().y();
-    //         } else if (pTriFound->p1() == pTri->p2() && pTriFound->p2() == pTri->p1()) {
-    //             diff_x = pTri->t1().x() - pTriFound->t2().x();
-    //             diff_y = pTri->t1().y() - pTriFound->t2().y();
-    //         } else if (pTriFound->p2() == pTri->p3() && pTriFound->p3() == pTri->p2()) {
-    //             diff_x = pTri->t2().x() - pTriFound->t3().x();
-    //             diff_y = pTri->t2().y() - pTriFound->t3().y();
-    //         } else if (pTriFound->p3() == pTri->p1() && pTriFound->p1() == pTri->p3()) {
-    //             diff_x = pTri->t3().x() - pTriFound->t1().x();
-    //             diff_y = pTri->t3().y() - pTriFound->t1().y();
-    //         } else {
-    //             std::cout << "processTexturing. Not found" << std::endl;
-    //         }
-    //         pTriFound->t1().setXY(
-    //             pTriFound->t1().x() + diff_x,
-    //             pTriFound->t1().y() + diff_y
-    //         );
-    //         pTriFound->t2().setXY(
-    //             pTriFound->t2().x() + diff_x,
-    //             pTriFound->t2().y() + diff_y
-    //         );
-    //         pTriFound->t3().setXY(
-    //             pTriFound->t3().x() + diff_x,
-    //             pTriFound->t3().y() + diff_y
-    //         );
-    //     }
-
-
-
-
+    if (vTrianglesHandled.size() != m_vTriangles.size()) {
+        std::cout << "vTrianglesHandled.size() = " << vTrianglesHandled.size() << std::endl;
+        std::cout << "m_vTriangles.size() = " << m_vTriangles.size() << std::endl;
+    } else {
+        std::cout << "m_vTriangles.size() == vTrianglesHandled.size() " << std::endl;
+    }
+ 
     for (int i = 0; i < m_vTriangles.size(); i++) {
         StoneTriangle *pTri = m_vTriangles[i];
         this->minmaxUV(pTri->t1(), nMinU, nMaxU, nMinV, nMaxV);
@@ -1132,9 +1182,10 @@ float StoneGenerator::angelTex(StoneTexturePoint &t11, StoneTexturePoint &t12, S
     float dy1 = t12.y() - t11.y();
     float dx2 = t22.x() - t21.x();
     float dy2 = t22.y() - t21.y();
-    float dxy = dx1 * dx2 + dy2 * dy1;
-    float c =  std::sqrt(dy1*dy1 + dx1*dx1);
-    return std::acos(dxy / c);
+    float dxy_scalar = dx1 * dx2 + dy2 * dy1;
+    float a = std::sqrt(dx1*dx1 + dy1*dy1);
+    float b = std::sqrt(dx2*dx2 + dy2*dy2);
+    return std::acos(dxy_scalar / (a*b));
 }
 
 bool StoneGenerator::hasTriangle(const std::vector<StoneTriangle *> &vTriangles, StoneTriangle *p) {

@@ -16,7 +16,7 @@ DialogConfigurator::DialogConfigurator(
 	m_bInProgress = false;
 	m_bRegenerateGeometry = false;
     m_bRegenerateTexture = false;
-	m_nSliderTrianglesValue = 100;
+	m_nSliderTrianglesValue = 500;
 	m_nSliderRadius = 2.0f;
 	m_nSliderSurfaceDistortion = 0.05f;
 	m_nSliderScaleX = 1.0f;

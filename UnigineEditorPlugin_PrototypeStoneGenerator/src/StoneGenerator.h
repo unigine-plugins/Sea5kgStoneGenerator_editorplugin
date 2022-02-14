@@ -38,12 +38,25 @@ class StonePoint {
         std::vector<StoneTriangle *> m_vLinkedTriangles;
 };
 
+class StoneLine {
+    public:
+        StoneLine(StonePoint *p1, StonePoint *p2);
+        bool equals(const StoneLine& line) const;
+        StonePoint *p1() const;
+        StonePoint *p2() const;
+        StonePoint *crossPoint(const StoneLine& line) const;
+
+    private:
+        StonePoint *m_p1;
+        StonePoint *m_p2;
+};
+
 class StoneTexturePoint {
     public:
         StoneTexturePoint();
 
-        float x();
-        float y();
+        float x() const;
+        float y() const;
 
         void setXY(float x, float y);
 
@@ -65,10 +78,13 @@ class StoneTriangle {
         StonePoint *p3();
 
         bool hasPoint(StonePoint *p);
+        StonePoint *getPointByIndex(int nIndex);
 
         StoneTexturePoint &t1();
         StoneTexturePoint &t2();
         StoneTexturePoint &t3();
+
+        StoneTexturePoint &getTexPointByIndex(int nIndex);
 
         void calculateMiddlePointAndNormal(StonePoint &middle_p, StonePoint &middle_p_normal);
         void rotateInXAxisAroundPoint(StonePoint &p1, float fRot);
@@ -76,14 +92,14 @@ class StoneTriangle {
         
         void copy(StoneTriangle *p);
 
-    private:
-        StonePoint *m_p1;
-        StonePoint *m_p2;
-        StonePoint *m_p3;
+        void rotateTexPointsBy(int nIndex0, float fAngle);
 
-        StoneTexturePoint m_t1;
-        StoneTexturePoint m_t2;
-        StoneTexturePoint m_t3;
+        void moveTexPointsBy(int nIndex0, const StoneTexturePoint &t);
+
+    private:
+        StonePoint **m_points;
+
+        StoneTexturePoint *m_pTexPoints;
 };
 
 class StoneGeneratorConfig {
