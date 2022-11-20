@@ -19,9 +19,14 @@ elif _platform.startswith("windows"):
 else:
     sys.exit("Unknown platform")
 
-ret = os.system("python3 build_plugin.py")
-if ret != 0:
-    sys.exit("Could not build...")
+if is_windows:
+    ret = os.system("python3 build_plugin.py")
+    if ret != 0:
+        sys.exit("Could not build...")
+elif is_linux:
+    ret = os.system("docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:latest ./build_plugin.py")
+    if ret != 0:
+        sys.exit("Could not build...")
 
 
 with open("version") as _file:
