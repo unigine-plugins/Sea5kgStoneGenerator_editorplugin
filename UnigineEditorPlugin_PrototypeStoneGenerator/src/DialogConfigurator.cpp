@@ -193,7 +193,7 @@ void DialogConfigurator::createNode() {
 	m_pDynamicMesh->setShowInEditorEnabledRecursive(1);
 	m_pDynamicMesh->setSaveToWorldEnabledRecursive(1);
 	m_pDynamicMesh->setName(QString(m_sRandomName).toStdString().c_str());
-	QVector<Unigine::NodePtr> pNodes;
+	Unigine::Vector<Unigine::NodePtr> pNodes;
 	pNodes.push_back(m_pDynamicMesh);
 	Editor::SelectorNodes *pSelected = Editor::SelectorNodes::createObjectsSelector(pNodes);
 	Editor::Selection::setSelector(pSelected);
@@ -202,12 +202,13 @@ void DialogConfigurator::createNode() {
 	m_bRegenerateTexture = false;
 
 	if (m_bGenerateMaterial) {
-		auto mesh_base = Unigine::Materials::findMaterial("mesh_base");
+		auto mesh_base = Unigine::Materials::findManualMaterial("mesh_base");
 		m_pMaterial = mesh_base->inherit();
 		m_pMaterial->setParent(mesh_base);
 		std::string sMaterialPath = QString(m_sRandomName + ".mat").toStdString();
-		m_pMaterial->setName(QString(m_sRandomName).toStdString().c_str());
-		m_pMaterial->setPath(sMaterialPath.c_str());
+		// TODO
+		// m_pMaterial->setName(QString(m_sRandomName).toStdString().c_str());
+		m_pMaterial->setTexturePath(QString(m_sRandomName).toStdString().c_str(), sMaterialPath.c_str());
 		m_pMaterial->save();
 
 		m_pDynamicMesh->setMaterial(m_pMaterial, 0);

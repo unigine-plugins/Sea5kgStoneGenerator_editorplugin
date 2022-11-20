@@ -49,7 +49,6 @@ add_library(${proj_name} SHARED
 
 target_include_directories(${proj_name} SYSTEM
 	PRIVATE
-    ${PROJECT_SOURCE_DIR}/include
 	${PROJECT_SOURCE_DIR}/src/
 	${CMAKE_CURRENT_BINARY_DIR}
 	)

@@ -51,7 +51,7 @@ private:
 	QAction *m_pActionAbout;
 	QAction *m_pActionEdit;
 
-	QVector<Unigine::NodePtr> m_vSelectedNodes;
+	Unigine::Vector<Unigine::NodePtr> m_vSelectedNodes;
 	QVector<Unigine::ObjectMeshDynamicPtr> m_vMeshes;
 	
 	DialogConfigurator *m_pDialog;

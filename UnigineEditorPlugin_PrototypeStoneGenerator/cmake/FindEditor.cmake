@@ -36,7 +36,7 @@ select_library_configurations(Editor)
 
 find_path(Editor_INCLUDE_DIR
 	NAMES "PluginManager.h"
-	PATHS ${PROJECT_SOURCE_DIR}/include/editor
+	PATHS ${PROJECT_SOURCE_DIR}/../include/editor
 	NO_DEFAULT_PATH
 	)
 
@@ -51,8 +51,8 @@ find_package_handle_standard_args(Editor
 if(Editor_FOUND)
 	add_library(Unigine::Editor UNKNOWN IMPORTED)
 	set_target_properties(Unigine::Editor PROPERTIES
-		INTERFACE_INCLUDE_DIRECTORIES ${Editor_INCLUDE_DIR}/..
-		INTERFACE_SYSTEM_INCLUDE_DIRECTORIES ${Editor_INCLUDE_DIR}/..
+		INTERFACE_INCLUDE_DIRECTORIES ${Editor_INCLUDE_DIR}
+		INTERFACE_SYSTEM_INCLUDE_DIRECTORIES ${Editor_INCLUDE_DIR}
 		)
 	set_property(TARGET Unigine::Editor PROPERTY
 		INTERFACE_COMPILE_DEFINITIONS $<$<BOOL:${UNIGINE_DOUBLE}>:UNIGINE_DOUBLE>

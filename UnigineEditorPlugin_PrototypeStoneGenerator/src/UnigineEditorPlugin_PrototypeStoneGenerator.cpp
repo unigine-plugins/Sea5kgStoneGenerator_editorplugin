@@ -107,18 +107,17 @@ void UnigineEditorPlugin_PrototypeStoneGenerator::globalSelectionChanged() {
 	m_vSelectedNodes.clear();
 	if (auto selector = Editor::Selection::getSelectorNodes()) {
 		log_info("Selected nodes");
-		
 		m_vSelectedNodes.append(selector->getNodes());
 	} else {
 		log_info("Something else");
-	
 	}
 }
 
 bool UnigineEditorPlugin_PrototypeStoneGenerator::safeCreateMenuCustom() {
 	QMenu *pMenuCreate = Editor::WindowManager::findMenu(Constants::MM_CREATE);
 	if (pMenuCreate == nullptr) {
-		log_error(" Not found menu: " + Constants::MM_CREATE);
+		std::string sLogMsg = std::string(" Not found menu: ") + std::string(Constants::MM_CREATE);
+		log_error(sLogMsg.c_str());
 		return false;
 
 	}
