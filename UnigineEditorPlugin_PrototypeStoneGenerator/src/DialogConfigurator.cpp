@@ -202,13 +202,12 @@ void DialogConfigurator::createNode() {
 	m_bRegenerateTexture = false;
 
 	if (m_bGenerateMaterial) {
-		auto mesh_base = Unigine::Materials::findManualMaterial("mesh_base");
+		auto mesh_base = Unigine::Materials::findManualMaterial("Unigine::mesh_base");
+		std::string sMaterialPath = QString(m_sRandomName + ".mat").toStdString();
 		m_pMaterial = mesh_base->inherit();
 		m_pMaterial->setParent(mesh_base);
-		std::string sMaterialPath = QString(m_sRandomName + ".mat").toStdString();
-		// TODO
-		// m_pMaterial->setName(QString(m_sRandomName).toStdString().c_str());
-		m_pMaterial->setTexturePath(QString(m_sRandomName).toStdString().c_str(), sMaterialPath.c_str());
+		m_pMaterial->createMaterialFile(sMaterialPath.c_str());
+
 		m_pMaterial->save();
 
 		m_pDynamicMesh->setMaterial(m_pMaterial, 0);
