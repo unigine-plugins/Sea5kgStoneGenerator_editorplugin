@@ -859,7 +859,7 @@ bool StoneGenerator::processRemoveUnusefulTriangles(const StoneGeneratorConfig &
     }
     for (int i = m_nRemoveTriangles.size()-1; i >= 0; i--) {
         int nIndex = m_nRemoveTriangles[i];
-        std::cout << "Removing triangle " << nIndex << std::endl;
+        // std::cout << "Removing triangle " << nIndex << std::endl;
         StoneTriangle *pTri = m_vTriangles[nIndex];
         delete pTri;
         m_vTriangles[nIndex] = nullptr;

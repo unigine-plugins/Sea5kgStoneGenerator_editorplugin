@@ -188,8 +188,27 @@ void DialogConfigurator::createNode() {
 	m_sRandomName = "stone_" + QString::number(std::rand() % 10000);
 
 	m_pDynamicMesh = Unigine::ObjectMeshDynamic::create();
-	// TODO select position by a camera
-	m_pDynamicMesh->setWorldTransform(translate(Unigine::Math::Vec3(0.0f, 0.0f, 2.0f)));
+
+	// find position by a camera
+	auto nViewportWindowId = Editor::ViewportManager::getActiveViewportWindow();
+	Unigine::PlayerPtr pPlayer = Editor::ViewportManager::getViewportWindowPlayer(nViewportWindowId);
+	auto pos = pPlayer->getWorldPosition();
+    auto rot = pPlayer->getWorldRotation();
+	// m_pDynamicMesh->setWorldTransform(translate(Unigine::Math::Vec3(0.0f, 0.0f, 2.0f)));
+	// m_pDynamicMesh->setWorldTransform(pPlayer->getTransform() * transform);
+	// m_pDynamicMesh->setWorldTransform(pPlayer->getTransform());
+	
+	
+
+	auto direction = pPlayer->getViewDirection();
+	direction *= 10.0f;
+	m_pDynamicMesh->setWorldPosition(pPlayer->getWorldPosition() + direction);
+	m_pDynamicMesh->setWorldRotation(pPlayer->getWorldRotation());
+
+	// Unigine::Math::Mat4 transform = pPlayer->getTransform();
+	// transform.setTranslate(direction);
+	// m_pDynamicMesh->setWorldTransform(pPlayer->getTransform() * transform);
+
 	m_pDynamicMesh->setShowInEditorEnabledRecursive(1);
 	m_pDynamicMesh->setSaveToWorldEnabledRecursive(1);
 	m_pDynamicMesh->setName(QString(m_sRandomName).toStdString().c_str());

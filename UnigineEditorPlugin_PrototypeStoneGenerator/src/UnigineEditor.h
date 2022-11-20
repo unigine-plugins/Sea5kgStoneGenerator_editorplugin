@@ -8,3 +8,4 @@
 #include "editor/Selector.h"
 #include "editor/Undo.h"
 #include "editor/WindowManager.h"
+#include "editor/ViewportManager.h"

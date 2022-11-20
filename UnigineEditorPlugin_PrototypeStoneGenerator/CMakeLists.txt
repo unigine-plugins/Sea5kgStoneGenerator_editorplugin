@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.14)
-set(proj_name UnigineEditorPlugin_PrototypeStoneGenerator_x64)
+set(target UnigineEditorPlugin_PrototypeStoneGenerator_x64)
 if (CMAKE_BUILD_TYPE MATCHES "RelWithDebInfo")
-	set(proj_name UnigineEditorPlugin_PrototypeStoneGenerator_x64d)
+	set(target UnigineEditorPlugin_PrototypeStoneGenerator_x64d)
 endif()
-project(${proj_name} CXX)
+project(${target} CXX)
 
 # set(PrototypeStoneGenerator_VERSION "0.0.2")
 file (STRINGS "../version" PrototypeStoneGenerator_VERSION)
@@ -39,7 +39,7 @@ ELSE()
 	find_package(Qt5 COMPONENTS Core Widgets Gui REQUIRED)
 ENDIF()
 
-add_library(${proj_name} SHARED
+add_library(${target} SHARED
 	${PROJECT_SOURCE_DIR}/src/UnigineEditorPlugin_PrototypeStoneGenerator.cpp
 	${PROJECT_SOURCE_DIR}/src/AsyncRunGenerator.cpp
 	${PROJECT_SOURCE_DIR}/src/StoneGenerator.cpp
@@ -47,20 +47,20 @@ add_library(${proj_name} SHARED
 	${PROJECT_SOURCE_DIR}/src/DialogConfigurator.cpp
 	)
 
-target_include_directories(${proj_name} SYSTEM
+target_include_directories(${target} SYSTEM
 	PRIVATE
 	${PROJECT_SOURCE_DIR}/src/
 	${CMAKE_CURRENT_BINARY_DIR}
 	)
 
 if (CMAKE_BUILD_TYPE MATCHES "RelWithDebInfo")
-    target_compile_definitions(${proj_name}
+    target_compile_definitions(${target}
 		PRIVATE
 		DEBUG
 		# QT_DEBUG
 	)
 else()
-	target_compile_definitions(${proj_name}
+	target_compile_definitions(${target}
 		PRIVATE
 		NDEBUG
 		# QT_NO_DEBUG
@@ -68,7 +68,7 @@ else()
 endif()
 
 
-set_target_properties(${proj_name}
+set_target_properties(${target}
 	PROPERTIES
 	RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../bin/editor/
 	LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/../bin/editor/
@@ -82,7 +82,7 @@ set_target_properties(${proj_name}
 	CXX_VISIBILITY_PRESET hidden
 )
 
-target_link_libraries(${proj_name}
+target_link_libraries(${target}
 	PRIVATE
 	Unigine::CompilerFlags
 	Unigine::Engine
@@ -91,3 +91,17 @@ target_link_libraries(${proj_name}
 	Qt5::Gui
 	Qt5::Widgets
 	)
+
+if(MSVC)
+    add_compile_options(/arch:SSE4.1)
+else()
+	target_compile_options(${target}
+		PRIVATE
+		-m64
+		-march=athlon64
+		-msse4.2
+		# Optimizations.
+		-ffast-math
+		-fno-strict-aliasing
+	)
+endif()
