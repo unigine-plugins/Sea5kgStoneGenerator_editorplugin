@@ -51,7 +51,11 @@ set(CMAKE_MAP_IMPORTED_CONFIG_DEBUG RELEASE)
 cmake_policy(PUSH)
 cmake_policy(SET CMP0111 OLD)
 # Find additional required packages
-find_package(Qt5 5.12.8 CONFIG EXACT COMPONENTS Core Gui Widgets)
+if(MSVC)
+	find_package(Qt5 5.12.3 CONFIG EXACT COMPONENTS Core Gui Widgets)
+else()
+	find_package(Qt5 5.12.8 CONFIG EXACT COMPONENTS Core Gui Widgets)
+endif()
 # Restore the actual value
 set(CMAKE_MAP_IMPORTED_CONFIG_DEBUG ${temp_map_imported})
 unset(temp_map_imported)
@@ -116,12 +120,26 @@ target_compile_definitions(${current_target}
 	QT_NO_DEBUG
 	)
 
+set(current_postfix "")
+if (UNIGINE_DOUBLE)
+	string(APPEND current_postfix "_double")
+endif ()
+
+string(APPEND current_postfix "_x64")
+
+set_target_properties(${current_target} PROPERTIES RELEASE_POSTFIX "${current_postfix}")
+set_target_properties(${current_target} PROPERTIES DEBUG_POSTFIX "${current_postfix}d")
+set_target_properties(${current_target} PROPERTIES RELWITHDEBINFO_POSTFIX "${current_postfix}d")
+
 set_target_properties(${current_target}
 	PROPERTIES
+	OUTPUT_NAME ${current_target}
 	LIBRARY_OUTPUT_DIRECTORY ${UNIGINE_OUTPUT_EDITOR_RELEASE_DIR}
+	LIBRARY_OUTPUT_DIRECTORY_RELEASE ${UNIGINE_OUTPUT_EDITOR_RELEASE_DIR}
 	LIBRARY_OUTPUT_DIRECTORY_DEBUG ${UNIGINE_OUTPUT_EDITOR_DEBUG_DIR}
 	LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO ${UNIGINE_OUTPUT_EDITOR_DEBUG_DIR}
 	RUNTIME_OUTPUT_DIRECTORY ${UNIGINE_OUTPUT_EDITOR_RELEASE_DIR}
+	RUNTIME_OUTPUT_DIRECTORY_RELEASE ${UNIGINE_OUTPUT_EDITOR_RELEASE_DIR}
 	RUNTIME_OUTPUT_DIRECTORY_DEBUG ${UNIGINE_OUTPUT_EDITOR_DEBUG_DIR}
 	RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${UNIGINE_OUTPUT_EDITOR_DEBUG_DIR}
 	CXX_VISIBILITY_PRESET hidden
@@ -144,14 +162,4 @@ else()
 	)
 endif()
 
-set(current_postfix "")
-if (UNIGINE_DOUBLE)
-	string(APPEND current_postfix "_double")
-endif ()
 
-string(APPEND current_postfix "_x64")
-
-set_target_properties(${current_target} PROPERTIES OUTPUT_NAME ${current_target})
-set_target_properties(${current_target} PROPERTIES RELEASE_POSTFIX "${current_postfix}")
-set_target_properties(${current_target} PROPERTIES DEBUG_POSTFIX "${current_postfix}d")
-set_target_properties(${current_target} PROPERTIES RELWITHDEBINFO_POSTFIX "${current_postfix}d")

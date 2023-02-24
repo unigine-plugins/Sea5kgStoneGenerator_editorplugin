@@ -62,6 +62,7 @@ if(Editor_FOUND)
 	if (Editor_LIBRARY_RELEASE)
 		set_target_properties(Unigine::Editor PROPERTIES
 			IMPORTED_LOCATION_RELEASE ${Editor_LIBRARY_RELEASE}
+			IMPORTED_LOCATION_MINSIZEREL ${Editor_LIBRARY_RELEASE}
 			)
 	endif()
 
