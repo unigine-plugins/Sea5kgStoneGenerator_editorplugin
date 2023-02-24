@@ -53,7 +53,12 @@ bool UnigineEditorPlugin_PrototypeStoneGenerator::init() {
 	}
 
 
-	connect(Editor::Selection::instance(), &Editor::Selection::changed, this, &UnigineEditorPlugin_PrototypeStoneGenerator::globalSelectionChanged);
+	connect(
+		UnigineEditor::Selection::instance(),
+		&UnigineEditor::Selection::changed,
+		this,
+		&UnigineEditorPlugin_PrototypeStoneGenerator::globalSelectionChanged
+	);
 	// connect(this, &UnigineEditorPlugin_PrototypeStoneGenerator::signal_executeRunner, this, &UnigineEditorPlugin_PrototypeStoneGenerator::slot_executeRunner);
 
 	log_info("Initialiazed");
@@ -105,7 +110,7 @@ void UnigineEditorPlugin_PrototypeStoneGenerator::globalSelectionChanged() {
 	// using namespace std;
 	// m_vSelectedGuids.clear();
 	m_vSelectedNodes.clear();
-	if (auto selector = Editor::Selection::getSelectorNodes()) {
+	if (auto selector = UnigineEditor::Selection::getSelectorNodes()) {
 		log_info("Selected nodes");
 		m_vSelectedNodes.append(selector->getNodes());
 	} else {
@@ -114,9 +119,9 @@ void UnigineEditorPlugin_PrototypeStoneGenerator::globalSelectionChanged() {
 }
 
 bool UnigineEditorPlugin_PrototypeStoneGenerator::safeCreateMenuCustom() {
-	QMenu *pMenuCreate = Editor::WindowManager::findMenu(Constants::MM_CREATE);
+	QMenu *pMenuCreate = UnigineEditor::WindowManager::findMenu(UnigineEditor::Constants::MM_CREATE);
 	if (pMenuCreate == nullptr) {
-		std::string sLogMsg = std::string(" Not found menu: ") + std::string(Constants::MM_CREATE);
+		std::string sLogMsg = std::string(" Not found menu: ") + std::string(UnigineEditor::Constants::MM_CREATE);
 		log_error(sLogMsg.c_str());
 		return false;
 

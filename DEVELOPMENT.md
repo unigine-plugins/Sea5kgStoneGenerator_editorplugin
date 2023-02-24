@@ -18,8 +18,8 @@ $ sudo apt install qt5-default cmake gcc git-core
 
 Windows:
 - install cmake >= 3.20 
-- install Visual Studio 2017
-- install qt 5.12.x (And set system environment variable `QTDIR=C:\Qt\Qt5.12.3\5.12.3\`)
+- install Visual Studio 2015
+- install qt 5.12.3 (And set system environment variable `QTDIR=C:\Qt\Qt5.12.3\5.12.3\`)
 - install python3 (for command scripts)
 
 ### step 1: create a empty project
@@ -44,14 +44,14 @@ Ubuntu/Debian:
 ```bash
 $ cd my_project
 $ cd UnigineEditorPlugin_PrototypeStoneGenerator
-$ python3 build_plugin.py
+$ python3 -u build_plugin.py
 ```
 
 Windows:
 ```bash
 $ cd my_project
 $ cd UnigineEditorPlugin_PrototypeStoneGenerator
-$ python3 build_plugin.py
+$ python3 -u build_plugin.py
 ```
 
 ### step 5: run editor

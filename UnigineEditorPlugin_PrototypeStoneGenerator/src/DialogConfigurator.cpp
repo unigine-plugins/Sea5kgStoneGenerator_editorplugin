@@ -190,8 +190,8 @@ void DialogConfigurator::createNode() {
 	m_pDynamicMesh = Unigine::ObjectMeshDynamic::create();
 
 	// find position by a camera
-	auto nViewportWindowId = Editor::ViewportManager::getActiveViewportWindow();
-	Unigine::PlayerPtr pPlayer = Editor::ViewportManager::getViewportWindowPlayer(nViewportWindowId);
+	auto nViewportWindowId = UnigineEditor::ViewportManager::getActiveViewportWindow();
+	Unigine::PlayerPtr pPlayer = UnigineEditor::ViewportManager::getViewportWindowPlayer(nViewportWindowId);
 	auto pos = pPlayer->getWorldPosition();
     auto rot = pPlayer->getWorldRotation();
 	// m_pDynamicMesh->setWorldTransform(translate(Unigine::Math::Vec3(0.0f, 0.0f, 2.0f)));
@@ -214,8 +214,8 @@ void DialogConfigurator::createNode() {
 	m_pDynamicMesh->setName(QString(m_sRandomName).toStdString().c_str());
 	Unigine::Vector<Unigine::NodePtr> pNodes;
 	pNodes.push_back(m_pDynamicMesh);
-	Editor::SelectorNodes *pSelected = Editor::SelectorNodes::createObjectsSelector(pNodes);
-	Editor::Selection::setSelector(pSelected);
+	UnigineEditor::SelectorNodes *pSelected = UnigineEditor::SelectorNodes::createObjectsSelector(pNodes);
+	UnigineEditor::Selection::setSelector(pSelected);
 	
 	m_bRegenerateGeometry = true;
 	m_bRegenerateTexture = false;

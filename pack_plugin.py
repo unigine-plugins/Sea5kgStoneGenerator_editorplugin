@@ -24,7 +24,7 @@ if is_windows:
     if ret != 0:
         sys.exit("Could not build...")
 elif is_linux:
-    ret = os.system("docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:latest ./build_plugin.py")
+    ret = os.system("docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:v2.16.1 ./build_plugin.py")
     if ret != 0:
         sys.exit("Could not build...")
 

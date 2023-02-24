@@ -2,7 +2,7 @@
 
 #include "DialogConfigurator.h"
 
-#include <editor/Plugin.h>
+#include <editor/UniginePlugin.h>
 #include <UnigineGUID.h>
 #include <UnigineNode.h>
 
@@ -13,14 +13,12 @@
 #include <QThread>
 #include <UnigineObjects.h>
 
-class UnigineEditorPlugin_PrototypeStoneGenerator
-	:
-		public QObject,
-		public ::Editor::Plugin
+class UnigineEditorPlugin_PrototypeStoneGenerator: public QObject, public ::UnigineEditor::Plugin
 {
 	Q_OBJECT
-	Q_PLUGIN_METADATA(IID "com.unigine.EditorPlugin" FILE "Plugin.json")
-	Q_INTERFACES(Editor::Plugin)
+	Q_DISABLE_COPY(UnigineEditorPlugin_PrototypeStoneGenerator)
+	Q_PLUGIN_METADATA(IID UNIGINE_EDITOR_PLUGIN_IID FILE "UnigineEditorPlugin_PrototypeStoneGenerator.json")
+	Q_INTERFACES(UnigineEditor::Plugin)
 public:
 	UnigineEditorPlugin_PrototypeStoneGenerator();
 	~UnigineEditorPlugin_PrototypeStoneGenerator() override;

@@ -25,23 +25,23 @@ else:
 build_commands = [
     {
         "name": "cmake configure release",
-        "command": "cmake -H. -Bjunk/release_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=Release \
+        "command": "cmake -H. -Bjunk/release_float_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DCMAKE_INSTALL_PREFIX=../bin",
     },
     {
         "name": "cmake build release",
-        "command": 'cmake --build junk/release_' + _platform + ' --parallel 8 --config Release',
+        "command": 'cmake --build junk/release_float_' + _platform + ' --parallel 8 --config Release',
     }, 
     {
         "name": "cmake configure debug",
-        "command": "cmake -H. -Bjunk/debug_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+        "command": "cmake -H. -Bjunk/debug_float_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=RelWithDebInfo \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DCMAKE_INSTALL_PREFIX=../bin",
     },
     {
         "name": "cmake build debug",
-        "command": "cmake --build junk/debug_" + _platform + " --parallel 8 --config RelWithDebInfo",
+        "command": "cmake --build junk/debug_float_" + _platform + " --parallel 8 --config RelWithDebInfo",
     }, 
 ]
 

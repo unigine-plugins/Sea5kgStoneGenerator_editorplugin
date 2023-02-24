@@ -20,8 +20,8 @@
 #include <UnigineMaterials.h>
 #include <UnigineTextures.h>
 #include <UnigineObjects.h>
-#include <editor/Selector.h>
-#include <editor/Selection.h>
+#include <editor/UnigineSelector.h>
+#include <editor/UnigineSelection.h>
 
 #include "DialogConfigurator.h"
 #include "AsyncRunGenerator.h"
