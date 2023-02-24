@@ -50,6 +50,14 @@ if is_linux:
         "bin/editor_debug/libUnigineEditorPlugin_PrototypeStoneGenerator_x64d.so",
         folder_inside + "/bin/editor_debug/libUnigineEditorPlugin_PrototypeStoneGenerator_x64d.so",
     )
+    zf.write(
+        "bin/editor/libUnigineEditorPlugin_PrototypeStoneGenerator_double_x64.so",
+        folder_inside + "/bin/editor/libUnigineEditorPlugin_PrototypeStoneGenerator_double_x64.so",
+    )
+    zf.write(
+        "bin/editor_debug/libUnigineEditorPlugin_PrototypeStoneGenerator_double_x64d.so",
+        folder_inside + "/bin/editor_debug/libUnigineEditorPlugin_PrototypeStoneGenerator_double_x64d.so",
+    )
 
 if is_windows:
     zf.write(
@@ -59,6 +67,14 @@ if is_windows:
     zf.write(
         "bin/editor_debug/UnigineEditorPlugin_PrototypeStoneGenerator_x64d.dll",
         folder_inside + "/bin/editor_debug/UnigineEditorPlugin_PrototypeStoneGenerator_x64d.dll",
+    )
+    zf.write(
+        "bin/editor/UnigineEditorPlugin_PrototypeStoneGenerator_double_x64.dll",
+        folder_inside + "/bin/editor/UnigineEditorPlugin_PrototypeStoneGenerator_double_x64.dll",
+    )
+    zf.write(
+        "bin/editor_debug/UnigineEditorPlugin_PrototypeStoneGenerator_double_x64d.dll",
+        folder_inside + "/bin/editor_debug/UnigineEditorPlugin_PrototypeStoneGenerator_double_x64d.dll",
     )
 
 zf.close()

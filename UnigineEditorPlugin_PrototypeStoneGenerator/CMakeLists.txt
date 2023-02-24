@@ -2,11 +2,9 @@
 ## General.
 ##==============================================================================
 cmake_minimum_required(VERSION 3.19)
-set(target UnigineEditorPlugin_PrototypeStoneGenerator_x64)
-if (CMAKE_BUILD_TYPE MATCHES "RelWithDebInfo")
-	set(target UnigineEditorPlugin_PrototypeStoneGenerator_x64d)
-endif()
-project(${target} LANGUAGES CXX)
+set(current_target UnigineEditorPlugin_PrototypeStoneGenerator)
+
+project(${current_target} LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
@@ -23,7 +21,8 @@ set(CMAKE_AUTORCC TRUE)
 ##==============================================================================
 ## Environment.
 ##==============================================================================
-set(UNIGINE_DOUBLE 0)
+option(UNIGINE_DOUBLE "build double or not" FALSE)
+
 set(UNIGINE_SDK_PATH ${PROJECT_SOURCE_DIR}/../)
 set(UNIGINE_BIN_DIR ${UNIGINE_SDK_PATH}bin/)
 set(UNIGINE_LIB_DIR ${UNIGINE_SDK_PATH}lib/)
@@ -75,18 +74,18 @@ add_definitions(-DPrototypeStoneGenerator_VERSION="${PrototypeStoneGenerator_VER
 message(STATUS " PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}")
 message(STATUS " CMAKE_CURRENT_BINARY_DIR = ${CMAKE_CURRENT_BINARY_DIR}")
 
-if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/UnigineEditorPlugin_PrototypeStoneGenerator.json.in)
-	message(FATAL_ERROR "Required file is missed! - ${CMAKE_CURRENT_SOURCE_DIR}/UnigineEditorPlugin_PrototypeStoneGenerator.json.in")
+if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${current_target}.json.in)
+	message(FATAL_ERROR "Required file is missed! - ${CMAKE_CURRENT_SOURCE_DIR}/${current_target}.json.in")
 endif()
 
 set(PLUGIN_VERSION ${PrototypeStoneGenerator_VERSION})
 set(PLUGIN_COMPAT_VERSION ${PrototypeStoneGenerator_VERSION})
 configure_file(
-	${CMAKE_CURRENT_SOURCE_DIR}/UnigineEditorPlugin_PrototypeStoneGenerator.json.in
-	${CMAKE_CURRENT_BINARY_DIR}/UnigineEditorPlugin_PrototypeStoneGenerator.json
+	${CMAKE_CURRENT_SOURCE_DIR}/${current_target}.json.in
+	${CMAKE_CURRENT_BINARY_DIR}/${current_target}.json
 	)
 
-add_library(${target} SHARED
+add_library(${current_target} SHARED
 	${PROJECT_SOURCE_DIR}/src/UnigineEditorPlugin_PrototypeStoneGenerator.cpp
 	${PROJECT_SOURCE_DIR}/src/AsyncRunGenerator.cpp
 	${PROJECT_SOURCE_DIR}/src/StoneGenerator.cpp
@@ -94,7 +93,7 @@ add_library(${target} SHARED
 	${PROJECT_SOURCE_DIR}/src/DialogConfigurator.cpp
 	)
 
-target_include_directories(${target} SYSTEM
+target_include_directories(${current_target} SYSTEM
 	PRIVATE
 	${PROJECT_SOURCE_DIR}/src/
 	${UNIGINE_INCLUDE_DIR}/
@@ -102,7 +101,7 @@ target_include_directories(${target} SYSTEM
 	${CMAKE_CURRENT_SOURCE_DIR}/
 	)
 
-target_link_libraries(${target}
+target_link_libraries(${current_target}
 	PRIVATE
 	Unigine::Engine
 	Unigine::Editor
@@ -111,13 +110,13 @@ target_link_libraries(${target}
 	Qt5::Widgets
 	)
 
-target_compile_definitions(${target}
+target_compile_definitions(${current_target}
 	PRIVATE
 	$<$<BOOL:${UNIX}>:_LINUX>
 	QT_NO_DEBUG
 	)
 
-set_target_properties(${target}
+set_target_properties(${current_target}
 	PROPERTIES
 	LIBRARY_OUTPUT_DIRECTORY ${UNIGINE_OUTPUT_EDITOR_RELEASE_DIR}
 	LIBRARY_OUTPUT_DIRECTORY_DEBUG ${UNIGINE_OUTPUT_EDITOR_DEBUG_DIR}
@@ -129,12 +128,12 @@ set_target_properties(${target}
 	)
 
 if(MSVC)
-	target_compile_options(${target}
+	target_compile_options(${current_target}
 		PRIVATE
     	/arch:SSE4.1
 	)
 else()
-	target_compile_options(${target}
+	target_compile_options(${current_target}
 		PRIVATE
 		-m64
 		-march=athlon64
@@ -144,3 +143,15 @@ else()
 		-fno-strict-aliasing
 	)
 endif()
+
+set(current_postfix "")
+if (UNIGINE_DOUBLE)
+	string(APPEND current_postfix "_double")
+endif ()
+
+string(APPEND current_postfix "_x64")
+
+set_target_properties(${current_target} PROPERTIES OUTPUT_NAME ${current_target})
+set_target_properties(${current_target} PROPERTIES RELEASE_POSTFIX "${current_postfix}")
+set_target_properties(${current_target} PROPERTIES DEBUG_POSTFIX "${current_postfix}d")
+set_target_properties(${current_target} PROPERTIES RELWITHDEBINFO_POSTFIX "${current_postfix}d")

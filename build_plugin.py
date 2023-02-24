@@ -23,26 +23,50 @@ else:
 
 
 build_commands = [
+    # build float
     {
-        "name": "cmake configure release",
+        "name": "cmake configure release (float)",
         "command": "cmake -H. -Bjunk/release_float_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DCMAKE_INSTALL_PREFIX=../bin",
     },
     {
-        "name": "cmake build release",
+        "name": "cmake build release (float)",
         "command": 'cmake --build junk/release_float_' + _platform + ' --parallel 8 --config Release',
     }, 
     {
-        "name": "cmake configure debug",
+        "name": "cmake configure debug (float)",
         "command": "cmake -H. -Bjunk/debug_float_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=RelWithDebInfo \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DCMAKE_INSTALL_PREFIX=../bin",
     },
     {
-        "name": "cmake build debug",
+        "name": "cmake build debug (float)",
         "command": "cmake --build junk/debug_float_" + _platform + " --parallel 8 --config RelWithDebInfo",
-    }, 
+    },
+    # build double
+    {
+        "name": "cmake configure release (double)",
+        "command": "cmake -H. -Bjunk/release_double_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+        -DUNIGINE_DOUBLE=ON \
+        -DCMAKE_INSTALL_PREFIX=../bin",
+    },
+    {
+        "name": "cmake build release (double)",
+        "command": 'cmake --build junk/release_double_' + _platform + ' --parallel 8 --config Release',
+    },
+    {
+        "name": "cmake configure debug (double)",
+        "command": "cmake -H. -Bjunk/debug_double_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+        -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+        -DUNIGINE_DOUBLE=ON \
+        -DCMAKE_INSTALL_PREFIX=../bin",
+    },
+    {
+        "name": "cmake build debug (double)",
+        "command": "cmake --build junk/debug_double_" + _platform + " --parallel 8 --config RelWithDebInfo",
+    },
 ]
 
 os.chdir("UnigineEditorPlugin_PrototypeStoneGenerator")

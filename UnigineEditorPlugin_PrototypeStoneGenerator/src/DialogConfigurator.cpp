@@ -199,8 +199,12 @@ void DialogConfigurator::createNode() {
 	// m_pDynamicMesh->setWorldTransform(pPlayer->getTransform());
 	
 	
-
-	auto direction = pPlayer->getViewDirection();
+	auto floatDirection = pPlayer->getViewDirection();
+	Unigine::Math::Vec3 direction = {
+		floatDirection.x,
+		floatDirection.y,
+		floatDirection.z
+	};
 	direction *= 10.0f;
 	m_pDynamicMesh->setWorldPosition(pPlayer->getWorldPosition() + direction);
 	m_pDynamicMesh->setWorldRotation(pPlayer->getWorldRotation());
