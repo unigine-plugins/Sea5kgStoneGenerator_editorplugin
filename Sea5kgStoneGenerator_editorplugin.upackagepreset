@@ -1,0 +1,167 @@
+{
+	"version": 1,
+	"include_dependencies": true,
+	"files": [
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/AsyncRunGenerator.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/Sea5kgStoneGenerator_editorplugin.json.in",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/libSea5kgStoneGenerator_editorplugin_x64d.so",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/libSea5kgStoneGenerator_editorplugin_double_x64d.so",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_x64.dll",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/cmake/modules/FindEngine.cmake",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/libSea5kgStoneGenerator_editorplugin_double_x64.so",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/ISignalGun.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/Sea5kgStoneGenerator_editorplugin.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/CMakeLists.txt",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_double_x64d.dll",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_double_x64d.pdb",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_double_x64.dll",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/libSea5kgStoneGenerator_editorplugin_x64.so",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/AsyncRunGenerator.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/Sea5kgStoneGenerator_editorplugin.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGenerator.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGenerator.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/TextureStoneGenerator.cpp",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_x64d.pdb",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/cmake/modules/FindEditor.cmake",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/DialogConfigurator.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/DialogConfigurator.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/TextureStoneGenerator.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/UnigineEditor.h",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_x64d.dll",
+			"used": true
+		}
+	],
+	"dirs": [
+		{
+			"path": "source/plugins",
+			"used": true,
+			"expanded": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/cmake",
+			"used": true,
+			"expanded": true
+		},
+		{
+			"path": "bin/plugins",
+			"used": true,
+			"expanded": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src",
+			"used": true,
+			"expanded": true
+		},
+		{
+			"path": "source",
+			"used": true,
+			"expanded": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator",
+			"used": true,
+			"expanded": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin",
+			"used": true,
+			"expanded": true
+		},
+		{
+			"path": "bin",
+			"used": true,
+			"expanded": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/cmake/modules",
+			"used": true,
+			"expanded": true
+		},
+		{
+			"path": "source/plugins/Sea5kg",
+			"used": true,
+			"expanded": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg",
+			"used": true,
+			"expanded": true
+		}
+	]
+}
