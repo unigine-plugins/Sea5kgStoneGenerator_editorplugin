@@ -17,7 +17,7 @@ class UnigineEditorPlugin_PrototypeStoneGenerator: public QObject, public ::Unig
 {
 	Q_OBJECT
 	Q_DISABLE_COPY(UnigineEditorPlugin_PrototypeStoneGenerator)
-	Q_PLUGIN_METADATA(IID UNIGINE_EDITOR_PLUGIN_IID FILE "UnigineEditorPlugin_PrototypeStoneGenerator.json")
+	Q_PLUGIN_METADATA(IID UNIGINE_EDITOR_PLUGIN_IID FILE "Sea5kgStoneGenerator_editorplugin.json")
 	Q_INTERFACES(UnigineEditor::Plugin)
 public:
 	UnigineEditorPlugin_PrototypeStoneGenerator();

@@ -2,7 +2,7 @@
 ## General.
 ##==============================================================================
 cmake_minimum_required(VERSION 3.19)
-set(current_target UnigineEditorPlugin_PrototypeStoneGenerator)
+set(current_target Sea5kgStoneGenerator_editorplugin)
 
 project(${current_target} LANGUAGES CXX)
 
@@ -27,8 +27,8 @@ set(UNIGINE_SDK_PATH ${PROJECT_SOURCE_DIR}/../)
 set(UNIGINE_BIN_DIR ${UNIGINE_SDK_PATH}bin/)
 set(UNIGINE_LIB_DIR ${UNIGINE_SDK_PATH}lib/)
 set(UNIGINE_INCLUDE_DIR ${UNIGINE_SDK_PATH}include/)
-set(UNIGINE_OUTPUT_EDITOR_RELEASE_DIR ${UNIGINE_BIN_DIR}editor/)
-set(UNIGINE_OUTPUT_EDITOR_DEBUG_DIR ${UNIGINE_BIN_DIR}editor_debug/)
+set(UNIGINE_OUTPUT_EDITOR_RELEASE_DIR ${UNIGINE_BIN_DIR}plugins/Sea5kg/StoneGenerator/)
+set(UNIGINE_OUTPUT_EDITOR_DEBUG_DIR ${UNIGINE_BIN_DIR}plugins/Sea5kg/StoneGenerator/)
 
 ##==============================================================================
 ## Dependencies.

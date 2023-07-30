@@ -1,4 +1,6 @@
 /bin
+/bin_double
+/bin_float
 /data
 /source
 /launch_debug*
@@ -11,6 +13,7 @@ __pycache__
 /fbx
 linux_UnigineEditorPlugin_PrototypeStoneGenerator_*.zip
 windows_UnigineEditorPlugin_PrototypeStoneGenerator_*.zip
+/include/plugins/
 
 # Prerequisites
 *.d
