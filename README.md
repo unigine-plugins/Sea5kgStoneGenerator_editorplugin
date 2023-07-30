@@ -1,10 +1,10 @@
 # prototype-stone-generator
 
-Prototype of plugin for Unigine Editor 2.16: stone generator
+Plugin for Unigine Editor 2.17: stone generator
 
 **IN-PROGRESS**
 
-[![Unigine Version](https://img.shields.io/badge/Unigine-2.16.1-yellow.svg)](https://developer.unigine.com/en/docs/2.16.1/)
+[![Unigine Version](https://img.shields.io/badge/Unigine-2.17-yellow.svg)](https://developer.unigine.com/en/docs/2.17/)
 
 Plugin for Unigine Editor https://unigine.com/get-unigine/
 
@@ -16,7 +16,7 @@ Preview on Youtube:
 
 
 * License of plugin: MIT
-* Unigine SDK 2.16.1 - tested on `Community Free`
+* Unigine SDK 2.17 - tested on `Community Free`
 
 
 ## Prebuilded versions
