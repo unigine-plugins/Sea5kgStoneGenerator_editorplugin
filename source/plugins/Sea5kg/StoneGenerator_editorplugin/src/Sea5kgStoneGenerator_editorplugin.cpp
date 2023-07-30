@@ -8,7 +8,7 @@
 #include <QScreen>
 
 
-#include "UnigineEditorPlugin_PrototypeStoneGenerator.h"
+#include "Sea5kgStoneGenerator_editorplugin.h"
 
 #include <UnigineLog.h>
 #include <UnigineEditor.h>

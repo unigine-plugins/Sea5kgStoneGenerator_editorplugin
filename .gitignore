@@ -2,7 +2,8 @@
 /bin_double
 /bin_float
 /data
-/source
+/source/plugins/Local
+/source/plugins/Unigine
 /launch_debug*
 /launch_release*
 junk

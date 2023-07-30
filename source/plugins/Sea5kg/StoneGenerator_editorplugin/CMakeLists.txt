@@ -23,7 +23,7 @@ set(CMAKE_AUTORCC TRUE)
 ##==============================================================================
 option(UNIGINE_DOUBLE "build double or not" FALSE)
 
-set(UNIGINE_SDK_PATH ${PROJECT_SOURCE_DIR}/../)
+set(UNIGINE_SDK_PATH ${PROJECT_SOURCE_DIR}/../../../../)
 set(UNIGINE_BIN_DIR ${UNIGINE_SDK_PATH}bin/)
 set(UNIGINE_LIB_DIR ${UNIGINE_SDK_PATH}lib/)
 set(UNIGINE_INCLUDE_DIR ${UNIGINE_SDK_PATH}include/)
@@ -71,7 +71,7 @@ endif()
 ## Target.
 ##==============================================================================
 
-file (STRINGS "../version" PrototypeStoneGenerator_VERSION)
+file (STRINGS "../../../../version" PrototypeStoneGenerator_VERSION)
 
 add_definitions(-DPrototypeStoneGenerator_VERSION="${PrototypeStoneGenerator_VERSION}")
 
@@ -90,7 +90,7 @@ configure_file(
 	)
 
 add_library(${current_target} SHARED
-	${PROJECT_SOURCE_DIR}/src/UnigineEditorPlugin_PrototypeStoneGenerator.cpp
+	${PROJECT_SOURCE_DIR}/src/Sea5kgStoneGenerator_editorplugin.cpp
 	${PROJECT_SOURCE_DIR}/src/AsyncRunGenerator.cpp
 	${PROJECT_SOURCE_DIR}/src/StoneGenerator.cpp
 	${PROJECT_SOURCE_DIR}/src/TextureStoneGenerator.cpp
