@@ -27,7 +27,7 @@ UnigineEditorPlugin_PrototypeStoneGenerator::UnigineEditorPlugin_PrototypeStoneG
 UnigineEditorPlugin_PrototypeStoneGenerator::~UnigineEditorPlugin_PrototypeStoneGenerator() = default;
 
 std::string log_prepare_message(QString message) {
-	message = QString(" >>>>>> UnigineEditorPlugin_PrototypeStoneGenerator::" + message + "\r\n");
+	message = QString(" >>>>>> Sea5kgStoneGenerator_editorplugin::" + message + "\r\n");
 	return message.toStdString();
 }
 
@@ -77,10 +77,11 @@ void UnigineEditorPlugin_PrototypeStoneGenerator::click_about() {
 	QMessageBox msgBox;
     msgBox.setStyleSheet("QLabel{min-width: 700px;}");
     msgBox.setModal( true );
-    msgBox.setWindowTitle("Prototype Stone Gnerator: About");
+    msgBox.setWindowTitle("Sea5kg Stone Gnerator: About");
     msgBox.setTextFormat(Qt::RichText);
     msgBox.setText(
-        "<h2>PrototypeStoneGenerator</h2> <br>"
+        "<h2>Sea5kg Stone Generator</h2> <br>"
+		"UnigineEditor Plugin for generation of meshes representing stones of various sizes and shapes.<br>"
         "Version: " + QString(PrototypeStoneGenerator_VERSION) + " <br>"
         "Source-code: <a href='https://github.com/unigine-plugins/unigine-editor-prototype-stone-generator'>https://github.com/unigine-plugins/unigine-editor-prototype-stone-generator</a> <br>"
         "<hr/>"

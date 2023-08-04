@@ -232,13 +232,13 @@ void DialogConfigurator::createNode() {
 		m_pMaterial->save();
 
 		m_pDynamicMesh->setMaterial(m_pMaterial, 0);
-		
+
 		m_pImage = Unigine::Image::create();
-		
+
 		// on first start regenerate all
 		m_bRegenerateTexture = true;
 	}
-	
+
 	this->regenerateGeometry();
 }
 
@@ -249,7 +249,7 @@ void DialogConfigurator::regenerateGeometry() {
 	}
 	m_bInProgress = true;
 	m_bWannaUpdate = false;
-	
+
 	// TODO update process
 	m_pProgress->setValue(0);
 	m_pProgress->setMinimum(0);
@@ -295,7 +295,7 @@ void DialogConfigurator::addVertex(int nIndex, StonePoint *p1, StoneTexturePoint
 	), nSurface);
 	// m_pMeshTemp->addColor(Unigine::Math::vec4(0,0,0,255), nSurface);
 	m_pMeshTemp->addNormal(Unigine::Math::vec3(
-	 	p1->getNormalX(), 
+	 	p1->getNormalX(),
 	 	p1->getNormalY(),
 	 	p1->getNormalZ()
 	), nSurface);
@@ -303,7 +303,7 @@ void DialogConfigurator::addVertex(int nIndex, StonePoint *p1, StoneTexturePoint
 }
 
 void DialogConfigurator::showNormal(int nLastIndex, int nIndex, StonePoint *p1, int nSurface) {
-	
+
 	std::vector<Unigine::Math::vec3> points;
 
 	points.push_back(Unigine::Math::vec3(
@@ -354,7 +354,7 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 		Unigine::Log::error("UnigineEditorPlugin_Python3Scripting::slot_executeRunner Not main thread!!!");
 	}
 	std::cout << sDone.toStdString() << std::endl;
-	
+
 	m_pDynamicMesh->clearVertex();
 	m_pDynamicMesh->clearIndices(); // here triangles like some one
 	m_pDynamicMesh->flushIndices();

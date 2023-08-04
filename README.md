@@ -1,6 +1,6 @@
 # prototype-stone-generator
 
-Plugin for Unigine Editor 2.17: stone generator
+UnigineEditor (2.17) Plugin for generation of meshes representing stones of various sizes and shapes.
 
 **IN-PROGRESS**
 
