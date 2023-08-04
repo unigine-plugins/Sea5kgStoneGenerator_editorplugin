@@ -71,8 +71,9 @@ endif()
 ## Target.
 ##==============================================================================
 
-file (STRINGS "../../../../version" PrototypeStoneGenerator_VERSION)
+# file (STRINGS "../../../../version" PrototypeStoneGenerator_VERSION)
 
+set(PrototypeStoneGenerator_VERSION "v2.17.0.1_v0.0.4")
 add_definitions(-DPrototypeStoneGenerator_VERSION="${PrototypeStoneGenerator_VERSION}")
 
 message(STATUS " PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}")
