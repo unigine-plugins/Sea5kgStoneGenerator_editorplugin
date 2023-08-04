@@ -128,7 +128,7 @@ bool UnigineEditorPlugin_PrototypeStoneGenerator::safeCreateMenuCustom() {
 	}
 
 	if (m_pMenuCustom == nullptr) {
-		m_pMenuCustom = pMenuCreate->addMenu(tr("Prototype Stone Generator"));
+		m_pMenuCustom = pMenuCreate->addMenu(tr("Sea5kg / Stone Generator"));
 
 		// menu create
 		m_pActionCreateOnlyMesh = new QAction("Create Only Mesh", this);

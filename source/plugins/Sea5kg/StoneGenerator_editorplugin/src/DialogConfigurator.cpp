@@ -39,7 +39,6 @@ DialogConfigurator::DialogConfigurator(
 
 	m_pAsyncRunGenerator = new AsyncRunGenerator(this);
 	m_pAsyncRunGenerator->setAutoDelete(false);
-    
 
 	QVBoxLayout *leftLayout = new QVBoxLayout;
 
@@ -83,7 +82,7 @@ DialogConfigurator::DialogConfigurator(
 	m_pImageView->setFixedHeight(512);
 	m_pImageView->setScaledContents(true);
 	m_pTexturesLayout->addWidget(m_pImageView);
-	
+
 	m_pTrianlesList = new QListWidget();
 	connect(m_pTrianlesList, SIGNAL(itemSelectionChanged()),this, SLOT(triangles_itemSelectionChanged()));
 	m_pTexturesLayout->addWidget(m_pTrianlesList);
@@ -120,7 +119,7 @@ DialogConfigurator::DialogConfigurator(
 	// mainLayout->addLayout(rightLayout);
 	setLayout(mainLayout);
 	// setLayout(leftLayout);
-	setWindowTitle(tr("Prototype Stone Generator - Configurator"));
+	setWindowTitle(tr("Sea5kg / Stone Generator - Configurator"));
 	setFixedWidth(800);
 	// setFixedHeight(sizeHint().height());
 
@@ -197,8 +196,7 @@ void DialogConfigurator::createNode() {
 	// m_pDynamicMesh->setWorldTransform(translate(Unigine::Math::Vec3(0.0f, 0.0f, 2.0f)));
 	// m_pDynamicMesh->setWorldTransform(pPlayer->getTransform() * transform);
 	// m_pDynamicMesh->setWorldTransform(pPlayer->getTransform());
-	
-	
+
 	auto floatDirection = pPlayer->getViewDirection();
 	Unigine::Math::Vec3 direction = {
 		floatDirection.x,
