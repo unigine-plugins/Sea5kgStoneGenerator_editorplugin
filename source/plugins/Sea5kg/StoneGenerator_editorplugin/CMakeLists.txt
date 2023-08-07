@@ -51,11 +51,8 @@ set(CMAKE_MAP_IMPORTED_CONFIG_DEBUG RELEASE)
 cmake_policy(PUSH)
 cmake_policy(SET CMP0111 OLD)
 # Find additional required packages
-if(MSVC)
-	find_package(Qt5 5.12.3 CONFIG EXACT COMPONENTS Core Gui Widgets)
-else()
-	find_package(Qt5 5.12.8 CONFIG EXACT COMPONENTS Core Gui Widgets)
-endif()
+find_package(Qt5 5.12 REQUIRED COMPONENTS Core Gui Widgets)
+
 # Restore the actual value
 set(CMAKE_MAP_IMPORTED_CONFIG_DEBUG ${temp_map_imported})
 unset(temp_map_imported)
