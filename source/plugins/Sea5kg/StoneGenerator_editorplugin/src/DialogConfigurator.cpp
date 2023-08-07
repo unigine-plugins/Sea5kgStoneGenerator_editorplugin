@@ -218,7 +218,11 @@ void DialogConfigurator::createNode() {
 	pNodes.push_back(m_pDynamicMesh);
 	UnigineEditor::SelectorNodes *pSelected = UnigineEditor::SelectorNodes::createObjectsSelector(pNodes);
 	UnigineEditor::Selection::setSelector(pSelected);
-	
+
+	m_pDynamicMesh->addProperty("stone_generator_data_component");
+	// m_pDynamicMesh->setPath("stones/");
+
+
 	m_bRegenerateGeometry = true;
 	m_bRegenerateTexture = false;
 

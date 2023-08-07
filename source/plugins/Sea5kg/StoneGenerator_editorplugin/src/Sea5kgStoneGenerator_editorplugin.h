@@ -35,8 +35,6 @@ private slots:
 
 private:
 	bool safeCreateMenuCustom();
-	bool reloadMenuForSelected();
-	bool reloadMenuForExtensions();
 	bool initMenuForAbout();
 
 	QString m_sRootPath;
@@ -51,6 +49,6 @@ private:
 
 	Unigine::Vector<Unigine::NodePtr> m_vSelectedNodes;
 	QVector<Unigine::ObjectMeshDynamicPtr> m_vMeshes;
-	
+
 	DialogConfigurator *m_pDialog;
 };

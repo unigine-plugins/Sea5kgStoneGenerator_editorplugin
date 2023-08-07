@@ -91,6 +91,8 @@ add_library(${current_target} SHARED
 	${PROJECT_SOURCE_DIR}/src/Sea5kgStoneGenerator_editorplugin.cpp
 	${PROJECT_SOURCE_DIR}/src/AsyncRunGenerator.cpp
 	${PROJECT_SOURCE_DIR}/src/StoneGenerator.cpp
+	${PROJECT_SOURCE_DIR}/src/StoneGeneratorConfig.cpp
+	${PROJECT_SOURCE_DIR}/src/StoneGeneratorDataComponent.cpp
 	${PROJECT_SOURCE_DIR}/src/TextureStoneGenerator.cpp
 	${PROJECT_SOURCE_DIR}/src/DialogConfigurator.cpp
 	)

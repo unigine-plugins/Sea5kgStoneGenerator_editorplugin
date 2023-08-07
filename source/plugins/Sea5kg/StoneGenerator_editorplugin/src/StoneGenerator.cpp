@@ -52,9 +52,9 @@ void StonePoint::setXYZ(float x, float y, float z) {
 }
 
 bool StonePoint::compare(int nX, int nY, int nZ, int nThreshold) {
-    return std::abs(nX - m_nX100) < nThreshold 
-        && std::abs(nY - m_nY100) < nThreshold 
-        && std::abs(nZ - m_nZ100) < nThreshold 
+    return std::abs(nX - m_nX100) < nThreshold
+        && std::abs(nY - m_nY100) < nThreshold
+        && std::abs(nZ - m_nZ100) < nThreshold
     ;
 }
 
@@ -247,7 +247,7 @@ void StoneTriangle::rotateInXAxisAroundPoint(StonePoint &p1, float fRot) {
 
     // help here:
     // https://stackoverflow.com/questions/14607640/rotating-a-vector-in-3d-space
-    
+
     // x axis
     // |1     0           0| |x|   |        x        |   |x'|
     // |0   cos θ    −sin θ| |y| = |y cos θ − z sin θ| = |y'|
@@ -262,7 +262,7 @@ void StoneTriangle::rotateInXAxisAroundPoint(StonePoint &p1, float fRot) {
         p1.y() + dy1 * std::cos(fRot) - dz1 * std::sin(fRot),
         p1.z() + dy1 * std::sin(fRot) + dz1 * std::cos(fRot)
     );
-    
+
     float dx2 = m_points[1]->x() - p1.x();
     float dy2 = m_points[1]->y() - p1.y();
     float dz2 = m_points[1]->z() - p1.z();
@@ -285,10 +285,10 @@ void StoneTriangle::rotateInXAxisAroundPoint(StonePoint &p1, float fRot) {
 }
 
 void StoneTriangle::rotateInYAxisAroundPoint(StonePoint &p1, float fRot) {
-    
+
     // help here:
     // https://stackoverflow.com/questions/14607640/rotating-a-vector-in-3d-space
-    
+
     // y axis
     // | cos θ    0   sin θ| |x|   | x cos θ + z sin θ|   |x'|
     // |   0      1       0| |y| = |         y        | = |y'|
@@ -375,92 +375,6 @@ void StoneTriangle::moveTexPointsBy(int nIndex0, const StoneTexturePoint &t) {
         m_pTexPoints[nIndex2].x() + dx,
         m_pTexPoints[nIndex2].y() + dy
     );
-}
-
-// StoneGeneratorConfig
-
-StoneGeneratorConfig::StoneGeneratorConfig() {
-    m_nSurfaceDistortion = 0.0f;
-    m_nRadius = 2.0f;
-    m_nExpectedTriangles = 300;
-    m_nScaleX = 1.0f;
-    m_nScaleY = 1.0f;
-    m_nScaleZ = 1.0f;
-    m_nBasicGeometry = 0;
-    m_nStrongOfAttraction = 1.0f;
-    m_nPointsOfAttraction = 0;
-}
-
-void StoneGeneratorConfig::setEstimatedExpectedTriangles(int nExpected) {
-    m_nExpectedTriangles = nExpected;
-}
-
-int StoneGeneratorConfig::getEstimatedExpectedTriangles() const {
-    return m_nExpectedTriangles;
-}
-
-void StoneGeneratorConfig::setPointsOfAttraction(int nPointsOfAttraction) {
-    m_nPointsOfAttraction = nPointsOfAttraction;
-}
-
-int StoneGeneratorConfig::getPointsOfAttraction() const {
-    return m_nPointsOfAttraction;
-}
-
-void StoneGeneratorConfig::setStrongOfAttraction(float nStrongOfAttraction) {
-    m_nStrongOfAttraction = nStrongOfAttraction;
-}
-
-float StoneGeneratorConfig::getStrongOfAttraction() const {
-    return m_nStrongOfAttraction;
-}
-
-void StoneGeneratorConfig::setRadius(float nRadius) {
-    m_nRadius = nRadius;
-}
-
-float StoneGeneratorConfig::getRadius() const {
-    return m_nRadius;
-}
-
-void StoneGeneratorConfig::setSurfaceDistortion(float nSurfaceDistortion) {
-    m_nSurfaceDistortion = nSurfaceDistortion;
-}
-
-float StoneGeneratorConfig::getSurfaceDistortion() const {
-    return m_nSurfaceDistortion;
-}
-
-void StoneGeneratorConfig::setScaleX(float nScaleX) {
-    m_nScaleX = nScaleX;
-}
-
-float StoneGeneratorConfig::getScaleX() const {
-    return m_nScaleX;
-}
-
-void StoneGeneratorConfig::setScaleY(float nScaleY) {
-    m_nScaleY = nScaleY;
-}
-
-float StoneGeneratorConfig::getScaleY() const {
-    return m_nScaleY;
-}
-
-void StoneGeneratorConfig::setScaleZ(float nScaleZ) {
-    m_nScaleZ = nScaleZ;
-}
-
-float StoneGeneratorConfig::getScaleZ() const {
-    return m_nScaleZ;
-}
-
-void StoneGeneratorConfig::setBasicGeometry(int nBasicGeometry) {
-    m_nBasicGeometry = nBasicGeometry;
-}
-
-int StoneGeneratorConfig::getBasicGeometry() const {
-    return m_nBasicGeometry;
 }
 
 // StoneGenerator

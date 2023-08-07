@@ -17,6 +17,7 @@
 #include <UniginePrimitives.h>
 #include <QCoreApplication>
 #include <UnigineMaterials.h>
+#include <UnigineComponentSystem.h>
 
 #include "UnigineFileSystem.h"
 
@@ -45,6 +46,8 @@ bool UnigineEditorPlugin_PrototypeStoneGenerator::init() {
 	log_info(" Initializing...");
 	m_pMenuCustom = nullptr;
 	m_pMainWindow = nullptr;
+
+	Unigine::ComponentSystem::get()->initialize();
 
 	m_sRootPath = QCoreApplication::applicationDirPath(); // must be in bin
 
@@ -155,51 +158,3 @@ bool UnigineEditorPlugin_PrototypeStoneGenerator::safeCreateMenuCustom() {
 
 	return true;
 }
-
-bool UnigineEditorPlugin_PrototypeStoneGenerator::reloadMenuForSelected() {
-
-	return true;
-}
-
-// bool UnigineEditorPlugin_PrototypeStoneGenerator::loadExtensions() {
-// 	if (!prepareDirectoryWithExtensions()) {
-// 		return false;
-// 	}
-	
-// 	// remove all previous
-// 	for (int i = 0; i < m_vScripts.size(); i++) {
-// 		delete m_vScripts[i];
-// 	}
-// 	m_vScripts.clear();
-
-// 	QDir mainDir(m_sPython3ScriptingDirPath);
-// 	QStringList allDirs = mainDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs);
-// 	for(int i = 0; i < allDirs.size(); i++) {
-// 		QString sPython3ScriptJsonFilePath = m_sPython3ScriptingDirPath + "/" + allDirs[i];
-// 		ModelExtension *pModel = new ModelExtension(sPython3ScriptJsonFilePath);
-// 		if (pModel->loadFromDirectory()) {
-// 			m_vScripts.push_back(pModel);
-// 		} else {
-// 			log_error(sPython3ScriptJsonFilePath + " - could not load some extension by index");
-// 			delete pModel;
-// 			continue;
-// 		}
-//     }
-
-// 	// TODO
-// 	m_sPython3ScriptingJsonFilePath = m_sPython3ScriptingDirPath + "/extensions.json";
-// 	// prepareExtensionsJson();
-// 	if (!safeCreateMenuCustom()) {
-// 		return false;
-// 	}
-// 	if (!reloadMenuForSelected()) {
-// 		return false;
-// 	}
-// 	if (!reloadMenuForExtensions()) {
-// 		return false;
-// 	}
-// 	initMenuForCreateExtension();
-// 	initMenuForManageScripts();
-// 	initMenuForAbout();
-// 	return true;
-// }
