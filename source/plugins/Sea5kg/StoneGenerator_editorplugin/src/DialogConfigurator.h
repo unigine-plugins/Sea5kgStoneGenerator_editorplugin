@@ -102,9 +102,11 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         void showNormal(int nLastIndex, int nIndex, StonePoint *p1, int nSurface);
 
         int m_nLabelSize;
+        int m_nStoneIdName;
         int m_nLabelValueSize;
 
         QString m_sRandomName;
+        QString m_sFullPathNode;
         QComboBox *m_pBasicGemometry;
 
         QLabel *m_pTextureLabel;
@@ -117,8 +119,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         QPushButton *m_pRegenerateButton;
         QPushButton *m_pSaveMeshButton;
         QPushButton *m_pCloseButton;
-        
-        
+
         int m_nBasicGeometry;
         int m_nPointsOfAttraction;
         float m_nStrongOfAttraction;
@@ -128,7 +129,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         float m_nSliderScaleX;
         float m_nSliderScaleY;
         float m_nSliderScaleZ;
-        
+
         //
         QComboBox *m_pTextureResolution;
 

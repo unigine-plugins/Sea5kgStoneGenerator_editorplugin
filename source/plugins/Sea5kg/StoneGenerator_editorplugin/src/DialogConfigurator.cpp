@@ -4,6 +4,7 @@
 #include "DialogConfigurator.h"
 #include "UnigineFileSystem.h"
 #include <UnigineEditor.h>
+#include <UnigineWorld.h>
 #include <QThreadPool>
 #include <QPixmap>
 
@@ -27,6 +28,7 @@ DialogConfigurator::DialogConfigurator(
 	m_nLabelSize = 130;
 	m_nLabelValueSize = 50;
 	m_nBasicGeometry = 0;
+	m_nStoneIdName = 0;
 	m_nPointsOfAttraction = 3;
 	m_nStrongOfAttraction = 3.14f;
 	m_bGenerateMesh = true;
@@ -184,7 +186,16 @@ void DialogConfigurator::regenerateButton_clicked() {
 }
 
 void DialogConfigurator::createNode() {
-	m_sRandomName = "stone_" + QString::number(std::rand() % 10000);
+	bool bUniqNameGenerated = false;
+	while (!bUniqNameGenerated) {
+		bUniqNameGenerated = true;
+		m_nStoneIdName++;
+		m_sRandomName = "stone_" + QString::number(m_nStoneIdName).rightJustified(6, '0');
+		m_sFullPathNode = "Sea5kgStoneGenerator/" + m_sRandomName + ".node";
+		if (UnigineEditor::AssetManager::isAsset(m_sFullPathNode.toStdString().c_str())) {
+			bUniqNameGenerated = false;
+		}
+	}
 
 	m_pDynamicMesh = Unigine::ObjectMeshDynamic::create();
 
@@ -211,14 +222,16 @@ void DialogConfigurator::createNode() {
 	// transform.setTranslate(direction);
 	// m_pDynamicMesh->setWorldTransform(pPlayer->getTransform() * transform);
 
-	m_pDynamicMesh->setShowInEditorEnabledRecursive(1);
-	m_pDynamicMesh->setSaveToWorldEnabledRecursive(1);
+	m_pDynamicMesh->setShowInEditorEnabledRecursive(true);
+	m_pDynamicMesh->setSaveToWorldEnabledRecursive(true);
 	m_pDynamicMesh->setName(QString(m_sRandomName).toStdString().c_str());
 	Unigine::Vector<Unigine::NodePtr> pNodes;
 	pNodes.push_back(m_pDynamicMesh);
 	UnigineEditor::SelectorNodes *pSelected = UnigineEditor::SelectorNodes::createObjectsSelector(pNodes);
 	UnigineEditor::Selection::setSelector(pSelected);
-	
+
+	Unigine::World::saveNode(m_sFullPathNode.toStdString().c_str(), m_pDynamicMesh);
+
 	m_bRegenerateGeometry = true;
 	m_bRegenerateTexture = false;
 
@@ -460,6 +473,8 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 		this->regenerateGeometry();
 	}
 	m_pMeshTemp = nullptr;
+
+	Unigine::World::saveNode(m_sFullPathNode.toStdString().c_str(), m_pDynamicMesh);
 }
 
 void DialogConfigurator::triangles_itemSelectionChanged() {
