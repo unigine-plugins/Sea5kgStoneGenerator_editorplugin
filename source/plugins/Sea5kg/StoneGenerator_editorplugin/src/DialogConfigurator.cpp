@@ -4,6 +4,7 @@
 #include "DialogConfigurator.h"
 #include "UnigineFileSystem.h"
 #include <UnigineEditor.h>
+#include <UnigineWorld.h>
 #include <QThreadPool>
 #include <QPixmap>
 
@@ -205,21 +206,27 @@ void DialogConfigurator::createNode() {
 	};
 	direction *= 10.0f;
 	m_pDynamicMesh->setWorldPosition(pPlayer->getWorldPosition() + direction);
-	m_pDynamicMesh->setWorldRotation(pPlayer->getWorldRotation());
+	// m_pDynamicMesh->setWorldRotation(pPlayer->getWorldRotation());
 
 	// Unigine::Math::Mat4 transform = pPlayer->getTransform();
 	// transform.setTranslate(direction);
 	// m_pDynamicMesh->setWorldTransform(pPlayer->getTransform() * transform);
 
-	m_pDynamicMesh->setShowInEditorEnabledRecursive(1);
-	m_pDynamicMesh->setSaveToWorldEnabledRecursive(1);
+	m_pDynamicMesh->setShowInEditorEnabledRecursive(true);
+	m_pDynamicMesh->setSaveToWorldEnabledRecursive(false);
 	m_pDynamicMesh->setName(QString(m_sRandomName).toStdString().c_str());
+
 	Unigine::Vector<Unigine::NodePtr> pNodes;
 	pNodes.push_back(m_pDynamicMesh);
 	UnigineEditor::SelectorNodes *pSelected = UnigineEditor::SelectorNodes::createObjectsSelector(pNodes);
 	UnigineEditor::Selection::setSelector(pSelected);
 
-	m_pDynamicMesh->addProperty("stone_generator_data_component");
+	Unigine::World::saveNode(QString("stones/" + m_sRandomName + ".node").toStdString().c_str(), m_pDynamicMesh);
+
+	// Unigine::PropertyPtr prop = m_pDynamicMesh->getProperty(m_pDynamicMesh->addProperty("PropertyName"));
+	// prop->getParameterPtr("parameter_name")->setValueInt(5);
+
+	// m_pDynamicMesh->addProperty("stone_generator_data_component");
 	// m_pDynamicMesh->setPath("stones/");
 
 

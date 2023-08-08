@@ -47,7 +47,7 @@ bool UnigineEditorPlugin_PrototypeStoneGenerator::init() {
 	m_pMenuCustom = nullptr;
 	m_pMainWindow = nullptr;
 
-	Unigine::ComponentSystem::get()->initialize();
+	// Unigine::ComponentSystem::get()->initialize();
 
 	m_sRootPath = QCoreApplication::applicationDirPath(); // must be in bin
 
