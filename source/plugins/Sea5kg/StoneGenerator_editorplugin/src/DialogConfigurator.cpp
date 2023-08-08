@@ -192,6 +192,7 @@ void DialogConfigurator::createNode() {
 		m_nStoneIdName++;
 		m_sRandomName = "stone_" + QString::number(m_nStoneIdName).rightJustified(6, '0');
 		m_sFullPathNode = "Sea5kgStoneGenerator/" + m_sRandomName + ".node";
+		m_sFullPathProp = "Sea5kgStoneGenerator/" + m_sRandomName + ".prop";
 		if (UnigineEditor::AssetManager::isAsset(m_sFullPathNode.toStdString().c_str())) {
 			bUniqNameGenerated = false;
 		}
@@ -231,6 +232,12 @@ void DialogConfigurator::createNode() {
 	UnigineEditor::Selection::setSelector(pSelected);
 
 	Unigine::World::saveNode(m_sFullPathNode.toStdString().c_str(), m_pDynamicMesh);
+
+	Unigine::PropertyPtr pProperty = Unigine::Properties::findProperty("node_base")->inherit("myproperty");
+	pProperty->setPath(m_sFullPathProp.toStdString().c_str());
+	m_pDynamicMesh->addProperty(pProperty);
+	pProperty->save();
+
 
 	m_bRegenerateGeometry = true;
 	m_bRegenerateTexture = false;

@@ -107,6 +107,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
 
         QString m_sRandomName;
         QString m_sFullPathNode;
+        QString m_sFullPathProp;
         QComboBox *m_pBasicGemometry;
 
         QLabel *m_pTextureLabel;
