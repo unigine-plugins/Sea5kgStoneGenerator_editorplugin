@@ -231,12 +231,12 @@ void DialogConfigurator::createNode() {
 	UnigineEditor::SelectorNodes *pSelected = UnigineEditor::SelectorNodes::createObjectsSelector(pNodes);
 	UnigineEditor::Selection::setSelector(pSelected);
 
-	// Unigine::World::saveNode(m_sFullPathNode.toStdString().c_str(), m_pDynamicMesh);
+	Unigine::World::saveNode(m_sFullPathNode.toStdString().c_str(), m_pDynamicMesh);
 
-	// Unigine::PropertyPtr pProperty = Unigine::Properties::findProperty("node_base")->inherit("myproperty");
-	// pProperty->setPath(m_sFullPathProp.toStdString().c_str());
-	// m_pDynamicMesh->addProperty(pProperty);
-	// pProperty->save();
+	Unigine::PropertyPtr pProperty = Unigine::Properties::findProperty("node_base")->inherit("myproperty");
+	pProperty->setPath(m_sFullPathProp.toStdString().c_str());
+	m_pDynamicMesh->addProperty(pProperty);
+	pProperty->save();
 
 
 	m_bRegenerateGeometry = true;
