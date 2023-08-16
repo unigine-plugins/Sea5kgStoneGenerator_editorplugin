@@ -27,7 +27,6 @@ DialogConfigurator::DialogConfigurator(
 	m_sFilePathHighlighted = m_temporaryDir.filePath("stone_high.png");
 	m_nLabelSize = 130;
 	m_nLabelValueSize = 50;
-	m_nBasicGeometry = 0;
 	m_nStoneIdName = 0;
 	m_nPointsOfAttraction = 3;
 	m_nStrongOfAttraction = 3.14f;
@@ -48,8 +47,22 @@ DialogConfigurator::DialogConfigurator(
 	leftLayout->addWidget(pGeometry);
 
 	m_pBasicGemometry = new QComboBox();
-	m_pBasicGemometry->addItem(tr("Sphere"), 1);
-    m_pBasicGemometry->addItem(tr("Cube"), 2);
+	std::map<std::string, StoneGeneratorBasicGeomery> mapGeometries = getAllStoneGeneratorBasicGeometries();
+	std::string sDefault = "";
+	for (const auto& item : mapGeometries) {
+		if (sDefault == "") {
+			sDefault = item.first;
+			m_config.setBasicGeometry(item.second);
+		}
+		m_pBasicGemometry->addItem(item.first.c_str(), (int)item.second + 1);
+	}
+	{
+		int index = m_pBasicGemometry->findText(sDefault.c_str());
+		m_pBasicGemometry->setCurrentIndex(index);
+	}
+
+	// m_pBasicGemometry->addItem(tr("Sphere"), 1);
+    // m_pBasicGemometry->addItem(tr("Cube"), 2);
 	connect(m_pBasicGemometry, SIGNAL(currentIndexChanged(int)), this, SLOT(comboboxBasicGeometry_Changed(int)));
 	leftLayout->addWidget(m_pBasicGemometry);
 
@@ -170,14 +183,15 @@ void DialogConfigurator::comboboxTextureResolution_Changed(int nNewValue) {
 
 void DialogConfigurator::comboboxBasicGeometry_Changed(int nNewValue) {
 	std::cout << "comboboxBasicGeometry_Changed " << nNewValue << std::endl;
-	m_nBasicGeometry = nNewValue;
+
+	m_config.setBasicGeometry((StoneGeneratorBasicGeomery)nNewValue);
 	m_bRegenerateGeometry = true;
 	this->regenerateGeometry();
 }
 
 void DialogConfigurator::click_saveMesh() {
 	// add to button - save mesh
-	m_pDynamicMesh->saveMesh(QString(m_sRandomName + ".mesh").toStdString().c_str());
+	m_pDynamicMesh->saveMesh(QString(m_sLongName + ".mesh").toStdString().c_str());
 }
 
 void DialogConfigurator::regenerateButton_clicked() {
@@ -190,10 +204,14 @@ void DialogConfigurator::createNode() {
 	while (!bUniqNameGenerated) {
 		bUniqNameGenerated = true;
 		m_nStoneIdName++;
-		m_sRandomName = "stone_" + QString::number(m_nStoneIdName).rightJustified(6, '0');
-		m_sFullPathNode = "Sea5kgStoneGenerator/" + m_sRandomName + ".node";
-		m_sFullPathProp = "Sea5kgStoneGenerator/" + m_sRandomName + ".prop";
-		if (UnigineEditor::AssetManager::isAsset(m_sFullPathNode.toStdString().c_str())) {
+		m_sShortName = "st_" + QString::number(m_nStoneIdName).rightJustified(5, '0');
+		m_sLongName = "stone_" + QString::number(m_nStoneIdName).rightJustified(5, '0');
+		m_sFullPathNode = "Sea5kgStoneGenerator/" + m_sShortName + ".node";
+		m_sFullPathProp = "Sea5kgStoneGenerator/" + m_sShortName + ".prop";
+		if (
+			UnigineEditor::AssetManager::isAsset(m_sFullPathNode.toStdString().c_str())
+			|| UnigineEditor::AssetManager::isAsset(m_sFullPathProp.toStdString().c_str())
+		) {
 			bUniqNameGenerated = false;
 		}
 	}
@@ -225,7 +243,7 @@ void DialogConfigurator::createNode() {
 
 	m_pDynamicMesh->setShowInEditorEnabledRecursive(true);
 	m_pDynamicMesh->setSaveToWorldEnabledRecursive(true);
-	m_pDynamicMesh->setName(QString(m_sRandomName).toStdString().c_str());
+	m_pDynamicMesh->setName(QString(m_sLongName).toStdString().c_str());
 	Unigine::Vector<Unigine::NodePtr> pNodes;
 	pNodes.push_back(m_pDynamicMesh);
 	UnigineEditor::SelectorNodes *pSelected = UnigineEditor::SelectorNodes::createObjectsSelector(pNodes);
@@ -233,18 +251,53 @@ void DialogConfigurator::createNode() {
 
 	Unigine::World::saveNode(m_sFullPathNode.toStdString().c_str(), m_pDynamicMesh);
 
-	Unigine::PropertyPtr pProperty = Unigine::Properties::findProperty("node_base")->inherit("myproperty");
-	pProperty->setPath(m_sFullPathProp.toStdString().c_str());
-	m_pDynamicMesh->addProperty(pProperty);
-	pProperty->save();
+	// Unigine::PropertyPtr pProperty = Unigine::Properties::findProperty("node_base")->inherit("sea5kg_stone_generator");
 
+	Unigine::PropertyPtr pProperty = Unigine::Property::create();
+	std::string sXml = m_config.toXmlString();
+	Unigine::Log::error("Sea5kgStoneGenerator: xml %s\n", sXml.c_str());
+
+	// Unigine::XmlPtr pXml = Unigine::Xml::create();
+
+	Unigine::XmlPtr pXml = Unigine::Xml::create("property");
+	pXml->setArg("version", "2.17.0.1");
+	pXml->setArg("name", QString("sea5kg_stone_generator_" + m_sLongName).toStdString().c_str());
+	// pXml->setArg("manual", "1");
+	// pXml->setArg("editable", "0");
+	Unigine::UGUID guid;
+	guid.generate();
+	// pXml->setArg("guid", guid.get());
+	// pXml->setArg("parent", Unigine::Properties::findProperty("node_base")->getGUID().get());
+
+	Unigine::XmlPtr xmlBasicGeometry = pXml->addChild("parameter");
+	xmlBasicGeometry->setArg("name", "basic_geometry");
+	xmlBasicGeometry->setArg("type", "switch");
+	xmlBasicGeometry->setArg("items", "cube,sphere");
+	xmlBasicGeometry->setData(std::to_string((int)m_config.getBasicGeometry()).c_str());
+	pXml->save((m_sFullPathProp + "1111").toStdString().c_str());
+
+	if (!pProperty->loadXml(pXml)) {
+		Unigine::Log::error("Sea5kgStoneGenerator: could not load xml\n");
+	} else {
+		Unigine::Log::message("Sea5kgStoneGenerator: Loaded from xml?\n");
+	}
+
+	// Unigine::PropertyParameterPtr param = pProperty->getParameterPtr("some_parameter");
+	// param->setValueInt(1);
+
+	// pProperty->setParameterInt(pProperty->findParameter("my_int_param"), 3);
+
+	m_pDynamicMesh->addProperty(pProperty);
+	pProperty = m_pDynamicMesh->getProperty(0);
+	pProperty->setPath(m_sFullPathProp.toStdString().c_str());
+	pProperty->save();
 
 	m_bRegenerateGeometry = true;
 	m_bRegenerateTexture = false;
 
 	if (m_bGenerateMaterial) {
 		auto mesh_base = Unigine::Materials::findManualMaterial("Unigine::mesh_base");
-		std::string sMaterialPath = QString(m_sRandomName + ".mat").toStdString();
+		std::string sMaterialPath = QString(m_sLongName + ".mat").toStdString();
 		m_pMaterial = mesh_base->inherit();
 		m_pMaterial->setParent(mesh_base);
 		m_pMaterial->createMaterialFile(sMaterialPath.c_str());
@@ -288,7 +341,7 @@ void DialogConfigurator::regenerateGeometry() {
 	newConf.setScaleX(m_nSliderScaleX);
 	newConf.setScaleY(m_nSliderScaleY);
 	newConf.setScaleZ(m_nSliderScaleZ);
-	newConf.setBasicGeometry(m_nBasicGeometry);
+	newConf.setBasicGeometry(m_config.getBasicGeometry());
 
 	m_pAsyncRunGenerator->setStoneGeneratorConfig(newConf);
 	m_pAsyncRunGenerator->setRegenerateGeometry(m_bRegenerateGeometry);
@@ -452,7 +505,7 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 		if (m_pImage->isLoaded()) {
 			std::cout << "Image loaded" << std::endl;
 			// add to button - save texture
-			m_pImage->save(QString(m_sRandomName + ".png").toStdString().c_str());
+			m_pImage->save(QString(m_sLongName + ".png").toStdString().c_str());
 			// m_pImageView->setScaledContents(true);
 		}
 		// m_pTexture->clear();
@@ -461,7 +514,7 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
 		int num = m_pMaterial->findTexture("albedo");
 		if (num != -1) {
 			std::cout << "Set albedo" << std::endl;
-			m_pMaterial->setTexturePath(num, QString(m_sRandomName + ".png").toStdString().c_str());
+			m_pMaterial->setTexturePath(num, QString(m_sLongName + ".png").toStdString().c_str());
 
 			// m_pMaterial->setTextureImage(num, m_pImage);
 		}
@@ -542,7 +595,7 @@ void DialogConfigurator::updateTextureImageView(const QString &sHeighlightTriang
 		painter.drawLine(nX0, nY0, nX1, nY1);
 		painter.drawLine(nX1, nY1, nX2, nY2);
 		painter.drawLine(nX2, nY2, nX0, nY0);
-		QString sTrianle = 
+		QString sTrianle =
 			"(" + QString::number(nX0) + "," + QString::number(nY0) + ")"
 			+ "(" + QString::number(nX1) + "," + QString::number(nY1) + ")"
 			+ "(" + QString::number(nX2) + "," + QString::number(nY2) + ")";
@@ -565,7 +618,6 @@ void DialogConfigurator::updateTextureImageView(const QString &sHeighlightTriang
 				bSaveImage = true;
 			}
 		}
-		
 	}
 	m_pImageView->setPixmap(m_pixmapImageHiglighted);
 	if (bSaveImage) {
@@ -574,7 +626,7 @@ void DialogConfigurator::updateTextureImageView(const QString &sHeighlightTriang
 		if (m_pImage->isLoaded()) {
 			std::cout << "Image loaded" << std::endl;
 			// add to button - save texture
-			// m_pImage->save(QString(m_sRandomName + ".png").toStdString().c_str());
+			// m_pImage->save(QString(m_sLongName + ".png").toStdString().c_str());
 
 			int num = m_pMaterial->findTexture("albedo");
 			if (num != -1) {
@@ -590,13 +642,13 @@ void DialogConfigurator::updateTextureImageView(const QString &sHeighlightTriang
 		if (m_pImage->isLoaded()) {
 			std::cout << "Image loaded" << std::endl;
 			// add to button - save texture
-			// m_pImage->save(QString(m_sRandomName + ".png").toStdString().c_str());
+			// m_pImage->save(QString(m_sLongName + ".png").toStdString().c_str());
 			// m_pImageView->setScaledContents(true);
 			int num = m_pMaterial->findTexture("albedo");
 			if (num != -1) {
 				std::cout << "Set albedo (reset picture)" << std::endl;
 				// NOT work here
-				m_pMaterial->setTexturePath(num, QString(m_sRandomName + ".png").toStdString().c_str());
+				m_pMaterial->setTexturePath(num, QString(m_sLongName + ".png").toStdString().c_str());
 
 				// m_pMaterial->setTextureImage(num, m_pImage);
 			}
@@ -625,7 +677,7 @@ QHBoxLayout *DialogConfigurator::createIntSliderParameterUI(QString sLabel, int 
     pSlider->setPoiterValue(nValue);
 	connect(pSlider, SIGNAL(valueChanged(int)), this, SLOT(sliderInt_valuesChanged(int)));
 	pLayout->addWidget(pSlider);
-	
+
 	return pLayout;
 }
 

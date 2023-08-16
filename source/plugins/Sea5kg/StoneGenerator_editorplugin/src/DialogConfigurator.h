@@ -52,7 +52,7 @@ class CustomFloatSlider : public QSlider {
             *m_pValue = nValue;
             m_pLabelValue->setText("(" + QString::number(nValue) + ")");
         };
-        
+
         void setLabelValue(QLabel *pLabelValue) { m_pLabelValue = pLabelValue; };
     private:
         QLabel *m_pLabelValue;
@@ -79,7 +79,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
     private slots:
         void regenerateButton_clicked();
         void click_saveMesh();
-        
+
         void sliderInt_valuesChanged(int nNewValue);
         void sliderFloat_valuesChanged(int nNewValue);
 
@@ -105,7 +105,8 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         int m_nStoneIdName;
         int m_nLabelValueSize;
 
-        QString m_sRandomName;
+        QString m_sShortName;
+        QString m_sLongName;
         QString m_sFullPathNode;
         QString m_sFullPathProp;
         QComboBox *m_pBasicGemometry;
@@ -121,7 +122,6 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         QPushButton *m_pSaveMeshButton;
         QPushButton *m_pCloseButton;
 
-        int m_nBasicGeometry;
         int m_nPointsOfAttraction;
         float m_nStrongOfAttraction;
         int m_nSliderTrianglesValue;
@@ -155,5 +155,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
 
         bool m_bGenerateMesh;
         bool m_bGenerateMaterial;
+
+        StoneGeneratorConfig m_config;
 };
 

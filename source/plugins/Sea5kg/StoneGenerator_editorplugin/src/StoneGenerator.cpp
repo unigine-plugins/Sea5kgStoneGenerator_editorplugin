@@ -377,92 +377,6 @@ void StoneTriangle::moveTexPointsBy(int nIndex0, const StoneTexturePoint &t) {
     );
 }
 
-// StoneGeneratorConfig
-
-StoneGeneratorConfig::StoneGeneratorConfig() {
-    m_nSurfaceDistortion = 0.0f;
-    m_nRadius = 2.0f;
-    m_nExpectedTriangles = 300;
-    m_nScaleX = 1.0f;
-    m_nScaleY = 1.0f;
-    m_nScaleZ = 1.0f;
-    m_nBasicGeometry = 0;
-    m_nStrongOfAttraction = 1.0f;
-    m_nPointsOfAttraction = 0;
-}
-
-void StoneGeneratorConfig::setEstimatedExpectedTriangles(int nExpected) {
-    m_nExpectedTriangles = nExpected;
-}
-
-int StoneGeneratorConfig::getEstimatedExpectedTriangles() const {
-    return m_nExpectedTriangles;
-}
-
-void StoneGeneratorConfig::setPointsOfAttraction(int nPointsOfAttraction) {
-    m_nPointsOfAttraction = nPointsOfAttraction;
-}
-
-int StoneGeneratorConfig::getPointsOfAttraction() const {
-    return m_nPointsOfAttraction;
-}
-
-void StoneGeneratorConfig::setStrongOfAttraction(float nStrongOfAttraction) {
-    m_nStrongOfAttraction = nStrongOfAttraction;
-}
-
-float StoneGeneratorConfig::getStrongOfAttraction() const {
-    return m_nStrongOfAttraction;
-}
-
-void StoneGeneratorConfig::setRadius(float nRadius) {
-    m_nRadius = nRadius;
-}
-
-float StoneGeneratorConfig::getRadius() const {
-    return m_nRadius;
-}
-
-void StoneGeneratorConfig::setSurfaceDistortion(float nSurfaceDistortion) {
-    m_nSurfaceDistortion = nSurfaceDistortion;
-}
-
-float StoneGeneratorConfig::getSurfaceDistortion() const {
-    return m_nSurfaceDistortion;
-}
-
-void StoneGeneratorConfig::setScaleX(float nScaleX) {
-    m_nScaleX = nScaleX;
-}
-
-float StoneGeneratorConfig::getScaleX() const {
-    return m_nScaleX;
-}
-
-void StoneGeneratorConfig::setScaleY(float nScaleY) {
-    m_nScaleY = nScaleY;
-}
-
-float StoneGeneratorConfig::getScaleY() const {
-    return m_nScaleY;
-}
-
-void StoneGeneratorConfig::setScaleZ(float nScaleZ) {
-    m_nScaleZ = nScaleZ;
-}
-
-float StoneGeneratorConfig::getScaleZ() const {
-    return m_nScaleZ;
-}
-
-void StoneGeneratorConfig::setBasicGeometry(int nBasicGeometry) {
-    m_nBasicGeometry = nBasicGeometry;
-}
-
-int StoneGeneratorConfig::getBasicGeometry() const {
-    return m_nBasicGeometry;
-}
-
 // StoneGenerator
 
 StoneGenerator::StoneGenerator() {
@@ -501,12 +415,12 @@ struct ZLevel {
 
 bool StoneGenerator::generate(const StoneGeneratorConfig &conf) {
     std::cout << "m_nExpectedTriangles = " << conf.getEstimatedExpectedTriangles() << std::endl;
-    
-    if (conf.getBasicGeometry() == 0) {
+
+    if (conf.getBasicGeometry() == StoneGeneratorBasicGeomery::SPHERE) {
         if (!this->generateBasicSpheres(conf)) {
             return false;
         }
-    } else if (conf.getBasicGeometry() == 1) {
+    } else if (conf.getBasicGeometry() == StoneGeneratorBasicGeomery::CUBE) {
         if (!this->generateBasicCube(conf)) {
             return false;
         }
@@ -514,7 +428,7 @@ bool StoneGenerator::generate(const StoneGeneratorConfig &conf) {
         std::cout << "Unknown basic geometry" << std::endl;
         return false;
     }
-    
+
     this->processRemoveUnusefulTriangles(conf);
     this->processAttraction(conf);
     this->processRandom(conf);
@@ -596,7 +510,7 @@ bool StoneGenerator::generateBasicSpheres(const StoneGeneratorConfig &conf) {
 	for (int zz0 = 0; zz0 < levels_z.size() - 1; zz0++) {
         ZLevel lvl_z = levels_z[zz0];
         ZLevel lvl_z_next = levels_z[zz0+1];
-        
+
         std::vector<XYPoint> xy_sectors = lvl_z.xy_sectors;
         for (int i_xy = 0; i_xy < xy_sectors.size(); i_xy++) {
             int i_xy_next = (i_xy+1) % nK;
@@ -610,7 +524,7 @@ bool StoneGenerator::generateBasicSpheres(const StoneGeneratorConfig &conf) {
             StonePoint *pPoint11 = addPoint(conf, x1y1.x, x1y1.y, lvl_z_next.z);
 
             // 00 * ----- * 01
-            //    |       | 
+            //    |       |
             // 10 * ----- * 11
             if (pPoint00 != pPoint01 && pPoint01 != pPoint10 && pPoint10 != pPoint00) {
                 StoneTriangle *pTriangle1 = new StoneTriangle(
@@ -624,7 +538,7 @@ bool StoneGenerator::generateBasicSpheres(const StoneGeneratorConfig &conf) {
                 );
                 m_vTriangles.push_back(pTriangle1);
             }
-            
+
             if (i_xy > 0 || i_xy < xy_sectors.size() - 1) {
                 // if (pPoint00 != pPoint01 && pPoint01 != pPoint10 && pPoint10 != pPoint00) {
                     StoneTriangle *pTriangle2 = new StoneTriangle(
