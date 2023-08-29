@@ -255,7 +255,7 @@ void DialogConfigurator::createNode() {
 
 	Unigine::PropertyPtr pProperty = Unigine::Property::create();
 	std::string sXml = m_config.toXmlString();
-	Unigine::Log::error("Sea5kgStoneGenerator: xml %s\n", sXml.c_str());
+	Unigine::Log::message("Sea5kgStoneGenerator: xml %s\n", sXml.c_str());
 
 	// Unigine::XmlPtr pXml = Unigine::Xml::create();
 
@@ -266,15 +266,20 @@ void DialogConfigurator::createNode() {
 	// pXml->setArg("editable", "0");
 	Unigine::UGUID guid;
 	guid.generate();
-	// pXml->setArg("guid", guid.get());
-	// pXml->setArg("parent", Unigine::Properties::findProperty("node_base")->getGUID().get());
+	QString new_guid = QString::fromStdString(guid.get());
+	new_guid = new_guid.mid(7,40);
+	QString parant_guid = QString::fromStdString(Unigine::Properties::findProperty("node_base")->getGUID().get());
+	parant_guid = parant_guid.mid(7,40);
+	Unigine::Log::message("generated guid: %s\n", new_guid.toStdString().c_str());
+	pXml->setArg("guid", new_guid.toStdString().c_str());
+	pXml->setArg("parent", parant_guid.toStdString().c_str());
 
 	Unigine::XmlPtr xmlBasicGeometry = pXml->addChild("parameter");
 	xmlBasicGeometry->setArg("name", "basic_geometry");
 	xmlBasicGeometry->setArg("type", "switch");
 	xmlBasicGeometry->setArg("items", "cube,sphere");
 	xmlBasicGeometry->setData(std::to_string((int)m_config.getBasicGeometry()).c_str());
-	pXml->save((m_sFullPathProp + "1111").toStdString().c_str());
+	pXml->save((m_sFullPathProp).toStdString().c_str());
 
 	if (!pProperty->loadXml(pXml)) {
 		Unigine::Log::error("Sea5kgStoneGenerator: could not load xml\n");
@@ -289,7 +294,12 @@ void DialogConfigurator::createNode() {
 
 	m_pDynamicMesh->addProperty(pProperty);
 	pProperty = m_pDynamicMesh->getProperty(0);
-	pProperty->setPath(m_sFullPathProp.toStdString().c_str());
+	new_guid = QString::fromStdString(pProperty->getGUID().get());
+	new_guid = new_guid.mid(7,40);
+	pXml->setArg("guid", new_guid.toStdString().c_str());
+	Unigine::Log::message("new guid: %s\n", new_guid.toStdString().c_str());
+	pXml->save((m_sFullPathProp).toStdString().c_str());
+	// pProperty->setPath(m_sFullPathProp.toStdString().c_str());
 	pProperty->save();
 
 	m_bRegenerateGeometry = true;
