@@ -75,6 +75,14 @@
 			"used": true
 		},
 		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorConfig.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorConfig.h",
+			"used": true
+		},
+		{
 			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/TextureStoneGenerator.cpp",
 			"used": true
 		},

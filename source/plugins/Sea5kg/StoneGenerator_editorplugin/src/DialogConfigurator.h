@@ -52,7 +52,7 @@ class CustomFloatSlider : public QSlider {
             *m_pValue = nValue;
             m_pLabelValue->setText("(" + QString::number(nValue) + ")");
         };
-        
+
         void setLabelValue(QLabel *pLabelValue) { m_pLabelValue = pLabelValue; };
     private:
         QLabel *m_pLabelValue;
@@ -121,7 +121,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         QPushButton *m_pSaveMeshButton;
         QPushButton *m_pCloseButton;
 
-        int m_nBasicGeometry;
+        StoneGeneratorBasicGeomery m_nBasicGeometry;
         int m_nPointsOfAttraction;
         float m_nStrongOfAttraction;
         int m_nSliderTrianglesValue;

@@ -27,7 +27,7 @@ DialogConfigurator::DialogConfigurator(
 	m_sFilePathHighlighted = m_temporaryDir.filePath("stone_high.png");
 	m_nLabelSize = 130;
 	m_nLabelValueSize = 50;
-	m_nBasicGeometry = 0;
+	m_nBasicGeometry = StoneGeneratorBasicGeomery::SPHERE;
 	m_nStoneIdName = 0;
 	m_nPointsOfAttraction = 3;
 	m_nStrongOfAttraction = 3.14f;
@@ -170,7 +170,7 @@ void DialogConfigurator::comboboxTextureResolution_Changed(int nNewValue) {
 
 void DialogConfigurator::comboboxBasicGeometry_Changed(int nNewValue) {
 	std::cout << "comboboxBasicGeometry_Changed " << nNewValue << std::endl;
-	m_nBasicGeometry = nNewValue;
+	m_nBasicGeometry = (StoneGeneratorBasicGeomery)nNewValue;
 	m_bRegenerateGeometry = true;
 	this->regenerateGeometry();
 }
