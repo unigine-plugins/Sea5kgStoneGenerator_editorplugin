@@ -35,6 +35,8 @@ class StoneGeneratorConfig {
         float getScaleY() const;
         void setScaleZ(float nScaleZ);
         float getScaleZ() const;
+        void setShowNormales(bool bShowNormales);
+        bool getShowNormales();
 
         void setBasicGeometry(StoneGeneratorBasicGeomery nBasicGeometry);
         StoneGeneratorBasicGeomery getBasicGeometry() const;
@@ -52,4 +54,5 @@ class StoneGeneratorConfig {
         float m_nScaleX;
         float m_nScaleY;
         float m_nScaleZ;
+        bool m_bShowNormales;
 };

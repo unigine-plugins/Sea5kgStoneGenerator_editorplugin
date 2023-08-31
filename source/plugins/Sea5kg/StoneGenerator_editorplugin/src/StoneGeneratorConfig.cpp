@@ -89,15 +89,15 @@ std::string StoneGeneratorConfig::toXmlString() const {
 
     std::string sGeometryItems = "";
     std::map<std::string, StoneGeneratorBasicGeomery> mapGeometries = getAllStoneGeneratorBasicGeometries();
-	int nDefaultGeometry = -1;
-	for (const auto& item : mapGeometries) {
+    int nDefaultGeometry = -1;
+    for (const auto& item : mapGeometries) {
         if (sGeometryItems == "") {
             nDefaultGeometry = (int)item.second;
         } else {
             sGeometryItems += ",";
         }
         sGeometryItems += item.first;
-	}
+    }
 
     std::string sRet =
         "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"

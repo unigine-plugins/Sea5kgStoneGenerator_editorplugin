@@ -488,8 +488,8 @@ bool StoneGenerator::generateBasicSpheres(const StoneGeneratorConfig &conf) {
     float spp = 2*M_PI / float(nK);
     float z_spp = M_PI / float(nK); // todo scale z here
     std::cout << "spp = " << spp << std::endl;
-	// int nTexX = 0.2;
-	// int nTexY = 0.2;
+    // int nTexX = 0.2;
+    // int nTexY = 0.2;
     std::vector<ZLevel> levels_z;
     for (int zz0 = 0; zz0 <= nK; zz0++) {
         ZLevel lvl;
@@ -501,13 +501,13 @@ bool StoneGenerator::generateBasicSpheres(const StoneGeneratorConfig &conf) {
             XYPoint xy;
             float angel = spp * float(rr0);
             xy.x = lvl.z_radius * cos( angel);
-			xy.y = lvl.z_radius * sin( angel);
+            xy.y = lvl.z_radius * sin( angel);
             lvl.xy_sectors.push_back(xy);
         }
         levels_z.push_back(lvl);
     }
 
-	for (int zz0 = 0; zz0 < levels_z.size() - 1; zz0++) {
+    for (int zz0 = 0; zz0 < levels_z.size() - 1; zz0++) {
         ZLevel lvl_z = levels_z[zz0];
         ZLevel lvl_z_next = levels_z[zz0+1];
         
@@ -538,7 +538,7 @@ bool StoneGenerator::generateBasicSpheres(const StoneGeneratorConfig &conf) {
                 );
                 m_vTriangles.push_back(pTriangle1);
             }
-            
+
             if (i_xy > 0 || i_xy < xy_sectors.size() - 1) {
                 // if (pPoint00 != pPoint01 && pPoint01 != pPoint10 && pPoint10 != pPoint00) {
                     StoneTriangle *pTriangle2 = new StoneTriangle(
@@ -550,7 +550,7 @@ bool StoneGenerator::generateBasicSpheres(const StoneGeneratorConfig &conf) {
                 // }
             }
         }
-	}
+    }
     return true;
 }
 
