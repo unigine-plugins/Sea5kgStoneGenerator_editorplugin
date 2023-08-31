@@ -11,7 +11,7 @@ AsyncRunGenerator::AsyncRunGenerator(ISignalGun *pSignalGun) {
 }
 
 AsyncRunGenerator::~AsyncRunGenerator() {
-    
+
 }
 
 void AsyncRunGenerator::setStoneGeneratorConfig(const StoneGeneratorConfig &conf) {

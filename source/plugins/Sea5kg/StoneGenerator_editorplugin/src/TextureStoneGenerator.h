@@ -22,7 +22,7 @@ class TextureStoneGenerator {
         TextureStoneGenerator();
 
         void generate(const TextureStoneGeneratorConfig &conf);
-        
+
     private:
         int randInt(int low, int high);
         int calcOneColor(float x, float xmax, float x_s, float x_k);

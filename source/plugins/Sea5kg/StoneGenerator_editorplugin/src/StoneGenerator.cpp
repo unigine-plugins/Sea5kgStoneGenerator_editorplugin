@@ -590,7 +590,7 @@ bool StoneGenerator::generateBasicCube(const StoneGeneratorConfig &conf) {
                 StoneTriangle *pTriangle2 = new StoneTriangle(pPoint00, pPoint11, pPoint10);
                 m_vTriangles.push_back(pTriangle2);
             }
-            
+
             // top
             {
                 StonePoint *pPoint00 = addPoint(conf, fA0, fB0, nZ1);
