@@ -6,6 +6,7 @@
 #include <math.h>
 #include <algorithm>
 
+// ---------------------------------------------------------------------
 // StonePoint
 
 StonePoint::StonePoint() {
@@ -52,9 +53,9 @@ void StonePoint::setXYZ(float x, float y, float z) {
 }
 
 bool StonePoint::compare(int nX, int nY, int nZ, int nThreshold) {
-    return std::abs(nX - m_nX100) < nThreshold 
-        && std::abs(nY - m_nY100) < nThreshold 
-        && std::abs(nZ - m_nZ100) < nThreshold 
+    return std::abs(nX - m_nX100) < nThreshold
+        && std::abs(nY - m_nY100) < nThreshold
+        && std::abs(nZ - m_nZ100) < nThreshold
     ;
 }
 
@@ -93,6 +94,27 @@ void StonePoint::removeLinkToTriangle(StoneTriangle *pTriangle) {
     // m_vLinkedTriangles.push_back(pTriangle);
 }
 
+void StonePoint::normalizetoUnitVector() {
+
+    float len = std::sqrt(m_nNormalX*m_nNormalX + m_nNormalY*m_nNormalY + m_nNormalZ*m_nNormalZ);
+    float k = 1 / len;
+    m_nNormalX = k * m_nNormalX;
+    m_nNormalY = k * m_nNormalY;
+    m_nNormalZ = k * m_nNormalZ;
+
+    // float fN = std::fabs(normal.x());
+    //     fN = std::max(fN, std::fabs(normal.y()));
+    //     fN = std::max(fN, std::fabs(normal.z()));
+    //     fN = 1.0 / fN;
+    //     normal.setXYZ(
+    //         fN * normal.x(),
+    //         fN * normal.y(),
+    //         fN * normal.z()
+    //     );
+}
+
+
+// ---------------------------------------------------------------------
 // StoneLine
 
 StoneLine::StoneLine(StonePoint *p1, StonePoint *p2) {
@@ -101,7 +123,7 @@ StoneLine::StoneLine(StonePoint *p1, StonePoint *p2) {
 }
 
 bool StoneLine::equals(const StoneLine& line) const {
-    return 
+    return
         (m_p1 == line.p1() && m_p2 == line.p2())
         || (m_p1 == line.p2() && m_p2 == line.p1())
     ;
@@ -125,6 +147,7 @@ StonePoint *StoneLine::crossPoint(const StoneLine& line) const {
     return nullptr;
 }
 
+// ---------------------------------------------------------------------
 // StoneTexturePoint
 
 StoneTexturePoint::StoneTexturePoint() {
@@ -144,6 +167,7 @@ void StoneTexturePoint::setXY(float x, float y) {
     m_nY = y;
 }
 
+// ---------------------------------------------------------------------
 // StoneTriangle
 
 StoneTriangle::StoneTriangle(
@@ -214,20 +238,20 @@ void StoneTriangle::calculateMiddlePointAndNormal(StonePoint &middle_p, StonePoi
         (m_points[0]->y() + m_points[1]->y() + m_points[2]->y()) / 3.0,
         (m_points[0]->z() + m_points[1]->z() + m_points[2]->z()) / 3.0
     );
-    // 
-    // | x - x1, x2 - x1, x3 - x1 | 
+    //
+    // | x - x1, x2 - x1, x3 - x1 |
     // | y - y1, y2 - y1, y3 - y1 | == 0
-    // | z - z1, z2 - z1, z3 - z1 | 
-    // (x - x1) * | y2 - y1, y3 - y1 | - (y - y1) * | x2 - x1, x3 - x1 | + (z - z1) * | x2 - x1, x3 - x1 | 
+    // | z - z1, z2 - z1, z3 - z1 |
+    // (x - x1) * | y2 - y1, y3 - y1 | - (y - y1) * | x2 - x1, x3 - x1 | + (z - z1) * | x2 - x1, x3 - x1 |
     //            | z2 - z1, z3 - z1 |              | z2 - z1, z3 - z1 |              | y2 - y1, y3 - y1 |
-    // 
+    //
     // (x - x1) * ((y2 - y1) *(z3 - z1) - (z2 - z1)*(y3 - y1))
     // - (y - y1) * ((x2 - x1)*(z3 - z1) - (x3 - x1)*(z2 - z1))
     // + (z - z1) * ((x2 - x1)*(y3 - y1) - (x3 - x1)*(y2 - y1))
-    // 
-    // a = ((y2 - y1) *(z3 - z1) - (z2 - z1)*(y3 - y1))
-    // b = - ((x2 - x1)*(z3 - z1) - (x3 - x1)*(z2 - z1))
-    // c = ((x2 - x1)*(y3 - y1) - (x3 - x1)*(y2 - y1))
+    //
+    // x = ((y2 - y1) *(z3 - z1) - (z2 - z1)*(y3 - y1))
+    // y = - ((x2 - x1)*(z3 - z1) - (x3 - x1)*(z2 - z1))
+    // z = ((x2 - x1)*(y3 - y1) - (x3 - x1)*(y2 - y1))
 
     float x21 = m_points[1]->x() - m_points[0]->x();
     float y21 = m_points[1]->y() - m_points[0]->y();
@@ -247,7 +271,7 @@ void StoneTriangle::rotateInXAxisAroundPoint(StonePoint &p1, float fRot) {
 
     // help here:
     // https://stackoverflow.com/questions/14607640/rotating-a-vector-in-3d-space
-    
+
     // x axis
     // |1     0           0| |x|   |        x        |   |x'|
     // |0   cos θ    −sin θ| |y| = |y cos θ − z sin θ| = |y'|
@@ -262,7 +286,7 @@ void StoneTriangle::rotateInXAxisAroundPoint(StonePoint &p1, float fRot) {
         p1.y() + dy1 * std::cos(fRot) - dz1 * std::sin(fRot),
         p1.z() + dy1 * std::sin(fRot) + dz1 * std::cos(fRot)
     );
-    
+
     float dx2 = m_points[1]->x() - p1.x();
     float dy2 = m_points[1]->y() - p1.y();
     float dz2 = m_points[1]->z() - p1.z();
@@ -285,10 +309,10 @@ void StoneTriangle::rotateInXAxisAroundPoint(StonePoint &p1, float fRot) {
 }
 
 void StoneTriangle::rotateInYAxisAroundPoint(StonePoint &p1, float fRot) {
-    
+
     // help here:
     // https://stackoverflow.com/questions/14607640/rotating-a-vector-in-3d-space
-    
+
     // y axis
     // | cos θ    0   sin θ| |x|   | x cos θ + z sin θ|   |x'|
     // |   0      1       0| |y| = |         y        | = |y'|
@@ -377,6 +401,7 @@ void StoneTriangle::moveTexPointsBy(int nIndex0, const StoneTexturePoint &t) {
     );
 }
 
+// ---------------------------------------------------------------------
 // StoneGenerator
 
 StoneGenerator::StoneGenerator() {
@@ -430,6 +455,7 @@ bool StoneGenerator::generate(const StoneGeneratorConfig &conf) {
     }
 
     this->processRemoveUnusefulTriangles(conf);
+    // TODO reunion triangles
     this->processAttraction(conf);
     this->processRandom(conf);
     this->processResizeAndShift(conf);
@@ -475,12 +501,12 @@ StonePoint *StoneGenerator::addPoint(const StoneGeneratorConfig &conf, float x, 
 bool StoneGenerator::generateBasicSpheres(const StoneGeneratorConfig &conf) {
     // TODO redesign
     int nK = conf.getEstimatedExpectedTriangles()/2;
-    std::cout << "nK = " << nK << std::endl;
+    // std::cout << "nK = " << nK << std::endl;
     nK = sqrt(nK);
-    std::cout << "nK = " << nK << std::endl;
+    // std::cout << "nK = " << nK << std::endl;
     if (nK % 2 == 1) {
         // kostyl
-        nK += 1; // to even number 
+        nK += 1; // to even number
     }
     std::cout << "nK = " << nK << std::endl;
 
@@ -510,7 +536,7 @@ bool StoneGenerator::generateBasicSpheres(const StoneGeneratorConfig &conf) {
     for (int zz0 = 0; zz0 < levels_z.size() - 1; zz0++) {
         ZLevel lvl_z = levels_z[zz0];
         ZLevel lvl_z_next = levels_z[zz0+1];
-        
+
         std::vector<XYPoint> xy_sectors = lvl_z.xy_sectors;
         for (int i_xy = 0; i_xy < xy_sectors.size(); i_xy++) {
             int i_xy_next = (i_xy+1) % nK;
@@ -614,7 +640,7 @@ bool StoneGenerator::generateBasicCube(const StoneGeneratorConfig &conf) {
                 StoneTriangle *pTriangle2 = new StoneTriangle(pPoint00, pPoint11, pPoint10);
                 m_vTriangles.push_back(pTriangle2);
             }
-            
+
             // right
             {
                 StonePoint *pPoint00 = addPoint(conf, nX1, fB0, fA0);
@@ -638,7 +664,7 @@ bool StoneGenerator::generateBasicCube(const StoneGeneratorConfig &conf) {
                 StoneTriangle *pTriangle2 = new StoneTriangle(pPoint00, pPoint11, pPoint10);
                 m_vTriangles.push_back(pTriangle2);
             }
-            
+
             // end
             {
                 StonePoint *pPoint00 = addPoint(conf, fB0, nY0, fA0);
@@ -788,41 +814,52 @@ bool StoneGenerator::processNormals(const StoneGeneratorConfig &conf) {
     std::vector<StoneTriangle *> vFoundTriangles;
     StonePoint pCenter(0.0, 0.0, 0.0);
     float nPointsSize = m_vPoints.size();
-    for (int i = 0; i < m_vPoints.size(); i++) {
-        pCenter.addOffset(
-            m_vPoints[i]->x(),
-            m_vPoints[i]->y(),
-            m_vPoints[i]->z()
-        );
-    }
-    pCenter.setXYZ(
-        pCenter.x() / nPointsSize,
-        pCenter.y() / nPointsSize,
-        pCenter.z() / nPointsSize
-    );
+    // for (int i = 0; i < m_vPoints.size(); i++) {
+    //     pCenter.addOffset(
+    //         m_vPoints[i]->x(),
+    //         m_vPoints[i]->y(),
+    //         m_vPoints[i]->z()
+    //     );
+    // }
+    // pCenter.setXYZ(
+    //     pCenter.x() / nPointsSize,
+    //     pCenter.y() / nPointsSize,
+    //     pCenter.z() / nPointsSize
+    // );
 
     for (int p_i = 0; p_i < m_vPoints.size(); p_i++) {
         // std::cout << "processNormals " << i << std::endl;
 
         StonePoint *p0 = m_vPoints[p_i];
-        
+
         vFoundTriangles.clear();
         findTrianglesByPoint(p0, vFoundTriangles);
         // std::cout << "processNormals vFoundTriangles.size() = " << vFoundTriangles.size() << std::endl;
         if (vFoundTriangles.size() == 0) {
             continue;
         }
-        StonePoint pNormal(0.0, 0.0, 0.0);
+        StonePoint normal(0.0, 0.0, 0.0);
         StonePoint middle_p;
         StonePoint middle_p_normal;
         // std::cout << "processNormals vFoundTriangles.size() = " << vFoundTriangles.size() << std::endl;
         for (int n = 0; n < vFoundTriangles.size(); n++) {
             vFoundTriangles[n]->calculateMiddlePointAndNormal(middle_p, middle_p_normal);
-            pNormal.addOffset(
+
+            middle_p_normal.setXYZ(
                 (middle_p_normal.x() - middle_p.x()),
                 (middle_p_normal.y() - middle_p.y()),
                 (middle_p_normal.z() - middle_p.z())
             );
+            // std::cout << middle_p_normal.x() - middle_p.x() << std::endl;
+            middle_p_normal.normalizetoUnitVector();
+            // std::cout << middle_p_normal.x() - middle_p.x() << std::endl;
+            normal.addOffset(middle_p_normal.x(), middle_p_normal.y(), middle_p_normal.z());
+
+            // normal.addOffset(
+            //     (middle_p_normal.x() - middle_p.x()),
+            //     (middle_p_normal.y() - middle_p.y()),
+            //     (middle_p_normal.z() - middle_p.z())
+            // );
         }
         // float size = vFoundTriangles.size();
         // pNormal.setXYZ(
@@ -830,20 +867,11 @@ bool StoneGenerator::processNormals(const StoneGeneratorConfig &conf) {
         //     pNormal.y() / size,
         //     pNormal.z() / size
         // );
-
-        float fN = std::fabs(pNormal.x());
-        fN = std::max(fN, std::fabs(pNormal.y()));
-        fN = std::max(fN, std::fabs(pNormal.z()));
-        fN = 1.0 / fN;
-        pNormal.setXYZ(
-            fN * pNormal.x(),
-            fN * pNormal.y(),
-            fN * pNormal.z()
-        );
+        normal.normalizetoUnitVector();
 
         // std::cout << "x = " << p0->x() << "; y " << p0->y() << "; z = " << p0->z() << std::endl;
         // std::cout << "x = " << pNormal.x() << "; y " << pNormal.y() << "; z = " << pNormal.z() << std::endl;
-        // tangent 
+        // tangent
         // // by x to 90
         // float dx1 = x_n - x;
         // float dy1 = y_n - y;
@@ -864,12 +892,12 @@ bool StoneGenerator::processNormals(const StoneGeneratorConfig &conf) {
         // p0->setNormal(
         //     1.5f - (1.0f + float(std::rand() % 100) / 100.0),
         //     1.5f - (1.0f + float(std::rand() % 100) / 100.0),
-        //     1.5f - (1.0f + float(std::rand() % 100) / 100.0) 
+        //     1.5f - (1.0f + float(std::rand() % 100) / 100.0)
         // );
         p0->setNormal(
-            pNormal.x(),
-            pNormal.y(),
-            pNormal.z()
+            normal.x(),
+            normal.y(),
+            normal.z()
         );
 
     }
@@ -904,7 +932,7 @@ bool StoneGenerator::processTexturing(const StoneGeneratorConfig &conf) {
         pTriangle->calculateMiddlePointAndNormal(middle_p, middle_p_normal);
         float fRotX = this->angelXAxis(middle_p, middle_p_normal);
         pTriangle->rotateInXAxisAroundPoint(middle_p, fRotX);
-    
+
         float fRotY = this->angelYAxis(middle_p, middle_p_normal);
         pTriangle->rotateInYAxisAroundPoint(middle_p, fRotY);
 
@@ -984,7 +1012,7 @@ bool StoneGenerator::processTexturing(const StoneGeneratorConfig &conf) {
                 }
             }
         }
-        vTrianglesHandled.push_back(pTri);        
+        vTrianglesHandled.push_back(pTri);
     }
 
     if (vTrianglesHandled.size() != m_vTriangles.size()) {
@@ -993,7 +1021,7 @@ bool StoneGenerator::processTexturing(const StoneGeneratorConfig &conf) {
     } else {
         std::cout << "m_vTriangles.size() == vTrianglesHandled.size() " << std::endl;
     }
- 
+
     for (int i = 0; i < m_vTriangles.size(); i++) {
         StoneTriangle *pTri = m_vTriangles[i];
         this->minmaxUV(pTri->t1(), nMinU, nMaxU, nMinV, nMaxV);

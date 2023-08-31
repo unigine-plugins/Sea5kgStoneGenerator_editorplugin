@@ -30,6 +30,8 @@ class StonePoint {
         void addLinkToTriangle(StoneTriangle *pTriangle);
         void removeLinkToTriangle(StoneTriangle *pTriangle);
 
+        void normalizetoUnitVector();
+
     private:
         float m_nX, m_nY, m_nZ;
         int m_nX100;

@@ -146,7 +146,7 @@ void DialogConfigurator::sliderInt_valuesChanged(int nNewValue) {
          return;
     }
     pSlider->updateValue(nNewValue);
-	m_nextConf.setRegenerateGeometry(true);
+    m_nextConf.setRegenerateGeometry(true);
     this->regenerateGeometry();
 }
 
@@ -237,8 +237,8 @@ void DialogConfigurator::createNode() {
     // pProperty->save();
 
 
-	m_nextConf.setRegenerateGeometry(true);
-	m_nextConf.setRegenerateTexture(false);
+    m_nextConf.setRegenerateGeometry(true);
+    m_nextConf.setRegenerateTexture(false);
 
     if (m_bGenerateMaterial) {
         auto mesh_base = Unigine::Materials::findManualMaterial("Unigine::mesh_base");
@@ -254,7 +254,7 @@ void DialogConfigurator::createNode() {
         m_pImage = Unigine::Image::create();
 
         // on first start regenerate all
-		m_nextConf.setRegenerateTexture(true);
+        m_nextConf.setRegenerateTexture(true);
     }
 
     this->regenerateGeometry();
@@ -288,8 +288,8 @@ void DialogConfigurator::regenerateGeometry() {
     m_nextConf.setBasicGeometry(m_nBasicGeometry);
 
     m_pAsyncRunGenerator->setStoneGeneratorConfig(m_nextConf);
-	m_nextConf.setRegenerateGeometry(false);
-	m_nextConf.setRegenerateTexture(false);
+    m_nextConf.setRegenerateGeometry(false);
+    m_nextConf.setRegenerateTexture(false);
 
     QThreadPool::globalInstance()->start(m_pAsyncRunGenerator);
 }
@@ -375,6 +375,7 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
     m_pDynamicMesh->flushIndices();
     m_pDynamicMesh->flushVertex();
     auto *pStoneGenerator = m_pAsyncRunGenerator->getStoneGenerator();
+    const StoneGeneratorConfig &conf = m_pAsyncRunGenerator->getConf();
 
     // const std::vector<StonePoint *> &vPoints = pStoneGenerator->points();
     // for (int i = 0; i < vPoints.size(); i++) {
@@ -386,7 +387,7 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
     //     // m_pDynamicMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
     //     // std::cout << "tx coord uv: " <<
     //     //     vPoints[i]->getTextureCoordinateU()
-    //     //     << " " << 
+    //     //     << " " <<
     //     //     vPoints[i]->getTextureCoordinateV()
     //     //     << std::endl;
     //     m_pDynamicMesh->addTexCoord(Unigine::Math::vec4(
@@ -414,12 +415,14 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
     }
 
     // show normals
-    // nLastIndex = nLastIndex + 1;
-    // const std::vector<StonePoint *> &vPoints = pStoneGenerator->points();
-    // for (int i = 0; i < vPoints.size(); i++) {
-    //     StonePoint *p1 = vPoints[i];
-    //     this->showNormal(nLastIndex, i, vPoints[i], nSurface);
-    // }
+    if (conf.getShowNormales()) {
+    nLastIndex = nLastIndex + 1;
+        const std::vector<StonePoint *> &vPoints = pStoneGenerator->points();
+        for (int i = 0; i < vPoints.size(); i++) {
+            StonePoint *p1 = vPoints[i];
+            this->showNormal(nLastIndex, i, vPoints[i], nSurface);
+        }
+    }
 
     m_pMeshTemp->createTangents();
     // // optimize vertex and index buffers, if necessary
