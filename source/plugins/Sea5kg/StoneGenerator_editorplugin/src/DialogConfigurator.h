@@ -26,6 +26,8 @@
 #include "DialogConfigurator.h"
 #include "AsyncRunGenerator.h"
 #include "StoneGenerator.h"
+#include "StoneGeneratorConfig.h"
+
 #include "TextureStoneGenerator.h"
 #include "ISignalGun.h"
 
@@ -37,7 +39,7 @@ class CustomIntSlider : public QSlider {
             *m_pValue = nValue;
             m_pLabelValue->setText("(" + QString::number(nValue) + ")");
         };
-        
+
         void setLabelValue(QLabel *pLabelValue) { m_pLabelValue = pLabelValue; };
     private:
         QLabel *m_pLabelValue;
@@ -79,7 +81,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
     private slots:
         void regenerateButton_clicked();
         void click_saveMesh();
-        
+
         void sliderInt_valuesChanged(int nNewValue);
         void sliderFloat_valuesChanged(int nNewValue);
 
@@ -134,6 +136,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         //
         QComboBox *m_pTextureResolution;
 
+        StoneGeneratorConfig m_nextConf;
 
         QProgressBar *m_pProgress;
         AsyncRunGenerator *m_pAsyncRunGenerator;
@@ -149,9 +152,6 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         // Unigine::TexturePtr m_pTexture;
         bool m_bWannaUpdate;
         bool m_bInProgress;
-
-        bool m_bRegenerateGeometry;
-        bool m_bRegenerateTexture;
 
         bool m_bGenerateMesh;
         bool m_bGenerateMaterial;

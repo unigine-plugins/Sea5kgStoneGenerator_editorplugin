@@ -11,6 +11,9 @@ StoneGeneratorConfig::StoneGeneratorConfig() {
     m_nBasicGeometry = StoneGeneratorBasicGeomery::SPHERE;
     m_nStrongOfAttraction = 1.0f;
     m_nPointsOfAttraction = 0;
+    m_bShowNormales = false;
+    m_bRegenerateGeometry = false;
+    m_bRegenerateTexture = false;
 }
 
 void StoneGeneratorConfig::setEstimatedExpectedTriangles(int nExpected) {
@@ -75,6 +78,30 @@ void StoneGeneratorConfig::setScaleZ(float nScaleZ) {
 
 float StoneGeneratorConfig::getScaleZ() const {
     return m_nScaleZ;
+}
+
+void StoneGeneratorConfig::setShowNormales(bool bShowNormales) {
+    m_bShowNormales = bShowNormales;
+}
+
+bool StoneGeneratorConfig::getShowNormales() const {
+    return m_bShowNormales;
+}
+
+void StoneGeneratorConfig::setRegenerateGeometry(bool bRegenerateGeometry) {
+    m_bRegenerateGeometry = bRegenerateGeometry;
+}
+
+bool StoneGeneratorConfig::getRegenerateGeometry() const {
+    return m_bRegenerateGeometry;
+}
+
+void StoneGeneratorConfig::setRegenerateTexture(bool bRegenerateTexture) {
+    m_bRegenerateTexture = bRegenerateTexture;
+}
+
+bool StoneGeneratorConfig::getRegenerateTexture() const {
+    return m_bRegenerateTexture;
 }
 
 void StoneGeneratorConfig::setBasicGeometry(StoneGeneratorBasicGeomery nBasicGeometry) {

@@ -15,8 +15,6 @@ DialogConfigurator::DialogConfigurator(
     // m_nSliderTrianglesValue = 6774;
     m_bWannaUpdate = false;
     m_bInProgress = false;
-    m_bRegenerateGeometry = false;
-    m_bRegenerateTexture = false;
     m_nSliderTrianglesValue = 500;
     m_nSliderRadius = 2.0f;
     m_nSliderSurfaceDistortion = 0.05f;
@@ -148,7 +146,7 @@ void DialogConfigurator::sliderInt_valuesChanged(int nNewValue) {
          return;
     }
     pSlider->updateValue(nNewValue);
-    m_bRegenerateGeometry = true;
+	m_nextConf.setRegenerateGeometry(true);
     this->regenerateGeometry();
 }
 
@@ -160,7 +158,7 @@ void DialogConfigurator::sliderFloat_valuesChanged(int nNewValue) {
          return;
     }
     pSlider->updateValue(float(nNewValue) / 100);
-    m_bRegenerateGeometry = true;
+    m_nextConf.setRegenerateGeometry(true);
     this->regenerateGeometry();
 }
 
@@ -171,7 +169,7 @@ void DialogConfigurator::comboboxTextureResolution_Changed(int nNewValue) {
 void DialogConfigurator::comboboxBasicGeometry_Changed(int nNewValue) {
     std::cout << "comboboxBasicGeometry_Changed " << nNewValue << std::endl;
     m_nBasicGeometry = (StoneGeneratorBasicGeomery)nNewValue;
-    m_bRegenerateGeometry = true;
+    m_nextConf.setRegenerateGeometry(true);
     this->regenerateGeometry();
 }
 
@@ -181,7 +179,7 @@ void DialogConfigurator::click_saveMesh() {
 }
 
 void DialogConfigurator::regenerateButton_clicked() {
-    m_bRegenerateGeometry = true;
+    m_nextConf.setRegenerateGeometry(true);
     this->regenerateGeometry();
 }
 
@@ -239,8 +237,8 @@ void DialogConfigurator::createNode() {
     // pProperty->save();
 
 
-    m_bRegenerateGeometry = true;
-    m_bRegenerateTexture = false;
+	m_nextConf.setRegenerateGeometry(true);
+	m_nextConf.setRegenerateTexture(false);
 
     if (m_bGenerateMaterial) {
         auto mesh_base = Unigine::Materials::findManualMaterial("Unigine::mesh_base");
@@ -256,7 +254,7 @@ void DialogConfigurator::createNode() {
         m_pImage = Unigine::Image::create();
 
         // on first start regenerate all
-        m_bRegenerateTexture = true;
+		m_nextConf.setRegenerateTexture(true);
     }
 
     this->regenerateGeometry();
@@ -279,22 +277,19 @@ void DialogConfigurator::regenerateGeometry() {
     texConf.setFilepath(m_sFilePath1);
     m_pAsyncRunGenerator->setTextureStoneGeneratorConfig(texConf);
 
-    StoneGeneratorConfig newConf;
-    newConf.setEstimatedExpectedTriangles(m_nSliderTrianglesValue);
-    newConf.setPointsOfAttraction(m_nPointsOfAttraction);
-    newConf.setStrongOfAttraction(m_nStrongOfAttraction);
-    newConf.setRadius(m_nSliderRadius);
-    newConf.setSurfaceDistortion(m_nSliderSurfaceDistortion);
-    newConf.setScaleX(m_nSliderScaleX);
-    newConf.setScaleY(m_nSliderScaleY);
-    newConf.setScaleZ(m_nSliderScaleZ);
-    newConf.setBasicGeometry(m_nBasicGeometry);
+    m_nextConf.setEstimatedExpectedTriangles(m_nSliderTrianglesValue);
+    m_nextConf.setPointsOfAttraction(m_nPointsOfAttraction);
+    m_nextConf.setStrongOfAttraction(m_nStrongOfAttraction);
+    m_nextConf.setRadius(m_nSliderRadius);
+    m_nextConf.setSurfaceDistortion(m_nSliderSurfaceDistortion);
+    m_nextConf.setScaleX(m_nSliderScaleX);
+    m_nextConf.setScaleY(m_nSliderScaleY);
+    m_nextConf.setScaleZ(m_nSliderScaleZ);
+    m_nextConf.setBasicGeometry(m_nBasicGeometry);
 
-    m_pAsyncRunGenerator->setStoneGeneratorConfig(newConf);
-    m_pAsyncRunGenerator->setRegenerateGeometry(m_bRegenerateGeometry);
-    m_pAsyncRunGenerator->setRegenerateTexture(m_bRegenerateTexture);
-    m_bRegenerateGeometry = false;
-    m_bRegenerateTexture = false;
+    m_pAsyncRunGenerator->setStoneGeneratorConfig(m_nextConf);
+	m_nextConf.setRegenerateGeometry(false);
+	m_nextConf.setRegenerateTexture(false);
 
     QThreadPool::globalInstance()->start(m_pAsyncRunGenerator);
 }
@@ -444,8 +439,7 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
     // lighting
     // m_pDynamicMesh->updateTangents();
 
-
-    if (m_pAsyncRunGenerator->getRegenerateTexture()) {
+    if (m_pAsyncRunGenerator->getConf().getRegenerateTexture()) {
         m_pImage->clear();
         m_pImage->load(m_sFilePath1.toStdString().c_str());
         m_pixmapImageOrigin.load(m_sFilePath1);
@@ -542,7 +536,7 @@ void DialogConfigurator::updateTextureImageView(const QString &sHeighlightTriang
         painter.drawLine(nX0, nY0, nX1, nY1);
         painter.drawLine(nX1, nY1, nX2, nY2);
         painter.drawLine(nX2, nY2, nX0, nY0);
-        QString sTrianle = 
+        QString sTrianle =
             "(" + QString::number(nX0) + "," + QString::number(nY0) + ")"
             + "(" + QString::number(nX1) + "," + QString::number(nY1) + ")"
             + "(" + QString::number(nX2) + "," + QString::number(nY2) + ")";
@@ -565,7 +559,6 @@ void DialogConfigurator::updateTextureImageView(const QString &sHeighlightTriang
                 bSaveImage = true;
             }
         }
-        
     }
     m_pImageView->setPixmap(m_pixmapImageHiglighted);
     if (bSaveImage) {

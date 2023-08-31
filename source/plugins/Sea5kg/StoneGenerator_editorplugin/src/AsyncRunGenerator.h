@@ -12,17 +12,13 @@ class AsyncRunGenerator : public QRunnable {
 
         void setStoneGeneratorConfig(const StoneGeneratorConfig &conf);
         void setTextureStoneGeneratorConfig(const TextureStoneGeneratorConfig &conf);
-        void setRegenerateGeometry(bool bVal);
-        bool getRegenerateGeometry();
-        void setRegenerateTexture(bool bVal);
-        bool getRegenerateTexture();
+
+        const StoneGeneratorConfig &getConf();
 
         StoneGenerator *getStoneGenerator();
 
     private:
         void run();
-        bool m_bRegenerateTexture;
-        bool m_bRegenerateGeometry;
         StoneGenerator *m_pStoneGenerator;
         ISignalGun *m_pSignalGun;
         StoneGeneratorConfig m_conf;
