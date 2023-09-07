@@ -43,6 +43,7 @@ private:
     QString m_sPython3ScriptingJsonFilePath;
     QWidget *m_pMainWindow;
     QMenu *m_pMenuCustom;
+    QMenu *m_pMenuCreate;
     QAction *m_pActionCreateMeshAndMaterial;
     QAction *m_pActionCreateOnlyMesh;
     QAction *m_pActionAbout;

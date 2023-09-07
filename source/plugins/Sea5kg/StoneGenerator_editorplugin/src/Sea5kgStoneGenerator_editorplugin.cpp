@@ -32,13 +32,13 @@ std::string log_prepare_message(QString message) {
 }
 
 void log_info(QString message) {
-    Unigine::Log::message(log_prepare_message(message).c_str());
+    Unigine::Log::message("%s", log_prepare_message(message).c_str());
 }
 
 void log_error(QString message) {
     std::string sMessage = log_prepare_message(message);
     const char * pMessage = sMessage.c_str();
-    Unigine::Log::error(pMessage);
+    Unigine::Log::error("%s", pMessage);
 }
 
 bool UnigineEditorPlugin_PrototypeStoneGenerator::init() {
@@ -67,10 +67,16 @@ bool UnigineEditorPlugin_PrototypeStoneGenerator::init() {
 }
 
 void UnigineEditorPlugin_PrototypeStoneGenerator::shutdown() {
-    log_info("shutdown");
-    // if (m_pEditScriptWindow != nullptr) {
-    //     delete m_pEditScriptWindow;
-    // }
+    log_info("Shutdown...");
+    disconnect(UnigineEditor::Selection::instance(), &UnigineEditor::Selection::changed, this, &UnigineEditorPlugin_PrototypeStoneGenerator::globalSelectionChanged);
+
+    m_pMenuCustom->removeAction(m_pActionCreateOnlyMesh);
+    m_pMenuCustom->removeAction(m_pActionCreateMeshAndMaterial);
+    m_pMenuCustom->removeAction(m_pActionAbout);
+    m_pMenuCreate->removeAction(m_pMenuCustom->menuAction());
+
+    delete m_pDialog;
+    log_info("Done");
 }
 
 void UnigineEditorPlugin_PrototypeStoneGenerator::click_about() {
@@ -120,8 +126,8 @@ void UnigineEditorPlugin_PrototypeStoneGenerator::globalSelectionChanged() {
 }
 
 bool UnigineEditorPlugin_PrototypeStoneGenerator::safeCreateMenuCustom() {
-    QMenu *pMenuCreate = UnigineEditor::WindowManager::findMenu(UnigineEditor::Constants::MM_CREATE);
-    if (pMenuCreate == nullptr) {
+    m_pMenuCreate = UnigineEditor::WindowManager::findMenu(UnigineEditor::Constants::MM_CREATE);
+    if (m_pMenuCreate == nullptr) {
         std::string sLogMsg = std::string(" Not found menu: ") + std::string(UnigineEditor::Constants::MM_CREATE);
         log_error(sLogMsg.c_str());
         return false;
@@ -129,7 +135,7 @@ bool UnigineEditorPlugin_PrototypeStoneGenerator::safeCreateMenuCustom() {
     }
 
     if (m_pMenuCustom == nullptr) {
-        m_pMenuCustom = pMenuCreate->addMenu(tr("Sea5kg / Stone Generator"));
+        m_pMenuCustom = m_pMenuCreate->addMenu(tr("Sea5kg / Stone Generator"));
 
         // menu create
         m_pActionCreateOnlyMesh = new QAction("Create Only Mesh", this);
@@ -144,7 +150,7 @@ bool UnigineEditorPlugin_PrototypeStoneGenerator::safeCreateMenuCustom() {
         connect(m_pActionAbout, &QAction::triggered, this, &UnigineEditorPlugin_PrototypeStoneGenerator::click_about);
         m_pMenuCustom->addAction(m_pActionAbout);
 
-        QWidget* pMenuTools = dynamic_cast<QWidget*>(pMenuCreate);
+        QWidget* pMenuTools = dynamic_cast<QWidget*>(m_pMenuCreate);
         m_pMainWindow = pMenuTools->parentWidget()->parentWidget();
         QString sClassname  = m_pMainWindow->metaObject()->className();
         log_info(" Found  " + sClassname);
