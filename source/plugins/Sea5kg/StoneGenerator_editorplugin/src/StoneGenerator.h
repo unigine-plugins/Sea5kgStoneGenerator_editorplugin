@@ -27,10 +27,16 @@ class StonePoint {
         float getNormalY();
         float getNormalZ();
 
+        void setTangent(float nX, float nY, float nZ, float nW);
+        float getTangentX();
+        float getTangentY();
+        float getTangentZ();
+        float getTangentW();
+
         void addLinkToTriangle(StoneTriangle *pTriangle);
         void removeLinkToTriangle(StoneTriangle *pTriangle);
 
-        void normalizetoUnitVector();
+        void normalizeToUnitVector();
 
     private:
         float m_nX, m_nY, m_nZ;
@@ -39,6 +45,7 @@ class StonePoint {
         int m_nZ100;
         int m_nIndex;
         float m_nNormalX, m_nNormalY, m_nNormalZ;
+        float m_nTangentX, m_nTangentY, m_nTangentZ, m_nTangentW;
         std::vector<StoneTriangle *> m_vLinkedTriangles;
 };
 
@@ -126,6 +133,7 @@ class StoneGenerator {
         bool processResizeAndShift(const StoneGeneratorConfig &conf);
         bool processRemoveUnusefulTriangles(const StoneGeneratorConfig &conf);
         bool processNormals(const StoneGeneratorConfig &conf);
+        bool processTangents(const StoneGeneratorConfig &conf);
         bool processTexturing(const StoneGeneratorConfig &conf);
 
         void findTrianglesByPoint(StonePoint *p1, std::vector<StoneTriangle *> &vTriangles);

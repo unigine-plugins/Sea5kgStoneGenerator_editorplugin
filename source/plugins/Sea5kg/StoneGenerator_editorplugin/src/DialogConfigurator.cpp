@@ -298,7 +298,61 @@ void DialogConfigurator::generationComplited(QString sDone) {
     emit signal_generationComplited(sDone);
 }
 
-void DialogConfigurator::addVertex(int nIndex, StonePoint *p1, StoneTexturePoint &t1, int nSurface) {
+int DialogConfigurator::showNormal(int nLastIndex, int nIndex, StonePoint *p1, int nSurface) {
+
+    Unigine::Math::vec3 vp0(
+        p1->x(),
+        p1->y(),
+        p1->z()
+    );
+
+    Unigine::Math::vec3 np(p1->getNormalX(), p1->getNormalY(), p1->getNormalZ());
+    // np = np.normalize();
+
+    Unigine::Math::vec3 np0( 1.0f * 0.0f,  1.0f * np.z, -1.0f * np.x);
+    Unigine::Math::vec3 np1( 1.0f * 0.0f, -1.0f * np.z,  1.0f * np.x);
+    Unigine::Math::vec3 np2( 1.0f * np.y, -1.0f * np.x,  1.0f * 0.0f);
+    Unigine::Math::vec3 np3(-1.0f * np.y,  1.0f * np.x,  1.0f * 0.0f);
+    Unigine::Math::vec3 np4( 1.0f * np.z,  1.0f * 0.0f, -1.0f * np.x);
+    Unigine::Math::vec3 np5(-1.0f * np.z,  1.0f * 0.0f,  1.0f * np.x);
+
+    // Unigine::Math::vec3 vp1 = ((np0 + np3) / 2.0).normalize() * 0.1 + vp0;
+    // Unigine::Math::vec3 vp2 = ((np1 + np4) / 2.0).normalize() * 0.1 + vp0;
+    // Unigine::Math::vec3 vp3 = ((np2 + np5) / 2.0).normalize() * 0.1 + vp0;
+
+    Unigine::Math::vec3 vp1 = np0.normalize() * 0.1 + np + vp0;
+    Unigine::Math::vec3 vp2 = np2.normalize() * 0.1 + np + vp0;
+    Unigine::Math::vec3 vp3 = np4.normalize() * 0.1 + np + vp0;
+
+    std::vector<Unigine::Math::vec3> vPoints;
+
+    // t1
+    vPoints.push_back(vp0);
+    vPoints.push_back(vp2);
+    vPoints.push_back(vp1);
+
+    vPoints.push_back(vp0);
+    vPoints.push_back(vp3);
+    vPoints.push_back(vp2);
+
+    vPoints.push_back(vp0);
+    vPoints.push_back(vp1);
+    vPoints.push_back(vp3);
+
+    vPoints.push_back(vp1);
+    vPoints.push_back(vp2);
+    vPoints.push_back(vp3);
+
+    for (int i = 0; i < vPoints.size(); i++) {
+        m_pMeshTemp->addVertex(vPoints[i], nSurface);
+        m_pMeshTemp->addNormal(Unigine::Math::vec3(0.0, 0.0, 0.0), nSurface);
+        m_pMeshTemp->addIndex(nLastIndex, nSurface);
+        nLastIndex++;
+    }
+    return nLastIndex;
+}
+
+void DialogConfigurator::addPointOfTriangle(int nIndex, StonePoint *p1, StoneTexturePoint &t1, int nSurface) {
     m_pMeshTemp->addVertex(Unigine::Math::vec3(
         p1->x(),
         p1->y(),
@@ -309,57 +363,20 @@ void DialogConfigurator::addVertex(int nIndex, StonePoint *p1, StoneTexturePoint
         t1.y()
     ), nSurface);
     // m_pMeshTemp->addColor(Unigine::Math::vec4(0,0,0,255), nSurface);
-    m_pMeshTemp->addNormal(Unigine::Math::vec3(
-         p1->getNormalX(),
-         p1->getNormalY(),
-         p1->getNormalZ()
-    ), nSurface);
+    Unigine::Math::vec3 nr(
+        p1->getNormalX(),
+        p1->getNormalY(),
+        p1->getNormalZ()
+    );
+    m_pMeshTemp->addNormal(nr, nSurface);
+    // Unigine::Math::quat t(
+    //     p1->getTangentX(),
+    //     p1->getTangentY(),
+    //     p1->getTangentZ(),
+    //     p1->getTangentW()
+    // );
+    // m_pMeshTemp->addTangent(t, nSurface);
     m_pMeshTemp->addIndex(nIndex, nSurface);
-}
-
-void DialogConfigurator::showNormal(int nLastIndex, int nIndex, StonePoint *p1, int nSurface) {
-
-    std::vector<Unigine::Math::vec3> points;
-
-    points.push_back(Unigine::Math::vec3(
-        p1->x(),
-        p1->y(),
-        p1->z()
-    ));
-    points.push_back(Unigine::Math::vec3(
-        p1->x() + p1->getNormalX() + 0.1,
-        p1->y() + p1->getNormalY() + 0.1,
-        p1->z() + p1->getNormalZ()
-    ));
-    points.push_back(Unigine::Math::vec3(
-        p1->x() + p1->getNormalX() - 0.1,
-        p1->y() + p1->getNormalY() + 0.1,
-        p1->z() + p1->getNormalZ()
-    ));
-    points.push_back(Unigine::Math::vec3(
-        p1->x() + p1->getNormalX(),
-        p1->y() + p1->getNormalY() - 0.1,
-        p1->z() + p1->getNormalZ()
-    ));
-
-    int nSize = points.size();
-    int nKI = nSize*3;
-    for (int i = 0; i < nSize; i++) {
-        Unigine::Math::vec3 p1 = points[(i+0)%nSize];
-        Unigine::Math::vec3 p2 = points[(i+1)%nSize];
-        Unigine::Math::vec3 p3 = points[(i+2)%nSize];
-        m_pMeshTemp->addVertex(p1, nSurface);
-        m_pMeshTemp->addIndex(nLastIndex + nIndex*nKI + i*3 + 0, nSurface);
-        m_pMeshTemp->addNormal(Unigine::Math::vec3(0.0, 0.0, 0.0), nSurface);
-
-        m_pMeshTemp->addVertex(p2, nSurface);
-        m_pMeshTemp->addIndex(nLastIndex + nIndex*nKI + i*3 + 1, nSurface);
-        m_pMeshTemp->addNormal(Unigine::Math::vec3(0.0, 0.0, 0.0), nSurface);
-
-        m_pMeshTemp->addVertex(p3, nSurface);
-        m_pMeshTemp->addIndex(nLastIndex + nIndex*nKI + i*3 + 2, nSurface);
-        m_pMeshTemp->addNormal(Unigine::Math::vec3(0.0, 0.0, 0.0), nSurface);
-    }
 }
 
 void DialogConfigurator::slot_generationComplited(QString sDone) {
@@ -377,27 +394,6 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
     auto *pStoneGenerator = m_pAsyncRunGenerator->getStoneGenerator();
     const StoneGeneratorConfig &conf = m_pAsyncRunGenerator->getConf();
 
-    // const std::vector<StonePoint *> &vPoints = pStoneGenerator->points();
-    // for (int i = 0; i < vPoints.size(); i++) {
-    //     m_pDynamicMesh->addVertex(Unigine::Math::vec3(
-    //         vPoints[i]->x(),
-    //         vPoints[i]->y(),
-    //         vPoints[i]->z()
-    //     ));
-    //     // m_pDynamicMesh->addTexCoord(Unigine::Math::vec4(float(std::rand() % 100) / 100, float(std::rand() % 100) / 100, 0, 0));
-    //     // std::cout << "tx coord uv: " <<
-    //     //     vPoints[i]->getTextureCoordinateU()
-    //     //     << " " <<
-    //     //     vPoints[i]->getTextureCoordinateV()
-    //     //     << std::endl;
-    //     m_pDynamicMesh->addTexCoord(Unigine::Math::vec4(
-    //         vPoints[i]->getTextureCoordinateU(),
-    //         vPoints[i]->getTextureCoordinateV(),
-    //         0,
-    //         0
-    //     ));
-    // }
-
     const std::vector<StoneTriangle *> &vTriangles = pStoneGenerator->triangles();
     m_pMeshTemp = Unigine::Mesh::create();
     // int nSurface = m_pMeshTemp->addEmptySurface("0", vTriangles.size()*3, vTriangles.size()*3);
@@ -408,23 +404,27 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
     int nLastIndex = 0;
     for (int i = 0; i < vTriangles.size(); i++) {
         StoneTriangle *pTriangle = vTriangles[i];
-        this->addVertex(i*3 + 0, pTriangle->p1(), pTriangle->t1(), nSurface);
-        this->addVertex(i*3 + 1, pTriangle->p2(), pTriangle->t2(), nSurface);
-        this->addVertex(i*3 + 2, pTriangle->p3(), pTriangle->t3(), nSurface);
+        this->addPointOfTriangle(i*3 + 0, pTriangle->p1(), pTriangle->t1(), nSurface);
+        this->addPointOfTriangle(i*3 + 1, pTriangle->p2(), pTriangle->t2(), nSurface);
+        this->addPointOfTriangle(i*3 + 2, pTriangle->p3(), pTriangle->t3(), nSurface);
         nLastIndex = i*3 + 2;
     }
 
     // show normals
     if (conf.getShowNormales()) {
-    nLastIndex = nLastIndex + 1;
+        nLastIndex = nLastIndex + 1;
         const std::vector<StonePoint *> &vPoints = pStoneGenerator->points();
         for (int i = 0; i < vPoints.size(); i++) {
             StonePoint *p1 = vPoints[i];
-            this->showNormal(nLastIndex, i, vPoints[i], nSurface);
+            nLastIndex = this->showNormal(nLastIndex, i, vPoints[i], nSurface);
         }
     }
 
-    m_pMeshTemp->createTangents();
+    // m_pMeshTemp->save("tmp.mesh");
+
+    m_pMeshTemp->createTangents(); // without nice
+
+
     // // optimize vertex and index buffers, if necessary
     Unigine::MaterialPtr pPrevMeterial = m_pDynamicMesh->getMaterial(0);
 
@@ -621,7 +621,7 @@ QHBoxLayout *DialogConfigurator::createIntSliderParameterUI(QString sLabel, int 
     pSlider->setPoiterValue(nValue);
     connect(pSlider, SIGNAL(valueChanged(int)), this, SLOT(sliderInt_valuesChanged(int)));
     pLayout->addWidget(pSlider);
-    
+
     return pLayout;
 }
 

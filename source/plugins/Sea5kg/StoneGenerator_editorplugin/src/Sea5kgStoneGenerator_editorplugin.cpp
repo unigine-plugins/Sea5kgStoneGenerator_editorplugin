@@ -42,7 +42,7 @@ void log_error(QString message) {
 }
 
 bool UnigineEditorPlugin_PrototypeStoneGenerator::init() {
-    log_info(" Initializing...");
+    log_info("Initializing...");
     m_pMenuCustom = nullptr;
     m_pMainWindow = nullptr;
 

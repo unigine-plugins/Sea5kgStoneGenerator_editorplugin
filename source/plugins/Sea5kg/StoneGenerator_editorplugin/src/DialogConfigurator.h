@@ -100,8 +100,8 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         int normalizeTextureCoordinates(int nWidth, float nVal);
         void updateTextureImageView(const QString &sHeighlightTriangle = "");
 
-        void addVertex(int nIndex, StonePoint *p1, StoneTexturePoint &t1, int nSurface);
-        void showNormal(int nLastIndex, int nIndex, StonePoint *p1, int nSurface);
+        void addPointOfTriangle(int nIndex, StonePoint *p1, StoneTexturePoint &t1, int nSurface);
+        int showNormal(int nLastIndex, int nIndex, StonePoint *p1, int nSurface);
 
         int m_nLabelSize;
         int m_nStoneIdName;

@@ -17,6 +17,10 @@ StonePoint::StonePoint() {
 StonePoint::StonePoint(float x, float y, float z) {
     setXYZ(x,y,z);
     m_nIndex = 0;
+    m_nTangentX = 0.0f;
+    m_nTangentY = 0.0f;
+    m_nTangentZ = 0.0f;
+    m_nTangentW = 0.0f;
 }
 
 float StonePoint::x() const {
@@ -85,6 +89,26 @@ float StonePoint::getNormalZ() {
     return m_nNormalZ;
 }
 
+void StonePoint::setTangent(float nX, float nY, float nZ, float nW) {
+    m_nTangentX = nX;
+    m_nTangentY = nY;
+    m_nTangentZ = nZ;
+    m_nTangentW = nW;
+}
+
+float StonePoint::getTangentX() {
+    return m_nTangentX;
+}
+float StonePoint::getTangentY() {
+    return m_nTangentY;
+}
+float StonePoint::getTangentZ() {
+    return m_nTangentZ;
+}
+float StonePoint::getTangentW() {
+    return m_nTangentW;
+}
+
 void StonePoint::addLinkToTriangle(StoneTriangle *pTriangle) {
     m_vLinkedTriangles.push_back(pTriangle);
 }
@@ -94,23 +118,12 @@ void StonePoint::removeLinkToTriangle(StoneTriangle *pTriangle) {
     // m_vLinkedTriangles.push_back(pTriangle);
 }
 
-void StonePoint::normalizetoUnitVector() {
-
-    float len = std::sqrt(m_nNormalX*m_nNormalX + m_nNormalY*m_nNormalY + m_nNormalZ*m_nNormalZ);
-    float k = 1 / len;
-    m_nNormalX = k * m_nNormalX;
-    m_nNormalY = k * m_nNormalY;
-    m_nNormalZ = k * m_nNormalZ;
-
-    // float fN = std::fabs(normal.x());
-    //     fN = std::max(fN, std::fabs(normal.y()));
-    //     fN = std::max(fN, std::fabs(normal.z()));
-    //     fN = 1.0 / fN;
-    //     normal.setXYZ(
-    //         fN * normal.x(),
-    //         fN * normal.y(),
-    //         fN * normal.z()
-    //     );
+void StonePoint::normalizeToUnitVector() {
+    float len = std::sqrt(m_nX*m_nX + m_nY*m_nY + m_nZ*m_nZ);
+    float k = 1.0 / len;
+    m_nX = k * m_nX;
+    m_nY = k * m_nY;
+    m_nZ = k * m_nZ;
 }
 
 
@@ -460,6 +473,7 @@ bool StoneGenerator::generate(const StoneGeneratorConfig &conf) {
     this->processRandom(conf);
     this->processResizeAndShift(conf);
     this->processNormals(conf);
+    // this->processTangents(conf);
     this->processTexturing(conf);
 
     std::cout << "got triangles = " << m_vTriangles.size() << std::endl;
@@ -813,19 +827,49 @@ bool StoneGenerator::processNormals(const StoneGeneratorConfig &conf) {
     std::cout << "processNormals start" << std::endl;
     std::vector<StoneTriangle *> vFoundTriangles;
     StonePoint pCenter(0.0, 0.0, 0.0);
-    float nPointsSize = m_vPoints.size();
-    // for (int i = 0; i < m_vPoints.size(); i++) {
-    //     pCenter.addOffset(
-    //         m_vPoints[i]->x(),
-    //         m_vPoints[i]->y(),
-    //         m_vPoints[i]->z()
-    //     );
-    // }
-    // pCenter.setXYZ(
-    //     pCenter.x() / nPointsSize,
-    //     pCenter.y() / nPointsSize,
-    //     pCenter.z() / nPointsSize
-    // );
+    for (int p_i = 0; p_i < m_vPoints.size(); p_i++) {
+        StonePoint *p0 = m_vPoints[p_i];
+
+        vFoundTriangles.clear();
+        findTrianglesByPoint(p0, vFoundTriangles);
+        if (vFoundTriangles.size() == 0) {
+            continue;
+        }
+        StonePoint normal(0.0, 0.0, 0.0);
+        StonePoint middle_p;
+        StonePoint middle_p_normal;
+        for (int n = 0; n < vFoundTriangles.size(); n++) {
+            vFoundTriangles[n]->calculateMiddlePointAndNormal(middle_p, middle_p_normal);
+
+            middle_p_normal.setXYZ(
+                (middle_p_normal.x() - middle_p.x()),
+                (middle_p_normal.y() - middle_p.y()),
+                (middle_p_normal.z() - middle_p.z())
+            );
+            middle_p_normal.normalizeToUnitVector();
+            normal.addOffset(middle_p_normal.x(), middle_p_normal.y(), middle_p_normal.z());
+        }
+        float size = vFoundTriangles.size();
+        normal.setXYZ(
+            normal.x() / size,
+            normal.y() / size,
+            normal.z() / size
+        );
+        normal.normalizeToUnitVector();
+        p0->setNormal(
+            normal.x(),
+            normal.y(),
+            normal.z()
+        );
+    }
+    std::cout << "processNormals end" << std::endl;
+    return true;
+}
+
+bool StoneGenerator::processTangents(const StoneGeneratorConfig &conf) {
+    std::cout << "processTangents start" << std::endl;
+    // TODO
+    std::vector<StoneTriangle *> vFoundTriangles;
 
     for (int p_i = 0; p_i < m_vPoints.size(); p_i++) {
         // std::cout << "processNormals " << i << std::endl;
@@ -836,79 +880,16 @@ bool StoneGenerator::processNormals(const StoneGeneratorConfig &conf) {
         findTrianglesByPoint(p0, vFoundTriangles);
         // std::cout << "processNormals vFoundTriangles.size() = " << vFoundTriangles.size() << std::endl;
         if (vFoundTriangles.size() == 0) {
+            std::cout << "Warning: Not found triangles for point" << std::endl;
             continue;
         }
-        StonePoint normal(0.0, 0.0, 0.0);
-        StonePoint middle_p;
-        StonePoint middle_p_normal;
-        // std::cout << "processNormals vFoundTriangles.size() = " << vFoundTriangles.size() << std::endl;
-        for (int n = 0; n < vFoundTriangles.size(); n++) {
-            vFoundTriangles[n]->calculateMiddlePointAndNormal(middle_p, middle_p_normal);
-
-            middle_p_normal.setXYZ(
-                (middle_p_normal.x() - middle_p.x()),
-                (middle_p_normal.y() - middle_p.y()),
-                (middle_p_normal.z() - middle_p.z())
-            );
-            // std::cout << middle_p_normal.x() - middle_p.x() << std::endl;
-            middle_p_normal.normalizetoUnitVector();
-            // std::cout << middle_p_normal.x() - middle_p.x() << std::endl;
-            normal.addOffset(middle_p_normal.x(), middle_p_normal.y(), middle_p_normal.z());
-
-            // normal.addOffset(
-            //     (middle_p_normal.x() - middle_p.x()),
-            //     (middle_p_normal.y() - middle_p.y()),
-            //     (middle_p_normal.z() - middle_p.z())
-            // );
-        }
-        // float size = vFoundTriangles.size();
-        // pNormal.setXYZ(
-        //     pNormal.x() / size,
-        //     pNormal.y() / size,
-        //     pNormal.z() / size
-        // );
-        normal.normalizetoUnitVector();
-
-        // std::cout << "x = " << p0->x() << "; y " << p0->y() << "; z = " << p0->z() << std::endl;
-        // std::cout << "x = " << pNormal.x() << "; y " << pNormal.y() << "; z = " << pNormal.z() << std::endl;
-        // tangent
-        // // by x to 90
-        // float dx1 = x_n - x;
-        // float dy1 = y_n - y;
-        // float dz1 = z_n - z;
-        // x_n = x + dx1;
-        // y_n = y + dy1 * std::cos(M_PI/2) - dz1 * std::sin(M_PI/2);
-        // z_n = z + dy1 * std::sin(M_PI/2) + dz1 * std::cos(M_PI/2);
-
-        // // by y to 90
-        // dx1 = x_n - x;
-        // dy1 = y_n - y;
-        // dz1 = z_n - z;
-        // x_n = x + dx1 * std::cos(M_PI/2) + dz1 * std::sin(M_PI/2);
-        // y_n = y + dy1;
-        // z_n = z - dx1 * std::sin(M_PI/2) + dz1 * std::cos(M_PI/2);
-        // p0
-        // normal
-        // p0->setNormal(
-        //     1.5f - (1.0f + float(std::rand() % 100) / 100.0),
-        //     1.5f - (1.0f + float(std::rand() % 100) / 100.0),
-        //     1.5f - (1.0f + float(std::rand() % 100) / 100.0)
-        // );
-        p0->setNormal(
-            normal.x(),
-            normal.y(),
-            normal.z()
-        );
-
     }
-    // std::cout << "m_vTriangles.size() = " << m_vTriangles.size() << std::endl;
-    // std::cout << "m_vPoints.size() = " << m_vPoints.size() << std::endl;
-    std::cout << "processNormals end" << std::endl;
+    std::cout << "processTangents end" << std::endl;
     return true;
 }
 
 bool StoneGenerator::processTexturing(const StoneGeneratorConfig &conf) {
-    if (m_vTriangles.size() <= 0) {
+    if (m_vTriangles.size() == 0) {
         return false;
     }
 
@@ -952,7 +933,7 @@ bool StoneGenerator::processTexturing(const StoneGeneratorConfig &conf) {
     while (vTrianglesHandling.size() > 0) {
         StoneTriangle *pTri = vTrianglesHandling[vTrianglesHandling.size()-1];
         vTrianglesHandling.pop_back();
-        
+
         for (int i = 0; i < m_vTriangles.size(); i++) {
             StoneTriangle *pTri2 = m_vTriangles[i];
             if (pTri2 == pTri) {
