@@ -2,6 +2,9 @@
 
 #include <string>
 #include <map>
+#include <vector>
+
+class StoneGeneratorBasicGeometry;
 
 enum class StoneGeneratorBasicGeomery {
     SPHERE = 0,

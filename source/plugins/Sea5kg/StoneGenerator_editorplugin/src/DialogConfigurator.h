@@ -26,7 +26,6 @@
 #include "DialogConfigurator.h"
 #include "AsyncRunGenerator.h"
 #include "StoneGenerator.h"
-#include "StoneGeneratorConfig.h"
 
 #include "TextureStoneGenerator.h"
 #include "ISignalGun.h"
@@ -100,8 +99,8 @@ class DialogConfigurator : public QDialog, public ISignalGun {
         int normalizeTextureCoordinates(int nWidth, float nVal);
         void updateTextureImageView(const QString &sHeighlightTriangle = "");
 
-        void addPointOfTriangle(int nIndex, StonePoint *p1, StoneTexturePoint &t1, int nSurface);
-        int showNormal(int nLastIndex, int nIndex, StonePoint *p1, int nSurface);
+        void addPointOfTriangle(int nIndex, StoneGeneratorPoint *p1, StoneGeneratorTexturePoint &t1, int nSurface);
+        int showNormal(int nLastIndex, int nIndex, StoneGeneratorPoint *p1, int nSurface);
 
         int m_nLabelSize;
         int m_nStoneIdName;
@@ -155,5 +154,7 @@ class DialogConfigurator : public QDialog, public ISignalGun {
 
         bool m_bGenerateMesh;
         bool m_bGenerateMaterial;
+
+        std::vector<StoneGeneratorBasicGeometry *> m_vBasicGeometries;
 };
 

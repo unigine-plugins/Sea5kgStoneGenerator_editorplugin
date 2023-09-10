@@ -1,5 +1,7 @@
 #include "StoneGeneratorConfig.h"
 
+// ---------------------------------------------------------------------
+// StoneGeneratorConfig
 
 StoneGeneratorConfig::StoneGeneratorConfig() {
     m_nSurfaceDistortion = 0.0f;

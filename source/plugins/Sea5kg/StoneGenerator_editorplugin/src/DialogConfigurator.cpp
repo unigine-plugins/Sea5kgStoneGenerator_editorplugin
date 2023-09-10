@@ -3,6 +3,8 @@
 
 #include "DialogConfigurator.h"
 #include "UnigineFileSystem.h"
+#include "StoneGeneratorBasicGeometries.h"
+
 #include <UnigineEditor.h>
 #include <UnigineWorld.h>
 #include <QThreadPool>
@@ -11,6 +13,11 @@
 DialogConfigurator::DialogConfigurator(
     QWidget *parent
 ) : QDialog(parent) {
+
+
+    m_vBasicGeometries.push_back(new StoneGeneratorBasicSphere());
+    m_vBasicGeometries.push_back(new StoneGeneratorBasicCube());
+
     // m_nSliderTrianglesValue = 80000;
     // m_nSliderTrianglesValue = 6774;
     m_bWannaUpdate = false;
@@ -298,7 +305,7 @@ void DialogConfigurator::generationComplited(QString sDone) {
     emit signal_generationComplited(sDone);
 }
 
-int DialogConfigurator::showNormal(int nLastIndex, int nIndex, StonePoint *p1, int nSurface) {
+int DialogConfigurator::showNormal(int nLastIndex, int nIndex, StoneGeneratorPoint *p1, int nSurface) {
 
     Unigine::Math::vec3 vp0(
         p1->x(),
@@ -352,7 +359,7 @@ int DialogConfigurator::showNormal(int nLastIndex, int nIndex, StonePoint *p1, i
     return nLastIndex;
 }
 
-void DialogConfigurator::addPointOfTriangle(int nIndex, StonePoint *p1, StoneTexturePoint &t1, int nSurface) {
+void DialogConfigurator::addPointOfTriangle(int nIndex, StoneGeneratorPoint *p1, StoneGeneratorTexturePoint &t1, int nSurface) {
     m_pMeshTemp->addVertex(Unigine::Math::vec3(
         p1->x(),
         p1->y(),
@@ -394,7 +401,7 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
     auto *pStoneGenerator = m_pAsyncRunGenerator->getStoneGenerator();
     const StoneGeneratorConfig &conf = m_pAsyncRunGenerator->getConf();
 
-    const std::vector<StoneTriangle *> &vTriangles = pStoneGenerator->triangles();
+    const std::vector<StoneGeneratorTriangle *> &vTriangles = pStoneGenerator->triangles();
     m_pMeshTemp = Unigine::Mesh::create();
     // int nSurface = m_pMeshTemp->addEmptySurface("0", vTriangles.size()*3, vTriangles.size()*3);
     int nSurface = m_pMeshTemp->addSurface("0");
@@ -403,7 +410,7 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
     std::cout << "Got triangles: " << vTriangles.size() << std::endl;
     int nLastIndex = 0;
     for (int i = 0; i < vTriangles.size(); i++) {
-        StoneTriangle *pTriangle = vTriangles[i];
+        StoneGeneratorTriangle *pTriangle = vTriangles[i];
         this->addPointOfTriangle(i*3 + 0, pTriangle->p1(), pTriangle->t1(), nSurface);
         this->addPointOfTriangle(i*3 + 1, pTriangle->p2(), pTriangle->t2(), nSurface);
         this->addPointOfTriangle(i*3 + 2, pTriangle->p3(), pTriangle->t3(), nSurface);
@@ -413,9 +420,9 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
     // show normals
     if (conf.getShowNormales()) {
         nLastIndex = nLastIndex + 1;
-        const std::vector<StonePoint *> &vPoints = pStoneGenerator->points();
+        const std::vector<StoneGeneratorPoint *> &vPoints = pStoneGenerator->points();
         for (int i = 0; i < vPoints.size(); i++) {
-            StonePoint *p1 = vPoints[i];
+            StoneGeneratorPoint *p1 = vPoints[i];
             nLastIndex = this->showNormal(nLastIndex, i, vPoints[i], nSurface);
         }
     }
@@ -512,7 +519,7 @@ void DialogConfigurator::updateTextureImageView(const QString &sHeighlightTriang
     m_pixmapImageHiglighted = m_pixmapImageOrigin;
 
     auto *pStoneGenerator = m_pAsyncRunGenerator->getStoneGenerator();
-    const std::vector<StoneTriangle *> &vTriangles = pStoneGenerator->triangles();
+    const std::vector<StoneGeneratorTriangle *> &vTriangles = pStoneGenerator->triangles();
 
     // print uv map
     QPainter painter(&m_pixmapImageHiglighted);
@@ -528,7 +535,7 @@ void DialogConfigurator::updateTextureImageView(const QString &sHeighlightTriang
     bool bSaveImage = false;
 
     for (int i = 0; i < vTriangles.size(); i++) {
-        StoneTriangle *pTriangle = vTriangles[i];
+        StoneGeneratorTriangle *pTriangle = vTriangles[i];
         int nX0 = normalizeTextureCoordinates(nImageHeight, pTriangle->t1().x());
         int nY0 = normalizeTextureCoordinates(nImageWidth,  pTriangle->t1().y());
         int nX1 = normalizeTextureCoordinates(nImageHeight, pTriangle->t2().x());
@@ -644,6 +651,6 @@ QHBoxLayout *DialogConfigurator::createFloatSliderParameterUI(QString sLabel, fl
 
     connect(pSlider, SIGNAL(valueChanged(int)), this, SLOT(sliderFloat_valuesChanged(int)));
     pLayout->addWidget(pSlider);
-    
+
     return pLayout;
 }
