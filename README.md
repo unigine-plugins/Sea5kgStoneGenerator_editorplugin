@@ -22,7 +22,7 @@ Preview on Youtube:
 
 ## Prebuilded versions
 
-[/unigine-plugins/UnigineEditorPlugin_PrototypeStoneGenerator/](https://sea-kg.com/files/unigine-plugins/UnigineEditorPlugin_PrototypeStoneGenerator/)
+[/unigine-plugins/UnigineEditorPlugin_PrototypeStoneGenerator/](https://sea5kg.ru/files/unigine-plugins/UnigineEditorPlugin_PrototypeStoneGenerator/)
 
 
 ## Build on linux:
