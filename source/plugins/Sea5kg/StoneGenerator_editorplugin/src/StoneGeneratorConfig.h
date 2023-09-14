@@ -24,6 +24,8 @@ class StoneGeneratorConfig {
 
         void setEstimatedExpectedTriangles(int nExpected);
         int getEstimatedExpectedTriangles() const;
+        void setSeedRandom(unsigned int nSeedRandom);
+        unsigned int getSeedRandom() const;
         void setPointsOfAttraction(int nPointsOfAttraction);
         int getPointsOfAttraction() const;
         void setStrongOfAttraction(float nStrongOfAttraction);
@@ -57,6 +59,7 @@ class StoneGeneratorConfig {
         StoneGeneratorBasicGeomery m_nBasicGeometry;
         float m_nRadius;
         int m_nExpectedTriangles;
+        unsigned int m_nSeedRandom;
         int m_nPointsOfAttraction;
         float m_nStrongOfAttraction;
         float m_nSurfaceDistortion;

@@ -5,6 +5,7 @@
 enum class IDialogConfiguratorUpdatedValue {
     BASIC_GEOMETRY = 0,
     EXPECTED_TRIANGLES = 10,
+    SEED_RANDOM = 15,
     RADIUS = 20,
     POINDS_OF_ATTRACTION = 30,
     STRONG_OF_ATTRACTION = 40,
@@ -19,6 +20,7 @@ class IDialogConfigurator {
         // virtual void generationComplited(QString sDone) = 0;
         virtual void updateValueFloat(IDialogConfiguratorUpdatedValue nIdValue, float nValue) = 0;
         virtual void updateValueInt(IDialogConfiguratorUpdatedValue nIdValue, int nValue) = 0;
+        virtual void updateValueUInt(IDialogConfiguratorUpdatedValue nIdValue, int nValue) = 0;
         virtual int getLabelSize() = 0;
         virtual int getLabelValueSize() = 0;
 };

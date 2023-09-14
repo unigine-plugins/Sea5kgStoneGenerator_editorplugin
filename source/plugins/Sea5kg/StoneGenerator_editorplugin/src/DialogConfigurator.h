@@ -47,6 +47,7 @@ class DialogConfigurator : public QDialog, public ISignalGun, public IDialogConf
         // IDialogConfigurator
         virtual void updateValueFloat(IDialogConfiguratorUpdatedValue nIdValue, float nValue) override;
         virtual void updateValueInt(IDialogConfiguratorUpdatedValue nIdValue, int nValue) override;
+        virtual void updateValueUInt(IDialogConfiguratorUpdatedValue nIdValue, int nValue) override;
         virtual int getLabelSize() override;
         virtual int getLabelValueSize() override;
 
@@ -55,7 +56,6 @@ class DialogConfigurator : public QDialog, public ISignalGun, public IDialogConf
 
 
     private slots:
-        void regenerateButton_clicked();
         void click_saveMesh();
 
         void comboboxTextureResolution_Changed(int nNewValue);
@@ -87,7 +87,6 @@ class DialogConfigurator : public QDialog, public ISignalGun, public IDialogConf
         QPixmap m_pixmapImageOrigin;
         QPixmap m_pixmapImageHiglighted;
 
-        QPushButton *m_pRegenerateButton;
         QPushButton *m_pSaveMeshButton;
         QPushButton *m_pCloseButton;
 

@@ -2,10 +2,11 @@
 
 #include <vector>
 
-#include <StoneGeneratorConfig.h>
-#include <StoneGeneratorPoint.h>
-#include <StoneGeneratorTriangle.h>
-// #include <StoneGeneratorBasicGeometries.h>
+#include "StoneGeneratorConfig.h"
+#include "StoneGeneratorPoint.h"
+#include "StoneGeneratorTriangle.h"
+#include "StoneGeneratorPseudoRandom.h"
+#include "StoneGeneratorBasicGeometry.h"
 
 class StoneGenerator {
     public:
@@ -51,4 +52,5 @@ class StoneGenerator {
 
         std::vector<StoneGeneratorPoint *> m_vPoints;
         std::vector<StoneGeneratorTriangle *> m_vTriangles;
+        StoneGeneratorPseudoRandom m_random;
 };

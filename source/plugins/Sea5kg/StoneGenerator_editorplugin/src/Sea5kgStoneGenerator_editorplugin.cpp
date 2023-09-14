@@ -6,7 +6,8 @@
 #include <iostream>
 #include <QGuiApplication>
 #include <QScreen>
-
+#include <ctime>
+#include <chrono>
 
 #include "Sea5kgStoneGenerator_editorplugin.h"
 
@@ -17,6 +18,7 @@
 #include <UniginePrimitives.h>
 #include <QCoreApplication>
 #include <UnigineMaterials.h>
+
 
 #include "UnigineFileSystem.h"
 
@@ -63,6 +65,16 @@ bool UnigineEditorPlugin_PrototypeStoneGenerator::init() {
 
     log_info("Initialiazed");
 
+    // auto start = std::chrono::steady_clock::now();
+    // unsigned int n = 1;
+    // for (int i = 0; i < 100; i++) {
+    //     // std::cout << i << " " << n << std::endl;
+    // }
+
+    // auto end = std::chrono::steady_clock::now();
+    // long long time_diff = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+    // std::cout << "time_diff: " << time_diff << " ns " << std::endl;
+ 
     return true;
 }
 

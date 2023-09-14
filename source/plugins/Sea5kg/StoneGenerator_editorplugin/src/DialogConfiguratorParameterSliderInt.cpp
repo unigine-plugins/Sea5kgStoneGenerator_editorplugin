@@ -29,20 +29,12 @@ DialogConfiguratorParameterSliderInt::DialogConfiguratorParameterSliderInt(
     m_pSlider->setRange(nMin, nMax);
     m_pSlider->setValue(m_nValue);
 
-    connect(m_pSlider, SIGNAL(valueChanged(int)), this, SLOT(sliderInt_valuesChanged(int)));
+    connect(m_pSlider, SIGNAL(valueChanged(int)), this, SLOT(valueChanged(int)));
     this->addWidget(m_pSlider);
 }
 
-void DialogConfiguratorParameterSliderInt::sliderInt_valuesChanged(int nNewValue) {
-    QObject* obj = sender();
-    QSlider *pSlider = dynamic_cast<QSlider *>(obj);
-    if (pSlider == nullptr) {
-        std::cerr << "Could not cast" << std::endl;
-        return;
-    }
+void DialogConfiguratorParameterSliderInt::valueChanged(int nNewValue) {
     m_nValue = nNewValue;
     m_pDialogConfigurator->updateValueInt(m_nIdValue, m_nValue);
     m_pLabelValue->setText("(" + QString::number(m_nValue) + ")");
-    // m_nextConf.setRegenerateGeometry(true);
-    // this->regenerateGeometry();
 }

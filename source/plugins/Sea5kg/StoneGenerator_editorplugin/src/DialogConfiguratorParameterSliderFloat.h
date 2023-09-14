@@ -15,7 +15,7 @@ class DialogConfiguratorParameterSliderFloat : public QHBoxLayout {
         DialogConfiguratorParameterSliderFloat(IDialogConfigurator *pDialogConfigurator, IDialogConfiguratorUpdatedValue nIdValue, QString sLabel, float nValue, float nMin, float nMax);
 
     private slots:
-        void sliderFloat_valuesChanged(int nNewValue);
+        void valueChanged(int nNewValue);
 
     private:
         IDialogConfiguratorUpdatedValue m_nIdValue;

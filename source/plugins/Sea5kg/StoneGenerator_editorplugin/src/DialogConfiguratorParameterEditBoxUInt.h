@@ -4,31 +4,35 @@
 #include <QSlider>
 #include <QLabel>
 #include <QHBoxLayout>
+#include <QLineEdit>
+#include <QPushButton>
 
 #include <iostream>
 
 #include "IDialogConfigurator.h"
 
-class DialogConfiguratorParameterSliderInt : public QHBoxLayout {
+class DialogConfiguratorParameterEditBoxUInt : public QHBoxLayout {
     Q_OBJECT
     public:
-        DialogConfiguratorParameterSliderInt(
+        DialogConfiguratorParameterEditBoxUInt(
             IDialogConfigurator *pDialogConfigurator,
             IDialogConfiguratorUpdatedValue nIdValue,
             QString sLabel,
-            int nValue,
-            int nMin,
-            int nMax
+            unsigned int nValue,
+            unsigned int nMin,
+            unsigned int nMax
         );
 
     private slots:
-        void valueChanged(int nNewValue);
+        void valueChanged(const QString &sNewValue);
+        void nextButton_clicked();
 
     private:
         IDialogConfiguratorUpdatedValue m_nIdValue;
         QLabel *m_pLabel;
         QLabel *m_pLabelValue;
-        QSlider *m_pSlider;
-        int m_nValue;
+        QLineEdit *m_pLineEdit;
+        QPushButton *m_pNextButton;
+        unsigned int m_nValue;
         IDialogConfigurator *m_pDialogConfigurator;
 };

@@ -7,6 +7,7 @@
 
 #include "DialogConfiguratorParameterSliderFloat.h"
 #include "DialogConfiguratorParameterSliderInt.h"
+#include "DialogConfiguratorParameterEditBoxUInt.h"
 
 #include <UnigineFileSystem.h>
 #include <UnigineEditor.h>
@@ -56,6 +57,11 @@ DialogConfigurator::DialogConfigurator(
         this, IDialogConfiguratorUpdatedValue::EXPECTED_TRIANGLES,
         "Expected triangles: ", m_nextConf.getEstimatedExpectedTriangles(),
         100, 15000
+    ));
+    verticalLayout->addLayout(new DialogConfiguratorParameterEditBoxUInt(
+        this, IDialogConfiguratorUpdatedValue::SEED_RANDOM,
+        "Seed Random: ", m_nextConf.getSeedRandom(),
+        0, 4294967294
     ));
     verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
         this, IDialogConfiguratorUpdatedValue::RADIUS,
@@ -130,11 +136,6 @@ DialogConfigurator::DialogConfigurator(
 
     QHBoxLayout *buttonsLayout = new QHBoxLayout;
 
-    m_pRegenerateButton = new QPushButton(tr("Regenerate"));
-    m_pRegenerateButton->setDefault(true);
-    connect(m_pRegenerateButton, SIGNAL(clicked()),this, SLOT(regenerateButton_clicked()));
-    buttonsLayout->addWidget(m_pRegenerateButton);
-
     m_pSaveMeshButton = new QPushButton(tr("Save Mesh"));
     connect(m_pSaveMeshButton, SIGNAL(clicked()),this, SLOT(click_saveMesh()));
     buttonsLayout->addWidget(m_pSaveMeshButton);
@@ -185,11 +186,6 @@ void DialogConfigurator::comboboxBasicGeometry_Changed(int nNewValue) {
 void DialogConfigurator::click_saveMesh() {
     // add to button - save mesh
     m_pDynamicMesh->saveMesh(QString(m_sRandomName + ".mesh").toStdString().c_str());
-}
-
-void DialogConfigurator::regenerateButton_clicked() {
-    m_nextConf.setRegenerateGeometry(true);
-    this->regenerateGeometry();
 }
 
 void DialogConfigurator::createNode() {
@@ -331,6 +327,23 @@ void DialogConfigurator::updateValueInt(IDialogConfiguratorUpdatedValue nIdValue
         case IDialogConfiguratorUpdatedValue::EXPECTED_TRIANGLES:
             m_nextConf.setEstimatedExpectedTriangles(nValue);
             break;
+        case IDialogConfiguratorUpdatedValue::SEED_RANDOM:
+            m_nextConf.setSeedRandom(nValue);
+            std::cout << " -----------1 m_nextConf.getSeedRandom(): " << m_nextConf.getSeedRandom() << std::endl;
+            break;
+        default:
+            break; // nothing
+    };
+    m_nextConf.setRegenerateGeometry(true);
+    this->regenerateGeometry();
+}
+
+void DialogConfigurator::updateValueUInt(IDialogConfiguratorUpdatedValue nIdValue, int nValue) {
+    switch (nIdValue) {
+        case IDialogConfiguratorUpdatedValue::SEED_RANDOM:
+            m_nextConf.setSeedRandom(nValue);
+            std::cout << " ------------2 m_nextConf.getSeedRandom(): " << m_nextConf.getSeedRandom() << std::endl;
+            break;
         default:
             break; // nothing
     };
@@ -344,7 +357,7 @@ int DialogConfigurator::getLabelSize() {
 }
 
 int DialogConfigurator::getLabelValueSize() {
-    return 50;
+    return 85;
 }
 
 void DialogConfigurator::generationComplited(QString sDone) {

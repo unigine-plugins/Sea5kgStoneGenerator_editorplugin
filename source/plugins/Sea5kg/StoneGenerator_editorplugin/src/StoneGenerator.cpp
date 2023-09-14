@@ -59,6 +59,8 @@ bool StoneGenerator::generate(const StoneGeneratorConfig &conf) {
         return false;
     }
 
+    m_random.setInitSeed(conf.getSeedRandom());
+
     this->processRemoveUnusefulTriangles(conf);
     // TODO reunion triangles
     this->processAttraction(conf);
@@ -297,13 +299,13 @@ bool StoneGenerator::processAttraction(const StoneGeneratorConfig &conf) {
     float fDiametr = conf.getRadius() * 2.0;
     int nWidth = fDiametr * rk * 100.0;
     for (int i = 0; i < conf.getPointsOfAttraction(); i++) {
-        float x = float(std::rand() % nWidth) / 100.0;
+        float x = float(m_random.getNextRandom() % nWidth) / 100.0;
         x = x - rk * conf.getRadius();
         x = x * conf.getScaleX();
-        float y = float(std::rand() % nWidth) / 100.0;
+        float y = float(m_random.getNextRandom() % nWidth) / 100.0;
         y = y - rk * conf.getRadius();
         y = y * conf.getScaleY();
-        float z = float(std::rand() % nWidth) / 100.0;
+        float z = float(m_random.getNextRandom() % nWidth) / 100.0;
         z = z - rk * conf.getRadius();
         z = z * conf.getScaleZ();
         vAttractionPoints.push_back(new StoneGeneratorPoint(x,y,z));
@@ -340,12 +342,12 @@ bool StoneGenerator::processAttraction(const StoneGeneratorConfig &conf) {
 bool StoneGenerator::processRandom(const StoneGeneratorConfig &conf) {
     int nRandomDiff = 100.0 * conf.getSurfaceDistortion();
     float fMin = conf.getSurfaceDistortion();
-    std::cout << "nRandomDiff: " << nRandomDiff << std::endl;
+    // std::cout << "nRandomDiff: " << nRandomDiff << std::endl;
     if (nRandomDiff > 0) {
         for (int i = 0; i < m_vPoints.size(); i++) {
-            float nOffsetX = fMin + float(std::rand() % nRandomDiff) / 100.0;
-            float nOffsetY = fMin + float(std::rand() % nRandomDiff) / 100.0;
-            float nOffsetZ = fMin + float(std::rand() % nRandomDiff) / 100.0;
+            float nOffsetX = fMin + float(m_random.getNextRandom() % nRandomDiff) / 100.0;
+            float nOffsetY = fMin + float(m_random.getNextRandom() % nRandomDiff) / 100.0;
+            float nOffsetZ = fMin + float(m_random.getNextRandom() % nRandomDiff) / 100.0;
             m_vPoints[i]->addOffset(nOffsetX, nOffsetY, nOffsetZ);
         }
     }
