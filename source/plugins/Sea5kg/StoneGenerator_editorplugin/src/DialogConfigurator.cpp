@@ -2,9 +2,10 @@
 #include <iostream>
 
 #include "DialogConfigurator.h"
-#include "UnigineFileSystem.h"
-#include "StoneGeneratorBasicGeometries.h"
+#include "StoneGeneratorBasicGeometryCube.h"
+#include "StoneGeneratorBasicGeometrySphere.h"
 
+#include <UnigineFileSystem.h>
 #include <UnigineEditor.h>
 #include <UnigineWorld.h>
 #include <QThreadPool>
@@ -23,19 +24,12 @@ DialogConfigurator::DialogConfigurator(
     m_bWannaUpdate = false;
     m_bInProgress = false;
     m_nSliderTrianglesValue = 500;
-    m_nSliderRadius = 2.0f;
-    m_nSliderSurfaceDistortion = 0.05f;
-    m_nSliderScaleX = 1.0f;
-    m_nSliderScaleY = 1.0f;
-    m_nSliderScaleZ = 1.0f;
     m_sFilePath1 = m_temporaryDir.filePath("stone.png");
     m_sFilePathHighlighted = m_temporaryDir.filePath("stone_high.png");
-    m_nLabelSize = 130;
-    m_nLabelValueSize = 50;
+
     m_nBasicGeometry = StoneGeneratorBasicGeomery::SPHERE;
     m_nStoneIdName = 0;
     m_nPointsOfAttraction = 3;
-    m_nStrongOfAttraction = 3.14f;
     m_bGenerateMesh = true;
     m_bGenerateMaterial = true;
 
@@ -47,28 +41,55 @@ DialogConfigurator::DialogConfigurator(
     m_pAsyncRunGenerator = new AsyncRunGenerator(this);
     m_pAsyncRunGenerator->setAutoDelete(false);
 
-    QVBoxLayout *leftLayout = new QVBoxLayout;
+    QVBoxLayout *verticalLayout = new QVBoxLayout;
 
     auto *pGeometry = new QLabel("Geometry:");
-    leftLayout->addWidget(pGeometry);
+    verticalLayout->addWidget(pGeometry);
 
     m_pBasicGemometry = new QComboBox();
     m_pBasicGemometry->addItem(tr("Sphere"), 1);
     m_pBasicGemometry->addItem(tr("Cube"), 2);
     connect(m_pBasicGemometry, SIGNAL(currentIndexChanged(int)), this, SLOT(comboboxBasicGeometry_Changed(int)));
-    leftLayout->addWidget(m_pBasicGemometry);
+    verticalLayout->addWidget(m_pBasicGemometry);
 
-    leftLayout->addLayout(  createIntSliderParameterUI("Expected triangles: ", &m_nSliderTrianglesValue, 100, 15000));
-    leftLayout->addLayout(createFloatSliderParameterUI("Radius: ", &m_nSliderRadius, 0.1, 4.0));
-    leftLayout->addLayout(  createIntSliderParameterUI("Attraction Points:", &m_nPointsOfAttraction, 0, 25));
-    leftLayout->addLayout(createFloatSliderParameterUI("Attraction Strong: ", &m_nStrongOfAttraction, 1.0, 50.0));
-    leftLayout->addLayout(createFloatSliderParameterUI("Surface distortion : ", &m_nSliderSurfaceDistortion, 0.0, 2.0));
-    leftLayout->addLayout(createFloatSliderParameterUI("Scale X: ", &m_nSliderScaleX, 0.1, 10.0));
-    leftLayout->addLayout(createFloatSliderParameterUI("Scale Y: ", &m_nSliderScaleY, 0.1, 10.0));
-    leftLayout->addLayout(createFloatSliderParameterUI("Scale Z: ", &m_nSliderScaleZ, 0.1, 10.0));
+    verticalLayout->addLayout(  createIntSliderParameterUI("Expected triangles: ", &m_nSliderTrianglesValue, 100, 15000));
+    verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
+        this, IDialogConfiguratorUpdatedValue::RADIUS,
+        "Radius: ", m_nextConf.getRadius(),
+        m_nextConf.getScaleMinAny(), m_nextConf.getScaleMaxAny()
+    ));
+
+    verticalLayout->addLayout(  createIntSliderParameterUI("Attraction Points:", &m_nPointsOfAttraction, 0, 25));
+
+    verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
+        this, IDialogConfiguratorUpdatedValue::STRONG_OF_ATTRACTION,
+        "Attraction Strong: ", m_nextConf.getStrongOfAttraction(),
+        1.0, 50.0
+    ));
+    verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
+        this, IDialogConfiguratorUpdatedValue::STRONG_OF_ATTRACTION,
+        "Surface distortion: ", m_nextConf.getSurfaceDistortion(),
+        0.0, 2.0
+    ));
+
+    verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
+        this, IDialogConfiguratorUpdatedValue::SCALE_X,
+        "Scale X: ", m_nextConf.getScaleX(),
+        m_nextConf.getScaleMinAny(), m_nextConf.getScaleMaxAny()
+    ));
+    verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
+        this, IDialogConfiguratorUpdatedValue::SCALE_Y,
+        "Scale Y: ", m_nextConf.getScaleY(),
+        m_nextConf.getScaleMinAny(), m_nextConf.getScaleMaxAny()
+    ));
+    verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
+        this, IDialogConfiguratorUpdatedValue::SCALE_Z,
+        "Scale Z: ", m_nextConf.getScaleZ(),
+        m_nextConf.getScaleMinAny(), m_nextConf.getScaleMaxAny()
+    ));
 
     m_pTextureLabel = new QLabel("Texture:");
-    leftLayout->addWidget(m_pTextureLabel);
+    verticalLayout->addWidget(m_pTextureLabel);
 
     // texture resolution
     // m_pTextureResolution = new QComboBox();
@@ -77,7 +98,7 @@ DialogConfigurator::DialogConfigurator(
     // m_pTextureResolution->addItem(tr("512x512"), 512);
     // m_pTextureResolution->addItem(tr("1024x1024"), 1024);
     // connect(m_pTextureResolution, SIGNAL(currentIndexChanged(int)), this, SLOT(comboboxTextureResolution_Changed(int)));
-    // leftLayout->addWidget(m_pTextureResolution);
+    // verticalLayout->addWidget(m_pTextureResolution);
 
     m_pTexturesLayout = new QHBoxLayout();
 
@@ -94,13 +115,13 @@ DialogConfigurator::DialogConfigurator(
     connect(m_pTrianlesList, SIGNAL(itemSelectionChanged()),this, SLOT(triangles_itemSelectionChanged()));
     m_pTexturesLayout->addWidget(m_pTrianlesList);
 
-    leftLayout->addLayout(m_pTexturesLayout);
+    verticalLayout->addLayout(m_pTexturesLayout);
 
     m_pProgress = new QProgressBar(this);
     m_pProgress->setValue(0);
     m_pProgress->setMinimum(0);
     m_pProgress->setMaximum(100);
-    leftLayout->addWidget(m_pProgress);
+    verticalLayout->addWidget(m_pProgress);
 
     QHBoxLayout *buttonsLayout = new QHBoxLayout;
 
@@ -119,13 +140,13 @@ DialogConfigurator::DialogConfigurator(
     m_pCloseButton = new QPushButton(tr("Close"));
     connect(m_pCloseButton, SIGNAL(clicked()),this, SLOT(close()));
     buttonsLayout->addWidget(m_pCloseButton);
-    leftLayout->addLayout(buttonsLayout);
+    verticalLayout->addLayout(buttonsLayout);
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
-    mainLayout->addLayout(leftLayout);
+    mainLayout->addLayout(verticalLayout);
     // mainLayout->addLayout(rightLayout);
     setLayout(mainLayout);
-    // setLayout(leftLayout);
+    // setLayout(verticalLayout);
     setWindowTitle(tr("Sea5kg / Stone Generator - Configurator"));
     setFixedWidth(800);
     // setFixedHeight(sizeHint().height());
@@ -153,18 +174,6 @@ void DialogConfigurator::sliderInt_valuesChanged(int nNewValue) {
          return;
     }
     pSlider->updateValue(nNewValue);
-    m_nextConf.setRegenerateGeometry(true);
-    this->regenerateGeometry();
-}
-
-void DialogConfigurator::sliderFloat_valuesChanged(int nNewValue) {
-    QObject* obj = sender();
-    CustomFloatSlider *pSlider = dynamic_cast<CustomFloatSlider *>(obj);
-    if (pSlider == nullptr) {
-         std::cerr << "Could not cast" << std::endl;
-         return;
-    }
-    pSlider->updateValue(float(nNewValue) / 100);
     m_nextConf.setRegenerateGeometry(true);
     this->regenerateGeometry();
 }
@@ -286,12 +295,6 @@ void DialogConfigurator::regenerateGeometry() {
 
     m_nextConf.setEstimatedExpectedTriangles(m_nSliderTrianglesValue);
     m_nextConf.setPointsOfAttraction(m_nPointsOfAttraction);
-    m_nextConf.setStrongOfAttraction(m_nStrongOfAttraction);
-    m_nextConf.setRadius(m_nSliderRadius);
-    m_nextConf.setSurfaceDistortion(m_nSliderSurfaceDistortion);
-    m_nextConf.setScaleX(m_nSliderScaleX);
-    m_nextConf.setScaleY(m_nSliderScaleY);
-    m_nextConf.setScaleZ(m_nSliderScaleZ);
     m_nextConf.setBasicGeometry(m_nBasicGeometry);
 
     m_pAsyncRunGenerator->setStoneGeneratorConfig(m_nextConf);
@@ -299,6 +302,42 @@ void DialogConfigurator::regenerateGeometry() {
     m_nextConf.setRegenerateTexture(false);
 
     QThreadPool::globalInstance()->start(m_pAsyncRunGenerator);
+}
+
+// IDialogConfigurator
+void DialogConfigurator::updateValueFloat(IDialogConfiguratorUpdatedValue nIdValue, float nValue) {
+    switch (nIdValue) {
+        case IDialogConfiguratorUpdatedValue::RADIUS:
+            m_nextConf.setRadius(nValue);
+            break;
+        case IDialogConfiguratorUpdatedValue::STRONG_OF_ATTRACTION:
+            m_nextConf.setStrongOfAttraction(nValue);
+            break;
+        case IDialogConfiguratorUpdatedValue::SURFACE_DISTORTION:
+            m_nextConf.setSurfaceDistortion(nValue);
+            break;
+        case IDialogConfiguratorUpdatedValue::SCALE_X:
+            m_nextConf.setScaleX(nValue);
+            break;
+        case IDialogConfiguratorUpdatedValue::SCALE_Y:
+            m_nextConf.setScaleY(nValue);
+            break;
+        case IDialogConfiguratorUpdatedValue::SCALE_Z:
+            m_nextConf.setScaleZ(nValue);
+            break;
+        default:
+            break; // nothing
+    };
+    m_nextConf.setRegenerateGeometry(true);
+    this->regenerateGeometry();
+};
+
+int DialogConfigurator::getLabelSize() {
+    return 130;
+}
+
+int DialogConfigurator::getLabelValueSize() {
+    return 50;
 }
 
 void DialogConfigurator::generationComplited(QString sDone) {
@@ -616,40 +655,17 @@ QHBoxLayout *DialogConfigurator::createIntSliderParameterUI(QString sLabel, int 
     QHBoxLayout *pLayout = new QHBoxLayout();
 
     QLabel *pLabel = new QLabel(sLabel);
-    pLabel->setFixedWidth(m_nLabelSize);
+    pLabel->setFixedWidth(this->getLabelSize());
     pLayout->addWidget(pLabel);
 
     QLabel *pLabelValue = new QLabel("(" + QString::number(*nValue) + ")");
-    pLabelValue->setFixedWidth(m_nLabelValueSize);
+    pLabelValue->setFixedWidth(this->getLabelValueSize());
     pSlider->setLabelValue(pLabelValue);
     pLayout->addWidget(pLabelValue);
     pSlider->setRange(nMin, nMax);
     pSlider->setValue(*nValue);
     pSlider->setPoiterValue(nValue);
     connect(pSlider, SIGNAL(valueChanged(int)), this, SLOT(sliderInt_valuesChanged(int)));
-    pLayout->addWidget(pSlider);
-
-    return pLayout;
-}
-
-QHBoxLayout *DialogConfigurator::createFloatSliderParameterUI(QString sLabel, float *nValue, float nMin, float nMax) {
-    CustomFloatSlider *pSlider = new CustomFloatSlider(Qt::Horizontal);
-
-    QHBoxLayout *pLayout = new QHBoxLayout();
-
-    QLabel *pLabel = new QLabel(sLabel);
-    pLabel->setFixedWidth(m_nLabelSize);
-    pLayout->addWidget(pLabel);
-
-    QLabel *pLabelValue = new QLabel("(" + QString::number(*nValue) + ")");
-    pLabelValue->setFixedWidth(m_nLabelValueSize);
-    pSlider->setLabelValue(pLabelValue);
-    pLayout->addWidget(pLabelValue);
-    pSlider->setRange(nMin*100, nMax*100);
-    pSlider->setValue((*nValue)*100);
-    pSlider->setPoiterValue(nValue);
-
-    connect(pSlider, SIGNAL(valueChanged(int)), this, SLOT(sliderFloat_valuesChanged(int)));
     pLayout->addWidget(pSlider);
 
     return pLayout;

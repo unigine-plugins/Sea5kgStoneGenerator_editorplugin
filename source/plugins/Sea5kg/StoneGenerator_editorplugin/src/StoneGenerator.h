@@ -5,7 +5,7 @@
 #include <StoneGeneratorConfig.h>
 #include <StoneGeneratorPoint.h>
 #include <StoneGeneratorTriangle.h>
-#include <StoneGeneratorBasicGeometries.h>
+// #include <StoneGeneratorBasicGeometries.h>
 
 class StoneGenerator {
     public:

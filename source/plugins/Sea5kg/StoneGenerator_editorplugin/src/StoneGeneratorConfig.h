@@ -38,6 +38,8 @@ class StoneGeneratorConfig {
         float getScaleY() const;
         void setScaleZ(float nScaleZ);
         float getScaleZ() const;
+        float getScaleMinAny() const;
+        float getScaleMaxAny() const;
         void setShowNormales(bool bShowNormales);
         bool getShowNormales() const;
         void setRegenerateGeometry(bool bRegenerateGeometry);
@@ -61,6 +63,8 @@ class StoneGeneratorConfig {
         float m_nScaleX;
         float m_nScaleY;
         float m_nScaleZ;
+        float m_nScaleMinAny;
+        float m_nScaleMaxAny;
         bool m_bShowNormales;
 
         // system

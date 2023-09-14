@@ -4,15 +4,17 @@
 // StoneGeneratorConfig
 
 StoneGeneratorConfig::StoneGeneratorConfig() {
-    m_nSurfaceDistortion = 0.0f;
-    m_nRadius = 2.0f;
+    m_nBasicGeometry = StoneGeneratorBasicGeomery::SPHERE;
     m_nExpectedTriangles = 300;
+    m_nRadius = 2.0f;
+    m_nPointsOfAttraction = 0;
+    m_nStrongOfAttraction = 3.14f;
+    m_nSurfaceDistortion = 0.05f;
     m_nScaleX = 1.0f;
     m_nScaleY = 1.0f;
     m_nScaleZ = 1.0f;
-    m_nBasicGeometry = StoneGeneratorBasicGeomery::SPHERE;
-    m_nStrongOfAttraction = 1.0f;
-    m_nPointsOfAttraction = 0;
+    m_nScaleMinAny = 0.1f;
+    m_nScaleMaxAny = 10.0f;
     m_bShowNormales = false;
     m_bRegenerateGeometry = false;
     m_bRegenerateTexture = false;
@@ -80,6 +82,14 @@ void StoneGeneratorConfig::setScaleZ(float nScaleZ) {
 
 float StoneGeneratorConfig::getScaleZ() const {
     return m_nScaleZ;
+}
+
+float StoneGeneratorConfig::getScaleMinAny() const {
+    return m_nScaleMinAny;
+}
+
+float StoneGeneratorConfig::getScaleMaxAny() const {
+    return m_nScaleMaxAny;
 }
 
 void StoneGeneratorConfig::setShowNormales(bool bShowNormales) {
