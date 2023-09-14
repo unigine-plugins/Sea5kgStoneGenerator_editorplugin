@@ -5,9 +5,9 @@
 
 StoneGeneratorConfig::StoneGeneratorConfig() {
     m_nBasicGeometry = StoneGeneratorBasicGeomery::SPHERE;
-    m_nExpectedTriangles = 300;
+    m_nExpectedTriangles = 500;
     m_nRadius = 2.0f;
-    m_nPointsOfAttraction = 0;
+    m_nPointsOfAttraction = 3;
     m_nStrongOfAttraction = 3.14f;
     m_nSurfaceDistortion = 0.05f;
     m_nScaleX = 1.0f;

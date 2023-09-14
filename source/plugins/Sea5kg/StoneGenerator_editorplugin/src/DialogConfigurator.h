@@ -16,8 +16,6 @@
 #include <QTemporaryDir>
 #include <QListWidget>
 
-#include "DialogConfiguratorParameterSliderFloat.h"
-
 #include <UnigineNode.h>
 #include <UnigineMaterials.h>
 #include <UnigineTextures.h>
@@ -32,21 +30,6 @@
 #include "TextureStoneGenerator.h"
 #include "ISignalGun.h"
 #include "IDialogConfigurator.h"
-
-class CustomIntSlider : public QSlider {
-    public:
-        CustomIntSlider(Qt::Orientation orientation) : QSlider(orientation) {};
-        void setPoiterValue(int *pValue) { m_pValue = pValue; };
-        void updateValue(int nValue) {
-            *m_pValue = nValue;
-            m_pLabelValue->setText("(" + QString::number(nValue) + ")");
-        };
-
-        void setLabelValue(QLabel *pLabelValue) { m_pLabelValue = pLabelValue; };
-    private:
-        QLabel *m_pLabelValue;
-        int *m_pValue;
-};
 
 class DialogConfigurator : public QDialog, public ISignalGun, public IDialogConfigurator {
     Q_OBJECT
@@ -63,6 +46,7 @@ class DialogConfigurator : public QDialog, public ISignalGun, public IDialogConf
 
         // IDialogConfigurator
         virtual void updateValueFloat(IDialogConfiguratorUpdatedValue nIdValue, float nValue) override;
+        virtual void updateValueInt(IDialogConfiguratorUpdatedValue nIdValue, int nValue) override;
         virtual int getLabelSize() override;
         virtual int getLabelValueSize() override;
 
@@ -74,8 +58,6 @@ class DialogConfigurator : public QDialog, public ISignalGun, public IDialogConf
         void regenerateButton_clicked();
         void click_saveMesh();
 
-        void sliderInt_valuesChanged(int nNewValue);
-
         void comboboxTextureResolution_Changed(int nNewValue);
         void comboboxBasicGeometry_Changed(int nNewValue);
 
@@ -84,8 +66,6 @@ class DialogConfigurator : public QDialog, public ISignalGun, public IDialogConf
         void triangles_itemSelectionChanged();
 
     private:
-
-        QHBoxLayout *createIntSliderParameterUI(QString sLabel, int *nValue, int nMin, int nMax);
 
         int normalizeTextureCoordinates(int nWidth, float nVal);
         void updateTextureImageView(const QString &sHeighlightTriangle = "");
@@ -111,11 +91,9 @@ class DialogConfigurator : public QDialog, public ISignalGun, public IDialogConf
         QPushButton *m_pSaveMeshButton;
         QPushButton *m_pCloseButton;
 
+        std::vector<StoneGeneratorBasicGeometry *> m_vBasicGeometries;
         StoneGeneratorBasicGeomery m_nBasicGeometry;
-        int m_nSliderTrianglesValue;
-        int m_nPointsOfAttraction;
 
-        //
         QComboBox *m_pTextureResolution;
 
         StoneGeneratorConfig m_nextConf;
@@ -137,7 +115,5 @@ class DialogConfigurator : public QDialog, public ISignalGun, public IDialogConf
 
         bool m_bGenerateMesh;
         bool m_bGenerateMaterial;
-
-        std::vector<StoneGeneratorBasicGeometry *> m_vBasicGeometries;
 };
 

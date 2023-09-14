@@ -101,6 +101,7 @@ add_library(${current_target} SHARED
 	${PROJECT_SOURCE_DIR}/src/TextureStoneGenerator.cpp
 	${PROJECT_SOURCE_DIR}/src/DialogConfigurator.cpp
 	${PROJECT_SOURCE_DIR}/src/DialogConfiguratorParameterSliderFloat.cpp
+	${PROJECT_SOURCE_DIR}/src/DialogConfiguratorParameterSliderInt.cpp
 	)
 
 target_include_directories(${current_target} SYSTEM

@@ -5,6 +5,9 @@
 #include "StoneGeneratorBasicGeometryCube.h"
 #include "StoneGeneratorBasicGeometrySphere.h"
 
+#include "DialogConfiguratorParameterSliderFloat.h"
+#include "DialogConfiguratorParameterSliderInt.h"
+
 #include <UnigineFileSystem.h>
 #include <UnigineEditor.h>
 #include <UnigineWorld.h>
@@ -19,17 +22,14 @@ DialogConfigurator::DialogConfigurator(
     m_vBasicGeometries.push_back(new StoneGeneratorBasicSphere());
     m_vBasicGeometries.push_back(new StoneGeneratorBasicCube());
 
-    // m_nSliderTrianglesValue = 80000;
-    // m_nSliderTrianglesValue = 6774;
     m_bWannaUpdate = false;
     m_bInProgress = false;
-    m_nSliderTrianglesValue = 500;
     m_sFilePath1 = m_temporaryDir.filePath("stone.png");
     m_sFilePathHighlighted = m_temporaryDir.filePath("stone_high.png");
 
     m_nBasicGeometry = StoneGeneratorBasicGeomery::SPHERE;
     m_nStoneIdName = 0;
-    m_nPointsOfAttraction = 3;
+
     m_bGenerateMesh = true;
     m_bGenerateMaterial = true;
 
@@ -52,26 +52,31 @@ DialogConfigurator::DialogConfigurator(
     connect(m_pBasicGemometry, SIGNAL(currentIndexChanged(int)), this, SLOT(comboboxBasicGeometry_Changed(int)));
     verticalLayout->addWidget(m_pBasicGemometry);
 
-    verticalLayout->addLayout(  createIntSliderParameterUI("Expected triangles: ", &m_nSliderTrianglesValue, 100, 15000));
+    verticalLayout->addLayout(new DialogConfiguratorParameterSliderInt(
+        this, IDialogConfiguratorUpdatedValue::EXPECTED_TRIANGLES,
+        "Expected triangles: ", m_nextConf.getEstimatedExpectedTriangles(),
+        100, 15000
+    ));
     verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
         this, IDialogConfiguratorUpdatedValue::RADIUS,
         "Radius: ", m_nextConf.getRadius(),
         m_nextConf.getScaleMinAny(), m_nextConf.getScaleMaxAny()
     ));
-
-    verticalLayout->addLayout(  createIntSliderParameterUI("Attraction Points:", &m_nPointsOfAttraction, 0, 25));
-
+    verticalLayout->addLayout(new DialogConfiguratorParameterSliderInt(
+        this, IDialogConfiguratorUpdatedValue::POINDS_OF_ATTRACTION,
+        "Attraction Points: ", m_nextConf.getPointsOfAttraction(),
+        0, 25
+    ));
     verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
         this, IDialogConfiguratorUpdatedValue::STRONG_OF_ATTRACTION,
         "Attraction Strong: ", m_nextConf.getStrongOfAttraction(),
         1.0, 50.0
     ));
     verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
-        this, IDialogConfiguratorUpdatedValue::STRONG_OF_ATTRACTION,
+        this, IDialogConfiguratorUpdatedValue::SURFACE_DISTORTION,
         "Surface distortion: ", m_nextConf.getSurfaceDistortion(),
         0.0, 2.0
     ));
-
     verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
         this, IDialogConfiguratorUpdatedValue::SCALE_X,
         "Scale X: ", m_nextConf.getScaleX(),
@@ -164,18 +169,6 @@ void DialogConfigurator::setGenerateMaterial(bool bGenerateMaterial) {
     // m_pTextureResolution->setVisible(m_bGenerateMaterial);
     m_pImageView->setVisible(m_bGenerateMaterial);
     m_pTrianlesList->setVisible(m_bGenerateMaterial);
-}
-
-void DialogConfigurator::sliderInt_valuesChanged(int nNewValue) {
-    QObject* obj = sender();
-    CustomIntSlider *pSlider = dynamic_cast<CustomIntSlider *>(obj);
-    if (pSlider == nullptr) {
-         std::cerr << "Could not cast" << std::endl;
-         return;
-    }
-    pSlider->updateValue(nNewValue);
-    m_nextConf.setRegenerateGeometry(true);
-    this->regenerateGeometry();
 }
 
 void DialogConfigurator::comboboxTextureResolution_Changed(int nNewValue) {
@@ -287,14 +280,12 @@ void DialogConfigurator::regenerateGeometry() {
     // TODO update process
     m_pProgress->setValue(0);
     m_pProgress->setMinimum(0);
-    m_pProgress->setMaximum(m_nSliderTrianglesValue);
+    m_pProgress->setMaximum(100);
 
     TextureStoneGeneratorConfig texConf;
     texConf.setFilepath(m_sFilePath1);
     m_pAsyncRunGenerator->setTextureStoneGeneratorConfig(texConf);
 
-    m_nextConf.setEstimatedExpectedTriangles(m_nSliderTrianglesValue);
-    m_nextConf.setPointsOfAttraction(m_nPointsOfAttraction);
     m_nextConf.setBasicGeometry(m_nBasicGeometry);
 
     m_pAsyncRunGenerator->setStoneGeneratorConfig(m_nextConf);
@@ -331,6 +322,22 @@ void DialogConfigurator::updateValueFloat(IDialogConfiguratorUpdatedValue nIdVal
     m_nextConf.setRegenerateGeometry(true);
     this->regenerateGeometry();
 };
+
+void DialogConfigurator::updateValueInt(IDialogConfiguratorUpdatedValue nIdValue, int nValue) {
+    switch (nIdValue) {
+        case IDialogConfiguratorUpdatedValue::POINDS_OF_ATTRACTION:
+            m_nextConf.setPointsOfAttraction(nValue);
+            break;
+        case IDialogConfiguratorUpdatedValue::EXPECTED_TRIANGLES:
+            m_nextConf.setEstimatedExpectedTriangles(nValue);
+            break;
+        default:
+            break; // nothing
+    };
+    m_nextConf.setRegenerateGeometry(true);
+    this->regenerateGeometry();
+}
+
 
 int DialogConfigurator::getLabelSize() {
     return 130;
@@ -647,26 +654,4 @@ void DialogConfigurator::updateTextureImageView(const QString &sHeighlightTriang
         // m_pTexture->setImage(m_pImage);
     }
 
-}
-
-QHBoxLayout *DialogConfigurator::createIntSliderParameterUI(QString sLabel, int *nValue, int nMin, int nMax) {
-    CustomIntSlider *pSlider = new CustomIntSlider(Qt::Horizontal);
-
-    QHBoxLayout *pLayout = new QHBoxLayout();
-
-    QLabel *pLabel = new QLabel(sLabel);
-    pLabel->setFixedWidth(this->getLabelSize());
-    pLayout->addWidget(pLabel);
-
-    QLabel *pLabelValue = new QLabel("(" + QString::number(*nValue) + ")");
-    pLabelValue->setFixedWidth(this->getLabelValueSize());
-    pSlider->setLabelValue(pLabelValue);
-    pLayout->addWidget(pLabelValue);
-    pSlider->setRange(nMin, nMax);
-    pSlider->setValue(*nValue);
-    pSlider->setPoiterValue(nValue);
-    connect(pSlider, SIGNAL(valueChanged(int)), this, SLOT(sliderInt_valuesChanged(int)));
-    pLayout->addWidget(pSlider);
-
-    return pLayout;
 }
