@@ -4,7 +4,7 @@
 #include <map>
 #include <vector>
 
-class StoneGeneratorBasicGeometry;
+#include "StoneGeneratorBasicGeometry.h"
 
 enum class StoneGeneratorBasicGeomery {
     SPHERE = 0,
@@ -49,14 +49,14 @@ class StoneGeneratorConfig {
         void setRegenerateTexture(bool bRegenerateTexture);
         bool getRegenerateTexture() const;
 
-        void setBasicGeometry(StoneGeneratorBasicGeomery nBasicGeometry);
-        StoneGeneratorBasicGeomery getBasicGeometry() const;
+        void setBasicGeometry(StoneGeneratorBasicGeometry *pBasicGeometry);
+        StoneGeneratorBasicGeometry *getBasicGeometry() const;
 
         std::string toXmlString() const;
 
 
     private:
-        StoneGeneratorBasicGeomery m_nBasicGeometry;
+        StoneGeneratorBasicGeometry *m_pBasicGeometry;
         float m_nRadius;
         int m_nExpectedTriangles;
         unsigned int m_nSeedRandom;

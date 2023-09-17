@@ -32,7 +32,6 @@ void AsyncRunGenerator::run() {
     std::cout << "AsyncRunGenerator::run() start" << std::endl;
     if (m_conf.getRegenerateGeometry()) {
         std::cout << "AsyncRunGenerator::run() RegenerateGeometry" << std::endl;
-        m_pStoneGenerator->clear();
         m_pStoneGenerator->generate(m_conf);
     }
 

@@ -8,5 +8,5 @@
 class StoneGeneratorBasicCube : public StoneGeneratorBasicGeometry {
     public:
         StoneGeneratorBasicCube();
-        virtual bool generate(const StoneGeneratorConfig &conf) override;
+        virtual bool generate(StoneGeneratorModel *pModel, int nExpectedTriangles, float nRadius) override;
 };

@@ -23,6 +23,8 @@ DialogConfigurator::DialogConfigurator(
     m_vBasicGeometries.push_back(new StoneGeneratorBasicSphere());
     m_vBasicGeometries.push_back(new StoneGeneratorBasicCube());
 
+    m_nextConf.setBasicGeometry(m_vBasicGeometries[1]);
+
     m_bWannaUpdate = false;
     m_bInProgress = false;
     m_sFilePath1 = m_temporaryDir.filePath("stone.png");
@@ -34,10 +36,6 @@ DialogConfigurator::DialogConfigurator(
     m_bGenerateMesh = true;
     m_bGenerateMaterial = true;
 
-    // m_nBasicGeometry = 1;
-    // m_nPointsOfAttraction = 0;
-    // m_nSliderSurfaceDistortion = 0.0f;
-    // m_nSliderTrianglesValue = 250;
 
     m_pAsyncRunGenerator = new AsyncRunGenerator(this);
     m_pAsyncRunGenerator->setAutoDelete(false);
@@ -76,7 +74,7 @@ DialogConfigurator::DialogConfigurator(
     verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
         this, IDialogConfiguratorUpdatedValue::STRONG_OF_ATTRACTION,
         "Attraction Strong: ", m_nextConf.getStrongOfAttraction(),
-        1.0, 50.0
+        0.0, 50.0
     ));
     verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
         this, IDialogConfiguratorUpdatedValue::SURFACE_DISTORTION,
@@ -282,7 +280,8 @@ void DialogConfigurator::regenerateGeometry() {
     texConf.setFilepath(m_sFilePath1);
     m_pAsyncRunGenerator->setTextureStoneGeneratorConfig(texConf);
 
-    m_nextConf.setBasicGeometry(m_nBasicGeometry);
+    // TODO
+    // m_nextConf.setBasicGeometry(m_nBasicGeometry);
 
     m_pAsyncRunGenerator->setStoneGeneratorConfig(m_nextConf);
     m_nextConf.setRegenerateGeometry(false);

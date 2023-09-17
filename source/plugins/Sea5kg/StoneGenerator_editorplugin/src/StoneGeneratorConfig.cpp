@@ -4,7 +4,7 @@
 // StoneGeneratorConfig
 
 StoneGeneratorConfig::StoneGeneratorConfig() {
-    m_nBasicGeometry = StoneGeneratorBasicGeomery::SPHERE;
+    m_pBasicGeometry = nullptr;
     m_nExpectedTriangles = 500;
     m_nSeedRandom = 660944345;
     m_nRadius = 2.0f;
@@ -126,12 +126,12 @@ bool StoneGeneratorConfig::getRegenerateTexture() const {
     return m_bRegenerateTexture;
 }
 
-void StoneGeneratorConfig::setBasicGeometry(StoneGeneratorBasicGeomery nBasicGeometry) {
-    m_nBasicGeometry = nBasicGeometry;
+void StoneGeneratorConfig::setBasicGeometry(StoneGeneratorBasicGeometry *pBasicGeometry) {
+    m_pBasicGeometry = pBasicGeometry;
 }
 
-StoneGeneratorBasicGeomery StoneGeneratorConfig::getBasicGeometry() const {
-    return m_nBasicGeometry;
+StoneGeneratorBasicGeometry *StoneGeneratorConfig::getBasicGeometry() const {
+    return m_pBasicGeometry;
 }
 
 std::string StoneGeneratorConfig::toXmlString() const {

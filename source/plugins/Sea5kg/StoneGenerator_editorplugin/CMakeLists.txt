@@ -99,6 +99,7 @@ add_library(${current_target} SHARED
 	${PROJECT_SOURCE_DIR}/src/StoneGeneratorBasicGeometryCube.cpp
 	${PROJECT_SOURCE_DIR}/src/StoneGeneratorBasicGeometrySphere.cpp
 	${PROJECT_SOURCE_DIR}/src/StoneGeneratorConfig.cpp
+	${PROJECT_SOURCE_DIR}/src/StoneGeneratorModel.cpp
 	${PROJECT_SOURCE_DIR}/src/StoneGeneratorPoint.cpp
 	${PROJECT_SOURCE_DIR}/src/StoneGeneratorPseudoRandom.cpp
 	${PROJECT_SOURCE_DIR}/src/StoneGeneratorTexturePoint.cpp

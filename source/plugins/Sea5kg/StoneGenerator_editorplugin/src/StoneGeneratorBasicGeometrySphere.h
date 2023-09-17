@@ -10,12 +10,5 @@
 class StoneGeneratorBasicSphere : public StoneGeneratorBasicGeometry {
     public:
         StoneGeneratorBasicSphere();
-        virtual bool generate(const StoneGeneratorConfig &conf) override;
-};
-
-static std::vector<StoneGeneratorBasicGeometry *> getStoneGeneratorBasicGeometries() {
-    std::vector<StoneGeneratorBasicGeometry *> vRet;
-    vRet.push_back(new StoneGeneratorBasicSphere());
-    // vRet.push_back(new StoneGeneratorBasicCube());
-    return vRet;
+        virtual bool generate(StoneGeneratorModel *pModel, int nExpectedTriangles, float nRadius) override;
 };

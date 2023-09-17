@@ -3,17 +3,15 @@
 #include <vector>
 
 #include "StoneGeneratorConfig.h"
-#include "StoneGeneratorPoint.h"
-#include "StoneGeneratorTriangle.h"
-#include "StoneGeneratorPseudoRandom.h"
 #include "StoneGeneratorBasicGeometry.h"
+#include "StoneGeneratorPseudoRandom.h"
+
 
 class StoneGenerator {
     public:
         StoneGenerator();
         ~StoneGenerator();
 
-        void clear();
         bool generate(const StoneGeneratorConfig &conf);
         const std::vector<StoneGeneratorTriangle *> &triangles();
         const std::vector<StoneGeneratorPoint *> &points();
@@ -21,8 +19,6 @@ class StoneGenerator {
     private:
         StoneGeneratorPoint *addPoint(const StoneGeneratorConfig &conf, float x, float y, float z);
 
-        bool generateBasicSpheres(const StoneGeneratorConfig &conf);
-        bool generateBasicCube(const StoneGeneratorConfig &conf);
         bool processAttraction(const StoneGeneratorConfig &conf);
         bool processRandom(const StoneGeneratorConfig &conf);
         bool processResizeAndShift(const StoneGeneratorConfig &conf);
@@ -50,7 +46,7 @@ class StoneGenerator {
         void minXYZ(StoneGeneratorPoint *p1, float &nMinX, float &nMinY, float &nMinZ);
         void maxXYZ(StoneGeneratorPoint *p1, float &nMaxX, float &nMaxY, float &nMaxZ);
 
-        std::vector<StoneGeneratorPoint *> m_vPoints;
-        std::vector<StoneGeneratorTriangle *> m_vTriangles;
+        StoneGeneratorModel *m_pModel;
+        float m_nBasicRadius;
         StoneGeneratorPseudoRandom m_random;
 };

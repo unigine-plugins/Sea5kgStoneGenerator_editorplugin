@@ -15,7 +15,8 @@ StoneGeneratorBasicSphere::StoneGeneratorBasicSphere() : StoneGeneratorBasicGeom
 
 }
 
-bool StoneGeneratorBasicSphere::generate(const StoneGeneratorConfig &conf) {
+bool StoneGeneratorBasicSphere::generate(StoneGeneratorModel *pModel, int nExpectedTriangles, float nRadius) {
+    pModel->clear();
 
     struct XYPoint {
         float x;
@@ -29,7 +30,7 @@ bool StoneGeneratorBasicSphere::generate(const StoneGeneratorConfig &conf) {
     };
 
     // TODO redesign
-    int nK = conf.getEstimatedExpectedTriangles()/2;
+    int nK = nExpectedTriangles / 2;
     // std::cout << "nK = " << nK << std::endl;
     nK = sqrt(nK);
     // std::cout << "nK = " << nK << std::endl;
@@ -50,8 +51,8 @@ bool StoneGeneratorBasicSphere::generate(const StoneGeneratorConfig &conf) {
         ZLevel lvl;
         lvl.xy_sectors.clear();
         float z_angel = z_spp * float(zz0);
-        lvl.z_radius = conf.getRadius() * sin( z_angel );
-        lvl.z = conf.getRadius() * cos( z_angel );
+        lvl.z_radius = nRadius * sin( z_angel );
+        lvl.z = nRadius * cos( z_angel );
         for (int rr0 = 0; rr0 < nK; rr0++) {
             XYPoint xy;
             float angel = spp * float(rr0);
@@ -73,16 +74,16 @@ bool StoneGeneratorBasicSphere::generate(const StoneGeneratorConfig &conf) {
             XYPoint x0y1 = xy_sectors[i_xy_next];
             XYPoint x1y0 = lvl_z_next.xy_sectors[i_xy];
             XYPoint x1y1 = lvl_z_next.xy_sectors[i_xy_next];
-            StoneGeneratorPoint *pPoint00 = addPoint(conf, x0y0.x, x0y0.y, lvl_z.z);
-            StoneGeneratorPoint *pPoint01 = addPoint(conf, x0y1.x, x0y1.y, lvl_z.z);
-            StoneGeneratorPoint *pPoint10 = addPoint(conf, x1y0.x, x1y0.y, lvl_z_next.z);
-            StoneGeneratorPoint *pPoint11 = addPoint(conf, x1y1.x, x1y1.y, lvl_z_next.z);
+            StoneGeneratorPoint *pPoint00 = pModel->addPoint(x0y0.x, x0y0.y, lvl_z.z);
+            StoneGeneratorPoint *pPoint01 = pModel->addPoint(x0y1.x, x0y1.y, lvl_z.z);
+            StoneGeneratorPoint *pPoint10 = pModel->addPoint(x1y0.x, x1y0.y, lvl_z_next.z);
+            StoneGeneratorPoint *pPoint11 = pModel->addPoint(x1y1.x, x1y1.y, lvl_z_next.z);
 
             // 00 * ----- * 01
             //    |       |
             // 10 * ----- * 11
             if (pPoint00 != pPoint01 && pPoint01 != pPoint10 && pPoint10 != pPoint00) {
-                StoneGeneratorTriangle *pTriangle1 = new StoneGeneratorTriangle(
+                pModel->addTriangle(
                     pPoint01,
                     pPoint00,
                     pPoint10
@@ -91,17 +92,15 @@ bool StoneGeneratorBasicSphere::generate(const StoneGeneratorConfig &conf) {
                     // pPoint01,
                     // pPoint10
                 );
-                m_vTriangles.push_back(pTriangle1);
             }
 
             if (i_xy > 0 || i_xy < xy_sectors.size() - 1) {
                 // if (pPoint00 != pPoint01 && pPoint01 != pPoint10 && pPoint10 != pPoint00) {
-                    StoneGeneratorTriangle *pTriangle2 = new StoneGeneratorTriangle(
+                    pModel->addTriangle(
                         pPoint01,
                         pPoint10,
                         pPoint11
                     );
-                    m_vTriangles.push_back(pTriangle2);
                 // }
             }
         }
