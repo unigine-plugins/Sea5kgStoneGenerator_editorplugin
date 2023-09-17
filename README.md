@@ -11,14 +11,14 @@ UnigineEditor (2.17) Plugin for generation of meshes representing stones of vari
 Plugin for Unigine Editor https://unigine.com/get-unigine/
 
 Preview on Youtube:
-- https://youtu.be/n0WCDjWXM3I
+- https://www.youtube.com/watch?v=7TaOFSUmlas
 
 ![preview](preview.gif)
 
 
 
 * License of plugin: MIT
-* Unigine SDK 2.17 - tested on `Community Free`
+* Unigine SDK 2.17 - tested on `Community` (Free)
 
 
 ## Prebuilded versions
