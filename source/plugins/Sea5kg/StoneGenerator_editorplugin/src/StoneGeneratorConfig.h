@@ -6,18 +6,6 @@
 
 #include "StoneGeneratorBasicGeometry.h"
 
-enum class StoneGeneratorBasicGeomery {
-    SPHERE = 0,
-    CUBE = 1
-};
-
-static std::map<std::string, StoneGeneratorBasicGeomery> getAllStoneGeneratorBasicGeometries() {
-    std::map<std::string, StoneGeneratorBasicGeomery> ret;
-    ret["sphere"] = StoneGeneratorBasicGeomery::SPHERE;
-    ret["cube"] = StoneGeneratorBasicGeomery::CUBE;
-    return ret;
-};
-
 class StoneGeneratorConfig {
     public:
         StoneGeneratorConfig();

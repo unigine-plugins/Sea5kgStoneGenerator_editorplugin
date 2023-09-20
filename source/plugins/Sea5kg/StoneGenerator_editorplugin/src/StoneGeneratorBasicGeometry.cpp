@@ -10,8 +10,8 @@
 // StoneGeneratorBasicGeometry
 
 StoneGeneratorBasicGeometry::StoneGeneratorBasicGeometry(int nId, const std::string &sName) {
-    m_sName = sName;
     m_nId = nId;
+    m_sName = sName;
 }
 
 int StoneGeneratorBasicGeometry::getId() const {

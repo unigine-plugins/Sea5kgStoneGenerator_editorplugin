@@ -136,22 +136,22 @@ StoneGeneratorBasicGeometry *StoneGeneratorConfig::getBasicGeometry() const {
 
 std::string StoneGeneratorConfig::toXmlString() const {
 
-    std::string sGeometryItems = "";
-    std::map<std::string, StoneGeneratorBasicGeomery> mapGeometries = getAllStoneGeneratorBasicGeometries();
-    int nDefaultGeometry = -1;
-    for (const auto& item : mapGeometries) {
-        if (sGeometryItems == "") {
-            nDefaultGeometry = (int)item.second;
-        } else {
-            sGeometryItems += ",";
-        }
-        sGeometryItems += item.first;
-    }
+    // std::string sGeometryItems = "";
+    // std::map<std::string, StoneGeneratorBasicGeomery> mapGeometries = getAllStoneGeneratorBasicGeometries();
+    // int nDefaultGeometry = -1;
+    // for (const auto& item : mapGeometries) {
+    //     if (sGeometryItems == "") {
+    //         nDefaultGeometry = (int)item.second;
+    //     } else {
+    //         sGeometryItems += ",";
+    //     }
+    //     sGeometryItems += item.first;
+    // }
 
     std::string sRet =
         "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
         "<property version=\"2.17.0.1\" manual=\"1\" editable=\"0\" name=\"sea5kg_stone_generator2\">"
-        "    <parameter name=\"basic_geometry\" type=\"switch\" items=\"" + sGeometryItems + "\">" + std::to_string(nDefaultGeometry) + "</parameter>"
+        // "    <parameter name=\"basic_geometry\" type=\"switch\" items=\"" + sGeometryItems + "\">" + std::to_string(nDefaultGeometry) + "</parameter>"
         "</property>"
     ;
 

@@ -67,6 +67,8 @@ class DialogConfigurator : public QDialog, public ISignalGun, public IDialogConf
 
     private:
 
+        void initListOfBasicGeometries();
+
         int normalizeTextureCoordinates(int nWidth, float nVal);
         void updateTextureImageView(const QString &sHeighlightTriangle = "");
 
@@ -91,7 +93,6 @@ class DialogConfigurator : public QDialog, public ISignalGun, public IDialogConf
         QPushButton *m_pCloseButton;
 
         std::vector<StoneGeneratorBasicGeometry *> m_vBasicGeometries;
-        StoneGeneratorBasicGeomery m_nBasicGeometry;
 
         QComboBox *m_pTextureResolution;
 

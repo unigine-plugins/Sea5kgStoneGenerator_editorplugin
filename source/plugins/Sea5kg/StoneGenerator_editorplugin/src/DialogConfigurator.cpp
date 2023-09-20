@@ -19,18 +19,13 @@ DialogConfigurator::DialogConfigurator(
     QWidget *parent
 ) : QDialog(parent) {
 
-
-    m_vBasicGeometries.push_back(new StoneGeneratorBasicSphere());
-    m_vBasicGeometries.push_back(new StoneGeneratorBasicCube());
-
-    m_nextConf.setBasicGeometry(m_vBasicGeometries[1]);
+    this->initListOfBasicGeometries();
 
     m_bWannaUpdate = false;
     m_bInProgress = false;
     m_sFilePath1 = m_temporaryDir.filePath("stone.png");
     m_sFilePathHighlighted = m_temporaryDir.filePath("stone_high.png");
 
-    m_nBasicGeometry = StoneGeneratorBasicGeomery::SPHERE;
     m_nStoneIdName = 0;
 
     m_bGenerateMesh = true;
@@ -40,14 +35,15 @@ DialogConfigurator::DialogConfigurator(
     m_pAsyncRunGenerator = new AsyncRunGenerator(this);
     m_pAsyncRunGenerator->setAutoDelete(false);
 
+    // Combobox for basic geometry
     QVBoxLayout *verticalLayout = new QVBoxLayout;
-
     auto *pGeometry = new QLabel("Geometry:");
     verticalLayout->addWidget(pGeometry);
-
     m_pBasicGemometry = new QComboBox();
-    m_pBasicGemometry->addItem(tr("Sphere"), 1);
-    m_pBasicGemometry->addItem(tr("Cube"), 2);
+    for (int i = 0; i < m_vBasicGeometries.size(); i++) {
+        std::string sName = m_vBasicGeometries[i]->getName();
+        m_pBasicGemometry->addItem(tr(sName.c_str()));
+    }
     connect(m_pBasicGemometry, SIGNAL(currentIndexChanged(int)), this, SLOT(comboboxBasicGeometry_Changed(int)));
     verticalLayout->addWidget(m_pBasicGemometry);
 
@@ -175,8 +171,22 @@ void DialogConfigurator::comboboxTextureResolution_Changed(int nNewValue) {
 }
 
 void DialogConfigurator::comboboxBasicGeometry_Changed(int nNewValue) {
-    std::cout << "comboboxBasicGeometry_Changed " << nNewValue << std::endl;
-    m_nBasicGeometry = (StoneGeneratorBasicGeomery)nNewValue;
+    std::string sName = m_pBasicGemometry->currentText().toStdString();
+
+    Unigine::Log::message("DialogConfigurator::comboboxBasicGeometry_Changed text = %s\n", sName.c_str());
+    Unigine::Log::message("DialogConfigurator::comboboxBasicGeometry_Changed nNewValue = %d\n", nNewValue);
+
+    if (m_nextConf.getBasicGeometry()->getName() == sName) {
+        Unigine::Log::message("DialogConfigurator::comboboxBasicGeometry_Changed Already basic geometry, text = %s\n", sName.c_str());
+        return;
+    }
+
+    for (int i = 0; i < m_vBasicGeometries.size(); i++) {
+        if (m_vBasicGeometries[i]->getName() == sName) {
+            m_nextConf.setBasicGeometry(m_vBasicGeometries[i]);
+            break;
+        }
+    }
     m_nextConf.setRegenerateGeometry(true);
     this->regenerateGeometry();
 }
@@ -279,9 +289,6 @@ void DialogConfigurator::regenerateGeometry() {
     TextureStoneGeneratorConfig texConf;
     texConf.setFilepath(m_sFilePath1);
     m_pAsyncRunGenerator->setTextureStoneGeneratorConfig(texConf);
-
-    // TODO
-    // m_nextConf.setBasicGeometry(m_nBasicGeometry);
 
     m_pAsyncRunGenerator->setStoneGeneratorConfig(m_nextConf);
     m_nextConf.setRegenerateGeometry(false);
@@ -559,6 +566,31 @@ void DialogConfigurator::triangles_itemSelectionChanged() {
         updateTextureImageView(pItem->text());
         return;
     }
+}
+
+void DialogConfigurator::initListOfBasicGeometries() {
+    std::vector<StoneGeneratorBasicGeometry *> vBasicGeometries;
+    vBasicGeometries.push_back(new StoneGeneratorBasicSphere());
+    vBasicGeometries.push_back(new StoneGeneratorBasicCube());
+    m_vBasicGeometries.clear();
+    for (int i = 0; i < vBasicGeometries.size(); i++) {
+        StoneGeneratorBasicGeometry *pBasicGeometry = vBasicGeometries[i];
+        bool bSkip = false;
+        for (int i0 = 0; i0 < m_vBasicGeometries.size(); i0++) {
+            if (pBasicGeometry->getName() == m_vBasicGeometries[i0]->getName()) {
+                Unigine::Log::error("SKIP: Name of Basic geometry already registered %s", pBasicGeometry->getName().c_str());
+                bSkip = true;
+            }
+            if (pBasicGeometry->getId() == m_vBasicGeometries[i0]->getId()) {
+                Unigine::Log::error("SKIP: ID of Basic geometry already registered %d", pBasicGeometry->getId());
+                bSkip = true;
+            }
+        }
+        if (!bSkip) {
+            m_vBasicGeometries.push_back(pBasicGeometry);
+        }
+    }
+    m_nextConf.setBasicGeometry(m_vBasicGeometries[0]); // default first
 }
 
 int DialogConfigurator::normalizeTextureCoordinates(int nWidth, float nVal) {
