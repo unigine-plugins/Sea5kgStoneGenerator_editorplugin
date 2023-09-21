@@ -35,11 +35,13 @@ bool StoneGeneratorBasicCube::generate(StoneGeneratorModel *pModel, int nExpecte
     float nZ1 = nRadius;
 
     for (int a = 0; a < nK; a++) {
+        float fA0 = float(a)*nStep - nRadius;
+        float fA1 = fA0 + nStep;
+
         for (int b = 0; b < nK; b++) {
-            float fA0 = float(a)*nStep - nRadius;
             float fB0 = float(b)*nStep - nRadius;
-            float fA1 = fA0 + nStep;
             float fB1 = fB0 + nStep;
+
             // bottom
             {
                 StoneGeneratorPoint *pPoint00 = pModel->addPoint(fA0, fB0, nZ0);

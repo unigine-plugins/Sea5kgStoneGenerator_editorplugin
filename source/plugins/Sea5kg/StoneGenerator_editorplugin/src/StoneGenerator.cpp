@@ -47,7 +47,7 @@ bool StoneGenerator::generate(const StoneGeneratorConfig &conf) {
     this->processRemoveUnusefulTriangles(conf);
     // TODO reunion triangles
     this->processAttraction(conf);
-    this->processRandom(conf);
+    this->processSurfaceDistortion(conf);
     this->processResizeAndShift(conf);
     this->processNormals(conf);
     // this->processTangents(conf);
@@ -93,8 +93,13 @@ bool StoneGenerator::processAttraction(const StoneGeneratorConfig &conf) {
     if (conf.getPointsOfAttraction() == 0) {
         return true;
     }
-    std::vector<StoneGeneratorPoint *> vAttractionPoints;
     float nStrongAttraction = conf.getStrongOfAttraction();
+    if (nStrongAttraction < 0.1) {
+        return true;
+    }
+
+    std::vector<StoneGeneratorPoint *> vAttractionPoints;
+
     float rk = 2.0;
     float fDiametr = m_nBasicRadius * 2.0; // TODO attraction radius
     int nWidth = fDiametr * rk * 100.0;
@@ -139,7 +144,7 @@ bool StoneGenerator::processAttraction(const StoneGeneratorConfig &conf) {
     return true;
 }
 
-bool StoneGenerator::processRandom(const StoneGeneratorConfig &conf) {
+bool StoneGenerator::processSurfaceDistortion(const StoneGeneratorConfig &conf) {
     int nRandomDiff = 100.0 * conf.getSurfaceDistortion();
     float fMin = conf.getSurfaceDistortion();
     // std::cout << "nRandomDiff: " << nRandomDiff << std::endl;
@@ -180,6 +185,10 @@ bool StoneGenerator::processResizeAndShift(const StoneGeneratorConfig &conf) {
     float fKX = nSizeX / (fMaxX - fMinX);
     float fKY = nSizeY / (fMaxY - fMinY);
     float fKZ = nSizeZ / (fMaxZ - fMinZ);
+
+    if (conf.getBasicGeometry()->getId() == 2) { // if it's plane, TODO magic numbers
+        fKZ = 1.0f;
+    }
 
     // shift
     float fSX = -1.0 * (fMinX + (fMaxX - fMinX) / 2.0);

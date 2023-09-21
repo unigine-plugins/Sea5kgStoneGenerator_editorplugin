@@ -3,6 +3,7 @@
 
 #include "DialogConfigurator.h"
 #include "StoneGeneratorBasicGeometryCube.h"
+#include "StoneGeneratorBasicGeometryPlane.h"
 #include "StoneGeneratorBasicGeometrySphere.h"
 
 #include "DialogConfiguratorParameterSliderFloat.h"
@@ -173,8 +174,8 @@ void DialogConfigurator::comboboxTextureResolution_Changed(int nNewValue) {
 void DialogConfigurator::comboboxBasicGeometry_Changed(int nNewValue) {
     std::string sName = m_pBasicGemometry->currentText().toStdString();
 
-    Unigine::Log::message("DialogConfigurator::comboboxBasicGeometry_Changed text = %s\n", sName.c_str());
-    Unigine::Log::message("DialogConfigurator::comboboxBasicGeometry_Changed nNewValue = %d\n", nNewValue);
+    // Unigine::Log::message("DialogConfigurator::comboboxBasicGeometry_Changed text = %s\n", sName.c_str());
+    // Unigine::Log::message("DialogConfigurator::comboboxBasicGeometry_Changed nNewValue = %d\n", nNewValue);
 
     if (m_nextConf.getBasicGeometry()->getName() == sName) {
         Unigine::Log::message("DialogConfigurator::comboboxBasicGeometry_Changed Already basic geometry, text = %s\n", sName.c_str());
@@ -572,17 +573,18 @@ void DialogConfigurator::initListOfBasicGeometries() {
     std::vector<StoneGeneratorBasicGeometry *> vBasicGeometries;
     vBasicGeometries.push_back(new StoneGeneratorBasicSphere());
     vBasicGeometries.push_back(new StoneGeneratorBasicCube());
+    vBasicGeometries.push_back(new StoneGeneratorBasicGeometryPlane());
     m_vBasicGeometries.clear();
     for (int i = 0; i < vBasicGeometries.size(); i++) {
         StoneGeneratorBasicGeometry *pBasicGeometry = vBasicGeometries[i];
         bool bSkip = false;
         for (int i0 = 0; i0 < m_vBasicGeometries.size(); i0++) {
             if (pBasicGeometry->getName() == m_vBasicGeometries[i0]->getName()) {
-                Unigine::Log::error("SKIP: Name of Basic geometry already registered %s", pBasicGeometry->getName().c_str());
+                Unigine::Log::error("SKIP: Name of Basic geometry already registered %s\n", pBasicGeometry->getName().c_str());
                 bSkip = true;
             }
             if (pBasicGeometry->getId() == m_vBasicGeometries[i0]->getId()) {
-                Unigine::Log::error("SKIP: ID of Basic geometry already registered %d", pBasicGeometry->getId());
+                Unigine::Log::error("SKIP: ID of Basic geometry already registered %d\n", pBasicGeometry->getId());
                 bSkip = true;
             }
         }

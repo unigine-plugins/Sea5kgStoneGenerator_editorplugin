@@ -20,7 +20,7 @@ class StoneGenerator {
         StoneGeneratorPoint *addPoint(const StoneGeneratorConfig &conf, float x, float y, float z);
 
         bool processAttraction(const StoneGeneratorConfig &conf);
-        bool processRandom(const StoneGeneratorConfig &conf);
+        bool processSurfaceDistortion(const StoneGeneratorConfig &conf);
         bool processResizeAndShift(const StoneGeneratorConfig &conf);
         bool processRemoveUnusefulTriangles(const StoneGeneratorConfig &conf);
         bool processNormals(const StoneGeneratorConfig &conf);
