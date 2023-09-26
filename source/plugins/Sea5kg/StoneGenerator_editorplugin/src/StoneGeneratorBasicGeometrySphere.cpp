@@ -38,12 +38,12 @@ bool StoneGeneratorBasicSphere::generate(StoneGeneratorModel *pModel, int nExpec
         // kostyl
         nK += 1; // to even number
     }
-    std::cout << "nK = " << nK << std::endl;
+    // std::cout << "nK = " << nK << std::endl;
 
     // calculate coordinates
     float spp = 2*M_PI / float(nK);
     float z_spp = M_PI / float(nK); // todo scale z here
-    std::cout << "spp = " << spp << std::endl;
+    // std::cout << "spp = " << spp << std::endl;
     // int nTexX = 0.2;
     // int nTexY = 0.2;
     std::vector<ZLevel> levels_z;

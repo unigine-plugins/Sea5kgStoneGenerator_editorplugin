@@ -15,7 +15,7 @@ class StoneGeneratorPoint {
 
         void addOffset(float x, float y, float z);
         void setXYZ(float x, float y, float z);
-        void setXYZ(StoneGeneratorPoint &point);
+        void setXYZ(const StoneGeneratorPoint &point);
 
         bool compare(int nX, int nY, int nZ, int nThreshold);
         void setIndex(int nIndex);
@@ -31,6 +31,8 @@ class StoneGeneratorPoint {
         void removeLinkToTriangle(StoneGeneratorTriangle *pTriangle);
 
         void normalizeToUnitVector();
+        float lengthToPoint(const StoneGeneratorPoint *p1) const;
+        float length() const;
 
     private:
         float m_nX, m_nY, m_nZ;

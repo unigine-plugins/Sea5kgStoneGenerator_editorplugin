@@ -53,7 +53,7 @@ void StoneGeneratorPoint::setXYZ(float x, float y, float z) {
     m_nZ100 = m_nZ*100;
 }
 
-void StoneGeneratorPoint::setXYZ(StoneGeneratorPoint &point) {
+void StoneGeneratorPoint::setXYZ(const StoneGeneratorPoint &point) {
     this->setXYZ(
         point.getX(),
         point.getY(),
@@ -111,4 +111,15 @@ void StoneGeneratorPoint::normalizeToUnitVector() {
     m_nX = k * m_nX;
     m_nY = k * m_nY;
     m_nZ = k * m_nZ;
+}
+
+float StoneGeneratorPoint::lengthToPoint(const StoneGeneratorPoint *p1) const {
+    float nDX = p1->getX() - m_nX;
+    float nDY = p1->getY() - m_nY;
+    float nDZ = p1->getZ() - m_nZ;
+    return std::sqrt(nDX*nDX + nDY*nDY + nDZ*nDZ);
+}
+
+float StoneGeneratorPoint::length() const {
+    return std::sqrt(m_nX*m_nX + m_nY*m_nY + m_nZ*m_nZ);
 }

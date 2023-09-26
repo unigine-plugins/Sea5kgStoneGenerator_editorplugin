@@ -81,7 +81,7 @@ DialogConfigurator::DialogConfigurator(
     verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
         this, IDialogConfiguratorUpdatedValue::DEVIATION_OF_NORMALS,
         "Deviation of Normals: ", m_nextConf.getDeviationOfNormals(),
-        0.0, 1.0
+        -2.0, 3.0
     ));
     verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
         this, IDialogConfiguratorUpdatedValue::SCALE_X,
