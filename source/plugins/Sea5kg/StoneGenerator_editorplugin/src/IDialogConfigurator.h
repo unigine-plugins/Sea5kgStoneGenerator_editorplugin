@@ -10,6 +10,7 @@ enum class IDialogConfiguratorUpdatedValue {
     POINDS_OF_ATTRACTION = 30,
     STRONG_OF_ATTRACTION = 40,
     SURFACE_DISTORTION = 50,
+    DEVIATION_OF_NORMALS = 55,
     SCALE_X = 60,
     SCALE_Y = 61,
     SCALE_Z = 62,

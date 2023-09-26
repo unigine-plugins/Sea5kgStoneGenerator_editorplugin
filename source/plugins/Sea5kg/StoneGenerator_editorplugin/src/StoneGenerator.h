@@ -23,6 +23,7 @@ class StoneGenerator {
         bool processSurfaceDistortion(const StoneGeneratorConfig &conf);
         bool processResizeAndShift(const StoneGeneratorConfig &conf);
         bool processRemoveUnusefulTriangles(const StoneGeneratorConfig &conf);
+        StoneGeneratorPoint calculateNormalForPoint(const StoneGeneratorConfig &conf, StoneGeneratorPoint *p0);
         bool processNormals(const StoneGeneratorConfig &conf);
         bool processTangents(const StoneGeneratorConfig &conf);
         bool processTexturing(const StoneGeneratorConfig &conf);

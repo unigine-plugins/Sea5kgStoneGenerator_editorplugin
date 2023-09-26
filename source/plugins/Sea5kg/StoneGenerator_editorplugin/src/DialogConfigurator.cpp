@@ -79,6 +79,11 @@ DialogConfigurator::DialogConfigurator(
         0.0, 2.0
     ));
     verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
+        this, IDialogConfiguratorUpdatedValue::DEVIATION_OF_NORMALS,
+        "Deviation of Normals: ", m_nextConf.getDeviationOfNormals(),
+        0.0, 1.0
+    ));
+    verticalLayout->addLayout(new DialogConfiguratorParameterSliderFloat(
         this, IDialogConfiguratorUpdatedValue::SCALE_X,
         "Scale X: ", m_nextConf.getScaleX(),
         m_nextConf.getScaleMinAny(), m_nextConf.getScaleMaxAny()
@@ -202,7 +207,7 @@ void DialogConfigurator::createNode() {
     while (!bUniqNameGenerated) {
         bUniqNameGenerated = true;
         m_nStoneIdName++;
-        m_sRandomName = "stone_" + QString::number(m_nStoneIdName).rightJustified(6, '0');
+        m_sRandomName = "st_" + QString::number(m_nStoneIdName).rightJustified(6, '0');
         m_sFullPathNode = "Sea5kgStoneGenerator/" + m_sRandomName + ".node";
         m_sFullPathProp = "Sea5kgStoneGenerator/" + m_sRandomName + ".prop";
         if (UnigineEditor::AssetManager::isAsset(m_sFullPathNode.toStdString().c_str())) {
@@ -310,6 +315,9 @@ void DialogConfigurator::updateValueFloat(IDialogConfiguratorUpdatedValue nIdVal
         case IDialogConfiguratorUpdatedValue::SURFACE_DISTORTION:
             m_nextConf.setSurfaceDistortion(nValue);
             break;
+        case IDialogConfiguratorUpdatedValue::DEVIATION_OF_NORMALS:
+            m_nextConf.setDeviationOfNormals(nValue);
+            break;
         case IDialogConfiguratorUpdatedValue::SCALE_X:
             m_nextConf.setScaleX(nValue);
             break;
@@ -373,63 +381,63 @@ void DialogConfigurator::generationComplited(QString sDone) {
 
 int DialogConfigurator::showNormal(int nLastIndex, int nIndex, StoneGeneratorPoint *p1, int nSurface) {
 
-    Unigine::Math::vec3 vp0(
-        p1->x(),
-        p1->y(),
-        p1->z()
-    );
+    // Unigine::Math::vec3 vp0(
+    //     p1->x(),
+    //     p1->y(),
+    //     p1->z()
+    // );
 
-    Unigine::Math::vec3 np(p1->getNormalX(), p1->getNormalY(), p1->getNormalZ());
-    // np = np.normalize();
+    // Unigine::Math::vec3 np(p1->getNormalX(), p1->getNormalY(), p1->getNormalZ());
+    // // np = np.normalize();
 
-    Unigine::Math::vec3 np0( 1.0f * 0.0f,  1.0f * np.z, -1.0f * np.x);
-    Unigine::Math::vec3 np1( 1.0f * 0.0f, -1.0f * np.z,  1.0f * np.x);
-    Unigine::Math::vec3 np2( 1.0f * np.y, -1.0f * np.x,  1.0f * 0.0f);
-    Unigine::Math::vec3 np3(-1.0f * np.y,  1.0f * np.x,  1.0f * 0.0f);
-    Unigine::Math::vec3 np4( 1.0f * np.z,  1.0f * 0.0f, -1.0f * np.x);
-    Unigine::Math::vec3 np5(-1.0f * np.z,  1.0f * 0.0f,  1.0f * np.x);
+    // Unigine::Math::vec3 np0( 1.0f * 0.0f,  1.0f * np.z, -1.0f * np.x);
+    // Unigine::Math::vec3 np1( 1.0f * 0.0f, -1.0f * np.z,  1.0f * np.x);
+    // Unigine::Math::vec3 np2( 1.0f * np.y, -1.0f * np.x,  1.0f * 0.0f);
+    // Unigine::Math::vec3 np3(-1.0f * np.y,  1.0f * np.x,  1.0f * 0.0f);
+    // Unigine::Math::vec3 np4( 1.0f * np.z,  1.0f * 0.0f, -1.0f * np.x);
+    // Unigine::Math::vec3 np5(-1.0f * np.z,  1.0f * 0.0f,  1.0f * np.x);
 
-    // Unigine::Math::vec3 vp1 = ((np0 + np3) / 2.0).normalize() * 0.1 + vp0;
-    // Unigine::Math::vec3 vp2 = ((np1 + np4) / 2.0).normalize() * 0.1 + vp0;
-    // Unigine::Math::vec3 vp3 = ((np2 + np5) / 2.0).normalize() * 0.1 + vp0;
+    // // Unigine::Math::vec3 vp1 = ((np0 + np3) / 2.0).normalize() * 0.1 + vp0;
+    // // Unigine::Math::vec3 vp2 = ((np1 + np4) / 2.0).normalize() * 0.1 + vp0;
+    // // Unigine::Math::vec3 vp3 = ((np2 + np5) / 2.0).normalize() * 0.1 + vp0;
 
-    Unigine::Math::vec3 vp1 = np0.normalize() * 0.1 + np + vp0;
-    Unigine::Math::vec3 vp2 = np2.normalize() * 0.1 + np + vp0;
-    Unigine::Math::vec3 vp3 = np4.normalize() * 0.1 + np + vp0;
+    // Unigine::Math::vec3 vp1 = np0.normalize() * 0.1 + np + vp0;
+    // Unigine::Math::vec3 vp2 = np2.normalize() * 0.1 + np + vp0;
+    // Unigine::Math::vec3 vp3 = np4.normalize() * 0.1 + np + vp0;
 
-    std::vector<Unigine::Math::vec3> vPoints;
+    // std::vector<Unigine::Math::vec3> vPoints;
 
-    // t1
-    vPoints.push_back(vp0);
-    vPoints.push_back(vp2);
-    vPoints.push_back(vp1);
+    // // t1
+    // vPoints.push_back(vp0);
+    // vPoints.push_back(vp2);
+    // vPoints.push_back(vp1);
 
-    vPoints.push_back(vp0);
-    vPoints.push_back(vp3);
-    vPoints.push_back(vp2);
+    // vPoints.push_back(vp0);
+    // vPoints.push_back(vp3);
+    // vPoints.push_back(vp2);
 
-    vPoints.push_back(vp0);
-    vPoints.push_back(vp1);
-    vPoints.push_back(vp3);
+    // vPoints.push_back(vp0);
+    // vPoints.push_back(vp1);
+    // vPoints.push_back(vp3);
 
-    vPoints.push_back(vp1);
-    vPoints.push_back(vp2);
-    vPoints.push_back(vp3);
+    // vPoints.push_back(vp1);
+    // vPoints.push_back(vp2);
+    // vPoints.push_back(vp3);
 
-    for (int i = 0; i < vPoints.size(); i++) {
-        m_pMeshTemp->addVertex(vPoints[i], nSurface);
-        m_pMeshTemp->addNormal(Unigine::Math::vec3(0.0, 0.0, 0.0), nSurface);
-        m_pMeshTemp->addIndex(nLastIndex, nSurface);
-        nLastIndex++;
-    }
+    // for (int i = 0; i < vPoints.size(); i++) {
+    //     m_pMeshTemp->addVertex(vPoints[i], nSurface);
+    //     m_pMeshTemp->addNormal(Unigine::Math::vec3(0.0, 0.0, 0.0), nSurface);
+    //     m_pMeshTemp->addIndex(nLastIndex, nSurface);
+    //     nLastIndex++;
+    // }
     return nLastIndex;
 }
 
-void DialogConfigurator::addPointOfTriangle(int nIndex, StoneGeneratorPoint *p1, StoneGeneratorTexturePoint &t1, int nSurface) {
+void DialogConfigurator::addPointOfTriangle(int nIndex, StoneGeneratorPoint *p1, StoneGeneratorPoint *pNormalP1, StoneGeneratorTexturePoint &t1, int nSurface) {
     m_pMeshTemp->addVertex(Unigine::Math::vec3(
-        p1->x(),
-        p1->y(),
-        p1->z()
+        p1->getX(),
+        p1->getY(),
+        p1->getZ()
     ), nSurface);
     m_pMeshTemp->addTexCoord0(Unigine::Math::vec2(
         t1.x(),
@@ -437,9 +445,9 @@ void DialogConfigurator::addPointOfTriangle(int nIndex, StoneGeneratorPoint *p1,
     ), nSurface);
     // m_pMeshTemp->addColor(Unigine::Math::vec4(0,0,0,255), nSurface);
     Unigine::Math::vec3 nr(
-        p1->getNormalX(),
-        p1->getNormalY(),
-        p1->getNormalZ()
+        pNormalP1->getX(),
+        pNormalP1->getY(),
+        pNormalP1->getZ()
     );
     m_pMeshTemp->addNormal(nr, nSurface);
     // Unigine::Math::quat t(
@@ -477,20 +485,20 @@ void DialogConfigurator::slot_generationComplited(QString sDone) {
     int nLastIndex = 0;
     for (int i = 0; i < vTriangles.size(); i++) {
         StoneGeneratorTriangle *pTriangle = vTriangles[i];
-        this->addPointOfTriangle(i*3 + 0, pTriangle->p1(), pTriangle->t1(), nSurface);
-        this->addPointOfTriangle(i*3 + 1, pTriangle->p2(), pTriangle->t2(), nSurface);
-        this->addPointOfTriangle(i*3 + 2, pTriangle->p3(), pTriangle->t3(), nSurface);
+        this->addPointOfTriangle(i*3 + 0, pTriangle->p1(), pTriangle->normalP1(), pTriangle->t1(), nSurface);
+        this->addPointOfTriangle(i*3 + 1, pTriangle->p2(), pTriangle->normalP2(), pTriangle->t2(), nSurface);
+        this->addPointOfTriangle(i*3 + 2, pTriangle->p3(), pTriangle->normalP3(), pTriangle->t3(), nSurface);
         nLastIndex = i*3 + 2;
     }
 
     // show normals
     if (conf.getShowNormales()) {
-        nLastIndex = nLastIndex + 1;
-        const std::vector<StoneGeneratorPoint *> &vPoints = pStoneGenerator->points();
-        for (int i = 0; i < vPoints.size(); i++) {
-            StoneGeneratorPoint *p1 = vPoints[i];
-            nLastIndex = this->showNormal(nLastIndex, i, vPoints[i], nSurface);
-        }
+        // nLastIndex = nLastIndex + 1;
+        // const std::vector<StoneGeneratorPoint *> &vPoints = pStoneGenerator->points();
+        // for (int i = 0; i < vPoints.size(); i++) {
+        //     StoneGeneratorPoint *p1 = vPoints[i];
+        //     nLastIndex = this->showNormal(nLastIndex, i, vPoints[i], nSurface);
+        // }
     }
 
     // m_pMeshTemp->save("tmp.mesh");

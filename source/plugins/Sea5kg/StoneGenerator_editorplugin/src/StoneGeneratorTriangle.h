@@ -16,6 +16,10 @@ class StoneGeneratorTriangle {
         StoneGeneratorPoint *p2();
         StoneGeneratorPoint *p3();
 
+        StoneGeneratorPoint *normalP1();
+        StoneGeneratorPoint *normalP2();
+        StoneGeneratorPoint *normalP3();
+
         bool hasPoint(StoneGeneratorPoint *p);
         StoneGeneratorPoint *getPointByIndex(int nIndex);
 
@@ -25,7 +29,8 @@ class StoneGeneratorTriangle {
 
         StoneGeneratorTexturePoint &getTexPointByIndex(int nIndex);
 
-        void calculateMiddlePointAndNormal(StoneGeneratorPoint &middle_p, StoneGeneratorPoint &middle_p_normal);
+        void calculateMiddlePoint(StoneGeneratorPoint &point) const;
+        void calculateNormal(StoneGeneratorPoint &normal) const;
         void rotateInXAxisAroundPoint(StoneGeneratorPoint &p1, float fRot);
         void rotateInYAxisAroundPoint(StoneGeneratorPoint &p1, float fRot);
 
@@ -37,6 +42,10 @@ class StoneGeneratorTriangle {
 
     private:
         StoneGeneratorPoint **m_points;
+
+        StoneGeneratorPoint m_pointNormalP1;
+        StoneGeneratorPoint m_pointNormalP2;
+        StoneGeneratorPoint m_pointNormalP3;
 
         StoneGeneratorTexturePoint *m_pTexPoints;
 };

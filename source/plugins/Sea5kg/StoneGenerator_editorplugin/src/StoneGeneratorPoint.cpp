@@ -23,15 +23,15 @@ StoneGeneratorPoint::StoneGeneratorPoint(float x, float y, float z) {
     m_nTangentW = 0.0f;
 }
 
-float StoneGeneratorPoint::x() const {
+float StoneGeneratorPoint::getX() const {
     return m_nX;
 }
 
-float StoneGeneratorPoint::y() const {
+float StoneGeneratorPoint::getY() const {
     return m_nY;
 }
 
-float StoneGeneratorPoint::z() const {
+float StoneGeneratorPoint::getZ() const {
     return m_nZ;
 }
 
@@ -51,9 +51,14 @@ void StoneGeneratorPoint::setXYZ(float x, float y, float z) {
     m_nX100 = m_nX*100;
     m_nY100 = m_nY*100;
     m_nZ100 = m_nZ*100;
-    m_nNormalX = 0.5f;
-    m_nNormalY = 0.5f;
-    m_nNormalZ = 0.5f;
+}
+
+void StoneGeneratorPoint::setXYZ(StoneGeneratorPoint &point) {
+    this->setXYZ(
+        point.getX(),
+        point.getY(),
+        point.getZ()
+    );
 }
 
 bool StoneGeneratorPoint::compare(int nX, int nY, int nZ, int nThreshold) {
@@ -69,24 +74,6 @@ void StoneGeneratorPoint::setIndex(int nIndex) {
 
 int StoneGeneratorPoint::getIndex() {
     return m_nIndex;
-}
-
-void StoneGeneratorPoint::setNormal(float nX, float nY, float nZ) {
-    m_nNormalX = nX;
-    m_nNormalY = nY;
-    m_nNormalZ = nZ;
-}
-
-float StoneGeneratorPoint::getNormalX() {
-    return m_nNormalX;
-}
-
-float StoneGeneratorPoint::getNormalY() {
-    return m_nNormalY;
-}
-
-float StoneGeneratorPoint::getNormalZ() {
-    return m_nNormalZ;
 }
 
 void StoneGeneratorPoint::setTangent(float nX, float nY, float nZ, float nW) {

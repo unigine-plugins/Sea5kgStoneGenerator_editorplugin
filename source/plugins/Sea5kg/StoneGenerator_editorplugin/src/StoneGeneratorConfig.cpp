@@ -11,6 +11,7 @@ StoneGeneratorConfig::StoneGeneratorConfig() {
     m_nPointsOfAttraction = 3;
     m_nStrongOfAttraction = 3.14f;
     m_nSurfaceDistortion = 0.05f;
+    m_nDeviationOfNormals = 1.0f;
     m_nScaleX = 1.0f;
     m_nScaleY = 1.0f;
     m_nScaleZ = 1.0f;
@@ -108,6 +109,14 @@ void StoneGeneratorConfig::setShowNormales(bool bShowNormales) {
 
 bool StoneGeneratorConfig::getShowNormales() const {
     return m_bShowNormales;
+}
+
+void StoneGeneratorConfig::setDeviationOfNormals(float nDeviationOfNormals) {
+    m_nDeviationOfNormals = nDeviationOfNormals;
+}
+
+float StoneGeneratorConfig::getDeviationOfNormals() const {
+    return m_nDeviationOfNormals;
 }
 
 void StoneGeneratorConfig::setRegenerateGeometry(bool bRegenerateGeometry) {

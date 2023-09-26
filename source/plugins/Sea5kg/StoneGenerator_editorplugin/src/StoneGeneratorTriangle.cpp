@@ -42,6 +42,18 @@ StoneGeneratorPoint *StoneGeneratorTriangle::p3() {
     return m_points[2];
 }
 
+StoneGeneratorPoint *StoneGeneratorTriangle::normalP1() {
+    return &m_pointNormalP1;
+}
+
+StoneGeneratorPoint *StoneGeneratorTriangle::normalP2() {
+    return &m_pointNormalP2;
+}
+
+StoneGeneratorPoint *StoneGeneratorTriangle::normalP3() {
+    return &m_pointNormalP3;
+}
+
 bool StoneGeneratorTriangle::hasPoint(StoneGeneratorPoint *p) {
     return m_points[0] == p || m_points[1] == p || m_points[2] == p;
 }
@@ -66,15 +78,21 @@ StoneGeneratorTexturePoint &StoneGeneratorTriangle::getTexPointByIndex(int nInde
     return m_pTexPoints[nIndex];
 }
 
-void StoneGeneratorTriangle::calculateMiddlePointAndNormal(StoneGeneratorPoint &middle_p, StoneGeneratorPoint &middle_p_normal) {
+void StoneGeneratorTriangle::calculateMiddlePoint(StoneGeneratorPoint &point) const {
+    point.setXYZ(
+        (m_points[0]->getX() + m_points[1]->getX() + m_points[2]->getX()) / 3.0,
+        (m_points[0]->getY() + m_points[1]->getY() + m_points[2]->getY()) / 3.0,
+        (m_points[0]->getZ() + m_points[1]->getZ() + m_points[2]->getZ()) / 3.0
+    );
+}
+
+void StoneGeneratorTriangle::calculateNormal(StoneGeneratorPoint &normal) const {
+    // StoneGeneratorPoint middlePoint;
+    // this->calculateMiddlePoint(middlePoint);
+
     // here math:
     // http://mathprofi.ru/uravnenie_ploskosti.html
 
-    middle_p.setXYZ(
-        (m_points[0]->x() + m_points[1]->x() + m_points[2]->x()) / 3.0,
-        (m_points[0]->y() + m_points[1]->y() + m_points[2]->y()) / 3.0,
-        (m_points[0]->z() + m_points[1]->z() + m_points[2]->z()) / 3.0
-    );
     //
     // | x - x1, x2 - x1, x3 - x1 |
     // | y - y1, y2 - y1, y3 - y1 | == 0
@@ -90,18 +108,19 @@ void StoneGeneratorTriangle::calculateMiddlePointAndNormal(StoneGeneratorPoint &
     // y = - ((x2 - x1)*(z3 - z1) - (x3 - x1)*(z2 - z1))
     // z = ((x2 - x1)*(y3 - y1) - (x3 - x1)*(y2 - y1))
 
-    float x21 = m_points[1]->x() - m_points[0]->x();
-    float y21 = m_points[1]->y() - m_points[0]->y();
-    float z21 = m_points[1]->z() - m_points[0]->z();
-    float x31 = m_points[2]->x() - m_points[0]->x();
-    float y31 = m_points[2]->y() - m_points[0]->y();
-    float z31 = m_points[2]->z() - m_points[0]->z();
+    float x21 = m_points[1]->getX() - m_points[0]->getX();
+    float y21 = m_points[1]->getY() - m_points[0]->getY();
+    float z21 = m_points[1]->getZ() - m_points[0]->getZ();
+    float x31 = m_points[2]->getX() - m_points[0]->getX();
+    float y31 = m_points[2]->getY() - m_points[0]->getY();
+    float z31 = m_points[2]->getZ() - m_points[0]->getZ();
 
-    middle_p_normal.setXYZ(
-        middle_p.x() + (y21*z31 - z21*y31),
-        middle_p.y() - (x21*z31 - z21*x31),
-        middle_p.z() + (x21*y31 - y21*x31)
+    normal.setXYZ(
+        + (y21*z31 - z21*y31),
+        - (x21*z31 - z21*x31),
+        + (x21*y31 - y21*x31)
     );
+    normal.normalizeToUnitVector();
 }
 
 void StoneGeneratorTriangle::rotateInXAxisAroundPoint(StoneGeneratorPoint &p1, float fRot) {
@@ -114,34 +133,34 @@ void StoneGeneratorTriangle::rotateInXAxisAroundPoint(StoneGeneratorPoint &p1, f
     // |0   cos θ    −sin θ| |y| = |y cos θ − z sin θ| = |y'|
     // |0   sin θ     cos θ| |z|   |y sin θ + z cos θ|   |z'|
 
-    float dx1 = m_points[0]->x() - p1.x();
-    float dy1 = m_points[0]->y() - p1.y();
-    float dz1 = m_points[0]->z() - p1.z();
+    float dx1 = m_points[0]->getX() - p1.getX();
+    float dy1 = m_points[0]->getY() - p1.getY();
+    float dz1 = m_points[0]->getZ() - p1.getZ();
 
     m_points[0]->setXYZ(
-        p1.x() + dx1,
-        p1.y() + dy1 * std::cos(fRot) - dz1 * std::sin(fRot),
-        p1.z() + dy1 * std::sin(fRot) + dz1 * std::cos(fRot)
+        p1.getX() + dx1,
+        p1.getY() + dy1 * std::cos(fRot) - dz1 * std::sin(fRot),
+        p1.getZ() + dy1 * std::sin(fRot) + dz1 * std::cos(fRot)
     );
 
-    float dx2 = m_points[1]->x() - p1.x();
-    float dy2 = m_points[1]->y() - p1.y();
-    float dz2 = m_points[1]->z() - p1.z();
+    float dx2 = m_points[1]->getX() - p1.getX();
+    float dy2 = m_points[1]->getY() - p1.getY();
+    float dz2 = m_points[1]->getZ() - p1.getZ();
 
     m_points[1]->setXYZ(
-        p1.x() + dx2,
-        p1.y() + dy2 * std::cos(fRot) - dz2 * std::sin(fRot),
-        p1.z() + dy2 * std::sin(fRot) + dz2 * std::cos(fRot)
+        p1.getX() + dx2,
+        p1.getY() + dy2 * std::cos(fRot) - dz2 * std::sin(fRot),
+        p1.getZ() + dy2 * std::sin(fRot) + dz2 * std::cos(fRot)
     );
 
-    float dx3 = m_points[2]->x() - p1.x();
-    float dy3 = m_points[2]->y() - p1.y();
-    float dz3 = m_points[2]->z() - p1.z();
+    float dx3 = m_points[2]->getX() - p1.getX();
+    float dy3 = m_points[2]->getY() - p1.getY();
+    float dz3 = m_points[2]->getZ() - p1.getZ();
 
     m_points[2]->setXYZ(
-        p1.x() + dx3,
-        p1.y() + dy3 * std::cos(fRot) - dz3 * std::sin(fRot),
-        p1.z() + dy3 * std::sin(fRot) + dz3 * std::cos(fRot)
+        p1.getX() + dx3,
+        p1.getY() + dy3 * std::cos(fRot) - dz3 * std::sin(fRot),
+        p1.getZ() + dy3 * std::sin(fRot) + dz3 * std::cos(fRot)
     );
 }
 
@@ -155,41 +174,41 @@ void StoneGeneratorTriangle::rotateInYAxisAroundPoint(StoneGeneratorPoint &p1, f
     // |   0      1       0| |y| = |         y        | = |y'|
     // |−sin θ    0   cos θ| |z|   |−x sin θ + z cos θ|   |z'|
 
-    float dx1 = m_points[0]->x() - p1.x();
-    float dy1 = m_points[0]->y() - p1.y();
-    float dz1 = m_points[0]->z() - p1.z();
+    float dx1 = m_points[0]->getX() - p1.getX();
+    float dy1 = m_points[0]->getY() - p1.getY();
+    float dz1 = m_points[0]->getZ() - p1.getZ();
 
     m_points[0]->setXYZ(
-        p1.x() + dx1 * std::cos(fRot) + dz1 * std::sin(fRot),
-        p1.y() + dy1,
-        p1.z() - dx1 * std::sin(fRot) + dz1 * std::cos(fRot)
+        p1.getX() + dx1 * std::cos(fRot) + dz1 * std::sin(fRot),
+        p1.getY() + dy1,
+        p1.getZ() - dx1 * std::sin(fRot) + dz1 * std::cos(fRot)
     );
 
-    float dx2 = m_points[1]->x() - p1.x();
-    float dy2 = m_points[1]->y() - p1.y();
-    float dz2 = m_points[1]->z() - p1.z();
+    float dx2 = m_points[1]->getX() - p1.getX();
+    float dy2 = m_points[1]->getY() - p1.getY();
+    float dz2 = m_points[1]->getZ() - p1.getZ();
 
     m_points[1]->setXYZ(
-        p1.x() + dx2 * std::cos(fRot) + dz2 * std::sin(fRot),
-        p1.y() + dy2,
-        p1.z() - dx2 * std::sin(fRot) + dz2 * std::cos(fRot)
+        p1.getX() + dx2 * std::cos(fRot) + dz2 * std::sin(fRot),
+        p1.getY() + dy2,
+        p1.getZ() - dx2 * std::sin(fRot) + dz2 * std::cos(fRot)
     );
 
-    float dx3 = m_points[2]->x() - p1.x();
-    float dy3 = m_points[2]->y() - p1.y();
-    float dz3 = m_points[2]->z() - p1.z();
+    float dx3 = m_points[2]->getX() - p1.getX();
+    float dy3 = m_points[2]->getY() - p1.getY();
+    float dz3 = m_points[2]->getZ() - p1.getZ();
 
     m_points[2]->setXYZ(
-        p1.x() + dx3 * std::cos(fRot) + dz3 * std::sin(fRot),
-        p1.y() + dy3,
-        p1.z() - dx3 * std::sin(fRot) + dz3 * std::cos(fRot)
+        p1.getX() + dx3 * std::cos(fRot) + dz3 * std::sin(fRot),
+        p1.getY() + dy3,
+        p1.getZ() - dx3 * std::sin(fRot) + dz3 * std::cos(fRot)
     );
 }
 
 void StoneGeneratorTriangle::copy(StoneGeneratorTriangle *pTriangle) {
-    m_points[0]->setXYZ(pTriangle->p1()->x(), pTriangle->p1()->y(), pTriangle->p1()->z());
-    m_points[1]->setXYZ(pTriangle->p2()->x(), pTriangle->p2()->y(), pTriangle->p2()->z());
-    m_points[2]->setXYZ(pTriangle->p3()->x(), pTriangle->p3()->y(), pTriangle->p3()->z());
+    m_points[0]->setXYZ(pTriangle->p1()->getX(), pTriangle->p1()->getY(), pTriangle->p1()->getZ());
+    m_points[1]->setXYZ(pTriangle->p2()->getX(), pTriangle->p2()->getY(), pTriangle->p2()->getZ());
+    m_points[2]->setXYZ(pTriangle->p3()->getX(), pTriangle->p3()->getY(), pTriangle->p3()->getZ());
 }
 
 void StoneGeneratorTriangle::rotateTexPointsBy(int nIndex0, float fAngle) {

@@ -9,21 +9,17 @@ class StoneGeneratorPoint {
         StoneGeneratorPoint();
         StoneGeneratorPoint(float x, float y, float z);
 
-        float x() const;
-        float y() const;
-        float z() const;
+        float getX() const;
+        float getY() const;
+        float getZ() const;
 
         void addOffset(float x, float y, float z);
         void setXYZ(float x, float y, float z);
+        void setXYZ(StoneGeneratorPoint &point);
 
         bool compare(int nX, int nY, int nZ, int nThreshold);
         void setIndex(int nIndex);
         int getIndex();
-
-        void setNormal(float nX, float nY, float nZ);
-        float getNormalX();
-        float getNormalY();
-        float getNormalZ();
 
         void setTangent(float nX, float nY, float nZ, float nW);
         float getTangentX();
@@ -42,7 +38,6 @@ class StoneGeneratorPoint {
         int m_nY100;
         int m_nZ100;
         int m_nIndex;
-        float m_nNormalX, m_nNormalY, m_nNormalZ;
         float m_nTangentX, m_nTangentY, m_nTangentZ, m_nTangentW;
         std::vector<StoneGeneratorTriangle *> m_vLinkedTriangles;
 };
