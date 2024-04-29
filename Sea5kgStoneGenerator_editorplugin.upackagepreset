@@ -209,10 +209,6 @@
 	],
 	"files": [
 		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/AsyncRunGenerator.cpp",
-			"used": true
-		},
-		{
 			"path": "bin/plugins/Sea5kg/StoneGenerator/libSea5kgStoneGenerator_editorplugin_x64d.so",
 			"used": true
 		},
@@ -237,11 +233,95 @@
 			"used": true
 		},
 		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/Sea5kgStoneGenerator_editorplugin.cpp",
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorTriangle.cpp",
 			"used": true
 		},
 		{
 			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/CMakeLists.txt",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/DialogConfiguratorParameterSliderFloat.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/DialogConfiguratorComboBox.h",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_x64d.pdb",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/DialogConfiguratorParameterEditBoxUInt.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/DialogConfiguratorParameterEditBoxUInt.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorPseudoRandom.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorModel.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorBasicGeometryPlane.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorBasicGeometryPlane.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/DialogConfiguratorParameterSliderInt.h",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_double_x64.dll",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGenerator.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/IDialogConfigurator.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/DialogConfigurator.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/cmake/modules/FindEditor.cmake",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorBasicGeometry.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorBasicGeometry.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/AsyncRunGenerator.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/DialogConfiguratorParameterSliderInt.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGenerator.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/Sea5kgStoneGenerator_editorplugin.cpp",
 			"used": true
 		},
 		{
@@ -253,7 +333,7 @@
 			"used": true
 		},
 		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGenerator.h",
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/TextureStoneGenerator.h",
 			"used": true
 		},
 		{
@@ -261,7 +341,11 @@
 			"used": true
 		},
 		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/TextureStoneGenerator.h",
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorBasicGeometryCube.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorTexturePoint.h",
 			"used": true
 		},
 		{
@@ -269,7 +353,11 @@
 			"used": true
 		},
 		{
-			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_x64d.pdb",
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorBasicGeometrySphere.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorPoint.cpp",
 			"used": true
 		},
 		{
@@ -278,6 +366,10 @@
 		},
 		{
 			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorConfig.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/DialogConfiguratorComboBox.cpp",
 			"used": true
 		},
 		{
@@ -297,7 +389,11 @@
 			"used": true
 		},
 		{
-			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_double_x64.dll",
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorBasicGeometrySphere.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorTexturePoint.cpp",
 			"used": true
 		},
 		{
@@ -305,32 +401,44 @@
 			"used": true
 		},
 		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGenerator.cpp",
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorPoint.h",
 			"used": true
 		},
 		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/DialogConfigurator.h",
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/DialogConfiguratorParameterSliderFloat.h",
 			"used": true
 		},
 		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/cmake/modules/FindEditor.cmake",
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorBasicGeometryCube.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorTriangle.h",
 			"used": true
 		},
 		{
 			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/UnigineEditor.h",
 			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorModel.h",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorPseudoRandom.cpp",
+			"used": true
 		}
 	],
 	"dirs": [
 		{
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures",
+			"used": true,
+			"expanded": false
+		},
+		{
 			"path": "source/plugins",
 			"used": true,
 			"expanded": true
-		},
-		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/cmake",
-			"used": true,
-			"expanded": false
 		},
 		{
 			"path": "bin/plugins",
@@ -338,17 +446,17 @@
 			"expanded": true
 		},
 		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src",
-			"used": true,
-			"expanded": false
-		},
-		{
 			"path": "data",
 			"used": true,
 			"expanded": false
 		},
 		{
-			"path": "data/plugins/Sea5kg/StoneGenerator/textures",
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/cmake",
+			"used": true,
+			"expanded": false
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src",
 			"used": true,
 			"expanded": false
 		},
@@ -363,17 +471,17 @@
 			"expanded": true
 		},
 		{
-			"path": "source/plugins/Sea5kg",
-			"used": true,
-			"expanded": false
-		},
-		{
 			"path": "bin/plugins/Sea5kg",
 			"used": true,
 			"expanded": true
 		},
 		{
 			"path": "data/plugins/Sea5kg/StoneGenerator",
+			"used": true,
+			"expanded": true
+		},
+		{
+			"path": "source/plugins/Sea5kg",
 			"used": true,
 			"expanded": true
 		},
