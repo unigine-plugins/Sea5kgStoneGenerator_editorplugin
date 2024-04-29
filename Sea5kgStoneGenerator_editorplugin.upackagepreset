@@ -1,21 +1,219 @@
 {
 	"version": 1,
 	"include_dependencies": true,
+	"assets": [
+		{
+			"guid": "7c1e5ec638723b1389597f22297fc72b205067e8",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/concrete2.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "df681ee4c733f3ad5a0f73e07b4293f573ab0eb6",
+			"path": "data/plugins/Sea5kg/StoneGenerator/red_transparent.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "f9f95a08c77a7ccce77317c4a316b0786754fafa",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/bark_of_tree.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "6d292254cde8395c119bd450f9d2b7719b0379a6",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/asphalt_photo.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "4f206f17bc1cc1f540a5834bb133380726e0d2c5",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/yellow_transparent.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "9abe47f1ad07fe134804104500e5c4814f1be28f",
+			"path": "data/plugins/Sea5kg/StoneGenerator/concrete.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "8d2ccb5cea402d38132b32d8a5515dbba5d4b8ee",
+			"path": "data/plugins/Sea5kg/StoneGenerator/green_transparent.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "a6c92943265fcf88c6a38b37102ee154e6b6d091",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/black_transparent.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "4ff3ec8d29b36d51635ec5a18a9b4d79a003e44b",
+			"path": "data/plugins/Sea5kg/StoneGenerator/concrete2.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "0de614e938fdf7201e692abde72dc40861b1a1c7",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/chainmail.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "8ecf8c0b020b8ec4d5058c7f4ef3ba13aca43919",
+			"path": "data/plugins/Sea5kg/StoneGenerator/ceiling_with_lamps.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "6990178e3478476f6e45c16a270d43ac384a2af0",
+			"path": "data/plugins/Sea5kg/StoneGenerator/multi1_transparent.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "7aa1187f3b83b5095c1edd3375da210945d8b8ed",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/plaster.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "c2f35a9ddda7def3cb5618b1bd2f2df981305ddb",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/red_transparent.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "e2c24ee92fd3e8f937579cba6653b51ef48e29bb",
+			"path": "data/plugins/Sea5kg/StoneGenerator/blue_transparent.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "163cd583286ca186aeb30b77881eaea6d36f9ad1",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/multi1_transparent.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "dfbcecf5a9cebca83aa3a6898aa355fb93d0fb73",
+			"path": "data/plugins/Sea5kg/StoneGenerator/back_of_tree.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "9ef3988041b1d9158978c8bc3e2f350ca9b88b32",
+			"path": "data/plugins/Sea5kg/StoneGenerator/black_transparent.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "46a439b47ccae3be6260fdb012c994d56b54a406",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/pebbles.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "5e293b0ba74164239f8deb7f00f7e282f1bf7019",
+			"path": "data/plugins/Sea5kg/StoneGenerator/asphalt_photo.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "3e5b425a4c30190f0e359876d391462fafa4fb1c",
+			"path": "data/plugins/Sea5kg/StoneGenerator/plaster.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "499140e33418a784e03204d7f35825a0eae3ab31",
+			"path": "data/plugins/Sea5kg/StoneGenerator/pebbles.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "afeeb3782019749d07ceee3471d20c187918b3ea",
+			"path": "data/plugins/Sea5kg/StoneGenerator/yellow_transparent.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "ef064f2ac549f952631c7446ae3e3281238ee66c",
+			"path": "data/plugins/Sea5kg/StoneGenerator/chainmail.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "b4dd68af0e07a348a8b4bc639641606e397f0f9d",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/umbrella.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "63ca24ca499dd808940927e6c17989989b0ff90c",
+			"path": "data/plugins/Sea5kg/StoneGenerator/umbrella.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "aa4584fb3c0de342a3b01a76365394420effc220",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/blue_transparent.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "f3aa54bc4d6866e4b1812e38ecdaab80d6b3054e",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/green_transparent.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "70d53b3af84e6f44559cab56d03a609d6b3daafc",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/gray_tree.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "c53fbbe132c410158d843f35e931e1f31ec282ff",
+			"path": "data/plugins/Sea5kg/StoneGenerator/pebbles2.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "963a7ec0bc37854e19d9fafc9b01fcf759d65372",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/concrete.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "c0b76756e60f040c854f6ab286776ef6c1fa74f8",
+			"path": "data/plugins/Sea5kg/StoneGenerator/gray_tree.mat",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "0be400ea1c26198ebe885a067adbc8970e32062c",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/pebbles2.png",
+			"used": true,
+			"is_dependency": false
+		},
+		{
+			"guid": "8ab3d8fba5d9cbb72264646fe31e16998691be89",
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures/ceiling_with_lamps.png",
+			"used": true,
+			"is_dependency": false
+		}
+	],
 	"files": [
 		{
 			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/AsyncRunGenerator.cpp",
 			"used": true
 		},
 		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/Sea5kgStoneGenerator_editorplugin.json.in",
-			"used": true
-		},
-		{
 			"path": "bin/plugins/Sea5kg/StoneGenerator/libSea5kgStoneGenerator_editorplugin_x64d.so",
-			"used": true
-		},
-		{
-			"path": "bin/plugins/Sea5kg/StoneGenerator/libSea5kgStoneGenerator_editorplugin_double_x64d.so",
 			"used": true
 		},
 		{
@@ -24,6 +222,10 @@
 		},
 		{
 			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/cmake/modules/FindEngine.cmake",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/Sea5kgStoneGenerator_editorplugin.h",
 			"used": true
 		},
 		{
@@ -47,27 +249,7 @@
 			"used": true
 		},
 		{
-			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_double_x64d.pdb",
-			"used": true
-		},
-		{
-			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_double_x64.dll",
-			"used": true
-		},
-		{
-			"path": "bin/plugins/Sea5kg/StoneGenerator/libSea5kgStoneGenerator_editorplugin_x64.so",
-			"used": true
-		},
-		{
 			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/AsyncRunGenerator.h",
-			"used": true
-		},
-		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/Sea5kgStoneGenerator_editorplugin.h",
-			"used": true
-		},
-		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGenerator.cpp",
 			"used": true
 		},
 		{
@@ -75,11 +257,11 @@
 			"used": true
 		},
 		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorConfig.cpp",
+			"path": "bin/plugins/Sea5kg/StoneGenerator/libSea5kgStoneGenerator_editorplugin_x64.so",
 			"used": true
 		},
 		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorConfig.h",
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/TextureStoneGenerator.h",
 			"used": true
 		},
 		{
@@ -91,7 +273,39 @@
 			"used": true
 		},
 		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/cmake/modules/FindEditor.cmake",
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/DialogConfigurator.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorConfig.cpp",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGeneratorConfig.h",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_x64d.dll",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/Sea5kgStoneGenerator_editorplugin.json.in",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/libSea5kgStoneGenerator_editorplugin_double_x64d.so",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_double_x64.dll",
+			"used": true
+		},
+		{
+			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_double_x64d.pdb",
+			"used": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/StoneGenerator.cpp",
 			"used": true
 		},
 		{
@@ -99,19 +313,11 @@
 			"used": true
 		},
 		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/DialogConfigurator.cpp",
-			"used": true
-		},
-		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/TextureStoneGenerator.h",
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/cmake/modules/FindEditor.cmake",
 			"used": true
 		},
 		{
 			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src/UnigineEditor.h",
-			"used": true
-		},
-		{
-			"path": "bin/plugins/Sea5kg/StoneGenerator/Sea5kgStoneGenerator_editorplugin_x64d.dll",
 			"used": true
 		}
 	],
@@ -124,7 +330,7 @@
 		{
 			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/cmake",
 			"used": true,
-			"expanded": true
+			"expanded": false
 		},
 		{
 			"path": "bin/plugins",
@@ -134,12 +340,47 @@
 		{
 			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/src",
 			"used": true,
+			"expanded": false
+		},
+		{
+			"path": "data",
+			"used": true,
+			"expanded": false
+		},
+		{
+			"path": "data/plugins/Sea5kg/StoneGenerator/textures",
+			"used": true,
+			"expanded": false
+		},
+		{
+			"path": "data/plugins",
+			"used": true,
+			"expanded": true
+		},
+		{
+			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/cmake/modules",
+			"used": true,
+			"expanded": true
+		},
+		{
+			"path": "source/plugins/Sea5kg",
+			"used": true,
+			"expanded": false
+		},
+		{
+			"path": "bin/plugins/Sea5kg",
+			"used": true,
+			"expanded": true
+		},
+		{
+			"path": "data/plugins/Sea5kg/StoneGenerator",
+			"used": true,
 			"expanded": true
 		},
 		{
 			"path": "source",
 			"used": true,
-			"expanded": true
+			"expanded": false
 		},
 		{
 			"path": "bin/plugins/Sea5kg/StoneGenerator",
@@ -154,20 +395,10 @@
 		{
 			"path": "bin",
 			"used": true,
-			"expanded": true
+			"expanded": false
 		},
 		{
-			"path": "source/plugins/Sea5kg/StoneGenerator_editorplugin/cmake/modules",
-			"used": true,
-			"expanded": true
-		},
-		{
-			"path": "source/plugins/Sea5kg",
-			"used": true,
-			"expanded": true
-		},
-		{
-			"path": "bin/plugins/Sea5kg",
+			"path": "data/plugins/Sea5kg",
 			"used": true,
 			"expanded": true
 		}
