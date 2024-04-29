@@ -101,7 +101,11 @@ void UnigineEditorPlugin_PrototypeStoneGenerator::click_about() {
         "<h2>Sea5kg Stone Generator</h2> <br>"
         "UnigineEditor Plugin for generation of meshes representing stones of various sizes and shapes.<br>"
         "Version: " + QString(PrototypeStoneGenerator_VERSION) + " <br>"
-        "Source-code: <a href='https://github.com/unigine-plugins/unigine-editor-prototype-stone-generator'>https://github.com/unigine-plugins/unigine-editor-prototype-stone-generator</a> <br>"
+        "Source-code: <a href='https://github.com/unigine-plugins/Sea5kgStoneGenerator_editorplugin'>https://github.com/unigine-plugins/Sea5kgStoneGenerator_editorplugin</a> <br>"
+        "Unigine Store: <a href='https://store.unigine.com/add-on/1ee2ef39-4458-6124-aefe-dbe1b97903ce/description'>https://store.unigine.com/add-on/1ee2ef39-4458-6124-aefe-dbe1b97903ce/description</a> <br>"
+        "Telegram: <a href='https://t.me/sea5kg_stonegenerator'>https://t.me/sea5kg_stonegenerator</a> <br>"
+        "Youtube Playlist: <a href='https://youtube.com/playlist?list=PL-Ky59xTi1WRCFocly-FhrFLLKwdbqEkO&feature=shared'>https://youtube.com/playlist?list=PL-Ky59xTi1WRCFocly-FhrFLLKwdbqEkO&feature=shared</a> <br>"
+
         "<hr/>"
         "Components and author(s):<ul>"
         "  <li>Evgenii Sopov (mrseakg@gmail.com) </li>"
