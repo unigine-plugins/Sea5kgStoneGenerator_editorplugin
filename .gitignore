@@ -1,6 +1,7 @@
 /bin
 /bin_double
 /bin_float
+/bin_pack
 /data/*
 !/data/plugins
 /data/plugins/*
