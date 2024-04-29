@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -1847,7 +1847,9 @@ UNIGINE_INLINE mat4 ortho(float l, float r, float b, float t, float n, float f)
 {
 	float rl = r - l;
 	float tb = t - b;
-	float fn = f - n;
+	rl = max(abs(rl), Consts::EPS) * sign(rl);
+	tb = max(abs(tb), Consts::EPS) * sign(tb);
+	float fn = max(f - n, Consts::EPS);
 	return mat4(
 		2.0f / rl, 0.0f, 0.0f, 0.0f,
 		0.0f, 2.0f / tb, 0.0f, 0.0f,
@@ -1859,7 +1861,9 @@ UNIGINE_INLINE mat4 frustum(float l, float r, float b, float t, float n, float f
 {
 	float rl = r - l;
 	float tb = t - b;
-	float fn = f - n;
+	rl = max(abs(rl), Consts::EPS) * sign(rl);
+	tb = max(abs(tb), Consts::EPS) * sign(tb);
+	float fn = max(f - n, Consts::EPS);
 	return mat4(
 		2.0f * n / rl, 0.0f, 0.0f, 0.0f,
 		0.0f, 2.0f * n / tb, 0.0f, 0.0f,
@@ -1873,10 +1877,10 @@ UNIGINE_INLINE mat4 perspective(float fov, float aspect, float n, float f)
 	float w = aspect;
 	if (!compare(fov, 90.0f))
 	{
-		h = tan(fov * Consts::DEG2RAD * 0.5f);
-		w = h * aspect;
+		h = max(tan(fov * Consts::DEG2RAD * 0.5f), Consts::EPS);
+		w = max(h * aspect, Consts::EPS);
 	}
-	float fn = f - n;
+	float fn = max(f - n, Consts::EPS);
 	return mat4(
 		1.0f / w, 0.0f, 0.0f, 0.0f,
 		0.0f, 1.0f / h, 0.0f, 0.0f,
@@ -2042,6 +2046,11 @@ UNIGINE_INLINE mat4 symmetryProjection(const mat4 &projection)
 	);
 }
 
+UNIGINE_INLINE float decomposePerspectiveFov(const mat4 &projection)
+{
+	return 2.0f * atan(1.0f/projection.m11) * Consts::RAD2DEG;
+}
+
 UNIGINE_INLINE bool isOrthoProjection(const mat4 &projection) { return projection.m32 == 0.0f; }
 UNIGINE_INLINE bool isPerspectiveProjection(const mat4 &projection) { return projection.m32 != 0.0f; }
 
@@ -2055,6 +2064,21 @@ UNIGINE_INLINE void decomposeProjection(const mat4 &projection, float &znear, fl
 	{
 		znear = projection.m23 / (projection.m22 - 1.0f);
 		zfar = projection.m23 / (projection.m22 + 1.0f);
+	}
+}
+
+UNIGINE_INLINE void decomposeProjection(const mat4 &projection, float &znear, float &zfar, float &fov)
+{
+	if (isOrthoProjection(projection))
+	{
+		znear = (projection.m23 + 1.0f) / projection.m22;
+		zfar = (projection.m23 - 1.0f) / projection.m22;
+		fov = 0.0f;
+	} else
+	{
+		znear = projection.m23 / (projection.m22 - 1.0f);
+		zfar = projection.m23 / (projection.m22 + 1.0f);
+		fov = decomposePerspectiveFov(projection);
 	}
 }
 

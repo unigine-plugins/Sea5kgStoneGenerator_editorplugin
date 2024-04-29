@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -783,9 +783,9 @@ struct alignas(16) BoundBox
 	{
 		return isValid() && insideValid(point, radius);
 	}
-	UNIGINE_INLINE bool inside(const vec3 &minimum, const vec3 &maximum) const
+	UNIGINE_INLINE bool inside(const vec3 &minimum_, const vec3 &maximum_) const
 	{
-		return isValid() && insideValid(minimum, maximum);
+		return isValid() && insideValid(minimum_, maximum_);
 	}
 
 	UNIGINE_INLINE bool insideValid(const vec3 &point) const
@@ -1072,6 +1072,27 @@ struct alignas(16) BoundBox
 				direction.z = 0.0f;
 			return sqrtFast(direction.length2());
 		#endif
+	}
+
+	UNIGINE_INLINE bool isCameraVisible(const vec3 &camera, float min_distance, float max_distance) const
+	{
+		float distance_min;
+		float distance_max;
+
+		#ifdef USE_SSE
+			{
+				__m128 direction = _mm_sub_ps(_mm_min_ps(_mm_max_ps(camera.vec, minimum.vec), maximum.vec), camera.vec);
+				direction = _mm_rcp_ss(_mm_rsqrt_ss(_mm_dot33_ps(direction, direction)));
+				_mm_store_ss(&distance_min, direction);
+			}
+			{
+				__m128 direction = _mm_sub_ps(_mm_min_ps(_mm_max_ps(camera.vec, minimum.vec), maximum.vec), camera.vec);
+				direction = _mm_rcp_ss(_mm_rsqrt_ss(_mm_dot33_ps(direction, direction)));
+				_mm_store_ss(&distance_max, direction);
+			}
+		#endif
+
+		return (distance_min <= max_distance) && (distance_max >= min_distance);
 	}
 };
 
@@ -1372,20 +1393,20 @@ struct alignas(16) BoundFrustum
 			&& inside_plane(planes[4], minimum, maximum)
 			&& inside_plane(planes[5], minimum, maximum);
 	}
-	UNIGINE_INLINE bool inside(const vec3 *points, int num_points) const
+	UNIGINE_INLINE bool inside(const vec3 *points_, int num_points) const
 	{
-		return bound_box.insideValid(points, num_points)
-			&& inside_plane(planes[0], points, num_points)
-			&& inside_plane(planes[1], points, num_points)
-			&& inside_plane(planes[2], points, num_points)
-			&& inside_plane(planes[3], points, num_points)
-			&& inside_plane(planes[4], points, num_points)
-			&& inside_plane(planes[5], points, num_points);
+		return bound_box.insideValid(points_, num_points)
+			&& inside_plane(planes[0], points_, num_points)
+			&& inside_plane(planes[1], points_, num_points)
+			&& inside_plane(planes[2], points_, num_points)
+			&& inside_plane(planes[3], points_, num_points)
+			&& inside_plane(planes[4], points_, num_points)
+			&& inside_plane(planes[5], points_, num_points);
 	}
 
 	UNIGINE_INLINE bool insideFast(const vec3 &point) const
 	{
-		return bound_box.inside(point)
+		return bound_box.insideValid(point)
 			&& (dot(planes[0], point) > 0.0)
 			&& (dot(planes[1], point) > 0.0)
 			&& (dot(planes[2], point) > 0.0)
@@ -1393,7 +1414,7 @@ struct alignas(16) BoundFrustum
 	}
 	UNIGINE_INLINE bool insideFast(const vec3 &point, float radius) const
 	{
-		return bound_box.inside(point, radius)
+		return bound_box.insideValid(point, radius)
 			&& (dot(planes[0], point) > -radius)
 			&& (dot(planes[1], point) > -radius)
 			&& (dot(planes[2], point) > -radius)
@@ -1407,13 +1428,13 @@ struct alignas(16) BoundFrustum
 			&& inside_plane(planes[2], minimum, maximum)
 			&& inside_plane(planes[3], minimum, maximum);
 	}
-	UNIGINE_INLINE bool insideFast(const vec3 *points, int num_points) const
+	UNIGINE_INLINE bool insideFast(const vec3 *points_, int num_points) const
 	{
-		return bound_box.insideValid(points, num_points)
-			&& inside_plane(planes[0], points, num_points)
-			&& inside_plane(planes[1], points, num_points)
-			&& inside_plane(planes[2], points, num_points)
-			&& inside_plane(planes[3], points, num_points);
+		return bound_box.insideValid(points_, num_points)
+			&& inside_plane(planes[0], points_, num_points)
+			&& inside_plane(planes[1], points_, num_points)
+			&& inside_plane(planes[2], points_, num_points)
+			&& inside_plane(planes[3], points_, num_points);
 	}
 
 	// inside bounds
@@ -1571,12 +1592,12 @@ struct alignas(16) BoundFrustum
 		vec3 z1 = offset + direction * radius;
 
 		// check visibility
-		vec3 points[8] = {
+		vec3 checked_points[8] = {
 			x0 + y0 + z0, x0 - y0 + z0, -x0 - y0 + z0, -x0 + y0 + z0,
 			x1 + y1 + z1, x1 - y1 + z1, -x1 - y1 + z1, -x1 + y1 + z1,
 		};
 
-		return insideFast(points, 8);
+		return insideFast(checked_points, 8);
 	}
 
 private:

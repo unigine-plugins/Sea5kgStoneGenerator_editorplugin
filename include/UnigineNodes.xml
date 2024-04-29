@@ -4,6 +4,32 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
+		<member name="M:Unigine.NodeAnimationPlayback.#ctor">
+			<summary>
+			Constructor. Creates an instance of the class with default parameters.
+			</summary>  
+		</member>
+		<member name="M:Unigine.NodeAnimationPlayback.type">
+			<summary>
+			Returns the type of the node.
+			</summary>  
+			<returns>NodeAnimationPlayback type identifier.</returns>
+		</member>
+		<member name="M:Unigine.NodeAnimationPlayback.play">
+			<summary>
+			Plays the animation playback either from the start or from the moment when the playback was paused (see ).
+			</summary>  
+		</member>
+		<member name="M:Unigine.NodeAnimationPlayback.pause">
+			<summary>
+			Pauses the animation playback, so the playback can be resumed from this moment upon calling .
+			</summary>  
+		</member>
+		<member name="M:Unigine.NodeAnimationPlayback.stop">
+			<summary>
+			Stops the animation playback.
+			</summary>  
+		</member>
 		<member name="M:Unigine.NodeDummy.#ctor">
 			<summary>
 			Constructor. Creates a dummy node.
@@ -118,7 +144,7 @@
 			Saves a node state into the Xml.
 			</summary> 
 			<param name="xml"> Xml smart pointer. </param> 
-			<returns>Returns 1 if the node state was successfully saved; otherwise, 0 is returned.</returns>
+			<returns>1 if the node state was successfully saved; otherwise, 0 is returned.</returns>
 		</member>
 		<member name="M:Unigine.NodeExternBase.swap(NodeExternBase)">
 			<summary>
@@ -209,65 +235,27 @@
 			Constructor. Creates a new trigger node.
 			</summary>  
 		</member>
-		<member name="M:Unigine.NodeTrigger.addEnabledCallback(Unigine.CallbackBase1{Unigine.Ptr{NodeTrigger}})">
-			<summary>
-			Sets a pointer to a callback to be fired when the trigger node is enabled or disabled. The callback function must receive a NodeTrigger as its first argument. In addition, it can also take 2 arguments of any type.
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added enabled callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.NodeTrigger.removeEnabledCallback(void)">
-			<summary>
-			Removes the specified callback from the list of enabled callbacks.
-			</summary> 
-			<param name="id"> Enabled callback ID obtained when adding it. </param> 
-			<returns>True if the enabled callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.NodeTrigger.clearEnabledCallbacks">
-			<summary>
-			Clears all added enabled callbacks.
-			</summary>  
-		</member>
 		<member name="M:Unigine.NodeTrigger.setEnabledCallbackName(char)">
 			<summary>
-			Sets a callback function to be fired when the trigger node is enabled. The callback function must be implemented in the world script (on the UnigineScript side). The callback function can take no arguments, a Node or a NodeTrigger.					The method allows for setting a callback with 0 or 1 argument only. To set the callback with additional arguments, use setEnabledCallback().On UnigineScript side:
+			Sets a callback function to be fired when the trigger node is enabled. The callback function must be implemented in the world script (on the UnigineScript side). The callback function can take no arguments, a					Nodeor a					NodeTrigger.					The method allows for setting a callback with 0 or 1 argument only.					On UnigineScript side:
 			</summary> 
 			<param name="name"> Name of the callback function implemented in the world script (UnigineScript side). </param> 
 		</member>
-		<member name="M:Unigine.NodeTrigger.getEnabledCallbackName">
+		<member name="M:Unigine.NodeTrigger.getEnabledCallbackName const">
 			<summary>
-			Returns the name of callback function to be fired on enabling the trigger node. This callback function is set via setEnabledCallbackName().
+			Returns the name of callback function to be fired on enabling the trigger node. This callback function is set via					setEnabledCallbackName().
 			</summary>  
 			<returns>Name of the callback function implemented in the world script (UnigineScript side).</returns>
 		</member>
-		<member name="M:Unigine.NodeTrigger.addPositionCallback(Unigine.CallbackBase1{Unigine.Ptr{NodeTrigger}})">
-			<summary>
-			Adds a pointer to a callback to be fired when the trigger node position has changed. The callback function must receive a NodeTrigger as its first argument. In addition, it can also take 2 arguments of any type.
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added position callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.NodeTrigger.removePositionCallback(void)">
-			<summary>
-			Removes the specified callback from the list of position callbacks.
-			</summary> 
-			<param name="id"> Position callback ID obtained when adding it. </param> 
-			<returns>True if the position callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.NodeTrigger.clearPositionCallbacks">
-			<summary>
-			Clears all added position callbacks.
-			</summary>  
-		</member>
 		<member name="M:Unigine.NodeTrigger.setPositionCallbackName(char)">
 			<summary>
-			Sets a callback function to be fired when the trigger node position has changed. The callback function must be implemented in the world script (on the UnigineScript side). The callback function can take no arguments, a Node or a NodeTrigger.					The method allows for setting a callback with 0 or 1 argument only. To set the callback with additional arguments, use setPositionCallback().On UnigineScript side:
+			Sets a callback function to be fired when the trigger node position has changed. The callback function must be implemented in the world script (on the UnigineScript side). The callback function can take no arguments, a					Nodeor a					NodeTrigger.					The method allows for setting a callback with 0 or 1 argument only.					On UnigineScript side:
 			</summary> 
 			<param name="name"> Name of the callback function implemented in the world script (UnigineScript side). </param> 
 		</member>
-		<member name="M:Unigine.NodeTrigger.getPositionCallbackName">
+		<member name="M:Unigine.NodeTrigger.getPositionCallbackName const">
 			<summary>
-			Returns the name of callback function to be fired on changing the trigger node position. This function is set by using the setPositionCallbackName() function.
+			Returns the name of callback function to be fired on changing the trigger node position. This function is set by using the					setPositionCallbackName()function.
 			</summary>  
 			<returns>Name of the callback function implemented in the world script (UnigineScript side).</returns>
 		</member>
@@ -275,7 +263,7 @@
 			<summary>
 			Returns the type of the node.
 			</summary>  
-			<returns>NodeTrigger type identifier.</returns>
+			<returns>NodeTriggertype identifier.</returns>
 		</member>
 	</members>
 </doc>

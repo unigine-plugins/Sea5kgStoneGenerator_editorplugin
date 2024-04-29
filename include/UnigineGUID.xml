@@ -6,7 +6,10 @@
 	<members>
 		<member name="M:Unigine.Hasher class.create(Unigine.UGUID)">
 			<summary>
-			</summary>  
+			Converts the given value to the type supported by the hash table. For example:
+			</summary> 
+			<param name="v"> The value to convert from. </param> 
+			<returns>The converted value supported by the hash table.</returns>
 		</member>
 		<member name="M:Unigine.UGUID.#ctor">
 			<summary>

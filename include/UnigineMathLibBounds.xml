@@ -39,8 +39,8 @@
 			<summary>
 			Constructor. Initialization by minimum and maximum coordinates of the bounding box.
 			</summary> 
-			<param name="min"> Bounding box minimum coordinates. </param>
-			<param name="max"> Bounding box maximum coordinates. </param> 
+			<param name="minimum"> Bounding box minimum coordinates. </param>
+			<param name="maximum"> Bounding box maximum coordinates. </param> 
 		</member>
 		<member name="M:Unigine.BoundBox.#ctor(float,float,float,float,float,float)">
 			<summary>
@@ -75,7 +75,7 @@
 			<summary>
 			Sets the bounding box by its minimum and maximum coordinates.
 			</summary> 
-			<param name="min"> Minimum coordinates of the bounding box. </param>
+			<param name="min_"> Minimum coordinates of the bounding box. </param>
 			<param name="max"> Maximum coordinates of the bounding box. </param> 
 		</member>
 		<member name="M:Unigine.BoundBox.set(Unigine.Math.vec3,int)">
@@ -195,8 +195,8 @@
 			<summary>
 			Checks if the box with the given coordinates is inside the current bounding box.
 			</summary> 
-			<param name="min"> Minimum coordinates of the box. </param>
-			<param name="max"> Maximum coordinates of the box. </param> 
+			<param name="minimum"> Minimum coordinates of the box. </param>
+			<param name="maximum"> Maximum coordinates of the box. </param> 
 			<returns>true if the box is inside the bounding box; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.BoundBox.inside(Unigine.BoundSphere) const">
@@ -240,8 +240,8 @@
 			<summary>
 			Checks if the box is inside the bounding box.					The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.
 			</summary> 
-			<param name="min"> Box minimum coordinates. </param>
-			<param name="max"> Box maximum coordinates. </param> 
+			<param name="min_"> Box minimum coordinates. </param>
+			<param name="max_"> Box maximum coordinates. </param> 
 			<returns>true if the box is inside the bounding box; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.BoundBox.insideValid(Unigine.BoundSphere) const">
@@ -401,6 +401,15 @@
 			Checks the bounding box status.
 			</summary>  
 			<returns>true if the bounding box minimum and maximum coordinates are valid; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.BoundBox.isCameraVisible(Unigine.vec3,float,float) const">
+			<summary>
+			Returns a value indicating if the bounding box bounding box is within the camera visibility distance.
+			</summary> 
+			<param name="camera"> Coordinates of the camera position. </param>
+			<param name="min_distance"> Minimum visibility distance, in meters. </param>
+			<param name="max_distance"> Maximum visibility distance, in meters. </param> 
+			<returns>true if the bounding box is within the camera visibility distance; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.BoundFrustum.BoundFrustum">
 			<summary>
@@ -1146,12 +1155,12 @@
 		</member>
 		<member name="M:Unigine.BoundSphere.isCameraVisible(Unigine.vec3,float,float) const">
 			<summary>
-			Returns a value indicating if the bounding sphere is visible fro the camera.
+			Returns a value indicating if the bounding sphere is within the camera visibility distance.
 			</summary> 
 			<param name="camera"> Coordinates of the camera position. </param>
 			<param name="min_distance"> Minimum visibility distance, in meters. </param>
 			<param name="max_distance"> Maximum visibility distance, in meters. </param> 
-			<returns>true if the bounding sphere radius has a positive value; otherwise, false.</returns>
+			<returns>true if the bounding sphere is within the camera visibility distance; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.WorldBoundBox.WorldBoundBox">
 			<summary>

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -56,9 +56,9 @@ public:
 		memcpy(str, g.str, sizeof(str));
 		return *this;
 	}
-	UNIGINE_INLINE UGUID &operator=(const char *str)
+	UNIGINE_INLINE UGUID &operator=(const char *str_)
 	{
-		setString(str);
+		setString(str_);
 		return *this;
 	}
 
@@ -203,16 +203,16 @@ private:
 	static constexpr size_t NUM_VALUE_INT = 5;
 
 	UNIGINE_INLINE char *get_str_data() { return str + PREFIX_SIZE; }
-	void read_string(const char *str)
+	void read_string(const char *str_)
 	{
 		int index = 0;
-		while (*str)
+		while (*str_)
 		{
 			unsigned int &value = value_int[index++];
 			int value_size = 8;
 			while (value_size--)
 			{
-				char c = *str++;
+				char c = *str_++;
 				if (c >= '0' && c <= '9')
 					value = (value << 4) + (c - '0');
 				else if (c >= 'a' && c <= 'f')

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -18,15 +18,16 @@
 namespace Unigine
 {
 
-namespace
+namespace CRC32Table
 {
-static unsigned int endian(unsigned int v)
+
+UNIGINE_INLINE unsigned int endian(unsigned int v)
 {
 	v = ((v << 8) & 0xff00ff00) | ((v >> 8) & 0x00ff00ff);
 	return (v << 16) | (v >> 16);
 }
 
-constexpr unsigned int crc32_table[256] = {
+constexpr unsigned int table[256] = {
 	0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f, 0xe963a535, 0x9e6495a3,
 	0x0edb8832, 0x79dcb8a4, 0xe0d5e91e, 0x97d2d988, 0x09b64c2b, 0x7eb17cbd, 0xe7b82d07, 0x90bf1d91,
 	0x1db71064, 0x6ab020f2, 0xf3b97148, 0x84be41de, 0x1adad47d, 0x6ddde4eb, 0xf4d4b551, 0x83d385c7,
@@ -61,20 +62,19 @@ constexpr unsigned int crc32_table[256] = {
 	0xb3667a2e, 0xc4614ab8, 0x5d681b02, 0x2a6f2b94, 0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d,
 };
 
-}
+} // namespace CRC32Table
 
 class CRC32
 {
 public:
 	UNIGINE_INLINE CRC32() { begin(); }
-	UNIGINE_INLINE ~CRC32() {}
 
 	UNIGINE_INLINE void begin() { value = 0xffffffff; }
 	UNIGINE_INLINE void update(const void *data, int size)
 	{
 		const unsigned char *d = (const unsigned char *)data;
 		for (int i = 0; i < size; i++)
-			value = crc32_table[(value ^ (*d++)) & 0xff] ^ (value >> 8);
+			value = CRC32Table::table[(value ^ (*d++)) & 0xff] ^ (value >> 8);
 	}
 	UNIGINE_INLINE int end()
 	{
@@ -87,7 +87,7 @@ public:
 	{
 		CRC32 crc32;
 		crc32.update(data, size);
-		return big_endian ? crc32.end() : endian(crc32.end());
+		return big_endian ? crc32.end() : CRC32Table::endian(crc32.end());
 	}
 
 	UNIGINE_INLINE static unsigned int calcCrc32(const void *data, int size)
@@ -96,7 +96,7 @@ public:
 		const unsigned char *p = (const unsigned char *)data;
 		const unsigned char *q = p + size;
 		while (p < q)
-			crc = (crc >> 8) ^ crc32_table[(crc ^ *p++) & 0xff];
+			crc = (crc >> 8) ^ CRC32Table::table[(crc ^ *p++) & 0xff];
 		return ~crc;
 	}
 
@@ -108,7 +108,6 @@ class MD5
 {
 public:
 	UNIGINE_INLINE MD5() { begin(); }
-	UNIGINE_INLINE ~MD5() {}
 
 	UNIGINE_INLINE void begin()
 	{
@@ -181,7 +180,7 @@ public:
 		transform(state, buffer);
 
 		for (int i = 0; i < 4; ++i)
-			value[i] = big_endian ? endian(state[i]) : state[i];
+			value[i] = big_endian ? CRC32Table::endian(state[i]) : state[i];
 	}
 	void endD3D(unsigned int *value)
 	{
@@ -237,7 +236,7 @@ public:
 	}
 
 private:
-	void transform(unsigned int *state, const unsigned int *data)
+	static void transform(unsigned int *state, const unsigned int *data)
 	{
 		unsigned int a = state[0];
 		unsigned int b = state[1];
@@ -346,7 +345,6 @@ class SHA1
 {
 public:
 	UNIGINE_INLINE SHA1() { begin(); }
-	UNIGINE_INLINE ~SHA1() {}
 
 	UNIGINE_INLINE void begin()
 	{
@@ -415,12 +413,12 @@ public:
 		} else
 			memset(b, 0, size);
 
-		buffer[14] = endian(counter[1]);
-		buffer[15] = endian(counter[0]);
+		buffer[14] = CRC32Table::endian(counter[1]);
+		buffer[15] = CRC32Table::endian(counter[0]);
 		transform(state, buffer);
 
 		for (int i = 0; i < 5; ++i)
-			value[i] = big_endian ? state[i] : endian(state[i]);
+			value[i] = big_endian ? state[i] : CRC32Table::endian(state[i]);
 	}
 
 	// calculate checksum for the single data block
@@ -440,7 +438,7 @@ public:
 	}
 
 private:
-	void transform(unsigned int *state, const unsigned int *src)
+	static void transform(unsigned int *state, const unsigned int *src)
 	{
 		unsigned int a = state[0];
 		unsigned int b = state[1];
@@ -470,7 +468,7 @@ private:
 
 		unsigned int data[80];
 		for (int i = 0; i < 16; i++)
-			data[i] = endian(src[i]);
+			data[i] = CRC32Table::endian(src[i]);
 		for (int i = 16; i < 80; i++)
 		{
 			unsigned int v = data[i - 3] ^ data[i - 8] ^ data[i - 14] ^ data[i - 16];
@@ -646,8 +644,8 @@ public:
 		buffer[56] = (unsigned char)(bit_len >> 56);
 		transform();
 
-		for (int i = 0; i < 8; ++i)
-			value[i] = big_endian ? state[i] : endian(state[i]);
+		for (int k = 0; k < 8; ++k)
+			value[k] = big_endian ? state[k] : CRC32Table::endian(state[k]);
 	}
 
 	UNIGINE_INLINE static int calculate(const void *data, int size, bool big_endian = true)

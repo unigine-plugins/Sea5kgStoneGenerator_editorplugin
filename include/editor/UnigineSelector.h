@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -31,9 +31,9 @@ namespace UnigineEditor
 class IndexList;
 
 namespace Internal {
-class SelectorGUIDsPrivate;
-class SelectorNodesPrivate;
-class IndexListPrivate;
+struct SelectorGUIDsPrivate;
+struct SelectorNodesPrivate;
+struct IndexListPrivate;
 }}
 
 
@@ -58,6 +58,9 @@ enum SelectorType
 ////////////////////////////////////////////////////////////////////////////////
 // Selector.
 ////////////////////////////////////////////////////////////////////////////////
+/// <summary>
+/// Selector class. This is a base class for all selector-classes used to manage current selection (nodes, materials, properties, runtimes...) in the Editor.
+/// </summary>
 class UNIGINE_EDITOR_API Selector
 {
 public:
@@ -85,11 +88,11 @@ public:
 	/// <summary> Creates a runtimes selector using the specified list of GUIDs.</summary>
 	/// <param name="guids"> The list of GUIDs of runtimes.</param>
 	/// <returns> SelectorGUIDs containing runtimes with the specified GUIDs.</returns>
-	static SelectorGUIDs *createRuntimesSelector  (Unigine::Vector<Unigine::UGUID> guids);
+	static SelectorGUIDs *createRuntimesSelector(Unigine::Vector<Unigine::UGUID> guids);
 	/// <summary> Creates a materials selector using the specified list of GUIDs.</summary>
 	/// <param name="guids"> The list of GUIDs of materials.</param>
 	/// <returns> SelectorGUIDs containing materials with the specified GUIDs.</returns>
-	static SelectorGUIDs *createMaterialsSelector (Unigine::Vector<Unigine::UGUID> guids);
+	static SelectorGUIDs *createMaterialsSelector(Unigine::Vector<Unigine::UGUID> guids);
 	/// <summary> Creates a properties selector using the specified list of GUIDs.</summary>
 	/// <param name="guids"> The list of GUIDs of properties.</param>
 	/// <returns> SelectorGUIDs containing properties with the specified GUIDs.</returns>
@@ -115,7 +118,7 @@ public:
 
 	/// <summary> Returns the list of GUIDs for all selected items.</summary>
 	/// <returns> Vector containing GUIDs for all selected items.</returns>
-	Unigine::Vector<Unigine::UGUID> guids() const;
+	const Unigine::Vector<Unigine::UGUID> &getGUIDs() const;
 
 	/// <summary> Checks whether the SelectorGUIDs contains the specified GUID.</summary>
 	/// <returns> <b>true</b> if the current selection contains the specified GUID; otherwise, <b>false</b>.</returns>
@@ -172,6 +175,9 @@ public:
 		/// <summary> Excludes all subitems of the specified type from the list.</summary>
 		/// <param name="sub"> Type of subitems to be excluded from the list. One of the <see cref="Constants::SubObjectType"/> enum values.</param>
 		virtual void exclude(Constants::SubObjectType sub) = 0;
+		/// <summary> Deletes invalid list items of a specific node.</summary>
+		/// <param name="node"> Specific node.</param>
+		virtual void validate(const Unigine::NodePtr &node) = 0;
 
 		virtual SubItemList *clone() const = 0;
 	};
@@ -193,7 +199,7 @@ public:
 
 	/// <summary> Returns the list of all selected nodes.</summary>
 	/// <returns> Vector containing all selected.</returns>
-	Unigine::Vector<Unigine::NodePtr> getNodes() const;
+	const Unigine::Vector<Unigine::NodePtr> &getNodes() const;
 	/// <summary> Returns the number of selected nodes.</summary>
 	/// <returns> Number of selected nodes.</returns>
 	int size() const;
@@ -344,6 +350,10 @@ public:
 	/// <param name="stype"> Subitem type. One of the <see cref="Constants::SubObjectType"/> enum values.</param>
 	/// <returns> Number of indices of subitems of the specified type.</returns>
 	int size(Constants::SubObjectType stype) const;
+
+	/// <summary> Deletes invalid list items of a specific node.</summary>
+	/// <param name="node"> Specific node.</param>
+	void validate(const Unigine::NodePtr &node) override;
 
 	/// <summary> Clones the index list.</summary>
 	/// <returns> Clone of the index list.</returns>

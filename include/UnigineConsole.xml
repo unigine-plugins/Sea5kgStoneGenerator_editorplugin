@@ -459,25 +459,6 @@
 			</summary>  
 			<returns>The number of available console variables.</returns>
 		</member>
-		<member name="M:Unigine.Console.addOutputCallback(Unigine.CallbackBase2{char,int})">
-			<summary>
-			Adds a callback function that will be executed when a text is output to the console. The function is useful when you implement a custom console, for example. The callback function must receive 2 arguments:																		const char *text - a text that is output to the console,																			int level - one of the							LEVEL_* variables that indicate the type of the output text. The value can be important for setting a color for console messages, for example.
-			</summary> 
-			<param name="func"> The callback pointer. The callback arguments must be: (const char *text, int level). </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Console.removeOutputCallback(void)">
-			<summary>
-			Removes the specified callback from the list of output callbacks.
-			</summary> 
-			<param name="id"> Callback ID obtained when adding it. </param> 
-			<returns>True if the callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.Console.clearOutputCallbacks">
-			<summary>
-			Clears all added output callbacks.
-			</summary>  
-		</member>
 		<member name="M:Unigine.Console.setPrompt(char)">
 			<summary>
 			Updates the console prompt. The default prompt is Unigine~#.
@@ -1034,11 +1015,6 @@
 			<param name="format"> Formatted text. </param>
 			<param name=""> Arguments, multiple allowed. </param> 
 		</member>
-		<member name="F:Unigine.Console.LEVEL_ERROR">
-			<summary>
-			An error message.
-		</summary>
-		</member>
 		<member name="F:Unigine.Console.LEVEL_NORMAL">
 			<summary>
 			An ordinary message.
@@ -1047,6 +1023,11 @@
 		<member name="F:Unigine.Console.LEVEL_WARNING">
 			<summary>
 			A warning.
+		</summary>
+		</member>
+		<member name="F:Unigine.Console.LEVEL_ERROR">
+			<summary>
+			An error message.
 		</summary>
 		</member>
 	</members>

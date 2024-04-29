@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -48,10 +48,10 @@ public:
 	using Iterator = typename Parent::Iterator;
 	using ConstIterator = typename Parent::ConstIterator;
 
-    // STL compatibility
+	// STL compatibility
 	using iterator = typename Parent::iterator;
 	using const_iterator = typename Parent::const_iterator;
-    using value_type = Key;
+	using value_type = Key;
 
 	HashSet() noexcept
 	{

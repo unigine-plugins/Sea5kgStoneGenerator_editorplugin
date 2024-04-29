@@ -121,18 +121,6 @@
 			<param name="loop"> Flag indicating if the path is looped. The default is 0 (path isn't looped). </param> 
 			<returns>Linear velocity. If the amount of frames is equal to 0 or 1, the function returns the (0,0,0) vector.</returns>
 		</member>
-		<member name="M:Unigine.Path.setNumFrames(int)">
-			<summary>
-			Sets the new number of frames.
-			</summary> 
-			<param name="frames"> Number of frames to be set. </param> 
-		</member>
-		<member name="M:Unigine.Path.getNumFrames">
-			<summary>
-			Returns the number of the path frames.
-			</summary>  
-			<returns>Number of path frames.</returns>
-		</member>
 		<member name="M:Unigine.Path.getPosition(float,int)">
 			<summary>
 			Returns the position of the object moving along the path at the specified time. If the path transformation is non-looped and the specified time is bigger than path transformation, the last path position will be returned. If the path transformation is looped, several loops can be used to count off time.

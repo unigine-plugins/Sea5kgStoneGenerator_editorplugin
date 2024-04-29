@@ -605,36 +605,6 @@
 			<param name="node_type"> Node type. </param> 
 			<returns>1 if shader combination for the given rendering pass and node type was compiled successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Material.fetchShader(Render::PASS)">
-			<summary>
-			Returns the rendering shader for the specified rendering pass.
-			</summary> 
-			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param> 
-			<returns>Shader for the specified rendering pass.</returns>
-		</member>
-		<member name="M:Unigine.Material.fetchShader(Render::PASS,Node::TYPE)">
-			<summary>
-			Returns the rendering shader for the specified rendering pass and node type.
-			</summary> 
-			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param>
-			<param name="node_type"> Node type. </param> 
-			<returns>Shader for the specified rendering pass and node type.</returns>
-		</member>
-		<member name="M:Unigine.Material.fetchShader(char)">
-			<summary>
-			Returns the rendering shader for the specified rendering pass.
-			</summary> 
-			<param name="pass_name"> Rendering pass name. One of the following:wireframevisualizer_soliddeferredauxiliaryemissionreflectionrefractiontransparent_blurambientlight_voxel_probelight_environment_probelight_omnilight_projlight_worldshadowdepth_pre_passpostobject_post </param> 
-			<returns>Shader for the specified rendering pass.</returns>
-		</member>
-		<member name="M:Unigine.Material.fetchShader(char,int)">
-			<summary>
-			Returns the rendering shader for the specified rendering pass and node type.
-			</summary> 
-			<param name="pass_name"> Rendering pass name. One of the following:wireframevisualizer_soliddeferredauxiliaryemissionreflectionrefractiontransparent_blurambientlight_voxel_probelight_environment_probelight_omnilight_projlight_worldshadowdepth_pre_passpostobject_post </param>
-			<param name="node"> Node type. </param> 
-			<returns>Shader for the specified rendering pass and node type.</returns>
-		</member>
 		<member name="M:Unigine.Material.isStateInternal(int) const">
 			<summary>
 			Returns a value indicating if a given state is internal.
@@ -842,7 +812,7 @@
 		</member>
 		<member name="M:Unigine.Material.canRenderNode const">
 			<summary>
-			Returns a value indicating if the marial can be rendered for at least one type of nodes.
+			Returns a value indicating if the material can be rendered for at least one type of nodes.
 			</summary>  
 			<returns>true if the material is rendered for at least one type of nodes; otherwise, false.</returns>
 		</member>
@@ -1399,7 +1369,75 @@
 		</member>
 		<member name="M:Unigine.Material.isReflection2D const">
 			<summary>
+			Returns a value indicating if the material has a 2d reflection texture.
 			</summary>  
+			<returns>true if the material has a 2d reflection texture; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.getShaderAsync(Render::PASS,int)">
+			<summary>
+			Returns the rendering shader for the specified rendering pass and node type:											If the shader has been compiled previously, the function will return it immediately.						If the shader hasn't been compiled yet, the function will initiate its asynchronous compilation in another thread and return the successfully compiled shader. 							The function will keep returning nullptr until the shader is compiled.										To compile the shader asynchronously, enable the asynchronous compilation mode. Otherwise, the function will work the same as getShaderForce().
+			</summary> 
+			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param>
+			<param name="node"> Node type. </param> 
+			<returns>Shader for the specified rendering pass and node type, if compiled successfully. Otherwise, nullptr.</returns>
+		</member>
+		<member name="M:Unigine.Material.getShaderAsync(Render::PASS)">
+			<summary>
+			Returns the rendering shader for the specified rendering pass:											If the shader has been compiled previously, the function will return it immediately.						If the shader hasn't been compiled yet, the function will initiate its asynchronous compilation in another thread and return the successfully compiled shader. 							The function will keep returning nullptr until the shader is compiled.										To compile the shader asynchronously, enable the asynchronous compilation mode. Otherwise, the function will work the same as getShaderForce().
+			</summary> 
+			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param> 
+			<returns>Shader for the specified rendering pass, if compiled successfully. Otherwise, nullptr.</returns>
+		</member>
+		<member name="M:Unigine.Material.getShaderAsync(char,int)">
+			<summary>
+			Returns the rendering shader for the specified rendering pass and node type:											If the shader has been compiled previously, the function will return it immediately.						If the shader hasn't been compiled yet, the function will initiate its asynchronous compilation in another thread and return the successfully compiled shader. 							The function will keep returning nullptr until the shader is compiled.										To compile the shader asynchronously, enable the asynchronous compilation mode. Otherwise, the function will work the same as getShaderForce().
+			</summary> 
+			<param name="pass"> Rendering pass name. One of the following:wireframevisualizer_soliddeferredauxiliaryemissionreflectionrefractiontransparent_blurambientlight_voxel_probelight_environment_probelight_omnilight_projlight_worldshadowdepth_pre_passpostobject_post </param>
+			<param name="node"> Node type. </param> 
+			<returns>Shader for the specified rendering pass and node type, if compiled successfully. Otherwise, nullptr.</returns>
+		</member>
+		<member name="M:Unigine.Material.getShaderAsync(char)">
+			<summary>
+			Returns the rendering shader for the specified rendering pass:											If the shader has been compiled previously, the function will return it immediately.						If the shader hasn't been compiled yet, the function will initiate its asynchronous compilation in another thread and return the successfully compiled shader. 							The function will keep returning nullptr until the shader is compiled.										To compile the shader asynchronously, enable the asynchronous compilation mode. Otherwise, the function will work the same as getShaderForce().
+			</summary> 
+			<param name="pass"> Rendering pass name. One of the following:wireframevisualizer_soliddeferredauxiliaryemissionreflectionrefractiontransparent_blurambientlight_voxel_probelight_environment_probelight_omnilight_projlight_worldshadowdepth_pre_passpostobject_post </param> 
+			<returns>Shader for the specified rendering pass, if compiled successfully. Otherwise, nullptr.</returns>
+		</member>
+		<member name="M:Unigine.Material.getShaderForce(Render::PASS,int)">
+			<summary>
+			Returns the rendering shader for the specified rendering pass and node type:											If the shader has been compiled previously, the function will return it immediately.						If the shader hasn't been compiled yet, the function will immediately compile and return it.										The function causes a spike because it compiles the shader in the current thread.
+			</summary> 
+			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param>
+			<param name="node"> Node type. </param> 
+			<returns>Shader for the specified rendering pass and node type, if compiled successfully. Otherwise, nullptr.</returns>
+		</member>
+		<member name="M:Unigine.Material.getShaderForce(Render::PASS)">
+			<summary>
+			Returns the rendering shader for the specified rendering pass:											If the shader has been compiled previously, the function will return it immediately.						If the shader hasn't been compiled yet, the function will immediately compile and return it.										The function causes a spike because it compiles the shader in the current thread.
+			</summary> 
+			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param> 
+			<returns>Shader for the specified rendering pass, if compiled successfully. Otherwise, nullptr.</returns>
+		</member>
+		<member name="M:Unigine.Material.getShaderForce(char,int)">
+			<summary>
+			Returns the rendering shader for the specified rendering pass and node type:											If the shader has been compiled previously, the function will return it immediately.						If the shader hasn't been compiled yet, the function will immediately compile and return it.										The function causes a spike because it compiles the shader in the current thread.
+			</summary> 
+			<param name="pass"> Rendering pass name. One of the following:wireframevisualizer_soliddeferredauxiliaryemissionreflectionrefractiontransparent_blurambientlight_voxel_probelight_environment_probelight_omnilight_projlight_worldshadowdepth_pre_passpostobject_post </param>
+			<param name="node"> Node type. </param> 
+			<returns>Shader for the specified rendering pass and node type, if compiled successfully. Otherwise, nullptr.</returns>
+		</member>
+		<member name="M:Unigine.Material.getShaderForce(char)">
+			<summary>
+			Returns the rendering shader for the specified rendering pass:											If the shader has been compiled previously, the function will return it immediately.						If the shader hasn't been compiled yet, the function will immediately compile and return it.										The function causes a spike because it compiles the shader in the current thread.
+			</summary> 
+			<param name="pass"> Rendering pass name. One of the following:wireframevisualizer_soliddeferredauxiliaryemissionreflectionrefractiontransparent_blurambientlight_voxel_probelight_environment_probelight_omnilight_projlight_worldshadowdepth_pre_passpostobject_post </param> 
+			<returns>Shader for the specified rendering pass, if compiled successfully. Otherwise, nullptr.</returns>
+		</member>
+		<member name="M:Unigine.Material.compileShaders(bool)">
+			<summary>
+			Compiles all shaders for the current material and its children (if any).
+			</summary> 
+			<param name="recursive"> true to compile shaders for child material; otherwise, false. </param> 
 		</member>
 		<member name="F:Unigine.Material.WIDGET_EDIT_INT">
 			<summary>
@@ -1974,6 +2012,41 @@
 		<member name="F:Unigine.Material.OPTION_DEPTH_PRE_PASS">
 			<summary>
 			Depth pre-pass rendering, i.e. an additional depth buffer rendering pass is performed for the material in the beginning of the rendering sequence. Performed only for alpha test and complex materials.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_OPACITY_DEPTH_REPROJECTION_BACK">
+			<summary>
+			Texture of this type stores depth data for opaque geometry reprojected from the previous frame.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_MIN_DISTANCE">
+			<summary>
+			Texture of this type stores data from the minimum distance buffer.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_INDIRECT_SPECULAR">
+			<summary>
+			Texture of this type stores indirect specular light.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_INDIRECT_DIFFUSE">
+			<summary>
+			Texture of this type stores indirect diffuse light.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_LIGHTING_INFORMATION_LOST">
+			<summary>
+			Texture of this type stores pixels missing from the previous frame.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_INDIRECT_LIGHTS">
+			<summary>
+			Texture of this type stores indirect lights.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_GBUFFER_LIGHTMAP">
+			<summary>
+			Texture of this type uses a G-buffer to store lightmap data.
 		</summary>
 		</member>
 	</members>

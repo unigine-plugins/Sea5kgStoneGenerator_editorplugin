@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -130,7 +130,7 @@ typedef Ptr<AmbientSource> AmbientSourcePtr;
 class UNIGINE_API SoundSource : public Node
 {
 public:
-	static int type() { return Node::SOUND_SOURCE; }
+	static Node::TYPE type() { return Node::SOUND_SOURCE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<SoundSource> create(const char *name, int stream = 0);
@@ -189,7 +189,7 @@ typedef Ptr<SoundSource> SoundSourcePtr;
 class UNIGINE_API SoundReverb : public Node
 {
 public:
-	static int type() { return Node::SOUND_REVERB; }
+	static Node::TYPE type() { return Node::SOUND_REVERB; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<SoundReverb> create(const Math::vec3 &arg1);

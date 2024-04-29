@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -47,7 +47,7 @@ typedef Ptr<ParticlesField> ParticlesFieldPtr;
 class UNIGINE_API ParticlesFieldDeflector : public ParticlesField
 {
 public:
-	static int type() { return Node::PARTICLES_FIELD_DEFLECTOR; }
+	static Node::TYPE type() { return Node::PARTICLES_FIELD_DEFLECTOR; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ParticlesFieldDeflector> create();
@@ -66,7 +66,7 @@ typedef Ptr<ParticlesFieldDeflector> ParticlesFieldDeflectorPtr;
 class UNIGINE_API ParticlesFieldSpacer : public ParticlesField
 {
 public:
-	static int type() { return Node::PARTICLES_FIELD_SPACER; }
+	static Node::TYPE type() { return Node::PARTICLES_FIELD_SPACER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 

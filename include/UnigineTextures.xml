@@ -307,72 +307,6 @@
 			</summary>  
 			<returns>An Id of the buffer.</returns>
 		</member>
-		<member name="M:Unigine.StructuredBuffer.bindCompute(int)">
-			<summary>
-			Binds the StructuredBuffer to the compute shader type.
-			</summary> 
-			<param name="unit"> Number of the slot. </param> 
-		</member>
-		<member name="M:Unigine.StructuredBuffer.unbindCompute(int)">
-			<summary>
-			Unbinds the StructuredBuffer from the compute shader type.
-			</summary> 
-			<param name="unit"> Number of the slot. </param> 
-		</member>
-		<member name="M:Unigine.StructuredBuffer.bindControl(int)">
-			<summary>
-			Binds the StructuredBuffer to the tessellation control (hull) shader type.
-			</summary> 
-			<param name="unit"> Number of the slot. </param> 
-		</member>
-		<member name="M:Unigine.StructuredBuffer.unbindControl(int)">
-			<summary>
-			Unbinds the StructuredBuffer from the tessellation control (hull) shader type.
-			</summary> 
-			<param name="unit"> Number of the slot. </param> 
-		</member>
-		<member name="M:Unigine.StructuredBuffer.bindEvaluate(int)">
-			<summary>
-			Binds the StructuredBuffer to the tessellation evaluation (domain) shader type.
-			</summary> 
-			<param name="unit"> Number of the slot. </param> 
-		</member>
-		<member name="M:Unigine.StructuredBuffer.unbindEvaluate(int)">
-			<summary>
-			Unbinds the StructuredBuffer from the tessellation evaluation (domain) shader type.
-			</summary> 
-			<param name="unit"> Number of the slot. </param> 
-		</member>
-		<member name="M:Unigine.StructuredBuffer.bindFragment(int)">
-			<summary>
-			Binds the StructuredBuffer to the fragment shader type.
-			</summary> 
-			<param name="unit"> Number of the slot. </param> 
-		</member>
-		<member name="M:Unigine.StructuredBuffer.unbindFragment(int)">
-			<summary>
-			Unbinds the StructuredBuffer from the fragment shader type.
-			</summary> 
-			<param name="unit"> Number of the slot. </param> 
-		</member>
-		<member name="M:Unigine.StructuredBuffer.bindGeometry(int)">
-			<summary>
-			Binds the StructuredBuffer to the geometry shader type.
-			</summary> 
-			<param name="unit"> Number of the slot. </param> 
-		</member>
-		<member name="M:Unigine.StructuredBuffer.unbindGeometry(int)">
-			<summary>
-			Unbinds the StructuredBuffer from the geometry shader type.
-			</summary> 
-			<param name="unit"> Number of the slot. </param> 
-		</member>
-		<member name="M:Unigine.StructuredBuffer.bindVertex(int)">
-			<summary>
-			Binds the StructuredBuffer to the vertex shader type.
-			</summary> 
-			<param name="unit"> Number of the slot. </param> 
-		</member>
 		<member name="M:Unigine.StructuredBuffer.clear">
 			<summary>
 			Clears smart pointer.
@@ -401,12 +335,6 @@
 			<summary>
 			Destroys smart pointer.
 			</summary>  
-		</member>
-		<member name="M:Unigine.StructuredBuffer.unbindVertex(int)">
-			<summary>
-			Unbinds the StructuredBuffer from the vertex shader type.
-			</summary> 
-			<param name="unit"> Number of the slot. </param> 
 		</member>
 		<member name="M:Unigine.StructuredBuffer.setDebugName(char)">
 			<summary>
@@ -653,13 +581,6 @@
 			<param name="image"> Source image to be used for setting texture data. </param> 
 			<returns>1 if the data was set successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Texture.getImage(Unigine.Ptr{Unigine.Image}) const">
-			<summary>
-			Gets texture data and puts it to the specified target image.
-			</summary> 
-			<param name="image"> Target image, to which the texture data is to be put. </param> 
-			<returns>1 if the data was received; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Texture.setImage2D(Unigine.Ptr{Unigine.Image},int,int,int)">
 			<summary>
 			Sets texture data using the data of the specified 2D or 2D array image.					The following conditions must be satisfied:													Both texture and image types must be either 2D or 2D_ARRAY.							Texture resolution must be greater or equal to the image resolution.							Image and texture mipmap counts must be equal (the same is for layer counts of 2D arrays).
@@ -757,24 +678,6 @@
 			</summary> 
 			<param name="level"> Mipmap level number in the range from 0 to the total number of mipmaps. </param> 
 			<returns>Texture mipmap level width.</returns>
-		</member>
-		<member name="M:Unigine.Texture.bindCompute(int) const">
-			<summary>
-			Binds compute texture.
-			</summary> 
-			<param name="unit"> Texture unit. </param> 
-		</member>
-		<member name="M:Unigine.Texture.bindFragment(int) const">
-			<summary>
-			Binds fragment texture.
-			</summary> 
-			<param name="unit"> Texture unit. </param> 
-		</member>
-		<member name="M:Unigine.Texture.bindVertex(int) const">
-			<summary>
-			Binds vertex texture.
-			</summary> 
-			<param name="unit"> Texture unit. </param> 
 		</member>
 		<member name="M:Unigine.Texture.clear">
 			<summary>
@@ -986,24 +889,6 @@
 			<param name="y0"> The first Y-coordinate. </param>
 			<param name="x1"> The second X-coordinate. </param>
 			<param name="y1"> The second Y-coordinate. </param> 
-		</member>
-		<member name="M:Unigine.Texture.unbindCompute(int) const">
-			<summary>
-			Unbinds compute texture.
-			</summary> 
-			<param name="unit"> Texture unit. </param> 
-		</member>
-		<member name="M:Unigine.Texture.unbindFragment(int) const">
-			<summary>
-			Unbinds fragment texture.
-			</summary> 
-			<param name="unit"> Texture unit. </param> 
-		</member>
-		<member name="M:Unigine.Texture.unbindVertex(int) const">
-			<summary>
-			Unbinds vertex texture.
-			</summary> 
-			<param name="unit"> Texture unit. </param> 
 		</member>
 		<member name="M:Unigine.Texture.formatImageToTexture(int,int)">
 			<summary>
@@ -1625,24 +1510,11 @@
 			Returns texture flags.
 			</summary>  
 		</member>
-		<member name="M:Unigine.TextureRamp.addChangedCallback(Unigine.CallbackBase)">
+		<member name="M:Unigine.TextureRamp.setDefaultCurve(Unigine.Ptr{Curve2d})">
 			<summary>
-			Adds a callback function to be called on changing the ramp texture. The signature of the changed callback function must be as follows:					You can set a callback function as follows:
+			Resets a curve to a default one.
 			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added changed callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.TextureRamp.removeChangedCallback(void)">
-			<summary>
-			Removes the specified callback from the list of changed callbacks.
-			</summary> 
-			<param name="id"> Changed callback ID obtained when adding it. </param> 
-			<returns>True if the changed callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.TextureRamp.clearChangedCallbacks">
-			<summary>
-			Clears all added changed callbacks.
-			</summary>  
+			<param name="default_curve"> A curve to be used as the default one. </param> 
 		</member>
 		<member name="M:Unigine.TextureRamp.setDefaultCurve(int,Unigine.Ptr{Curve2d})">
 			<summary>

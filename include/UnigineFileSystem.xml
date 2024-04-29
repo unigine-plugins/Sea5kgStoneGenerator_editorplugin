@@ -4,27 +4,27 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.FileSystem.getMount(char)">
+		<member name="M:Unigine.FileSystem.getMount(char) const">
 			<summary>
 			Returns a mount point for the specified path.					This method will return the root mount for all files located directly in the data folder or its subfolders.
 			</summary> 
 			<param name="path"> File path, for which a mount point is to be found. It can be a relative, absolute, network, or virtual path.If you want to specify a path to an asset, you should use the asset path format (asset://). Otherwise, if you specify the regular path to the asset, it will be treated as the path to its runtime file (if any) from the .runtimes folder. </param> 
 			<returns>FileSystemMount class smart pointer on success; otherwise, nullptr.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.getMount(Unigine.UGUID)">
+		<member name="M:Unigine.FileSystem.getMount(Unigine.UGUID) const">
 			<summary>
 			Returns a mount point for the specified GUID.					This method will return the root mount for all files located directly in the data folder or its subfolders.
 			</summary> 
 			<param name="guid"> File GUID for which a mount point is to be found. </param> 
 			<returns>FileSystemMount class smart pointer on success; otherwise, nullptr.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.getMounts(Unigine.Vector{Unigine.Ptr{FileSystemMount},int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.FileSystem.getMounts(Unigine.Vector{Unigine.Ptr{FileSystemMount},int,Unigine.VectorAllocator}) const">
 			<summary>
 			Returns a list of all mount points currently used by the file system and puts the to the specified output buffer.					This list will not include the root mount.
 			</summary> 
 			<param name="container"> Output buffer to store the list of all currently used mount points. </param> 
 		</member>
-		<member name="M:Unigine.FileSystem.getRootMount">
+		<member name="M:Unigine.FileSystem.getRootMount const">
 			<summary>
 			Returns the root mount of the file system. It mounts the data folder to the root of the virtual file system. The root mount cannot be unmounted.
 			</summary>  
@@ -36,17 +36,17 @@
 			</summary> 
 			<param name="absolute_path"> Absolute path to the mounted folder/package. </param>
 			<param name="virtual_path"> Virtual path to the folder to which the contents of the external folder/package is to be mounted. </param>
-			<param name="access"> Mount point access mode, one of the FileSystemMount::ACCESS_* values. </param> 
+			<param name="access"> Mount point access mode, one of the values. </param> 
 			<returns>FileSystemMount class smart pointer, if it was created successfully; otherwise, nullptr.</returns>
 		</member>
 		<member name="M:Unigine.FileSystem.addMount(char)">
 			<summary>
-			Adds a new mount point using the data from the specified *.umount file. All mounted files are automatically added as known to the virtual file system.
+								Adds a new mount point using the data from the specified *.umount file.All mounted files are automatically added as known to the virtual file system.
 			</summary> 
 			<param name="umount_path"> Absolute path to a *.umount file. </param> 
 			<returns>FileSystemMount class smart pointer, if it was created successfully; otherwise, nullptr.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.saveMountFile(char)">
+		<member name="M:Unigine.FileSystem.saveMountFile(char) const">
 			<summary>
 			Saves the specified *.umount file.
 			</summary> 
@@ -55,26 +55,26 @@
 		</member>
 		<member name="M:Unigine.FileSystem.removeMount(char)">
 			<summary>
-			Unmounts a mount point with a given path.					The root mount cannot be removed.
+								Unmounts a mount point with a given path.					The root mount cannot be removed.
 			</summary> 
 			<param name="path"> Absolute path to the mounted folder/package. </param> 
 			<returns>true if the mount point with a given path is successfully unmounted; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystem.clearMounts">
 			<summary>
-			Unmounts all mount points.					This method does not remove the root mount.
+								Unmounts all mount points.					This method does not remove the root mount.
 			</summary>  
 		</member>
 		<member name="M:Unigine.FileSystem.loadPackage(char)">
 			<summary>
-			Loads an UNG or ZIP package into the file system. Note that the package should be mounted, otherwise it won't be loaded.					UNG packages without password protection can be loaded even if the engine has built-in password for the file system packages. For example, it is possible to load both the core.ung package without a password and the my_assets.ung package protected with a password.
+								Loads an UNG or ZIP package into the file system. Note that the package should be mounted, otherwise it won't be loaded.					UNG packages without password protection can be loaded even if the engine has built-in password for the file system packages. For example, it is possible to load both the core.ung package without a password and the my_assets.ung package protected with a password.
 			</summary> 
 			<param name="path"> Package path. It can be a relative, absolute, network, or virtual path. </param> 
 			<returns>true if the package is loaded; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.FileSystem.loadPackage(char,char)">
 			<summary>
-			Loads a package with the specified extension (ung, zip, or pak) into the file system. Note that the package should be mounted, otherwise it won't be loaded.					UNG packages without password protection can be loaded even if the engine has built-in password for the file system packages. For example, it is possible to load both the core.ung package without a password and the my_assets.ung package protected with a password.
+								Loads a package with the specified extension (ung, zip, or pak) into the file system. Note that the package should be mounted, otherwise it won't be loaded.					UNG packages without password protection can be loaded even if the engine has built-in password for the file system packages. For example, it is possible to load both the core.ung package without a password and the my_assets.ung package protected with a password.
 			</summary> 
 			<param name="path"> Package path. It can be a relative, absolute, network, or virtual path. </param>
 			<param name="extension"> Extension of a custom package, one of the following values:ungzippak </param> 
@@ -93,14 +93,14 @@
 			</summary> 
 			<param name="extensions"> An array to store registered extensions. </param> 
 		</member>
-		<member name="M:Unigine.FileSystem.getPackageVirtualFiles(char,Unigine.Vector{String,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.FileSystem.getPackageVirtualFiles(char,Unigine.Vector{String,int,Unigine.VectorAllocator}) const">
 			<summary>
 			Saves the list of names for all virtual files stored in the specified package to the specified string buffer.
 			</summary> 
 			<param name="path"> Path to a custom package. It can be a relative, absolute, network, or virtual path. </param>
 			<param name="files"> String buffer to store the list of names for all virtual files stored in the specified package. </param> 
 		</member>
-		<member name="M:Unigine.FileSystem.getPackageVirtualFiles(char,char,Unigine.Vector{String,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.FileSystem.getPackageVirtualFiles(char,char,Unigine.Vector{String,int,Unigine.VectorAllocator}) const">
 			<summary>
 			Saves the list of names for all virtual files stored in a package with the specified name and extension to the specified string buffer.
 			</summary> 
@@ -141,7 +141,7 @@
 			<param name="package"> Custom package instance. </param> 
 			<returns>true if the package is added successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.getVirtualFiles(Unigine.Vector{String,int,Unigine.VectorAllocator})">
+		<member name="M:Unigine.FileSystem.getVirtualFiles(Unigine.Vector{String,int,Unigine.VectorAllocator}) const">
 			<summary>
 			Saves the list of names for all known files registered in the file system to the specified string buffer.
 			</summary> 
@@ -153,14 +153,14 @@
 			</summary> 
 			<param name="files"> String buffer to store the list of GUIDs for all known virtual files. </param> 
 		</member>
-		<member name="M:Unigine.FileSystem.isVirtualFile(char)">
+		<member name="M:Unigine.FileSystem.isVirtualFile(char) const">
 			<summary>
 			Checks if the given file is known to the virtual file system.
 			</summary> 
 			<param name="path"> File path. It can be a relative, absolute, network, or virtual path. </param> 
 			<returns>true if the file is known to the virtual file system; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.isVirtualFile(Unigine.UGUID)">
+		<member name="M:Unigine.FileSystem.isVirtualFile(Unigine.UGUID) const">
 			<summary>
 			Checks if a file with the given GUID is known to the virtual file system and has a virtual path registered.
 			</summary> 
@@ -251,14 +251,14 @@
 			Removes all non-existing virtual files from the File System. These files aren't physically exist on the disk, however, they are added to the virtual file system. For example, it can be a blob or a cache file.
 			</summary>  
 		</member>
-		<member name="M:Unigine.FileSystem.isBlobFile(char)">
+		<member name="M:Unigine.FileSystem.isBlobFile(char) const">
 			<summary>
 			Checks if the given file is loaded to a blob.
 			</summary> 
 			<param name="path"> File path. It can be a relative, absolute, network, or virtual path.If you want to specify a path to an asset, you should use the asset path format (asset://). Otherwise, if you specify the regular path to the asset, it will be treated as the path to its runtime file (if any) from the .runtimes folder. </param> 
 			<returns>true if the file is loaded to a blob successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.isBlobFile(Unigine.UGUID)">
+		<member name="M:Unigine.FileSystem.isBlobFile(Unigine.UGUID) const">
 			<summary>
 			Checks if a file with the given GUID is loaded to a blob.
 			</summary> 
@@ -293,14 +293,14 @@
 			<param name="guid"> File GUID. </param> 
 			<returns>true if the file is removed successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.isCacheFile(char)">
+		<member name="M:Unigine.FileSystem.isCacheFile(char) const">
 			<summary>
 			Checks if the given file is loaded into cache.
 			</summary> 
 			<param name="path"> File path. It can be a relative, absolute, network, or virtual path.If you want to specify a path to an asset, you should use the asset path format (asset://). Otherwise, if you specify the regular path to the asset, it will be treated as the path to its runtime file (if any) from the .runtimes folder. </param> 
 			<returns>true if the file is added into cache; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.isCacheFile(Unigine.UGUID)">
+		<member name="M:Unigine.FileSystem.isCacheFile(Unigine.UGUID) const">
 			<summary>
 			Checks if a file with the given GUID is loaded into cache.
 			</summary> 
@@ -335,63 +335,63 @@
 			<param name="guid"> File GUID. </param> 
 			<returns>true if the file is successfully removed from cache; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.isDiskFile(char)">
+		<member name="M:Unigine.FileSystem.isDiskFile(char) const">
 			<summary>
 			Returns a value indicating if the specified file path is a path to a file on disk (i.e. not a package, a blob, or a cache file).
 			</summary> 
 			<param name="path"> File path. It can be a relative, absolute, network, or virtual path.If you want to specify a path to an asset, you should use the asset path format (asset://). Otherwise, if you specify the regular path to the asset, it will be treated as the path to its runtime file (if any) from the .runtimes folder. </param> 
 			<returns>true if the specified file path is a path to a file on disk; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.isDiskFile(Unigine.UGUID)">
+		<member name="M:Unigine.FileSystem.isDiskFile(Unigine.UGUID) const">
 			<summary>
 			Returns a value indicating if the file with the specified GUID is a file on disk.
 			</summary> 
 			<param name="guid"> Any file GUID. </param> 
 			<returns>true if the file with the specified GUID is a file on disk; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.isPackageFile(char)">
+		<member name="M:Unigine.FileSystem.isPackageFile(char) const">
 			<summary>
 			Returns a value indicating if the specified file path is a path to a file inside a ZIP or UNG package.
 			</summary> 
 			<param name="path"> File path. It can be a relative, absolute, network, or virtual path. </param> 
 			<returns>true if the specified file path is a path to a file inside a ZIP or UNG package; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.isPackageFile(Unigine.UGUID)">
+		<member name="M:Unigine.FileSystem.isPackageFile(Unigine.UGUID) const">
 			<summary>
 			Returns a value indicating if the file with the specified GUID is file inside a ZIP or UNG package.
 			</summary> 
 			<param name="guid"> Any file GUID. </param> 
 			<returns>true if the file with the specified GUID is file inside a ZIP or UNG package; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.resolvePartialVirtualPath(char)">
+		<member name="M:Unigine.FileSystem.resolvePartialVirtualPath(char) const">
 			<summary>
 			Converts the given partial path to a full virtual one.					If the file isn't added to the virtual file system, the full virtual path won't be returned.				For example, if you have the					data/project/image_1.tga and want to use the partial virtual path image_1.tga, you should get the full virtual path first:
 			</summary> 
 			<param name="path"> Partial path to be resolved. </param> 
 			<returns>Full virtual path.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.getVirtualPath(char)">
+		<member name="M:Unigine.FileSystem.getVirtualPath(char) const">
 			<summary>
 			Resolves a virtual path for the given file path. The following examples show particular cases of the method usage:											If the given path is known for the virtual file system, the following can be returned:													If the given path is unknown for the virtual file system, the following can be returned:													If the given path is the path to a mounted file. Here mount_1 is the mount_1.umount mount point. Note that in the example below, the 1.tga asset has no runtime files. If an asset has a runtime file, the virtual path to this runtime file (stored in the .runtimes folder of the mount point) will be returned.													If the given path is the path to a mounted file stored in the nested mount points. Here mount_1 and mount_2 are the mount_1.umount and mount_2.umount mount points correspondingly. Note that in the example below, the 1.tga asset has no runtime files. If an asset has a runtime file, the virtual path to this runtime file (stored in the .runtimes folder of the mount point) will be returned.
 			</summary> 
 			<param name="path"> File path. It can be a relative, absolute, network, or virtual path, including a path to a folder.If you want to specify a path to an asset, you should use the asset path format (asset://). Otherwise, if you specify the regular path to the asset, it will be treated as the path to its runtime file (if any) from the .runtimes folder. </param> 
 			<returns>Virtual path to the file relative to the data folder.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.getVirtualPath(Unigine.UGUID)">
+		<member name="M:Unigine.FileSystem.getVirtualPath(Unigine.UGUID) const">
 			<summary>
 			Resolves a virtual path for the given GUID.
 			</summary> 
 			<param name="guid"> File GUID. </param> 
 			<returns>Virtual path to the file relative to the data folder.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.getAbsolutePath(char)">
+		<member name="M:Unigine.FileSystem.getAbsolutePath(char) const">
 			<summary>
 			Resolves an absolute path for the given file path. The following examples show particular cases of the method usage:											If the given path is known for the virtual file system, the following can be returned:													If the given path is unknown for the virtual file system, the following can be returned:													If the given path is the path to a mounted file. Here mount_1 is the mount_1.umount mount point. Note that in the example below, the 1.tga asset has no runtime files. If an asset has a runtime file, the absolute path to this runtime file (stored in the .runtimes folder of the mount point) will be returned.													If the given path is the path to a mounted file stored in the nested mount points. Here mount_1 and mount_2 are the mount_1.umount and mount_2.umount mount points correspondingly. Note that in the example below, the 1.tga asset has no runtime files. If an asset has a runtime file, the absolute path to this runtime file (stored in the .runtimes folder of the mount point) will be returned.													If the given path is a network path:
 			</summary> 
 			<param name="path"> File path. It can be a relative, absolute, network, or virtual path, including a path to a folder.If you want to specify a path to an asset, you should use the asset path format (asset://). Otherwise, if you specify the regular path to the asset, it will be treated as the path to its runtime file (if any) from the .runtimes folder. </param> 
 			<returns>Absolute path to the file.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.getAbsolutePath(Unigine.UGUID)">
+		<member name="M:Unigine.FileSystem.getAbsolutePath(Unigine.UGUID) const">
 			<summary>
 								Resolves an absolute path for the given file GUID.
 			</summary> 
@@ -402,7 +402,7 @@
 			<summary>
 			Resolves a virtual path for the given path to the package.
 			</summary> 
-			<param name="path"> Path to a package. It can be a relative, absolute, network, or virtual path. </param> 
+			<param name="path"> Path to a package. It can be a relative, absolute, network, or virtual path.  </param> 
 			<returns>Virtual path to the package.</returns>
 		</member>
 		<member name="M:Unigine.FileSystem.getPackageVirtualPath(Unigine.UGUID) const">
@@ -416,7 +416,7 @@
 			<summary>
 			Resolves an absolute path for the given path to the package.
 			</summary> 
-			<param name="path"> Path to a package. It can be a relative, absolute, network, or virtual path. </param> 
+			<param name="path"> Path to a package. It can be a relative, absolute, network, or virtual path.  </param> 
 			<returns>Absolute path to the package.</returns>
 		</member>
 		<member name="M:Unigine.FileSystem.getPackageAbsolutePath(Unigine.UGUID) const">
@@ -426,58 +426,58 @@
 			<param name="guid"> Package GUID. </param> 
 			<returns>Absolute path to the package.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.getExtension(char)">
+		<member name="M:Unigine.FileSystem.getExtension(char) const">
 			<summary>
 			Returns the extension for the given file.
 			</summary> 
 			<param name="path"> File path. It can be a relative, absolute, network, or virtual path.If you want to specify a path to an asset, you should use the asset path format (asset://). Otherwise, if you specify the regular path to the asset, it will be treated as the path to its runtime file (if any) from the .runtimes folder. </param> 
 			<returns>File extension in lower case, if any; otherwise, an empty string.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.getExtension(Unigine.UGUID)">
+		<member name="M:Unigine.FileSystem.getExtension(Unigine.UGUID) const">
 			<summary>
 			Returns the extension for a file with the specified GUID.
 			</summary> 
 			<param name="guid"> GUID of the file for which extension is to be returned. </param> 
 			<returns>File extension in lower case if any; otherwise, an empty string.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.isFileExist(char)">
+		<member name="M:Unigine.FileSystem.isFileExist(char) const">
 			<summary>
-			Checks if the given file actually exists on the disk.Calling this method every frame in the main thread, especially for multiple files, may cause a performance hit. It is better to optimize such checks and move them to a separate thread.
+			Checks if the given file actually exists on the disk.					Calling this method every frame in the main thread, especially for multiple files, may cause a performance hit. It is better to optimize such checks and move them to a separate thread.
 			</summary> 
 			<param name="path"> File path. It can be a relative, absolute, network, or virtual path.If you want to specify a path to an asset, you should use the asset path format (asset://). Otherwise, if you specify the regular path to the asset, it will be treated as the path to its runtime file (if any) from the .runtimes folder. </param> 
 			<returns>true if the file exists; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.isFileExist(Unigine.UGUID)">
+		<member name="M:Unigine.FileSystem.isFileExist(Unigine.UGUID) const">
 			<summary>
-			Checks if a file with the given GUID actually exists.Calling this method every frame in the main thread, especially for multiple files, may cause a performance hit. It is better to optimize such checks and move them to a separate thread.
+			Checks if a file with the given GUID actually exists.					Calling this method every frame in the main thread, especially for multiple files, may cause a performance hit. It is better to optimize such checks and move them to a separate thread.
 			</summary> 
 			<param name="guid"> File GUID. </param> 
 			<returns>true if the file exists; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.isGUIDPath(char)">
+		<member name="M:Unigine.FileSystem.isGUIDPath(char) const">
 			<summary>
 			Returns a value indicating if the given path has a valid GUID path format (e.g. "guid://e231e15beff2309b8f87c30b2c105cc4d2399973)".
 			</summary> 
 			<param name="path"> Path to be checked. </param> 
 			<returns>true if the given path has a valid GUID path format; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.isAssetPath(char)">
+		<member name="M:Unigine.FileSystem.isAssetPath(char) const">
 			<summary>
 			Returns a value indicating if the given path has a valid asset path format (e.g. asset://1.tga).
 			</summary> 
 			<param name="path"> Path to be checked. </param> 
 			<returns>true if the given path has a valid asset path format; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.getMTime(char)">
+		<member name="M:Unigine.FileSystem.getMTime(char) const">
 			<summary>
-			Returns the time of the last modification of the given file.Calling this method every frame in the main thread, especially for multiple files, may cause a performance hit. It is better to optimize such checks and move them to a separate thread.
+			Returns the time of the last modification of the given file.					Calling this method every frame in the main thread, especially for multiple files, may cause a performance hit. It is better to optimize such checks and move them to a separate thread.
 			</summary> 
 			<param name="path"> File path. It can be a relative, absolute, network, or virtual path.If you want to specify a path to an asset, you should use the asset path format (asset://). Otherwise, if you specify the regular path to the asset, it will be treated as the path to its runtime file (if any) from the .runtimes folder. </param> 
 			<returns>Time of the last file modification. If there is no such file, -1 will be returned.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.getMTime(Unigine.UGUID)">
+		<member name="M:Unigine.FileSystem.getMTime(Unigine.UGUID) const">
 			<summary>
-			Returns the time of the last modification of the file with the specified GUID.Calling this method every frame in the main thread, especially for multiple files, may cause a performance hit. It is better to optimize such checks and move them to a separate thread.
+			Returns the time of the last modification of the file with the specified GUID.					Calling this method every frame in the main thread, especially for multiple files, may cause a performance hit. It is better to optimize such checks and move them to a separate thread.
 			</summary> 
 			<param name="guid"> File GUID. </param> 
 			<returns>Time of the last file modification. If there is no such file, -1 will be returned.</returns>
@@ -489,7 +489,7 @@
 			<param name="path"> Path to the file, where file system GUIDs are stored. </param> 
 			<returns>true if file system GUIDs are loaded successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.saveGUIDs(char,bool)">
+		<member name="M:Unigine.FileSystem.saveGUIDs(char,bool) const">
 			<summary>
 			Saves all file system GUIDs to the specified file in the specified format (json or binary).
 			</summary> 
@@ -497,7 +497,7 @@
 			<param name="binary"> Binary file format flag. When the flag is set to true, the file system will save GUIDs to a binary file; otherwise, to a JSON file. </param> 
 			<returns>true if all file system GUIDs are saved successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.generateGUID">
+		<member name="M:Unigine.FileSystem.generateGUID const">
 			<summary>
 			Generates a new GUID.
 			</summary>  
@@ -511,7 +511,7 @@
 			<param name="guid"> GUID to be set for the file. </param> 
 			<returns>true if the GUID is set successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.getGUID(char)">
+		<member name="M:Unigine.FileSystem.getGUID(char) const">
 			<summary>
 			Returns the GUID (if it exists) for the given file.
 			</summary> 
@@ -532,7 +532,7 @@
 			<param name="guid"> File GUID </param> 
 			<returns>File size in bytes.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.getNumModifiers">
+		<member name="M:Unigine.FileSystem.getNumModifiers const">
 			<summary>
 			Returns the total number of file modifiers registered in the file system.
 			</summary>  
@@ -561,71 +561,6 @@
 			<summary>
 			Unregister all modifiers in the file system.
 			</summary>  
-		</member>
-		<member name="M:Unigine.FileSystem.addCallback(int,Unigine.CallbackBase1{Unigine.Vector{FilePath,int,Unigine.VectorAllocator}})">
-			<summary>
-			Adds a callback of the specified type. Callback functions can be used to determine actions to be performed when files are added, changed, or removed. The signature of the callback function must be as follows:
-			</summary> 
-			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param>
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.FileSystem.addCallback(int,Unigine.CallbackBase2{char,Unigine.UGUID})">
-			<summary>
-			Adds a callback of the specified type. Callback functions can be used to determine actions to be performed when files are added, changed, or removed. The signature of the callback function must be as follows:
-			</summary> 
-			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param>
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.FileSystem.removeCallback(int,void)">
-			<summary>
-			Removes the specified callback from the list of callbacks of the specified type. Callback functions can be used to determine actions to be performed when files are added, changed, or removed.
-			</summary> 
-			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param>
-			<param name="id"> Callback ID obtained when adding it. </param> 
-			<returns>True if the callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.FileSystem.clearCallbacks(int)">
-			<summary>
-			Clears all added callbacks of the specified type. Callback functions can be used to determine actions to be performed when files are added, changed, or removed.
-			</summary> 
-			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param> 
-		</member>
-		<member name="F:Unigine.FileSystem.NUM_CALLBACKS">
-			<summary>
-			Callback counter.
-		</summary>
-		</member>
-		<member name="F:Unigine.FileSystem.CALLBACK_FILES_CHANGED">
-			<summary>
-			Callback fired at the end of the Engine::update() containing the files have been changed during the frame.
-		</summary>
-		</member>
-		<member name="F:Unigine.FileSystem.CALLBACK_FILES_REMOVED">
-			<summary>
-			Callback fired at the end of the Engine::update() containing the files have been removed during the frame.
-		</summary>
-		</member>
-		<member name="F:Unigine.FileSystem.CALLBACK_FILES_ADDED">
-			<summary>
-			Callback fired at the end of the Engine::update() containing the files have been added during the frame.
-		</summary>
-		</member>
-		<member name="F:Unigine.FileSystem.CALLBACK_FILE_CHANGED">
-			<summary>
-			Callback fired after the file is changed using the FileSystem API.
-		</summary>
-		</member>
-		<member name="F:Unigine.FileSystem.CALLBACK_FILE_REMOVED">
-			<summary>
-			Callback fired after the file is removed using the FileSystem API.
-		</summary>
-		</member>
-		<member name="F:Unigine.FileSystem.CALLBACK_FILE_ADDED">
-			<summary>
-			Callback fired after the file is added using the FileSystem API.
-		</summary>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.isAsset(Unigine.UGUID)">
 			<summary>

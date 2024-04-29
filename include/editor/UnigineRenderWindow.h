@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -56,77 +56,65 @@ public:
 public:
 	explicit RenderWindow(QWidget *parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
 	~RenderWindow() override;
-
-	struct Callback;
-	using CallbackId = Callback *;
-	/// <summary> Adds a callback to be fired for the Render Window
+	/// <summary> Event triggered for the Render Window
 	/// on Engine::update(). As an alternative you can inherit your
 	/// class from the RenderWindow and override
 	/// the <see cref="onUpdate"/>() method.
 	/// </summary>
-	/// <param name="update_func">Callback function.</param>
-	CallbackId addUpdateCallback(Unigine::CallbackBase *update_func);
-	/// <summary> Adds a callback to be fired for the Render Window
+	Unigine::Event<> &getEventUpdate();
+	/// <summary> Event triggered for the Render Window
 	/// on Engine::render(). As an alternative you can inherit your
 	/// class from the RenderWindow and override
 	/// the <see cref="onRender"/>() method.
 	/// </summary>
-	/// <param name="render_func">Callback function.</param>
-	CallbackId addRenderCallback(Unigine::CallbackBase *render_func);
-	/// <summary> Adds a callback to be fired for the Render Window
+	Unigine::Event<> &getEventRender();
+	/// <summary> Event triggered for the Render Window
 	/// on Engine::swap(). As an alternative you can inherit your
 	/// class from the RenderWindow and override
 	/// the <see cref="onSwap"/>() method.
 	/// </summary>
-	/// <param name="swap_func">Callback function.</param>
-	CallbackId addSwapCallback(Unigine::CallbackBase *swap_func);
-	/// <summary> Adds a callback to be fired when the focus
+	Unigine::Event<> &getEventSwap();
+	/// <summary> Event triggered when the focus
 	/// of the Render Window changes.
 	/// </summary>
-	/// <param name="focus_changed_func">Callback function.</param>
-	CallbackId addFocusChangedCallback(Unigine::CallbackBase *focus_changed_func);
-	/// <summary> Adds a callback to be fired when the focus of
-	/// the Render Window becomes focused. As an alternative you
+	Unigine::Event<> &getEventFocusChanged();
+	/// <summary> Event triggered when the Render Window
+	/// becomes focused. As an alternative you
 	/// can inherit your class from the RenderWindow and override
 	/// the <see cref="focusInEvent"/>() method.
 	/// </summary>
-	/// <param name="focus_in_func">Callback function.</param>
-	CallbackId addFocusInChangedCallback(Unigine::CallbackBase *focus_in_func);
-	/// <summary> Adds a callback to be fired when the Render Window
+	Unigine::Event<> &getEventFocusIn();
+	/// <summary> Event triggered when the Render Window
 	/// loses focus. As an alternative you can inherit your class
 	/// from the RenderWindow and override
 	/// the <see cref="focusOutEvent"/>() method.</summary>
-	/// <param name="focus_out_func">Callback function.</param>
-	CallbackId addFocusOutChangedCallback(Unigine::CallbackBase *focus_out_func);
-	/// <summary> Adds a callback to be fired when something is
-	/// dragged into the Render Window. The callback function
-	/// receives a QDragEnterEvent instance. For more details please
+	Unigine::Event<> &getEventFocusOut();
+	/// <summary> Event triggered when something is dragged
+	/// into the Render Window. The event handler function receives
+	/// a QDragEnterEvent instance. For more details please
 	/// refer to Qt documentation. As an alternative you can inherit
 	/// your class from the RenderWindow and override
 	/// the <see cref="dragEnterEvent"/>() method.
 	/// </summary>
-	/// <param name="drag_enter_func">Callback function.</param>
-	CallbackId addDragEnterCallback(Unigine::CallbackBase1<QDragEnterEvent *> *drag_enter_func);
-	/// <summary> Adds a callback to be fired when something is
-	/// dragged within the Render Window. The callback function
+	Unigine::Event<QDragEnterEvent *> &getEventDragEnter();
+	/// <summary> Event triggered when something is
+	/// dragged within the Render Window. The event handler function
 	/// receives a QDragMoveEvent instance. For more details
 	/// please refer to Qt documentation. As an alternative you
 	/// can inherit your class from the RenderWindow and override
 	/// the <see cref="dragMoveEvent"/>() method.
 	/// </summary>
-	/// <param name="drag_move_func">Callback function.</param>
-	CallbackId addDragMoveCallback(Unigine::CallbackBase1<QDragMoveEvent *> *drag_move_func);
-	/// <summary> Adds a callback to be fired when something is
-	/// dragged out of the Render Window. The callback function
+	Unigine::Event<QDragMoveEvent *> &getEventDragMove();
+	/// <summary> Event triggered when something is
+	/// dragged out of the Render Window. The event handler function
 	/// receives a QDragLeaveEvent instance. For more details
 	/// please refer to Qt documentation. As an alternative you
 	/// can inherit your class from the RenderWindow and override
 	/// the <see cref="dragLeaveEvent"/>() method.
 	/// </summary>
-	/// <param name="drag_leave_func">Callback function.</param>
-	CallbackId addDragLeaveCallback(Unigine::CallbackBase1<QDragLeaveEvent *> *drag_leave_func);
-	/// <summary>Adds a callback to be fired when the user drops
-	/// something within the Render Window. The callback function
+	Unigine::Event<QDragLeaveEvent *> &getEventDragLeave();
+	/// <summary>Event triggered when the user drops
+	/// something within the Render Window. The event handler function
 	/// receives a QDropEvent instance, that contains a proposed
 	/// action, available from proposedAction(), for the widget
 	/// to either accept or ignore. If the action can be handled
@@ -149,15 +137,7 @@ public:
 	/// RenderWindow and override
 	/// the <see cref="dropEvent"/>() method.
 	/// </summary>
-	/// <param name="drop_func">Callback function.</param>
-	CallbackId addDropCallback(Unigine::CallbackBase1<QDropEvent *> *drop_func);
-	/// <summary>Removes a callback with the specified ID.</summary>
-	/// <param name="callback_id">Callback function ID.</param>
-	/// <returns> <b>true</b> if the callback with the specified ID is removed successfully; otherwise, <b>false</b>.</returns>
-	bool removeCallback(CallbackId callback_id);
-	/// <summary>Removes all callbacks.</summary>
-	void clearCallbacks();
-
+	Unigine::Event<QDropEvent *> &getEventDrop();
 	/// <summary>Sets rendering policy for the Render Window.
 	/// This policy defines when the window should be rendered
 	/// depending on its visibility and focus status.
@@ -171,7 +151,14 @@ public:
 	/// </summary>
 	RENDERING_POLICY getRenderingPolicy() const;
 
+	/// <summary>Sets a value indicating if render buffers are to be
+	/// cleared every time the <see cref="do_render"/> method is called.
+	/// </summary>
+	/// <param name="v"> <b>true</b> to clear render buffers every time the <see cref="do_render"/> method is called; <b>false</b> - not to clear.</param>
 	void setClearRenderBuffers(bool v);
+	/// <summary>Returns a value indicating if render buffers are to be
+	/// cleared every time the <see cref="do_render"/> method is called.
+	/// </summary>
 	bool isClearRenderBuffers() const;
 
 	QPaintEngine *paintEngine() const final override { return nullptr; }
@@ -188,21 +175,21 @@ protected:
 	/// override this method to define your custom actions to be
 	/// performed on Engine::update(). As an alternative to
 	/// overriding this method you can use
-	/// the Update callback (<see cref="addUpdateCallback"/>).
+	/// the Update event (<see cref="getEventUpdate"/>).
 	/// </summary>
 	virtual void onUpdate() {}
 	/// <summary>You can inherit your class from RenderWindow and
 	/// override this method to define your custom actions to be
 	/// performed on Engine::render(). As an alternative to
 	/// overriding this method you can use
-	/// the Render callback (<see cref="addRenderCallback"/>).
+	/// the Render event (<see cref="getEventRender"/>).
 	/// </summary>
 	virtual void onRender() {}
 	/// <summary>You can inherit your class from RenderWindow and
 	/// override this method to define your custom actions to be
 	/// performed on Engine::swap(). As an alternative to
 	/// overriding this method you can use
-	/// the Swap callback (<see cref="addSwapCallback"/>).
+	/// the Swap event (<see cref="getEventSwap"/>).
 	/// </summary>
 	virtual void onSwap() {}
 
@@ -210,9 +197,15 @@ protected:
 	/// override this method to define your custom actions to be
 	/// performed on receiving various events (QEvent). As an
 	/// alternative to overriding this method you can use
-	/// the Update callback (<see cref="addUpdateCallback"/>).
+	/// the Update event (<see cref="getEventUpdate"/>).
 	/// </summary>
 	bool event(QEvent *event) override;
+	/// <summary>You can inherit your class from RenderWindow and
+	/// override this method to define actions to be performed on
+	/// receiving a paint event (QPaintEvent). Paint events are
+	/// sent to widgets that need to update themselves. For
+	/// more details please refer to Qt documentation.
+	/// </summary>
 	void paintEvent(QPaintEvent *) final override {}
 	/// <summary>You can inherit your class from RenderWindow and
 	/// override this method to define actions to be performed on
@@ -220,9 +213,15 @@ protected:
 	/// sent to widgets that have been resized. For more details
 	/// please refer to Qt documentation. As an alternative to
 	/// overriding this method you can use
-	/// the Update callback (<see cref="addUpdateCallback"/>).
+	/// the Update event (<see cref="getEventUpdate"/>).
 	/// </summary>
 	void resizeEvent(QResizeEvent *event) override;
+	/// <summary>You can inherit your class from RenderWindow and
+	/// override this method to define actions to be performed on
+	/// receiving a close event (QCloseEvent). Close events are
+	/// sent to widgets that have been closed. For more details
+	/// please refer to Qt documentation.
+	/// </summary>
 	void closeEvent(QCloseEvent *event) override;
 	/// <summary>You can inherit your class from RenderWindow and
 	/// override this method to define actions to be performed on
@@ -235,7 +234,7 @@ protected:
 	/// focus event is returned by reason() in the appropriate event
 	/// handler. For more details please refer to Qt documentation.
 	/// As an alternative to overriding this method you can use
-	/// the FocusIn callback (<see cref="addFocusInChangedCallback"/>).
+	/// the FocusIn event (<see cref="getEventFocusIn"/>).
 	/// </summary>
 	void focusInEvent(QFocusEvent *event) override;
 	/// <summary>You can inherit your class from RenderWindow and
@@ -249,7 +248,7 @@ protected:
 	/// focus event is returned by reason() in the appropriate event
 	/// handler. For more details please refer to Qt documentation.
 	/// As an alternative to overriding this method you can use
-	/// the FocusOut callback (<see cref="addFocusOutChangedCallback"/>).
+	/// the FocusOut event (<see cref="getEventFocusOut"/>).
 	/// </summary>
 	void focusOutEvent(QFocusEvent *event) override;
 	/// <summary>You can inherit your class from RenderWindow and
@@ -259,7 +258,7 @@ protected:
 	/// is always immediately followed by a drag move event.
 	/// For more details please refer to Qt documentation. As an
 	/// alternative to overriding this method you can use
-	/// the <see cref="addDragEnterCallback"/> callback.
+	/// the DragEnter event (<see cref="getEventDragEnter"/>).
 	/// </summary>
 	void dragEnterEvent(QDragEnterEvent *event) override;
 	/// <summary>You can inherit your class from RenderWindow and
@@ -268,7 +267,7 @@ protected:
 	/// The drag move event always immediately follows a drag enter
 	/// event. For more details please refer to Qt documentation.
 	/// As an alternative to overriding this method you can use
-	/// the <see cref="addDragMoveCallback"/> callback.
+	/// the DragMove event (<see cref="getEventDragMove"/>).
 	/// </summary>
 	void dragMoveEvent(QDragMoveEvent *event) override;
 	/// <summary>You can inherit your class from RenderWindow and
@@ -276,7 +275,7 @@ protected:
 	/// a drag-and-drop action leaves the Render Window (QDragLeaveEvent).
 	/// For more details please refer to Qt documentation. As an
 	/// alternative to overriding this method you can use
-	/// the <see cref="addDragLeaveCallback"/> callback.
+	/// the DragLeave event (<see cref="getEventDragLeave"/>).
 	/// </summary>
 	void dragLeaveEvent(QDragLeaveEvent *event) override;
 	/// <summary>You can inherit your class from RenderWindow and
@@ -284,7 +283,7 @@ protected:
 	/// a drag-and-drop action is completed (QDropEvent). For more
 	/// details please refer to Qt documentation. As an alternative
 	/// to overriding this method you can use
-	/// the <see cref="addDropCallback"/> callback.
+	/// the Drop event (<see cref="getEventDrop"/>).
 	/// </summary>
 	void dropEvent(QDropEvent *event) override;
 

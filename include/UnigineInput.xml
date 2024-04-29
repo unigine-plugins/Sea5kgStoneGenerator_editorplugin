@@ -10,7 +10,7 @@
 			</summary>  
 			<returns>Global coordinates of the cursor.</returns>
 		</member>
-		<member name="M:Unigine.Input.getMouseDeltaPosition">
+		<member name="M:Unigine.Input.getMouseDeltaPosition const">
 			<summary>
 			Returns a vector containing screen position change of the mouse pointer along the X and Y axes — the difference between the values in the previous and the current frames.
 			</summary>  
@@ -285,7 +285,7 @@
 		</member>
 		<member name="M:Unigine.Input.setMouseCursorHide(bool)">
 			<summary>
-			Sets a value indicating if the mouse cursor should be hidden. Can be used, for example, to hide mouse cursor for a certain element.This method hides the cursor only for one frame. So, you should call it each frame if a longer period is required.
+			Sets a value indicating if the mouse cursor should be hidden. Can be used, for example, to hide mouse cursor for a certain element.					This method hides the cursor only for one frame. So, you should call it each frame if a longer period is required.
 			</summary> 
 			<param name="hide"> true to hide the mouse cursor for a single frame, false - to show it. </param> 
 		</member>
@@ -355,7 +355,7 @@
 		</member>
 		<member name="M:Unigine.Input.getKeyLocalName(Input::KEY) const">
 			<summary>
-			Returns the name for the specified key taken from the currently selected keyboard layout.The returned value is affected by the modifier such as Shift.
+			Returns the name for the specified key taken from the currently selected keyboard layout.					The returned value is affected by the modifier such as Shift.
 			</summary> 
 			<param name="key"> One of the preset KEY_ codes. </param> 
 			<returns>Localized name for the specified key.</returns>
@@ -376,100 +376,10 @@
 		</member>
 		<member name="M:Unigine.Input.isKeyText(Input::KEY) const">
 			<summary>
-			Returns a value indicating if the given key has a corresponding printable symbol (current Num Lock state is taken into account). For example, pressing 2 on the numpad with Num Lock enabled produces "2", while with disabled Num Lock the same key acts as a down arrow. Keys like Esc, PrintScreen, BackSpace do not produce any printable symbol at all.
+			Returns a value indicating if the given key has a corresponding printable symbol (current Num Lock state is taken into account). For example, pressing 2 on the numpad with					Num Lock enabled produces "2", while with disabled					Num Lock the same key acts as a down arrow. Keys like					Esc, PrintScreen, BackSpace do not produce any printable symbol at all.
 			</summary> 
 			<param name="key"> One of the preset KEY_ codes. </param> 
 			<returns>true if the key value is a symbol; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Input.addCallback(Unigine.Input.CALLBACK_INDEX,Unigine.CallbackBase1{Input::MOUSE_BUTTON})">
-			<summary>
-			Adds a callback of the specified type for mouse button events. Callback functions can be used to determine actions to be performed when various input events occur. Here is an example of tracking mouse button events via callbacks:
-			
-			</summary> 
-			<param name="callback"> Callback type. One of the following: </param>
-			<param name="func"> Callback function pointer. The callback signature should be as follows: void callback_function_name(Input::MOUSE_BUTTON button); </param>
-			<param name="func">  button - mouse button. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Input.addCallback(Unigine.Input.CALLBACK_INDEX,Unigine.CallbackBase2{int,int})">
-			<summary>
-			Adds a callback of the specified type for the mouse motion event. Callback functions can be used to determine actions to be performed when various input events occur.
-			</summary> 
-			<param name="callback"> Callback type. One of the following: </param>
-			<param name="func"> Callback function pointer. The callback signature should be as follows: void callback_function_name(int x, int y); </param>
-			<param name="func">  (x, y) - mouse coordinates delta. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Input.addCallback(Unigine.Input.CALLBACK_INDEX,Unigine.CallbackBase1{Input::KEY})">
-			<summary>
-			Adds a callback of the specified type for keyboard events. Callback functions can be used to determine actions to be performed when various input events occur.
-			</summary> 
-			<param name="callback"> Callback type. One of the following: </param>
-			<param name="func"> Callback function pointer. The callback signature should be as follows: void callback_function_name(Input::KEY key); </param>
-			<param name="func">  key - keyboard key code. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Input.addCallback(Unigine.Input.CALLBACK_INDEX,Unigine.CallbackBase1{unsignedint})">
-			<summary>
-			Adds a callback of the specified type for a unicode key or a touch event. Callback functions can be used to determine actions to be performed when various input events occur.
-			</summary> 
-			<param name="callback"> Callback type. One of the following: </param>
-			<param name="func"> Callback function pointer. The callback signature should be as follows: void callback_function_name(unsigned int code); </param>
-			<param name="func">  code - unicode value displayed for the key or touch index (depending on the callback type). </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Input.addCallback(Unigine.Input.CALLBACK_INDEX,Unigine.CallbackBase1{Unigine.Ptr{InputEvent}})">
-			<summary>
-			Adds a callback of the specified type. Callback functions can be used to determine actions to be performed when various input events occur.
-			</summary> 
-			<param name="callback"> Callback type. One of the following: </param>
-			<param name="func"> Callback function pointer. The callback signature should be as follows: void callback_function_name(InputEventPtr event); </param>
-			<param name="func">  event - input event. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Input.addCallback(Unigine.Input.CALLBACK_INDEX,Unigine.CallbackBase2{unsignedint,Input::GAMEPAD_BUTTON})">
-			<summary>
-			Adds a callback of the specified type for a gamepad button event. Callback functions can be used to determine actions to be performed when various input events occur.
-			</summary> 
-			<param name="callback"> Callback type. One of the following: </param>
-			<param name="func"> Callback function pointer. The callback signature should be as follows: void callback_function_name(unsigned int index, Input::GAMEPAD_BUTTON button); </param>
-			<param name="func">  index - gamepad index. </param>
-			<param name="func">  button - gamepad button index. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Input.addCallback(Unigine.Input.CALLBACK_INDEX,Unigine.CallbackBase2{unsignedint,Input::GAMEPAD_AXIS})">
-			<summary>
-			Adds a callback of the specified type for a gamepad axis event. Callback functions can be used to determine actions to be performed when various input events occur.
-			</summary> 
-			<param name="callback"> Callback type. One of the following: </param>
-			<param name="func"> Callback function pointer. The callback signature should be as follows: void callback_function_name(unsigned int index, Input::GAMEPAD_AXIS axis); </param>
-			<param name="func">  index - gamepad index. </param>
-			<param name="func">  axis - gamepad axis index. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Input.addCallback(Unigine.Input.CALLBACK_INDEX,Unigine.CallbackBase2{unsignedint,int})">
-			<summary>
-			Adds a callback of the specified type for an action event. Callback functions can be used to determine actions to be performed when various input events occur.
-			</summary> 
-			<param name="callback"> Callback type. One of the following: </param>
-			<param name="func"> Callback function pointer. The callback signature should be as follows: void callback_function_name(unsigned int index, int action); </param>
-			<param name="func">  index - device index. </param>
-			<param name="func">  action - action index. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Input.removeCallback(Unigine.Input.CALLBACK_INDEX,void)">
-			<summary>
-			Removes the specified callback from the list of callbacks of the specified type. Callback functions can be used to determine actions to be performed when various input events occur.
-			</summary> 
-			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param>
-			<param name="id"> Callback ID obtained when adding it. </param> 
-			<returns>true if the callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.Input.clearCallbacks(Unigine.Input.CALLBACK_INDEX)">
-			<summary>
-			Clears all added callbacks of the specified type. Callback functions can be used to determine actions to be performed when various input events occur.
-			</summary> 
-			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param> 
 		</member>
 		<member name="M:Unigine.Input.getModifierName(Input::MODIFIER) const">
 			<summary>
@@ -484,6 +394,43 @@
 			</summary> 
 			<param name="name"> Key name of the modifier. </param> 
 			<returns>Scancode of the modifier.</returns>
+		</member>
+		<member name="M:Unigine.Input.getNumVRDevices const">
+			<summary>
+			Returns the total number of all VR devices.
+			</summary>  
+			<returns>Number of all VR devices.</returns>
+		</member>
+		<member name="M:Unigine.Input.getVRDevice(int) const">
+			<summary>
+			Returns the VR device by its number.
+			</summary> 
+			<param name="num"> Number of the VR device. </param> 
+			<returns>VR device.</returns>
+		</member>
+		<member name="M:Unigine.Input.getVRHead const">
+			<summary>
+			Returns the currently connected VR head device.
+			</summary>  
+			<returns>VR head device.</returns>
+		</member>
+		<member name="M:Unigine.Input.getVRControllerLeft const">
+			<summary>
+			Returns the currently connected left-hand VR controller.
+			</summary>  
+			<returns>Left-hand VR controller.</returns>
+		</member>
+		<member name="M:Unigine.Input.getVRControllerRight const">
+			<summary>
+			Returns the currently connected right-hand VR controller.
+			</summary>  
+			<returns>Right-hand VR controller.</returns>
+		</member>
+		<member name="M:Unigine.Input.getVRControllerTreadmill const">
+			<summary>
+			Returns the currently connected treadmill VR controller.
+			</summary>  
+			<returns>Treadmill VR controller.</returns>
 		</member>
 		<member name="F:Unigine.Input.MOUSE_BUTTON_UNKNOWN">
 			<summary>
@@ -547,7 +494,7 @@
 		</member>
 		<member name="F:Unigine.Input.KEY_ESC">
 			<summary>
-			Escape key
+								Escape key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_F1">
@@ -612,17 +559,17 @@
 		</member>
 		<member name="F:Unigine.Input.KEY_PRINTSCREEN">
 			<summary>
-			Print Screen key
+								Print Screen key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_SCROLL_LOCK">
 			<summary>
-			Scroll Lock key
+								Scroll Lock key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_PAUSE">
 			<summary>
-			Pause key
+								Pause key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_BACK_QUOTE">
@@ -697,57 +644,57 @@
 		</member>
 		<member name="F:Unigine.Input.KEY_TAB">
 			<summary>
-			Tab key
+								Tab key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_Q">
 			<summary>
-			Q key
+								Q key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_W">
 			<summary>
-			W key
+								W key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_E">
 			<summary>
-			E key
+								E key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_R">
 			<summary>
-			R key
+								R key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_T">
 			<summary>
-			T key
+								T key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_Y">
 			<summary>
-			Y key
+								Y key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_U">
 			<summary>
-			U key
+								U key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_I">
 			<summary>
-			I key
+								I key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_O">
 			<summary>
-			O key
+								O key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_P">
 			<summary>
-			P key
+								P key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_LEFT_BRACKET">
@@ -762,57 +709,57 @@
 		</member>
 		<member name="F:Unigine.Input.KEY_ENTER">
 			<summary>
-			Enter key
+								Enter key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_CAPS_LOCK">
 			<summary>
-			Caps Lock key
+								Caps Lock key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_A">
 			<summary>
-			A key
+								A key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_S">
 			<summary>
-			S key
+								S key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_D">
 			<summary>
-			D key
+								D key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_F">
 			<summary>
-			F key
+								F key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_G">
 			<summary>
-			G key
+								G key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_H">
 			<summary>
-			H key
+								H key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_J">
 			<summary>
-			J key
+								J key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_K">
 			<summary>
-			K key
+								K key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_L">
 			<summary>
-			L key
+								L key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_SEMICOLON">
@@ -892,12 +839,12 @@
 		</member>
 		<member name="F:Unigine.Input.KEY_RIGHT_SHIFT">
 			<summary>
-			Right Shift key
+			Right					Shift key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_LEFT_CTRL">
 			<summary>
-			Left Ctrl key
+			Left					Ctrl key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_LEFT_CMD">
@@ -907,7 +854,7 @@
 		</member>
 		<member name="F:Unigine.Input.KEY_LEFT_ALT">
 			<summary>
-			Left Alt key
+			Left					Alt key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_SPACE">
@@ -917,7 +864,7 @@
 		</member>
 		<member name="F:Unigine.Input.KEY_RIGHT_ALT">
 			<summary>
-			Right Alt key
+			Right					Alt key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_RIGHT_CMD">
@@ -932,27 +879,27 @@
 		</member>
 		<member name="F:Unigine.Input.KEY_RIGHT_CTRL">
 			<summary>
-			Right Ctrl key
+			Right					Ctrl key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_INSERT">
 			<summary>
-			Insert key
+								Insert key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_DELETE">
 			<summary>
-			Delete key
+								Delete key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_HOME">
 			<summary>
-			Home key
+								Home key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_END">
 			<summary>
-			End key
+								End key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_PGUP">
@@ -987,7 +934,7 @@
 		</member>
 		<member name="F:Unigine.Input.KEY_NUM_LOCK">
 			<summary>
-			Num Lock key
+								Num Lock key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_NUMPAD_DIVIDE">
@@ -1057,7 +1004,7 @@
 		</member>
 		<member name="F:Unigine.Input.KEY_NUMPAD_ENTER">
 			<summary>
-			Enter key of the numeric keypad
+								Enter key of the numeric keypad
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_NUMPAD_DIGIT_0">
@@ -1072,17 +1019,17 @@
 		</member>
 		<member name="F:Unigine.Input.KEY_ANY_SHIFT">
 			<summary>
-			Any Shift key
+			Any					Shift key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_ANY_CTRL">
 			<summary>
-			Any Ctrl key
+			Any					Ctrl key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_ANY_ALT">
 			<summary>
-			Any Alt key
+			Any					Alt key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_ANY_CMD">
@@ -1117,22 +1064,22 @@
 		</member>
 		<member name="F:Unigine.Input.KEY_ANY_DELETE">
 			<summary>
-			Any Delete key
+			Any					Delete key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_ANY_INSERT">
 			<summary>
-			Any Insert key
+			Any					Insert key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_ANY_HOME">
 			<summary>
-			Any Home key
+			Any					Home key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_ANY_END">
 			<summary>
-			Any End key
+			Any					End key
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.KEY_ANY_PGUP">
@@ -1210,6 +1157,11 @@
 			Any dot key
 		</summary>
 		</member>
+		<member name="F:Unigine.Input.NUM_KEYS">
+			<summary>
+			Number of keys.
+		</summary>
+		</member>
 		<member name="F:Unigine.Input.MOUSE_HANDLE_GRAB">
 			<summary>
 			The mouse is grabbed when clicked (the cursor disappears and camera movement is controlled by the mouse).
@@ -1223,146 +1175,6 @@
 		<member name="F:Unigine.Input.MOUSE_HANDLE_USER">
 			<summary>
 			The mouse is not handled by the system (allows input handling by some custom module).
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_MOUSE_DOWN">
-			<summary>
-			Callback when the mouse button is pressed.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_MOUSE_UP">
-			<summary>
-			Callback when the mouse button is released.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_MOUSE_WHEEL">
-			<summary>
-			Callback when the mouse scroll wheel is moved.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_MOUSE_WHEEL_HORIZONTAL">
-			<summary>
-			Callback when the mouse wheel is moved horizontally.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_MOUSE_MOTION">
-			<summary>
-			Callback when the mouse is moved.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_KEY_DOWN">
-			<summary>
-			Callback when the key is pressed and held.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_KEY_UP">
-			<summary>
-			Callback when the key is released.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_KEY_REPEAT">
-			<summary>
-			Callback when the key is pressed repeatedly.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_TEXT_PRESS">
-			<summary>
-			Callback when the key that has a corresponding printable symbol is pressed.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_TOUCH_DOWN">
-			<summary>
-			Callback when the touch is pressed.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_TOUCH_UP">
-			<summary>
-			Callback when the touch is released.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_TOUCH_MOTION">
-			<summary>
-			Callback when the touch is moved.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_CONNECTED">
-			<summary>
-			index - gamepad index.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_DISCONNECTED">
-			<summary>
-			index - gamepad index.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_BUTTON_DOWN">
-			<summary>
-			index - gamepad index, b - gamepad button.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_BUTTON_UP">
-			<summary>
-			index - gamepad index, b - gamepad button.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_AXIS_MOTION">
-			<summary>
-			index - gamepad index, a - gamepad axis.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_TOUCH_DOWN">
-			<summary>
-			index - gamepad index, touch - touch index, finger - finger index.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_TOUCH_UP">
-			<summary>
-			index - gamepad index, touch - touch index, finger - finger index.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_GAMEPAD_TOUCH_MOTION">
-			<summary>
-			index - gamepad index, touch - touch index, finger - finger index.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_JOY_CONNECTED">
-			<summary>
-			index - joystick index.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_JOY_DISCONNECTED">
-			<summary>
-			index - joystick index.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_JOY_BUTTON_DOWN">
-			<summary>
-			index - joystick index, b - button index.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_JOY_BUTTON_UP">
-			<summary>
-			index - joystick index, b - button index.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_JOY_AXIS_MOTION">
-			<summary>
-			index - joystick index, a - axis index.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_JOY_POV_MOTION">
-			<summary>
-			index - joystick index, pov - pov index.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.CALLBACK_IMMEDIATE_INPUT">
-			<summary>
-			Callback that allows receiving input events immediately from proxy before being processed by the engine. This callback can be called in different threads depending on the proxy implementation.
-		</summary>
-		</member>
-		<member name="F:Unigine.Input.NUM_CALLBACKS">
-			<summary>
-			Callback counter.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.DEVICE_UNKNOWN">
@@ -1408,6 +1220,11 @@
 		<member name="F:Unigine.Input.DEVICE_THROTTLE">
 			<summary>
 			Throttle device.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.DEVICE_VR">
+			<summary>
+			VR device.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.GAMEPAD_BUTTON_A">
@@ -1582,32 +1399,32 @@
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_LEFT_SHIFT">
 			<summary>
-			Left Shift key used as modifier.
+			Left					Shift key used as modifier.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_RIGHT_SHIFT">
 			<summary>
-			Right Shift key used as modifier.
+			Right					Shift key used as modifier.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_LEFT_CTRL">
 			<summary>
-			Left Ctrl key used as modifier.
+			Left					Ctrl key used as modifier.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_RIGHT_CTRL">
 			<summary>
-			Right Ctrl key used as modifier.
+			Right					Ctrl key used as modifier.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_LEFT_ALT">
 			<summary>
-			Left Alt key used as modifier.
+			Left					Alt key used as modifier.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_RIGHT_ALT">
 			<summary>
-			Right Alt key used as modifier.
+			Right					Alt key used as modifier.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_LEFT_CMD">
@@ -1622,37 +1439,37 @@
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_NUM_LOCK">
 			<summary>
-			Num Lock key used as modifier.
+								Num Lock key used as modifier.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_CAPS_LOCK">
 			<summary>
-			Caps Lock key used as modifier.
+								Caps Lock key used as modifier.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_SCROLL_LOCK">
 			<summary>
-			Scroll Lock key used as modifier.
+								Scroll Lock key used as modifier.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_ALT_GR">
 			<summary>
-			Alt Gr key used as modifier.
+								Alt Gr key used as modifier.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_ANY_SHIFT">
 			<summary>
-			Any Shift key used as modifier.
+			Any					Shift key used as modifier.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_ANY_CTRL">
 			<summary>
-			Any Ctrl key used as modifier.
+			Any					Ctrl key used as modifier.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_ANY_ALT">
 			<summary>
-			Any Alt key used as modifier.
+			Any					Alt key used as modifier.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.MODIFIER_ANY_CMD">
@@ -1660,9 +1477,139 @@
 			Any Command key used as modifier.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.NUM_KEYS">
+		<member name="F:Unigine.Input.MODIFIER_NONE">
 			<summary>
-			Number of keys.
+			No modifier is specified.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.NUM_MODIFIERS">
+			<summary>
+			Total number of modifiers.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_SYSTEM_LEFT">
+			<summary>
+			Left system button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_SYSTEM_RIGHT">
+			<summary>
+			Right system button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_A">
+			<summary>
+			A button reserved for the controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_B">
+			<summary>
+			B button reserved for the controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_X">
+			<summary>
+			X button reserved for the controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_Y">
+			<summary>
+			Y button reserved for the controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_GRIP_LEFT">
+			<summary>
+			Left grip button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_0_LEFT">
+			<summary>
+			The axis reserved for the left controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_1_LEFT">
+			<summary>
+			The axis reserved for the left controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_2_LEFT">
+			<summary>
+			The axis reserved for the left controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_3_LEFT">
+			<summary>
+			The axis reserved for the left controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_4_LEFT">
+			<summary>
+			The axis reserved for the left controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_GRIP_RIGHT">
+			<summary>
+			Right grip button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_0_RIGHT">
+			<summary>
+			The axis reserved for the right controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_1_RIGHT">
+			<summary>
+			The axis reserved for the right controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_2_RIGHT">
+			<summary>
+			The axis reserved for the right controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_3_RIGHT">
+			<summary>
+			The axis reserved for the right controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_4_RIGHT">
+			<summary>
+			The axis reserved for the right controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_DPAD_UP">
+			<summary>
+			Sensor panel up button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_DPAD_DOWN">
+			<summary>
+			Sensor panel down button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_DPAD_LEFT">
+			<summary>
+			Sensor panel left button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_DPAD_RIGHT">
+			<summary>
+			Sensor panel right button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_PROXIMITY_SENSOR">
+			<summary>
+			Proximity sensor.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_APPLICATION">
+			<summary>
+			Application menu button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.NUM_VR_BUTTONS">
+			<summary>
+			Total number of VR buttons and axes.
 		</summary>
 		</member>
 		<member name="M:Unigine.InputEvent.getType const">
@@ -1982,6 +1929,268 @@
 			Returns the delta of the horizontal mouse scroll movement.
 			</summary>  
 			<returns>The amount scrolled horizontally, positive to the right and negative to the left.</returns>
+		</member>
+		<member name="M:Unigine.InputEventVRAxisMotion.#ctor">
+			<summary>
+			Default constructor.
+			</summary>  
+		</member>
+		<member name="M:Unigine.InputEventVRAxisMotion.#ctor(unsignedlonglong,Unigine.Math.ivec2)">
+			<summary>
+			VR controller axis motion event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="mouse_pos"> Position of the mouse. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRAxisMotion.#ctor(unsignedlonglong,Unigine.Math.ivec2,int,int,float)">
+			<summary>
+			VR controller axis motion event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="mouse_pos"> Position of the mouse. </param>
+			<param name="connection_id"> Connection identifier. </param>
+			<param name="axis"> VR controller axis index. </param>
+			<param name="value"> Axis position value. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRAxisMotion.setConnectionID(int)">
+			<summary>
+			Sets the connection identifier.
+			</summary> 
+			<param name="connectionid"> Connection identifier to be set. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRAxisMotion.getConnectionID const">
+			<summary>
+			Returns the current connection identifier.
+			</summary>  
+			<returns>Connection identifier.</returns>
+		</member>
+		<member name="M:Unigine.InputEventVRAxisMotion.setAxis(int)">
+			<summary>
+			Sets the VR controller axis.
+			</summary> 
+			<param name="axis"> The VR controller axis. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRAxisMotion.getAxis const">
+			<summary>
+			Returns the VR controller axis.
+			</summary>  
+			<returns>The VR controller axis.</returns>
+		</member>
+		<member name="M:Unigine.InputEventVRAxisMotion.setValue(float)">
+			<summary>
+			Sets the axis position value.
+			</summary> 
+			<param name="value"> The axis position value. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRAxisMotion.getValue const">
+			<summary>
+			Returns the axis position value.
+			</summary>  
+			<returns>The axis position value.</returns>
+		</member>
+		<member name="M:Unigine.InputEventVRButton.#ctor">
+			<summary>
+			Default constructor.
+			</summary>  
+		</member>
+		<member name="M:Unigine.InputEventVRButton.#ctor(unsignedlonglong,Unigine.Math.ivec2)">
+			<summary>
+			VR controller button input event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="mouse_pos"> Position of the mouse. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRButton.#ctor(unsignedlonglong,Unigine.Math.ivec2,InputEventVRButton::ACTION,int,Input::VR_BUTTON)">
+			<summary>
+			VR controller button input event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="mouse_pos"> Position of the mouse. </param>
+			<param name="action"> Type of the VR controller button input event, one of the ACTION_* values. </param>
+			<param name="connection_id"> Connection identifier. </param>
+			<param name="button"> VR controller button index. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRButton.setAction(InputEventVRButton::ACTION)">
+			<summary>
+			Sets the type of the VR controller button input event.
+			</summary> 
+			<param name="action"> Type of the VR controller button input event, one of the ACTION_* values. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRButton.getAction const">
+			<summary>
+			Returns the type of the VR controller button input event.
+			</summary>  
+			<returns>Type of the VR controller button input event, one of the ACTION_* values.</returns>
+		</member>
+		<member name="M:Unigine.InputEventVRButton.setConnectionID(int)">
+			<summary>
+			Sets the connection identifier.
+			</summary> 
+			<param name="connectionid"> Connection identifier. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRButton.getConnectionID const">
+			<summary>
+			Returns the current connection identifier.
+			</summary>  
+			<returns>Connection identifier.</returns>
+		</member>
+		<member name="M:Unigine.InputEventVRButton.setButton(Input::VR_BUTTON)">
+			<summary>
+			Sets the VR controller button index.
+			</summary> 
+			<param name="button"> VR controller button index. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRButton.getButton const">
+			<summary>
+			Returns the VR controller button index.
+			</summary>  
+			<returns>VR controller button index.</returns>
+		</member>
+		<member name="F:Unigine.InputEventVRButton.ACTION_DOWN">
+			<summary>
+			Button state is "pressed".
+		</summary>
+		</member>
+		<member name="F:Unigine.InputEventVRButton.ACTION_UP">
+			<summary>
+			Button state is "released".
+		</summary>
+		</member>
+		<member name="M:Unigine.InputEventVRButtonTouch.#ctor">
+			<summary>
+			Default constructor.
+			</summary>  
+		</member>
+		<member name="M:Unigine.InputEventVRButtonTouch.#ctor(unsignedlonglong,Unigine.Math.ivec2)">
+			<summary>
+			VR controller button touch input event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="mouse_pos"> Position of the mouse. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRButtonTouch.#ctor(unsignedlonglong,Unigine.Math.ivec2,InputEventVRButtonTouch::ACTION,int,Input::VR_BUTTON)">
+			<summary>
+			VR controller button touch input event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="mouse_pos"> Position of the mouse. </param>
+			<param name="action"> Type of the VR controller button touch input event, one of the ACTION_* values. </param>
+			<param name="connection_id"> Connection identifier. </param>
+			<param name="button"> VR controller button touch index. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRButtonTouch.setAction(InputEventVRButtonTouch::ACTION)">
+			<summary>
+			Sets the type of the VR controller button touch input event.
+			</summary> 
+			<param name="action"> Type of the VR controller button touch input event, one of the ACTION_* values. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRButtonTouch.getAction const">
+			<summary>
+			Returns the type of the VR controller button touch input event.
+			</summary>  
+			<returns>Type of the VR controller button touch input event, one of the ACTION_* values.</returns>
+		</member>
+		<member name="M:Unigine.InputEventVRButtonTouch.setConnectionID(int)">
+			<summary>
+			Sets the connection identifier.
+			</summary> 
+			<param name="connectionid"> Connection identifier. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRButtonTouch.getConnectionID const">
+			<summary>
+			Returns the current connection identifier.
+			</summary>  
+			<returns>Connection identifier.</returns>
+		</member>
+		<member name="M:Unigine.InputEventVRButtonTouch.setButton(Input::VR_BUTTON)">
+			<summary>
+			Sets the VR controller button index.
+			</summary> 
+			<param name="button"> VR controller button index. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRButtonTouch.getButton const">
+			<summary>
+			Returns the VR controller button index.
+			</summary>  
+			<returns>VR controller button index.</returns>
+		</member>
+		<member name="F:Unigine.InputEventVRButtonTouch.ACTION_DOWN">
+			<summary>
+			Button state is "pressed".
+		</summary>
+		</member>
+		<member name="F:Unigine.InputEventVRButtonTouch.ACTION_UP">
+			<summary>
+			Button state is "released".
+		</summary>
+		</member>
+		<member name="M:Unigine.InputEventVRDevice.#ctor">
+			<summary>
+			Default constructor.
+			</summary>  
+		</member>
+		<member name="M:Unigine.InputEventVRDevice.#ctor(unsignedlonglong,Unigine.Math.ivec2)">
+			<summary>
+			VR device input event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="mouse_pos"> Position of the mouse. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRDevice.#ctor(unsignedlonglong,Unigine.Math.ivec2,InputEventVRDevice::ACTION,int,InputVRDevice::TYPE)">
+			<summary>
+			VR device input event constructor.
+			</summary> 
+			<param name="timestamp"> Timestamp of the event. </param>
+			<param name="mouse_pos"> Position of the mouse. </param>
+			<param name="action"> Type of the VR device input event, one of the ACTION_* values. </param>
+			<param name="connection_id"> Connection identifier. </param>
+			<param name="type"> VR device type. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRDevice.setAction(InputEventVRDevice::ACTION)">
+			<summary>
+			Sets the type of the VR device input event.
+			</summary> 
+			<param name="action"> Type of the VR device input event, one of the ACTION_* values. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRDevice.getAction const">
+			<summary>
+			Returns the type of the VR device input event.
+			</summary>  
+			<returns>Type of the VR device input event, one of the ACTION_* values.</returns>
+		</member>
+		<member name="M:Unigine.InputEventVRDevice.setConnectionID(int)">
+			<summary>
+			Sets the connection identifier.
+			</summary> 
+			<param name="connectionid"> Connection identifier. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRDevice.getConnectionID const">
+			<summary>
+			Returns the current connection identifier.
+			</summary>  
+			<returns>Connection identifier.</returns>
+		</member>
+		<member name="M:Unigine.InputEventVRDevice.setType(InputEventVRDevice::TYPE)">
+			<summary>
+			Sets the VR device type.
+			</summary> 
+			<param name="type"> VR device type. </param> 
+		</member>
+		<member name="M:Unigine.InputEventVRDevice.getType const">
+			<summary>
+			Returns the VR device type.
+			</summary>  
+			<returns>VR device type.</returns>
+		</member>
+		<member name="F:Unigine.InputEventVRDevice.ACTION_CONNECTED">
+			<summary>
+			Device state is "connected".
+		</summary>
+		</member>
+		<member name="F:Unigine.InputEventVRDevice.ACTION_DISCONNECTED">
+			<summary>
+			Device state is "disconnected".
+		</summary>
 		</member>
 		<member name="M:Unigine.InputEventSystem.#ctor">
 			<summary>
@@ -3163,6 +3372,695 @@
 			Returns the version of the product established by the manufacturer of the device. This can be very useful in case your application uses non-standard custom input devices to ensure proper configuration (dead zones, inverse flags, correction curves, etc.).
 			</summary>  
 			<returns>Version of the product established by the manufacturer of the device.</returns>
+		</member>
+		<member name="M:Unigine.InputVRBaseStation.getModelType const">
+			<summary>
+			Returns the model type of the VR base station.
+			</summary>  
+			<returns>Base station model type.</returns>
+		</member>
+		<member name="F:Unigine.InputVRBaseStation.MODEL_TYPE_UNKNOWN">
+			<summary>
+			Unknown base station
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRBaseStation.MODEL_TYPE_HTC_VIVE">
+			<summary>
+			HTC Vive
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRBaseStation.MODEL_TYPE_VALVE">
+			<summary>
+			Valve Index
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRBaseStation.NUM_MODEL_TYPES">
+			<summary>
+			Total number of VR base station models.
+		</summary>
+		</member>
+		<member name="M:Unigine.InputVRController.getModelType const">
+			<summary>
+			Returns the model type of the VR controller.
+			</summary>  
+			<returns>Controller model type.</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.setFilter(float)">
+			<summary>
+			Sets a filter value used to correct the current state of the analog axis relative to the previous one. Axis states are interpolated for thumbsticks and triggers.
+			</summary> 
+			<param name="filter"> Filter value for interpolation between axis states. The provided value is clamped to a range [0.0;1.0].Filter value of 0.0 means there is no interpolation and the current value is not corrected.Filter value of 1.0 means the previous state is used instead of the current one. </param> 
+		</member>
+		<member name="M:Unigine.InputVRController.getFilter const">
+			<summary>
+			Returns a filter value used to correct the current state of the analog axis (thumbsticks and triggers) relative to the previous one:													Filter value of 0.0 means there is no interpolation and the current value is not corrected.							Filter value of 1.0 means the previous state is used instead of the current one.
+			</summary>  
+			<returns>Filter value.</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.getControllerType const">
+			<summary>
+			Returns the type of the VR controller.
+			</summary>  
+			<returns>Controller type.</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.getNumAxes const">
+			<summary>
+			Returns the number of axes supported by the VR controller.
+			</summary>  
+			<returns>Number of axes.</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.getAxisType(int) const">
+			<summary>
+			Returns the type of the specified axis.
+			</summary> 
+			<param name="axis"> Axis number. </param> 
+			<returns>Axis type.</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.getAxis(int) const">
+			<summary>
+			Returns a state value for the specified axis. It includes position of the VR controller along the following axes: X, Y (two-axis controller) and Z (three-axis controller). When the VR controller is in the center position, X and Y axes values are zero. Negative values indicate left or down; positive values indicate right or up.
+			</summary> 
+			<param name="axis"> Axis number. </param> 
+			<returns>Value in range [-1.0f; 1.0f].</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.getAxisDelta(int) const">
+			<summary>
+			Returns the axis delta — the difference between a new and the current state of the specified axis.
+			</summary> 
+			<param name="axis"> Axis number. </param> 
+			<returns>Value in range [-1.0f; 1.0f].</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.isButtonPressed(Input::VR_BUTTON) const">
+			<summary>
+			Returns a value indicating if the specified button is pressed. Check this value to perform continuous actions.
+			</summary> 
+			<param name="button"> Button. </param> 
+			<returns>true if the button is pressed; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.isButtonDown(Input::VR_BUTTON) const">
+			<summary>
+			Returns a value indicating if the specified button was pressed during the current frame.
+			</summary> 
+			<param name="button"> Button. </param> 
+			<returns>true if the button was pressed; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.isButtonUp(Input::VR_BUTTON) const">
+			<summary>
+			Returns a value indicating if the specified button was released during the current frame.
+			</summary> 
+			<param name="button"> Button. </param> 
+			<returns>true if the button was released; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.isButtonTouchPressed(Input::VR_BUTTON) const">
+			<summary>
+			Returns a value indicating if the specified button is touched.
+			</summary> 
+			<param name="touch"> Button. </param> 
+			<returns>true if the button is touched; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.isButtonTouchDown(Input::VR_BUTTON) const">
+			<summary>
+			Returns a value indicating if the specified touch button was "pressed" in the currect frame.
+			</summary> 
+			<param name="touch">  </param> 
+			<returns>true if the touch button was "pressed"; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.isButtonTouchUp(Input::VR_BUTTON) const">
+			<summary>
+			Returns a value indicating if the specified touch button was "released" in the currect frame.
+			</summary> 
+			<param name="touch">  </param> 
+			<returns>true if the touch button was "released"; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.getButtonEvent(Input::VR_BUTTON) const">
+			<summary>
+			Returns the currently processed VR controller button input event.
+			</summary> 
+			<param name="button"> Button. </param> 
+			<returns>VR controller button input event, or nullptr if there are no events for the specified button in the current frame.</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.getButtonEvents(Input::VR_BUTTON,Unigine.Vector{Unigine.Ptr{InputEventVRButton},int,Unigine.VectorAllocator})">
+			<summary>
+			Returns the number of input events for the specified VR controller button and puts the events to the specified output buffer.
+			</summary> 
+			<param name="button"> Button. </param>
+			<param name="events"> Buffer with button input events. </param> 
+			<returns>Number of input events for the specified VR controller button.</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.getButtonTouchEvent(Input::VR_BUTTON) const">
+			<summary>
+			Returns the currently processed VR controller button touch event.
+			</summary> 
+			<param name="button"> Button. </param> 
+			<returns>VR controller button touch event, or nullptr if there are no events for the specified touch button in the current frame.</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.getButtonTouchEvents(Input::VR_BUTTON,Unigine.Vector{Unigine.Ptr{InputEventVRButtonTouch},int,Unigine.VectorAllocator})">
+			<summary>
+			Returns the number of touch events for the specified VR controller touch button and puts the events to the specified output buffer.
+			</summary> 
+			<param name="button"> Button. </param>
+			<param name="events"> Buffer with button touch events. </param> 
+			<returns>Number of input events for the specified VR controller touch button.</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.setVibration(unsignedshort)">
+			<summary>
+			Sets the vibration of the given duration for the VR controller.
+			</summary> 
+			<param name="duration_ms"> Duration of the vibration. </param> 
+		</member>
+		<member name="F:Unigine.InputVRController.MODEL_TYPE_UNKNOWN">
+			<summary>
+			Unknown controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.MODEL_TYPE_HTC_VIVE">
+			<summary>
+			HTC Vive
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.MODEL_TYPE_OCULUS_RIFT">
+			<summary>
+			Oculus Rift
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.MODEL_TYPE_VALVE_KNUCKLES">
+			<summary>
+			Valve Index Knuckles
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.NUM_MODEL_TYPES">
+			<summary>
+			Total number of VR controller models.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.CONTROLLER_TYPE_UNKNOWN">
+			<summary>
+			Unknown controller type
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.CONTROLLER_TYPE_HAND_LEFT">
+			<summary>
+			Left hand controller
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.CONTROLLER_TYPE_HAND_RIGHT">
+			<summary>
+			Right hand controller
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.CONTROLLER_TYPE_TREADMILL">
+			<summary>
+			Treadmill
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.NUM_CONTROLLER_TYPES">
+			<summary>
+			Total number of controller types
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_NONE">
+			<summary>
+			Not specified
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_TRACK_PAD">
+			<summary>
+			Trackpad
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_JOYSTICK">
+			<summary>
+			Joystick
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_TRIGGER">
+			<summary>
+			Trigger
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.NUM_AXIS_TYPES">
+			<summary>
+			Total number of axis types.
+		</summary>
+		</member>
+		<member name="M:Unigine.InputVRDevice.isAvailable const">
+			<summary>
+			Returns a value indicating if the VR device is available.
+			</summary>  
+			<returns>true if the device is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getNumber const">
+			<summary>
+			Returns the index of the VR device.
+			</summary>  
+			<returns>Device index.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getName const">
+			<summary>
+			Returns the name of the VR device.
+			</summary>  
+			<returns>Device name.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getDeviceType const">
+			<summary>
+			Returns the type of the input device (wheel, throttle, etc.).
+			</summary>  
+			<returns>Input device type.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getType const">
+			<summary>
+			Returns the type of the VR device (HMD, controller, base station, etc.).
+			</summary>  
+			<returns>VR device type.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getDeviceModelName const">
+			<summary>
+			Returns the name of the model of the VR device.
+			</summary>  
+			<returns>Model name.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.hasYawDrift const">
+			<summary>
+			Returns a value indicating if the VR device will drift in a specific direction.
+			</summary>  
+			<returns>true if the device has yaw drift; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.isCharging const">
+			<summary>
+			Returns a value indicating if the VR device is charging.
+			</summary>  
+			<returns>true if the device is charging; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.hasBattery const">
+			<summary>
+			Returns a value indicating if the VR device has a battery.
+			</summary>  
+			<returns>true if the device has the battery; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.canReportBatteryValue const">
+			<summary>
+			Returns a value indicating if the VR device provides the battery status.
+			</summary>  
+			<returns>true if the battery status is provided; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getBatteryValue const">
+			<summary>
+			Returns the current battery level.
+			</summary>  
+			<returns>Battery level, in percents.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getModelNumber const">
+			<summary>
+			Returns the model number for the VR device.
+			</summary>  
+			<returns>Model number.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getSerialNumber const">
+			<summary>
+			Returns the serial number of the VR device.
+			</summary>  
+			<returns>Seril number.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getManufacturerName const">
+			<summary>
+			Returns the name of the VR device's vendor.
+			</summary>  
+			<returns>Vendor name.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getHardwareRevision const">
+			<summary>
+			Returns the hardware revision of the VR device.
+			</summary>  
+			<returns>Hardware revision.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getFirmwareVersion const">
+			<summary>
+			Returns the firmware version of the VR device.
+			</summary>  
+			<returns>Firmware version</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getWorldTransform const">
+			<summary>
+			Retuns the world transformation of the VR device.
+			</summary>  
+			<returns>World transformation matrix.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getTransform const">
+			<summary>
+			Returns the local transformation of the VR device.
+			</summary>  
+			<returns>Local transformation matrix.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getLinearVelocity const">
+			<summary>
+			Returns the linear velocity of the VR device.
+			</summary>  
+			<returns>Linear velocity.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getAngularVelocity const">
+			<summary>
+			Returns the angular velocity of the VR device.
+			</summary>  
+			<returns>Angular velocity.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getAngularAcceleration const">
+			<summary>
+			Returns the angular acceleration of the VR device.
+			</summary>  
+			<returns>Angular acceleration.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.isTransformValid const">
+			<summary>
+			Returns a value indicating if transformation if the VR device is valid.
+			</summary>  
+			<returns>true if transformation is valid; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getNumModels const">
+			<summary>
+			Returns the number of VR device's models.
+			</summary>  
+			<returns>Number of models.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getModelTransform(int) const">
+			<summary>
+			Returns the local transformation of the given model.
+			</summary> 
+			<param name="num"> Model index. </param> 
+			<returns>Local transformation matrix of the model.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getModelWorldTransform(int) const">
+			<summary>
+			Returns the world transformation of the given model.
+			</summary> 
+			<param name="num"> Model index. </param> 
+			<returns>World transformation matrix of the model.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getModelMesh(int)">
+			<summary>
+			Returns the mesh of the given model.
+			</summary> 
+			<param name="num"> Model index. </param> 
+			<returns>Model mesh.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getModelTexture(int)">
+			<summary>
+			Returns the texture of the given model.
+			</summary> 
+			<param name="num"> Model index. </param> 
+			<returns>Model texture.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getModelName(int)">
+			<summary>
+			Returns the name of the given model.
+			</summary> 
+			<param name="num"> Model index. </param> 
+			<returns>Model name.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getCombinedModelMesh const">
+			<summary>
+			Returns the entire mesh of the combined model of the VR device.						You cannot animate this mesh. However, if you get a mesh of each model individually, it will be automatically animated.
+			</summary>  
+			<returns>Mesh of the combined model.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getCombinedModelTexture const">
+			<summary>
+			Returns the texture of the combined model of the VR device.
+			</summary>  
+			<returns>Texure of the combined model.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.getCombinedModelName const">
+			<summary>
+			Returns the name of the combined model of the VR device.
+			</summary>  
+			<returns>Name of the combined model.</returns>
+		</member>
+		<member name="F:Unigine.InputVRDevice.INPUT_VR_UNKNOWN">
+			<summary>
+			Unknown VR device.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRDevice.INPUT_VR_DEVICE">
+			<summary>
+			VR device.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRDevice.INPUT_VR_HEAD">
+			<summary>
+			Head-mounted display.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRDevice.INPUT_VR_CONTROLLER">
+			<summary>
+			Controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRDevice.INPUT_VR_TRACKER">
+			<summary>
+			Tracker.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRDevice.INPUT_VR_BASE_STATION">
+			<summary>
+			Base station.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRDevice.NUM_TYPES">
+			<summary>
+			Total number of types of the VR devices.
+		</summary>
+		</member>
+		<member name="M:Unigine.InputVRHead.getModelType const">
+			<summary>
+			Returns the model type of the HMD.
+			</summary>  
+			<returns>HMD model type.</returns>
+		</member>
+		<member name="M:Unigine.InputVRHead.hasButtons const">
+			<summary>
+			Returns a value indicating if the HMD has buttons.
+			</summary>  
+			<returns>true if there are buttons; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRHead.setTrackingPositionEnabled(bool)">
+			<summary>
+			Sets the value indicating if head position tracking is enabled.
+			</summary> 
+			<param name="enabled"> true to enable position tracking; false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.InputVRHead.isTrackingPositionEnabled const">
+			<summary>
+			Returns a value indicating if head position tracking is enabled.
+			</summary>  
+			<returns>true if position tracking is enabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRHead.setTrackingRotationEnabled(bool)">
+			<summary>
+			Sets the value indicating if head rotation tracking is enabled.
+			</summary> 
+			<param name="enabled"> true to enable rotation tracking; false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.InputVRHead.isTrackingRotationEnabled const">
+			<summary>
+			Returns a value indicating if head rotation tracking is enabled.
+			</summary>  
+			<returns>true if rotation tracking is enabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRHead.isButtonPressed(Input::VR_BUTTON) const">
+			<summary>
+			Returns a value indicating if the specified button is pressed. Check this value to perform continuous actions.
+			</summary> 
+			<param name="button"> Button. </param> 
+			<returns>true if the button is pressed; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRHead.isButtonDown(Input::VR_BUTTON) const">
+			<summary>
+			Returns a value indicating if the specified button was pressed during the current frame.
+			</summary> 
+			<param name="button"> Button. </param> 
+			<returns>true if the button was pressed; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRHead.isButtonUp(Input::VR_BUTTON) const">
+			<summary>
+			Returns a value indicating if the specified button was released during the current frame.
+			</summary> 
+			<param name="button"> Button. </param> 
+			<returns>true if the button was released; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRHead.getButtonEvent(Input::VR_BUTTON) const">
+			<summary>
+			Returns the currently processed HMD button input event.
+			</summary> 
+			<param name="button"> Button. </param> 
+			<returns>HMD button input event, or nullptr if there are no events for the specified button in the current frame.</returns>
+		</member>
+		<member name="M:Unigine.InputVRHead.getButtonEvents(Input::VR_BUTTON,Unigine.Vector{Unigine.Ptr{InputEventVRButton},int,Unigine.VectorAllocator})">
+			<summary>
+			Returns the number of input events for the specified HMD button and puts the events to the specified output buffer.
+			</summary> 
+			<param name="button"> Button. </param>
+			<param name="events"> Buffer with HMD button input events. </param> 
+			<returns>Number of input events for the specified HMD button.</returns>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_UNKNOWN">
+			<summary>
+			Unknown HMD.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OCULUS_BEGIN">
+			<summary>
+			The first element to be used for iteration through the model types of the Oculus Rift HMD.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OCULUS_DK2">
+			<summary>
+			Oculus Rift DK2
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OCULUS_CB">
+			<summary>
+			Oculus Rift CB
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OCULUS_OTHER">
+			<summary>
+			Other model of the Oculus Rift HMD.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OCULUS_E3_2015">
+			<summary>
+			Oculus Rift E3 2015
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OCULUS_ES06">
+			<summary>
+			Oculus Rift ES06
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OCULUS_ES09">
+			<summary>
+			Oculus Rift ES09
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OCULUS_ES11">
+			<summary>
+			Oculus Rift ES11
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OCULUS_RIFT">
+			<summary>
+			Oculus Rift CV1
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OCULUS_RIFT_S">
+			<summary>
+			Oculus Rift Rift S
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OCULUS_END">
+			<summary>
+			The last element to be used for iteration through the model types of the Oculus Rift HMD.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_VARJO_BEGIN">
+			<summary>
+			The first element to be used for iteration through the model types of the Varjo HMD.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_VARJO_VR_1">
+			<summary>
+			Varjo VR-1
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_VARJO_XR_1">
+			<summary>
+			Varjo XR-1
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_VARJO_VR_2">
+			<summary>
+			Varjo VR-2
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_VARJO_VR_2_PRO">
+			<summary>
+			Varjo VR-2 Pro
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_VARJO_VR_3">
+			<summary>
+			Varjo VR-3
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_VARJO_XR_3">
+			<summary>
+			Varjo XR-3
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_VARJO_AERO">
+			<summary>
+			Varjo AERO
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_VARJO_END">
+			<summary>
+			The last element to be used for iteration through the model types of the Varjo HMD.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OPENVR_BEGIN">
+			<summary>
+			The first element to be used for iteration through the model types of the HMD.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OPENVR_HTC_VIVE">
+			<summary>
+			HTC Vive
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OPENVR_HTC_VIVE_PRO">
+			<summary>
+			HTC Vive Pro MV
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OPENVR_HTC_FOCUS">
+			<summary>
+			HTC Vive Focus
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OPENVR_VALVE_INDEX">
+			<summary>
+			Valve Index
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.MODEL_TYPE_OPENVR_END">
+			<summary>
+			The last element to be used for iteration through the model types of the HMD.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRHead.NUM_MODEL_TYPES">
+			<summary>
+			Total number of HMD model types.
+		</summary>
+		</member>
+		<member name="M:Unigine.InputVRTracker.getModelType const">
+			<summary>
+			Returns the model type of the VR tracker.
+			</summary>  
+			<returns>Tracker model type.</returns>
+		</member>
+		<member name="F:Unigine.InputVRTracker.MODEL_TYPE_UNKNOWN">
+			<summary>
+			Unknown VR tracker.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRTracker.MODEL_TYPE_HTC_VIVE">
+			<summary>
+			HTC Vive
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRTracker.NUM_MODEL_TYPES">
+			<summary>
+			Total number of VR tracker models.
+		</summary>
 		</member>
 	</members>
 </doc>

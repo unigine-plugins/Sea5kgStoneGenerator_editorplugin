@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -49,6 +49,7 @@ struct Hasher
 	using HashType = uintptr_t;
 	UNIGINE_INLINE static HashType create(const Type &t)
 	{
+		UNIGINE_UNUSED(t)
 		static_assert(sizeof(Type) == 0 && false, "Hash function undefined.");
 		return 0;
 	}
@@ -511,20 +512,25 @@ protected:
 		Counter mask = (capacity - 1);
 		index = (index + 1) & mask;
 
-		#define CHECK(i) if (data[(index + i) & mask] == nullptr || (data[(index + i) & mask]->hash & mask) != ((index + i) & mask)) { index = (index + i) & mask; break; }
+		#define UNIGINE_REHASH_DATA_CHECK(i)                                           \
+		if (data[(index + i) & mask] == nullptr ||                                     \
+			Counter(data[(index + i) & mask]->hash & mask) != ((index + i) & mask)) {  \
+			index = (index + i) & mask;                                                \
+			break;                                                                     \
+		}
 		while (data[index])
 		{
-			if ((data[index]->hash & mask) != index)
+			if (Counter(data[index]->hash & mask) != index)
 				break;
-			CHECK(1)
-			CHECK(2)
-			CHECK(3)
-			CHECK(4)
-			CHECK(5)
-			CHECK(6)
+			UNIGINE_REHASH_DATA_CHECK(1)
+			UNIGINE_REHASH_DATA_CHECK(2)
+			UNIGINE_REHASH_DATA_CHECK(3)
+			UNIGINE_REHASH_DATA_CHECK(4)
+			UNIGINE_REHASH_DATA_CHECK(5)
+			UNIGINE_REHASH_DATA_CHECK(6)
 			index = (index + 7) & mask;
 		}
-		#undef CHECK
+		#undef UNIGINE_REHASH_DATA_CHECK
 
 		while (data[index])
 		{
@@ -543,7 +549,7 @@ protected:
 	UNIGINE_INLINE static Counter round_up(Counter v) noexcept
 	{
 		v--;
-		for (Counter i = 1; i < sizeof(v) * 8; i *= 2)
+		for (Counter i = 1; i < static_cast<Counter>(sizeof(v) * 8); i *= 2)
 			v |= v >> i;
 		return ++v;
 	}

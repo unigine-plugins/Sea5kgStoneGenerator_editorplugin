@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -387,46 +387,29 @@ public:
 	}
 
 	template <class C>
-	C *getComponent(const NodePtr &node) const
-	{
-		if (node.isDeleted())
-			return nullptr;
-
-		auto it = components.find(node->getID());
-		if (it == components.end())
-			return nullptr;
-
-		int count = it->data.size();
-		for (int i = 0; i < count; i++)
-		{
-			C *c = dynamic_cast<C*>(it->data[i]);
-			if (c)
-				return c;
-		}
-		return nullptr;
-	}
+	C *getComponent(const NodePtr &node, bool enabled_only = false) const;
 
 	template <class C>
-	C *getComponentInParent(const NodePtr &node) const
+	C *getComponentInParent(const NodePtr &node, bool enabled_only = false) const
 	{
 		NodePtr n = node;
 		C *c = nullptr;
 		while (!c && n)
 		{
-			c = getComponent<C>(n);
+			c = getComponent<C>(n, enabled_only);
 			n = n->getParent() ? n->getParent() : n->getPossessor();
 		}
 		return c;
 	}
 
 	template <class C>
-	C *getComponentInChildren(const NodePtr &node) const
+	C *getComponentInChildren(const NodePtr &node, bool enabled_only = false) const
 	{
 		if (node.isDeleted())
 			return nullptr;
 
 		// find in current node
-		C *c = getComponent<C>(node);
+		C *c = getComponent<C>(node, enabled_only);
 		if (c)
 			return c;
 
@@ -434,7 +417,7 @@ public:
 		if (node->getType() == Node::NODE_REFERENCE && !World::isUnpackNodeReferences())
 		{
 			NodeReferencePtr node_ref = static_ptr_cast<NodeReference>(node);
-			c = getComponentInChildren<C>(node_ref->getReference());
+			c = getComponentInChildren<C>(node_ref->getReference(), enabled_only);
 			if (c)
 				return c;
 		}
@@ -442,7 +425,7 @@ public:
 		// find in nearest children
 		for (int i = 0; i < node->getNumChildren(); i++)
 		{
-			c = getComponent<C>(node->getChild(i));
+			c = getComponent<C>(node->getChild(i), enabled_only);
 			if (c)
 				return c;
 		}
@@ -450,7 +433,7 @@ public:
 		// find in children of children
 		for (int i = 0; i < node->getNumChildren(); i++)
 		{
-			c = getComponentInChildren<C>(node->getChild(i));
+			c = getComponentInChildren<C>(node->getChild(i), enabled_only);
 			if (c)
 				return c;
 		}
@@ -517,6 +500,26 @@ public:
 		for (int i = 0; i < node->getNumChildren(); i++)
 			getComponentsInChildren<C>(node->getChild(i), out_components, 0);
 	}
+
+	template<class C>
+	void getComponentsInWorld(Unigine::Vector<C *> &out_components, bool clear_vector = false) const
+	{
+		if (clear_vector)
+			out_components.clear();
+
+		for (const auto &it : components)
+		{
+			for (const auto &component : it.data)
+			{
+				C *c = dynamic_cast<C *>(component);
+				if (c)
+					out_components.push_back(c);
+			}
+		}
+	}
+
+	template<class C>
+	C *getComponentInWorld(bool enabled_only = false) const;
 
 	template <class C>
 	int removeComponent(const NodePtr &node)
@@ -598,12 +601,12 @@ private:
 	UNIGINE_API void run_thread_methods(const Map<int, Vector<ComponentCallback>> &functions, int id, int size) const;
 
 	// callbacks
-	UNIGINE_API void on_property_slots_changed(const NodePtr node, int num_slots);
-	UNIGINE_API void on_property_created(const NodePtr node, const PropertyPtr prop, int num);
-	UNIGINE_API void on_property_swapped(const NodePtr node, int from_num, int to_num);
-	UNIGINE_API void on_property_removed(const NodePtr node, const PropertyPtr prop, int num);
-	UNIGINE_API void on_property_change_enabled(const NodePtr node, const PropertyPtr prop, int num);
-	UNIGINE_API void on_node_change_enabled(const NodePtr node);
+	UNIGINE_API void on_property_slots_changed(const NodePtr &node, int num_slots);
+	UNIGINE_API void on_property_created(const NodePtr &node, const PropertyPtr &prop, int num);
+	UNIGINE_API void on_property_swapped(const NodePtr &node, int from_num, int to_num);
+	UNIGINE_API void on_property_removed(const NodePtr &node, const PropertyPtr &prop, int num);
+	UNIGINE_API void on_property_change_enabled(const NodePtr &node, const PropertyPtr &prop, int num);
+	UNIGINE_API void on_node_change_enabled(const NodePtr &node);
 
 	bool is_enabled = true;
 
@@ -632,7 +635,7 @@ private:
 
 	// components with properties
 	ComponentFactory component_factory;
-	Map<int, Vector<ComponentBase*>> components; // <node ID, components[]>
+	HashMap<int, Vector<ComponentBase*>> components; // <node ID, components[]>
 
 	struct ComponentCallback
 	{
@@ -1265,7 +1268,7 @@ public:
 		struct_type = type_name;
 
 		// set parameters to all children recursively
-		setParameter(parameter);
+		ComponentVariableStruct::setParameter(parameter);
 
 		// add new struct to the Component
 		int index = component->findStructIndex(struct_type.get());
@@ -1466,51 +1469,51 @@ protected:
 
 	// components
 	template <class C>
-	C *addComponent(const NodePtr &node)
+	C *addComponent(const NodePtr &n)
 	{
-		return ComponentSystem::get()->addComponent<C>(node);
+		return ComponentSystem::get()->addComponent<C>(n);
 	}
 
 	template <class C>
-	C *getComponent(const NodePtr &node) const
+	C *getComponent(const NodePtr &n, bool enabled_only = false) const
 	{
-		return ComponentSystem::get()->getComponent<C>(node);
+		return ComponentSystem::get()->getComponent<C>(n, enabled_only);
 	}
 
 	template <class C>
-	C *getComponentInParent(const NodePtr &node) const
+	C *getComponentInParent(const NodePtr &n, bool enabled_only = false) const
 	{
-		return ComponentSystem::get()->getComponentInParent<C>(node);
+		return ComponentSystem::get()->getComponentInParent<C>(n, enabled_only);
 	}
 
 	template <class C>
-	C *getComponentInChildren(const NodePtr &node) const
+	C *getComponentInChildren(const NodePtr &n, bool enabled_only = false) const
 	{
-		return ComponentSystem::get()->getComponentInChildren<C>(node);
+		return ComponentSystem::get()->getComponentInChildren<C>(n, enabled_only);
 	}
 
 	template <class C>
-	void getComponents(const NodePtr &node, Vector<C*> &components) const
+	void getComponents(const NodePtr &n, Vector<C*> &components) const
 	{
-		ComponentSystem::get()->getComponents<C>(node, components);
+		ComponentSystem::get()->getComponents<C>(n, components);
 	}
 
 	template <class C>
-	void getComponentsInParent(const NodePtr &node, Vector<C*> &components) const
+	void getComponentsInParent(const NodePtr &n, Vector<C*> &components) const
 	{
-		ComponentSystem::get()->getComponentsInParent<C>(node, components);
+		ComponentSystem::get()->getComponentsInParent<C>(n, components);
 	}
 
 	template <class C>
-	void getComponentsInChildren(const NodePtr &node, Vector<C*> &components) const
+	void getComponentsInChildren(const NodePtr &n, Vector<C*> &components) const
 	{
-		ComponentSystem::get()->getComponentsInChildren<C>(node, components);
+		ComponentSystem::get()->getComponentsInChildren<C>(n, components);
 	}
 
 	template <class C>
-	int removeComponent(const NodePtr &node)
+	int removeComponent(const NodePtr &n)
 	{
-		return ComponentSystem::get()->removeComponent<C>(node);
+		return ComponentSystem::get()->removeComponent<C>(n);
 	}
 
 	//////////////////////////////////////////////////////////
@@ -1573,6 +1576,48 @@ public:
 	ComponentStruct() = default;
 	virtual ~ComponentStruct() = default;
 };
+
+template<class C>
+C *ComponentSystem::getComponentInWorld(bool enabled_only) const
+{
+	for (const auto &it : components)
+	{
+		for (const auto &base_component : it.data)
+		{
+			if (enabled_only && !base_component->isEnabled())
+				continue;
+
+			C *c = dynamic_cast<C *>(base_component);
+			if (c)
+				return c;
+		}
+	}
+	return nullptr;
+}
+
+template<class C>
+C *ComponentSystem::getComponent(const NodePtr &node, bool enabled_only) const
+{
+	if (node.isDeleted())
+		return nullptr;
+
+	auto it = components.find(node->getID());
+	if (it == components.end())
+		return nullptr;
+
+	int count = it->data.size();
+	for (int i = 0; i < count; i++)
+	{
+		const auto &base_component = it->data[i];
+		if (enabled_only && !base_component->isEnabled())
+			continue;
+
+		C *c = dynamic_cast<C*>(base_component);
+		if (c)
+			return c;
+	}
+	return nullptr;
+}
 
 #ifndef __GNUC__
 #pragma endregion Base

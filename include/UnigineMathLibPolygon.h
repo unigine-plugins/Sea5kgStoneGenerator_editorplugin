@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -72,7 +72,7 @@ public:
 		int iterations = buffer.size() * 2;
 		while (iterations-- > 0)
 		{
-			int index = -1;
+			int idx = -1;
 			float distance = 0.0f;
 			const vec3 &v0 = vertex.last().xyz;
 			for (int i = 0; i < buffer.size(); i++)
@@ -105,14 +105,14 @@ public:
 				if (is_convex == 0)
 					continue;
 				distance = d;
-				index = i;
+				idx = i;
 			}
 
-			if (index == -1)
+			if (idx == -1)
 				break;
 
-			vertex.append(buffer[index]);
-			buffer.removeFast(index);
+			vertex.append(buffer[idx]);
+			buffer.removeFast(idx);
 		}
 
 		// create polygon indices

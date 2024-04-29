@@ -14,7 +14,7 @@
 			<summary>
 			Returns a value indicating if the visualizer is enabled.
 			</summary>  
-			<returns>1 if the visualizer is enabled; otherwise, 0.</returns>
+			<returns>true if the visualizer is enabled; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Visualizer.setSize(int)">
 			<summary>
@@ -500,10 +500,31 @@
 			<summary>
 			Returns the current Visualizer mode.
 			</summary>  
+			<returns>The currently set Visualizer mode.</returns>
 		</member>
-		<member name="F:Unigine.Visualizer.MODE_ENABLED_DEPTH_TEST_DISABLED">
+		<member name="M:Unigine.Visualizer.getNumHandlers const">
 			<summary>
-			Display the Visualizer without depth testing.
+			Returns the total number of handlers.					The total number of handlers may change every frame depending on the camera transforms (i.e. how many handlers are visible in the current frame), therefore it is not recommended to save and reuse this value.
+			</summary>  
+			<returns>The total number of handlers.</returns>
+		</member>
+		<member name="M:Unigine.Visualizer.getHandlerNode(int) const">
+			<summary>
+			Returns the handler node by its index.					The handler index may change every frame depending on the camera transforms (i.e. how many handlers are visible in the current frame), therefore it is not recommended to save and reuse this value.
+			</summary> 
+			<param name="num"> Handler node index in the range from 0 to the total number of handlers. </param> 
+			<returns>The node for which the handler is rendered.</returns>
+		</member>
+		<member name="M:Unigine.Visualizer.getHandlerSize(int) const">
+			<summary>
+			Returns the handler icon size in units by its index. This value may be affected by the icon size (set by the setSize() method) and by the 3D option (world_handler_3d console command).
+			</summary> 
+			<param name="num"> Handler node index in the range from 0 to the total number of handlers. </param> 
+			<returns>The handler icon size, in units.</returns>
+		</member>
+		<member name="F:Unigine.Visualizer.MODE_DISABLED">
+			<summary>
+			Do not display the Visualizer at all.
 		</summary>
 		</member>
 		<member name="F:Unigine.Visualizer.MODE_ENABLED_DEPTH_TEST_ENABLED">
@@ -511,9 +532,9 @@
 			Display the Visualizer with depth testing enabled.
 		</summary>
 		</member>
-		<member name="F:Unigine.Visualizer.MODE_DISABLED">
+		<member name="F:Unigine.Visualizer.MODE_ENABLED_DEPTH_TEST_DISABLED">
 			<summary>
-			Do not display the Visualizer at all.
+			Display the Visualizer without depth testing.
 		</summary>
 		</member>
 	</members>

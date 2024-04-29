@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -40,7 +40,7 @@ typedef Ptr<Field> FieldPtr;
 class UNIGINE_API FieldAnimation : public Field
 {
 public:
-	static int type() { return Node::FIELD_ANIMATION; }
+	static Node::TYPE type() { return Node::FIELD_ANIMATION; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<FieldAnimation> create(const Math::vec3 &size);
@@ -66,7 +66,7 @@ typedef Ptr<FieldAnimation> FieldAnimationPtr;
 class UNIGINE_API FieldHeight : public Field
 {
 public:
-	static int type() { return Node::FIELD_HEIGHT; }
+	static Node::TYPE type() { return Node::FIELD_HEIGHT; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<FieldHeight> create();
@@ -100,7 +100,7 @@ typedef Ptr<FieldHeight> FieldHeightPtr;
 class UNIGINE_API FieldWeather : public Field
 {
 public:
-	static int type() { return Node::FIELD_WEATHER; }
+	static Node::TYPE type() { return Node::FIELD_WEATHER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<FieldWeather> create();
@@ -134,7 +134,7 @@ typedef Ptr<FieldWeather> FieldWeatherPtr;
 class UNIGINE_API FieldShoreline : public Field
 {
 public:
-	static int type() { return Node::FIELD_SHORELINE; }
+	static Node::TYPE type() { return Node::FIELD_SHORELINE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<FieldShoreline> create();
@@ -148,9 +148,7 @@ public:
 	Ptr<Texture> getTexture() const;
 	int bakeWaterLevel(const Ptr<Image> &image);
 	int createShorelineDistanceField(const Ptr<Texture> &texture, int shoreline_radius, int blur_radius, int downsample_resolution);
-	void *addProgressCallback(CallbackBase1<float> *func);
-	bool removeProgressCallback(void *id);
-	void clearProgressCallbacks();
+	Event<float> &getEventProgress();
 };
 typedef Ptr<FieldShoreline> FieldShorelinePtr;
 
@@ -159,7 +157,7 @@ typedef Ptr<FieldShoreline> FieldShorelinePtr;
 class UNIGINE_API FieldSpacer : public Field
 {
 public:
-	static int type() { return Node::FIELD_SPACER; }
+	static Node::TYPE type() { return Node::FIELD_SPACER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<FieldSpacer> create(const Math::vec3 &size);

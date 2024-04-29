@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -62,7 +62,7 @@ typedef Ptr<Decal> DecalPtr;
 class UNIGINE_API DecalMesh : public Decal
 {
 public:
-	static int type() { return Node::DECAL_MESH; }
+	static Node::TYPE type() { return Node::DECAL_MESH; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<DecalMesh> create();
@@ -99,7 +99,7 @@ typedef Ptr<DecalMesh> DecalMeshPtr;
 class UNIGINE_API DecalOrtho : public Decal
 {
 public:
-	static int type() { return Node::DECAL_ORTHO; }
+	static Node::TYPE type() { return Node::DECAL_ORTHO; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<DecalOrtho> create();
@@ -118,7 +118,7 @@ typedef Ptr<DecalOrtho> DecalOrthoPtr;
 class UNIGINE_API DecalProj : public Decal
 {
 public:
-	static int type() { return Node::DECAL_PROJ; }
+	static Node::TYPE type() { return Node::DECAL_PROJ; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<DecalProj> create();

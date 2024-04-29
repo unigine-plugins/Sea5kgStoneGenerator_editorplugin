@@ -1,0 +1,48 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.VREyeTracking.requestCalibration">
+			<summary>
+			Triggers the gaze calibration sequence, if gaze tracking has been enabled in Varjo settings and the Varjo system is in a state where it can bring up the calibration UI.
+			</summary>  
+		</member>
+		<member name="F:Unigine.VREyeTracking.STATUS_INVALID">
+			<summary>
+			Data is not available, user is not wearing the device or eyes cannot be found.
+		</summary>
+		</member>
+		<member name="F:Unigine.VREyeTracking.STATUS_ADJUST">
+			<summary>
+			User is wearing the device, but gaze tracking is being calibrated.
+		</summary>
+		</member>
+		<member name="F:Unigine.VREyeTracking.STATUS_VALID">
+			<summary>
+			Data is valid.
+		</summary>
+		</member>
+		<member name="F:Unigine.VREyeTracking.EYE_STATUS_INVALID">
+			<summary>
+			Eye is not tracked and not visible (for example, eye is shut).
+		</summary>
+		</member>
+		<member name="F:Unigine.VREyeTracking.EYE_STATUS_VISIBLE">
+			<summary>
+			Eye is visible but not reliably tracked (for example, saccade or blink).
+		</summary>
+		</member>
+		<member name="F:Unigine.VREyeTracking.EYE_STATUS_COMPENSATED">
+			<summary>
+			Eye is tracked but quality compromised (for example, headset has moved after calibration).
+		</summary>
+		</member>
+		<member name="F:Unigine.VREyeTracking.EYE_STATUS_TRACKED">
+			<summary>
+			Eye is tracked.
+		</summary>
+		</member>
+	</members>
+</doc>

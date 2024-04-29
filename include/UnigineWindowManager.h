@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -24,6 +24,16 @@ namespace Unigine
 
 class WindowEvent;
 class EngineWindowGroup;
+class EngineWindow;
+
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<WindowEvent> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<WindowEvent> &>>;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<Gui> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Gui> &>>;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Math::ivec2 &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Math::ivec2 &>>;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<EngineWindow> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<EngineWindow> &>>;
 
 class UNIGINE_API EngineWindow : public APIInterface
 {
@@ -76,35 +86,6 @@ public:
 		AREA_BOTTOM_LEFT,
 		AREA_BOTTOM_CENTER,
 		AREA_BOTTOM_RIGHT,
-	};
-
-	enum CALLBACK_INDEX
-	{
-		CALLBACK_WINDOW_EVENT = 0,
-		CALLBACK_FUNC_UPDATE,
-		CALLBACK_FUNC_BEGIN_RENDER,
-		CALLBACK_FUNC_RENDER,
-		CALLBACK_FUNC_BEGIN_RENDER_GUI,
-		CALLBACK_FUNC_END_RENDER_GUI,
-		CALLBACK_FUNC_END_RENDER,
-		CALLBACK_FUNC_SWAP,
-		CALLBACK_MOVED,
-		CALLBACK_RESIZED,
-		CALLBACK_FOCUSED,
-		CALLBACK_UNFOCUSED,
-		CALLBACK_MOUSE_ENTER,
-		CALLBACK_MOUSE_LEAVE,
-		CALLBACK_SHOWN,
-		CALLBACK_HIDDEN,
-		CALLBACK_MINIMIZED,
-		CALLBACK_MAXIMIZED,
-		CALLBACK_RESTORED,
-		CALLBACK_CLOSE,
-		CALLBACK_ITEM_DROP,
-		CALLBACK_UNSTACK_MOVE,
-		CALLBACK_STACK,
-		CALLBACK_UNSTACK,
-		NUM_CALLBACKS,
 	};
 	EngineWindow::TYPE getType() const;
 	const char *getTypeName() const;
@@ -209,19 +190,54 @@ public:
 	bool getClientIntersection(const Math::ivec2 &global_mouse_pos) const;
 	EngineWindow::AREA getClient9Area(const Math::ivec2 &global_mouse_pos) const;
 	const char *get9AreaName(EngineWindow::AREA area) const;
-	void *addCallback(EngineWindow::CALLBACK_INDEX callback, CallbackBase *func);
-	void *addCallback(EngineWindow::CALLBACK_INDEX callback, CallbackBase1<float> *func);
-	void *addCallback(EngineWindow::CALLBACK_INDEX callback, CallbackBase1<const char *> *func);
-	void *addCallback(EngineWindow::CALLBACK_INDEX callback, CallbackBase1<Math::ivec2> *func);
-	void *addCallback(EngineWindow::CALLBACK_INDEX callback, CallbackBase1<Ptr<WindowEvent>> *func);
-	bool removeCallback(EngineWindow::CALLBACK_INDEX callback, void *id);
-	void clearCallbacks(EngineWindow::CALLBACK_INDEX callback);
+	Event<const Ptr<WindowEvent> &> &getEventWindowEvent();
+	Event<> &getEventFuncUpdate();
+	Event<> &getEventFuncBeginRender();
+	Event<> &getEventFuncRender();
+	Event<const Ptr<Gui> &> &getEventFuncBeginRenderGui();
+	Event<const Ptr<Gui> &> &getEventFuncEndRenderGui();
+	Event<> &getEventFuncEndRender();
+	Event<> &getEventFuncSwap();
+	Event<const Math::ivec2 &> &getEventMoved();
+	Event<const Math::ivec2 &> &getEventResized();
+	Event<> &getEventFocused();
+	Event<> &getEventUnfocused();
+	Event<> &getEventMouseEnter();
+	Event<> &getEventMouseLeave();
+	Event<> &getEventShown();
+	Event<> &getEventHidden();
+	Event<> &getEventMinimized();
+	Event<> &getEventMaximized();
+	Event<> &getEventRestored();
+	Event<> &getEventClose();
+	Event<const char *> &getEventItemDrop();
+	Event<const Ptr<EngineWindow> &> &getEventUnstackMove();
+	Event<> &getEventStack();
+	Event<> &getEventUnstack();
 	int getNumDroppedItems() const;
 	const char *getDroppedItem(int index) const;
 	void screenshot(const char *path);
+
+private:
+
+	EventHolder<EventInterfaceInvoker<const Ptr<WindowEvent> &>> event_window_event;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<WindowEvent> &>> event_window_event_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Gui> &>> event_func_begin_render_gui;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Gui> &>> event_func_begin_render_gui_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Gui> &>> event_func_end_render_gui;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Gui> &>> event_func_end_render_gui_connection;
+	EventHolder<EventInterfaceInvoker<const Math::ivec2 &>> event_moved;
+	EventInterfaceConnection<EventInterfaceInvoker<const Math::ivec2 &>> event_moved_connection;
+	EventHolder<EventInterfaceInvoker<const Math::ivec2 &>> event_resized;
+	EventInterfaceConnection<EventInterfaceInvoker<const Math::ivec2 &>> event_resized_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<EngineWindow> &>> event_unstack_move;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<EngineWindow> &>> event_unstack_move_connection;
 };
 typedef Ptr<EngineWindow> EngineWindowPtr;
 
+class EngineWindowViewport;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<EngineWindowViewport> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<EngineWindowViewport> &>>;
 
 class UNIGINE_API EngineWindowViewport : public EngineWindow
 {
@@ -253,11 +269,14 @@ public:
 	bool isChild(const Ptr<Widget> &widget);
 	Ptr<Widget> getChild(int index);
 	int getNumChildren() const;
-	void *addCustomRenderCallback(CallbackBase1<Ptr<EngineWindowViewport>> *func);
-	bool removeCustomRenderCallback(void *id);
-	void clearCustomRenderCallbacks();
+	Event<const Ptr<EngineWindowViewport> &> &getEventCustomRender();
 	void setDeprecatedCustomPresentCallback(CallbackBase *callback);
 	CallbackBase *getDeprecatedCustomPresentCallback() const;
+
+private:
+
+	EventHolder<EventInterfaceInvoker<const Ptr<EngineWindowViewport> &>> event_custom_render;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<EngineWindowViewport> &>> event_custom_render_connection;
 };
 typedef Ptr<EngineWindowViewport> EngineWindowViewportPtr;
 
@@ -427,7 +446,7 @@ public:
 	static Ptr<WindowEventDpi> create(unsigned long long timestamp, unsigned long long win_id);
 	static Ptr<WindowEventDpi> create(unsigned long long timestamp, unsigned long long win_id, const Math::ivec2 &mouse_pos);
 	static Ptr<WindowEventDpi> create(unsigned long long timestamp, unsigned long long win_id, const Math::ivec2 &mouse_pos, const Math::ivec2 &position, const Math::ivec2 &size);
-	static Ptr<WindowEventDpi> create(unsigned long long timestamp, unsigned long long win_id, const Math::ivec2 &mouse_pos, const Math::ivec2 &position, const Math::ivec2 &size, WindowEventDrop::ACTION action, int dpi);
+	static Ptr<WindowEventDpi> create(unsigned long long timestamp, unsigned long long win_id, const Math::ivec2 &mouse_pos, const Math::ivec2 &position, const Math::ivec2 &size, WindowEventDpi::ACTION action, int dpi);
 	void setAction(WindowEventDpi::ACTION action);
 	WindowEventDpi::ACTION getAction() const;
 	void setDpi(int dpi);
@@ -474,15 +493,6 @@ class UNIGINE_API WindowManager
 {
 public:
 	static int isInitialized();
-
-	enum CALLBACKS
-	{
-		CALLBACKS_WINDOW_CREATED = 0,
-		CALLBACKS_WINDOW_REMOVED,
-		CALLBACKS_WINDOW_STACKED,
-		CALLBACKS_WINDOW_UNSTACKED,
-		CALLBACKS_NUM,
-	};
 
 	enum DPI_AWARENESS
 	{
@@ -531,10 +541,11 @@ public:
 	static const char *dialogSaveFile(const char *path, const char *filter);
 	static const char *dialogSaveFile(const char *path);
 	static const char *dialogSaveFile();
-	static void *addCallback(WindowManager::CALLBACKS callback, CallbackBase *func);
-	static void *addCallback(WindowManager::CALLBACKS callback, CallbackBase1<Ptr<EngineWindow>> *func);
-	static bool removeCallback(WindowManager::CALLBACKS callback, void *id);
-	static void clearCallbacks(WindowManager::CALLBACKS callback);
+	static Event<const Ptr<EngineWindow> &> &getEventWindowCreated();
+	static Event<const Ptr<EngineWindow> &> &getEventWindowRemoved();
+	static Event<const Ptr<EngineWindow> &> &getEventWindowStacked();
+	static Event<const Ptr<EngineWindow> &> &getEventWindowUnstacked();
+	static Event<const Ptr<WindowEvent> &> &getEventImmediateWindowEvent();
 	static void setEventsFilter(int (*func)(Ptr<WindowEvent> &e));
 };
 

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -113,7 +113,7 @@ typedef Ptr<Player> PlayerPtr;
 class UNIGINE_API PlayerDummy : public Player
 {
 public:
-	static int type() { return Node::PLAYER_DUMMY; }
+	static Node::TYPE type() { return Node::PLAYER_DUMMY; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<PlayerDummy> create();
@@ -127,7 +127,7 @@ typedef Ptr<PlayerDummy> PlayerDummyPtr;
 class UNIGINE_API PlayerActor : public Player
 {
 public:
-	static int type() { return Node::PLAYER_ACTOR; }
+	static Node::TYPE type() { return Node::PLAYER_ACTOR; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<PlayerActor> create();
@@ -224,7 +224,7 @@ typedef Ptr<PlayerActor> PlayerActorPtr;
 class UNIGINE_API PlayerPersecutor : public Player
 {
 public:
-	static int type() { return Node::PLAYER_PERSECUTOR; }
+	static Node::TYPE type() { return Node::PLAYER_PERSECUTOR; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<PlayerPersecutor> create();
@@ -271,7 +271,7 @@ typedef Ptr<PlayerPersecutor> PlayerPersecutorPtr;
 class UNIGINE_API PlayerSpectator : public Player
 {
 public:
-	static int type() { return Node::PLAYER_SPECTATOR; }
+	static Node::TYPE type() { return Node::PLAYER_SPECTATOR; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<PlayerSpectator> create();

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -15,7 +15,8 @@
 
 #include "UnigineBase.h"
 #include "UnigineString.h"
-#include "UnigineCallback.h"
+#include "UnigineEvent.h"
+#include "UniginePlayers.h"
 
 // Unigine compilation flags
 enum
@@ -75,95 +76,6 @@ public:
 		VIDEO_CONTEXT_BREAK_ON_ERROR = 1 << 1,
 		VIDEO_CONTEXT_GPU_SIDE_VALIDATION = 1 << 2,
 		VIDEO_CONTEXT_QUAD_BUFFER_CONTEXT = 1 << 3,
-	};
-
-	enum CALLBACK_INDEX
-	{
-		// Engine::update()
-		CALLBACK_BEGIN_UPDATE = 0,
-			CALLBACK_BEGIN_PROPERTIES_UPDATE,
-			  CALLBACK_END_PROPERTIES_UPDATE,
-			CALLBACK_BEGIN_INPUT_UPDATE,
-			  CALLBACK_END_INPUT_UPDATE,
-			CALLBACK_BEGIN_CONTROLS_UPDATE,
-			  CALLBACK_END_CONTROLS_UPDATE,
-			CALLBACK_BEGIN_WORLD_MANAGER_UPDATE,
-			  CALLBACK_END_WORLD_MANAGER_UPDATE,
-			CALLBACK_BEGIN_SOUND_MANAGER_UPDATE,
-			  CALLBACK_END_SOUND_MANAGER_UPDATE,
-			CALLBACK_BEGIN_GAME_UPDATE,
-			  CALLBACK_END_GAME_UPDATE,
-			CALLBACK_BEGIN_RENDER_UPDATE,
-			  CALLBACK_END_RENDER_UPDATE,
-			CALLBACK_BEGIN_EXPRESSION_UPDATE,
-			  CALLBACK_END_EXPRESSION_UPDATE,
-			CALLBACK_BEGIN_SOUNDS_UPDATE,
-			  CALLBACK_END_SOUNDS_UPDATE,
-
-			CALLBACK_BEGIN_PLUGINS_UPDATE,
-			  CALLBACK_END_PLUGINS_UPDATE,
-			CALLBACK_BEGIN_EDITOR_UPDATE,
-			  CALLBACK_END_EDITOR_UPDATE,
-			CALLBACK_BEGIN_SYSTEM_SCRIPT_UPDATE,
-			  CALLBACK_END_SYSTEM_SCRIPT_UPDATE,
-			CALLBACK_BEGIN_SYSTEM_LOGIC_UPDATE,
-			  CALLBACK_END_SYSTEM_LOGIC_UPDATE,
-			CALLBACK_BEGIN_WORLD_UPDATE,
-			  CALLBACK_END_WORLD_UPDATE,
-			CALLBACK_BEGIN_WORLD_POST_UPDATE,
-			  CALLBACK_END_WORLD_POST_UPDATE,
-			CALLBACK_BEGIN_SYSTEM_SCRIPT_POST_UPDATE,
-			  CALLBACK_END_SYSTEM_SCRIPT_POST_UPDATE,
-			CALLBACK_BEGIN_SYSTEM_LOGIC_POST_UPDATE,
-			  CALLBACK_END_SYSTEM_LOGIC_POST_UPDATE,
-			CALLBACK_BEGIN_EDITOR_POST_UPDATE,
-			  CALLBACK_END_EDITOR_POST_UPDATE,
-			CALLBACK_BEGIN_PLUGINS_POST_UPDATE,
-			  CALLBACK_END_PLUGINS_POST_UPDATE,
-
-			CALLBACK_BEGIN_SPATIAL_UPDATE,
-			  CALLBACK_END_SPATIAL_UPDATE,
-			CALLBACK_BEGIN_FILESYSTEM_UPDATE,
-			  CALLBACK_END_FILESYSTEM_UPDATE,
-			CALLBACK_BEGIN_PATHFINDING,
-		CALLBACK_END_UPDATE,
-
-		CALLBACK_SYNC_BEGIN_FRAME_PHYSICS,
-		CALLBACK_SYNC_END_FRAME_PHYSICS,
-
-		CALLBACK_ASYNC_BEGIN_FRAME_PHYSICS,
-		CALLBACK_ASYNC_END_FRAME_PHYSICS,
-
-		// Engine::render()
-		CALLBACK_BEGIN_RENDER,
-			CALLBACK_BEGIN_EDITOR_RENDER,
-			  CALLBACK_END_EDITOR_RENDER,
-			CALLBACK_BEGIN_PLUGINS_RENDER,
-			  CALLBACK_END_PLUGINS_RENDER,
-			CALLBACK_BEGIN_RENDER_WORLD,
-			  CALLBACK_END_RENDER_WORLD,
-			CALLBACK_BEGIN_PLUGINS_GUI,
-			  CALLBACK_END_PLUGINS_GUI,
-			CALLBACK_BEGIN_POST_RENDER,
-			  CALLBACK_END_POST_RENDER,
-		CALLBACK_END_RENDER,
-
-		// Engine::swap()
-		CALLBACK_BEGIN_SWAP,
-			CALLBACK_END_PATHFINDING,
-			CALLBACK_BEGIN_WORLD_SWAP,
-			  CALLBACK_END_WORLD_SWAP,
-			CALLBACK_BEGIN_PLUGINS_SWAP,
-			  CALLBACK_END_PLUGINS_SWAP,
-			CALLBACK_BEGIN_DELETE_OBJECTS,
-			  CALLBACK_END_DELETE_OBJECTS,
-		CALLBACK_END_SWAP,
-
-		// Engine::focus()
-		CALLBACK_FOCUS_GAINED,
-		CALLBACK_FOCUS_LOST,
-
-		NUM_CALLBACKS,
 	};
 
 	enum BACKGROUND_UPDATE
@@ -232,7 +144,7 @@ public:
 	/// Returns true if Engine was built as an evaluation version; otherwise false.
 	static UNIGINE_API bool isEvaluation();
 
-	/// Returns the list of features (like OpenGL, Direct3D, Microprofile, Geodetic, etc.) as a string 
+	/// Returns the list of features (like Direct3D, Microprofile, Geodetic, etc.) as a string
 	static UNIGINE_API const char *getFeatures();
 
 	/// Returns the number of command line arguments.
@@ -395,7 +307,9 @@ public:
 	/// The engine requests to exit the application.
 	virtual void quit() = 0;
 
+	/// Starts a block of code where you can call Render class methods from outside the Engine's Loop.
 	virtual void beginOutsideLoopRender() = 0;
+	/// Closes a block of code where you can call Render class methods from outside the Engine's Loop started with a call to the beginOutsideLoopRender() method.
 	virtual void endOutsideLoopRender() = 0;
 
 	/// Stops the FPS counter.
@@ -692,10 +606,87 @@ public:
 	/// Returns true if the function from the main Engine thread; otherwise, false.
 	virtual bool isMainThread() const = 0;
 
-	/// Callbacks
-	virtual void *addCallback(CALLBACK_INDEX callback, CallbackBase *func) = 0;
-	virtual bool removeCallback(CALLBACK_INDEX callback, void *id) = 0;
-	virtual void clearCallbacks(CALLBACK_INDEX callback) = 0;
+	/// Returns current main player. Either for the editor, or for the game
+	virtual PlayerPtr getMainPlayer() const = 0;
+
+	virtual Event<> &getEventBeginUpdate() = 0;
+	virtual Event<> &getEventBeginPropertiesUpdate() = 0;
+	virtual Event<> &getEventEndPropertiesUpdate() = 0;
+	virtual Event<> &getEventBeginInputUpdate() = 0;
+	virtual Event<> &getEventEndInputUpdate() = 0;
+	virtual Event<> &getEventBeginControlsUpdate() = 0;
+	virtual Event<> &getEventEndControlsUpdate() = 0;
+	virtual Event<> &getEventBeginWorldManagerUpdate() = 0;
+	virtual Event<> &getEventEndWorldManagerUpdate() = 0;
+	virtual Event<> &getEventBeginSoundManagerUpdate() = 0;
+	virtual Event<> &getEventEndSoundManagerUpdate() = 0;
+	virtual Event<> &getEventBeginGameUpdate() = 0;
+	virtual Event<> &getEventEndGameUpdate() = 0;
+	virtual Event<> &getEventBeginRenderUpdate() = 0;
+	virtual Event<> &getEventEndRenderUpdate() = 0;
+	virtual Event<> &getEventBeginExpressionUpdate() = 0;
+	virtual Event<> &getEventEndExpressionUpdate() = 0;
+	virtual Event<> &getEventBeginSoundsUpdate() = 0;
+	virtual Event<> &getEventEndSoundsUpdate() = 0;
+	virtual Event<> &getEventBeginPluginsUpdate() = 0;
+	virtual Event<> &getEventEndPluginsUpdate() = 0;
+	virtual Event<> &getEventBeginVRUpdate() = 0;
+	virtual Event<> &getEventEndVRUpdate() = 0;
+	virtual Event<> &getEventBeginEditorUpdate() = 0;
+	virtual Event<> &getEventEndEditorUpdate() = 0;
+	virtual Event<> &getEventBeginSystemScriptUpdate() = 0;
+	virtual Event<> &getEventEndSystemScriptUpdate() = 0;
+	virtual Event<> &getEventBeginSystemLogicUpdate() = 0;
+	virtual Event<> &getEventEndSystemLogicUpdate() = 0;
+	virtual Event<> &getEventBeginWorldUpdate() = 0;
+	virtual Event<> &getEventEndWorldUpdate() = 0;
+	virtual Event<> &getEventBeginAnimationManagerUpdate() = 0;
+	virtual Event<> &getEventEndAnimationManagerUpdate() = 0;
+	virtual Event<> &getEventBeginWorldPostUpdate() = 0;
+	virtual Event<> &getEventEndWorldPostUpdate() = 0;
+	virtual Event<> &getEventBeginSystemScriptPostUpdate() = 0;
+	virtual Event<> &getEventEndSystemScriptPostUpdate() = 0;
+	virtual Event<> &getEventBeginSystemLogicPostUpdate() = 0;
+	virtual Event<> &getEventEndSystemLogicPostUpdate() = 0;
+	virtual Event<> &getEventBeginEditorPostUpdate() = 0;
+	virtual Event<> &getEventEndEditorPostUpdate() = 0;
+	virtual Event<> &getEventBeginPluginsPostUpdate() = 0;
+	virtual Event<> &getEventEndPluginsPostUpdate() = 0;
+	virtual Event<> &getEventBeginSpatialUpdate() = 0;
+	virtual Event<> &getEventEndSpatialUpdate() = 0;
+	virtual Event<> &getEventBeginFilesystemUpdate() = 0;
+	virtual Event<> &getEventEndFilesystemUpdate() = 0;
+	virtual Event<> &getEventBeginPathfinding() = 0;
+	virtual Event<> &getEventEndUpdate() = 0;
+	virtual Event<> &getEventSyncBeginFramePhysics() = 0;
+	virtual Event<> &getEventSyncEndFramePhysics() = 0;
+	virtual Event<> &getEventAsyncBeginFramePhysics() = 0;
+	virtual Event<> &getEventAsyncEndFramePhysics() = 0;
+	virtual Event<> &getEventBeginVRRender() = 0;
+	virtual Event<> &getEventEndVRRender() = 0;
+	virtual Event<> &getEventBeginRender() = 0;
+	virtual Event<> &getEventBeginEditorRender() = 0;
+	virtual Event<> &getEventEndEditorRender() = 0;
+	virtual Event<> &getEventBeginPluginsRender() = 0;
+	virtual Event<> &getEventEndPluginsRender() = 0;
+	virtual Event<> &getEventBeginRenderWorld() = 0;
+	virtual Event<> &getEventEndRenderWorld() = 0;
+	virtual Event<> &getEventBeginPluginsGui() = 0;
+	virtual Event<> &getEventEndPluginsGui() = 0;
+	virtual Event<> &getEventBeginPostRender() = 0;
+	virtual Event<> &getEventEndPostRender() = 0;
+	virtual Event<> &getEventEndRender() = 0;
+	virtual Event<> &getEventBeginSwap() = 0;
+	virtual Event<> &getEventEndPathfinding() = 0;
+	virtual Event<> &getEventBeginWorldSwap() = 0;
+	virtual Event<> &getEventEndWorldSwap() = 0;
+	virtual Event<> &getEventBeginPluginsSwap() = 0;
+	virtual Event<> &getEventEndPluginsSwap() = 0;
+	virtual Event<> &getEventBeginDeleteObjects() = 0;
+	virtual Event<> &getEventEndDeleteObjects() = 0;
+	virtual Event<> &getEventEndSwap() = 0;
+	virtual Event<> &getEventFocusGained() = 0;
+	virtual Event<> &getEventFocusLost() = 0;
 
 protected:
 	virtual ~Engine() { }

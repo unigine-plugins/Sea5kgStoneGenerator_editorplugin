@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -87,7 +87,29 @@ protected:
 	/// </summary>
 	void onRender() override;
 
+	/// <summary>You can inherit your class from EngineGuiWindow and
+	/// override this method to define actions to be performed on
+	/// losing focus, i.e., receiving the corresponding
+	/// focus event (QFocusEvent). Focus events are sent to widgets
+	/// when the keyboard input focus changes. Focus events occur
+	/// due to mouse actions, key presses (such as Tab or Backtab),
+	/// the window system, popup menus, keyboard shortcuts, or other
+	/// application-specific reasons. The reason for a particular
+	/// focus event is returned by reason() in the appropriate event
+	/// handler. For more details please refer to Qt documentation.
+	/// </summary>
 	void focusOutEvent(QFocusEvent *event) override;
+	/// <summary>You can inherit your class from EngineGuiWindow and
+	/// override this method to define actions to be performed on
+	/// getting focus, i.e., receiving the corresponding focus
+	/// event (QFocusEvent). Focus events are sent to widgets
+	/// when the keyboard input focus changes. Focus events occur
+	/// due to mouse actions, key presses (such as Tab or Backtab),
+	/// the window system, popup menus, keyboard shortcuts, or other
+	/// application-specific reasons. The reason for a particular
+	/// focus event is returned by reason() in the appropriate event
+	/// handler. For more details please refer to Qt documentation.
+	/// </summary>
 	void focusInEvent(QFocusEvent *event) override;
 
 private:

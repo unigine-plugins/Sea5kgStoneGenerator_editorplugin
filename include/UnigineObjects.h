@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -260,7 +260,7 @@ typedef Ptr<Object> ObjectPtr;
 class UNIGINE_API ObjectDummy : public Object
 {
 public:
-	static int type() { return Node::OBJECT_DUMMY; }
+	static Node::TYPE type() { return Node::OBJECT_DUMMY; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectDummy> create();
@@ -272,7 +272,7 @@ typedef Ptr<ObjectDummy> ObjectDummyPtr;
 class UNIGINE_API ObjectDynamic : public Object
 {
 public:
-	static int type() { return Node::OBJECT_DYNAMIC; }
+	static Node::TYPE type() { return Node::OBJECT_DYNAMIC; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 
@@ -384,7 +384,7 @@ typedef Ptr<ObjectDynamic> ObjectDynamicPtr;
 class UNIGINE_API ObjectMeshStatic : public Object
 {
 public:
-	static int type() { return Node::OBJECT_MESH_STATIC; }
+	static Node::TYPE type() { return Node::OBJECT_MESH_STATIC; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 
@@ -460,12 +460,47 @@ public:
 };
 typedef Ptr<ObjectMeshStatic> ObjectMeshStaticPtr;
 
+
+class UNIGINE_API BonesRetargeting : public APIInterface
+{
+public:
+
+	enum MODE
+	{
+		MODE_ANIMATION = 0,
+		MODE_BIND,
+		MODE_PROPORTION,
+	};
+	static Ptr<BonesRetargeting> create();
+	static Ptr<BonesRetargeting> create(const char *src_mesh_path, const char *dst_mesh_path);
+	bool loadMeshes(const char *src_mesh_path, const char *dst_mesh_path);
+	bool isMeshesLoaded() const;
+	bool setNameMapping(const char *src_name, const char *dst_name);
+	void findEqualNameMapping();
+	int getNumBones() const;
+	const char *getSrcBoneName(int index) const;
+	const char *getDstBoneName(int index) const;
+	void setBoneMode(const char *src_name, BonesRetargeting::MODE mode);
+	BonesRetargeting::MODE getBoneMode(const char *src_name) const;
+	float getBoneProportion(const char *src_name) const;
+	void setBoneCustomProportion(const char *src_name, float proportion);
+	float getBoneCustomProportion(const char *src_name) const;
+	void removeBoneCustomProportion(const char *src_name);
+	const char *getDstBoneBySrcBone(const char *src_name) const;
+	const char *getSrcBoneByDstBone(const char *dst_name) const;
+	UGUID getSrcMeshFileGUID() const;
+	UGUID getDstMeshFileGUID() const;
+	bool save(const char *path) const;
+	bool load(const char *path);
+};
+typedef Ptr<BonesRetargeting> BonesRetargetingPtr;
+
 //////////////////////////////////////////////////////////////////////////
 
 class UNIGINE_API ObjectMeshSkinned : public Object
 {
 public:
-	static int type() { return Node::OBJECT_MESH_SKINNED; }
+	static Node::TYPE type() { return Node::OBJECT_MESH_SKINNED; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 
@@ -486,6 +521,18 @@ public:
 		BONE_SPACE_WORLD = 0,
 		BONE_SPACE_OBJECT,
 		BONE_SPACE_LOCAL,
+	};
+
+	enum FRAME_USES
+	{
+		FRAME_USES_NONE = 0,
+		FRAME_USES_POSITION = 1 << 0,
+		FRAME_USES_ROTATION = 1 << 1,
+		FRAME_USES_SCALE = 1 << 2,
+		FRAME_USES_ALL = FRAME_USES_POSITION | FRAME_USES_ROTATION | FRAME_USES_SCALE,
+		FRAME_USES_POSITION_AND_ROTATION = FRAME_USES_POSITION | FRAME_USES_ROTATION,
+		FRAME_USES_POSITION_AND_SCALE = FRAME_USES_POSITION | FRAME_USES_SCALE,
+		FRAME_USES_ROTATION_AND_SCALE = FRAME_USES_ROTATION | FRAME_USES_SCALE,
 	};
 	static Ptr<ObjectMeshSkinned> create(const Ptr<Mesh> &mesh);
 	static Ptr<ObjectMeshSkinned> create(const char *path, bool unique = false);
@@ -610,6 +657,8 @@ public:
 	Math::mat4 getBoneNotAdditionalBindLocalTransform(int bone) const;
 	Math::mat4 getBoneNotAdditionalBindObjectTransform(int bone) const;
 	Math::Mat4 getBoneNotAdditionalBindWorldTransform(int bone) const;
+	void setBoneFrameUses(int layer, int bone, ObjectMeshSkinned::FRAME_USES uses);
+	ObjectMeshSkinned::FRAME_USES getBoneFrameUses(int layer, int bone) const;
 	void setBindNode(int bone, const Ptr<Node> &node);
 	Ptr<Node> getBindNode(int bone) const;
 	void removeBindNodeByBone(int bone);
@@ -628,8 +677,45 @@ public:
 	void clearVisualizeBones();
 	void setVisualizeAllBones(bool bones);
 	bool isVisualizeAllBones() const;
+	void addVisualizeIKChain(int chain_id);
+	void removeVisualizeIKChain(int chain_id);
+	void clearVisualizeIKChain();
+	int addIKChain();
+	void removeIKChain(int chain_id);
+	int getNumIKChains() const;
+	int getIKChain(int num) const;
+	void setIKChainEnabled(bool enabled, int chain_id);
+	bool isIKChainEnabled(int chain_id) const;
+	void setIKChainWeight(float weight, int chain_id);
+	float getIKChainWeight(int chain_id) const;
+	int addIKChainBone(int bone, int chain_id);
+	int getIKChainNumBones(int chain_id) const;
+	void removeIKChainBone(int bone_num, int chain_id);
+	int getIKChainBone(int bone_num, int chain_id) const;
+	void setIKChainTargetPosition(const Math::Vec3 &position, int chain_id);
+	Math::Vec3 getIKChainTargetPosition(int chain_id) const;
+	void setIKChainTargetWorldPosition(const Math::Vec3 &position, int chain_id);
+	Math::Vec3 getIKChainTargetWorldPosition(int chain_id) const;
+	void setIKChainUsePoleVector(bool use, int chain_id);
+	bool isIKChainUsePoleVector(int chain_id) const;
+	void setIKChainPolePosition(const Math::Vec3 &position, int chain_id);
+	Math::Vec3 getIKChainPolePosition(int chain_id) const;
+	void setIKChainPoleWorldPosition(const Math::Vec3 &position, int chain_id);
+	Math::Vec3 getIKChainPoleWorldPosition(int chain_id) const;
+	void setIKChainUseEffectorRotation(bool use, int chain_id);
+	bool isIKChainUseEffectorRotation(int chain_id) const;
+	void setIKChainEffectorRotation(const Math::quat &rotation, int chain_id);
+	Math::quat getIKChainEffectorRotation(int chain_id) const;
+	void setIKChainEffectorWorldRotation(const Math::quat &rotation, int chain_id);
+	Math::quat getIKChainEffectorWorldRotation(int chain_id) const;
+	void setIKChainNumIterations(int num, int chain_id);
+	int getIKChainNumIterations(int chain_id) const;
+	void setIKChainTolerance(float tolerance, int chain_id);
+	float getIKChainTolerance(int chain_id) const;
 	int addAnimation(const char *path);
 	int addAnimation(const Ptr<Mesh> &mesh, const char *path = 0);
+	int addRetargetedAnimation(const char *path, const Ptr<BonesRetargeting> &bones_retargeting);
+	int addRetargetedAnimation(const Ptr<Mesh> &mesh, const Ptr<BonesRetargeting> &bones_retargeting, const char *path = 0);
 	void removeAnimation(int animation);
 	int getNumAnimations() const;
 	int getAnimationID(int num) const;
@@ -649,6 +735,8 @@ public:
 	const char *getSurfaceTargetName(int surface, int target) const;
 	int findSurfaceTarget(const char *name, int surface) const;
 	void updateSkinned();
+	void copyBoneTransforms(const Ptr<ObjectMeshSkinned> &mesh);
+	bool isNeedUpdate() const;
 };
 typedef Ptr<ObjectMeshSkinned> ObjectMeshSkinnedPtr;
 
@@ -657,7 +745,7 @@ typedef Ptr<ObjectMeshSkinned> ObjectMeshSkinnedPtr;
 class UNIGINE_API ObjectMeshDynamic : public Object
 {
 public:
-	static int type() { return Node::OBJECT_MESH_DYNAMIC; }
+	static Node::TYPE type() { return Node::OBJECT_MESH_DYNAMIC; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectMeshDynamic> create(const Ptr<Mesh> &mesh, int flags = 0);
@@ -676,6 +764,7 @@ public:
 	int getMesh(Ptr<Mesh> &mesh) const;
 	void setMeshName(const char *name);
 	const char *getMeshName() const;
+	bool isUsageShared() const;
 	bool isUniqueMesh() const;
 	void putUniqueMesh();
 	void setFPSVisibleCamera(int camera);
@@ -686,6 +775,8 @@ public:
 	int getFPSInvisible() const;
 	void setUpdateDistanceLimit(float limit);
 	float getUpdateDistanceLimit() const;
+	Ptr<ResourceExternalMemory> getExternalMemoryVertexBuffer() const;
+	Ptr<ResourceExternalMemory> getExternalMemoryIndexBuffer() const;
 	void clearSurfaces();
 	void addSurface(const char *name);
 	void setSurfaceName(const char *name, int surface);
@@ -745,13 +836,15 @@ public:
 	enum
 	{
 		// immutable flags
-		IMMUTABLE_VERTEX = 1 << 0,
-		IMMUTABLE_INDICES = 1 << 1,
-		IMMUTABLE_ALL = (IMMUTABLE_VERTEX | IMMUTABLE_INDICES),
+		USAGE_IMMUTABLE_VERTEX = 1 << 0,
+		USAGE_IMMUTABLE_INDICES = 1 << 1,
+		USAGE_IMMUTABLE_ALL = (USAGE_IMMUTABLE_VERTEX | USAGE_IMMUTABLE_INDICES),
 		// dynamic flags
-		DYNAMIC_VERTEX = 1 << 2,
-		DYNAMIC_INDICES = 1 << 3,
-		DYNAMIC_ALL = (DYNAMIC_VERTEX | DYNAMIC_INDICES),
+		USAGE_DYNAMIC_VERTEX = 1 << 2,
+		USAGE_DYNAMIC_INDICES = 1 << 3,
+		USAGE_DYNAMIC_ALL = (USAGE_DYNAMIC_VERTEX | USAGE_DYNAMIC_INDICES),
+		// misc
+		USAGE_MISC_SHARED = 1 << 6,
 	};
 };
 typedef Ptr<ObjectMeshDynamic> ObjectMeshDynamicPtr;
@@ -761,7 +854,7 @@ typedef Ptr<ObjectMeshDynamic> ObjectMeshDynamicPtr;
 class UNIGINE_API ObjectMeshCluster : public Object
 {
 public:
-	static int type() { return Node::OBJECT_MESH_CLUSTER; }
+	static Node::TYPE type() { return Node::OBJECT_MESH_CLUSTER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectMeshCluster> create();
@@ -789,7 +882,6 @@ public:
 	Object::STREAMING_OBJECT_MESH getMeshStreamingModeVRAM() const;
 	void setMeshPath(const char *path);
 	const char *getMeshPath() const;
-	void updateSpatialTree();
 	void setVisibleDistance(float distance);
 	float getVisibleDistance() const;
 	void setFadeDistance(float distance);
@@ -820,7 +912,7 @@ typedef Ptr<ObjectMeshCluster> ObjectMeshClusterPtr;
 class UNIGINE_API ObjectMeshClutter : public Object
 {
 public:
-	static int type() { return Node::OBJECT_MESH_CLUTTER; }
+	static Node::TYPE type() { return Node::OBJECT_MESH_CLUTTER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	using Object::getCollision;
@@ -937,7 +1029,7 @@ typedef Ptr<ObjectMeshClutter> ObjectMeshClutterPtr;
 class UNIGINE_API ObjectMeshSplineCluster : public Object
 {
 public:
-	static int type() { return Node::OBJECT_MESH_SPLINE_CLUSTER; }
+	static Node::TYPE type() { return Node::OBJECT_MESH_SPLINE_CLUSTER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	const char *getMeshPath() const;
@@ -953,7 +1045,7 @@ typedef Ptr<ObjectMeshSplineCluster> ObjectMeshSplineClusterPtr;
 class UNIGINE_API ObjectSky : public Object
 {
 public:
-	static int type() { return Node::OBJECT_SKY; }
+	static Node::TYPE type() { return Node::OBJECT_SKY; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectSky> create();
@@ -967,7 +1059,7 @@ typedef Ptr<ObjectSky> ObjectSkyPtr;
 class UNIGINE_API ObjectGrass : public Object
 {
 public:
-	static int type() { return Node::OBJECT_GRASS; }
+	static Node::TYPE type() { return Node::OBJECT_GRASS; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	using Object::getIntersection;
@@ -1139,7 +1231,7 @@ typedef Ptr<TerrainDetailMask> TerrainDetailMaskPtr;
 class UNIGINE_API ObjectLandscapeTerrain : public Object
 {
 public:
-	static int type() { return Node::OBJECT_LANDSCAPE_TERRAIN; }
+	static Node::TYPE type() { return Node::OBJECT_LANDSCAPE_TERRAIN; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectLandscapeTerrain> create();
@@ -1317,25 +1409,19 @@ public:
 	static void asyncTextureDraw(const UGUID &file_guid, const Math::ivec2 &coord, const Math::ivec2 &resolution, int flags_file_data, const Vector<Math::WorldBoundBox> &bounds_preload);
 	static void asyncTextureDraw(const UGUID &file_guid, const Math::ivec2 &coord, const Math::ivec2 &resolution, int flags_file_data);
 	static void asyncTextureDraw(const UGUID &file_guid, const Math::ivec2 &coord, const Math::ivec2 &resolution);
-	static void *addTextureDrawCallback(CallbackBase5<UGUID, int, Ptr<LandscapeTextures>, Math::ivec2, int> *func);
-	static bool removeTextureDrawCallback(void *id);
-	static void clearTextureDrawCallbacks();
 	static void asyncApplyDiff(int operation_id, const UGUID &file_guid, const char *path);
 	static void asyncApplyDiff(const UGUID &file_guid, const char *path);
-	static void *addApplyDiffCallback(CallbackBase3<UGUID, int, const char *> *func);
-	static bool removeApplyDiffCallback(void *id);
-	static void clearApplyDiffCallbacks();
 	static void asyncSaveFile(int operation_id, const UGUID &file_guid, const char *path_new_diff, const char *path_old_diff);
 	static void asyncSaveFile(int operation_id, const UGUID &file_guid);
 	static void asyncSaveFile(const UGUID &file_guid, const char *path_new_diff, const char *path_old_diff);
 	static void asyncSaveFile(const UGUID &file_guid);
-	static void *addSaveFileCallback(CallbackBase4<UGUID, int, const char *, const char *> *func);
-	static bool removeSaveFileCallback(void *id);
-	static void clearSaveFileCallbacks();
 	static bool isFilesClosed();
 	static void filesClose(const Vector<UGUID> &reload_files);
 	static void filesClose();
 	static void filesOpen();
+	static Event<const UGUID &, int, const Ptr<LandscapeTextures> &, const Math::ivec2 &, int> &getEventTextureDraw();
+	static Event<const UGUID &, int, const char *> &getEventApplyDiff();
+	static Event<const UGUID &, int, const char *, const char *> &getEventSaveFile();
 	static Ptr<ObjectLandscapeTerrain> getActiveTerrain();
 };
 
@@ -1344,7 +1430,7 @@ public:
 class UNIGINE_API LandscapeLayerMap : public Node
 {
 public:
-	static int type() { return Node::LANDSCAPE_LAYER_MAP; }
+	static Node::TYPE type() { return Node::LANDSCAPE_LAYER_MAP; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<LandscapeLayerMap> create();
@@ -1435,6 +1521,9 @@ public:
 };
 typedef Ptr<LandscapeMapFileSettings> LandscapeMapFileSettingsPtr;
 
+class LandscapeMapFileCompression;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<LandscapeMapFileCompression> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<LandscapeMapFileCompression> &>>;
 
 class UNIGINE_API LandscapeMapFileCompression : public APIInterface
 {
@@ -1469,15 +1558,18 @@ public:
 	const char *getCacheDirectory() const;
 	void setGUID(const UGUID &guid);
 	UGUID getGUID() const;
-	void *addBeginCallback(CallbackBase1<Ptr<LandscapeMapFileCompression>> *func);
-	bool removeBeginCallback(void *id);
-	void clearBeginCallbacks();
-	void *addProgressCallback(CallbackBase1<Ptr<LandscapeMapFileCompression>> *func);
-	bool removeProgressCallback(void *id);
-	void clearProgressCallbacks();
-	void *addEndCallback(CallbackBase1<Ptr<LandscapeMapFileCompression>> *func);
-	bool removeEndCallback(void *id);
-	void clearEndCallbacks();
+	Event<const Ptr<LandscapeMapFileCompression> &> &getEventBegin();
+	Event<const Ptr<LandscapeMapFileCompression> &> &getEventProgress();
+	Event<const Ptr<LandscapeMapFileCompression> &> &getEventEnd();
+
+private:
+
+	EventHolder<EventInterfaceInvoker<const Ptr<LandscapeMapFileCompression> &>> event_begin;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<LandscapeMapFileCompression> &>> event_begin_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<LandscapeMapFileCompression> &>> event_progress;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<LandscapeMapFileCompression> &>> event_progress_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<LandscapeMapFileCompression> &>> event_end;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<LandscapeMapFileCompression> &>> event_end_connection;
 };
 typedef Ptr<LandscapeMapFileCompression> LandscapeMapFileCompressionPtr;
 
@@ -1527,15 +1619,16 @@ public:
 	static void wait(const Vector<Ptr<LandscapeFetch>> &fetches);
 	void wait();
 	bool isAsyncCompleted() const;
-	void *addStartCallback(CallbackBase *func);
-	bool removeStartCallback(void *id);
-	void clearStartCallbacks();
-	void *addEndCallback(CallbackBase *func);
-	bool removeEndCallback(void *id);
-	void clearEndCallbacks();
+	Event<> &getEventStart();
+	Event<> &getEventEnd();
 };
 typedef Ptr<LandscapeFetch> LandscapeFetchPtr;
 
+class LandscapeMapFileCreator;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<LandscapeMapFileCreator> &, const Ptr<LandscapeImages> &, int, int>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<LandscapeMapFileCreator> &, const Ptr<LandscapeImages> &, int, int>>;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<LandscapeMapFileCreator> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<LandscapeMapFileCreator> &>>;
 
 class UNIGINE_API LandscapeMapFileCreator : public APIInterface
 {
@@ -1551,19 +1644,22 @@ public:
 	double getTimeSeconds() const;
 	void setPath(const char *path);
 	const char *getPath() const;
-	void *addCreateCallback(CallbackBase4<Ptr<LandscapeMapFileCreator>, Ptr<LandscapeImages>, int, int> *func);
-	bool removeCreateCallback(void *id);
-	void clearCreateCallbacks();
-	void *addProgressCallback(CallbackBase1<Ptr<LandscapeMapFileCreator>> *func);
-	bool removeProgressCallback(void *id);
-	void clearProgressCallbacks();
-	void *addBeginCallback(CallbackBase1<Ptr<LandscapeMapFileCreator>> *func);
-	bool removeBeginCallback(void *id);
-	void clearBeginCallbacks();
-	void *addEndCallback(CallbackBase1<Ptr<LandscapeMapFileCreator>> *func);
-	bool removeEndCallback(void *id);
-	void clearEndCallbacks();
+	Event<const Ptr<LandscapeMapFileCreator> &, const Ptr<LandscapeImages> &, int, int> &getEventCreate();
+	Event<const Ptr<LandscapeMapFileCreator> &> &getEventProgress();
+	Event<const Ptr<LandscapeMapFileCreator> &> &getEventBegin();
+	Event<const Ptr<LandscapeMapFileCreator> &> &getEventEnd();
 	bool run(bool is_empty = false, bool is_safe = true);
+
+private:
+
+	EventHolder<EventInterfaceInvoker<const Ptr<LandscapeMapFileCreator> &, const Ptr<LandscapeImages> &, int, int>> event_create;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<LandscapeMapFileCreator> &, const Ptr<LandscapeImages> &, int, int>> event_create_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<LandscapeMapFileCreator> &>> event_progress;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<LandscapeMapFileCreator> &>> event_progress_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<LandscapeMapFileCreator> &>> event_begin;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<LandscapeMapFileCreator> &>> event_begin_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<LandscapeMapFileCreator> &>> event_end;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<LandscapeMapFileCreator> &>> event_end_connection;
 };
 typedef Ptr<LandscapeMapFileCreator> LandscapeMapFileCreatorPtr;
 
@@ -1716,7 +1812,7 @@ typedef Ptr<TerrainGlobalDetail> TerrainGlobalDetailPtr;
 class UNIGINE_API ObjectTerrainGlobal : public Object
 {
 public:
-	static int type() { return Node::OBJECT_TERRAIN_GLOBAL; }
+	static Node::TYPE type() { return Node::OBJECT_TERRAIN_GLOBAL; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectTerrainGlobal> create();
@@ -1853,7 +1949,7 @@ typedef Ptr<ParticleModifierVector> ParticleModifierVectorPtr;
 class UNIGINE_API ObjectParticles : public Object
 {
 public:
-	static int type() { return Node::OBJECT_PARTICLES; }
+	static Node::TYPE type() { return Node::OBJECT_PARTICLES; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 
@@ -2040,7 +2136,7 @@ typedef Ptr<ObjectParticles> ObjectParticlesPtr;
 class UNIGINE_API ObjectBillboards : public Object
 {
 public:
-	static int type() { return Node::OBJECT_BILLBOARDS; }
+	static Node::TYPE type() { return Node::OBJECT_BILLBOARDS; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectBillboards> create();
@@ -2075,7 +2171,7 @@ typedef Ptr<ObjectBillboards> ObjectBillboardsPtr;
 class UNIGINE_API ObjectVolumeBox : public Object
 {
 public:
-	static int type() { return Node::OBJECT_VOLUME_BOX; }
+	static Node::TYPE type() { return Node::OBJECT_VOLUME_BOX; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectVolumeBox> create(const Math::vec3 &size);
@@ -2089,7 +2185,7 @@ typedef Ptr<ObjectVolumeBox> ObjectVolumeBoxPtr;
 class UNIGINE_API ObjectVolumeSphere : public Object
 {
 public:
-	static int type() { return Node::OBJECT_VOLUME_SPHERE; }
+	static Node::TYPE type() { return Node::OBJECT_VOLUME_SPHERE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectVolumeSphere> create(const Math::vec3 &radius);
@@ -2103,7 +2199,7 @@ typedef Ptr<ObjectVolumeSphere> ObjectVolumeSpherePtr;
 class UNIGINE_API ObjectVolumeOmni : public Object
 {
 public:
-	static int type() { return Node::OBJECT_VOLUME_OMNI; }
+	static Node::TYPE type() { return Node::OBJECT_VOLUME_OMNI; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectVolumeOmni> create(float width, float height, float radius);
@@ -2122,7 +2218,7 @@ typedef Ptr<ObjectVolumeOmni> ObjectVolumeOmniPtr;
 class UNIGINE_API ObjectVolumeProj : public Object
 {
 public:
-	static int type() { return Node::OBJECT_VOLUME_PROJ; }
+	static Node::TYPE type() { return Node::OBJECT_VOLUME_PROJ; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectVolumeProj> create(float width, float height, float fov);
@@ -2146,7 +2242,7 @@ typedef Ptr<ObjectVolumeProj> ObjectVolumeProjPtr;
 class UNIGINE_API ObjectGui : public Object
 {
 public:
-	static int type() { return Node::OBJECT_GUI; }
+	static Node::TYPE type() { return Node::OBJECT_GUI; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 
@@ -2186,7 +2282,7 @@ typedef Ptr<ObjectGui> ObjectGuiPtr;
 class UNIGINE_API ObjectGuiMesh : public Object
 {
 public:
-	static int type() { return Node::OBJECT_GUI_MESH; }
+	static Node::TYPE type() { return Node::OBJECT_GUI_MESH; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 
@@ -2241,7 +2337,7 @@ typedef Ptr<ObjectGuiMesh> ObjectGuiMeshPtr;
 class UNIGINE_API ObjectWaterMesh : public Object
 {
 public:
-	static int type() { return Node::OBJECT_WATER_MESH; }
+	static Node::TYPE type() { return Node::OBJECT_WATER_MESH; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectWaterMesh> create();
@@ -2275,7 +2371,7 @@ typedef Ptr<ObjectWaterMesh> ObjectWaterMeshPtr;
 class UNIGINE_API ObjectText : public Object
 {
 public:
-	static int type() { return Node::OBJECT_TEXT; }
+	static Node::TYPE type() { return Node::OBJECT_TEXT; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectText> create();
@@ -2311,7 +2407,7 @@ typedef Ptr<ObjectText> ObjectTextPtr;
 class UNIGINE_API ObjectWaterGlobal : public Object
 {
 public:
-	static int type() { return Node::OBJECT_WATER_GLOBAL; }
+	static Node::TYPE type() { return Node::OBJECT_WATER_GLOBAL; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectWaterGlobal> create();
@@ -2601,7 +2697,7 @@ typedef Ptr<ObjectWaterGlobal> ObjectWaterGlobalPtr;
 class UNIGINE_API ObjectCloudLayer : public Object
 {
 public:
-	static int type() { return Node::OBJECT_CLOUD_LAYER; }
+	static Node::TYPE type() { return Node::OBJECT_CLOUD_LAYER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectCloudLayer> create();
@@ -2624,7 +2720,7 @@ class ObjectExternBase;
 class UNIGINE_API ObjectExtern : public Object
 {
 public:
-	static int type() { return Node::OBJECT_EXTERN; }
+	static Node::TYPE type() { return Node::OBJECT_EXTERN; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObjectExtern> create(int class_id);

@@ -1,0 +1,225 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.SSLSocket.#ctor">
+			<summary>
+			Constructor. Creates a new SSL socket with default parameters (TLS).
+			</summary>  
+		</member>
+		<member name="M:Unigine.SSLSocket.#ctor(Socket::SOCKET_TYPE,SSLSocket::SSL_CTX_METHOD)">
+			<summary>
+			Constructor. Creates a new SSL socket with the specified parameters.
+			</summary> 
+			<param name="socket_type"> SSL socket type. </param>
+			<param name="ssl_method"> SSL connection method to be used. </param> 
+		</member>
+		<member name="M:Unigine.SSLSocket.close">
+			<summary>
+			Closes the socket.
+			</summary>  
+		</member>
+		<member name="M:Unigine.SSLSocket.accept(Unigine.Ptr{Socket})">
+			<summary>
+			Accepts a connection on the socket.
+			</summary> 
+			<param name="socket"> Socket that is bound to an address and listens to connections. </param> 
+			<returns>true if the connection is accepted; otherwise, fals.</returns>
+		</member>
+		<member name="M:Unigine.SSLSocket.connect">
+			<summary>
+			Initiates a connection on the socket.
+			</summary>  
+			<returns>true if the connection is initialized; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.SSLSocket.load(SSLSocket::LOADER_TYPE,char)">
+			<summary>
+			Loads a certificate from the file.
+			</summary> 
+			<param name="loader_type"> Certificate type, one of the LOADER_TYPE values. </param>
+			<param name="path"> Path to a certificate file. </param> 
+			<returns>true if the certificate is loaded successfully, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.SSLSocket.parse(SSLSocket::LOADER_TYPE,char)">
+			<summary>
+			Parses a specified certificate.
+			</summary> 
+			<param name="loader_type"> Certificate type, one of the LOADER_TYPE values. </param>
+			<param name="data"> Certificate data. </param> 
+			<returns>true if the certificate is parsed successfully, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.SSLSocket.handshake">
+			<summary>
+			Starts a handshake and returns the result.
+			</summary>  
+			<returns>Handshake status.</returns>
+		</member>
+		<member name="M:Unigine.SSLSocket.isAvailable const">
+			<summary>
+			Checks if the socket has been established, but not opened.
+			</summary>  
+			<returns>true if the socket is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.SSLSocket.isCertificateVerified const">
+			<summary>
+			Returns a value indicating if SSL certificate for the socket is successfully verified.
+			</summary>  
+			<returns>true if SSL certificate for the socket is successfully verified; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.SSLSocket.pending const">
+			<summary>
+			Returns the number of bytes available for immediate retrieval without reading from the socket object. This function is essential if you work with event loops.
+			</summary>  
+			<returns>Number of bytes.</returns>
+		</member>
+		<member name="M:Unigine.SSLSocket.read(void,size_t,size_t) const">
+			<summary>
+			Reads the specified number of blocks of the specified size from the SSL connection to the specified destination buffer.
+			</summary> 
+			<param name="ptr"> Pointer to the destination buffer to which the data is to be read. </param>
+			<param name="size"> Size of a message block in bytes. </param>
+			<param name="nmemb"> Number of message blocks to read from the SSL connection. </param> 
+			<returns>Number of bytes actually read.</returns>
+		</member>
+		<member name="M:Unigine.SSLSocket.write(void,size_t,size_t) const">
+			<summary>
+			Writes the specified number of blocks of the specified size from the specified source buffer to the SSL connection.
+			</summary> 
+			<param name="ptr"> Pointer to the source buffer from which the data is to be written. </param>
+			<param name="size"> Size of a message block in bytes. </param>
+			<param name="nmemb"> Number of message blocks to be written to the SSL connection. </param> 
+			<returns>Number of bytes actually written.</returns>
+		</member>
+		<member name="M:Unigine.SSLSocket.peek(void,size_t,size_t) const">
+			<summary>
+			Reads the specified number of blocks of the specified size from the SSL connection to the specified destination buffer. This method is identical to  except no bytes are actually removed from the underlying BIO during the read, so that a subsequent call to  will yield at least the same bytes.
+			</summary> 
+			<param name="ptr"> Pointer to the destination buffer to which the data is to be read. </param>
+			<param name="size"> Size of a message block in bytes. </param>
+			<param name="nmemb"> Number of message blocks to be written to the SSL connection. </param> 
+			<returns>Number of bytes actually written.</returns>
+		</member>
+		<member name="F:Unigine.SSLSocket.LOADER_TYPE_X509_CERT">
+			<summary>
+			Self-signed X.509 certificate.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.LOADER_TYPE_X509_CACERT">
+			<summary>
+			X.509 certificate issued by a Certification Agency.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.LOADER_TYPE_RSA_KEY">
+			<summary>
+			RSA key.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_HANDSHAKE_ERROR_NONE">
+			<summary>
+			The TLS/SSL I/O operation completed.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_HANDSHAKE_ERROR_SSL">
+			<summary>
+			A non-recoverable, fatal error in the SSL library occurred, usually a protocol error. The OpenSSL error queue contains more information on the error. If this error occurs then no further I/O operations should be performed on the connection.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_HANDSHAKE_ERROR_WANT_READ">
+			<summary>
+			Error code returned when the last operation was a read operation from a nonblocking BIO. It means that not enough data was available at this time to complete the operation. If at a later time the underlying BIO has data available for reading the same function can be called again.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_HANDSHAKE_ERROR_WANT_WRITE">
+			<summary>
+			Error code returned when the last operation was a write to a nonblocking BIO and it was unable to sent all data to the BIO. When the BIO is writable again, the same function can be called again.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_HANDSHAKE_ERROR_WANT_X509_LOOKUP">
+			<summary>
+			The operation did not complete because an application callback has asked to be called again. The TLS/SSL I/O function should be called again later. Details depend on the application.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_HANDSHAKE_ERROR_SYSCALL">
+			<summary>
+			Some non-recoverable, fatal I/O error occurred. The OpenSSL error queue may contain more information on the error. For socket I/O on Unix systems, consult errno for details. If this error occurs then no further I/O operations should be performed on the connection.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_HANDSHAKE_ERROR_ZERO_RETURN">
+			<summary>
+			The TLS/SSL peer has closed the connection for writing by sending the close_notify alert. No more data can be read. Note that SSL_ERROR_ZERO_RETURN does not necessarily indicate that the underlying transport has been closed.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_HANDSHAKE_ERROR_WANT_CONNECT">
+			<summary>
+			The operation did not complete; the same TLS/SSL I/O function should be called again later. The underlying BIO was not connected yet to the peer and the call would block in connect(). The SSL function should be called again when the connection is established.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_HANDSHAKE_ERROR_WANT_ACCEPT">
+			<summary>
+			The operation did not complete; the same TLS/SSL I/O function should be called again later. The underlying BIO was not connected yet to the peer and the call would block in accept(). The SSL function should be called again when the connection is established.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_HANDSHAKE_ERROR_WANT_ASYNC">
+			<summary>
+			The operation did not complete because an asynchronous engine is still processing data. The TLS/SSL I/O function should be called again later. The function must be called from the same thread that the original call was made from.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_HANDSHAKE_ERROR_WANT_ASYNC_JOB">
+			<summary>
+			The asynchronous job could not be started because there were no async jobs available in the pool. The application should retry the operation after a currently executing asynchronous operation for the current thread has completed.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_HANDSHAKE_ERROR_WANT_CLIENT_HELLO_CB">
+			<summary>
+			The operation did not complete because an application callback set by SSL_CTX_set_client_hello_cb() has asked to be called again. The TLS/SSL I/O function should be called again later. Details depend on the application.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_HANDSHAKE_OK">
+			<summary>
+			Hadnshake operation was successful.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_HANDSHAKE_FAILED">
+			<summary>
+			Hadnshake operation failed.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_CTX_METHOD_TLS">
+			<summary>
+			General-purpose version-flexible SSL/TLS methods. The actual protocol version used will be negotiated to the highest version mutually supported by the client and the server. Currently supported protocols are TLS 1.0, TLS 1.1, and TLS 1.2.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_CTX_METHOD_TLS_1_0">
+			<summary>
+			Transport Layer Security Version 1.0 protocol.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_CTX_METHOD_TLS_1_1">
+			<summary>
+			Transport Layer Security Version 1.1 protocol.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_CTX_METHOD_TLS_1_2">
+			<summary>
+			Transport Layer Security Version 1.2 protocol.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_CTX_METHOD_DTLS">
+			<summary>
+			Version-flexible DTLS methods. Currently supported protocols are DTLS 1.0 and DTLS 1.2.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_CTX_METHOD_DTLS_1">
+			<summary>
+			Datagram Transport Layer Security Version 1.0 protocol.
+		</summary>
+		</member>
+		<member name="F:Unigine.SSLSocket.SSL_CTX_METHOD_DTLS_1_2">
+			<summary>
+			Datagram Transport Layer Security Version 1.2 protocol.
+		</summary>
+		</member>
+	</members>
+</doc>

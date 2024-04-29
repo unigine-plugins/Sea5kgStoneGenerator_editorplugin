@@ -1233,11 +1233,15 @@
 		</member>
 		<member name="M:Unigine.ObjectCloudLayer.refreshCloudsRegionMask">
 			<summary>
+			Refreshes the clouds region mask. The method should be called after changing the mask to apply it.
 			</summary>  
 		</member>
 		<member name="M:Unigine.ObjectCloudLayer.getDensity(Unigine.Math.Vec3) const">
 			<summary>
-			</summary>  
+			Returns the current density of clouds at the given point.
+			</summary> 
+			<param name="world_point"> Point coordinates in world space. </param> 
+			<returns>Clouds density.</returns>
 		</member>
 		<member name="M:Unigine.ObjectDummy.#ctor">
 			<summary>
@@ -3548,7 +3552,7 @@
 		</member>
 		<member name="M:Unigine.Landscape.render(Unigine.Vector{Unigine.Ptr{Unigine.LandscapeLayerMap},int,Unigine.VectorAllocator},Unigine.Ptr{Unigine.LandscapeTextures},Unigine.Math.Mat4,Unigine.Math.Scalar)">
 			<summary>
-			Renders the area of the specified landscape layer maps defined by the specified transform and texel size, to the specified buffers. Use the padding parameter to set inner padding size for the area (when necessary).
+			Renders the area of the specified landscape layer maps defined by the specified transform and texel size, to the specified buffers.
 			</summary> 
 			<param name="maps"> List of the landscape layer maps to be rendered. </param>
 			<param name="buffers"> Target texture buffers to which the specified landscape layer maps are to be rendered. </param>
@@ -3569,10 +3573,10 @@
 		</member>
 		<member name="M:Unigine.Landscape.asyncTextureDraw(int,Unigine.UGUID,Unigine.Math.ivec2,Unigine.Math.ivec2,int,Unigine.Vector{Unigine.Math.WorldBoundBox,int,Unigine.VectorAllocator})">
 			<summary>
-			Commences an asynchronous GPU-based drawing operation with forced pre-loading of terrain data within the specified bounding box (all landscape layer maps). The drawing operation represents modification of the texture buffer of the specified size taken at specified coordinates and combining data layers defined by the specified flags. The operation itself is to be implemented in the TextureDrawCallback handler. This method can be used for implementing GPU-based terrain modification (e.g. brushes) that requires additional data beyond the area specified by coords and resolution parameters as well as the data of other landscape layer maps (e.g. a copy brush).
+			Commences an asynchronous GPU-based drawing operation with forced pre-loading of terrain data within the specified bounding box (all landscape layer maps). The drawing operation represents modification of the texture buffer of the specified size taken at specified coordinates and combining data layers defined by the specified flags. The operation itself is to be implemented in the TextureDraw event handler. This method can be used for implementing GPU-based terrain modification (e.g. brushes) that requires additional data beyond the area specified by coords and resolution parameters as well as the data of other landscape layer maps (e.g. a copy brush).
 			</summary> 
 			<param name="operation_id"> Draw operation ID. </param>
-			<param name="guid"> GUID of the landscape layer map file to be modified. </param>
+			<param name="file_guid"> GUID of the landscape layer map file to be modified. </param>
 			<param name="coord"> Coordinates of the upper left corner of the landscape layer map data segment to be modified along the X and Y axes. </param>
 			<param name="resolution"> Resolution of the landscape layer map data segment to be modified along the X and Y axes. </param>
 			<param name="flags_file_data"> Data layer mask. A combination of FLAGS_FILE_DATA_* flags indicating data layers to be affected (heights, albedo, certain masks). </param>
@@ -3580,29 +3584,29 @@
 		</member>
 		<member name="M:Unigine.Landscape.asyncTextureDraw(int,Unigine.UGUID,Unigine.Math.ivec2,Unigine.Math.ivec2,int)">
 			<summary>
-			Commences an asynchronous GPU-based drawing operation. The drawing operation represents modification of the texture buffer of the specified size taken at specified coordinates and combining data layers defined by the specified flags. The operation itself is to be implemented in the TextureDrawCallback handler. This method can be used for implementing GPU-based terrain modification (e.g. brushes).
+			Commences an asynchronous GPU-based drawing operation. The drawing operation represents modification of the texture buffer of the specified size taken at specified coordinates and combining data layers defined by the specified flags. The operation itself is to be implemented in the TextureDraw event handler. This method can be used for implementing GPU-based terrain modification (e.g. brushes).
 			</summary> 
 			<param name="operation_id"> Draw operation ID. </param>
-			<param name="guid"> GUID of the landscape layer map file to be modified. </param>
+			<param name="file_guid"> GUID of the landscape layer map file to be modified. </param>
 			<param name="coord"> Coordinates of the upper left corner of the landscape layer map data segment to be modified along the X and Y axes. </param>
 			<param name="resolution"> Resolution of the landscape layer map data segment to be modified along the X and Y axes. </param>
 			<param name="flags_file_data"> Data layer mask. A combination of FLAGS_FILE_DATA_* flags indicating data layers to be affected (heights, albedo, certain masks). </param> 
 		</member>
 		<member name="M:Unigine.Landscape.asyncTextureDraw(int,Unigine.UGUID,Unigine.Math.ivec2,Unigine.Math.ivec2)">
 			<summary>
-			Commences an asynchronous GPU-based drawing operation. The drawing operation represents modification of the texture buffer of the specified size taken at specified coordinates and combining all data layers. The operation itself is to be implemented in the TextureDrawCallback handler. This method can be used for implementing GPU-based terrain modification (e.g. brushes).
+			Commences an asynchronous GPU-based drawing operation. The drawing operation represents modification of the texture buffer of the specified size taken at specified coordinates and combining all data layers. The operation itself is to be implemented in the TextureDraw event handler. This method can be used for implementing GPU-based terrain modification (e.g. brushes).
 			</summary> 
 			<param name="operation_id"> Draw operation ID. </param>
-			<param name="guid"> GUID of the landscape layer map file to be modified. </param>
+			<param name="file_guid"> GUID of the landscape layer map file to be modified. </param>
 			<param name="coord"> Coordinates of the upper left corner of the landscape layer map data segment to be modified along the X and Y axes. </param>
 			<param name="resolution"> Resolution of the landscape layer map data segment to be modified along the X and Y axes. </param> 
 		</member>
 		<member name="M:Unigine.Landscape.asyncTextureDraw(Unigine.UGUID,Unigine.Math.ivec2,Unigine.Math.ivec2,int,Unigine.Vector{Unigine.Math.WorldBoundBox,int,Unigine.VectorAllocator})">
 			<summary>
-			Commences an asynchronous GPU-based drawing operation with forced pre-loading of terrain data within the specified bounding box (all landscape layer maps). The drawing operation represents modification of the texture buffer of the specified size taken at specified coordinates and combining data layers defined by the specified flags. The operation itself is to be implemented in the TextureDrawCallback handler. This method can be used for implementing GPU-based terrain modification (e.g. brushes) that requires additional data beyond the area specified by coords and resolution parameters as well as the data of other landscape layer maps (e.g. a copy brush).
+			Commences an asynchronous GPU-based drawing operation with forced pre-loading of terrain data within the specified bounding box (all landscape layer maps). The drawing operation represents modification of the texture buffer of the specified size taken at specified coordinates and combining data layers defined by the specified flags. The operation itself is to be implemented in the TextureDraw event handler. This method can be used for implementing GPU-based terrain modification (e.g. brushes) that requires additional data beyond the area specified by coords and resolution parameters as well as the data of other landscape layer maps (e.g. a copy brush).
 			</summary> 
-			<param name="guid"> GUI </param>
-			<param name="guid"> GUID of the landscape layer map file to be modified. </param>
+			<param name="file_guid"> GUI </param>
+			<param name="file_guid"> GUID of the landscape layer map file to be modified. </param>
 			<param name="coord"> Coordinates of the upper left corner of the landscape layer map data segment to be modified along the X and Y axes. </param>
 			<param name="resolution"> Resolution of the landscape layer map data segment to be modified along the X and Y axes. </param>
 			<param name="flags_file_data"> Data layer mask. A combination of FLAGS_FILE_DATA_* flags indicating data layers to be affected (heights, albedo, certain masks). </param>
@@ -3610,18 +3614,18 @@
 		</member>
 		<member name="M:Unigine.Landscape.asyncTextureDraw(Unigine.UGUID,Unigine.Math.ivec2,Unigine.Math.ivec2,int)">
 			<summary>
-			Commences an asynchronous GPU-based drawing operation. The drawing operation represents modification of the texture buffer of the specified size taken at specified coordinates and combining data layers defined by the specified flags. The operation itself is to be implemented in the TextureDrawCallback handler. This method can be used for implementing GPU-based terrain modification (e.g. brushes).
+			Commences an asynchronous GPU-based drawing operation. The drawing operation represents modification of the texture buffer of the specified size taken at specified coordinates and combining data layers defined by the specified flags. The operation itself is to be implemented in the TextureDraw event handler. This method can be used for implementing GPU-based terrain modification (e.g. brushes).
 			</summary> 
-			<param name="guid"> GUID of the landscape layer map file to be modified. </param>
+			<param name="file_guid"> GUID of the landscape layer map file to be modified. </param>
 			<param name="coord"> Coordinates of the upper left corner of the landscape layer map data segment to be modified along the X and Y axes. </param>
 			<param name="resolution"> Resolution of the landscape layer map data segment to be modified along the X and Y axes. </param>
 			<param name="flags_file_data"> Data layer mask. A combination of FLAGS_FILE_DATA_* flags indicating data layers to be affected (heights, albedo, certain masks). </param> 
 		</member>
 		<member name="M:Unigine.Landscape.asyncTextureDraw(Unigine.UGUID,Unigine.Math.ivec2,Unigine.Math.ivec2)">
 			<summary>
-			Commences an asynchronous GPU-based drawing operation. The drawing operation represents modification of the texture buffer of the specified size taken at specified coordinates and combining all data layers. The operation itself is to be implemented in the TextureDrawCallback handler. This method can be used for implementing GPU-based terrain modification (e.g. brushes).
+			Commences an asynchronous GPU-based drawing operation. The drawing operation represents modification of the texture buffer of the specified size taken at specified coordinates and combining all data layers. The operation itself is to be implemented in the TextureDraw event handler. This method can be used for implementing GPU-based terrain modification (e.g. brushes).
 			</summary> 
-			<param name="guid"> GUID of the landscape layer map file to be modified. </param>
+			<param name="file_guid"> GUID of the landscape layer map file to be modified. </param>
 			<param name="coord"> Coordinates of the upper left corner of the landscape layer map data segment to be modified along the X and Y axes. </param>
 			<param name="resolution"> Resolution of the landscape layer map data segment to be modified along the X and Y axes. </param> 
 		</member>
@@ -3630,14 +3634,14 @@
 			Applies the state of the landscape layer map stored in the specified file to the landscape layer map file with the specified GUID.
 			</summary> 
 			<param name="operation_id"> Operation ID. </param>
-			<param name="guid"> GUID of the landscape layer map file to which a state stored at the specified path is to be applied. </param>
+			<param name="file_guid"> GUID of the landscape layer map file to which a state stored at the specified path is to be applied. </param>
 			<param name="path"> Path to a file where the current landscape map modification state is stored. </param> 
 		</member>
 		<member name="M:Unigine.Landscape.asyncApplyDiff(Unigine.UGUID,char)">
 			<summary>
 			Applies the state of the landscape layer map stored in the specified file to the landscape layer map file with the specified GUID.
 			</summary> 
-			<param name="guid"> GUID of the landscape layer map file to which a state stored at the specified path is to be applied. </param>
+			<param name="file_guid"> GUID of the landscape layer map file to which a state stored at the specified path is to be applied. </param>
 			<param name="path"> Path to a file where the current landscape map modification state is stored. </param> 
 		</member>
 		<member name="M:Unigine.Landscape.asyncSaveFile(int,Unigine.UGUID)">
@@ -3658,24 +3662,18 @@
 			Saves the specified landscape layer map file applying all changes along with saving old and new states (diff) to temporary files. These temporary files can be used to perform undo/redo operations via the applyDiff() method.
 			</summary> 
 			<param name="operation_id"> Operation ID. </param>
-			<param name="guid"> GUID of the landscape layer map file. </param>
-			<param name="path_new_state"> Path to a file to store the new landscape layer map state. </param>
-			<param name="path_old_state"> Path to a file to store the old landscape layer map state. </param> 
+			<param name="file_guid"> GUID of the landscape layer map file. </param>
+			<param name="path_new_diff"> Path to a file to store the new landscape layer map state. </param>
+			<param name="path_old_diff"> Path to a file to store the old landscape layer map state. </param> 
 		</member>
 		<member name="M:Unigine.Landscape.asyncSaveFile(Unigine.UGUID,char,char)">
 			<summary>
 			Saves the specified landscape layer map file applying all changes along with saving old and new states (diff) to temporary files. These temporary files can be used to perform undo/redo operations via the applyDiff() method.
 			
 			</summary> 
-			<param name="guid"> GUID of the landscape layer map file. </param>
-			<param name="path_new_state"> Path to a file to store the new landscape layer map state. </param>
-			<param name="path_old_state"> Path to a file to store the old landscape layer map state. </param> 
-		</member>
-		<member name="M:Unigine.Landscape.isFilesClosed">
-			<summary>
-			Returns a value indicating if .lmap files for all landscape layer maps are closed. Call this method before making any changes (modification, deletion, renaming) to .lmap files of the landscape terrain object to ensure that these files are not currently used by the Engine to avoid conflicts. If not, you can use the filesClose() method co close them.
-			</summary>  
-			<returns>true if .lmap files for all landscape layer maps are closed; otherwise, false.</returns>
+			<param name="file_guid"> GUID of the landscape layer map file. </param>
+			<param name="path_new_diff"> Path to a file to store the new landscape layer map state. </param>
+			<param name="path_old_diff"> Path to a file to store the old landscape layer map state. </param> 
 		</member>
 		<member name="M:Unigine.Landscape.filesClose(Unigine.Vector{Unigine.UGUID,int,Unigine.VectorAllocator})">
 			<summary>
@@ -3685,76 +3683,19 @@
 		</member>
 		<member name="M:Unigine.Landscape.filesClose">
 			<summary>
-			Closes .lmap files for all landscape layer maps. This method should be called before making any changes (modification, deletion, renaming) to .lmap files of the landscape terrain object to avoid conflicts, as these files are streamed continuosly by the Engine. Thus, by calling this method you inform the Engine that it should stop streaming terrain data. As you're done with modification you should call the filesOpen() method to resume streaming operations.
+								Closes .lmap files for all landscape layer maps.This method should be called before making any changes (modification, deletion, renaming) to					.lmap files of the landscape terrain object to avoid conflicts, as these files are streamed continuosly by the Engine. Thus, by calling this method you inform the Engine that it should stop streaming terrain data. As you're done with modification you should call the filesOpen() method to resume streaming operations.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Landscape.filesOpen">
 			<summary>
-			Opens .lmap files for all landscape layer maps. This method should be called after making any changes (modification, deletion, renaming) to .lmap files of the landscape terrain object. Prior to making such modifications the filesClose() method should be called.
+								Opens .lmap files for all landscape layer maps.This method should be called after making any changes (modification, deletion, renaming) to					.lmap files of the landscape terrain object. Prior to making such modifications the filesClose() method should be called.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Landscape.getActiveTerrain">
 			<summary>
-			Returns the current active Landscape Terrain object.If a scene contains multiple Landscape Terrain objects, only one of them can be active (rendered).
+			Returns the current active Landscape Terrain object.					If a scene contains multiple Landscape Terrain objects, only one of them can be active (rendered).
 			</summary>  
 			<returns>Landscape Terrain object that is currently active.</returns>
-		</member>
-		<member name="M:Unigine.Landscape.addTextureDrawCallback(Unigine.CallbackBase5{Unigine.UGUID,int,Unigine.Ptr{Unigine.LandscapeTextures},Unigine.Math.ivec2,int})">
-			<summary>
-			Adds a callback function to be called when a Texture Draw (GPU-based terrain modification) operation is performed. The signature of the callback function must be as follows:						You can set a callback function as follows:						Example: Setting a texture draw callback function for a certain class:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added texture draw callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Landscape.removeTextureDrawCallback(void)">
-			<summary>
-			Removes the specified callback from the list of texture draw callbacks.
-			</summary> 
-			<param name="id"> Texture draw callback ID obtained when adding it. </param> 
-			<returns>True if the texture draw callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.Landscape.clearTextureDrawCallback">
-			<summary>
-			Clears all added texture draw callbacks.
-			</summary>  
-		</member>
-		<member name="M:Unigine.Landscape.addApplyDiffCallback(Unigine.CallbackBase3{Unigine.UGUID,int,char})">
-			<summary>
-			Adds a callback function to be called on applying a diff to the landscape layer map file. The signature of the callback function must be as follows:						You can set a callback function as follows:						Example: Setting an apply diff callback function for a certain class:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added apply diff callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Landscape.removeApplyDiffCallback(void)">
-			<summary>
-			Removes the specified callback from the list of apply diff callbacks.
-			</summary> 
-			<param name="id"> Apply diff callback ID obtained when adding it. </param> 
-			<returns>True if the apply diff callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.Landscape.clearApplyDiffCallback">
-			<summary>
-			Clears all added apply diff callbacks.
-			</summary>  
-		</member>
-		<member name="M:Unigine.Landscape.addSaveFileCallback(Unigine.CallbackBase4{Unigine.UGUID,int,char,char})">
-			<summary>
-			Adds a callback function to be called on applying changes made to a landscape layer map file and saving old and new states to temporary files. The signature of the callback function must be as follows:						You can set a callback function as follows:						Example: Setting an apply diff callback function for a certain class:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added save file callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Landscape.removeSaveFileCallback(void)">
-			<summary>
-			Removes the specified callback from the list of save file callbacks.
-			</summary> 
-			<param name="id"> Save file callback ID obtained when adding it. </param> 
-			<returns>True if the save file callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.Landscape.clearSaveFileCallback">
-			<summary>
-			Clears all added save file callbacks.
-			</summary>  
 		</member>
 		<member name="M:Unigine.Landscape.generateOperationID">
 			<summary>
@@ -4344,17 +4285,20 @@
 			<summary>
 			Returns the blending mode set for the height data.
 			</summary>  
+			<returns>The blending mode, one of the  values.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeLayerMap.getAlbedoBlending const">
 			<summary>
 			Returns the blending mode set for the albedo data.
 			</summary>  
+			<returns>The blending mode, one of the  values.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeLayerMap.getMaskBlending(int) const">
 			<summary>
 			Returns the blending mode set for the mask data.
 			</summary> 
 			<param name="mask"> Mask index. </param> 
+			<returns>The blending mode, one of the  values.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeLayerMap.getHeightFadeAttenuation const">
 			<summary>
@@ -4392,7 +4336,7 @@
 			</summary> 
 			<param name="resolution"> Two-component vector (X, Y) representing new landscape map resolution along X and Y axes to be set, in pixels. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.getResolution">
+		<member name="M:Unigine.LandscapeMapFileCreator.getResolution const">
 			<summary>
 			Returns the current landscape map resolution.
 			</summary>  
@@ -4404,19 +4348,19 @@
 			</summary> 
 			<param name="grid"> Two-component vector (X, Y) representing number of tiles of the landscape map along X and Y axes. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.getGrid">
+		<member name="M:Unigine.LandscapeMapFileCreator.getGrid const">
 			<summary>
 			Returns the current grid size for the landscape map.
 			</summary>  
 			<returns>Two-component vector (X, Y) representing number of tiles of the landscape map along X and Y axes.</returns>
 		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.getProgress">
+		<member name="M:Unigine.LandscapeMapFileCreator.getProgress const">
 			<summary>
 			Returns the current landscape map file creation progress.
 			</summary>  
 			<returns>Current landscape map file creation progress (percentage).</returns>
 		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.getTimeSeconds">
+		<member name="M:Unigine.LandscapeMapFileCreator.getTimeSeconds const">
 			<summary>
 			Returns the landscape map file creation time. You can use this method to get total file generation time when processing an End callback.
 			</summary>  
@@ -4428,7 +4372,7 @@
 			</summary> 
 			<param name="path"> New path to the .lmap file to be generated. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.getPath">
+		<member name="M:Unigine.LandscapeMapFileCreator.getPath const">
 			<summary>
 			Returns a path to the .lmap file to be generated.
 			</summary>  
@@ -4455,82 +4399,6 @@
 			<param name="is_empty"> true to create an empty .lmap file (e.g., when you create a layer map to be manually sculpted from scratch using brushes), false - to get necessary data from the sources and put them to the generated .lmap file. </param>
 			<param name="is_safe"> true to make the Engine automatically call filesClose()/fileOpen() methods when performing operations (before modifying an .lmap file the Engine should release files via filesClose(), while after modification fileOpen() should be called), false - to call filesClose()/fileOpen() methods manually.The Landscape class has two overloads for the filesClose() method:filesClose() - to be called in case of moving an .lmap file (no data reloading is performed as the file itself was not modified - saves time on reloading data)filesClose(reload_files) - to be called in case of deleting or modifying an .lmap file.When is_safe = true the Engine shall always call filesClose(reload_files) with complete data reloading. </param> 
 			<returns>true if the operation is successful; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.addCreateCallback(Unigine.CallbackBase4{Unigine.Ptr{LandscapeMapFileCreator},Unigine.Ptr{Unigine.LandscapeImages},int,int})">
-			<summary>
-			Adds a callback function to be called on creating a landscape layer map file. The signature of the callback function must be as follows:						You can set a callback function as follows:						Example: Setting a landscape layer map file creation callback function for a certain class:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added landscape layer map file creation callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.removeCreateCallback(void)">
-			<summary>
-			Removes the specified callback from the list of create file callbacks.
-			</summary> 
-			<param name="id"> Create file callback ID obtained when adding it. </param> 
-			<returns>True if the create file callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.clearCreateCallback">
-			<summary>
-			Clears all added create file callbacks.
-			</summary>  
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.addProgressCallback(Unigine.CallbackBase1{Unigine.Ptr{LandscapeMapFileCreator}})">
-			<summary>
-			Adds a callback function to be called on landscape map file creation progress. The signature of the callback function must be as follows:						You can set a callback function as follows:						Example: Setting a progress callback function for a certain class:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added progress callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.removeProgressCallback(void)">
-			<summary>
-			Removes the specified callback from the list of progress callbacks.
-			</summary> 
-			<param name="id"> Progress callback ID obtained when adding it. </param> 
-			<returns>True if the progress callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.clearProgressCallback">
-			<summary>
-			Clears all added progress callbacks.
-			</summary>  
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.addBeginCallback(Unigine.CallbackBase1{Unigine.Ptr{LandscapeMapFileCreator}})">
-			<summary>
-			Adds a callback function to be called on beginning the landscape map file creation. The signature of the callback function must be as follows:						You can set a callback function as follows:						Example: Setting a begin file creation callback function for a certain class:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added begin file creation callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.removeBeginCallback(void)">
-			<summary>
-			Removes the specified callback from the list of begin file creation callbacks.
-			</summary> 
-			<param name="id"> Begin callback ID obtained when adding it. </param> 
-			<returns>True if the begin file creation callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.clearBeginCallback">
-			<summary>
-			Clears all added begin file creation callbacks.
-			</summary>  
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.addEndCallback(Unigine.CallbackBase1{Unigine.Ptr{LandscapeMapFileCreator}})">
-			<summary>
-			Adds a callback function to be called on completion of the landscape map file creation. The signature of the callback function must be as follows:						You can set a callback function as follows:						Example: Setting a file creation completion callback function for a certain class:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added file creation completion callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.removeEndCallback(void)">
-			<summary>
-			Removes the specified callback from the list of file creation completion callbacks.
-			</summary> 
-			<param name="id"> End callback ID obtained when adding it. </param> 
-			<returns>True if the progress callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.clearEndCallback">
-			<summary>
-			Clears all added file creation completion callbacks.
-			</summary>  
 		</member>
 		<member name="M:Unigine.LandscapeMapFileCompression.#ctor">
 			<summary>
@@ -4977,39 +4845,39 @@
 			The LandscapeFetch constructor.
 			</summary>  
 		</member>
-		<member name="M:Unigine.LandscapeFetch.getPosition">
+		<member name="M:Unigine.LandscapeFetch.getPosition const">
 			<summary>
 			Returns the coordinates of the fetch/intersection point.
 			</summary>  
 			<returns>Fetch/intersection point coordinates as a three-component vector.</returns>
 		</member>
-		<member name="M:Unigine.LandscapeFetch.getHeight">
+		<member name="M:Unigine.LandscapeFetch.getHeight const">
 			<summary>
 			Returns the height value at the point.
 			</summary>  
 			<returns>Height value at the point.</returns>
 		</member>
-		<member name="M:Unigine.LandscapeFetch.getNormal">
+		<member name="M:Unigine.LandscapeFetch.getNormal const">
 			<summary>
-			Returns normal vector coordinates at the point.To get valid normal information via this method, engage normal data for the fetch/intersection request.
+			Returns normal vector coordinates at the point.					To get valid normal information via this method, engage normal data for the fetch/intersection request.
 			</summary>  
 			<returns>Normal vector coordinates at the point.</returns>
 		</member>
-		<member name="M:Unigine.LandscapeFetch.getAlbedo">
+		<member name="M:Unigine.LandscapeFetch.getAlbedo const">
 			<summary>
-			Returns albedo color information at the point.To get valid albedo color information via this method, engage albedo data for the fetch/intersection request.
+			Returns albedo color information at the point.					To get valid albedo color information via this method, engage albedo data for the fetch/intersection request.
 			</summary>  
 			<returns>Albedo color at the point as a 4 component vector (R, G, B, A).</returns>
 		</member>
-		<member name="M:Unigine.LandscapeFetch.isIntersection">
+		<member name="M:Unigine.LandscapeFetch.isIntersection const">
 			<summary>
 			Returns a value indicating if an intersection was detected.
 			</summary>  
 			<returns>true if an intersection was detected; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.LandscapeFetch.getMask(int)">
+		<member name="M:Unigine.LandscapeFetch.getMask(int) const">
 			<summary>
-			Returns information stored for the point in the detail mask with the specified number.To get valid detail mask information via this method, engage mask data for the fetch/intersection request.
+			Returns information stored for the point in the detail mask with the specified number.					To get valid detail mask information via this method, engage mask data for the fetch/intersection request.
 			</summary> 
 			<param name="num"> Number of the detail mask in the [0; 19] range. </param> 
 			<returns>Value for the point stored in the detail mask with the specified number.</returns>
@@ -5020,7 +4888,7 @@
 			</summary> 
 			<param name="uses"> Combination of data engagement flags to be set. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeFetch.getUses">
+		<member name="M:Unigine.LandscapeFetch.getUses const">
 			<summary>
 			Returns the current state of flags engaging/disengaging certain data types for the fetch/intersection request.
 			</summary>  
@@ -5032,7 +4900,7 @@
 			</summary> 
 			<param name="height"> true to engage height data in the fetch/intersection request, false - to disengage. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeFetch.isUsesHeight">
+		<member name="M:Unigine.LandscapeFetch.isUsesHeight const">
 			<summary>
 			Returns a value indicating if heights data is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point). This option is enabled by default.
 			</summary>  
@@ -5040,38 +4908,38 @@
 		</member>
 		<member name="M:Unigine.LandscapeFetch.setUsesNormal(bool)">
 			<summary>
-			Sets a value indicating if normals data is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).Enable this option to get normal information for the point.
+			Sets a value indicating if normals data is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).					Enable this option to get normal						 information for the point.
 			</summary> 
 			<param name="normal"> true to engage normals data in the fetch/intersection request, false - to disengage. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeFetch.isUsesNormal">
+		<member name="M:Unigine.LandscapeFetch.isUsesNormal const">
 			<summary>
-			Returns a value indicating if normals data is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).Enable this option to get normal information for the point.
+			Returns a value indicating if normals data is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).					Enable this option to get normal						 information for the point.
 			</summary>  
 			<returns>true if normals data is engaged in the fetch/intersection request; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeFetch.setUsesAlbedo(bool)">
 			<summary>
-			Sets a value indicating if albedo data is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).Enable this option to get albedo information for the point.
+			Sets a value indicating if albedo data is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).					Enable this option to get albedo information for the point.
 			</summary> 
 			<param name="albedo"> true to engage albedo data in the fetch/intersection request, false - to disengage. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeFetch.isUsesAlbedo">
+		<member name="M:Unigine.LandscapeFetch.isUsesAlbedo const">
 			<summary>
-			Returns a value indicating if albedo data is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).Enable this option to get albedo information for the point.
+			Returns a value indicating if albedo data is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).					Enable this option to get albedo information for the point.
 			</summary>  
 			<returns>true if albedo data is engaged in the fetch/intersection request; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeFetch.setUsesMask(int,bool)">
 			<summary>
-			Sets a value indicating if data of the specified detail mask is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).Enable this option to get detail mask data for the point.
+			Sets a value indicating if data of the specified detail mask is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).					Enable this option to get detail mask data for the point.
 			</summary> 
 			<param name="num"> Detail mask number in the [0; 19] range. </param>
 			<param name="value"> true to engage data of the specified detail mask in the fetch/intersection request, false - to disengage. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeFetch.isUsesMask(int)">
+		<member name="M:Unigine.LandscapeFetch.isUsesMask(int) const">
 			<summary>
-			Returns a value indicating if data of the specified detail mask is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).Enable this option to get detail mask data for the point.
+			Returns a value indicating if data of the specified detail mask is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).					Enable this option to get detail mask data for the point.
 			</summary> 
 			<param name="num"> Detail mask number in the [0; 19] range. </param> 
 			<returns>true if data of the specified detail mask is engaged in the fetch/intersection request; otherwise, false.</returns>
@@ -5080,9 +4948,9 @@
 			<summary>
 			Sets a value indicating if checking for terrain holes in the fetch/intersection request is enabled. This option is enabled by default. When disabled terrain holes created using decals are ignored.
 			</summary> 
-			<param name="albedo"> true to enable checking for terrain holes in the fetch/intersection request, false - to disable it. </param> 
+			<param name="enabled"> true to enable checking for terrain holes in the fetch/intersection request, false - to disable it. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeFetch.isHolesEnabled">
+		<member name="M:Unigine.LandscapeFetch.isHolesEnabled const">
 			<summary>
 			Returns a value indicating if checking for terrain holes in the fetch/intersection request is enabled. This option is enabled by default. When disabled terrain holes created using decals are ignored.
 			</summary>  
@@ -5092,9 +4960,9 @@
 			<summary>
 			Sets a new precision value to be used for intersection detection requested by intersectionForce() and intersectionAsync() methods.
 			</summary> 
-			<param name="begin"> Precision for intersection detection as a fraction of maximum precision in the [0; 1] range. The default value is 0.5f. Maximum precision is determined by the Engine on the basis of the data of your Landscape Terrain. </param> 
+			<param name="precision"> Precision for intersection detection as a fraction of maximum precision in the [0; 1] range. The default value is 0.5f. Maximum precision is determined by the Engine on the basis of the data of your Landscape Terrain. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeFetch.getIntersectionPrecision">
+		<member name="M:Unigine.LandscapeFetch.getIntersectionPrecision const">
 			<summary>
 			Returns the current precision value used for intersection detection requested by intersectionForce() and intersectionAsync() methods.
 			</summary>  
@@ -5227,49 +5095,11 @@
 			</summary> 
 			<param name="fetches"> List of fetch requests to be completed. </param> 
 		</member>
-		<member name="M:Unigine.LandscapeFetch.isAsyncCompleted">
+		<member name="M:Unigine.LandscapeFetch.isAsyncCompleted const">
 			<summary>
 			Returns a value indicating if async operation is completed. As the operation is completed you can obtain necessary data via get*() methods.
 			</summary>  
 			<returns>true if async operation is completed; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.addStartCallback(Unigine.CallbackBase)">
-			<summary>
-			Adds a callback function to be called on beginning of the fetch process. The signature of the callback function must be as follows:						You can set a callback function as follows:						Example: Setting a fetch start callback function for a certain class:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added fetch start callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.removeStartCallback(void)">
-			<summary>
-			Removes the specified callback from the list of file fetch start callbacks.
-			</summary> 
-			<param name="id"> Start callback ID obtained when adding it. </param> 
-			<returns>True if the fetch start callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.clearStartCallback">
-			<summary>
-			Clears all added fetch start callbacks.
-			</summary>  
-		</member>
-		<member name="M:Unigine.LandscapeFetch.addEndCallback(Unigine.CallbackBase)">
-			<summary>
-			Adds a callback function to be called on fetch completion. The signature of the callback function must be as follows:						You can set a callback function as follows:						Example: Setting a fetch completion callback function for a certain class:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added fetch end callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.removeEndCallback(void)">
-			<summary>
-			Removes the specified callback from the list of file fetch end callbacks.
-			</summary> 
-			<param name="id"> End callback ID obtained when adding it. </param> 
-			<returns>True if the fetch end callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.clearEndCallback">
-			<summary>
-			Clears all added fetch end callbacks.
-			</summary>  
 		</member>
 		<member name="M:Unigine.LandscapeImages.#ctor(Unigine.Math.ivec2)">
 			<summary>
@@ -5417,13 +5247,13 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.#ctor(char)">
 			<summary>
-			ObjectMeshCluster constructor. Creates a Static Mesh object with mesh loaded from the specified file.
+			ObjectMeshStatic constructor. Creates a Static Mesh object with mesh loaded from the specified file.
 			</summary> 
 			<param name="path"> Path to the base .mesh-file. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.#ctor">
 			<summary>
-			ObjectMeshCluster constructor. Creates an empty Static Mesh object.
+			ObjectMeshStatic constructor. Creates an empty Static Mesh object.
 			</summary>  
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.setMeshPath(char)">
@@ -5843,11 +5673,6 @@
 			</summary> 
 			<param name="num"> Mesh instance number. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshCluster.updateSpatialTree">
-			<summary>
-			Updates the spatial tree of the mesh cluster. Spatial tree is updated in the next frame, this method can be used to update the tree immediately.
-			</summary>  
-		</member>
 		<member name="M:Unigine.ObjectMeshCluster.getNumMeshes const">
 			<summary>
 			Returns the total number of meshes handled by the mesh cluster.
@@ -5873,7 +5698,7 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.createMeshes(Unigine.Vector{Unigine.Math.Mat4,int,Unigine.VectorAllocator})">
 			<summary>
-			Creates meshes is accordance with the transformations vector (world coordinates) and bakes them into the cluster. All baked meshes are identical to the source mesh and have the same material applied to their surfaces.
+			Creates meshes in accordance with the transformations vector (world coordinates) and bakes them into the cluster. All baked meshes are identical to the source mesh and have the same material applied to their surfaces.
 			</summary> 
 			<param name="world_transforms"> Transformations vector in world coordinates. </param> 
 		</member>
@@ -7360,7 +7185,7 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getBoneTransform(int) const">
 			<summary>
-			Returns a transformation matrix of a given bone relatively to the parent object (not considering transformations of the node itself).
+			Returns a transformation matrix of a given bone relatively to the parent object (not considering transformations of the Mesh Skinned node itself).
 			</summary> 
 			<param name="bone"> Bone number. </param> 
 			<returns>Transformation matrix.</returns>
@@ -7530,17 +7355,17 @@
 			<param name="layer"> Animation layer number. </param> 
 			<returns>Weight of the animation layer.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setLoop(int)">
+		<member name="M:Unigine.ObjectMeshSkinned.setLoop(bool)">
 			<summary>
 			Sets a value indicating if the animation should be looped.
 			</summary> 
-			<param name="loop"> 1 is to play the animation in a loop, 0 is to play it only once.  </param> 
+			<param name="loop"> true is to play the animation in a loop, false is to play it only once.  </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getLoop const">
+		<member name="M:Unigine.ObjectMeshSkinned.isLoop const">
 			<summary>
-			Returns a value indicating if the animation is looped. 1 if the animation is looped; otherwise - 0.
+			Returns a value indicating if the animation is looped.
 			</summary>  
-			<returns>The loop flag.</returns>
+			<returns>true if the animation is looped; otherwise - false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.setMesh(Unigine.Ptr{Unigine.Mesh})">
 			<summary>
@@ -7623,7 +7448,7 @@
 			<summary>
 			Returns the number of all bones taking part in animation.
 			</summary>  
-			<returns>Number of bones.</returns>
+			<returns>Number of bones of the skinned mesh.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getNumCIndices(int) const">
 			<summary>
@@ -7795,6 +7620,12 @@
 			Returns stop status.
 			</summary>  
 			<returns>true if animation is stopped; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.isNeedUpdate const">
+			<summary>
+			Returns a value indicating if the ObjectMeshSkinned needs to be updated (e.g. after adding new animations).
+			</summary>  
+			<returns>true if the skinned mesh needs to be updated; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getSurfaceTargetName(int,int) const">
 			<summary>
@@ -7990,18 +7821,35 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.addAnimation(Unigine.Ptr{Unigine.Mesh},char)">
 			<summary>
-			Loads an additional animation from an external file.
+			Adds animation from the specified mesh.
 			</summary> 
 			<param name="mesh"> Mesh containing the animation to be added. </param>
 			<param name="path"> The parameter is a virtual unique path defining the animation. After loading the animation clip, its internal representation will be identified by the path when using findAnimation, setAnimation, etc. The default 0 value implies that the names of the animation clips will be used.As the given mesh isn't associated with a file and, therefore, doesn't have path data, the path must be represented by an arbitrary unique string. You can generate a new string and use it as the virtual path for the animation. </param> 
-			<returns>Animation identifier.</returns>
+			<returns>Index of the added animation or -1 if an error has occurred.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.addAnimation(char)">
 			<summary>
-			Loads the additional animation from an external file.
+			Loads additional animation from the specified external file.
 			</summary> 
 			<param name="path"> Path to the animation file. The path can be represented by either a path to the file or its GUID, which is the recommended approach. After loading the animation, its internal representation is identified by the path when using findAnimation, setAnimation, etc. When you import your model with animations from an FBX container, the following path to your *.anim files should be used: &amp;lt;path_to_your_fbx_file&amp;gt;/&amp;lt;file.fbx&amp;gt;/&amp;lt;your_anim_file.anim&amp;gt;For example: object-&amp;gt;addAnimation("models/soldier/soldier.fbx/run.anim"); </param> 
-			<returns>Animation identifier.</returns>
+			<returns>Index of the added animation or -1 if an error has occurred.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.addRetargetedAnimation(char,Unigine.Ptr{BonesRetargeting})">
+			<summary>
+			Loads additional animation from the specified external file applying the specified bones retargeting settings.
+			</summary> 
+			<param name="path"> Path to the animation file. The path can be represented by either a path to the file or its GUID, which is the recommended approach. After loading the animation, its internal representation is identified by the path when using findAnimation, setAnimation, etc. When you import your model with animations from an FBX container, the following path to your *.anim files should be used: &amp;lt;path_to_your_fbx_file&amp;gt;/&amp;lt;file.fbx&amp;gt;/&amp;lt;your_anim_file.anim&amp;gt;For example: object-&amp;gt;addAnimation("models/soldier/soldier.fbx/run.anim"); </param>
+			<param name="bones_retargeting"> Instance of the BonesRetargeting class describing retargeting of bones from the skeleton of the specified source mesh to the skeleton of the calling object. </param> 
+			<returns>Index of the added animation or -1 if an error has occurred.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.addRetargetedAnimation(Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{BonesRetargeting},char)">
+			<summary>
+			Adds animation from the specified mesh applying the specified bones retargeting settings.
+			</summary> 
+			<param name="mesh"> Source mesh containing the animation to be added. </param>
+			<param name="bones_retargeting"> Instance of the BonesRetargeting class describing retargeting of bones from the skeleton of the specified source mesh to the skeleton of the calling object. </param>
+			<param name="path"> The parameter is a virtual unique path defining the animation. After loading the animation clip, its internal representation will be identified by the path when using findAnimation, setAnimation, etc. The default 0 value implies that the names of the animation clips will be used.As the given mesh isn't associated with a file and, therefore, doesn't have path data, the path must be represented by an arbitrary unique string. You can generate a new string and use it as the virtual path for the animation. </param> 
+			<returns>Index of the added animation or -1 if an error has occurred.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.addEmptySurface(char,int,int)">
 			<summary>
@@ -8272,18 +8120,24 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getBoneNotAdditionalBindLocalTransform(int) const">
 			<summary>
+			Returns the bone transformation relative to the parent bone without taking into account the bound node transformation.
 			</summary> 
 			<param name="bone"> Number of the bone, in the range from 0 to the total number of bones. </param> 
+			<returns>Transformation matrix in the local space.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getBoneNotAdditionalBindObjectTransform(int) const">
 			<summary>
+			Returns the bone transformation relative to the parent object without taking into account the bound node transformation.
 			</summary> 
 			<param name="bone"> Number of the bone, in the range from 0 to the total number of bones. </param> 
+			<returns>Transformation matrix in the object space.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getBoneNotAdditionalBindWorldTransform(int) const">
 			<summary>
+			Returns the bone transformation relative to the world origin.
 			</summary> 
 			<param name="bone"> Number of the bone, in the range from 0 to the total number of bones. </param> 
+			<returns>Transformation matrix in the world space without taking into account the bound node transformation.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.setBindNode(int,Unigine.Ptr{Unigine.Node})">
 			<summary>
@@ -8292,11 +8146,22 @@
 			<param name="bone"> Number of the bone to be controlled by the specified node, in the range from 0 to the total number of bones. </param>
 			<param name="node"> Node whose transformation is used to control the transformation of the bone. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.removeBindNode(int)">
+		<member name="M:Unigine.ObjectMeshSkinned.removeBindNodeByBone(int)">
 			<summary>
 			Removes the assigned bind node from the bone with the specified number.
 			</summary> 
 			<param name="bone"> Number of the bone, in the range from 0 to the total number of bones. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.removeBindNodeByNode(Unigine.Ptr{Unigine.Node})">
+			<summary>
+			Removes the specified bind node.
+			</summary> 
+			<param name="node"> Bind node to be removed. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.removeAllBindNode">
+			<summary>
+			Removes all assigned bind nodes.
+			</summary>  
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getBindNode(int) const">
 			<summary>
@@ -8390,6 +8255,268 @@
 			</summary>  
 			<returns>true if visualization for bones and their basis vectors is enabled; otherwise, false.</returns>
 		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setBoneFrameUses(int,int,ObjectMeshSkinned::FRAME_USES)">
+			<summary>
+			Sets the value indicating which components of the frame are to be used to animate the specified bone of the given animation layer.
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="bone"> Number of the bone, in the range from 0 to the total number of bones. </param>
+			<param name="uses"> Value indicating frame components to be used. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneFrameUses(int,int) const">
+			<summary>
+			Returns the value indicating which components of the frame are to be used to animate the specified bone of the given animation layer.
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="bone"> Number of the bone, in the range from 0 to the total number of bones. </param> 
+			<returns>Value indicating frame components to be used.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.addVisualizeIKChain(int)">
+			<summary>
+			Adds an IK chain with the specified ID to the list of chains for which the basis vectors are to be visualized.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.removeVisualizeIKChain(int)">
+			<summary>
+			Removes the IK chain with the specified ID from the list of chains for which the basis vectors are to be visualized.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.clearVisualizeIKChain">
+			<summary>
+			Clears the list of IK chains for which the basis vectors are to be visualized.
+			</summary>  
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.addIKChain">
+			<summary>
+			Adds a new IK chain to the skinned mesh.
+			</summary>  
+			<returns>ID of the added IK chain.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.removeIKChain(int)">
+			<summary>
+			Removes the IK chain with the specified ID.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getNumIKChains const">
+			<summary>
+			Returns the number of IK chains of the skinned mesh.
+			</summary>  
+			<returns>Number of IK chains.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getIKChain(int) const">
+			<summary>
+			Returns the ID of the IK chain by its number.
+			</summary> 
+			<param name="num"> IK chain number. </param> 
+			<returns>IK chain ID.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setIKChainEnabled(bool,int)">
+			<summary>
+			Sets a value indicating if the IK chain with the specified ID is enabled.
+			</summary> 
+			<param name="enabled"> Set true to enable IK chain with the specified ID, or false - to disable it. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.isIKChainEnabled(int) const">
+			<summary>
+			Returns a value indicating if the IK chain with the specified ID is enabled.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>true if the IK chain with the specified ID is enabled; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setIKChainWeight(float,int)">
+			<summary>
+			Sets a new weight for the IK chain with the specified ID. Weight value defines the impact of the target position on the last joint of the chain.
+			</summary> 
+			<param name="weight"> New weight value to be set in the [0.0f, 1.0f] range. Higher values increase the impact. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getIKChainWeight(int) const">
+			<summary>
+			Returns the current weight for the IK chain with the specified ID. Weight value defines the impact of the target position on the last joint of the chain.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>Current weight value in the [0.0f, 1.0f] range. Higher values increase the impact.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.addIKChainBone(int,int)">
+			<summary>
+			Adds a bone with the specified number to the IK chain with the specified ID.
+			</summary> 
+			<param name="bone"> Bone number. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>Index of the last added bone in the chain.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getIKChainNumBones(int) const">
+			<summary>
+			Returns the number of bones in the IK chain with the specified ID.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>Number of bones in the IK chain with the specified ID.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.removeIKChainBone(int,int)">
+			<summary>
+			Removes the bone with the specified number from the IK chain with the specified ID.
+			</summary> 
+			<param name="bone_num"> Bone number. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getIKChainBone(int,int) const">
+			<summary>
+			Returns the index of the bone with the specified number (within the chain) from the IK chain with the specified ID.
+			</summary> 
+			<param name="bone_num"> Bone number. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>Number of the bone, in the range from 0 to the total number of bones.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setIKChainTargetPosition(Unigine.Math.Vec3,int)">
+			<summary>
+			Sets new local coordinates of the target position of the IK chain with the specified ID.
+			</summary> 
+			<param name="position"> New local coordinates of the target position to be set for the IK chain with the specified ID. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getIKChainTargetPosition(int) const">
+			<summary>
+			Returns the current local coordinates of the target position of the IK chain with the specified ID.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>Local coordinates of the target position of the IK chain with the specified ID.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setIKChainTargetWorldPosition(Unigine.Math.Vec3,int)">
+			<summary>
+			Sets new world coordinates of the target position of the IK chain with the specified ID.
+			</summary> 
+			<param name="position"> New world coordinates of the target position to be set for the IK chain with the specified ID. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getIKChainTargetWorldPosition(int) const">
+			<summary>
+			Returns the current world coordinates of the target position of the IK chain with the specified ID.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>World coordinates of the target position of the IK chain with the specified ID.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setIKChainUsePoleVector(bool,int)">
+			<summary>
+			Sets a value indicating if the pole vector is to be used to define the direction of rotation for the joints of the IK chain with the specified ID as they attempt to reach the target.
+			</summary> 
+			<param name="use"> true to use the pole vector for the IK chain with the specified ID; false - not to use. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.isIKChainUsePoleVector(int) const">
+			<summary>
+			Returns a value indicating if the pole vector is to be used to define the direction of rotation for the joints of the IK chain with the specified ID as they attempt to reach the target.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>true if the pole vector is to be used for the IK chain with the specified ID; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setIKChainPolePosition(Unigine.Math.Vec3,int)">
+			<summary>
+			Sets a new pole position (in local coordinates) for the IK chain with the specified ID.
+			</summary> 
+			<param name="position"> New pole position (in local coordinates) to be set for the IK chain. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getIKChainPolePosition(int) const">
+			<summary>
+			Returns the current pole position (in local coordinates) for the IK chain with the specified ID.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>Pole position (in local coordinates) for the IK chain.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setIKChainPoleWorldPosition(Unigine.Math.Vec3,int)">
+			<summary>
+			Sets a new pole position (in world coordinates) for the IK chain with the specified ID.
+			</summary> 
+			<param name="position"> New pole position (in world coordinates) to be set for the IK chain. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getIKChainPoleWorldPosition(int) const">
+			<summary>
+			Returns the current pole position (in world coordinates) for the IK chain with the specified ID.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>Pole position (in world coordinates) for the IK chain.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setIKChainUseEffectorRotation(bool,int)">
+			<summary>
+			Sets a value indicating if the effector rotation is to be used for the IK chain with the specified ID.
+			</summary> 
+			<param name="use"> true to use effector rotation for the IK chain with the specified ID; false - not to use. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.isIKChainUseEffectorRotation(int) const">
+			<summary>
+			Returns a value indicating if the effector rotation is to be used for the IK chain with the specified ID.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>true if the effector rotation is to be used for the IK chain with the specified ID; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setIKChainEffectorRotation(Unigine.Math.quat,int)">
+			<summary>
+			Sets the rotation of the end-effector (in local coordinates) of the IK chain with the specified ID.
+			</summary> 
+			<param name="rotation"> Quaternion that defines rotation (local coordinates) of the end-effector of the chain. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getIKChainEffectorRotation(int) const">
+			<summary>
+			Returns the current rotation (in local coordinates) of the end-effector of the IK chain with the specified ID.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>Quaternion that defines rotation (local coordinates) of the end-effector of the chain.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setIKChainEffectorWorldRotation(Unigine.Math.quat,int)">
+			<summary>
+			Sets the rotation of the end-effector (in world coordinates) of the IK chain with the specified ID.
+			</summary> 
+			<param name="rotation"> Quaternion that defines rotation (world coordinates) of the end-effector of the chain. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getIKChainEffectorWorldRotation(int) const">
+			<summary>
+			Returns the current rotation (in world coordinates) of the end-effector of the IK chain with the specified ID.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>Quaternion that defines rotation (world coordinates) of the end-effector of the chain.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setIKChainNumIterations(int,int)">
+			<summary>
+			Sets the number of iterations to be used for solving the IK chain with the specified ID (number of times the algorithm runs).
+			</summary> 
+			<param name="num"> Number of iterations to be used for solving the IK chain with the specified ID. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getIKChainNumIterations(int) const">
+			<summary>
+			Returns the number of iterations used for solving the IK chain with the specified ID (number of times the algorithm runs).
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>Current number of iterations for the IK chain with the specified ID.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setIKChainTolerance(float,int)">
+			<summary>
+			Sets a new tolerance value to be used for the IK chain with the specified ID. This value sets a threshold where the target is considered to have reached its destination position, and when the IK Solver stops iterating.
+			</summary> 
+			<param name="tolerance"> Tolerance value to be set for the IK chain. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getIKChainTolerance(int) const">
+			<summary>
+			Returns the current tolerance value to be used for the IK chain with the specified ID. This value sets a threshold where the target is considered to have reached its destination position, and when the IK Solver stops iterating.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>Current tolerance value for the IK chain.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.copyBoneTransforms(Unigine.Ptr{ObjectMeshSkinned})">
+			<summary>
+			Copies all bone transformations from the specified source skinned mesh.
+			</summary> 
+			<param name="mesh"> Source skinned mesh from which bone transforms are to be copied. </param> 
+		</member>
 		<member name="F:Unigine.ObjectMeshSkinned.BONE_SPACE_LOCAL">
 			<summary>
 			Coordinates relative to the parent bone.
@@ -8423,6 +8550,174 @@
 		<member name="F:Unigine.ObjectMeshSkinned.BIND_MODE_OVERRIDE">
 			<summary>
 			Replace bone's transformation with the transformation of the bind node.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_NONE">
+			<summary>
+			No frame components are to be used.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_POSITION">
+			<summary>
+			Only position is to be used.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_ROTATION">
+			<summary>
+			Only rotation is to be used.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_SCALE">
+			<summary>
+			Only scale is to be used.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_ALL">
+			<summary>
+			All frame components are to be used.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_POSITION_AND_ROTATION">
+			<summary>
+			Only position and rotation are to be used.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_POSITION_AND_SCALE">
+			<summary>
+			Only position and scale are to be used.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_ROTATION_AND_SCALE">
+			<summary>
+			Only rotation and scale are to be used.
+		</summary>
+		</member>
+		<member name="M:Unigine.BonesRetargeting.#ctor">
+			<summary>
+			Constructor. Creates an instance of the class with default parameters.
+			</summary>  
+		</member>
+		<member name="M:Unigine.BonesRetargeting.#ctor(char,char)">
+			<summary>
+			Constructor. Creates an instance of the class with default parameters and loads the specified source and target meshes.
+			</summary> 
+			<param name="src_mesh_path"> Path to the source *.mesh file. </param>
+			<param name="dst_mesh_path"> Path to the target *.mesh file. </param> 
+		</member>
+		<member name="M:Unigine.BonesRetargeting.loadMeshes(char,char)">
+			<summary>
+			Loads source and target meshes from the specified locations.
+			</summary> 
+			<param name="src_mesh_path"> Path to the source *.mesh file. </param>
+			<param name="dst_mesh_path"> Path to the target *.mesh file. </param> 
+			<returns>true if source and target meshes were successfully loaded from the specified files; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.BonesRetargeting.setNameMapping(char,char)">
+			<summary>
+			Sets name mapping for the pair of source and target bones.
+			</summary> 
+			<param name="src_name"> Name of the source bone. </param>
+			<param name="dst_name"> Name of the corresponding target bone. </param> 
+			<returns>true if name mapping for the specified pair of source and target bones is set successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.BonesRetargeting.findEqualNameMapping">
+			<summary>
+			Performs a search and automatically maps source and target bones by matching names.
+			</summary>  
+		</member>
+		<member name="M:Unigine.BonesRetargeting.getSrcBoneName(int) const">
+			<summary>
+			Returns the name of the source bone by its index.
+			</summary> 
+			<param name="index"> Index of the source bone. </param> 
+			<returns>Name of the source bone with the specified index.</returns>
+		</member>
+		<member name="M:Unigine.BonesRetargeting.getDstBoneName(int) const">
+			<summary>
+			Returns the name of the target bone by its index.
+			</summary> 
+			<param name="index"> Index of the target bone. </param> 
+			<returns>Name of the target bone with the specified index.</returns>
+		</member>
+		<member name="M:Unigine.BonesRetargeting.setBoneMode(char,BonesRetargeting::MODE)">
+			<summary>
+			Sets a new retargeting mode to be used for the source bone with the specified name.
+			</summary> 
+			<param name="src_name"> Name of the source bone. </param>
+			<param name="mode"> Retargeting mode to be used for the bone. </param> 
+		</member>
+		<member name="M:Unigine.BonesRetargeting.getBoneMode(char) const">
+			<summary>
+			Returns the current retargeting mode used for the source bone with the specified name.
+			</summary> 
+			<param name="src_name"> Name of the source bone. </param> 
+			<returns>Retargeting mode currently used for the bone.</returns>
+		</member>
+		<member name="M:Unigine.BonesRetargeting.getBoneProportion(char) const">
+			<summary>
+			Returns the calculated proportion value for the source bone with the specified name.
+			</summary> 
+			<param name="src_name"> Name of the source bone. </param> 
+			<returns>Proportion value for the bone.</returns>
+		</member>
+		<member name="M:Unigine.BonesRetargeting.setBoneCustomProportion(char,float)">
+			<summary>
+			Sets a new custom proportion value for the source bone with the specified name.
+			</summary> 
+			<param name="src_name"> Name of the source bone. </param>
+			<param name="proportion"> New proportion value to be set. </param> 
+		</member>
+		<member name="M:Unigine.BonesRetargeting.getBoneCustomProportion(char) const">
+			<summary>
+			Returns the current custom proportion value for the source bone with the specified name.
+			</summary> 
+			<param name="src_name"> Name of the source bone. </param> 
+		</member>
+		<member name="M:Unigine.BonesRetargeting.removeBoneCustomProportion(char)">
+			<summary>
+			Removes the custom proportion for the source bone with the specified name.
+			</summary> 
+			<param name="src_name"> Name of the source bone. </param> 
+		</member>
+		<member name="M:Unigine.BonesRetargeting.getDstBoneBySrcBone(char) const">
+			<summary>
+			Returns the name of the target bone corresponding to the source bone with the specified name.
+			</summary> 
+			<param name="src_name"> Name of the source bone. </param> 
+			<returns>Name of the corresponding target bone for the specified source one.</returns>
+		</member>
+		<member name="M:Unigine.BonesRetargeting.getSrcBoneByDstBone(char) const">
+			<summary>
+			Returns the name of the source bone corresponding to the target bone with the specified name.
+			</summary> 
+			<param name="dst_name"> Name of the target bone. </param> 
+			<returns>Name of the corresponding source bone for the specified target one.</returns>
+		</member>
+		<member name="M:Unigine.BonesRetargeting.save(char) const">
+			<summary>
+			Saves the current bones retargeting settings to a .bones_retargeting file according to the specified path. This file can then be used for an ObjectMeshSkinned via the  method.
+			</summary> 
+			<param name="path"> Path to a file to which bones retargeting settings are to be saved (.bones_retargeting extension). </param> 
+		</member>
+		<member name="M:Unigine.BonesRetargeting.load(char)">
+			<summary>
+			Loads bones retargeting settings from a .bones_retargeting file according to the specified path. Such files can be used for an ObjectMeshSkinned via the  method.
+			</summary> 
+			<param name="path"> Path to a file containing bones retargeting settings to be loaded (.bones_retargeting extension). </param> 
+		</member>
+		<member name="F:Unigine.BonesRetargeting.MODE_ANIMATION">
+			<summary>
+			Bone position is taken from the source animation.
+		</summary>
+		</member>
+		<member name="F:Unigine.BonesRetargeting.MODE_BIND">
+			<summary>
+			Bone position is taken from the T-pose of the target skeleton.
+		</summary>
+		</member>
+		<member name="F:Unigine.BonesRetargeting.MODE_PROPORTION">
+			<summary>
+			Bone position is taken from the source animation and multiplied by the proportion between the source and the target bones.
 		</summary>
 		</member>
 		<member name="M:Unigine.ObjectMeshSplineCluster.type">

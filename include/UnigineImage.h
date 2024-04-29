@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -82,6 +82,29 @@ public:
 		};
 	};
 
+	// pixel wrapping
+	static UNIGINE_INLINE void copy_pixel(Pixel &ret, const Pixel &value) { memcpy(&ret, &value, sizeof(Pixel)); }
+	static UNIGINE_INLINE Pixel align_pixel(const Pixel &value) { Pixel ret; memcpy(&ret, &value, sizeof(Pixel)); return ret; }
+
+	struct MarshalPixel
+	{
+		Pixel value;
+		Pixel *ptr;
+
+		MarshalPixel(Pixel *v)
+		{
+			ptr = v;
+			copy_pixel(value, *ptr);
+		}
+
+		~MarshalPixel()
+		{
+			copy_pixel(*ptr, value);
+		}
+
+		UNIGINE_INLINE Image::Pixel &get() { return value; }
+	};
+
 	enum
 	{
 		AUTO_IMAGE_TYPE = -1,
@@ -137,6 +160,8 @@ public:
 		FILTER_POINT = 0,
 		FILTER_LINEAR,
 		FILTER_MIN,
+		FILTER_BLUR,
+		FILTER_SHARPEN,
 	};
 
 	enum GGX_MIPMAPS_QUALITY
@@ -157,6 +182,7 @@ public:
 	bool info(const char *file);
 	bool load(const char *file);
 	bool load(const char *file, int mip_offset);
+	bool load(const unsigned char *data, int size);
 	bool save(const char *file, float quality) const;
 	bool save(const char *file) const;
 	bool save(const Ptr<Stream> &stream) const;
@@ -233,7 +259,8 @@ public:
 	bool compare(const Ptr<Image> &image, int x0, int y0, int x1, int y1, int width, int height, int threshold = 0);
 	bool resize(int new_width, int new_height, Image::FILTER filter = Image::FILTER_LINEAR);
 	bool rotate(int angle);
-	bool blur(int size);
+	bool blur(int radius, float gamma = 1.0f, int level = 0);
+	bool sharpen(float radius, float intensity, float gamma = 1.0f, bool sharp_only_lightness = true, int level = 0);
 	bool extrude(int pixels);
 	bool normalize();
 	bool flipX();
@@ -334,6 +361,8 @@ public:
 		MIPMAPS_MODE_DISABLE = 0,
 		MIPMAPS_MODE_POINT,
 		MIPMAPS_MODE_LINEAR,
+		MIPMAPS_MODE_BLUR,
+		MIPMAPS_MODE_SHARPEN,
 		MIPMAPS_MODE_COMBINED,
 		MIPMAPS_MODE_GGX,
 	};
@@ -389,6 +418,12 @@ public:
 	ImageConverter::MIPMAPS_MODE getMipmapsMode() const;
 	void setMipmapsGamma(float gamma);
 	float getMipmapsGamma() const;
+	void setMipmapsFilterIntensity(float intensity);
+	float getMipmapsFilterIntensity() const;
+	void setMipmapsFilterRadius(float radius);
+	float getMipmapsFilterRadius() const;
+	void setMipmapsSharpOnlyLightness(bool lightness);
+	bool isMipmapsSharpOnlyLightness() const;
 	void setGGXMipmapsQuality(Image::GGX_MIPMAPS_QUALITY quality);
 	Image::GGX_MIPMAPS_QUALITY getGGXMipmapsQuality() const;
 	void setRangeMode(ImageConverter::RANGE_MODE mode);

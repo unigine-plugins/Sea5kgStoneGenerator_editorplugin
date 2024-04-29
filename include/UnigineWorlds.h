@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -32,7 +32,7 @@ namespace Unigine
 class UNIGINE_API WorldTrigger : public Node
 {
 public:
-	static int type() { return Node::WORLD_TRIGGER; }
+	static Node::TYPE type() { return Node::WORLD_TRIGGER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<WorldTrigger> create(const Math::vec3 &size);
@@ -55,12 +55,15 @@ public:
 	const char *getEnterCallbackName() const;
 	void setLeaveCallbackName(const char *name);
 	const char *getLeaveCallbackName() const;
-	void *addEnterCallback(CallbackBase1<Ptr<Node>> *func);
-	bool removeEnterCallback(void *id);
-	void clearEnterCallbacks();
-	void *addLeaveCallback(CallbackBase1<Ptr<Node>> *func);
-	bool removeLeaveCallback(void *id);
-	void clearLeaveCallbacks();
+	Event<const Ptr<Node> &> &getEventEnter();
+	Event<const Ptr<Node> &> &getEventLeave();
+
+private:
+
+	EventHolder<EventInterfaceInvoker<const Ptr<Node> &>> event_enter;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Node> &>> event_enter_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Node> &>> event_leave;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Node> &>> event_leave_connection;
 };
 typedef Ptr<WorldTrigger> WorldTriggerPtr;
 
@@ -69,7 +72,7 @@ typedef Ptr<WorldTrigger> WorldTriggerPtr;
 class UNIGINE_API WorldClutter : public Node
 {
 public:
-	static int type() { return Node::WORLD_CLUTTER; }
+	static Node::TYPE type() { return Node::WORLD_CLUTTER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<WorldClutter> create();
@@ -153,7 +156,7 @@ typedef Ptr<WorldClutter> WorldClutterPtr;
 class UNIGINE_API WorldOccluder : public Node
 {
 public:
-	static int type() { return Node::WORLD_OCCLUDER; }
+	static Node::TYPE type() { return Node::WORLD_OCCLUDER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<WorldOccluder> create(const Math::vec3 &size);
@@ -171,7 +174,7 @@ typedef Ptr<WorldOccluder> WorldOccluderPtr;
 class UNIGINE_API WorldOccluderMesh : public Node
 {
 public:
-	static int type() { return Node::WORLD_OCCLUDER_MESH; }
+	static Node::TYPE type() { return Node::WORLD_OCCLUDER_MESH; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<WorldOccluderMesh> create();
@@ -192,7 +195,7 @@ typedef Ptr<WorldOccluderMesh> WorldOccluderMeshPtr;
 class UNIGINE_API WorldTransformPath : public Node
 {
 public:
-	static int type() { return Node::WORLD_TRANSFORM_PATH; }
+	static Node::TYPE type() { return Node::WORLD_TRANSFORM_PATH; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<WorldTransformPath> create(const char *name, int unique = 0);
@@ -221,7 +224,7 @@ typedef Ptr<WorldTransformPath> WorldTransformPathPtr;
 class UNIGINE_API WorldTransformBone : public Node
 {
 public:
-	static int type() { return Node::WORLD_TRANSFORM_BONE; }
+	static Node::TYPE type() { return Node::WORLD_TRANSFORM_BONE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<WorldTransformBone> create(const char *name = 0);
@@ -235,7 +238,7 @@ typedef Ptr<WorldTransformBone> WorldTransformBonePtr;
 class UNIGINE_API WorldExpression : public Node
 {
 public:
-	static int type() { return Node::WORLD_EXPRESSION; }
+	static Node::TYPE type() { return Node::WORLD_EXPRESSION; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<WorldExpression> create();
@@ -257,7 +260,7 @@ typedef Ptr<WorldExpression> WorldExpressionPtr;
 class UNIGINE_API WorldSwitcher : public Node
 {
 public:
-	static int type() { return Node::WORLD_SWITCHER; }
+	static Node::TYPE type() { return Node::WORLD_SWITCHER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<WorldSwitcher> create();
@@ -356,12 +359,19 @@ public:
 };
 typedef Ptr<SplineSegment> SplineSegmentPtr;
 
+class WorldSplineGraph;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplinePoint> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplinePoint> &>>;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplineSegment> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplineSegment> &>>;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &>>;
 //////////////////////////////////////////////////////////////////////////
 
 class UNIGINE_API WorldSplineGraph : public Node
 {
 public:
-	static int type() { return Node::WORLD_SPLINE_GRAPH; }
+	static Node::TYPE type() { return Node::WORLD_SPLINE_GRAPH; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<WorldSplineGraph> create();
@@ -391,27 +401,30 @@ public:
 	bool isLinked(const Ptr<SplinePoint> &point) const;
 	void rebuild(int try_force = 0);
 	int isRebuilding() const;
-	void *addPointAddedCallback(CallbackBase2<Ptr<WorldSplineGraph>, Ptr<SplinePoint>> *func);
-	bool removePointAddedCallback(void *id);
-	void clearPointAddedCallbacks();
-	void *addPointChangedCallback(CallbackBase2<Ptr<WorldSplineGraph>, Ptr<SplinePoint>> *func);
-	bool removePointChangedCallback(void *id);
-	void clearPointChangedCallbacks();
-	void *addPointRemovedCallback(CallbackBase2<Ptr<WorldSplineGraph>, Ptr<SplinePoint>> *func);
-	bool removePointRemovedCallback(void *id);
-	void clearPointRemovedCallbacks();
-	void *addSegmentAddedCallback(CallbackBase2<Ptr<WorldSplineGraph>, Ptr<SplineSegment>> *func);
-	bool removeSegmentAddedCallback(void *id);
-	void clearSegmentAddedCallbacks();
-	void *addSegmentChangedCallback(CallbackBase2<Ptr<WorldSplineGraph>, Ptr<SplineSegment>> *func);
-	bool removeSegmentChangedCallback(void *id);
-	void clearSegmentChangedCallbacks();
-	void *addSegmentRemovedCallback(CallbackBase2<Ptr<WorldSplineGraph>, Ptr<SplineSegment>> *func);
-	bool removeSegmentRemovedCallback(void *id);
-	void clearSegmentRemovedCallbacks();
-	void *addRebuildingFinishedCallback(CallbackBase1<Ptr<WorldSplineGraph>> *func);
-	bool removeRebuildingFinishedCallback(void *id);
-	void clearRebuildingFinishedCallbacks();
+	Event<const Ptr<WorldSplineGraph> &, const Ptr<SplinePoint> &> &getEventPointAdded();
+	Event<const Ptr<WorldSplineGraph> &, const Ptr<SplinePoint> &> &getEventPointChanged();
+	Event<const Ptr<WorldSplineGraph> &, const Ptr<SplinePoint> &> &getEventPointRemoved();
+	Event<const Ptr<WorldSplineGraph> &, const Ptr<SplineSegment> &> &getEventSegmentAdded();
+	Event<const Ptr<WorldSplineGraph> &, const Ptr<SplineSegment> &> &getEventSegmentChanged();
+	Event<const Ptr<WorldSplineGraph> &, const Ptr<SplineSegment> &> &getEventSegmentRemoved();
+	Event<const Ptr<WorldSplineGraph> &> &getEventRebuildingFinished();
+
+private:
+
+	EventHolder<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplinePoint> &>> event_point_added;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplinePoint> &>> event_point_added_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplinePoint> &>> event_point_changed;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplinePoint> &>> event_point_changed_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplinePoint> &>> event_point_removed;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplinePoint> &>> event_point_removed_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplineSegment> &>> event_segment_added;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplineSegment> &>> event_segment_added_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplineSegment> &>> event_segment_changed;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplineSegment> &>> event_segment_changed_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplineSegment> &>> event_segment_removed;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &, const Ptr<SplineSegment> &>> event_segment_removed_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &>> event_rebuilding_finished;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<WorldSplineGraph> &>> event_rebuilding_finished_connection;
 };
 typedef Ptr<WorldSplineGraph> WorldSplineGraphPtr;
 

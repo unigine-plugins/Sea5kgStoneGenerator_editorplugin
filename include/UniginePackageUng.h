@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -41,9 +41,12 @@ public:
 	const char *getFileName(int num);
 	int selectFile(const char *name, int &size);
 	int readFile(unsigned char *data, int size);
-	int writeFile(const char *name, unsigned char *data, int size);
+	int writeFile(const char *name, const unsigned char *data, int size);
+	bool removeFile(const char *name);
+	bool removeFile(int num);
 	int getCompressionType() const;
-	bool containsFile(const char *name);
+	bool containsFile(const char *name) const;
+	int findFile(const char *name) const;
 };
 typedef Ptr<PackageUng> PackageUngPtr;
 

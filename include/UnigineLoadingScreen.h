@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -54,12 +54,8 @@ public:
 	static void renderForce(const char *message);
 	static int getProgress();
 	static const char *getMessage();
-	static void *addRenderBeginCallback(CallbackBase *func);
-	static bool removeRenderBeginCallback(void *id);
-	static void clearRenderBeginCallbacks();
-	static void *addRenderEndCallback(CallbackBase *func);
-	static bool removeRenderEndCallback(void *id);
-	static void clearRenderEndCallbacks();
+	static Event<> &getEventRenderBegin();
+	static Event<> &getEventRenderEnd();
 };
 
 } // namespace Unigine

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -25,6 +25,16 @@ class UNIGINE_API Shader : public APIInterface
 {
 public:
 
+	enum SUB_SHADER
+	{
+		SUB_SHADER_VERTEX = 0,
+		SUB_SHADER_CONTROL,
+		SUB_SHADER_EVALUATE,
+		SUB_SHADER_GEOMETRY,
+		SUB_SHADER_FRAGMENT,
+		SUB_SHADER_COMPUTE,
+	};
+
 	enum WARNING_MODE
 	{
 		WARNING_MODE_DISABLE = 0,
@@ -35,13 +45,12 @@ public:
 	static Ptr<Shader> create(const char *name);
 	static Ptr<Shader> create(const char *name, const char *defines);
 	static Ptr<Shader> create(const char *vertex, const char *fragment, const char *defines);
-	bool loadVertex(const char *name, const char *defines) const;
-	bool loadControl(const char *name, const char *defines) const;
-	bool loadEvaluate(const char *name, const char *defines) const;
-	bool loadGeometry(const char *name, const char *defines) const;
-	bool loadFragment(const char *name, const char *defines) const;
-	bool loadCompute(const char *name, const char *defines) const;
-	bool compile() const;
+	bool compile(const char *vertex, const char *geometry, const char *fragment, const char *compute, const char *control, const char *evaluate, const char *defines = "", unsigned long long key_cache = 0);
+	bool compileCompute(const char *compute, const char *defines = "", unsigned long long key_cache = 0);
+	bool compileVertFrag(const char *vertex, const char *fragment, const char *defines = "", unsigned long long key_cache = 0);
+	bool compileVertGeomFrag(const char *vertex, const char *geometry, const char *fragment, const char *defines = "", unsigned long long key_cache = 0);
+	bool compileShader(const char *shader, const char *defines = "", unsigned long long key_cache = 0);
+	static bool validateShader(Shader::SUB_SHADER type, const char *shader, const char *defines = "");
 	void setOptimizationLevel(int level);
 	int getOptimizationLevel() const;
 	void setWarningMode(Shader::WARNING_MODE mode);

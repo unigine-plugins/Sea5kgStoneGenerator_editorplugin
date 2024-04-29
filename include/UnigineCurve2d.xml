@@ -26,28 +26,16 @@
 			</summary> 
 			<param name="curve"> Source curve. </param> 
 		</member>
-		<member name="M:Unigine.Curve2d.getHash const">
-			<summary>
-			Returns a hash value calculated for the curve. This value is used for performance optimization and helps define if the curve really needs to be updated, or nothing has changed in its parameters (repeat mode, key points, and tangents are all the same).
-			</summary>  
-			<returns>Hash value calculated for the curve.</returns>
-		</member>
-		<member name="M:Unigine.Curve2d.getNumKeys const">
-			<summary>
-			Returns the current total number of key points in the curve .
-			</summary>  
-			<returns>Total number of key points in the curve.</returns>
-		</member>
 		<member name="M:Unigine.Curve2d.addKey(Unigine.Math.vec2)">
 			<summary>
-			Adds a new key point with the specified coordinates to the curve. Upon completion on this operation the CHANGED callback is fired.
+			Adds a new key point with the specified coordinates to the curve. Upon completion on this operation the CHANGED event is triggered.
 			</summary> 
 			<param name="point"> Coordinates of the new key point to be added. </param> 
 			<returns>Number of the added key point.</returns>
 		</member>
 		<member name="M:Unigine.Curve2d.addKey(Unigine.Math.vec2,Unigine.Math.vec2,Unigine.Math.vec2)">
 			<summary>
-			Adds a new key point with the specified coordinates and tangents to the curve. Upon completion on this operation the CHANGED callback is fired.
+			Adds a new key point with the specified coordinates and tangents to the curve. Upon completion on this operation the CHANGED event is triggered.
 			</summary> 
 			<param name="point"> Coordinates of the new key point to be added. </param>
 			<param name="left_tangent"> Coordinates of the left tangent at the key point. </param>
@@ -56,38 +44,40 @@
 		</member>
 		<member name="M:Unigine.Curve2d.removeKey(int)">
 			<summary>
-			Removes the key point with the specified number from the curve. Upon completion on this operation the CHANGED callback is fired.
+			Removes the key point with the specified number from the curve. Upon completion on this operation the CHANGED event is triggered.
 			</summary> 
 			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
 		</member>
 		<member name="M:Unigine.Curve2d.moveKey(int,Unigine.Math.vec2)">
 			<summary>
-			Moves the key point with the specified number to a new position (preserving the tangents). Upon completion on this operation the CHANGED callback is fired. The index of key point will be updated automatically. This method can be used to implement dragging of keys on the curve. In case of moving multiple keys it is recommended to use the setKeyPoint() method to set new values for keys and then sort them all at once via the sortKeys() method to save performance.
+			Moves the key point with the specified number to a new position (preserving the tangents). Upon completion on this operation the CHANGED event is triggered. The index of key point will be updated automatically. This method can be used to implement dragging of keys on the curve. In case of moving multiple keys it is recommended to use the setKeyPoint() method to set new values for keys and then sort them all at once via the sortKeys() method to save performance.
 			</summary> 
-			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="point"> New coordinates of the key point. </param> 
+			<returns>New index of the key.</returns>
 		</member>
 		<member name="M:Unigine.Curve2d.sortKeys">
 			<summary>
-			Sorts all key points ov the curve by time (X axis) in the ascending order. Upon completion on this operation the CHANGED callback is fired.
+			Sorts all key points ov the curve by time (X axis) in the ascending order. Upon completion on this operation the CHANGED event is triggered.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Curve2d.setKeyPoint(int,Unigine.Math.vec2)">
 			<summary>
-			Sets new coordinates for the specified key point (tangents are unaffected). Upon completion on this operation the CHANGED callback is fired. This method unlike the moveKey() does not update the index of the key point automatically. It can be used to implement dragging of multiple keys to set new values for them along with subsequent sorting all keys at once via the sortKeys() method to save performance.
+			Sets new coordinates for the specified key point (tangents are unaffected). Upon completion on this operation the CHANGED event is triggered. This method unlike the moveKey() does not update the index of the key point automatically. It can be used to implement dragging of multiple keys to set new values for them along with subsequent sorting all keys at once via the sortKeys() method to save performance.
 			</summary> 
 			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
 			<param name="point"> New coordinates to be set for the specified point. </param> 
 		</member>
 		<member name="M:Unigine.Curve2d.setKeyLeftTangent(int,Unigine.Math.vec2)">
 			<summary>
-			Sets new coordinates for the left tangent at the specified key point of the curve. Upon completion on this operation the CHANGED callback is fired.
+			Sets new coordinates for the left tangent at the specified key point of the curve. Upon completion on this operation the CHANGED event is triggered.
 			</summary> 
 			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
 			<param name="point"> New coordinates of the left tangent at the specified key point to be set. </param> 
 		</member>
 		<member name="M:Unigine.Curve2d.setKeyRightTangent(int,Unigine.Math.vec2)">
 			<summary>
-			Sets new coordinates for the right tangent at the specified key point of the curve. Upon completion on this operation the CHANGED callback is fired.
+			Sets new coordinates for the right tangent at the specified key point of the curve. Upon completion on this operation the CHANGED event is triggered.
 			</summary> 
 			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
 			<param name="point"> New coordinates of the right tangent at the specified key point to be set. </param> 
@@ -154,49 +144,6 @@
 			</summary> 
 			<param name="xml"> Xml class instance in which the curve data is stored. </param> 
 			<returns>true if the curve data is successfully loaded from the specified Xml class instance; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Curve2d.setRepeatModeStart(Curve2d::REPEAT_MODE)">
-			<summary>
-			Sets the mode for the beginning of the curve to be used for repeating the sequence defined by the key points of the curve (tiling curves).
-			</summary> 
-			<param name="start"> Repeat mode for the beginning of the curve (defines behavior before the first key point), one of the REPEAT_MODE_* values. </param> 
-		</member>
-		<member name="M:Unigine.Curve2d.getRepeatModeStart const">
-			<summary>
-			Returns the current mode for the beginning of the curve used for repeating the sequence defined by the key points of the curve (tiling curves).
-			</summary>  
-			<returns>Current repeat mode for the beginning of the curve (defines behavior before the first key point), one of the REPEAT_MODE_* values.</returns>
-		</member>
-		<member name="M:Unigine.Curve2d.setRepeatModeEnd(Curve2d::REPEAT_MODE)">
-			<summary>
-			Sets the mode for the end of the curve to be used for repeating the sequence defined by the key points of the curve (tiling curves).
-			</summary> 
-			<param name="end"> Repeat mode for the end of the curve (defines behavior after the last key point), one of the REPEAT_MODE_* values. </param> 
-		</member>
-		<member name="M:Unigine.Curve2d.getRepeatModeEnd const">
-			<summary>
-			Returns the current mode for the end of the curve used for repeating the sequence defined by the key points of the curve (tiling curves).
-			</summary>  
-			<returns>Current repeat mode for the end of the curve (defines behavior after the last key point), one of the REPEAT_MODE_* values.</returns>
-		</member>
-		<member name="M:Unigine.Curve2d.addChangedCallback(Unigine.CallbackBase)">
-			<summary>
-			Adds a callback function to be called on changing the curve. The signature of the changed callback function must be as follows:					You can set a callback function as follows:					Example: Setting a changed callback function for a curve:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added changed callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Curve2d.removeChangedCallback(void)">
-			<summary>
-			Removes the specified callback from the list of changed callbacks.
-			</summary> 
-			<param name="id"> Changed callback ID obtained when adding it. </param> 
-			<returns>True if the changed callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.Curve2d.clearChangedCallbacks">
-			<summary>
-			Clears all added changed callbacks.
-			</summary>  
 		</member>
 		<member name="M:Unigine.Curve2d.evaluate(float) const">
 			<summary>

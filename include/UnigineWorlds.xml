@@ -740,12 +740,12 @@
 		</member>
 		<member name="M:Unigine.WorldSplineGraph.getPointNodeMesh(Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{SplinePoint},int,bool)">
 			<summary>
-			Exports a mesh with the specified index placed as the specified spline point to the specified target mesh.				Due to the nature of the mesh, there will be visual artifacts connected with the float precision, in case an exported node is located very far from the origin (around 10,000 m and further). In this case we advise exporting it without baking transformation.
+			Exports a mesh with the specified index placed as the specified spline point to the specified target mesh.					Due to the nature of the mesh, there will be visual artifacts connected with the float precision, in case an exported node is located very far from the origin (around 10,000 m and further). In this case we advise exporting it without baking transformation.
 			</summary> 
 			<param name="mesh"> Target mesh to store the desired mesh placed at the specified spline point. </param>
 			<param name="point"> Spline point for which a mesh is to be retrieved. </param>
 			<param name="node_index"> Number of the desired node in a row of nodes placed at the specified point, in the range from 0 to the total number of nodes placed at the point.The node must be an ObjectMeshStatic or an ObjectMeshSkinned, otherwise an error occurs. </param>
-			<param name="bake_transform"> Bake Transform flag: true - to export the mesh preserving the current coordinates (can be useful when splitting large WorldSplineGraph objects to keep relative positions of meshes); or false - to reset the position of the exported mesh to origin (0,0,0) with zero-rotation. </param> 
+			<param name="bake_transform"> Bake Transform flag:true - to export the mesh preserving the current coordinates (can be useful when splitting largeWorldSplineGraph objects to keep relative positions of meshes); orfalse - to reset the position of the exported mesh to origin (0,0,0) with zero-rotation. </param> 
 		</member>
 		<member name="M:Unigine.WorldSplineGraph.createSplinePoint(Unigine.Math.Vec3)">
 			<summary>
@@ -803,120 +803,6 @@
 			Returns a value indicating if the world spline graph is currently being rebuilt. The world spline graph uses a deferred rebuild.
 			</summary>  
 			<returns>1 if the world spline graph is currently being rebuilt; otherwise 0.</returns>
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.addPointAddedCallback(Unigine.CallbackBase2{Unigine.Ptr{Unigine.Body},int})">
-			<summary>
-			Adds a callback function to be called when a point is added to the world spline graph. The signature of the Point Added callback function must be as follows:					You can set a callback function as follows:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added Point Added callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.removePointAddedCallback(void)">
-			<summary>
-			Removes the specified callback from the list of Point Added callbacks.
-			</summary> 
-			<param name="id"> Point Added callback ID obtained when adding it. </param> 
-			<returns>True if the Point Added callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.clearPointAddedCallbacks">
-			<summary>
-			Clears all added Point Added callbacks.
-			</summary>  
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.addPointChangedCallback(Unigine.CallbackBase2{Unigine.Ptr{Unigine.Body},int})">
-			<summary>
-			Adds a callback function to be called when a point of the world spline graph is modified. The signature of the Point Changed callback function must be as follows:					You can set a callback function as follows:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added Point Changed callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.removePointChangedCallback(void)">
-			<summary>
-			Removes the specified callback from the list of Point Changed callbacks.
-			</summary> 
-			<param name="id"> Point Changed callback ID obtained when adding it. </param> 
-			<returns>True if the Point Changed callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.clearPointChangedCallbacks">
-			<summary>
-			Clears all added Point Changed callbacks.
-			</summary>  
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.addPointRemovedCallback(Unigine.CallbackBase2{Unigine.Ptr{Unigine.Body},int})">
-			<summary>
-			Adds a callback function to be called when a point of the world spline graph is removed. The signature of the Point Removed callback function must be as follows:					You can set a callback function as follows:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added Point Removed callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.removePointRemovedCallback(void)">
-			<summary>
-			Removes the specified callback from the list of Point Removed callbacks.
-			</summary> 
-			<param name="id"> Point Removed callback ID obtained when adding it. </param> 
-			<returns>True if the Point Removed callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.clearPointRemovedCallbacks">
-			<summary>
-			Clears all added Point Removed callbacks.
-			</summary>  
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.addSegmentAddedCallback(Unigine.CallbackBase2{Unigine.Ptr{Unigine.Body},int})">
-			<summary>
-			Adds a callback function to be called when a segment is added to the world spline graph. The signature of the Segment Added callback function must be as follows:					You can set a callback function as follows:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added Segment Added callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.removeSegmentAddedCallback(void)">
-			<summary>
-			Removes the specified callback from the list of Segment Added callbacks.
-			</summary> 
-			<param name="id"> Segment Added callback ID obtained when adding it. </param> 
-			<returns>True if the Segment Added callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.clearSegmentAddedCallbacks">
-			<summary>
-			Clears all added Segment Added callbacks.
-			</summary>  
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.addSegmentChangedCallback(Unigine.CallbackBase2{Unigine.Ptr{Unigine.Body},int})">
-			<summary>
-			Adds a callback function to be called when a segment of the world spline graph is modified. The signature of the Segment Changed callback function must be as follows:					You can set a callback function as follows:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added Segment Changed callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.removeSegmentChangedCallback(void)">
-			<summary>
-			Removes the specified callback from the list of Segment Changed callbacks.
-			</summary> 
-			<param name="id"> Segment Changed callback ID obtained when adding it. </param> 
-			<returns>True if the Segment Changed callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.clearSegmentChangedCallbacks">
-			<summary>
-			Clears all added Segment Changed callbacks.
-			</summary>  
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.addSegmentRemovedCallback(Unigine.CallbackBase2{Unigine.Ptr{Unigine.Body},int})">
-			<summary>
-			Adds a callback function to be called when a segment of the world spline graph is removed. The signature of the Segment Removed callback function must be as follows:					You can set a callback function as follows:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added Segment Removed callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.removeSegmentRemovedCallback(void)">
-			<summary>
-			Removes the specified callback from the list of Segment Removed callbacks.
-			</summary> 
-			<param name="id"> Segment Removed callback ID obtained when adding it. </param> 
-			<returns>True if the Segment Removed callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.clearSegmentRemovedCallbacks">
-			<summary>
-			Clears all added Segment Removed callbacks.
-			</summary>  
 		</member>
 		<member name="M:Unigine.WorldSplineGraph.splitSplineSegment(Unigine.Ptr{SplineSegment},float)">
 			<summary>
@@ -1523,34 +1409,15 @@
 			</summary> 
 			<param name="size"> Dimensions of the new world trigger. If negative values are provided, 0 will be used instead of them.  </param> 
 		</member>
-		<member name="M:Unigine.WorldTrigger.addEnterCallback(Unigine.CallbackBase1{Unigine.Ptr{Unigine.Node}})">
-			<summary>
-			Adds a callback function to be fired when a node enters the world trigger. The callback function must receive a Node as its first argument. In addition, it can also take 2 arguments of any type.
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added enter callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.WorldTrigger.removeEnterCallback(void)">
-			<summary>
-			Removes the specified callback from the list of enter callbacks.
-			</summary> 
-			<param name="id"> Enter callback ID obtained when adding it. </param> 
-			<returns>True if the enter callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.WorldTrigger.clearEnterCallbacks">
-			<summary>
-			Clears all added enter callbacks.
-			</summary>  
-		</member>
 		<member name="M:Unigine.WorldTrigger.setEnterCallbackName(char)">
 			<summary>
-			Sets a callback function to be fired when nodes are entering the world trigger. Unlike setEnterCallback(), this callback function accepts a node that entered the world trigger and world trigger itself as arguments.
+			Sets a name of a handler function to be executed when nodes are entering the world trigger.
 			</summary> 
 			<param name="name"> World script function name. </param> 
 		</member>
 		<member name="M:Unigine.WorldTrigger.getEnterCallbackName const">
 			<summary>
-			Returns the name of callback function to be fired on entering the world trigger. This callback function is set via setEnterCallbackName().
+			Returns the name of handler function to be executed on entering the world trigger.
 			</summary>  
 			<returns>World script function name.</returns>
 		</member>
@@ -1576,34 +1443,15 @@
 			Returns the current list of excluded node types, on which the world trigger does not react.
 			</summary>  
 		</member>
-		<member name="M:Unigine.WorldTrigger.addLeaveCallback(Unigine.CallbackBase1{Unigine.Ptr{Unigine.Node}})">
-			<summary>
-			Adds a callback function to be fired when a node leaves the world trigger. The callback function must receive a Node as its first argument. In addition, it can also take 2 arguments of any type.
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added leave callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.WorldTrigger.removeLeaveCallback(void)">
-			<summary>
-			Removes the specified callback from the list of leave callbacks.
-			</summary> 
-			<param name="id"> Leave callback ID obtained when adding it. </param> 
-			<returns>True if the leave callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.WorldTrigger.clearLeaveCallbacks">
-			<summary>
-			Clears all added leave callbacks.
-			</summary>  
-		</member>
 		<member name="M:Unigine.WorldTrigger.setLeaveCallbackName(char)">
 			<summary>
-			Sets a callback function to be fired when nodes are leaving the world trigger. Unlike setLeaveCallback(), this callback function accepts a node that left the world trigger and world trigger itself as arguments.
+			Sets a handler function to be executed when nodes are leaving the world trigger.
 			</summary> 
 			<param name="name"> World script function name. </param> 
 		</member>
 		<member name="M:Unigine.WorldTrigger.getLeaveCallbackName const">
 			<summary>
-			Returns the name of the callback function name to be fired on leaving the world trigger. This callback function is set via setLeaveCallbackName().
+			Returns the name of the handler function name to be executed on leaving the world trigger.
 			</summary>  
 			<returns>World script function name.</returns>
 		</member>

@@ -6,7 +6,7 @@
 	<members>
 		<member name="M:Unigine.LoadingScreen.setEnabled(bool)">
 			<summary>
-			Specifies if manual rendering of the loading screen can be started or should be stopped. setEnabled() is used only together with the corresponding render functions (render()). It cannot be used to enable or disable rendering of the loading screen during the initialization stage of the engine.
+			Specifies if manual rendering of the loading screen can be started or should be stopped.											setEnabled()is used only together with the corresponding render functions (render()). It cannot be used to enable or disable rendering of the loading screen during the initialization stage of the engine.
 			</summary> 
 			<param name="enabled"> true to enable manual rendering of a custom loading screen; false to disable. </param> 
 		</member>
@@ -18,7 +18,7 @@
 		</member>
 		<member name="M:Unigine.LoadingScreen.setThreshold(int)">
 			<summary>
-			Sets the amount of blur in the alpha channel when interpolating between states of the loading screen.By default, the Threshold value is set to 16.
+			Sets the amount of blur in the alpha channel when interpolating between states of the loading screen.					By default, the Threshold value is set to 16.
 			</summary> 
 			<param name="threshold"> amount of blur in the [0, 255] range. </param> 
 		</member>
@@ -145,44 +145,6 @@
 			Returns the text message representing the current loading stage.
 			</summary>  
 			<returns>Loading message.</returns>
-		</member>
-		<member name="M:Unigine.LoadingScreen.addRenderBeginCallback(Unigine.CallbackBase)">
-			<summary>
-			Adds a callback function that will be executed when rendering of the loading screen begins. The function is useful when you implement a custom loading screen rendering function, for example. The callback function must not take arguments.
-			</summary> 
-			<param name="func"> The pointer to the callback with no arguments. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.LoadingScreen.removeRenderBeginCallback(void)">
-			<summary>
-			Removes the specified callback from the list of render begin callbacks.
-			</summary> 
-			<param name="id"> Callback ID obtained when adding it. </param> 
-			<returns>True if the callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.LoadingScreen.clearRenderBeginCallbacks">
-			<summary>
-			Clears all added render begin callbacks.
-			</summary>  
-		</member>
-		<member name="M:Unigine.LoadingScreen.addRenderEndCallback(Unigine.CallbackBase)">
-			<summary>
-			Adds a callback function that will be executed when rendering of the loading screen ends. The function is useful when you implement a custom loading screen rendering function, for example. The callback function must not take arguments.
-			</summary> 
-			<param name="func"> The pointer to the callback with no arguments. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.LoadingScreen.removeRenderEndCallback(void)">
-			<summary>
-			Removes the specified callback from the list of render end callbacks.
-			</summary> 
-			<param name="id"> Callback ID obtained when adding it. </param> 
-			<returns>True if the callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.LoadingScreen.clearRenderEndCallbacks">
-			<summary>
-			Clears all added render end callbacks.
-			</summary>  
 		</member>
 		<member name="M:Unigine.LoadingScreen.setMessageLoadingWorld(char)">
 			<summary>

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -934,14 +934,14 @@ UNIGINE_INLINE mat3 jacobi(const mat3 &m, mat3 &v)
 		int q = 1;
 		for (int i = 0; i < 3; i++)
 		{
-			for (int j = 0; j < 3; j++)
+			for (int k = 0; k < 3; k++)
 			{
-				if (i == j)
+				if (i == k)
 					continue;
-				if (abs(ret.get(i, j)) > abs(ret.get(p, q)))
+				if (abs(ret.get(i, k)) > abs(ret.get(p, q)))
 				{
 					p = i;
-					q = j;
+					q = k;
 				}
 			}
 		}
@@ -967,11 +967,11 @@ UNIGINE_INLINE mat3 jacobi(const mat3 &m, mat3 &v)
 		float sum = 0.0f;
 		for (int i = 0; i < 3; i++)
 		{
-			for (int j = 0; j < 3; j++)
+			for (int k = 0; k < 3; k++)
 			{
-				if (i == j)
+				if (i == k)
 					continue;
-				sum += ret.get(i, j) * ret.get(i, j);
+				sum += ret.get(i, k) * ret.get(i, k);
 			}
 		}
 		if (prev <= sum)

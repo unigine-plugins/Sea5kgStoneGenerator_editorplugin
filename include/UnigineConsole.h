@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -19,6 +19,8 @@
 #include "UnigineCallback.h"
 #include "UnigineString.h"
 #include "UniginePalette.h"
+#include "UnigineEvent.h"
+#include "UniginePtr.h"
 
 namespace Unigine
 {
@@ -108,9 +110,7 @@ public:
 	static void onscreenWarningLine(const char *format, ...);
 	static void onscreenErrorLine(const char *format, ...);
 
-	static void *addOutputCallback(CallbackBase2<const char *, Console::LEVEL> *func);
-	static bool removeOutputCallback(void *id);
-	static void clearOutputCallbacks();
+	static Event<const char *, Console::LEVEL> &getEventOutput();
 	static int getNumVariables();
 	static const char *getVariableName(int num);
 	static const char *getVariableDescription(const char *name);

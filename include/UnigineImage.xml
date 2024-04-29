@@ -795,12 +795,25 @@
 			<param name="safe"> 1 for safe blending with respect to destination image boundaries; otherwise, 0. </param> 
 			<returns>Returns 1 if blending is successful; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Image.blur(int)">
+		<member name="M:Unigine.Image.blur(int,float,int)">
 			<summary>
-			Filters the image using two-pass Gaussian blur. Only the 2D or cube image can be resized. Compressed and combined image formats are not supported.
+			Filters the image using two-pass Gaussian blur. Only the 2D or cube image can be blurred. Compressed and combined image formats are not supported.
 			</summary> 
-			<param name="size"> Blur filter size. It is the number of neighbouring source pixels (from all sides) that are averaged for each blurred destination pixel. For example, if blur = 2, two pixels from each side are taken and the blurring kernel is 5 x 5 pixels. </param> 
-			<returns>1 if the image was successfully blurred or the size of blur filter is 0; otherwise, 0.</returns>
+			<param name="radius"> Blur filter radius, the number of neighbouring source pixels that are averaged for each blurred destination pixel. For example, if Radius = 2, two pixels from each side are taken and the blurring kernel is 5 x 5 pixels. </param>
+			<param name="gamma"> Gamma correction value. If 1 is provided, no gamma correction is applied. This is an optional argument. </param>
+			<param name="level"> Mip level for which the blurring effect is applied.  This is an optional argument. </param> 
+			<returns>true if the image was successfully blurred or the size of blur filter is 0; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Image.sharpen(float,float,float,bool,int)">
+			<summary>
+			Sharpens the image. Only the 2D or cube image can be sharpened. Compressed and combined image formats are not supported.
+			</summary> 
+			<param name="radius"> Sharpen filter radius, the number of neighbouring source pixels (or subpixels) that are averaged for each sharpened destination pixel. </param>
+			<param name="intensity"> Filter intensity value. </param>
+			<param name="gamma"> Gamma correction value. If 1 is provided, no gamma correction is applied. This is an optional argument. </param>
+			<param name="sharp_only_lightness"> true to adjust sharpness of the lightness value only, false to sharpen all HSL values.  This is an optional argument. </param>
+			<param name="level"> Mip level for which the sharpening effect is applied. This is an optional argument. </param> 
+			<returns>true if the image was successfully sharpened or the size of sharpen filter is 0; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Image.clear">
 			<summary>
@@ -986,7 +999,7 @@
 			<param name="allocate"> true to allocate memory for the created image. This value should be always set to true. </param> 
 			<returns>true if the cube array image is successfully created; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Image.createMipmaps(Image::FILTER,float)">
+		<member name="M:Unigine.Image.createMipmaps(Image::FILTER,float,float,float)">
 			<summary>
 			Generates mipmaps for the image. Mipmaps cannot be created for compressed and combined image formats.
 			</summary> 
@@ -1082,13 +1095,21 @@
 			Loads an image from a specified stream. The following file formats are supported:											*.texture						*.tga						*.png						*.dds						*.psd						*.ppm						*.pgm						*.hdr						*.sgi						*.ies						*.exr						tif															*.tif								*.tiff																			jpg															*.jpg								*.jpeg								*.jpe								*.jif								*.jfif								*.jfi																			sgi															*.bw								*.la								*.int								*.inta								*.rgb								*.rgba
 			</summary> 
 			<param name="stream"> Stream smart pointer. </param> 
-			<returns>1 if the image is loaded successfully; otherwise, 0.</returns>
+			<returns>true if the image is loaded successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Image.load(unsignedchar,int)">
+			<summary>
+			Loads the image from raw data.
+			</summary> 
+			<param name="data"> Set of raw data. </param>
+			<param name="size"> Raw data size, in bytes. </param> 
+			<returns>true if the image is loaded successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Image.normalize">
 			<summary>
 			Creates a three-component normal map out of the image.
 			</summary>  
-			<returns>1 if normalization was successful; otherwise, 0.</returns>
+			<returns>true if normalization was successful; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Image.resize(int,int,Image::FILTER)">
 			<summary>
@@ -1097,21 +1118,21 @@
 			<param name="new_width"> New image width. </param>
 			<param name="new_height"> New image height. </param>
 			<param name="filter"> Filter type to be used: linear or point. The default filter is linear. See the Unigine::Image Enumerations with FILTER_* prefixes. </param> 
-			<returns>1 if the image is resized successfully; otherwise, 0.</returns>
+			<returns>true if the image is resized successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Image.rotate(int)">
 			<summary>
 			Rotates the image by a given angle (with the step of 90 degrees). Only the 2D or cube image can be rotated. Compressed and combined image formats cannot be rotated.
 			</summary> 
 			<param name="angle"> Angle that is multiplied by the step (angle * 90) to set the image rotation degree. </param> 
-			<returns>1 if the image is rotated successfully; otherwise, 0.</returns>
+			<returns>true if the image is rotated successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Image.save(char) const">
 			<summary>
 			Saves the image to a file with the specified name. The following file formats are supported:											*.texture						*.tga						*.png						*.dds						*.psd						jpg															*.jpg								*.jpeg								*.jpe								*.jif								*.jfif								*.jfi
 			</summary> 
 			<param name="file"> Name of the file to save image data to. </param> 
-			<returns>Returns 1 if the image is saved successfully; otherwise, 0.</returns>
+			<returns>true if the image is saved successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Image.save(char,float) const">
 			<summary>
@@ -1119,7 +1140,7 @@
 			</summary> 
 			<param name="file"> Name of a file with extension into which data will be saved. </param>
 			<param name="quality"> Quality of JPG compression in range [0;1]. </param> 
-			<returns>Returns 1 if the image is saved successfully; otherwise, 0.</returns>
+			<returns>true if the image is saved successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Image.save(Unigine.Ptr{Unigine.Stream}) const">
 			<summary>
@@ -1336,6 +1357,16 @@
 		<member name="F:Unigine.Image.FILTER_MIN">
 			<summary>
 			A minimum mipmap filter.
+		</summary>
+		</member>
+		<member name="F:Unigine.Image.FILTER_BLUR">
+			<summary>
+			A blurring mipmap filter.
+		</summary>
+		</member>
+		<member name="F:Unigine.Image.FILTER_SHARPEN">
+			<summary>
+			A sharpening mipmap filter.
 		</summary>
 		</member>
 		<member name="F:Unigine.Image.AUTO_FORMAT">
@@ -1559,174 +1590,6 @@
 			</summary> 
 			<param name="imageconverter"> Source image converter. </param> 
 		</member>
-		<member name="M:Unigine.ImageConverter.setType(int)">
-			<summary>
-			Sets a numerical code of the image type.
-			</summary> 
-			<param name="type"> Numerical code of the image type: 0 for a 2D image, 1 for a 3D image, 2 for a cube image, 3 for a 2D Array. See the Unigine::Image:: Enumeration with IMAGE_* prefixes. </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.getType const">
-			<summary>
-			Returns a numerical code of the image type.
-			</summary>  
-			<returns>Numerical code of the image type: 0 for a 2D image, 1 for a 3D image, 2 for a cube image, 3 for a 2D Array. See the Unigine::Image:: Enumeration with IMAGE_* prefixes.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setFormat(int)">
-			<summary>
-			Sets a numerical code of the image format.
-			</summary> 
-			<param name="format"> Numerical code of the image format. See the FORMAT_* variables. </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.getFormat const">
-			<summary>
-			Returns a numerical code of the image format.
-			</summary>  
-			<returns>Numerical code of the image format. See the FORMAT_* variables.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setResolutionMode(ImageConverter::RESOLUTION_MODE)">
-			<summary>
-			Sets the resolution mode to be used for the image.
-			</summary> 
-			<param name="mode"> Resolution mode to be used for the image. One of the RESOLUTION_MODE values. </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.getResolutionMode const">
-			<summary>
-			Returns the resolution mode used for the image.
-			</summary>  
-			<returns>Resolution mode used for the image. One of the RESOLUTION_MODE values.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setResizeFilter(ImageConverter::RESIZE_FILTER)">
-			<summary>
-			Sets the resize filter to be used for the image.
-			</summary> 
-			<param name="filter"> Resize filter to be used for the image. One of the RESIZE_FILTER values. </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.getResizeFilter const">
-			<summary>
-			Returns the resize filter used for the image.
-			</summary>  
-			<returns>Resize filter used for the image. One of the RESIZE_FILTER values.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setWidth(int)">
-			<summary>
-			Sets the image width, in pixels.
-			</summary> 
-			<param name="width"> Image width, in pixels </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.getWidth const">
-			<summary>
-			Returns the image width, in pixels.
-			</summary>  
-			<returns>Image width, in pixels</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setHeight(int)">
-			<summary>
-			Sets the image height, in pixels.
-			</summary> 
-			<param name="height"> Image height, in pixels </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.getHeight const">
-			<summary>
-			Returns the image height, in pixels.
-			</summary>  
-			<returns>Image height, in pixels</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setDepth(int)">
-			<summary>
-			Sets the image depth, in pixels.
-			</summary> 
-			<param name="depth"> Image depth, in pixels </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.getDepth const">
-			<summary>
-			Returns the image depth, in pixels.
-			</summary>  
-			<returns>Image depth, in pixels</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setFileCompression(Image::FILE_COMPRESSION)">
-			<summary>
-			Sets the image file compression type.
-			</summary> 
-			<param name="compression"> File compression type to be used for the image. One of the FILE_COMPRESSION_* values. </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.getFileCompression const">
-			<summary>
-			Returns the image file compression type.
-			</summary>  
-			<returns>File compression type used for the image. One of the FILE_COMPRESSION_* values.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setCompressionQuality(ImageConverter::COMPRESSION_QUALITY)">
-			<summary>
-			Sets the image file compression quality.
-			</summary> 
-			<param name="quality"> Compression quality to be used for the image. One of the COMPRESSION_QUALITY_* values. </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.getCompressionQuality const">
-			<summary>
-			Returns the image file compression quality.
-			</summary>  
-			<returns>Compression quality used for the image. One of the COMPRESSION_QUALITY_* values.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setGPUCompression(bool)">
-			<summary>
-			Defines if GPU compression is used at converting the image.
-			</summary> 
-			<param name="compression"> true to enable image compression on GPU, or false to disable it. </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.isGPUCompression const">
-			<summary>
-			Returns the value specifying if GPU compression is used at converting the image.
-			</summary>  
-			<returns>true if GPU compression is enabled; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setMipmapsMode(ImageConverter::MIPMAPS_MODE)">
-			<summary>
-			Sets the filtering type for the image mipmaps.
-			</summary> 
-			<param name="mode"> Mipmaps mode to be used. One of the MIPMAPS_MODE_* values. </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.getMipmapsMode const">
-			<summary>
-			Returns the filtering type set for the image mipmaps.
-			</summary>  
-			<returns>Mipmaps mode to be used. One of the MIPMAPS_MODE_* values.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setMipmapsGamma(float)">
-			<summary>
-			Sets the gamma correction value to be used for the mipmaps.
-			</summary> 
-			<param name="gamma"> Gamma correction value to be used for the mipmaps. </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.getMipmapsGamma const">
-			<summary>
-			Returns the gamma correction value used for the mipmaps.
-			</summary>  
-			<returns>Gamma correction value used for the mipmaps.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setGGXMipmapsQuality(Image::GGX_MIPMAPS_QUALITY)">
-			<summary>
-			Sets the quality for mipmaps generated for cubemap images using the GGX BRDF microfacet model. The value is applied when the mipmap mode is set to GGX.
-			</summary> 
-			<param name="quality"> Quality of the GGX mipmaps for the cubemap image. One of the  values. </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.getGGXMipmapsQuality const">
-			<summary>
-			Returns the quality of mipmaps generated for cubemap images using the GGX BRDF microfacet model.
-			</summary>  
-			<returns>Quality of the GGX mipmaps for the cubemap image. One of the  values.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setRangeMode(ImageConverter::RANGE_MODE)">
-			<summary>
-			Sets the range mode to be applied at the image conversion.
-			</summary> 
-			<param name="mode"> Range mode to be applied at the image conversion. One of the RANGE_MODE_* values. </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.getRangeMode const">
-			<summary>
-			Returns the range mode applied at the image conversion.
-			</summary>  
-			<returns>Range mode applied at the image conversion. One of the RANGE_MODE_* values.</returns>
-		</member>
 		<member name="M:Unigine.ImageConverter.setRange(int,Unigine.Math.dvec4)">
 			<summary>
 			Sets the range to be applied at the image conversion.						The range of the final image will be clamped, if the set range values exceed the maximum values of the image conversion format.
@@ -1741,66 +1604,18 @@
 			<param name="channel"> Number of the channel to be inverted, in the range from 0 to the total number of channels. </param> 
 			<returns>Range values: x and y coordinates of the value specify the original range, z and w specify the range to which the image will be converted.</returns>
 		</member>
-		<member name="M:Unigine.ImageConverter.setFlipX(bool)">
-			<summary>
-			Flips the image horizontally.
-			</summary> 
-			<param name="flipx"> true if the image is to be flipped horizontally; otherwise, false. </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.isFlipX const">
-			<summary>
-			Returns the value indicating if the image is to be flipped horizontally.
-			</summary>  
-			<returns>true if the image is to be flipped horizontally; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setFlipY(bool)">
-			<summary>
-			Flips the image vertically.
-			</summary> 
-			<param name="flipy"> true if the image is to be flipped vertically; otherwise, false. </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.isFlipY const">
-			<summary>
-			Returns the value indicating if the image is to be flipped vertically.
-			</summary>  
-			<returns>true if the image is to be flipped vertically; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setBlur(int)">
-			<summary>
-			Sets the amount of blur in pixels.
-			</summary> 
-			<param name="blur"> Amount of blur in pixels. </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.getBlur const">
-			<summary>
-			Returns the amount of blur in pixels.
-			</summary>  
-			<returns>Amount of blur in pixels.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.setRotate(int)">
-			<summary>
-			Sets the image rotation angle.
-			</summary> 
-			<param name="rotate"> Rotation angle, clock-wise. </param> 
-		</member>
-		<member name="M:Unigine.ImageConverter.getRotate const">
-			<summary>
-			Returns the image rotation angle.
-			</summary>  
-			<returns>Rotation angle, clock-wise.</returns>
-		</member>
 		<member name="M:Unigine.ImageConverter.getInvertChannel(int)">
 			<summary>
 			Returns the value indicating if the channel needs to be inverted.
 			</summary> 
-			<param name="channel"> Number of the channel to be inverted, in the range from 0 to the total number of channels. </param> 
+			<param name="channel"> The number of the channel to be inverted, in the range from 0 to the total number of channels. </param> 
 			<returns>true if the channel needs to be inverted; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ImageConverter.setInvertChannel(int,bool)">
 			<summary>
 			Inverts the values stored in the specified channel. Channels of images of half (FORMAT_R16F to FORMAT_RGBA16F) and float (FORMAT_R32F to FORMAT_RGBA32F) formats cannot be inverted.
 			</summary> 
-			<param name="channel"> Number of the channel to be inverted, in the range from 0 to the total number of channels. </param>
+			<param name="channel"> The number of the channel to be inverted, in the range from 0 to the total number of channels. </param>
 			<param name="value"> true if the channel needs to be inverted; otherwise, false. </param> 
 		</member>
 		<member name="M:Unigine.ImageConverter.reset">
@@ -1812,51 +1627,51 @@
 			<summary>
 			Copies data from the specified source converter.
 			</summary> 
-			<param name="converter"> Source converter. </param> 
+			<param name="converter"> The source converter. </param> 
 		</member>
 		<member name="M:Unigine.ImageConverter.clone const">
 			<summary>
 			Creates a clone of the specified source converter.
 			</summary>  
-			<returns>Converter to be cloned.</returns>
+			<returns>The converter to be cloned.</returns>
 		</member>
 		<member name="M:Unigine.ImageConverter.load(char)">
 			<summary>
 			Loads the image converter settings on the disk using the specified path.
 			</summary> 
-			<param name="path"> Path to the file with the image converter settings. </param> 
+			<param name="path"> The path to the file with the image converter settings. </param> 
 			<returns>true if the image converter settings are loaded successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ImageConverter.load(Unigine.Ptr{Json})">
 			<summary>
 			Loads the .json object with the image converter settings.
 			</summary> 
-			<param name="json"> Object with the image converter settings. </param> 
+			<param name="json"> The object with the image converter settings. </param> 
 		</member>
 		<member name="M:Unigine.ImageConverter.save(char) const">
 			<summary>
 			Saves image converter settings on the disk to the specified location.
 			</summary> 
-			<param name="path"> Path to the file to store the image converter settings. </param> 
+			<param name="path"> The path to the file to store the image converter settings. </param> 
 			<returns>true if the image converter settings are saved successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ImageConverter.save(Unigine.Ptr{Json}) const">
 			<summary>
 			Saves image converter settings to the specified .json object.
 			</summary> 
-			<param name="json"> Object with the image converter settings. </param> 
+			<param name="json"> The object with the image converter settings. </param> 
 		</member>
 		<member name="M:Unigine.ImageConverter.updateParameters(Unigine.Ptr{Unigine.Image})">
 			<summary>
 			Validates the parameters of the image converter for the specified image. This method allows checking the resulting parameters before converting the image.
 			</summary> 
-			<param name="image"> Image to be converted. </param> 
+			<param name="image"> The image to be converted. </param> 
 		</member>
 		<member name="M:Unigine.ImageConverter.runCpu(Unigine.Ptr{Unigine.Image})">
 			<summary>
 			Runs the image converter on CPU.
 			</summary> 
-			<param name="image"> Image to be converted. </param> 
+			<param name="image"> The image to be converted. </param> 
 			<returns>true if the image has been converted successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ImageConverter.run(Unigine.CallbackBase1{Unigine.Ptr{Unigine.Image}},Unigine.Ptr{Unigine.Image})">
@@ -1866,44 +1681,6 @@
 			<param name="on_converted"> Callback to be fired after image conversion. </param>
 			<param name="image"> Image to be converted. </param> 
 			<returns>true if the image has been converted successfully; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.addBeginCallback(Unigine.CallbackBase2{Unigine.Ptr{ImageConverter},Unigine.Ptr{Unigine.Image}})">
-			<summary>
-			Adds a callback function to be called on beginning image conversion. The signature of the callback function must be as follows:						You can set a callback function as follows:						Example: Setting a begin image conversion callback function for a certain class:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added begin image conversion callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.removeBeginCallback(void)">
-			<summary>
-			Removes the specified callback from the list of begin image conversion callbacks.
-			</summary> 
-			<param name="id"> Begin callback ID obtained when adding it. </param> 
-			<returns>True if the begin image conversion callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.clearBeginCallback">
-			<summary>
-			Clears all added begin image conversion callbacks.
-			</summary>  
-		</member>
-		<member name="M:Unigine.ImageConverter.addEndCallback(Unigine.CallbackBase2{Unigine.Ptr{ImageConverter},Unigine.Ptr{Unigine.Image}})">
-			<summary>
-			Adds a callback function to be called on completion of the image conversion. The signature of the callback function must be as follows:						You can set a callback function as follows:						Example: Setting an image conversion completion callback function for a certain class:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added image conversion completion callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.removeEndCallback(void)">
-			<summary>
-			Removes the specified callback from the list of image conversion completion callbacks.
-			</summary> 
-			<param name="id"> End callback ID obtained when adding it. </param> 
-			<returns>True if the image conversion completion callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.ImageConverter.clearEndCallback">
-			<summary>
-			Clears all added image conversion completion callbacks.
-			</summary>  
 		</member>
 		<member name="F:Unigine.ImageConverter.MIPMAPS_MODE_DISABLE">
 			<summary>
@@ -1918,6 +1695,16 @@
 		<member name="F:Unigine.ImageConverter.MIPMAPS_MODE_LINEAR">
 			<summary>
 			Linear filtering method is used at mipmap generation.
+		</summary>
+		</member>
+		<member name="F:Unigine.ImageConverter.MIPMAPS_MODE_BLUR">
+			<summary>
+			Blurring is applied at mipmap generation.
+		</summary>
+		</member>
+		<member name="F:Unigine.ImageConverter.MIPMAPS_MODE_SHARPEN">
+			<summary>
+			Sharpening is applied at mipmap generation.
 		</summary>
 		</member>
 		<member name="F:Unigine.ImageConverter.MIPMAPS_MODE_COMBINED">

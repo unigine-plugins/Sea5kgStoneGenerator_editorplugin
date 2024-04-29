@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -176,13 +176,13 @@ public:
 		for (int i = 0; i < faces.size(); i++)
 		{
 			const Face &f = faces[i];
-			const dvec3 &v0 = vertex[f.vertex[0]];
+			const dvec3 &vertex0 = vertex[f.vertex[0]];
 			for (int j = 2; j < f.vertex.size(); j++)
 			{
-				const dvec3 &v1 = vertex[f.vertex[j - 1]];
-				const dvec3 &v2 = vertex[f.vertex[j]];
-				dvec3 normal = cross(v1 - v0, v2 - v0);
-				volume += normal.x * (v0.x + v1.x + v2.x);
+				const dvec3 &vertex1 = vertex[f.vertex[j - 1]];
+				const dvec3 &vertex2 = vertex[f.vertex[j]];
+				dvec3 normal = cross(vertex1 - vertex0, vertex2 - vertex0);
+				volume += normal.x * (vertex0.x + vertex1.x + vertex2.x);
 			}
 		}
 		volume /= 6.0;
@@ -398,9 +398,9 @@ private:
 		double distance = dot(t->plane, vertex[v]);
 		if (distance > -Consts::EPS)
 		{
-			Vertex *vertex = &t->vertex.append();
-			vertex->distance = distance;
-			vertex->id = v;
+			Vertex *new_vertex = &t->vertex.append();
+			new_vertex->distance = distance;
+			new_vertex->id = v;
 		}
 	}
 	Triangle *add_triangle(int v0, int v1, int v2)
@@ -414,15 +414,15 @@ private:
 		return t;
 	}
 
-	void create_edges(const Vector<Triangle *> &triangles)
+	void create_edges(const Vector<Triangle *> &triangles_)
 	{
 		static const int next_3[3] = {1, 2, 0};
 
 		// create edges
 		edges.clear();
-		for (int i = 0; i < triangles.size(); i++)
+		for (int i = 0; i < triangles_.size(); i++)
 		{
-			Triangle *t = triangles[i];
+			Triangle *t = triangles_[i];
 			for (int j = 0; j < 3; j++)
 			{
 				t->e[j] = -1;
@@ -450,9 +450,9 @@ private:
 		// find silhouette edges
 		for (int i = 0; i < edges.size(); i++)
 			edges[i].counter = 0;
-		for (int i = 0; i < triangles.size(); i++)
+		for (int i = 0; i < triangles_.size(); i++)
 		{
-			Triangle *t = triangles[i];
+			Triangle *t = triangles_[i];
 			for (int j = 0; j < 3; j++)
 				edges[t->e[j]].counter++;
 		}
@@ -693,12 +693,12 @@ private:
 			{
 				for (int j = 0; j < face_triangles.size(); j++)
 				{
-					Triangle *t = face_triangles[j];
+					Triangle *tr = face_triangles[j];
 					Face *face = &faces.append();
 					face->vertex.clear();
-					face->vertex.append(t->v[0]);
-					face->vertex.append(t->v[1]);
-					face->vertex.append(t->v[2]);
+					face->vertex.append(tr->v[0]);
+					face->vertex.append(tr->v[1]);
+					face->vertex.append(tr->v[2]);
 				}
 			}
 

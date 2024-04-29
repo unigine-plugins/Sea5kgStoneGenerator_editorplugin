@@ -1,0 +1,205 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.VR.getHMDResolution(VR::VIEWPORT_TYPE) const">
+			<summary>
+			Returns the current resolution of the head-mounted display. For HMDs having context (peripheral) and focus displays, you should specify the viewport type.
+			</summary> 
+			<param name="viewport_type"> Type of the viewport (for HMDs having context (peripheral) and focus displays). </param> 
+			<returns>HMD resolution.</returns>
+		</member>
+		<member name="M:Unigine.VR.hasFeatureMixedReality const">
+			<summary>
+			Returns a value indicating if the mixed reality mode is available. Mixed reality enables you to combine real-world view from front-facing cameras mounted on the headset with the VR image rendered. This feature is available for the Varjo devices only.					If VR is not initialized, the function will return false.
+			</summary>  
+			<returns>true if the feature is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VR.hasFeatureEyeTracking const">
+			<summary>
+			Returns a value indicating if eye tracking is available. This feature is available for the Varjo devices only.					If VR is not initialized, the function will return false.
+			</summary>  
+			<returns>true if the feature is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VR.hasFeatureTrackingSpaceRaw const">
+			<summary>
+			Returns a value indicating if poses can be provided in the coordinate system defined by the tracker driver.					If VR is not initialized, the function will return false.
+			</summary>  
+			<returns>true if the feature is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VR.hasFeatureMotionPrediction const">
+			<summary>
+			Returns a value indicating if motion prediction is available. This feature is available for the Varjo devices only. It allows the engine to submit the velocity from the GBuffer to the Varjo Composer. 					If VR is not initialized, the function will return false.
+			</summary>  
+			<returns>true if the feature is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VR.hasFeatureFoveatedRendering const">
+			<summary>
+			Returns a value indicating if foveated rendering is available. This feature is available for the Varjo devices only. Foveated rendering enhances performance by using the eye tracking functionality in Varjo headsets: it decreases the image quality in the peripheral areas where the user is not looking. Foveation allows applications to render fewer pixels and achieve a better VR experience.					If VR is not initialized, the function will return false.
+			</summary>  
+			<returns>true if the feature is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VR.hasFeatureReportProximitySensor const">
+			<summary>
+			Returns a value indicating if proximity sensor reporting is available.						If VR is not initialized, the function will return false.
+			</summary>  
+			<returns>true if the feature is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VR.hasFeatureSupportForTreadmill const">
+			<summary>
+			Returns a value indicating if the user treadmill support is available.						If VR is not initialized, the function will return false.
+			</summary>  
+			<returns>true if the feature is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VR.hasFeatureSupportForBaseStations const">
+			<summary>
+			Returns a value indicating if the base stations support is available.						If VR is not initialized, the function will return false.
+			</summary>  
+			<returns>true if the feature is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VR.hasFeatureSupportForTrackers const">
+			<summary>
+			Returns a value indicating if support for trackers is available.						If VR is not initialized, the function will return false.
+			</summary>  
+			<returns>true if the feature is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VR.hasFeatureSupportForRenderModelComponents const">
+			<summary>
+			Returns a value indicating if support for render model components is available.						If VR is not initialized, the function will return false.
+			</summary>  
+			<returns>true if the feature is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VR.resetZeroPose const">
+			<summary>
+			Sets the zero pose to the current tracker position.
+			</summary>  
+		</member>
+		<member name="F:Unigine.VR.API_NULL">
+			<summary>
+			VR API is not initialized.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.API_VARJO">
+			<summary>
+			Varjo API.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.API_OPENVR">
+			<summary>
+			OpenVR API.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.VIEWPORT_TYPE_CONTEXT">
+			<summary>
+			Context (low-res) viewport.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.VIEWPORT_TYPE_FOCUS">
+			<summary>
+			Focus (high-res) viewport.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.VIEWPORT_TYPE_NUM">
+			<summary>
+			Number of viewport types.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.EYE_TYPE_LEFT">
+			<summary>
+			Left eye.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.EYE_TYPE_RIGHT">
+			<summary>
+			Right eye.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.EYE_TYPE_NUM">
+			<summary>
+			Number of eye types.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.TOTAL_VIEWPORTS">
+			<summary>
+			The total number of available viewports.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.MIRROR_MODE_BEGIN">
+			<summary>
+			The first element to be used for iteration.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.MIRROR_MODE_BLACK_SCREEN">
+			<summary>
+			No image (black screen).
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.MIRROR_MODE_MONO_LEFT">
+			<summary>
+			Mono image for the left eye.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.MIRROR_MODE_MONO_RIGHT">
+			<summary>
+			Mono image for the right eye.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.MIRROR_MODE_STEREO">
+			<summary>
+			Stereo image (left and right eyes).
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.MIRROR_MODE_END">
+			<summary>
+			The last element to be used for iteration.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.WINDOW_MODE_BEGIN">
+			<summary>
+			The first element to be used for iteration.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.WINDOW_MODE_DISABLED">
+			<summary>
+			Showing the mirrored image is disabled.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.WINDOW_MODE_MAIN">
+			<summary>
+			The main window shows the mirrored image.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.WINDOW_MODE_END">
+			<summary>
+			The last element to be used for iteration.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.TRACKING_SPACE_BEGIN">
+			<summary>
+			The first element to be used for iteration.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.TRACKING_SPACE_UNKNOWN">
+			<summary>
+			Poses are provided in the coordinate system defined by the tracker driver.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.TRACKING_SPACE_SEATED">
+			<summary>
+			Poses are provided relative to the seated zero pose.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.TRACKING_SPACE_STANDING">
+			<summary>
+			Poses are provided relative to the safe bounds specified by the user.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.TRACKING_SPACE_END">
+			<summary>
+			The last element to be used for iteration.
+		</summary>
+		</member>
+	</members>
+</doc>

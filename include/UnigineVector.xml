@@ -4,6 +4,42 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
+		<member name="M:Unigine.Vector.Vector">
+			<summary>
+			Default constructor. Produces an empty vector.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Vector.Vector(Unigine.Vector{Type,int,Unigine.VectorAllocator})">
+			<summary>
+			Copy constructor.
+			</summary> 
+			<param name="v"> Vector. </param> 
+		</member>
+		<member name="M:Unigine.Vector.Vector(Type,size_t)">
+			<summary>
+			Constructor. Produces a vector with a specified size and initialization.
+			</summary> 
+			<param name="t"> Item value. </param>
+			<param name="size"> Vector size. </param> 
+		</member>
+		<member name="M:Unigine.Vector.Vector(Type,size_t)">
+			<summary>
+			Copy constructor. Produces a vector with a specified size.
+			</summary> 
+			<param name="v"> Vector pointer. </param>
+			<param name="size"> Vector size. </param> 
+		</member>
+		<member name="M:Unigine.Vector.Vector(size_t)">
+			<summary>
+			Explicit constructor. Produces a vector with specified size.
+			</summary> 
+			<param name="size"> Vector size. </param> 
+		</member>
+		<member name="M:Unigine.Vector.~Vector">
+			<summary>
+			Destructor.
+			</summary>  
+		</member>
 		<member name="M:Unigine.Vector.set(size_t,Type)">
 			<summary>
 			Sets an item with a given index.
@@ -45,7 +81,7 @@
 		</member>
 		<member name="M:Unigine.Vector.append(Type)">
 			<summary>
-			Appends an item.
+			Adds the item to the end of the vector.
 			</summary> 
 			<param name="t"> Item to append. </param> 
 		</member>
@@ -69,56 +105,107 @@
 			<param name="v"> Pointer to the vector to append. </param>
 			<param name="size"> Vector size. </param> 
 		</member>
+		<member name="M:Unigine.Vector.appendFast(Type)">
+			<summary>
+			Adds the item to the end of the vector. Using this method implies that you have enough memory allocated via the allocate()/reserve() methods.
+			</summary> 
+			<param name="t"> Item to append. </param> 
+		</member>
+		<member name="M:Unigine.Vector.appendFast(size_t,Type)">
+			<summary>
+			Appends an item at a given position.
+			</summary> 
+			<param name="pos"> Position. </param>
+			<param name="t"> Item to append. </param> 
+		</member>
+		<member name="M:Unigine.Vector.appendFast(Unigine.Vector{Type,int,Unigine.VectorAllocator})">
+			<summary>
+			Appends a vector.
+			</summary> 
+			<param name="v"> Vector to append. </param> 
+		</member>
+		<member name="M:Unigine.Vector.appendFast(Type,size_t)">
+			<summary>
+			Appends a vector with a given size.
+			</summary> 
+			<param name="v"> Vector to append. </param>
+			<param name="size"> Vector size. </param> 
+		</member>
+		<member name="M:Unigine.Vector.appendUnique(Type)">
+			<summary>
+			Appends the item if the vector doesn't contain it.
+			</summary> 
+			<param name="t"> Item to append. </param> 
+		</member>
+		<member name="M:Unigine.Vector.at(size_t)">
+			<summary>
+			Returns a reference to the element at a specified location in the vector.
+			</summary> 
+			<param name="index"> Item index. </param> 
+		</member>
+		<member name="M:Unigine.Vector.at(size_t) const">
+			<summary>
+			Returns a reference to the element at a specified location in the vector.
+			</summary> 
+			<param name="index"> Item index. </param> 
+		</member>
 		<member name="M:Unigine.Vector.back">
 			<summary>
-			Returns the back iterator.
+			Returns a reference to the last element in the vector. Unlike the method end(), which returns an iterator just past this element, this function returns a direct reference.
 			</summary>  
 			<returns>Back iterator.</returns>
 		</member>
 		<member name="M:Unigine.Vector.back const">
 			<summary>
-			Returns the back iterator.
+			Returns a reference to the last element in the vector. Unlike the method end(), which returns an iterator just past this element, this function returns a direct reference.
 			</summary>  
 			<returns>Back iterator.</returns>
 		</member>
 		<member name="M:Unigine.Vector.begin">
 			<summary>
-			Returns the begin iterator.
+			Returns an iterator pointing to the first element in the vector. Unlike the front() method, which returns a reference to the first element, this function returns a random access iterator pointing to it.
 			</summary>  
 			<returns>Begin iterator.</returns>
 		</member>
 		<member name="M:Unigine.Vector.begin const">
 			<summary>
-			Returns the begin iterator.
+			Returns an iterator pointing to the first element in the vector. Unlike the front() method, which returns a reference to the first element, this function returns a random access iterator pointing to it.
 			</summary>  
 			<returns>Begin iterator.</returns>
 		</member>
 		<member name="M:Unigine.Vector.cbegin const">
 			<summary>
-			Returns the begin iterator.
+			Returns the constant iterator pointing to the first element in the vector.
 			</summary>  
-			<returns>Begin iterator.</returns>
+			<returns>Constant iterator.</returns>
 		</member>
 		<member name="M:Unigine.Vector.rbegin const">
 			<summary>
-			Returns the begin iterator.
+			Returns the reverse iterator pointing to the first element in the vector.
 			</summary>  
-			<returns>Begin iterator.</returns>
+			<returns>Reverse iterator.</returns>
 		</member>
 		<member name="M:Unigine.Vector.crbegin const">
 			<summary>
-			Returns the begin iterator.
+			Returns the constant reverse iterator pointing to the first element in the vector.
 			</summary>  
-			<returns>Begin iterator.</returns>
+			<returns>Constant reverse iterator.</returns>
 		</member>
 		<member name="M:Unigine.Vector.clear">
 			<summary>
-			Clears the vector.
+			Clears the vector without deallocating the memory. To clear the vector and deallocate the memory, use the destroy() method.
 			</summary>  
+		</member>
+		<member name="M:Unigine.Vector.contains(T) const">
+			<summary>
+			Returns a value indicating if the vector contains the specified item.
+			</summary> 
+			<param name="t"> Item. </param> 
+			<returns>true if the vector contains the specified item; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Vector.destroy">
 			<summary>
-			Destroys the vector.
+			Clears the vector and deallocates the memory. To clear the vector without deallocating the memory, use the clear() method.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Vector.empty const">
@@ -129,33 +216,33 @@
 		</member>
 		<member name="M:Unigine.Vector.end">
 			<summary>
-			Returns the end iterator.
+			Returns an iterator referring to the past-the-end element in the vector container.
 			</summary>  
 			<returns>End iterator.</returns>
 		</member>
 		<member name="M:Unigine.Vector.end const">
 			<summary>
-			Returns the end iterator.
+			Returns an iterator referring to the past-the-end element in the vector container.
 			</summary>  
 			<returns>End iterator.</returns>
 		</member>
 		<member name="M:Unigine.Vector.cend const">
 			<summary>
-			Returns the end iterator.
+			Returns a constant iterator referring to the past-the-end element in the vector container.
 			</summary>  
-			<returns>End iterator.</returns>
+			<returns>Constant iterator.</returns>
 		</member>
 		<member name="M:Unigine.Vector.rend const">
 			<summary>
-			Returns the end iterator.
+			Returns a reverse iterator referring to the past-the-end element in the vector container.
 			</summary>  
-			<returns>End iterator.</returns>
+			<returns>Reverse iterator.</returns>
 		</member>
 		<member name="M:Unigine.Vector.crend const">
 			<summary>
-			Returns the end iterator.
+			Returns a constant reverse iterator referring to the past-the-end element in the vector container.
 			</summary>  
-			<returns>End iterator.</returns>
+			<returns>Constant reverse iterator.</returns>
 		</member>
 		<member name="M:Unigine.Vector.find(T)">
 			<summary>
@@ -185,6 +272,89 @@
 			<param name="t"> Item. </param> 
 			<returns>Left neighbor index.</returns>
 		</member>
+		<member name="M:Unigine.Vector.first">
+			<summary>
+			Returns the value of the first element of the vector.
+			</summary>  
+			<returns>The value of the first element.</returns>
+		</member>
+		<member name="M:Unigine.Vector.first const">
+			<summary>
+			Returns the value of the first element of the vector.
+			</summary>  
+			<returns>The value of the first element.</returns>
+		</member>
+		<member name="M:Unigine.Vector.front">
+			<summary>
+			Returns a reference to the first element in the vector. Unlike the begin() method, which returns an iterator to this same element, this function returns a direct reference.
+			</summary>  
+			<returns>The front iterator.</returns>
+		</member>
+		<member name="M:Unigine.Vector.front const">
+			<summary>
+			Returns a reference to the first element in the vector. Unlike the begin() method, which returns an iterator to this same element, this function returns a direct reference.
+			</summary>  
+			<returns>The front iterator.</returns>
+		</member>
+		<member name="M:Unigine.Vector.getMaxSize const">
+			<summary>
+			Returns the maximum number of elements that the vector can hold.
+			</summary>  
+			<returns>The maximum length of the vector.</returns>
+		</member>
+		<member name="M:Unigine.Vector.getMemoryUsage const">
+			<summary>
+			Shows the amount of memory used by the vector in bytes.
+			</summary>  
+			<returns>Used memory in bytes.</returns>
+		</member>
+		<member name="M:Unigine.Vector.insert(size_t,Type)">
+			<summary>
+			Inserts an element into the vector at a specified position.
+			</summary> 
+			<param name="pos"> Position. </param>
+			<param name="v"> Value to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.Vector.insert(size_t,Type)">
+			<summary>
+			Inserts an element into the vector at a specified position.
+			</summary> 
+			<param name="pos"> Item position. </param>
+			<param name="v"> Pointer to the value to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.Vector.insert(size_t,Type)">
+			<summary>
+			Inserts an element into the vector at a specified position.
+			</summary> 
+			<param name="pos"> Item position. </param>
+			<param name="v"> Value to set. </param> 
+		</member>
+		<member name="M:Unigine.Vector.isValidNum(int) const">
+			<summary>
+			Returns a value indicating if the vector contains an item with this index.
+			</summary> 
+			<param name="num"> Index to be checked. </param> 
+			<returns>true if the vector contains an item with this index; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Vector.last">
+			<summary>
+			Returns the position of the last element beyond the range of elements to be copied.
+			</summary>  
+			<returns>Position of the last element beyond the range of elements to be copied.</returns>
+		</member>
+		<member name="M:Unigine.Vector.last const">
+			<summary>
+			Returns the position of the last element beyond the range of elements to be copied.
+			</summary>  
+			<returns>Position of the last element beyond the range of elements to be copied.</returns>
+		</member>
+		<member name="M:Unigine.Vector.move(size_t,size_t)">
+			<summary>
+			Moves an element in the vector from its position to a specified one, while shifting the items in between towards the initial position.
+			</summary> 
+			<param name="from"> Initial position of the item to be moved. </param>
+			<param name="to"> Target position of the moved item. </param> 
+		</member>
 		<member name="M:Unigine.Vector.operator=(Unigine.Vector{Type,int,Unigine.VectorAllocator})">
 			<summary>
 			Assignment operator for the vector.
@@ -205,6 +375,60 @@
 			<param name="index"> Item index. </param> 
 			<returns>Vector item.</returns>
 		</member>
+		<member name="M:Unigine.Vector.prepend(Type)">
+			<summary>
+			Adds an item to the beginning of the vector.
+			</summary> 
+			<param name="v"> Item to prepend. </param> 
+		</member>
+		<member name="M:Unigine.Vector.prepend(Type)">
+			<summary>
+			Adds an item to the beginning of the vector.
+			</summary> 
+			<param name="v"> Item to prepend. </param> 
+		</member>
+		<member name="M:Unigine.Vector.push_back(Type)">
+			<summary>
+			Adds an item to the end of the vector.
+			</summary> 
+			<param name="v"> Item to append. </param> 
+		</member>
+		<member name="M:Unigine.Vector.push_back(Type)">
+			<summary>
+			Adds an item to the end of the vector.
+			</summary> 
+			<param name="v"> Item to append. </param> 
+		</member>
+		<member name="M:Unigine.Vector.push_front(Type)">
+			<summary>
+			Adds an item to the beginning of the vector.
+			</summary> 
+			<param name="v"> Item to prepend. </param> 
+		</member>
+		<member name="M:Unigine.Vector.push_front(Type)">
+			<summary>
+			Adds an item to the beginning of the vector.
+			</summary> 
+			<param name="v"> Item to prepend. </param> 
+		</member>
+		<member name="M:Unigine.Vector.random">
+			<summary>
+			Returns a pseudo-random element of the vector.
+			</summary>  
+			<returns>Random element of the vector.</returns>
+		</member>
+		<member name="M:Unigine.Vector.random const">
+			<summary>
+			Returns a pseudo-random element of the vector.
+			</summary>  
+			<returns>Random element of the vector.</returns>
+		</member>
+		<member name="M:Unigine.Vector.randomIndex const">
+			<summary>
+			Returns a pseudo-random index of the vector.
+			</summary>  
+			<returns>Random index.</returns>
+		</member>
 		<member name="M:Unigine.Vector.remove">
 			<summary>
 			Removes the last item.
@@ -223,17 +447,65 @@
 			</summary> 
 			<param name="it"> Iterator. </param> 
 		</member>
+		<member name="M:Unigine.Vector.removeAll(Type)">
+			<summary>
+			Removes all items having the specified value.
+			</summary> 
+			<param name="v"> Value to be removed. </param> 
+		</member>
+		<member name="M:Unigine.Vector.removeAllFast(Type)">
+			<summary>
+			Removes all items having the specified value. The removed value is replaced by the value contained in the last element.
+			</summary> 
+			<param name="v"> Value to be removed. </param> 
+		</member>
 		<member name="M:Unigine.Vector.removeFast(size_t)">
 			<summary>
-			Removes an item at a given position.
+			Removes an item at a given position. The removed value is replaced by the value contained in the last element.
 			</summary> 
 			<param name="pos"> Position. </param> 
 		</member>
 		<member name="M:Unigine.Vector.removeFast(Iterator)">
 			<summary>
-			Removes an item indicated by a given iterator.
+			Removes an item indicated by a given iterator. The removed value is replaced by the value contained in the last element.
 			</summary> 
 			<param name="it"> Iterator. </param> 
+		</member>
+		<member name="M:Unigine.Vector.removeFirst">
+			<summary>
+			Removes the first item in the vector.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Vector.removeLast">
+			<summary>
+			Removes the last item in the vector.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Vector.removeOne(Type)">
+			<summary>
+			Removes the first encountered item having the specified value.
+			</summary> 
+			<param name="v"> Value to be removed. </param> 
+		</member>
+		<member name="M:Unigine.Vector.removeOneFast(Type)">
+			<summary>
+			Removes the first encountered item having the specified value. The removed value is replaced by the value contained in the last element.
+			</summary> 
+			<param name="v"> Value to be removed. </param> 
+		</member>
+		<member name="M:Unigine.Vector.replace(Type,Type)">
+			<summary>
+			Replaces the specified value with the new one in all relevant vector elements.
+			</summary> 
+			<param name="old_value"> Value to be replaced. </param>
+			<param name="new_value"> Value to replace the old one. </param> 
+		</member>
+		<member name="M:Unigine.Vector.replaceOne(Type,Type)">
+			<summary>
+			Replaces the specified value with the new one in the first encountered vector element.
+			</summary> 
+			<param name="old_value"> Value to be replaced. </param>
+			<param name="new_value"> Value to replace the old one. </param> 
 		</member>
 		<member name="M:Unigine.Vector.reserve(size_t)">
 			<summary>
@@ -254,6 +526,11 @@
 			<param name="t"> Item. </param> 
 			<returns>Right neighbor index.</returns>
 		</member>
+		<member name="M:Unigine.Vector.shrink">
+			<summary>
+			Discards excess capacity.
+			</summary>  
+		</member>
 		<member name="M:Unigine.Vector.size const">
 			<summary>
 			Returns the size of the vector.
@@ -266,41 +543,67 @@
 			</summary>  
 			<returns>Vector capacity.</returns>
 		</member>
-		<member name="M:Unigine.Vector.Vector">
+		<member name="M:Unigine.Vector.swap(Vector)">
 			<summary>
-			Default constructor. Produces an empty vector.
-			</summary>  
-		</member>
-		<member name="M:Unigine.Vector.Vector(Unigine.Vector{Type,int,Unigine.VectorAllocator})">
-			<summary>
-			Copy constructor.
+			Swaps this vector with the specified vector.
 			</summary> 
 			<param name="v"> Vector. </param> 
 		</member>
-		<member name="M:Unigine.Vector.Vector(Type,size_t)">
+		<member name="M:Unigine.Vector.swap(int,int)">
 			<summary>
-			Constructor. Produces a vector with a specified size and initialization.
+			Swaps the values at the specified positions in the vector.
 			</summary> 
-			<param name="t"> Item value. </param>
-			<param name="size"> Vector size. </param> 
+			<param name="num_0"> Position of the item. </param>
+			<param name="num_1"> Position of the item. </param> 
 		</member>
-		<member name="M:Unigine.Vector.Vector(Type,size_t)">
+		<member name="M:Unigine.Vector.takeAt(int)">
 			<summary>
-			Copy constructor. Produces a vector with a specified size.
+			Returns the vector item taken at the specified index and removes it from the vector.
 			</summary> 
-			<param name="v"> Vector pointer. </param>
-			<param name="size"> Vector size. </param> 
+			<param name="index"> Index of the value. </param> 
+			<returns>Vector item.</returns>
 		</member>
-		<member name="M:Unigine.Vector.Vector(size_t)">
+		<member name="M:Unigine.Vector.takeAtFast(int)">
 			<summary>
-			Explicit constructor. Produces a vector with specified size.
+			Returns the vector item taken at the specified index and removes it from the vector. The removed value is replaced by the value contained in the last element.
 			</summary> 
-			<param name="size"> Vector size. </param> 
+			<param name="index"> Index of the value. </param> 
+			<returns>Vector item.</returns>
 		</member>
-		<member name="M:Unigine.Vector.~Vector">
+		<member name="M:Unigine.Vector.takeFirst">
 			<summary>
-			Destructor.
+			Returns the first item of the vector and removes it from the vector.
 			</summary>  
+			<returns>The first vector item.</returns>
+		</member>
+		<member name="M:Unigine.Vector.takeLast">
+			<summary>
+			Returns the last item of the vector and removes it from the vector.
+			</summary>  
+			<returns>The last vector item.</returns>
+		</member>
+		<member name="M:Unigine.Vector.value(int)">
+			<summary>
+			Returns the vector item taken at the specified index. This is a safe method that returns a default-constructed value, if the index is outside the vector range.
+			</summary> 
+			<param name="index"> Index of the value. </param> 
+			<returns>Vector item.</returns>
+		</member>
+		<member name="M:Unigine.Vector.value(int,Type)">
+			<summary>
+			Returns the vector item taken at the specified index.
+			</summary> 
+			<param name="index"> Index of the value. </param>
+			<param name="def"> The reference to be returned if the index is outside the vector limits. </param> 
+			<returns>Vector item.</returns>
+		</member>
+		<member name="M:Unigine.Vector.valueRef(int,Type)">
+			<summary>
+			Returns the reference to the vector item taken at the specified index.
+			</summary> 
+			<param name="index"> Index of the value. </param>
+			<param name="def"> The reference to be returned if the index is outside the vector limits. </param> 
+			<returns>Reference to the vector item.</returns>
 		</member>
 		<member name="M:Unigine.Vector.ConstIterator.get const">
 			<summary>
@@ -324,14 +627,14 @@
 			Check if two iterators are not the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are not the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are not the same; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Vector.ConstIterator.operator!=(ConstIterator) const">
 			<summary>
 			Check if two iterators are not the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are not the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are not the same; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Vector.ConstIterator.operator* const">
 			<summary>
@@ -410,14 +713,14 @@
 			Check if two iterators are actually the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are the same; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Vector.ConstIterator.operator==(ConstIterator) const">
 			<summary>
 			Check if two iterators are actually the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are the same; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Vector.ConstIterator.~ConstIterator">
 			<summary>
@@ -446,14 +749,14 @@
 			Check if two iterators are not the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are not the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are not the same; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Vector.Iterator.operator!=(typenameVector{Type}::ConstIterator) const">
 			<summary>
 			Check if two iterators are not the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are not the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are not the same; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Vector.Iterator.operator* const">
 			<summary>
@@ -532,14 +835,14 @@
 			Check if two iterators are actually the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are the same; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Vector.Iterator.operator==(typenameVector{Type}::ConstIterator) const">
 			<summary>
 			Check if two iterators are actually the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are the same; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Vector.Iterator.~Iterator">
 			<summary>

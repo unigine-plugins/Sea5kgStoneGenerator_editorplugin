@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -60,13 +60,11 @@ public:
 	bool load(const Ptr<Xml> &xml);
 	bool save(const Ptr<Json> &json) const;
 	bool load(const Ptr<Json> &json);
-	void *addChangedCallback(CallbackBase *func);
-	bool removeChangedCallback(void *id);
-	void clearChangedCallbacks();
 	void setRepeatModeStart(Curve2d::REPEAT_MODE start);
 	Curve2d::REPEAT_MODE getRepeatModeStart() const;
 	void setRepeatModeEnd(Curve2d::REPEAT_MODE end);
 	Curve2d::REPEAT_MODE getRepeatModeEnd() const;
+	Event<> &getEventChanged();
 };
 typedef Ptr<Curve2d> Curve2dPtr;
 

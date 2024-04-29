@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -32,6 +32,7 @@ class SetNodeTransformActionPrivate;
 class ReparentNodesActionPrivate;
 class RenameNodeActionPrivate;
 class EnableNodeActionPrivate;
+class ChangeNodeFlagsActionPrivate;
 }
 
 
@@ -98,6 +99,7 @@ public:
 	/// <summary>Redoes the previously undone create nodes action (reverses the undo method).</summary>
 	void redo() override;
 
+	/// <summary>Returns the list of nodes affected by the action.</summary>
 	Unigine::Vector<Unigine::NodePtr> getNodes() const;
 
 private:
@@ -131,6 +133,7 @@ public:
 	/// </summary>
 	bool validate() override;
 
+	/// <summary>Returns the list of nodes affected by the action.</summary>
 	Unigine::Vector<Unigine::NodePtr> getNodes() const;
 
 private:
@@ -169,7 +172,7 @@ private:
 };
 
 /// <summary>This class is used to represent any user's action changing nodes parents.</summary>
-class UNIGINE_EDITOR_API ReparentNodesAction final : public Action
+class UNIGINE_EDITOR_API ReparentNodesAction : public Action
 {
 public:
 	/// <summary>Creates a new reparent action for the specified nodes.</summary>
@@ -200,6 +203,11 @@ public:
 	/// <param name="node">Node affected by the rename action.</param>
 	/// <param name="new_name">New name of the node.</param>
 	explicit RenameNodeAction(const Unigine::NodePtr &node, const char *new_name);
+	/// <summary>Creates a new rename action for the specified nodes.</summary>
+	/// <param name="nodes">Nodes affected by the rename action.</param>
+	/// <param name="new_names">New name of the nodes.</param>
+	explicit RenameNodeAction(Unigine::Vector<Unigine::NodePtr> nodes,
+		Unigine::Vector<Unigine::String> new_names);
 	~RenameNodeAction() override;
 
 	/// <summary>Applies the rename node action.</summary>
@@ -231,7 +239,7 @@ public:
 	/// <summary>Creates a new enable action for the specified nodes.</summary>
 	/// <param name="nodes">Nodes affected by the action.</param>
 	/// <param name="enabled"><b>true</b> if the action enables the specified nodes; otherwise, <b>false</b>.</param>
-	EnableNodeAction(const Unigine::Vector<Unigine::NodePtr> &nodes, bool enabled);
+	explicit EnableNodeAction(const Unigine::Vector<Unigine::NodePtr> &nodes, bool enabled);
 	~EnableNodeAction() override;
 
 	/// <summary>Applies the enable node action.</summary>
@@ -250,6 +258,40 @@ public:
 
 private:
 	::UnigineEditor::EnableNodeActionPrivate *const d;
+};
+
+/// <summary>This class is used to represent any user's action changing node's flags.</summary>
+class UNIGINE_EDITOR_API ChangeNodeFlagsAction : public Action
+{
+public:
+	/// <summary>Creates a new change node flag action for the specified node.</summary>
+	/// <param name="node">Node affected by the action.</param>
+	/// <param name="flag">Flag affected by the action.</param>
+	/// <param name="enabled"><b>true</b> if the action enables the specified flag; otherwise, <b>false</b>.</param>
+	explicit ChangeNodeFlagsAction(const Unigine::NodePtr &node, int flag, bool enabled);
+	/// <summary>Creates a new change node flag action for the specified nodes.</summary>
+	/// <param name="nodes">Nodes affected by the action.</param>
+	/// <param name="flag">Flag affected by the action.</param>
+	/// <param name="enabled"><b>true</b> if the action enables the specified flag; otherwise, <b>false</b>.</param>
+	explicit ChangeNodeFlagsAction(const Unigine::Vector<Unigine::NodePtr> &nodes, int flag, bool enabled);
+	~ChangeNodeFlagsAction() override;
+
+	/// <summary>Applies the change node flag action.</summary>
+	void apply() override;
+	/// <summary>Reverts the change node flag action.</summary>
+	void undo() override;
+	/// <summary>Redoes the previously undone change node flag action (reverses the undo method).</summary>
+	void redo() override;
+	/// <summary>
+	/// This method allows action to do some internal cleanup.
+	/// Return value indicates whether the action is still sane.
+	/// Whenever it returns false undo system will delete invalid action
+	/// for good.
+	/// </summary>
+	bool validate() override;
+
+private:
+	::UnigineEditor::ChangeNodeFlagsActionPrivate *const d;
 };
 
 } // namespace UnigineEditor

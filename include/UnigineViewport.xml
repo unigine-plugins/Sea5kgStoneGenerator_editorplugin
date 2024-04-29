@@ -21,29 +21,6 @@
 			</summary>  
 			<returns>true if the aspect correction enabled, otherwise false.</returns>
 		</member>
-		<member name="M:Unigine.Viewport.addCallback(int,Unigine.CallbackBase1{Unigine.Renderer})">
-			<summary>
-			Adds a callback for the specified stage of the rendering sequence. Callback functions can be used to get access to buffers and matrices at intermediate stages of the rendering sequence. Some of them are read-only, but most of them can be modified ad hoc.
-			Callback function must be as follows:
-			</summary> 
-			<param name="callback"> Stage of the rendering sequence for which a callback is to be added. One of the Render::CALLBACK_* variables.The _BEGIN prefix corresponds to the beginning of the rendering pass, _END - to its completion. </param>
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Viewport.clearCallbacks(int)">
-			<summary>
-			Clears all added callbacks for the specified stage of the rendering sequence. Callback functions can be used to get access to buffers and matrices at intermediate stages of the rendering sequence. Some of them are read-only, but most of them can be modified ad hoc.
-			</summary> 
-			<param name="callback"> Stage of the rendering sequence for which the callbacks are to be cleared. One of the Render::CALLBACK_* variables.The _BEGIN prefix corresponds to the beginning of the rendering pass, _END - to its completion. </param> 
-		</member>
-		<member name="M:Unigine.Viewport.removeCallback(int,void)">
-			<summary>
-			Removes the specified callback from the list of callbacks for the specified stage of the rendering sequence. Callback functions can be used to get access to buffers and matrices at intermediate stages of the rendering sequence. Some of them are read-only, but most of them can be modified ad hoc.
-			</summary> 
-			<param name="callback"> Stage of the rendering sequence for which the callback is to be removed. One of the Render::CALLBACK_* variables.The _BEGIN prefix corresponds to the beginning of the rendering pass, _END - to its completion. </param>
-			<param name="id"> Callback ID obtained when adding it. </param> 
-			<returns>True if the callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
 		<member name="M:Unigine.Viewport.setFirstFrame(int)">
 			<summary>
 			Sets a value indicating if the first frame should be enabled over the current frame.
@@ -126,7 +103,7 @@
 			<summary>
 			Returns a value indicating if the stereo rendering is enabled for the current viewport (one of the stereo modes is set).
 			</summary>  
-			<returns>1 if the stereo rendering is enabled; otherwise, 0.</returns>
+			<returns>true if the stereo rendering is enabled; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Viewport.setStereoDistance(float)">
 			<summary>
@@ -289,7 +266,7 @@
 			<param name="width"> Image width, in pixels. </param>
 			<param name="height"> Image height, in pixels. </param> 
 		</member>
-		<member name="M:Unigine.Viewport.renderNodesTexture2D(Unigine.Ptr{Unigine.Camera},Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Ptr{Unigine.Image},int,int,int)">
+		<member name="M:Unigine.Viewport.renderNodesTexture2D(Unigine.Ptr{Unigine.Camera},Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Ptr{Unigine.Texture},int,int,int)">
 			<summary>
 			Renders given nodes with all their children to the 2D texture of the specified size.
 			</summary> 
@@ -391,15 +368,20 @@
 		</member>
 		<member name="M:Unigine.Viewport.setUseTAAOffset(bool)">
 			<summary>
-			Sets a value indicating if skipping render mode check is enabled for using TAA. Can be used to ensure proper TAA calculation when rendering mode for the Viewport is set to RENDER_DEPTH.
+			Sets a value indicating if skipping render mode check is enabled for using TAA. Can be used to ensure proper TAA calculation when rendering mode for the					Viewport is set to					RENDER_DEPTH.
 			</summary> 
 			<param name="offset"> true to enable skipping render mode check and use TAA; otherwise false. </param> 
 		</member>
 		<member name="M:Unigine.Viewport.isUseTAAOffset const">
 			<summary>
-			Returns a value indicating if skipping render mode check is enabled for using TAA. Can be used to ensure proper TAA calculation when rendering mode for the Viewport is set to RENDER_DEPTH.
+			Returns a value indicating if skipping render mode check is enabled for using TAA. Can be used to ensure proper TAA calculation when rendering mode for the					Viewport is set to					RENDER_DEPTH.
 			</summary>  
 			<returns>true if skipping render mode check is enabled for using TAA; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Viewport.renderVREngine">
+			<summary>
+			Renders the VR viewport if VR is enabled, taking into account the vr mirror mode set.
+			</summary>  
 		</member>
 		<member name="F:Unigine.Viewport.SKIP_SHADOWS">
 			<summary>

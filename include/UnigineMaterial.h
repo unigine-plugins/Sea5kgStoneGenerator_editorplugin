@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -76,16 +76,22 @@ public:
 		TEXTURE_SOURCE_GBUFFER_VELOCITY,
 		TEXTURE_SOURCE_GBUFFER_MATERIAL_MASK,
 		TEXTURE_SOURCE_GBUFFER_FEATURES,
+		TEXTURE_SOURCE_GBUFFER_LIGHTMAP,
 		TEXTURE_SOURCE_AUXILIARY,
 		TEXTURE_SOURCE_REFRACTION,
 		TEXTURE_SOURCE_REFRACTION_MASK,
 		TEXTURE_SOURCE_TRANSPARENT_BLUR,
-		TEXTURE_SOURCE_LIGHTS,
+		TEXTURE_SOURCE_DIRECT_LIGHTS,
+		TEXTURE_SOURCE_INDIRECT_LIGHTS,
+		TEXTURE_SOURCE_LIGHTING_INFORMATION_LOST,
+		TEXTURE_SOURCE_INDIRECT_DIFFUSE,
+		TEXTURE_SOURCE_INDIRECT_SPECULAR,
 		TEXTURE_SOURCE_BENT_NORMAL,
 		TEXTURE_SOURCE_SSAO,
 		TEXTURE_SOURCE_SSGI,
 		TEXTURE_SOURCE_SSR,
 		TEXTURE_SOURCE_CURVATURE,
+		TEXTURE_SOURCE_MIN_DISTANCE,
 		TEXTURE_SOURCE_SHADOW_SHAFTS,
 		TEXTURE_SOURCE_DOF_MASK,
 		TEXTURE_SOURCE_AUTO_EXPOSURE,
@@ -98,6 +104,7 @@ public:
 		TEXTURE_SOURCE_CURRENT_DEPTH,
 		TEXTURE_SOURCE_OPACITY_DEPTH,
 		TEXTURE_SOURCE_LINEAR_DEPTH,
+		TEXTURE_SOURCE_OPACITY_DEPTH_REPROJECTION_BACK,
 		TEXTURE_SOURCE_LIGHT_IMAGE,
 		TEXTURE_SOURCE_LIGHT_SHADOW_DEPTH,
 		TEXTURE_SOURCE_LIGHT_SHADOW_COLOR,
@@ -186,8 +193,8 @@ public:
 	Ptr<Material> getBaseMaterial() const;
 	int getNumChildren() const;
 	Ptr<Material> getChild(int num) const;
-	Ptr<Material> clone(const UGUID &guid);
-	Ptr<Material> clone();
+	Ptr<Material> clone(const UGUID &guid) const;
+	Ptr<Material> clone() const;
 	Ptr<Material> inherit(const UGUID &guid);
 	Ptr<Material> inherit();
 	const char *getNamespaceName() const;
@@ -250,11 +257,16 @@ public:
 	bool checkShaderCache() const;
 	bool checkShaderCache(Render::PASS pass, Node::TYPE node_type) const;
 	bool compileShader(Render::PASS pass, Node::TYPE node_type);
-	Ptr<Shader> fetchShader(Render::PASS pass, Node::TYPE node_type);
-	Ptr<Shader> fetchShader(Render::PASS pass);
-	Ptr<Shader> fetchShader(const char *pass_name, int node);
-	Ptr<Shader> fetchShader(const char *pass_name);
+	Ptr<Shader> getShaderAsync(Render::PASS pass, int node);
+	Ptr<Shader> getShaderAsync(Render::PASS pass);
+	Ptr<Shader> getShaderAsync(const char *pass, int node);
+	Ptr<Shader> getShaderAsync(const char *pass);
+	Ptr<Shader> getShaderForce(Render::PASS pass, int node);
+	Ptr<Shader> getShaderForce(Render::PASS pass);
+	Ptr<Shader> getShaderForce(const char *pass, int node);
+	Ptr<Shader> getShaderForce(const char *pass);
 	void createShaders(bool recursive = false);
+	void compileShaders(bool recursive = false);
 	void destroyTextures();
 	int getNumParameters() const;
 	int findParameter(const char *name) const;

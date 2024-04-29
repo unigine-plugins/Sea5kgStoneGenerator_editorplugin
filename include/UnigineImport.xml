@@ -245,7 +245,7 @@
 			<param name="type_name"> Import processor type name. </param> 
 			<returns>New created import processor with the specified  type name (if it was created successfully).</returns>
 		</member>
-		<member name="M:Unigine.Import.registerImporter(char,ImportProcessorCreationFunction,ImportProcessorDeletionFunction,void)">
+		<member name="M:Unigine.Import.registerImportProcessor(char,ImportProcessorCreationFunction,ImportProcessorDeletionFunction,void)">
 			<summary>
 			Registers a new import processor with the specified parameters.
 			</summary> 

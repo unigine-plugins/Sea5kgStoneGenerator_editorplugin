@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -15,33 +15,25 @@
 
 #include "UnigineBase.h"
 
-
 namespace Unigine
 {
+
+template<typename ...Args> class Event;
+
 namespace Math
 {
 struct vec4;
 }
 }
 
+using LogEvent = Unigine::Event<const char *>;
+
 namespace Unigine
 {
-
-template <class A0>
-class CallbackBase1;
-using LogCallback = CallbackBase1<const char *>;
 
 class Log
 {
 public:
-	enum CALLBACK_INDEX
-	{
-		CALLBACK_MESSAGE,
-		CALLBACK_WARNING,
-		CALLBACK_ERROR,
-		CALLBACK_FATAL,
-		CALLBACK_COUNT
-	};
 
 	// Prints a message to the console and the log file.
 	static UNIGINE_API void message(const char *format, ...) UNIGINE_PRINTF(1, 2);
@@ -56,12 +48,10 @@ public:
 	// Prints a fatal error message to the log file and immediately quit the engine.
 	static UNIGINE_API void fatal(const char *format, ...) UNIGINE_PRINTF(1, 2);
 
-
-	// Add callback
-	static UNIGINE_API void *addCallback(CALLBACK_INDEX callback, LogCallback *func);
-	static UNIGINE_API bool removeCallback(CALLBACK_INDEX callback, void* id);
-	static UNIGINE_API void clearCallbacks(CALLBACK_INDEX callback);
-	static UNIGINE_API bool hasCallbacks(CALLBACK_INDEX callback);
+	static UNIGINE_API LogEvent &getEventMessage();
+	static UNIGINE_API LogEvent &getEventWarning();
+	static UNIGINE_API LogEvent &getEventError();
+	static UNIGINE_API LogEvent &getEventFatal();
 };
 
 } // namespace Unigine

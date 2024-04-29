@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -28,6 +28,12 @@ class Node;
 class Material;
 class Curve2d;
 class PropertyParameter;
+class Property;
+
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<Property> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Property> &>>;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<Property> &, int>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Property> &, int>>;
 
 class UNIGINE_API Property : public APIInterface
 {
@@ -80,16 +86,6 @@ public:
 		PARAMETER_MASK_PHYSICAL,
 		PARAMETER_MASK_FIELD,
 		PARAMETER_MASK_PARTICLES_FIELD,
-	};
-
-	enum CALLBACK_INDEX
-	{
-		CALLBACK_RELOADED = 0,
-		CALLBACK_MOVED,
-		CALLBACK_RENAMED,
-		CALLBACK_REPARENTED,
-		CALLBACK_PARAMETER_CHANGED,
-		CALLBACK_DESTROY,
 	};
 
 	enum
@@ -152,10 +148,27 @@ public:
 	int parameterTypeByName(const char *param_type) const;
 	const char *parameterNameByType(int param_type) const;
 	Ptr<Node> getNode() const;
-	void *addCallback(Property::CALLBACK_INDEX callback, CallbackBase1<Ptr<Property>> *func);
-	void *addCallback(Property::CALLBACK_INDEX callback, CallbackBase2<Ptr<Property>, int> *func);
-	bool removeCallback(Property::CALLBACK_INDEX callback, void *id);
-	void clearCallbacks(Property::CALLBACK_INDEX callback);
+	Event<const Ptr<Property> &> &getEventReloaded();
+	Event<const Ptr<Property> &> &getEventMoved();
+	Event<const Ptr<Property> &> &getEventRenamed();
+	Event<const Ptr<Property> &> &getEventReparented();
+	Event<const Ptr<Property> &, int> &getEventParameterChanged();
+	Event<const Ptr<Property> &> &getEventDestroy();
+
+private:
+
+	EventHolder<EventInterfaceInvoker<const Ptr<Property> &>> event_reloaded;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Property> &>> event_reloaded_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Property> &>> event_moved;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Property> &>> event_moved_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Property> &>> event_renamed;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Property> &>> event_renamed_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Property> &>> event_reparented;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Property> &>> event_reparented_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Property> &, int>> event_parameter_changed;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Property> &, int>> event_parameter_changed_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Property> &>> event_destroy;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Property> &>> event_destroy_connection;
 };
 typedef Ptr<Property> PropertyPtr;
 
@@ -321,15 +334,6 @@ class UNIGINE_API Properties
 {
 public:
 	static int isInitialized();
-
-	enum CALLBACK_INDEX
-	{
-		CALLBACK_CREATED = 0,
-		CALLBACK_MOVED,
-		CALLBACK_RENAMED,
-		CALLBACK_REPARENTED,
-		CALLBACK_REMOVED,
-	};
 	static Ptr<Property> loadProperty(const char *path);
 	static int saveProperties();
 	static void reloadProperties();
@@ -350,9 +354,11 @@ public:
 	static bool reparentProperty(const UGUID &guid, const UGUID &new_parent, bool save_all_values = false);
 	static bool removeProperty(const UGUID &guid, bool remove_file = false, bool remove_children = true);
 	static bool replaceProperty(const Ptr<Property> &property, const Ptr<Property> &new_property);
-	static void *addCallback(Properties::CALLBACK_INDEX callback, CallbackBase1<Ptr<Property>> *func);
-	static bool removeCallback(Properties::CALLBACK_INDEX callback, void *id);
-	static void clearCallbacks(Properties::CALLBACK_INDEX callback);
+	static Event<const Ptr<Property> &> &getEventCreated();
+	static Event<const Ptr<Property> &> &getEventMoved();
+	static Event<const Ptr<Property> &> &getEventRenamed();
+	static Event<const Ptr<Property> &> &getEventReparented();
+	static Event<const Ptr<Property> &> &getEventRemoved();
 };
 
 } // namespace Unigine

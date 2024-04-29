@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -89,22 +89,6 @@ class UNIGINE_API World
 public:
 	static int isInitialized();
 
-	enum CALLBACK_INDEX
-	{
-		CALLBACK_PRE_WORLD_LOAD,
-		CALLBACK_POST_WORLD_LOAD,
-		CALLBACK_PRE_WORLD_SAVE,
-		CALLBACK_POST_WORLD_SAVE,
-		CALLBACK_PRE_WORLD_CLEAR,
-		CALLBACK_POST_WORLD_CLEAR,
-		CALLBACK_PRE_NODE_SAVE,
-		CALLBACK_POST_NODE_SAVE,
-		CALLBACK_PRE_WORLD_INIT,
-		CALLBACK_POST_WORLD_INIT,
-		CALLBACK_PRE_WORLD_SHUTDOWN,
-		CALLBACK_POST_WORLD_SHUTDOWN,
-	};
-
 	enum MOVING_IMMOVABLE_NODES_MODE
 	{
 		MOVING_IMMOVABLE_NODES_MODE_BAN = 0,
@@ -193,11 +177,20 @@ public:
 	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Vector<Ptr<Node>> &exclude, const Ptr<WorldIntersectionNormal> &intersection);
 	static Ptr<Object> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, int mask, const Vector<Ptr<Node>> &exclude, const Ptr<WorldIntersectionTexCoord> &intersection);
 	static void clearBindings();
-	static void *addCallback(World::CALLBACK_INDEX callback, CallbackBase *func);
-	static void *addCallback(World::CALLBACK_INDEX callback, CallbackBase1<const char *> *func);
-	static void *addCallback(World::CALLBACK_INDEX callback, CallbackBase2<const char *, Ptr<Node>> *func);
-	static bool removeCallback(World::CALLBACK_INDEX callback, void *id);
-	static void clearCallbacks(World::CALLBACK_INDEX callback);
+	static Event<const char *> &getEventPreWorldLoad();
+	static Event<const char *> &getEventPostWorldLoad();
+	static Event<const char *> &getEventPreWorldSave();
+	static Event<const char *> &getEventPostWorldSave();
+	static Event<const char *> &getEventPreWorldClear();
+	static Event<const char *> &getEventPostWorldClear();
+	static Event<const char *, const Ptr<Node> &> &getEventPreNodeSave();
+	static Event<const char *, const Ptr<Node> &> &getEventPostNodeSave();
+	static Event<> &getEventPreWorldInit();
+	static Event<> &getEventPostWorldInit();
+	static Event<> &getEventPreWorldShutdown();
+	static Event<> &getEventPostWorldShutdown();
+	static Event<const Ptr<Node> &> &getEventNodeAdded();
+	static Event<const Ptr<Node> &> &getEventNodeRemoved();
 };
 
 class WorldExternBase;
@@ -206,7 +199,7 @@ class WorldExternBase;
 class UNIGINE_API WorldExtern : public Node
 {
 public:
-	static int type() { return Node::WORLD_EXTERN; }
+	static Node::TYPE type() { return Node::WORLD_EXTERN; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<WorldExtern> create(int class_id);

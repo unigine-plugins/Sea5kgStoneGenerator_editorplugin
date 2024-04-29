@@ -4149,6 +4149,13 @@
 			<param name="face"> Cube face number. </param> 
 			<returns>Cube viewing matrix.</returns>
 		</member>
+		<member name="M:Unigine.Math.decomposePerspectiveFov(Unigine.mat4)">
+			<summary>
+			Decomposes a given perspective projection matrix, extracting the field of view angle.
+			</summary> 
+			<param name="projection"> Perspective projection matrix. </param> 
+			<returns>Field of view angle.</returns>
+		</member>
 		<member name="M:Unigine.Math.decomposeProjection(Unigine.mat4,float,float)">
 			<summary>
 			Decomposes a given projection matrix, extracting distances to near and far clipping planes.
@@ -4156,6 +4163,15 @@
 			<param name="projection"> Projection matrix. </param>
 			<param name="znear"> Near clipping plane. </param>
 			<param name="zfar"> Far clipping plane. </param> 
+		</member>
+		<member name="M:Unigine.Math.decomposeProjection(Unigine.mat4,float,float,float)">
+			<summary>
+			Decomposes a given projection matrix, extracting distances to near and far clipping planes, and the field of view angle.
+			</summary> 
+			<param name="projection"> Projection matrix. </param>
+			<param name="znear"> Near clipping plane. </param>
+			<param name="zfar"> Far clipping plane. </param>
+			<param name="fov"> Field of view angle. </param> 
 		</member>
 		<member name="M:Unigine.Math.decomposeRotationXYZ(mat3)">
 			<summary>

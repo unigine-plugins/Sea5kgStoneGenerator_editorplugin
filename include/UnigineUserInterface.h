@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -25,6 +25,27 @@ namespace Unigine
 class UNIGINE_API UserInterface : public APIInterface
 {
 public:
+
+	enum EVENT_TYPE
+	{
+		EVENT_SHOW = 0,
+		EVENT_HIDE,
+		EVENT_FOCUS_IN,
+		EVENT_FOCUS_OUT,
+		EVENT_CHANGED,
+		EVENT_CLICKED,
+		EVENT_DOUBLE_CLICKED,
+		EVENT_PRESSED,
+		EVENT_RELEASED,
+		EVENT_KEY_PRESSED,
+		EVENT_TEXT_PRESSED,
+		EVENT_ENTER,
+		EVENT_LEAVE,
+		EVENT_DRAG_MOVE,
+		EVENT_DRAG_DROP,
+		EVENT_REMOVE,
+		NUM_EVENTS,
+	};
 	static Ptr<UserInterface> create(const Ptr<Gui> &gui, const char *name, const char *prefix = 0);
 	void setGui(const Ptr<Gui> &gui);
 	Ptr<Gui> getGui() const;
@@ -34,22 +55,17 @@ public:
 	int getNumWidgets() const;
 	int findWidget(const char *name) const;
 	Ptr<Widget> getWidget(int num) const;
+	Ptr<Widget> getWidgetByName(const char *name) const;
 	const char *getWidgetName(int num) const;
 	const char *getWidgetNext(int num) const;
 	int getWidgetExport(int num) const;
 	int getNumCallbacks(int num) const;
-	int getCallback(int num, int callback) const;
+	UserInterface::EVENT_TYPE getCallback(int num, int callback) const;
 	const char *getCallbackName(int num, int callback) const;
 	Ptr<Widget> getCallbackWidgetData(int num, int callback) const;
 	const char *getCallbackStringData(int num, int callback) const;
 	const char *getCallbackVariableData(int num, int callback) const;
 	const char *getCallbackInstanceData(int num, int callback) const;
-	void *addCallback(const char *name, Gui::CALLBACK_INDEX callback, CallbackBase *func);
-	void *addCallback(const char *name, Gui::CALLBACK_INDEX callback, CallbackBase1< Ptr<Widget> > *func);
-	void *addCallback(const char *name, Gui::CALLBACK_INDEX callback, CallbackBase2< Ptr<Widget>, Ptr<Widget> > *func);
-	void *addCallback(const char *name, Gui::CALLBACK_INDEX callback, CallbackBase3< Ptr<Widget>, Ptr<Widget>, int > *func);
-	bool removeCallback(const char *name, Gui::CALLBACK_INDEX callback, void *id);
-	void clearCallbacks(const char *name, Gui::CALLBACK_INDEX callback);
 };
 typedef Ptr<UserInterface> UserInterfacePtr;
 

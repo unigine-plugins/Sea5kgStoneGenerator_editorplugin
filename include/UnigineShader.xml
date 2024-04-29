@@ -11,24 +11,24 @@
 		</member>
 		<member name="M:Unigine.Shader.#ctor(char)">
 			<summary>
-			Shader constructor. Loads all existing shaders with given name.
+			Shader constructor. Loads all existing shaders with the given name.
 			</summary> 
 			<param name="name"> Shader name. </param> 
 		</member>
 		<member name="M:Unigine.Shader.#ctor(char,char)">
 			<summary>
-			Shader constructor. Loads all existing shaders with given name.
+			Shader constructor. Loads all existing shaders with the given name.
 			</summary> 
 			<param name="name"> Shader name. </param>
-			<param name="defines"> Shader defines. </param> 
+			<param name="defines"> User defines. </param> 
 		</member>
 		<member name="M:Unigine.Shader.#ctor(char,char,char)">
 			<summary>
-			Shader constructor. Loads only vertex and fragment shaders with given names.
+			Shader constructor. Loads only vertex and fragment subshaders with the given names.
 			</summary> 
-			<param name="vertex"> Vertex shader name or source. </param>
-			<param name="fragment"> Fragment shader name or source. </param>
-			<param name="defines"> Shader defines. </param> 
+			<param name="vertex"> Vertex subshader name or source. </param>
+			<param name="fragment"> Fragment subshader name or source. </param>
+			<param name="defines"> User defines. </param> 
 		</member>
 		<member name="M:Unigine.Shader.getD3D11ComputeShader const">
 			<summary>
@@ -75,11 +75,19 @@
 			Clears shader.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Shader.compile const">
+		<member name="M:Unigine.Shader.compile(char,char,char,char,char,char,char,unsignedlonglong)">
 			<summary>
-			Compiles shader.
-			</summary>  
-			<returns>1 if the shader compiled successfully; otherwise, 0.</returns>
+			Compiles the shader with the specified subshaders. To skip a subshader, pass nullptr instead of an argument. Depending on the subshaders types, additional values are added automatically to the defines argument: VERTEX, CONTROL, EVALUATE, GEOMETRY, FRAGMENT.
+			</summary> 
+			<param name="vertex"> Vertex subshader path. </param>
+			<param name="geometry"> Geometry subshader path. </param>
+			<param name="fragment"> Fragment subshader path. </param>
+			<param name="compute"> Compute subshader path. </param>
+			<param name="control"> Control subshader path. </param>
+			<param name="evaluate"> Evaluation subshader path. </param>
+			<param name="defines"> User defines (for example, "OPENGL", "DIRECT3D11", or any other). </param>
+			<param name="key_cache"> Key cache. </param> 
+			<returns>true if the shader is compiled successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Shader.destroy const">
 			<summary>
@@ -97,54 +105,6 @@
 			<summary>
 			Flushes shader parameters.
 			</summary>  
-		</member>
-		<member name="M:Unigine.Shader.loadCompute(char,char) const">
-			<summary>
-			Loads compute shader.
-			</summary> 
-			<param name="name"> Compute shader name or source. </param>
-			<param name="defines"> Shader defines. </param> 
-			<returns>1 if the compute shader was loaded successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Shader.loadControl(char,char) const">
-			<summary>
-			Loads control shader.
-			</summary> 
-			<param name="name"> Control shader name or source. </param>
-			<param name="defines"> Shader defines. </param> 
-			<returns>1 if the control shader was loaded successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Shader.loadEvaluate(char,char) const">
-			<summary>
-			Loads evaluate shader.
-			</summary> 
-			<param name="name"> Evaluate shader name or source. </param>
-			<param name="defines"> Shader defines. </param> 
-			<returns>1 if the evaluate shader was loaded successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Shader.loadFragment(char,char) const">
-			<summary>
-			Loads fragment shader.
-			</summary> 
-			<param name="name"> Fragment shader name or source. </param>
-			<param name="defines"> Shader defines. </param> 
-			<returns>1 if the fragment shader was loaded successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Shader.loadGeometry(char,char) const">
-			<summary>
-			Loads geometry shader.
-			</summary> 
-			<param name="name"> Geometry shader name or source. </param>
-			<param name="defines"> Shader defines. </param> 
-			<returns>1 if the geometry shader was loaded successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Shader.loadVertex(char,char) const">
-			<summary>
-			Loads vertex shader.
-			</summary> 
-			<param name="name"> Vertex shader name or source. </param>
-			<param name="defines"> Shader defines. </param> 
-			<returns>1 if the vertex shader was loaded successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Shader.unbind const">
 			<summary>
@@ -789,6 +749,54 @@
 			</summary>  
 			<returns>true if the shader compiler forces the IEEE strict compilation; otherwise, false.</returns>
 		</member>
+		<member name="M:Unigine.Shader.compileCompute(char,char,unsignedlonglong)">
+			<summary>
+			Compiles the shader with the specified compute subshader. The additional COMPUTE value is added automatically to the defines argument. This function is the same as the compile() function called only with the compute argument.
+			</summary> 
+			<param name="compute"> Compute subshader path. </param>
+			<param name="defines"> User defines (for example, "OPENGL", "DIRECT3D11", or any other). </param>
+			<param name="key_cache"> Key cache. </param> 
+			<returns>true if the shader compiled successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Shader.compileVertFrag(char,char,char,unsignedlonglong)">
+			<summary>
+			Compiles the shader with the specified vertex and fragment subshaders. The additional VERTEX and FRAGMENT values are added automatically to the defines argument. This function is the same as the compile() function called only with the vertex and fragment arguments.
+			</summary> 
+			<param name="vertex"> Vertex subshader path. </param>
+			<param name="fragment"> Fragment subshader path. </param>
+			<param name="defines"> User defines (for example, "OPENGL", "DIRECT3D11", or any other). </param>
+			<param name="key_cache"> Key cache. </param> 
+			<returns>true if the shader compiled successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Shader.compileVertGeomFrag(char,char,char,char,unsignedlonglong)">
+			<summary>
+			Compiles the shader with the specified vertex, geometry, and fragment subshaders. The additional VERTEX, GEOMETRY, and FRAGMENT values are added automatically to the defines argument. This function is the same as the compile() function called only with the vertex, fragment, and geometry arguments.
+			</summary> 
+			<param name="vertex"> Vertex subshader path. </param>
+			<param name="geometry"> Geometry subshader path. </param>
+			<param name="fragment"> Fragment subshader path. </param>
+			<param name="defines"> User defines (for example, "OPENGL", "DIRECT3D11", or any other). </param>
+			<param name="key_cache"> Key cache. </param> 
+			<returns>true if the shader compiled successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Shader.compileShader(char,char,unsignedlonglong)">
+			<summary>
+			Compiles the shader that includes subshaders. Depending on the types of the subshaders defined in the shader file, additional values are added to the defines argument automatically: VERTEX, CONTROL, EVALUATE, GEOMETRY, FRAGMENT.
+			</summary> 
+			<param name="shader"> Shader path. </param>
+			<param name="defines"> User defines (for example, "OPENGL", "DIRECT3D11", or any other). </param>
+			<param name="key_cache"> Key cache. </param> 
+			<returns>trueif the shader with all the subshaders compiled successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Shader.validateShader(Shader::SUB_SHADER,char,char)">
+			<summary>
+			Validates the shader (whether it can be compiled or not).
+			</summary> 
+			<param name="type"> Subshader type. </param>
+			<param name="shader"> Shader path. </param>
+			<param name="defines"> User defines (for example, "OPENGL", "DIRECT3D11", or any other). </param> 
+			<returns>true if the shader can be compiled; otherwise, false.</returns>
+		</member>
 		<member name="F:Unigine.Shader.WARNING_MODE_DISABLE">
 			<summary>
 			All shader compilation warnings are ignored. Using this mode is not recommended as it may result in driver and OS crashes, so you use it at your own risk.
@@ -802,6 +810,36 @@
 		<member name="F:Unigine.Shader.WARNING_MODE_HARD">
 			<summary>
 			All warnings are treated as errors. This level is used by default.
+		</summary>
+		</member>
+		<member name="F:Unigine.Shader.SUB_SHADER_VERTEX">
+			<summary>
+			Vertex subshader.
+		</summary>
+		</member>
+		<member name="F:Unigine.Shader.SUB_SHADER_CONTROL">
+			<summary>
+			Control subshader.
+		</summary>
+		</member>
+		<member name="F:Unigine.Shader.SUB_SHADER_EVALUATE">
+			<summary>
+			Evaluation subshader.
+		</summary>
+		</member>
+		<member name="F:Unigine.Shader.SUB_SHADER_GEOMETRY">
+			<summary>
+			Geometry subshader.
+		</summary>
+		</member>
+		<member name="F:Unigine.Shader.SUB_SHADER_FRAGMENT">
+			<summary>
+			Fragment subshader.
+		</summary>
+		</member>
+		<member name="F:Unigine.Shader.SUB_SHADER_COMPUTE">
+			<summary>
+			Compute subshader.
 		</summary>
 		</member>
 	</members>

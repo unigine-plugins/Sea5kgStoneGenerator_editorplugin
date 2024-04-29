@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -146,10 +146,15 @@ public:
 		STREAMING_MESHES_PREFETCH_FULL,
 	};
 
-	enum
+	enum SHADERS_COMPILE_MODE
 	{
-		API_UNKNOWN = 0,
-		API_NULL,
+		SHADERS_COMPILE_MODE_ASYNC,
+		SHADERS_COMPILE_MODE_FORCE,
+	};
+
+	enum RENDER_API
+	{
+		API_NULL = 0,
 		API_OPENGL,
 		API_DIRECT3D11,
 		API_DIRECT3D12,
@@ -163,11 +168,18 @@ public:
 		QUALITY_HIGH,
 	};
 
-	enum
+	enum CAMERA_MODE
 	{
-		EXPOSURE_DISABLED = 0,
-		EXPOSURE_LOGARITHMIC,
-		EXPOSURE_QUADRATIC,
+		CAMERA_MODE_CLASSIC,
+		CAMERA_MODE_PHYSICALLY_BASED,
+	};
+
+	enum EXPOSURE_MODE
+	{
+		EXPOSURE_MODE_DISABLED = 0,
+		EXPOSURE_MODE_LOGARITHMIC,
+		EXPOSURE_MODE_QUADRATIC,
+		EXPOSURE_MODE_CURVE_BASED,
 	};
 
 	enum TONEMAPPER
@@ -192,6 +204,14 @@ public:
 		SHOW_IMMOVABLE_DISABLED = 0,
 		SHOW_IMMOVABLE_OPTION_ENABLED,
 		SHOW_IMMOVABLE_OPTION_DISABLED,
+	};
+
+	enum SHOW_LIGHTING_MODE
+	{
+		SHOW_LIGHTING_MODE_DISABLED = 0,
+		SHOW_LIGHTING_MODE_STATIC,
+		SHOW_LIGHTING_MODE_DYNAMIC,
+		SHOW_LIGHTING_MODE_ADVANCED,
 	};
 
 	enum SHOW_VERTEX_COLOR
@@ -240,6 +260,7 @@ public:
 		PASS_LIGHTMAP_DATA,
 		PASS_PROCEDURAL_DECALS,
 		PASS_PROCEDURAL_FIELDS,
+		PASS_MIXED_REALITY_BLEND_MASK_COLOR,
 		PASS_CUSTOM_0,
 		PASS_CUSTOM_1,
 		PASS_CUSTOM_2,
@@ -315,98 +336,51 @@ public:
 		HAZE_SCATTERING,
 	};
 
-	enum CALLBACK_INDEX
-	{
-		CALLBACK_BEGIN = 0,
-		CALLBACK_BEGIN_ENVIRONMENT,
-		CALLBACK_END_ENVIRONMENT,
-		CALLBACK_BEGIN_SHADOWS,
-		CALLBACK_BEGIN_WORLD_SHADOW,
-		CALLBACK_END_WORLD_SHADOW,
-		CALLBACK_BEGIN_PROJ_SHADOW,
-		CALLBACK_END_PROJ_SHADOW,
-		CALLBACK_BEGIN_OMNI_SHADOW,
-		CALLBACK_END_OMNI_SHADOW,
-		CALLBACK_END_SHADOWS,
-		CALLBACK_BEGIN_SCREEN,
-		CALLBACK_BEGIN_OPACITY_GBUFFER,
-		CALLBACK_END_OPACITY_GBUFFER,
-		CALLBACK_BEGIN_OPACITY_DECALS,
-		CALLBACK_END_OPACITY_DECALS,
-		CALLBACK_BEGIN_CURVATURE,
-		CALLBACK_END_CURVATURE,
-		CALLBACK_BEGIN_CURVATURE_COMPOSITE,
-		CALLBACK_END_CURVATURE_COMPOSITE,
-		CALLBACK_BEGIN_SSRTGI,
-		CALLBACK_END_SSRTGI,
-		CALLBACK_BEGIN_OPACITY_LIGHTS,
-		CALLBACK_END_OPACITY_LIGHTS,
-		CALLBACK_BEGIN_OPACITY_VOXEL_PROBES,
-		CALLBACK_END_OPACITY_VOXEL_PROBES,
-		CALLBACK_BEGIN_OPACITY_ENVIRONMENT_PROBES,
-		CALLBACK_END_OPACITY_ENVIRONMENT_PROBES,
-		CALLBACK_BEGIN_OPACITY_PLANAR_PROBES,
-		CALLBACK_END_OPACITY_PLANAR_PROBES,
-		CALLBACK_BEGIN_AUXILIARY_BUFFER,
-		CALLBACK_END_AUXILIARY_BUFFER,
-		CALLBACK_BEGIN_REFRACTION_BUFFER,
-		CALLBACK_END_REFRACTION_BUFFER,
-		CALLBACK_BEGIN_TRANSPARENT_BLUR_BUFFER,
-		CALLBACK_END_TRANSPARENT_BLUR_BUFFER,
-		CALLBACK_BEGIN_SSSS,
-		CALLBACK_END_SSSS,
-		CALLBACK_BEGIN_SSR,
-		CALLBACK_END_SSR,
-		CALLBACK_BEGIN_SSAO,
-		CALLBACK_END_SSAO,
-		CALLBACK_BEGIN_SSGI,
-		CALLBACK_END_SSGI,
-		CALLBACK_BEGIN_SKY,
-		CALLBACK_END_SKY,
-		CALLBACK_BEGIN_COMPOSITE_DEFERRED,
-		CALLBACK_END_COMPOSITE_DEFERRED,
-		CALLBACK_BEGIN_TRANSPARENT,
-		CALLBACK_BEGIN_CLOUDS,
-		CALLBACK_END_CLOUDS,
-		CALLBACK_BEGIN_WATER,
-		CALLBACK_BEGIN_WATER_DECALS,
-		CALLBACK_END_WATER_DECALS,
-		CALLBACK_BEGIN_WATER_LIGHTS,
-		CALLBACK_END_WATER_LIGHTS,
-		CALLBACK_BEGIN_WATER_VOXEL_PROBES,
-		CALLBACK_END_WATER_VOXEL_PROBES,
-		CALLBACK_BEGIN_WATER_ENVIRONMENT_PROBES,
-		CALLBACK_END_WATER_ENVIRONMENT_PROBES,
-		CALLBACK_BEGIN_WATER_PLANAR_PROBES,
-		CALLBACK_END_WATER_PLANAR_PROBES,
-		CALLBACK_END_WATER,
-		CALLBACK_END_TRANSPARENT,
-		CALLBACK_BEGIN_SRGB_CORRECTION,
-		CALLBACK_END_SRGB_CORRECTION,
-		CALLBACK_BEGIN_ADAPTATION_COLOR_AVERAGE,
-		CALLBACK_END_ADAPTATION_COLOR_AVERAGE,
-		CALLBACK_BEGIN_ADAPTATION_COLOR,
-		CALLBACK_END_ADAPTATION_COLOR,
-		CALLBACK_BEGIN_TAA,
-		CALLBACK_END_TAA,
-		CALLBACK_BEGIN_CAMERA_EFFECTS,
-		CALLBACK_END_CAMERA_EFFECTS,
-		CALLBACK_BEGIN_POST_MATERIALS,
-		CALLBACK_END_POST_MATERIALS,
-		CALLBACK_BEGIN_DEBUG_MATERIALS,
-		CALLBACK_END_DEBUG_MATERIALS,
-		CALLBACK_BEGIN_VISUALIZER,
-		CALLBACK_END_VISUALIZER,
-		CALLBACK_END_SCREEN,
-		CALLBACK_END,
-		NUM_CALLBACKS,
-	};
-
 	enum VSYNC
 	{
 		VSYNC_DISABLE,
 		VSYNC_STRICT,
 		VSYNC_ADAPTIVE,
+	};
+
+	enum RENDER_UPSCALE_MODE
+	{
+		RENDER_UPSCALE_MODE_NONE,
+		RENDER_UPSCALE_MODE_FSR,
+		RENDER_UPSCALE_MODE_DLSS,
+		RENDER_UPSCALE_NUM_MODES,
+	};
+
+	enum RENDER_FSR_MODE
+	{
+		RENDER_FSR_MODE_ULTRA_PERFORMANCE,
+		RENDER_FSR_MODE_PERFORMANCE,
+		RENDER_FSR_MODE_BALANCED,
+		RENDER_FSR_MODE_QUALITY,
+		RENDER_FSR_NUM_MODES,
+	};
+
+	enum RENDER_DLSS_MODE
+	{
+		RENDER_DLSS_MODE_ULTRA_PERFORMANCE,
+		RENDER_DLSS_MODE_MAX_PERFORMANCE,
+		RENDER_DLSS_MODE_BALANCED,
+		RENDER_DLSS_MODE_MAX_QUALITY,
+		RENDER_DLSS_MODE_DLAA,
+		RENDER_DLSS_NUM_MODES,
+	};
+
+	enum RENDER_DLSS_PRESET
+	{
+		RENDER_DLSS_PRESET_DEFAULT,
+		RENDER_DLSS_PRESET_A,
+		RENDER_DLSS_PRESET_B,
+		RENDER_DLSS_PRESET_C,
+		RENDER_DLSS_PRESET_D,
+		RENDER_DLSS_PRESET_E,
+		RENDER_DLSS_PRESET_F,
+		RENDER_DLSS_PRESET_G,
+		RENDER_DLSS_NUM_PRESETS,
 	};
 	static bool createMipmapsCubeGGXImage(const Ptr<Image> &image, const Ptr<Texture> &dest, Render::GGX_MIPMAPS_QUALITY quality);
 	static bool createMipmapsCubeGGXTexture(const Ptr<Texture> &texture, Render::GGX_MIPMAPS_QUALITY quality, bool realtime = true);
@@ -443,11 +417,93 @@ public:
 	static int getMaxFieldAnimations();
 	static int getMaxFieldHeights();
 	static int getMaxFieldShorelines();
-	static int isEnabled();
-	static void setEnabled(int arg1);
-	static void *addCallback(Render::CALLBACK_INDEX callback, CallbackBase *func);
-	static bool removeCallback(Render::CALLBACK_INDEX callback, void *id);
-	static void clearCallbacks(Render::CALLBACK_INDEX callback);
+	static void setEnabled(bool enabled);
+	static bool isEnabled();
+	static Event<> &getEventBegin();
+	static Event<> &getEventBeginEnvironment();
+	static Event<> &getEventEndEnvironment();
+	static Event<> &getEventBeginShadows();
+	static Event<> &getEventBeginWorldShadow();
+	static Event<> &getEventEndWorldShadow();
+	static Event<> &getEventBeginProjShadow();
+	static Event<> &getEventEndProjShadow();
+	static Event<> &getEventBeginOmniShadow();
+	static Event<> &getEventEndOmniShadow();
+	static Event<> &getEventEndShadows();
+	static Event<> &getEventBeginScreen();
+	static Event<> &getEventBeginMixedRealityBlendMaskColor();
+	static Event<> &getEventEndMixedRealityBlendMaskColor();
+	static Event<> &getEventBeginOpacityGBuffer();
+	static Event<> &getEventEndOpacityGBuffer();
+	static Event<> &getEventBeginOpacityDecals();
+	static Event<> &getEventEndOpacityDecals();
+	static Event<> &getEventBeginCurvature();
+	static Event<> &getEventEndCurvature();
+	static Event<> &getEventBeginCurvatureComposite();
+	static Event<> &getEventEndCurvatureComposite();
+	static Event<> &getEventBeginSSRTGI();
+	static Event<> &getEventEndSSRTGI();
+	static Event<> &getEventBeginOpacityLights();
+	static Event<> &getEventEndOpacityLights();
+	static Event<> &getEventBeginOpacityVoxelProbes();
+	static Event<> &getEventEndOpacityVoxelProbes();
+	static Event<> &getEventBeginOpacityEnvironmentProbes();
+	static Event<> &getEventEndOpacityEnvironmentProbes();
+	static Event<> &getEventBeginOpacityPlanarProbes();
+	static Event<> &getEventEndOpacityPlanarProbes();
+	static Event<> &getEventBeginAuxiliaryBuffer();
+	static Event<> &getEventEndAuxiliaryBuffer();
+	static Event<> &getEventBeginRefractionBuffer();
+	static Event<> &getEventEndRefractionBuffer();
+	static Event<> &getEventBeginTransparentBlurBuffer();
+	static Event<> &getEventEndTransparentBlurBuffer();
+	static Event<> &getEventBeginSSSS();
+	static Event<> &getEventEndSSSS();
+	static Event<> &getEventBeginSSR();
+	static Event<> &getEventEndSSR();
+	static Event<> &getEventBeginSSAO();
+	static Event<> &getEventEndSSAO();
+	static Event<> &getEventBeginSSGI();
+	static Event<> &getEventEndSSGI();
+	static Event<> &getEventBeginSky();
+	static Event<> &getEventEndSky();
+	static Event<> &getEventBeginCompositeDeferred();
+	static Event<> &getEventEndCompositeDeferred();
+	static Event<> &getEventBeginTransparent();
+	static Event<> &getEventBeginClouds();
+	static Event<> &getEventEndClouds();
+	static Event<> &getEventBeginWater();
+	static Event<> &getEventBeginWaterDecals();
+	static Event<> &getEventEndWaterDecals();
+	static Event<> &getEventBeginWaterLights();
+	static Event<> &getEventEndWaterLights();
+	static Event<> &getEventBeginWaterVoxelProbes();
+	static Event<> &getEventEndWaterVoxelProbes();
+	static Event<> &getEventBeginWaterEnvironmentProbes();
+	static Event<> &getEventEndWaterEnvironmentProbes();
+	static Event<> &getEventBeginWaterPlanarProbes();
+	static Event<> &getEventEndWaterPlanarProbes();
+	static Event<> &getEventEndWater();
+	static Event<> &getEventEndTransparent();
+	static Event<> &getEventBeginSrgbCorrection();
+	static Event<> &getEventEndSrgbCorrection();
+	static Event<> &getEventBeginAdaptationColorAverage();
+	static Event<> &getEventEndAdaptationColorAverage();
+	static Event<> &getEventBeginAdaptationColor();
+	static Event<> &getEventEndAdaptationColor();
+	static Event<> &getEventBeginTAA();
+	static Event<> &getEventEndTAA();
+	static Event<> &getEventBeginCameraEffects();
+	static Event<> &getEventEndCameraEffects();
+	static Event<> &getEventBeginPostMaterials();
+	static Event<> &getEventEndPostMaterials();
+	static Event<> &getEventBeginDebugMaterials();
+	static Event<> &getEventEndDebugMaterials();
+	static Event<> &getEventBeginVisualizer();
+	static Event<> &getEventEndVisualizer();
+	static Event<> &getEventEndScreen();
+	static Event<> &getEventEnd();
+	static Event<> &getEventEndFrameExecuteCommandLists();
 	static void setData(const char *data);
 	static const char *getData();
 	static void setFirstFrame(bool frame);
@@ -487,6 +543,10 @@ public:
 	static void swapScriptableMaterials(int num_0, int num_1);
 	static void setScriptableMaterialEnabled(int num, bool enabled);
 	static bool getScriptableMaterialEnabled(int num);
+	static int getNumCompiledPSO();
+	static int getNumLoadedPSO();
+	static int getNumCompiledShaders();
+	static int getNumLoadedShaders();
 	static void setBudget(float budget);
 	static float getBudget();
 	static void setBorder(const Math::vec2 &border);
@@ -505,6 +565,8 @@ public:
 	static bool isDebug();
 	static void setLatency(int latency);
 	static int getLatency();
+	static void setMaxNumActiveTargets(int targets);
+	static int getMaxNumActiveTargets();
 	static void setTexturesQuality(int quality);
 	static int getTexturesQuality();
 	static void setTexturesMaxResolution(int resolution);
@@ -517,8 +579,6 @@ public:
 	static int getTexturesAnisotropy();
 	static void setForceStreaming(bool streaming);
 	static bool isForceStreaming();
-	static void setStreamingFirstFramesForce(int force);
-	static int getStreamingFirstFramesForce();
 	static void setStreamingMaxThreads(int threads);
 	static int getStreamingMaxThreads();
 	static void setStreamingParticlesMemoryLimit(int limit);
@@ -535,8 +595,6 @@ public:
 	static int getStreamingTexturesMemoryLimit();
 	static void setStreamingTexturesLifeTime(int time);
 	static int getStreamingTexturesLifeTime();
-	static void setStreamingTexturesCacheResolution(int resolution);
-	static int getStreamingTexturesCacheResolution();
 	static void setStreamingMeshesModeVRAM(Render::STREAMING_MESHES streamingmeshesmodevram);
 	static Render::STREAMING_MESHES getStreamingMeshesModeVRAM();
 	static void setStreamingMeshesLimitVRAM(int streamingmesheslimitvram);
@@ -555,8 +613,8 @@ public:
 	static Render::STREAMING_MESHES_PREFETCH getStreamingMeshesPrefetchIntersection();
 	static void setStreamingMeshesPrefetchRadius(float radius);
 	static float getStreamingMeshesPrefetchRadius();
-	static void setShadersPreload(bool preload);
-	static bool isShadersPreload();
+	static void setShadersCompileMode(Render::SHADERS_COMPILE_MODE mode);
+	static Render::SHADERS_COMPILE_MODE getShadersCompileMode();
 	static void setDistanceOffset(float offset);
 	static float getDistanceOffset();
 	static void setDistanceScale(float scale);
@@ -664,6 +722,30 @@ public:
 	static bool isSharpen();
 	static void setSharpenIntensity(float intensity);
 	static float getSharpenIntensity();
+	static void setUpscaleMode(Render::RENDER_UPSCALE_MODE mode);
+	static Render::RENDER_UPSCALE_MODE getUpscaleMode();
+	static void setUpscalePost(bool post);
+	static bool isUpscalePost();
+	static void setDLSSMode(Render::RENDER_DLSS_MODE mode);
+	static Render::RENDER_DLSS_MODE getDLSSMode();
+	static void setDLSSPreset(Render::RENDER_DLSS_PRESET preset);
+	static Render::RENDER_DLSS_PRESET getDLSSPreset();
+	static void setFSRMode(Render::RENDER_FSR_MODE mode);
+	static Render::RENDER_FSR_MODE getFSRMode();
+	static void setFSREnableSharpness(bool sharpness);
+	static bool isFSREnableSharpness();
+	static void setFSRSharpness(float sharpness);
+	static float getFSRSharpness();
+	static void setFSRPreExposure(float exposure);
+	static float getFSRPreExposure();
+	static void setFSRAutoReactiveScale(float scale);
+	static float getFSRAutoReactiveScale();
+	static void setFSRAutoTCScale(float scale);
+	static float getFSRAutoTCScale();
+	static void setFSRAutoTCThreshold(float threshold);
+	static float getFSRAutoTCThreshold();
+	static void setFSRAutoReactiveMax(float val);
+	static float getFSRAutoReactiveMax();
 	static void setAlphaFade(bool fade);
 	static bool isAlphaFade();
 	static void setAuxiliary(bool auxiliary);
@@ -728,6 +810,8 @@ public:
 	static float getSSGIThreshold();
 	static void setSSGIIntensityBoost(int boost);
 	static int getSSGIIntensityBoost();
+	static void setSSGIInformationLostFix(bool fix);
+	static bool isSSGIInformationLostFix();
 	static void setBentNormal(bool normal);
 	static bool isBentNormal();
 	static void setBentNormalFixOverlitAreas(bool areas);
@@ -750,6 +834,8 @@ public:
 	static int getSSRResolutionColor();
 	static void setSSRAlphaAccumulationMode(int mode);
 	static int getSSRAlphaAccumulationMode();
+	static void setSSRInformationLostFix(bool fix);
+	static bool isSSRInformationLostFix();
 	static void setSSRNumRays(int rays);
 	static int getSSRNumRays();
 	static void setSSRNumSteps(int steps);
@@ -780,40 +866,80 @@ public:
 	static bool isIndirectDiffuseTemporalFilteringEnabled();
 	static void setIndirectDiffuseTemporalFilteringFrameCount(float count);
 	static float getIndirectDiffuseTemporalFilteringFrameCount();
+	static void setIndirectDiffuseTemporalFilteringFrameCountMin(float val);
+	static float getIndirectDiffuseTemporalFilteringFrameCountMin();
 	static void setIndirectDiffuseTemporalFilteringColorClampingIntensity(float intensity);
 	static float getIndirectDiffuseTemporalFilteringColorClampingIntensity();
+	static void setIndirectDiffuseTemporalFilteringColorClampingIntensityAO(float indirectdiffusetemporalfilteringcolorclampingintensityao);
+	static float getIndirectDiffuseTemporalFilteringColorClampingIntensityAO();
 	static void setIndirectDiffuseTemporalFilteringColorClampingVelocityThreshold(float threshold);
 	static float getIndirectDiffuseTemporalFilteringColorClampingVelocityThreshold();
+	static void setIndirectDiffuseTemporalFilteringFramesClampingVelocityThreshold(float threshold);
+	static float getIndirectDiffuseTemporalFilteringFramesClampingVelocityThreshold();
 	static void setIndirectDiffuseDenoiseEnabled(bool enabled);
 	static bool isIndirectDiffuseDenoiseEnabled();
 	static void setIndirectDiffuseDenoiseMaskEnabled(bool enabled);
 	static bool isIndirectDiffuseDenoiseMaskEnabled();
 	static void setIndirectDiffuseDenoiseThreshold(float threshold);
 	static float getIndirectDiffuseDenoiseThreshold();
+	static void setIndirectDiffuseDenoiseThresholdAO(float indirectdiffusedenoisethresholdao);
+	static float getIndirectDiffuseDenoiseThresholdAO();
 	static void setIndirectSpecularTemporalFilteringEnabled(bool enabled);
 	static bool isIndirectSpecularTemporalFilteringEnabled();
 	static void setIndirectSpecularTemporalFilteringFrameCount(float count);
 	static float getIndirectSpecularTemporalFilteringFrameCount();
+	static void setIndirectSpecularTemporalFilteringFrameCountMin(float val);
+	static float getIndirectSpecularTemporalFilteringFrameCountMin();
 	static void setIndirectSpecularTemporalFilteringColorClampingIntensity(float intensity);
 	static float getIndirectSpecularTemporalFilteringColorClampingIntensity();
+	static void setIndirectSpecularTemporalFilteringColorClampingIntensityAO(float indirectspeculartemporalfilteringcolorclampingintensityao);
+	static float getIndirectSpecularTemporalFilteringColorClampingIntensityAO();
 	static void setIndirectSpecularTemporalFilteringColorClampingVelocityThreshold(float threshold);
 	static float getIndirectSpecularTemporalFilteringColorClampingVelocityThreshold();
+	static void setIndirectSpecularTemporalFilteringFramesClampingVelocityThreshold(float threshold);
+	static float getIndirectSpecularTemporalFilteringFramesClampingVelocityThreshold();
 	static void setIndirectSpecularDenoiseEnabled(bool enabled);
 	static bool isIndirectSpecularDenoiseEnabled();
 	static void setIndirectSpecularDenoiseMaskEnabled(bool enabled);
 	static bool isIndirectSpecularDenoiseMaskEnabled();
 	static void setIndirectSpecularDenoiseThreshold(float threshold);
 	static float getIndirectSpecularDenoiseThreshold();
+	static void setIndirectSpecularDenoiseThresholdAO(float indirectspeculardenoisethresholdao);
+	static float getIndirectSpecularDenoiseThresholdAO();
 	static void setDenoisePreset(int preset);
 	static int getDenoisePreset();
 	static int getDenoisePresetNumNames();
 	static const char *getDenoisePresetName(int num);
+	static void setDenoiseInterleaved(bool interleaved);
+	static bool isDenoiseInterleaved();
 	static void setDenoiseRadius(int radius);
 	static int getDenoiseRadius();
 	static void setDenoiseNumBlurIterations(int iterations);
 	static int getDenoiseNumBlurIterations();
-	static void setDenoiseDenoiseByVelocityThreshold(float threshold);
-	static float getDenoiseDenoiseByVelocityThreshold();
+	static void setDenoiseInformationLostDepthThreshold(float threshold);
+	static float getDenoiseInformationLostDepthThreshold();
+	static void setDenoiseAOMaskRadius(float radius);
+	static float getDenoiseAOMaskRadius();
+	static void setDenoiseColorClampingBlurRadius(float radius);
+	static float getDenoiseColorClampingBlurRadius();
+	static void setDenoiseColorClampingBlurIntensity(float intensity);
+	static float getDenoiseColorClampingBlurIntensity();
+	static void setDenoiseColorClampingBlurIntensityAO(float denoisecolorclampingblurintensityao);
+	static float getDenoiseColorClampingBlurIntensityAO();
+	static void setDenoiseInformationLostFixFlicker(float flicker);
+	static float getDenoiseInformationLostFixFlicker();
+	static void setDenoiseHotPixelsFixIntensity(float intensity);
+	static float getDenoiseHotPixelsFixIntensity();
+	static void setDenoiseDenoiseMaskFrameCount(float count);
+	static float getDenoiseDenoiseMaskFrameCount();
+	static void setDenoiseDenoiseMaskVelocityThreshold(float threshold);
+	static float getDenoiseDenoiseMaskVelocityThreshold();
+	static void setDenoiseDenoiseMaskInformationLostBoost(float boost);
+	static float getDenoiseDenoiseMaskInformationLostBoost();
+	static void setDenoiseDenoiseMaskBias(float bias);
+	static float getDenoiseDenoiseMaskBias();
+	static void setDenoiseDenoiseMaskDenoiseThreshold(float threshold);
+	static float getDenoiseDenoiseMaskDenoiseThreshold();
 	static void setSSSSS(bool sssss);
 	static bool isSSSSS();
 	static void setSSSSSPreset(int preset);
@@ -886,16 +1012,21 @@ public:
 	static float getDirtScale();
 	static void setDirtTextureName(const char *name);
 	static const char *getDirtTextureName();
-	static void setCameraMode(int mode);
-	static int getCameraMode();
+	static void setMeteringMaskEnabled(bool enabled);
+	static bool isMeteringMaskEnabled();
+	static void setMeteringMaskTexturePath(const char *path);
+	static const char *getMeteringMaskTexturePath();
+	static Ptr<Texture> getMeteringMaskTexture();
+	static void setCameraMode(Render::CAMERA_MODE mode);
+	static Render::CAMERA_MODE getCameraMode();
 	static void setISO(float iso);
 	static float getISO();
 	static void setShutterSpeed(float speed);
 	static float getShutterSpeed();
 	static void setFStop(float fstop);
 	static float getFStop();
-	static void setExposureMode(int mode);
-	static int getExposureMode();
+	static void setExposureMode(Render::EXPOSURE_MODE mode);
+	static Render::EXPOSURE_MODE getExposureMode();
 	static void setExposure(float exposure);
 	static float getExposure();
 	static void setExposureAdaptation(float adaptation);
@@ -904,6 +1035,8 @@ public:
 	static float getExposureMinLuminance();
 	static void setExposureMaxLuminance(float luminance);
 	static float getExposureMaxLuminance();
+	static Ptr<TextureRamp> getAutoExposureRamp();
+	static void resetAutoExposureRamp();
 	static void setWhiteBalance(bool balance);
 	static bool isWhiteBalance();
 	static void setWhiteBalanceIntensity(float intensity);
@@ -974,6 +1107,20 @@ public:
 	static float getBloomScale();
 	static void setBloomPower(float power);
 	static float getBloomPower();
+	static void setLocalTonemapper(bool tonemapper);
+	static bool isLocalTonemapper();
+	static void setLocalTonemapperNumBlurIterations(int iterations);
+	static int getLocalTonemapperNumBlurIterations();
+	static void setLocalTonemapperDepthThreshold(float threshold);
+	static float getLocalTonemapperDepthThreshold();
+	static void setLocalTonemapperTonemappingIntensity(float intensity);
+	static float getLocalTonemapperTonemappingIntensity();
+	static void setLocalTonemapperEffectOnDarkAreas(float areas);
+	static float getLocalTonemapperEffectOnDarkAreas();
+	static void setLocalTonemapperTargetMiddleGray(float gray);
+	static float getLocalTonemapperTargetMiddleGray();
+	static void setLocalTonemapperLumaBlurredIntensity(float intensity);
+	static float getLocalTonemapperLumaBlurredIntensity();
 	static void setTonemapper(bool tonemapper);
 	static bool isTonemapper();
 	static void setTonemapperMode(Render::TONEMAPPER mode);
@@ -1174,14 +1321,6 @@ public:
 	static int getLightsMaxPerBatch();
 	static void setLightsTileGridSize(int size);
 	static int getLightsTileGridSize();
-	static void setLightsInterleaved(bool interleaved);
-	static bool isLightsInterleaved();
-	static void setLightsInterleavedCatmullResampling(bool resampling);
-	static bool isLightsInterleavedCatmullResampling();
-	static void setLightsInterleavedColorClamping(int clamping);
-	static int getLightsInterleavedColorClamping();
-	static void setLightsInterleavedSamples(int samples);
-	static int getLightsInterleavedSamples();
 	static void setLightsForwardPerObjectWorld(int world);
 	static int getLightsForwardPerObjectWorld();
 	static void setLightsForwardPerObjectOmni(int omni);
@@ -1196,10 +1335,22 @@ public:
 	static int getLightsForwardPerObjectVoxel();
 	static void setLightsLensFlares(bool flares);
 	static bool isLightsLensFlares();
+	static void setDirectLightingInterleaved(bool interleaved);
+	static bool isDirectLightingInterleaved();
+	static void setDirectLightingInterleavedCatmullResampling(bool resampling);
+	static bool isDirectLightingInterleavedCatmullResampling();
+	static void setDirectLightingInterleavedColorClamping(int clamping);
+	static int getDirectLightingInterleavedColorClamping();
+	static void setDirectLightingInterleavedSamples(int samples);
+	static int getDirectLightingInterleavedSamples();
+	static void setIndirectLightingInterleaved(bool interleaved);
+	static bool isIndirectLightingInterleaved();
 	static void setLightmapColor(const Math::vec4 &color);
 	static Math::vec4 getLightmapColor();
 	static void setShadows(bool shadows);
 	static bool isShadows();
+	static void setShadowsReuse(bool reuse);
+	static bool isShadowsReuse();
 	static void setShadowsTranslucentDepth(float depth);
 	static float getShadowsTranslucentDepth();
 	static void setShadowsWorldLerpCascades(bool cascades);
@@ -1208,6 +1359,8 @@ public:
 	static bool isShadowsWorldCascadesCullingClusters();
 	static void setShadowsAlphaTest(bool test);
 	static bool isShadowsAlphaTest();
+	static void setShadowsSimplified(bool simplified);
+	static bool isShadowsSimplified();
 	static void setShadowsScreenSpace(bool space);
 	static bool isShadowsScreenSpace();
 	static void setShadowsPenumbraMode(int mode);
@@ -1426,6 +1579,12 @@ public:
 	static int getWaterAnisotropy();
 	static void setCloudsEnabled(bool enabled);
 	static bool isCloudsEnabled();
+	static void setCloudsMode(int mode);
+	static int getCloudsMode();
+	static void setCloudsPanoramaResolution(int resolution);
+	static int getCloudsPanoramaResolution();
+	static void setCloudsPanoramaReuse(bool reuse);
+	static bool isCloudsPanoramaReuse();
 	static void setCloudsQualityPreset(int preset);
 	static int getCloudsQualityPreset();
 	static int getCloudsQualityPresetNumNames();
@@ -1578,6 +1737,8 @@ public:
 	static bool isShowOccluder();
 	static void setShowCascades(bool cascades);
 	static bool isShowCascades();
+	static void setShowLightingMode(Render::SHOW_LIGHTING_MODE mode);
+	static Render::SHOW_LIGHTING_MODE getShowLightingMode();
 	static void setShowVisualizerDistance(float distance);
 	static float getShowVisualizerDistance();
 	static void setShowWorldShadowCasters(bool casters);
@@ -1719,18 +1880,17 @@ public:
 	static bool saveState(const Ptr<Stream> &stream);
 	static void destroyCacheTexture(const UGUID &guid);
 	static void createCacheTexture(const UGUID &guid);
-	static Ptr<Texture> getCacheTexture(const UGUID &guid);
+	static Ptr<Texture> getCacheTexture(const UGUID &guid, bool forced = false);
 	static void reloadCacheTexture(const UGUID &guid);
 	static void destroyCacheTextures();
 	static void unloadCacheTextures();
-	static void createCacheTextures();
 	static void loadCacheTextures();
 	static void * getD3D11Factory();
 	static void * getD3D11Device();
 	static void * getD3D11Context();
 	static void * getGLContext();
 	static void reloadResource(const char *path);
-	static void reloadResource(const Vector<String> &pathes);
+	static void reloadResource(const Vector<String> &paths);
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -1963,6 +2123,8 @@ public:
 		Math::vec4 modelview_projection_old_x;
 		Math::vec4 modelview_projection_old_y;
 		Math::vec4 modelview_projection_old_w;
+
+		float camera_fov;
 	};
 
 
@@ -2070,6 +2232,7 @@ public:
 	static bool useDynamicReflections();
 	static bool usePostEffects();
 	static bool useOcclusionQueries();
+	static bool useUpscale();
 	static Ptr<Light> getCurrentLight();
 	static void setOverlapEnvironmentTexture(const Ptr<Texture> &texture);
 	static Ptr<Texture> getOverlapEnvironmentTexture();
@@ -2112,7 +2275,8 @@ public:
 	static Ptr<Texture> getTextureRefraction();
 	static Ptr<Texture> getTextureRefractionMask();
 	static Ptr<Texture> getTextureTransparentBlur();
-	static Ptr<Texture> getTextureLights();
+	static Ptr<Texture> getTextureDirectLights();
+	static Ptr<Texture> getTextureIndirectLights();
 	static Ptr<Texture> getTextureBentNormal();
 	static Ptr<Texture> getTextureSSAO();
 	static Ptr<Texture> getTextureSSGI();

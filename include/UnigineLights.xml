@@ -1018,7 +1018,7 @@
 			<summary>
 			Sets the current ambient parallax factor for box projection.					Available only when the Projection Mode is set to Box.
 			</summary> 
-			<param name="boxgi"> Ambient parallax factor. </param> 
+			<param name="parallax"> Ambient parallax factor. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getBoxAmbientParallax const">
 			<summary>
@@ -1066,13 +1066,13 @@
 			<summary>
 			Sets the box size for the environment probe (available only when the Projection Mode is set to Box).
 			</summary> 
-			<param name="size"> Box size along X, Y and Z axes. </param> 
+			<param name="size"> Box size along X, Y, and Z axes. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getBoxSize const">
 			<summary>
 			Returns the current box size for the environment probe (available only when the Projection Mode is set to Box).
 			</summary>  
-			<returns>Box size along X, Y and Z axes.</returns>
+			<returns>Box size along X, Y, and Z axes.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setTexturePath(char)">
 			<summary>
@@ -1100,15 +1100,15 @@
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setGrabGGXMipmapsQuality(Render::GGX_MIPMAPS_QUALITY)">
 			<summary>
-			Sets the quality of GGX mipmaps, one of the GGX_MIPMAPS_QUALITY values.
+			Sets the quality of GGX mipmaps, one of the GGX_MIPMAPS_QUALITYvalues.
 			</summary> 
-			<param name="quality"> The quality of GGX mipmaps, one of the GGX_MIPMAPS_QUALITY values. </param> 
+			<param name="quality"> The quality of GGX mipmaps, one of the GGX_MIPMAPS_QUALITYvalues. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getGrabGGXMipmapsQuality const">
 			<summary>
-			Returns the current quality of GGX mipmaps, one of the GGX_MIPMAPS_QUALITY values.
+			Returns the current quality of GGX mipmaps, one of the GGX_MIPMAPS_QUALITYvalues.
 			</summary>  
-			<returns>The quality of GGX mipmaps, one of the GGX_MIPMAPS_QUALITY values.</returns>
+			<returns>The quality of GGX mipmaps, one of the GGX_MIPMAPS_QUALITYvalues.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setGrabViewportMask(int)">
 			<summary>
@@ -1320,7 +1320,7 @@
 			</summary>  
 			<returns>true if voxel probe light sources are to be baked to the environment probe; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.LightEnvironmentProbe.setGrabBakeVisibilityEnvironmentProbe(int)">
+		<member name="M:Unigine.LightEnvironmentProbe.setGrabBakeVisibilityEnvironmentProbe(bool)">
 			<summary>
 			Enables or disables baking of environment probe light sources to the voxel probe. You can use this option together with additive blending to provide more flexibility in light baking. Thus, you can make voxel probes independent of each other and combine them to produce some sort of dynamic GI effect.
 			</summary> 
@@ -1354,19 +1354,19 @@
 			<summary>
 			Returns the number of variations of the noise pattern, which is changed every frame. Higher values result in a more dynamic noise effect, but a significant temporal accumulation of frames will make the image look like more rays are used. Smaller values result in a more static noise pattern.
 			</summary>  
-			<returns>The number of noise pattern variations.</returns>
+			<returns>Number of variations of the noise pattern, which is changed every frame.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffuseStepSize(float)">
 			<summary>
 			Sets the size of the trace step used for the indirect diffuse light calculation. Higher values result in longer traces (however, tiny objects may become missing), lower values produce more detailed reflections of tiny objects.
 			</summary> 
-			<param name="size"> The size of the trace step used for the indirect diffuse light calculation. </param> 
+			<param name="size"> Size of the trace step used for the indirect diffuse light calculation. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingDiffuseStepSize const">
 			<summary>
 			Returns the size of the trace step used for the indirect diffuse light calculation. Higher values result in longer traces (however, tiny objects may become missing), lower values produce more detailed reflections of tiny objects.
 			</summary>  
-			<returns>The size of the trace step used for the indirect diffuse light calculation.</returns>
+			<returns>Size of the trace step used for the indirect diffuse light calculation.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffuseNumRays(int)">
 			<summary>
@@ -1408,13 +1408,13 @@
 			<summary>
 			Sets the value that limits imitation of environment cubemap occlusion for the diffuse light in areas where information can't be obtained. Higher values make the effect less pronounced. This parameter is mainly used for indoor environment to correct false reflections on occluded areas (false reflections are replaced with black color). For outdoor environment, higher values of this parameter are recommended.
 			</summary> 
-			<param name="occlusion"> The value that limits imitation of environment cubemap occlusion for the diffuse light in areas where information can't be obtained.  </param> 
+			<param name="occlusion"> The value that limits imitation of environment cubemap occlusion for the diffuse light in areas where information can't be obtained. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingDiffuseThresholdOcclusion const">
 			<summary>
 			Returns the current value that limits imitation of environment cubemap occlusion for the diffuse light in areas where information can't be obtained. Higher values make the effect less pronounced. This parameter is mainly used for indoor environment to correct false reflections on occluded areas (false reflections are replaced with black color). For outdoor environment, higher values of this parameter are recommended.
 			</summary>  
-			<returns>The value that limits imitation of environment cubemap occlusion for the diffuse light in areas where information can't be obtained. </returns>
+			<returns>The value that limits imitation of environment cubemap occlusion for the diffuse light in areas where information can't be obtained.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffuseMipOffset(float)">
 			<summary>
@@ -1439,30 +1439,6 @@
 			Returns the current multiplier for the number of rays (Num Rays) for the indirect diffuse in the areas where the ghosting effect usually occurs. Increasing this value reduces the ghosting, but the more ghosting cases are, the more it affects performance.
 			</summary>  
 			<returns>The multiplier for the number of rays (Num Rays) for the indirect diffuse in the areas where the ghosting effect usually occurs.</returns>
-		</member>
-		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffuseReconstructionSamplesScreen(int)">
-			<summary>
-			Sets the number of iterations required for a more accurate detection of the screen-space ray-surface intersection for the indirect diffuse. Higher values define the intersection more precisely, however significantly affect performance.
-			</summary> 
-			<param name="screen"> The number of iterations required for a more accurate detection of the screen-space ray-surface intersection for the indirect diffuse. </param> 
-		</member>
-		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingDiffuseReconstructionSamplesScreen const">
-			<summary>
-			Returns the current number of iterations required for a more accurate detection of the screen-space ray-surface intersection for the indirect diffuse. Higher values define the intersection more precisely, however significantly affect performance.
-			</summary>  
-			<returns>The number of iterations required for a more accurate detection of the screen-space ray-surface intersection for the indirect diffuse.</returns>
-		</member>
-		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffuseReconstructionSamplesCubemap(int)">
-			<summary>
-			Sets the number of iterations required for a more accurate detection of the ray-surface intersection for the indirect diffuse the screen space. Higher values define the intersection more precisely, however significantly affect performance.
-			</summary> 
-			<param name="cubemap"> The number of iterations required for a more accurate detection of the ray-surface intersection for the indirect diffuse outside the screen space. </param> 
-		</member>
-		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingDiffuseReconstructionSamplesCubemap const">
-			<summary>
-			Returns the current number of iterations required for a more accurate detection of the ray-surface intersection for the indirect diffuse outside the screen space. Higher values define the intersection more precisely, however significantly affect performance.
-			</summary>  
-			<returns>The number of iterations required for a more accurate detection of the ray-surface intersection for the indirect diffuse outside the screen space.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffuseTranslucenceAnisotropy(float)">
 			<summary>
@@ -1540,13 +1516,13 @@
 			<summary>
 			Sets the value that limits imitation of environment cubemap occlusion for the specular reflections in areas where information can't be obtained. Higher values make the effect less pronounced. This parameter is mainly used for indoor environment to correct false reflections on occluded areas (false reflections are replaced with black color). For outdoor environment, higher values of this parameter are recommended.
 			</summary> 
-			<param name="occlusion"> The value that limits imitation of environment cubemap occlusion for the specular reflections in areas where information can't be obtained.  </param> 
+			<param name="occlusion"> The value that limits imitation of environment cubemap occlusion for the specular reflections in areas where information can't be obtained. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingSpecularThresholdOcclusion const">
 			<summary>
 			Returns the current value that limits imitation of environment cubemap occlusion for the specular reflections in areas where information can't be obtained. Higher values make the effect less pronounced. This parameter is mainly used for indoor environment to correct false reflections on occluded areas (false reflections are replaced with black color). For outdoor environment, higher values of this parameter are recommended.
 			</summary>  
-			<returns>The value that limits imitation of environment cubemap occlusion for the specular reflections in areas where information can't be obtained. </returns>
+			<returns>The value that limits imitation of environment cubemap occlusion for the specular reflections in areas where information can't be obtained.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularMipOffset(float)">
 			<summary>
@@ -1584,30 +1560,6 @@
 			</summary>  
 			<returns>The rougness value starting from which Indirect Specular stops being calculated and is replaced with Indirect Diffuse.</returns>
 		</member>
-		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularReconstructionSamplesScreen(int)">
-			<summary>
-			Sets the number of iterations required for a more accurate detection of the screen-space ray-surface intersection for the indirect specular. Higher values define the intersection more precisely, however significantly affect performance.
-			</summary> 
-			<param name="screen"> The number of iterations required for a more accurate detection of the screen-space ray-surface intersection for the indirect specular. </param> 
-		</member>
-		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingSpecularReconstructionSamplesScreen const">
-			<summary>
-			Returns the current number of iterations required for a more accurate detection of the screen-space ray-surface intersection for the indirect specular. Higher values define the intersection more precisely, however significantly affect performance.
-			</summary>  
-			<returns>The number of iterations required for a more accurate detection of the screen-space ray-surface intersection for the indirect specular.</returns>
-		</member>
-		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularReconstructionSamplesCubemap(int)">
-			<summary>
-			Sets the number of iterations required for a more accurate detection of the ray-surface intersection for the indirect specular outside the screen space. Higher values define the intersection more precisely, however significantly affect performance.
-			</summary> 
-			<param name="cubemap"> The number of iterations required for a more accurate detection of the ray-surface intersection for the indirect specular outside the screen space. </param> 
-		</member>
-		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingSpecularReconstructionSamplesCubemap const">
-			<summary>
-			Returns the current number of iterations required for a more accurate detection of the ray-surface intersection for the indirect specular outside the screen space. Higher values define the intersection more precisely, however significantly affect performance.
-			</summary>  
-			<returns>The number of iterations required for a more accurate detection of the ray-surface intersection for the indirect specular outside the screen space.</returns>
-		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularBRDF(LightEnvironmentProbe::SPECULAR_BRDF_MODE)">
 			<summary>
 			Sets the light distribution model for matte surfaces. GGX is more realistic, though increases noise and slightly reduces performance.
@@ -1619,6 +1571,110 @@
 			The light distribution model for matte surfaces. GGX is more realistic, though increases noise and slightly reduces performance.
 			</summary>  
 			<returns>The light distribution model for matte surfaces, one of the SPECULAR_BRDF_MODE values.</returns>
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingLastStepMode(LightEnvironmentProbe::LAST_STEP_MODE)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingLastStepMode const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingAmbientOcclusionIntensity(float)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingAmbientOcclusionIntensity const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingAmbientOcclusionRadius(float)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingAmbientOcclusionRadius const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffuseThresholdBinarySearch(float)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingDiffuseThresholdBinarySearch const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffuseReconstructionSamples(int)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingDiffuseReconstructionSamples const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffusePerspectiveCompensation(float)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingDiffusePerspectiveCompensation const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffuseNonLinearStepSize(float)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingDiffuseNonLinearStepSize const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularThresholdBinarySearch(float)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingSpecularThresholdBinarySearch const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularReconstructionSamples(int)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingSpecularReconstructionSamples const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularPerspectiveCompensation(float)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingSpecularPerspectiveCompensation const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularNonLinearStepSize(float)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingSpecularNonLinearStepSize const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setGrabEnvironmentAmbientIntensity(float)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.getGrabEnvironmentAmbientIntensity const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setGrabEnvironmentReflectionIntensity(float)">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.getGrabEnvironmentReflectionIntensity const">
+			<summary>
+			</summary>  
 		</member>
 		<member name="F:Unigine.LightEnvironmentProbe.GRAB_DYNAMIC_FACES_PER_FRAME_MODE_1">
 			<summary>
@@ -1960,18 +2016,6 @@
 			</summary>  
 			<returns>A texture memory usage, in bytes.</returns>
 		</member>
-		<member name="M:Unigine.LightVoxelProbe.setAdditiveBlending(bool)">
-			<summary>
-			Enables or disables additive blending mode for the voxel probe. This option offers more flexibility in lighting control. You can use it to blend lighting of several voxel probes together and control them separately (e.g. make a separate voxel probe for an indoor emissive light source and blend it with another voxel probe with lighting baked from the sky, having the ability to enable and disable them separately).					Voxel probes with additive blending enabled cannot be used to add lighting details (e.g. creating a small high-detail voxel probe inside a large low-detail one). Such probes do not replace each other, as they are blended instead.
-			</summary> 
-			<param name="blending"> 1 to enable additive blending mode for the voxel probe; 0 to disable it. </param> 
-		</member>
-		<member name="M:Unigine.LightVoxelProbe.isAdditiveBlending const">
-			<summary>
-			Returns a value indicating if the additive blending mode for the voxel probe is enabled. This option offers more flexibility in lighting control. You can use it to blend lighting of several voxel probes together and control them separately (e.g. make a separate voxel probe for an indoor emissive light source and blend it with another voxel probe with lighting baked from the sky, having the ability to enable and disable them separately).					Voxel probes with additive blending enabled cannot be used to add lighting details (e.g. creating a small high-detail voxel probe inside a large low-detail one). Such probes do not replace each other, as they are blended instead.
-			</summary>  
-			<returns>1 if the additive blending mode for the voxel probe; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.LightVoxelProbe.setBakeVisibilityEmission(bool)">
 			<summary>
 			Enables or disables baking of emission light sources to the voxel probe. You can use this option together with additive blending to provide more flexibility in light baking. Thus, you can make voxel probes independent of each other and combine them to produce some sort of dynamic GI effect.
@@ -2056,7 +2100,7 @@
 			</summary>  
 			<returns>1 if lightmapped surfaces are to be baked to the voxel probe; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.LightVoxelProbe.setBakeVisibilityEnvironmentProbe(int)">
+		<member name="M:Unigine.LightVoxelProbe.setBakeVisibilityEnvironmentProbe(bool)">
 			<summary>
 			Enables or disables baking of environment probe light sources to the voxel probe. You can use this option together with additive blending to provide more flexibility in light baking. Thus, you can make voxel probes independent of each other and combine them to produce some sort of dynamic GI effect.
 			</summary> 
@@ -2079,6 +2123,18 @@
 			Returns the current baking quality for the voxel probe.
 			</summary>  
 			<returns>The bake quality. One of BAKE_QUALITY values.</returns>
+		</member>
+		<member name="M:Unigine.LightVoxelProbe.setBlendMode(LightVoxelProbe::BLEND)">
+			<summary>
+			Sets the blending mode for the light voxel probe.
+			</summary> 
+			<param name="mode"> The blending mode. One of BLEND values. </param> 
+		</member>
+		<member name="M:Unigine.LightVoxelProbe.getBlendMode const">
+			<summary>
+			Returns the current blending mode for the light voxel probe.
+			</summary>  
+			<returns>The blending mode. One of BLEND values.</returns>
 		</member>
 		<member name="F:Unigine.LightVoxelProbe.BAKE_INTERNAL_VOLUME_HALF">
 			<summary>
@@ -2118,6 +2174,21 @@
 		<member name="F:Unigine.LightVoxelProbe.BAKE_QUALITY_DRAFT">
 			<summary>
 			The lowest sampling quality and number of rays simulated but the highest iterativity.
+		</summary>
+		</member>
+		<member name="F:Unigine.LightVoxelProbe.BLEND_MULTIPLICATIVE">
+			<summary>
+			The multiplicative mode of light blending.
+		</summary>
+		</member>
+		<member name="F:Unigine.LightVoxelProbe.BLEND_ADDITIVE">
+			<summary>
+			The additive mode of light blending.
+		</summary>
+		</member>
+		<member name="F:Unigine.LightVoxelProbe.BLEND_ALPHA_BLEND">
+			<summary>
+			The alpha blend mode of light blending.
 		</summary>
 		</member>
 		<member name="M:Unigine.LightPlanarProbe.#ctor">
@@ -2710,7 +2781,7 @@
 			</summary> 
 			<param name="mode"> Light mode, one of the MODE_* variables. </param> 
 		</member>
-		<member name="M:Unigine.LightWorld.getMode">
+		<member name="M:Unigine.LightWorld.getMode const">
 			<summary>
 			Returns the current rendering mode for the light source. This option determines whether the light is to be rendered as a dynamic or static one.
 			</summary>  
@@ -2722,7 +2793,7 @@
 			</summary> 
 			<param name="angle"> Angle at which the light source is disabled. </param> 
 		</member>
-		<member name="M:Unigine.LightWorld.getDisableAngle">
+		<member name="M:Unigine.LightWorld.getDisableAngle const">
 			<summary>
 			Returns an angle at which the light source is disabled (shadows and the diffuse component is disabled). However, the light source still affects scattering.
 			</summary>  
@@ -2734,31 +2805,31 @@
 			</summary> 
 			<param name="cascades"> Number of shadow cascades. Accepted values are from 1 to 4. The default is 4. </param> 
 		</member>
-		<member name="M:Unigine.LightWorld.getNumShadowCascades">
+		<member name="M:Unigine.LightWorld.getNumShadowCascades const">
 			<summary>
 			Returns the number of shadow cascades with different shadow maps. All the shadow maps have the same resolution, but are applied to different cascades. Thus, close-range shadows are of higher quality and distant ones of lower.
 			</summary>  
 			<returns>The number of shadow cascades. The minimum number of cascades is 1, the maximum is 4.</returns>
 		</member>
-		<member name="M:Unigine.LightWorld.setScattering(int)">
+		<member name="M:Unigine.LightWorld.setScattering(LightWorld::SCATTERING)">
 			<summary>
 			Sets a lighting type for the world light.
 			</summary> 
 			<param name="scattering"> One of the SCATTERING_* variables. </param> 
 		</member>
-		<member name="M:Unigine.LightWorld.getScattering">
+		<member name="M:Unigine.LightWorld.getScattering const">
 			<summary>
 			Returns a lighting type set for the world light.
 			</summary>  
 			<returns>One of the SCATTERING_* variables.</returns>
 		</member>
-		<member name="M:Unigine.LightWorld.setShadowCascadeMode(int)">
+		<member name="M:Unigine.LightWorld.setShadowCascadeMode(LightWorld::SHADOW_CASCADE_MODE)">
 			<summary>
 			Sets the shadow cascade generation mode for the world light source. There are two modes available:											Dynamic - shadow cascades are built dynamically relative to the camera's position.						Static - shadow cascades are built relative to the world light's position and baked. This mode is suitable for archviz projects.
 			</summary> 
 			<param name="mode"> Shadow cascade mode, one of the SHADOW_CASCADE_MODE_* variables. </param> 
 		</member>
-		<member name="M:Unigine.LightWorld.getShadowCascadeMode">
+		<member name="M:Unigine.LightWorld.getShadowCascadeMode const">
 			<summary>
 			Returns the current shadow cascade generation mode for the world light source. There are two modes available:											Dynamic - shadow cascades are built dynamically relative to the camera's position.						Static - shadow cascades are built relative to the world light's position and baked. This mode is suitable for archviz projects.
 			</summary>  
@@ -2771,7 +2842,7 @@
 			<param name="num"> Number of the cascade in range [0;num_cascades-1]. </param>
 			<param name="r"> Distance multiplier to be set, in range [0; 1]. </param> 
 		</member>
-		<member name="M:Unigine.LightWorld.getShadowCascadeBorder(int)">
+		<member name="M:Unigine.LightWorld.getShadowCascadeBorder(int) const">
 			<summary>
 			Returns the multiplier for the distance to the border of the specified shadow cascade at which the corresponding shadows are rendered.
 			</summary> 
@@ -2784,7 +2855,7 @@
 			</summary> 
 			<param name="height"> View height of the orthographic projection used for shadow cascade generation, in units. </param> 
 		</member>
-		<member name="M:Unigine.LightWorld.getShadowHeight">
+		<member name="M:Unigine.LightWorld.getShadowHeight const">
 			<summary>
 			Returns the current view height of the orthographic projection used for generation of static shadow cascades. Static cascades are generated relative to the world light's position.					This parameter is available only when the shadow cascade mode of the world light is set to static.
 			</summary>  
@@ -2796,7 +2867,7 @@
 			</summary> 
 			<param name="width"> View width of the orthographic projection used for shadow cascade generation, in units. </param> 
 		</member>
-		<member name="M:Unigine.LightWorld.getShadowWidth">
+		<member name="M:Unigine.LightWorld.getShadowWidth const">
 			<summary>
 			Returns the current view width of the orthographic projection used for generation of static shadow cascades. Static cascades are generated relative to the world light's position.					This parameter is available only when the shadow cascade mode of the world light is set to static.
 			</summary>  
@@ -2808,7 +2879,7 @@
 			</summary> 
 			<param name="zfar"> Distance to the far clipping plane to be used, in units. </param> 
 		</member>
-		<member name="M:Unigine.LightWorld.getShadowZFar">
+		<member name="M:Unigine.LightWorld.getShadowZFar const">
 			<summary>
 			Returns the current distance to the far clipping plane used for generation of static shadow cascades. Static cascades are generated relative to the world light's position.					This parameter is available only when the shadow cascade mode of the world light is set to static.
 			</summary>  
@@ -2846,6 +2917,18 @@
 			</summary> 
 			<param name="camera_position"> Position of the camera in world coordinates. </param>
 			<param name="zfar"> Distance to the far z-clipping plane, in units. </param> 
+		</member>
+		<member name="M:Unigine.LightWorld.setOneCascadePerFrame(bool)">
+			<summary>
+			Sets the value indicating if the One Cascade Per Frame mode is enabled. This mode distributes the update of shadow cascades across multiple rendering frames: shadows from static geometry are rendered into only one cascade per frame.
+			</summary> 
+			<param name="frame"> true to enable the One Cascade Per Frame mode, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.LightWorld.isOneCascadePerFrame const">
+			<summary>
+			Returns the value indicating if the One Cascade Per Frame mode is enabled. This mode distributes the update of shadow cascades across multiple rendering frames: shadows from static geometry are rendered into only one cascade per frame.
+			</summary>  
+			<returns>true if the One Cascade Per Frame mode is enabled, otherwise false.</returns>
 		</member>
 		<member name="F:Unigine.LightWorld.SCATTERING_MOON">
 			<summary>

@@ -1250,12 +1250,12 @@
 		</member>
 		<member name="M:Unigine.StringStack class.#ctor">
 			<summary>
-			Default constructor that creates an empty string stack of the default size (256 characters).
+			Default constructor that creates an empty string of the default size (256 characters).
 			</summary>  
 		</member>
 		<member name="M:Unigine.StringStack class.#ctor(String)">
 			<summary>
-			Copy constructor. Creates a string stack that stores a given string.
+			Copy constructor. Creates a string that stores a given string.
 			</summary> 
 			<param name="s"> String to be copied. </param> 
 		</member>
@@ -1278,31 +1278,31 @@
 		</member>
 		<member name="M:Unigine.StringStack class.StringStack&lt;Capacity&gt;(StringStack{OtherCapacity})">
 			<summary>
-			Copies a given string stack to the current string stack.
+			Copies a given string to the current string.
 			</summary> 
-			<param name="s"> String stack of a given size to be copied. </param> 
+			<param name="s"> String of a given size to be copied. </param> 
 		</member>
 		<member name="M:Unigine.StringStack class.operator=(StringStack{Capacity})">
 			<summary>
-			Assignment operator for the string stack.
+			Assignment operator for the string.
 			</summary> 
-			<param name="s"> String stack. </param> 
+			<param name="s"> String. </param> 
 		</member>
 		<member name="M:Unigine.StringStack class.operator=(char)">
 			<summary>
-			Assignment operator for the string stack.
+			Assignment operator for the string.
 			</summary> 
 			<param name="s"> Pointer to a null-terminated string. </param> 
 		</member>
 		<member name="M:Unigine.StringStack class.operator=(StringStack{OtherCapacity})">
 			<summary>
-			Assignment operator for the string stack.
+			Assignment operator for the string.
 			</summary> 
-			<param name="s"> String stack of the given size. </param> 
+			<param name="s"> String of the given size. </param> 
 		</member>
 		<member name="M:Unigine.StringStack class.operator=(String)">
 			<summary>
-			Assignment operator for the string stack.
+			Assignment operator for the string.
 			</summary> 
 			<param name="s"> String. </param> 
 		</member>

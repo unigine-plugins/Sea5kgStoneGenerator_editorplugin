@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -14,10 +14,69 @@
 #pragma once
 
 #include "UnigineBase.h"
+#include "UnigineHash.h"
+#include "UnigineMathLib.h"
 #include <type_traits>
+
+#ifdef __clang__
+	#pragma GCC diagnostic push
+	// Remove the warning: 'foo' overrides a member function but is not marked 'override'
+	#pragma GCC diagnostic ignored "-Winconsistent-missing-override"
+#endif
 
 namespace Unigine
 {
+
+class EventBase;
+
+class UNIGINE_API EventConnection : public InstancePool<EventConnection>
+{
+public:
+	UNIGINE_INLINE EventConnection() = default;
+	UNIGINE_INLINE virtual ~EventConnection() { disconnect(); }
+	void disconnect();
+	UNIGINE_INLINE bool isEnabled() const { return enabled; }
+	UNIGINE_INLINE void setEnabled(bool mode) { enabled = mode; }
+	UNIGINE_INLINE bool isValid() const { return event != nullptr; }
+	EventConnection(EventConnection &&other) = delete;
+	EventConnection(const EventConnection &other) = delete;
+	EventConnection &operator=(EventConnection &&other) = delete;
+	EventConnection &operator=(const EventConnection &other) = delete;
+
+protected:
+	UNIGINE_INLINE virtual void clear() { event = nullptr; }
+
+private:
+	friend class EventBase;
+	friend class CallbackBase;
+
+	EventBase *event{nullptr};
+	bool enabled{true};
+};
+
+class EventConnections
+{
+public:
+	UNIGINE_INLINE EventConnections() = default;
+	EventConnections(EventConnections &&other) = delete;
+	EventConnections(const EventConnections &other) = delete;
+	EventConnections &operator=(EventConnections &&other) = delete;
+	EventConnections &operator=(const EventConnections &other) = delete;
+
+	virtual ~EventConnections() { disconnectAll(); }
+	UNIGINE_INLINE bool empty() const { return connections.size() == 0; }
+
+	UNIGINE_INLINE void disconnectAll()
+	{
+		while (connections.size())
+			delete connections.takeLast();
+	}
+
+private:
+
+	friend class EventBase;
+	Vector<EventConnection *> connections;
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 // Base callback class.
@@ -25,7 +84,11 @@ namespace Unigine
 class CallbackBase
 {
 public:
-	virtual ~CallbackBase() {}
+	virtual ~CallbackBase()
+	{
+		if (connection)
+			connection->clear();
+	}
 
 	virtual void run() = 0;
 
@@ -44,7 +107,26 @@ public:
 	template <class A0, class A1, class A2, class A3, class A4>
 	void run(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4);
 
+	virtual uint32_t getHash() = 0;
+
+	template<class A1>
+	UNIGINE_INLINE static uint32_t hashCall(const A1 &a1) { return Math::hashCast64To32(Hasher<A1>::create(a1)); }
+	template<class A1, class A2>
+	UNIGINE_INLINE static uint32_t hashCall(const A1 &a1, const A2 &a2) { return Math::hashMixer(hashCall(a1), hashCall(a2)); }
+
+protected:
+
+	bool is_enabled() const
+	{
+		if (connection == nullptr)
+			return true;
+		return connection->isEnabled();
+	}
+
 private:
+
+	friend EventBase;
+	EventConnection *connection{nullptr};
 	virtual int get_arity() const { return 0; }
 };
 
@@ -64,7 +146,7 @@ template <class A0, class A1>
 class CallbackBase2 : public CallbackBase
 {
 public:
-	void run()  override { UNIGINE_ASSERT(0 && "CallbackBase2::run(): called"); }
+	void run() override { UNIGINE_ASSERT(0 && "CallbackBase2::run(): called"); }
 	virtual void run(A0 a0, A1 a1) = 0;
 
 private:
@@ -108,6 +190,9 @@ private:
 template <class A0>
 void CallbackBase::run(A0 a0)
 {
+	if (!this->is_enabled())
+		return;
+
 	switch (get_arity())
 	{
 		case 0: run(); break;
@@ -119,6 +204,9 @@ void CallbackBase::run(A0 a0)
 template <class A0, class A1>
 void CallbackBase::run(A0 a0, A1 a1)
 {
+	if (!this->is_enabled())
+		return;
+
 	switch (get_arity())
 	{
 		case 0: run(); break;
@@ -131,6 +219,9 @@ void CallbackBase::run(A0 a0, A1 a1)
 template <class A0, class A1, class A2>
 void CallbackBase::run(A0 a0, A1 a1, A2 a2)
 {
+	if (!this->is_enabled())
+		return;
+
 	switch (get_arity())
 	{
 		case 0: run(); break;
@@ -144,6 +235,9 @@ void CallbackBase::run(A0 a0, A1 a1, A2 a2)
 template <class A0, class A1, class A2, class A3>
 void CallbackBase::run(A0 a0, A1 a1, A2 a2, A3 a3)
 {
+	if (!this->is_enabled())
+		return;
+
 	switch (get_arity())
 	{
 		case 0: run(); break;
@@ -158,6 +252,9 @@ void CallbackBase::run(A0 a0, A1 a1, A2 a2, A3 a3)
 template <class A0, class A1, class A2, class A3, class A4>
 void CallbackBase::run(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
 {
+	if (!this->is_enabled())
+		return;
+
 	switch (get_arity())
 	{
 		case 0: run(); break;
@@ -181,7 +278,9 @@ public:
 		: func(func)
 	{}
 
-	virtual void run() { func(); }
+	void run() override { if (!this->is_enabled()) return; func(); }
+
+	uint32_t getHash() override { return this->hashCall(func); }
 
 private:
 	Func func;
@@ -198,8 +297,10 @@ public:
 		: func(func), a0(a0)
 	{}
 
-	virtual void run() { func(a0); }
-	virtual void run(A0 arg0) { func(arg0); }
+	void run() override { if (!this->is_enabled()) return; func(a0); }
+	virtual void run(A0 arg0) { if (!this->is_enabled()) return; func(arg0); }
+
+	uint32_t getHash() override { return this->hashCall(func); }
 
 private:
 	Func func;
@@ -220,9 +321,11 @@ public:
 		: func(func), a0(a0), a1(a1)
 	{}
 
-	virtual void run() { func(a0, a1); }
-	virtual void run(A0 arg0) { func(arg0, a1); }
-	virtual void run(A0 arg0, A1 arg1) { func(arg0, arg1); }
+	void run() override { if (!this->is_enabled()) return; func(a0, a1); }
+	virtual void run(A0 arg0) { if (!this->is_enabled()) return; func(arg0, a1); }
+	virtual void run(A0 arg0, A1 arg1) { if (!this->is_enabled()) return; func(arg0, arg1); }
+
+	uint32_t getHash() override { return this->hashCall(func); }
 
 private:
 	Func func;
@@ -247,10 +350,12 @@ public:
 		: func(func), a0(a0), a1(a1), a2(a2)
 	{}
 
-	virtual void run() { func(a0, a1, a2); }
-	virtual void run(A0 arg0) { func(arg0, a1, a2); }
-	virtual void run(A0 arg0, A1 arg1) { func(arg0, arg1, a2); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2) { func(arg0, arg1, arg2); }
+	void run() override { if (!this->is_enabled()) return; func(a0, a1, a2); }
+	virtual void run(A0 arg0) { if (!this->is_enabled()) return; func(arg0, a1, a2); }
+	virtual void run(A0 arg0, A1 arg1) { if (!this->is_enabled()) return; func(arg0, arg1, a2); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2) { if (!this->is_enabled()) return; func(arg0, arg1, arg2); }
+
+	uint32_t getHash() override { return this->hashCall(func); }
 
 private:
 	Func func;
@@ -279,11 +384,13 @@ public:
 		: func(func), a0(a0), a1(a1), a2(a2), a3(a3)
 	{}
 
-	virtual void run() { func(a0, a1, a2, a3); }
-	virtual void run(A0 arg0) { func(arg0, a1, a2, a3); }
-	virtual void run(A0 arg0, A1 arg1) { func(arg0, arg1, a2, a3); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2) { func(arg0, arg1, arg2, a3); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3) { func(arg0, arg1, arg2, arg3); }
+	void run() override { if (!this->is_enabled()) return; func(a0, a1, a2, a3); }
+	virtual void run(A0 arg0) { if (!this->is_enabled()) return; func(arg0, a1, a2, a3); }
+	virtual void run(A0 arg0, A1 arg1) { if (!this->is_enabled()) return; func(arg0, arg1, a2, a3); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2) { if (!this->is_enabled()) return; func(arg0, arg1, arg2, a3); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3) { if (!this->is_enabled()) return; func(arg0, arg1, arg2, arg3); }
+
+	uint32_t getHash() override { return this->hashCall(func); }
 
 private:
 	Func func;
@@ -300,28 +407,30 @@ public:
 	Callback5(Func func)
 		: func(func)
 	{}
-	Callback5(Func func, A3 a3)
-		: func(func), a3(a3)
+	Callback5(Func func, A4 a4)
+		: func(func), a4(a4)
 	{}
-	Callback5(Func func, A2 a2, A3 a3)
-		: func(func), a2(a2), a3(a3)
+	Callback5(Func func, A3 a3, A4 a4)
+		: func(func), a3(a3), a4(a4)
 	{}
-	Callback5(Func func, A1 a1, A2 a2, A3 a3)
-		: func(func), a1(a1), a2(a2), a3(a3)
+	Callback5(Func func, A2 a2, A3 a3, A4 a4)
+		: func(func), a2(a2), a3(a3), a4(a4)
 	{}
-	Callback5(Func func, A0 a0, A1 a1, A2 a2, A3 a3)
-		: func(func), a0(a0), a1(a1), a2(a2), a3(a3)
+	Callback5(Func func, A1 a1, A2 a2, A3 a3, A4 a4)
+		: func(func), a1(a1), a2(a2), a3(a3), a4(a4)
 	{}
 	Callback5(Func func, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
 		: func(func), a0(a0), a1(a1), a2(a2), a3(a3), a4(a4)
 	{}
 
-	virtual void run() { func(a0, a1, a2, a3, a4); }
-	virtual void run(A0 arg0) { func(arg0, a1, a2, a3, a4); }
-	virtual void run(A0 arg0, A1 arg1) { func(arg0, arg1, a2, a3, a4); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2) { func(arg0, arg1, arg2, a3, a4); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3) { func(arg0, arg1, arg2, arg3, a4); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3, A4 arg4) { func(arg0, arg1, arg2, arg3, arg4); }
+	void run() override { if (!this->is_enabled()) return; func(a0, a1, a2, a3, a4); }
+	virtual void run(A0 arg0) { if (!this->is_enabled()) return; func(arg0, a1, a2, a3, a4); }
+	virtual void run(A0 arg0, A1 arg1) { if (!this->is_enabled()) return; func(arg0, arg1, a2, a3, a4); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2) { if (!this->is_enabled()) return; func(arg0, arg1, arg2, a3, a4); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3) { if (!this->is_enabled()) return; func(arg0, arg1, arg2, arg3, a4); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3, A4 arg4) { if (!this->is_enabled()) return; func(arg0, arg1, arg2, arg3, arg4); }
+
+	uint32_t getHash() override { return this->hashCall(func); }
 
 private:
 	Func func;
@@ -472,7 +581,8 @@ public:
 		: object(object), func(func)
 	{}
 
-	virtual void run() { (object->*func)(); }
+	void run() override { if (!this->is_enabled()) return; (object->*func)(); }
+	uint32_t getHash() override { return this->hashCall(object, reinterpret_cast<void *&>(func)); }
 
 private:
 	Class *object;
@@ -490,8 +600,10 @@ public:
 		: object(object), func(func), a0(a0)
 	{}
 
-	virtual void run() { (object->*func)(a0); }
-	virtual void run(A0 arg0) { (object->*func)(arg0); }
+	void run() override { if (!this->is_enabled()) return; (object->*func)(a0); }
+	virtual void run(A0 arg0) { if (!this->is_enabled()) return; (object->*func)(arg0); }
+
+	uint32_t getHash() override { return this->hashCall(object, reinterpret_cast<void *&>(func)); }
 
 private:
 	Class *object;
@@ -513,9 +625,11 @@ public:
 		: object(object), func(func), a0(a0), a1(a1)
 	{}
 
-	virtual void run() { (object->*func)(a0, a1); }
-	virtual void run(A0 arg0) { (object->*func)(arg0, a1); }
-	virtual void run(A0 arg0, A1 arg1) { (object->*func)(arg0, arg1); }
+	void run() override { if (!this->is_enabled()) return; (object->*func)(a0, a1); }
+	virtual void run(A0 arg0) { if (!this->is_enabled()) return; (object->*func)(arg0, a1); }
+	virtual void run(A0 arg0, A1 arg1) { if (!this->is_enabled()) return; (object->*func)(arg0, arg1); }
+
+	uint32_t getHash() override { return this->hashCall(object, reinterpret_cast<void *&>(func)); }
 
 private:
 	Class *object;
@@ -541,10 +655,12 @@ public:
 		: object(object), func(func), a0(a0), a1(a1), a2(a2)
 	{}
 
-	virtual void run() { (object->*func)(a0, a1, a2); }
-	virtual void run(A0 arg0) { (object->*func)(arg0, a1, a2); }
-	virtual void run(A0 arg0, A1 arg1) { (object->*func)(arg0, arg1, a2); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2) { (object->*func)(arg0, arg1, arg2); }
+	void run() override { if (!this->is_enabled()) return; (object->*func)(a0, a1, a2); }
+	virtual void run(A0 arg0) { if (!this->is_enabled()) return; (object->*func)(arg0, a1, a2); }
+	virtual void run(A0 arg0, A1 arg1) { if (!this->is_enabled()) return; (object->*func)(arg0, arg1, a2); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2) { if (!this->is_enabled()) return; (object->*func)(arg0, arg1, arg2); }
+
+	uint32_t getHash() override { return this->hashCall(object, reinterpret_cast<void *&>(func)); }
 
 private:
 	Class *object;
@@ -574,11 +690,14 @@ public:
 		: object(object), func(func), a0(a0), a1(a1), a2(a2), a3(a3)
 	{}
 
-	virtual void run() { (object->*func)(a0, a1, a2, a3); }
-	virtual void run(A0 arg0) { (object->*func)(arg0, a1, a2, a3); }
-	virtual void run(A0 arg0, A1 arg1) { (object->*func)(arg0, arg1, a2, a3); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2) { (object->*func)(arg0, arg1, arg2, a3); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3) { (object->*func)(arg0, arg1, arg2, arg3); }
+	void run() override { if (!this->is_enabled()) return; (object->*func)(a0, a1, a2, a3); }
+	virtual void run(A0 arg0) { if (!this->is_enabled()) return; (object->*func)(arg0, a1, a2, a3); }
+	virtual void run(A0 arg0, A1 arg1) { if (!this->is_enabled()) return; (object->*func)(arg0, arg1, a2, a3); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2) { if (!this->is_enabled()) return; (object->*func)(arg0, arg1, arg2, a3); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3) { if (!this->is_enabled()) return; (object->*func)(arg0, arg1, arg2, arg3); }
+
+	uint32_t getHash() override { return this->hashCall(object, reinterpret_cast<void *&>(func)); }
+
 private:
 	Class *object;
 	Func func;
@@ -611,12 +730,14 @@ public:
 		: object(object), func(func), a0(a0), a1(a1), a2(a2), a3(a3), a4(a4)
 	{}
 
-	virtual void run() { (object->*func)(a0, a1, a2, a3, a4); }
-	virtual void run(A0 arg0) { (object->*func)(arg0, a1, a2, a3, a4); }
-	virtual void run(A0 arg0, A1 arg1) { (object->*func)(arg0, arg1, a2, a3, a4); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2) { (object->*func)(arg0, arg1, arg2, a3, a4); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3) { (object->*func)(arg0, arg1, arg2, arg3, a4); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3, A4 arg4) { (object->*func)(arg0, arg1, arg2, arg3, arg4); }
+	void run() override { if (!this->is_enabled()) return; (object->*func)(a0, a1, a2, a3, a4); }
+	virtual void run(A0 arg0) { if (!this->is_enabled()) return; (object->*func)(arg0, a1, a2, a3, a4); }
+	virtual void run(A0 arg0, A1 arg1) { if (!this->is_enabled()) return; (object->*func)(arg0, arg1, a2, a3, a4); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2) { if (!this->is_enabled()) return; (object->*func)(arg0, arg1, arg2, a3, a4); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3) { if (!this->is_enabled()) return; (object->*func)(arg0, arg1, arg2, arg3, a4); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3, A4 arg4) { if (!this->is_enabled()) return; (object->*func)(arg0, arg1, arg2, arg3, arg4); }
+
+	uint32_t getHash() override { return this->hashCall(object, reinterpret_cast<void *&>(func)); }
 
 private:
 	Class *object;
@@ -656,13 +777,13 @@ CallbackBase1<A0> *MakeCallback(Class *object, Ret (Class::*func)(A0) const)
 }
 
 template <class Class, class Ret, class A0>
-CallbackBase*MakeCallback(Class *object, Ret (Class::*func)(A0), A0 a0)
+CallbackBase *MakeCallback(Class *object, Ret (Class::*func)(A0), A0 a0)
 {
 	return new CallbackObject1<CallbackBase, Class, Ret (Class::*)(A0), A0>(object, func, a0);
 }
 
 template <class Class, class Ret, class A0>
-CallbackBase*MakeCallback(Class *object, Ret (Class::*func)(A0) const, A0 a0)
+CallbackBase *MakeCallback(Class *object, Ret (Class::*func)(A0) const, A0 a0)
 {
 	return new CallbackObject1<CallbackBase, Class, Ret (Class::*)(A0) const, A0>(object, func, a0);
 }
@@ -892,7 +1013,9 @@ class CallbackCallable : public CallbackBase
 public:
 	CallbackCallable(const T &f) : func(f) {}
 
-	virtual void run() { func(); }
+	void run() override { if (!this->is_enabled()) return; func(); }
+
+	uint32_t getHash() override { return this->hashCall(reinterpret_cast<void *&>(func)); }
 
 private:
 	T func;
@@ -904,8 +1027,10 @@ class CallbackCallable1 : public CallbackBase1<A0>
 public:
 	CallbackCallable1(const T &f) : func(f) {}
 
-	virtual void run() { func(a0); }
-	virtual void run(A0 arg0) { func(arg0); }
+	void run() override { if (!this->is_enabled()) return; func(a0); }
+	void run(A0 arg0) override { if (!this->is_enabled()) return; func(arg0); }
+
+	uint32_t getHash() override { return this->hashCall(reinterpret_cast<void *&>(func)); }
 
 private:
 	T func;
@@ -918,9 +1043,11 @@ class CallbackCallable2 : public CallbackBase2<A0, A1>
 public:
 	CallbackCallable2(const T &f) : func(f) {}
 
-	virtual void run() { func(a0, a1); }
-	virtual void run(A0 arg0) { func(arg0, a1); }
-	virtual void run(A0 arg0, A1 arg1) { func(arg0, arg1); }
+	void run() override { if (!this->is_enabled()) return; func(a0, a1); }
+	virtual void run(A0 arg0) { if (!this->is_enabled()) return; func(arg0, a1); }
+	void run(A0 arg0, A1 arg1) override { if (!this->is_enabled()) return; func(arg0, arg1); }
+
+	uint32_t getHash() override { return this->hashCall(reinterpret_cast<void *&>(func)); }
 
 private:
 	T func;
@@ -934,9 +1061,12 @@ class CallbackCallable3 : public CallbackBase3<A0, A1, A2>
 public:
 	CallbackCallable3(const T &f) : func(f) {}
 
-	virtual void run() { func(a0, a1, a2); }
-	virtual void run(A0 arg0) { func(arg0, a1, a2); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2) { func(arg0, arg1, arg2); }
+	void run() override { if (!this->is_enabled()) return; func(a0, a1, a2); }
+	virtual void run(A0 arg0) { if (!this->is_enabled()) return; func(arg0, a1, a2); }
+	virtual void run(A0 arg0, A1 arg1) { if (!this->is_enabled()) return; func(arg0, arg1, a2); }
+	void run(A0 arg0, A1 arg1, A2 arg2) override { if (!this->is_enabled()) return; func(arg0, arg1, arg2); }
+
+	uint32_t getHash() override { return this->hashCall(reinterpret_cast<void *&>(func)); }
 
 private:
 	T func;
@@ -951,11 +1081,13 @@ class CallbackCallable4 : public CallbackBase4<A0, A1, A2, A3>
 public:
 	CallbackCallable4(const T &f) : func(f) {}
 
-	virtual void run() { func(a0, a1, a2, a3); }
-	virtual void run(A0 arg0) { func(arg0, a1, a2, a3); }
-	virtual void run(A0 arg0, A1 arg1) { func(arg0, arg1, a2, a3); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2) { func(arg0, arg1, arg2, a3); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3) { func(arg0, arg1, arg2, arg3); }
+	void run() override { if (!this->is_enabled()) return; func(a0, a1, a2, a3); }
+	virtual void run(A0 arg0) { if (!this->is_enabled()) return; func(arg0, a1, a2, a3); }
+	virtual void run(A0 arg0, A1 arg1) { if (!this->is_enabled()) return; func(arg0, arg1, a2, a3); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2) { if (!this->is_enabled()) return; func(arg0, arg1, arg2, a3); }
+	void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3) override { if (!this->is_enabled()) return; func(arg0, arg1, arg2, arg3); }
+
+	uint32_t getHash() override { return this->hashCall(reinterpret_cast<void *&>(func)); }
 
 private:
 	T func;
@@ -971,12 +1103,14 @@ class CallbackCallable5 : public CallbackBase5<A0, A1, A2, A3, A4>
 public:
 	CallbackCallable5(const T &f) : func(f) {}
 
-	virtual void run() { func(a0, a1, a2, a3, a4); }
-	virtual void run(A0 arg0) { func(arg0, a1, a2, a3, a4); }
-	virtual void run(A0 arg0, A1 arg1) { func(arg0, arg1, a2, a3, a4); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2) { func(arg0, arg1, arg2, a3, a4); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3) { func(arg0, arg1, arg2, arg3, a4); }
-	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3, A4 arg4) { func(arg0, arg1, arg2, arg3, arg4); }
+	void run() override { if (!this->is_enabled()) return; func(a0, a1, a2, a3, a4); }
+	virtual void run(A0 arg0) { if (!this->is_enabled()) return; func(arg0, a1, a2, a3, a4); }
+	virtual void run(A0 arg0, A1 arg1) { if (!this->is_enabled()) return; func(arg0, arg1, a2, a3, a4); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2) { if (!this->is_enabled()) return; func(arg0, arg1, arg2, a3, a4); }
+	virtual void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3) { if (!this->is_enabled()) return; func(arg0, arg1, arg2, arg3, a4); }
+	void run(A0 arg0, A1 arg1, A2 arg2, A3 arg3, A4 arg4) override { if (!this->is_enabled()) return; func(arg0, arg1, arg2, arg3, arg4); }
+
+	virtual uint32_t getHash() override { return this->hashCall(reinterpret_cast<void *&>(func)); }
 
 private:
 	T func;
@@ -987,31 +1121,78 @@ private:
 	typename std::decay<A4>::type a4;
 };
 
+template <typename T>
+struct LambdaTraits : public LambdaTraits<decltype(&T::operator())>
+{
+
+};
+
+template <typename Class, typename ReturnType, typename ...Args>
+struct LambdaTraits<ReturnType(Class::*)(Args...) const>
+{
+	enum
+	{
+		arity = sizeof...(Args)
+	};
+
+	typedef ReturnType result;
+
+	template <size_t i>
+	struct arg
+	{
+		typedef typename std::tuple_element<i, std::tuple<Args... >>::type type;
+	};
+
+	typedef std::tuple<Args...> args;
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 /// Callable callback factories.
 ////////////////////////////////////////////////////////////////////////////////
-template<class T>
+template <class T>
 class CallableToCallbackTransformer
 {
 public:
 	CallableToCallbackTransformer(const T &f) : func(f) {}
 
-	operator CallbackBase *() { return new CallbackCallable<T>(func); }
-
-	template<class A0>
+	template <class A0>
 	operator CallbackBase1<A0> *() {return new CallbackCallable1<T, A0>(func); }
 
-	template<class A0, class A1>
+	template <class A0, class A1>
 	operator CallbackBase2<A0, A1> *() { return new CallbackCallable2<T, A0, A1>(func); }
 
-	template<class A0, class A1, class A2>
+	template <class A0, class A1, class A2>
 	operator CallbackBase3<A0, A1, A2> *() { return new CallbackCallable3<T, A0, A1, A2>(func); }
 
-	template<class A0, class A1, class A2, class A3>
+	template <class A0, class A1, class A2, class A3>
 	operator CallbackBase4<A0, A1, A2, A3> *() { return new CallbackCallable4<T, A0, A1, A2, A3>(func); }
 
-	template<class A0, class A1, class A2, class A3, class A4>
+	template <class A0, class A1, class A2, class A3, class A4>
 	operator CallbackBase5<A0, A1, A2, A3, A4> *() { return new CallbackCallable5<T, A0, A1, A2, A3, A4>(func); }
+
+	template <typename L = T>
+	operator typename std::enable_if<LambdaTraits<L>::arity == 0, CallbackBase *>::type
+	() { return new CallbackCallable<T>(func); }
+
+	template <typename L = T>
+	operator typename std::enable_if<LambdaTraits<L>::arity == 1, CallbackBase *>::type
+	() {return new CallbackCallable1<T, typename LambdaTraits<L>::template arg<0>::type>(func); }
+
+	template <typename L = T>
+	operator typename std::enable_if<LambdaTraits<L>::arity == 2, CallbackBase *>::type
+	() { return new CallbackCallable2<T, typename LambdaTraits<L>::template arg<0>::type, typename LambdaTraits<L>::template arg<1>::type>(func); }
+
+	template <typename L = T>
+	operator typename std::enable_if<LambdaTraits<L>::arity == 3, CallbackBase *>::type
+	() { return new CallbackCallable3<T, typename LambdaTraits<L>::template arg<0>::type, typename LambdaTraits<L>::template arg<1>::type, typename LambdaTraits<L>::template arg<2>::type>(func); }
+
+	template <typename L = T>
+	operator typename std::enable_if<LambdaTraits<L>::arity == 4, CallbackBase *>::type
+	() { return new CallbackCallable4<T, typename LambdaTraits<L>::template arg<0>::type, typename LambdaTraits<L>::template arg<1>::type, typename LambdaTraits<L>::template arg<2>::type, typename LambdaTraits<L>::template arg<3>::type>(func); }
+
+	template <typename L = T>
+	operator typename std::enable_if<LambdaTraits<L>::arity == 5, CallbackBase *>::type
+	() { return new CallbackCallable5<T, typename LambdaTraits<L>::template arg<0>::type, typename LambdaTraits<L>::template arg<1>::type, typename LambdaTraits<L>::template arg<2>::type, typename LambdaTraits<L>::template arg<3>::type, typename LambdaTraits<L>::template arg<4>::type>(func); }
 
 private:
 	T func;
@@ -1021,3 +1202,8 @@ template<class Callable>
 CallableToCallbackTransformer<Callable> MakeCallback(const Callable &f) { return f; }
 
 } // namespace Unigine
+
+#ifdef __clang__
+	#pragma GCC diagnostic pop
+#endif
+

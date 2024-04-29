@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -276,6 +276,7 @@ private:
 	}
 	UNIGINE_INLINE Variable do_run(void *i, Variable *args_array, TypeToType<void>, IntToType<0>) const
 	{
+		UNIGINE_UNUSED(i);
 		UNIGINE_UNUSED(args_array);
 		func();
 		return Variable();
@@ -687,6 +688,7 @@ private:
 	}
 	UNIGINE_INLINE Variable do_run(void *i, Variable *args_array, IntToType<0>, TypeToType<void>, IntToType<0>) const
 	{
+		UNIGINE_UNUSED(i);
 		UNIGINE_UNUSED(args_array);
 		func(object);
 		return Variable();
@@ -1468,6 +1470,7 @@ private:
 	}
 	template <class Type> UNIGINE_INLINE void *do_run(void *i, Variable *args_array, Type, IntToType<0>) const
 	{
+		UNIGINE_UNUSED(i);
 		UNIGINE_UNUSED(args_array);
 		return func();
 	}
@@ -1764,55 +1767,55 @@ private:
 			return String::format("\t%s %s(%s);\n", TypeToName<Ret>::name(), class_name,
 								  TypeToName<A0>::name());
 		}
-		String do_get_info(const char *name, IntToType<2>) const
+		String do_get_info(const char *name_, IntToType<2>) const
 		{
-			return String::format("\t%s %s(%s,%s);\n", TypeToName<Ret>::name(), name,
+			return String::format("\t%s %s(%s,%s);\n", TypeToName<Ret>::name(), name_,
 								  TypeToName<A0>::name(), TypeToName<A1>::name());
 		}
-		String do_get_info(const char *name, IntToType<3>) const
+		String do_get_info(const char *name_, IntToType<3>) const
 		{
-			return String::format("\t%s %s(%s,%s,%s);\n", TypeToName<Ret>::name(), name,
+			return String::format("\t%s %s(%s,%s,%s);\n", TypeToName<Ret>::name(), name_,
 								  TypeToName<A0>::name(), TypeToName<A1>::name(), TypeToName<A2>::name());
 		}
-		String do_get_info(const char *name, IntToType<4>) const
+		String do_get_info(const char *name_, IntToType<4>) const
 		{
-			return String::format("\t%s %s(%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name,
+			return String::format("\t%s %s(%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name_,
 								  TypeToName<A0>::name(), TypeToName<A1>::name(), TypeToName<A2>::name(), TypeToName<A3>::name());
 		}
-		String do_get_info(const char *name, IntToType<5>) const
+		String do_get_info(const char *name_, IntToType<5>) const
 		{
-			return String::format("\t%s %s(%s,%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name,
+			return String::format("\t%s %s(%s,%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name_,
 								  TypeToName<A0>::name(), TypeToName<A1>::name(), TypeToName<A2>::name(), TypeToName<A3>::name(),
 								  TypeToName<A4>::name());
 		}
-		String do_get_info(const char *name, IntToType<6>) const
+		String do_get_info(const char *name_, IntToType<6>) const
 		{
-			return String::format("\t%s %s(%s,%s,%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name,
+			return String::format("\t%s %s(%s,%s,%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name_,
 								  TypeToName<A0>::name(), TypeToName<A1>::name(), TypeToName<A2>::name(), TypeToName<A3>::name(),
 								  TypeToName<A4>::name(), TypeToName<A5>::name());
 		}
-		String do_get_info(const char *name, IntToType<7>) const
+		String do_get_info(const char *name_, IntToType<7>) const
 		{
-			return String::format("\t%s %s(%s,%s,%s,%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name,
+			return String::format("\t%s %s(%s,%s,%s,%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name_,
 								  TypeToName<A0>::name(), TypeToName<A1>::name(), TypeToName<A2>::name(), TypeToName<A3>::name(),
 								  TypeToName<A4>::name(), TypeToName<A5>::name(), TypeToName<A6>::name());
 		}
-		String do_get_info(const char *name, IntToType<8>) const
+		String do_get_info(const char *name_, IntToType<8>) const
 		{
-			return String::format("\t%s %s(%s,%s,%s,%s,%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name,
+			return String::format("\t%s %s(%s,%s,%s,%s,%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name_,
 								  TypeToName<A0>::name(), TypeToName<A1>::name(), TypeToName<A2>::name(), TypeToName<A3>::name(),
 								  TypeToName<A4>::name(), TypeToName<A5>::name(), TypeToName<A6>::name(), TypeToName<A7>::name());
 		}
-		String do_get_info(const char *name, IntToType<9>) const
+		String do_get_info(const char *name_, IntToType<9>) const
 		{
-			return String::format("\t%s %s(%s,%s,%s,%s,%s,%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name,
+			return String::format("\t%s %s(%s,%s,%s,%s,%s,%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name_,
 								  TypeToName<A0>::name(), TypeToName<A1>::name(), TypeToName<A2>::name(), TypeToName<A3>::name(),
 								  TypeToName<A4>::name(), TypeToName<A5>::name(), TypeToName<A6>::name(), TypeToName<A7>::name(),
 								  TypeToName<A8>::name());
 		}
-		String do_get_info(const char *name, IntToType<10>) const
+		String do_get_info(const char *name_, IntToType<10>) const
 		{
-			return String::format("\t%s %s(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name,
+			return String::format("\t%s %s(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);\n", TypeToName<Ret>::name(), name_,
 				TypeToName<A0>::name(), TypeToName<A1>::name(), TypeToName<A2>::name(), TypeToName<A3>::name(),
 				TypeToName<A4>::name(), TypeToName<A5>::name(), TypeToName<A6>::name(), TypeToName<A7>::name(),
 				TypeToName<A8>::name(), TypeToName<A9>::name());
@@ -1844,6 +1847,7 @@ private:
 	}
 	UNIGINE_INLINE Variable do_run(void *object, void *i, Variable *args_array, IntToType<0>, TypeToType<void>, IntToType<0>) const
 	{
+		UNIGINE_UNUSED(i);
 		UNIGINE_UNUSED(args_array);
 		func(static_cast<Class *>(object));
 		return Variable();
@@ -2354,12 +2358,14 @@ private:
 	#ifdef UNIGINE_EXTERN_INFO
 		return String::format("\t%s %s();\n", TypeToName<Type>::name(), in_name);
 	#else
+		UNIGINE_UNUSED(in_name);
 		return String();
 	#endif
 	}
 
 	virtual Variable run(void *object, void *i, Variable *args) const
 	{
+		UNIGINE_UNUSED(args);
 		TypeToVariable<Type> value(i, static_cast<Class *>(object)->*member);
 		return value.value;
 	}

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -28,17 +28,6 @@ class UNIGINE_API AsyncQueue
 {
 public:
 	static int isInitialized();
-
-	enum CALLBACK_INDEX
-	{
-		CALLBACK_BEGIN = 0,
-		CALLBACK_FILE_LOADED = CALLBACK_BEGIN,
-		CALLBACK_IMAGE_LOADED,
-		CALLBACK_MESH_LOADED,
-		CALLBACK_NODE_LOADED,
-		CALLBACK_END = CALLBACK_NODE_LOADED,
-		NUM_CALLBACKS,
-	};
 	static int loadFile(const char *name, int group = 0, float weight = 0.0f);
 	static int removeFile(int id);
 	static int forceFile(int id);
@@ -77,9 +66,10 @@ public:
 	static int getNumLoadedMeshes();
 	static int getNumLoadedNodes();
 	static int getNumLoadedResources();
-	static void *addCallback(AsyncQueue::CALLBACK_INDEX callback, CallbackBase2<const char *, int> *func);
-	static bool removeCallback(AsyncQueue::CALLBACK_INDEX callback, void *id);
-	static void clearCallbacks(AsyncQueue::CALLBACK_INDEX callback);
+	static Event<const char *, int> &getEventFileLoaded();
+	static Event<const char *, int> &getEventImageLoaded();
+	static Event<const char *, int> &getEventMeshLoaded();
+	static Event<const char *, int> &getEventNodeLoaded();
 };
 
 } // namespace Unigine

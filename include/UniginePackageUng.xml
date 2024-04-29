@@ -56,7 +56,8 @@
 		<member name="M:Unigine.PackageUng.load(char)">
 			<summary>
 			Loads a package with a given name.
-			</summary>  
+			</summary> 
+			<param name="name"> Package name. </param> 
 			<returns>1 if a package was loaded successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.PackageUng.readFile(unsignedchar,int)">
@@ -71,6 +72,7 @@
 			<summary>
 			Selects a file with a given name as a current one and puts its size to size.
 			</summary> 
+			<param name="name"> File name. </param>
 			<param name="size"> Integer variable to store the size of the selected file. </param> 
 			<returns>1 if a file was selected successfully; otherwise, 0.</returns>
 		</member>
@@ -78,13 +80,38 @@
 			<summary>
 			Writes data to a file with a given name.
 			</summary> 
+			<param name="name"> File name. </param>
 			<param name="data"> Data to be written. </param>
 			<param name="size"> Size of the data to be written, in bytes. </param> 
 			<returns>1 if the data was successfully written to a file; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.PackageUng.containsFile(char)">
+		<member name="M:Unigine.PackageUng.containsFile(char) const">
 			<summary>
-			</summary>  
+			Checks if the package contains the specified file.
+			</summary> 
+			<param name="name"> File name. </param> 
+			<returns>true if the package contains the specified file; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.PackageUng.removeFile(char)">
+			<summary>
+			Removes the specified file from the package.
+			</summary> 
+			<param name="name"> File name. </param> 
+			<returns>true if the specified file is successfully removed from the package; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.PackageUng.removeFile(int)">
+			<summary>
+			Removes the file with the specified ID from the package.
+			</summary> 
+			<param name="num"> File ID. A number between 0 and the total number of files in the package. </param> 
+			<returns>true if the specified file is successfully removed from the package; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.PackageUng.findFile(char) const">
+			<summary>
+			Returns the file ID in the package by its name.
+			</summary> 
+			<param name="name"> File name. </param> 
+			<returns>File ID. A number between 0 and the total number of files in the package, or -1, if the file doesn't exist.</returns>
 		</member>
 		<member name="F:Unigine.PackageUng.COMPRESSION_NONE">
 			<summary>

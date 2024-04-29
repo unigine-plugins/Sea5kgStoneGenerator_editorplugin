@@ -9,18 +9,6 @@
 			Constructor. Creates a ULON argument.
 			</summary>  
 		</member>
-		<member name="M:Unigine.UlonArg.getName const">
-			<summary>
-			Returns the name of the ULON argument.
-			</summary>  
-			<returns>ULON argument name.</returns>
-		</member>
-		<member name="M:Unigine.UlonArg.getValue const">
-			<summary>
-			Returns the value of the ULON argument.
-			</summary>  
-			<returns>ULON argument value.</returns>
-		</member>
 		<member name="M:Unigine.UlonValue.#ctor">
 			<summary>
 			Constructor. Creates a ULON node value.
@@ -31,12 +19,6 @@
 			Constructor. Creates a ULON node value from the specified source buffer.
 			</summary> 
 			<param name="arg1"> ULON node value source buffer. </param> 
-		</member>
-		<member name="M:Unigine.UlonValue.isArray const">
-			<summary>
-			Returns a value indicating if the ULON node value is of an array type.
-			</summary>  
-			<returns>true if the ULON node value is of an array type; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.UlonValue.getStr const">
 			<summary>
@@ -122,18 +104,6 @@
 			</summary> 
 			<param name="ret"> Output ivec4 vector. </param> 
 		</member>
-		<member name="M:Unigine.UlonValue.setUsage(bool)">
-			<summary>
-			Sets a value indicating if the ULON node value is used (obtained via one of the get*() methods).
-			</summary> 
-			<param name="usage"> true to mark the ULON node value as used; otherwise, false. </param> 
-		</member>
-		<member name="M:Unigine.UlonValue.isUsage const">
-			<summary>
-			Returns a value indicating if the ULON node value is used (obtained via one of the get*() methods).
-			</summary>  
-			<returns>true if the ULON node value is used; otherwise, false.</returns>
-		</member>
 		<member name="M:Unigine.UlonValue.read(char)">
 			<summary>
 			Reads the ULON node value from the specified source buffer.
@@ -164,30 +134,6 @@
 			Returns the list of all children of the ULON node.
 			</summary>  
 			<returns>List of all ULON node's children.</returns>
-		</member>
-		<member name="M:Unigine.UlonNode.getType const">
-			<summary>
-			Returns the type of the ULON node.
-			</summary>  
-			<returns>ULON node type.</returns>
-		</member>
-		<member name="M:Unigine.UlonNode.getName const">
-			<summary>
-			Returns the name of the ULON node.
-			</summary>  
-			<returns>ULON node name.</returns>
-		</member>
-		<member name="M:Unigine.UlonNode.getCondition const">
-			<summary>
-			Returns a condition set for the ULON node.					Conditions are not parsed and executed automatically, processing of conditions is the responsibility of the user of the ULON format (e.g. in case of materials UnigineScript and UUSL are used).
-			</summary>  
-			<returns>condition set for the ULON node.</returns>
-		</member>
-		<member name="M:Unigine.UlonNode.getValue const">
-			<summary>
-			Returns the value of the ULON node.
-			</summary>  
-			<returns>ULON node value.</returns>
 		</member>
 		<member name="M:Unigine.UlonNode.getArgs const">
 			<summary>

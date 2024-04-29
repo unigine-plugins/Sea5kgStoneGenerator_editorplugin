@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -30,27 +30,6 @@ class WidgetVBox;
 class UNIGINE_API Gui : public APIInterface
 {
 public:
-
-	enum CALLBACK_INDEX
-	{
-		SHOW = 0,
-		HIDE,
-		FOCUS_IN,
-		FOCUS_OUT,
-		CHANGED,
-		CLICKED,
-		DOUBLE_CLICKED,
-		PRESSED,
-		RELEASED,
-		KEY_PRESSED,
-		TEXT_PRESSED,
-		ENTER,
-		LEAVE,
-		DRAG_MOVE,
-		DRAG_DROP,
-		REMOVE,
-		NUM_CALLBACKS,
-	};
 
 	enum
 	{
@@ -267,22 +246,29 @@ public:
 	Ptr<Widget> getChild(int num) const;
 	bool isActive() const;
 	int getKeyActivity(unsigned int key) const;
-	int setFont(const char *name);
-	int setSkin(const char *name);
-	int setResource(const char *name);
-	int clearTexture(const char *name);
+	bool setFontPath(const char *path);
+	const char *getFontPath() const;
+	bool setFontPaths(const char *normal_path, const char *bold_path, const char *italic_path, const char *bold_italic_path);
+	bool setFontRichBoldPath(const char *path);
+	const char *getFontRichBoldPath() const;
+	bool setFontRichItalicPath(const char *path);
+	const char *getFontRichItalicPath() const;
+	bool setFontRichBoldItalicPath(const char *path);
+	const char *getFontRichBoldItalicPath() const;
+	bool setSkinPath(const char *path);
+	const char *getSkinPath() const;
+	bool setResource(const char *name);
+	bool clearTexture(const char *name);
 	Math::vec4 parseColor(const char *str) const;
 	void clearDictionaries();
-	int addDictionary(const char *name, const char *language = 0);
-	int saveDictionary(const char *name, const char *language = 0);
-	int hasTranslation(const char *arg1) const;
+	bool addDictionary(const char *name, const char *language = 0);
+	bool saveDictionary(const char *name, const char *language = 0);
+	bool hasTranslation(const char *arg1) const;
 	const char *translate(const char *str);
+	Event<> &getEventUpdate();
 	static bool isRenderingBootScreen();
 	static bool isRenderingSplashScreen();
 	static bool isRenderingLoadingScreen();
-	void *addUpdateCallback(CallbackBase *func);
-	bool removeUpdateCallback(void *id);
-	void clearUpdateCallbacks();
 };
 typedef Ptr<Gui> GuiPtr;
 

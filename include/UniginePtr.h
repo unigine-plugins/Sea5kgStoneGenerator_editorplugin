@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -19,6 +19,7 @@
 #include <UnigineHashMap.h>
 #include <UnigineMap.h>
 #include <UnigineSet.h>
+#include <UnigineEvent.h>
 
 #include <type_traits>
 
@@ -52,8 +53,8 @@ public:
 
 	UnigineBaseObject(const UnigineBaseObject &) = delete;
 	UnigineBaseObject &operator=(const UnigineBaseObject&) = delete;
-	UnigineBaseObject(UnigineBaseObject && other);
-	UnigineBaseObject &operator=(UnigineBaseObject &&other);
+	UnigineBaseObject(UnigineBaseObject &&other) noexcept;
+	UnigineBaseObject &operator=(UnigineBaseObject &&other) noexcept;
 
 	APIInterface *getInterface();
 
@@ -128,7 +129,34 @@ public:
 	int isNull() const { return obj == nullptr; }
 	int isDeleted() const { return is_deleted; }
 
-	void deleteLater()
+	template<typename T>
+	T *getInternalObject() const { return static_cast<T*>(obj); }
+
+	UnigineBaseObject *getInternalObject() const { return obj; }
+
+	Event<APIInterface *> &getEventAPIInterfaceDestroy() { return event_destroy.create(); }
+
+protected:
+	void setInternalObject(UnigineBaseObject *const obj_)
+	{
+		obj = obj_;
+		is_deleted = obj_->isDeletedLater();
+	}
+
+protected:
+	friend UnigineBaseObject;
+	template<typename OtherType>
+	friend class Ptr;
+
+	void object_destructor()
+	{
+		is_deleted = 1;
+		obj = nullptr;
+		if (counter == 0)
+			delete this;
+	}
+
+	void delete_later()
 	{
 		if (isNull() || is_deleted)
 			return;
@@ -142,7 +170,7 @@ public:
 
 		obj->delete_later();
 	}
-	void deleteForce()
+	void delete_force()
 	{
 		if (isNull() || is_deleted)
 			return;
@@ -165,35 +193,21 @@ public:
 		}
 	}
 
-	template<typename T>
-	T *getInternalObject() const { return static_cast<T*>(obj); }
-
-	UnigineBaseObject *getInternalObject() const { return obj; }
-
-protected:
-	friend UnigineBaseObject;
-	void object_destructor()
-	{
-		is_deleted = 1;
-		obj = nullptr;
-		if (counter == 0)
-			delete this;
-	}
-	void setInternalObject(UnigineBaseObject * const obj_)
-	{
-		obj = obj_;
-		is_deleted = obj_->isDeletedLater();
-	}
-
-	bool owner{false};
-	volatile int counter{0};
 	UnigineBaseObject *obj{nullptr};
+	EventHolder<EventInvoker<APIInterface *>> event_destroy;
 
+	volatile int counter{0};
 	Mutex deleted_mutex;
+	bool owner{false};
 	volatile bool is_deleted = 0;
 };
 
-inline APIInterface::~APIInterface() = default;
+inline APIInterface::~APIInterface()
+{
+	if (event_destroy.isNull())
+		return;
+	event_destroy.get()->run(this);
+}
 
 // Smart pointer api interface
 template <typename Type>
@@ -245,6 +259,12 @@ public:
 	explicit Ptr(Type *pointer): ptr(pointer) { grab(); }
 
 	~Ptr() { clear(); }
+
+	Ptr &operator=(std::nullptr_t)
+	{
+		clear();
+		return *this;
+	}
 
 	Ptr &operator=(const Ptr &pointer)
 	{
@@ -342,15 +362,20 @@ public:
 	bool isDeleted() const { return isNull() || api_interface()->isDeleted(); }
 	explicit operator bool() const { return isValid(); }
 
-	void deleteLater()
+	void deleteLater() const
 	{
 		if (!isNull())
-			api_interface()->deleteLater();
+			api_interface()->delete_later();
+	}
+	void deleteForce() const
+	{
+		if (!isNull())
+			api_interface()->delete_force();
 	}
 	void deleteForce()
 	{
 		if (!isNull())
-			api_interface()->deleteForce();
+			api_interface()->delete_force();
 		clear();
 	}
 
@@ -359,15 +384,13 @@ public:
 private:
 	template<typename OtherType>
 	friend class Ptr;
-	
+
 	void grab()
 	{
 		if (ptr)
 			api_interface()->counterInc();
 	}
-
-	APIInterface *api_interface() { return static_cast<APIInterface *>(ptr); }
-	const APIInterface *api_interface() const { return static_cast<const APIInterface *>(ptr); }
+	APIInterface *api_interface() const { return static_cast<APIInterface *>(ptr); }
 
 	Type *ptr;
 };
@@ -400,6 +423,151 @@ Ptr<To> checked_ptr_cast(const Ptr<From> &ptr)
 }
 
 typedef Ptr<APIInterface> BaseObjectPtr;
+
+template<typename ...Args>
+class EventInterfaceInvoker : public EventInvoker<Args...>
+{
+public:
+
+	void internal_set_data(EventBase *event, APIInterface *i, EventConnectionId(*f)(void *, void *, EventConnection *), EventConnection *connection)
+	{
+		engine_event = event;
+		api_interface = i;
+		connection_func = f;
+		internal_connection = connection;
+	}
+
+	bool internal_need_init()
+	{
+		return engine_event == nullptr;
+	}
+
+	void internal_clear()
+	{
+		if (!this->callbacks.empty())
+		{
+			if (api_interface)
+				api_interface->counterDec();
+			while (this->callbacks.size())
+				delete this->callbacks.takeLast();
+		}
+
+		engine_event = nullptr;
+		api_interface = nullptr;
+		connection_func = nullptr;
+		if (internal_connection)
+			internal_connection->disconnect();
+		internal_connection = nullptr;
+	}
+
+	bool empty() const override
+	{
+		assert(engine_event != nullptr);
+		return this->callbacks.empty() || engine_event->empty();
+	}
+
+	void setEnabled(bool mode) override
+	{
+		assert(engine_event != nullptr);
+		EventBase::setEnabled(mode);
+		engine_event->setEnabled(mode);
+	}
+
+	bool isEnabled() const override
+	{
+		assert(engine_event != nullptr);
+		return engine_event->isEnabled();
+	}
+
+protected:
+
+	EventConnectionId append(CallbackBase *c) override
+	{
+		assert(engine_event != nullptr);
+		if (this->callbacks.empty())
+		{
+			if (api_interface)
+				api_interface->counterInc();
+			if (connection_func)
+				connection_func(this, engine_event, internal_connection);
+		}
+		return EventBase::append(c);
+	}
+
+	bool remove(CallbackBase *callback) override
+	{
+		bool result = EventBase::remove(callback);
+		if (result && this->callbacks.empty())
+		{
+			if (api_interface)
+				api_interface->counterDec();
+			if (internal_connection)
+				internal_connection->disconnect();
+		}
+		return result;
+	}
+
+	bool remove(EventConnection *connection) override
+	{
+		bool result = EventBase::remove(connection);
+		if (result && this->callbacks.empty())
+		{
+			if (api_interface)
+				api_interface->counterDec();
+			if (internal_connection)
+				internal_connection->disconnect();
+		}
+		return result;
+	}
+
+	bool remove(uint32_t hash) override
+	{
+		bool result = EventBase::remove(hash);
+		if (result && this->callbacks.empty())
+		{
+			if (api_interface)
+				api_interface->counterDec();
+			if (internal_connection)
+				internal_connection->disconnect();
+		}
+		return result;
+	}
+
+private:
+
+	APIInterface *api_interface{nullptr};
+	EventBase *engine_event{nullptr};
+	EventConnectionId(*connection_func)(void *, void *, EventConnection *){nullptr};
+	EventConnection *internal_connection{nullptr};
+};
+
+template<typename T>
+class UNIGINE_API EventInterfaceConnection : public EventConnection
+{
+public:
+	EventInterfaceConnection() = default;
+	EventInterfaceConnection(EventInterfaceConnection &&other) = delete;
+	EventInterfaceConnection(const EventInterfaceConnection &other) = delete;
+	EventInterfaceConnection &operator=(EventInterfaceConnection &&other) = delete;
+	EventInterfaceConnection &operator=(const EventInterfaceConnection &other) = delete;
+	~EventInterfaceConnection() = default;
+	void internal_set_data(T *event_interface)
+	{
+		i = event_interface;
+	}
+protected:
+	void clear() override
+	{
+		EventConnection::clear();
+		if (i)
+		{
+			i->internal_clear();
+			i = nullptr;
+		}
+	}
+private:
+	T *i{nullptr};
+};
 
 namespace Internal
 {

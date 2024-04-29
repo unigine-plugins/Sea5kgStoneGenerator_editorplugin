@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -28,7 +28,7 @@ namespace Unigine
 class UNIGINE_API GeodeticPivot : public Node
 {
 public:
-	static int type() { return Node::GEODETIC_PIVOT; }
+	static Node::TYPE type() { return Node::GEODETIC_PIVOT; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	using Node::toWorld;

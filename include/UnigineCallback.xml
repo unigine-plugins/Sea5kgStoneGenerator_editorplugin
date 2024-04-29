@@ -1,0 +1,18 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.EventConnection.disconnect">
+			<summary>
+			Cancels the connection between the event and the callback.
+			</summary>  
+		</member>
+		<member name="M:Unigine.EventConnections.disconnectAll">
+			<summary>
+			Cancels the connection for all EventConnection instances in the container.
+			</summary>  
+		</member>
+	</members>
+</doc>

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -303,16 +303,16 @@ UNIGINE_INLINE vec4 triangleTangent(const vec3 &v0, const vec3 &v1, const vec3 &
 	orthoBasis(normal, tangent, binormal);
 	if (t10.y != 0.0f || t10.z != 0.0f || t20.y != 0.0f || t20.z != 0.0f)
 	{
-		vec3 normal;
+		vec3 temp_normal;
 		for (int i = 0; i < 3; i++)
 		{
 			t10.x = v10[i];
 			t20.x = v20[i];
-			cross(normal, t10, t20);
-			if (abs(normal.x) > Consts::EPS)
+			cross(temp_normal, t10, t20);
+			if (abs(temp_normal.x) > Consts::EPS)
 			{
-				tangent[i] = -normal.y / normal.x;
-				binormal[i] = -normal.z / normal.x;
+				tangent[i] = -temp_normal.y / temp_normal.x;
+				binormal[i] = -temp_normal.z / temp_normal.x;
 			}
 		}
 	}
@@ -785,14 +785,14 @@ UNIGINE_INLINE float point_polygon_distance(const vec3 &point, const vec3 *verte
 			{
 				if (j == num_indices)
 					j = 0;
-				const vec3 &v0 = vertex[indices[i]];
-				const vec3 &v1 = vertex[indices[j]];
-				sub(v10, v1, v0);
-				sub(v20, point, v0);
+				const vec3 &vertex0 = vertex[indices[i]];
+				const vec3 &vertex1 = vertex[indices[j]];
+				sub(v10, vertex1, vertex0);
+				sub(v20, point, vertex0);
 				float k = saturate(dot(v10, v20) * rcp(length2(v10)));
-				float d = length2(sub(v20, point, mad(v20, v10, k, v0)));
-				if (distance > d)
-					distance = d;
+				float temp_distance = length2(sub(v20, point, mad(v20, v10, k, vertex0)));
+				if (distance > temp_distance)
+					distance = temp_distance;
 			}
 			return fsqrt(distance);
 		}
@@ -822,14 +822,14 @@ UNIGINE_INLINE double point_polygon_distance(const dvec3 &point, const dvec3 *ve
 			{
 				if (j == num_indices)
 					j = 0;
-				const dvec3 &v0 = vertex[indices[i]];
-				const dvec3 &v1 = vertex[indices[j]];
-				sub(v10, v1, v0);
-				sub(v20, point, v0);
+				const dvec3 &vertex0 = vertex[indices[i]];
+				const dvec3 &vertex1 = vertex[indices[j]];
+				sub(v10, vertex1, vertex0);
+				sub(v20, point, vertex0);
 				double k = saturate(dot(v10, v20) * rcp(length2(v10)));
-				double d = length2(sub(v20, point, mad(v20, v10, k, v0)));
-				if (distance > d)
-					distance = d;
+				double temp_distance = length2(sub(v20, point, mad(v20, v10, k, vertex0)));
+				if (distance > temp_distance)
+					distance = temp_distance;
 			}
 			return dsqrt(distance);
 		}

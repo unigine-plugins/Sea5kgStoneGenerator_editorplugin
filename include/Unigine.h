@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -12,6 +12,8 @@
 */
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 #pragma once
+#include "UnigineAnimation.h"
+#include "UnigineAnimationParameters.h"
 #include "UnigineAsyncQueue.h"
 #include "UnigineBase.h"
 #include "UnigineBiMap.h"
@@ -30,6 +32,7 @@
 #include "UnigineEditor.h"
 #include "UnigineEllipsoid.h"
 #include "UnigineEngine.h"
+#include "UnigineEvent.h"
 #include "UnigineExport.h"
 #include "UnigineFactory.h"
 #include "UnigineFfp.h"
@@ -61,6 +64,7 @@
 #include "UnigineMathLib2d.h"
 #include "UnigineMathLibBVec4.h"
 #include "UnigineMathLibBounds.h"
+#include "UnigineMathLibColorSpaces.h"
 #include "UnigineMathLibCommon.h"
 #include "UnigineMathLibConcave.h"
 #include "UnigineMathLibConvex.h"
@@ -114,6 +118,9 @@
 #include "UnigineRegExp.h"
 #include "UnigineRender.h"
 #include "UnigineResource.h"
+#include "UnigineResourceExternalMemory.h"
+#include "UnigineResourceFence.h"
+#include "UnigineSSLSocket.h"
 #include "UnigineSet.h"
 #include "UnigineShader.h"
 #include "UnigineSignal.h"
@@ -134,6 +141,9 @@
 #include "UnigineUlon.h"
 #include "UnigineUserInterface.h"
 #include "UnigineUtils.h"
+#include "UnigineVR.h"
+#include "UnigineVREyeTracking.h"
+#include "UnigineVRMixedReality.h"
 #include "UnigineVector.h"
 #include "UnigineVersion.h"
 #include "UnigineViewport.h"

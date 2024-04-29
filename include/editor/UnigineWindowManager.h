@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -18,6 +18,7 @@
 #include <UnigineVector.h>
 
 #include <QObject>
+#include <QPointer>
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -99,7 +100,7 @@ public:
 	/// <param name="widget">Tool window to be added.</param>
 	/// <param name="area">Main window area to which the specified tool window is to be added.</param>
 	/// <remarks> To get a window area use <see cref="getArea"/>()</remarks>
-	static void add(QWidget *widget, AreaType area = LAST_USED_AREA);
+	static void add(QWidget *widget, AreaType area = AreaType::LAST_USED_AREA);
 	/// <summary>
 	/// Adds the specified tool window to the specified window area
 	/// according to the specified anchor type (<see cref="RefType"/>).
@@ -114,7 +115,7 @@ public:
 	/// </summary>
 	/// <param name="widgets"> List of tool windows to be added.</param>
 	/// <param name="area"> Main window area to which the specified tool windows are to be added.</param>
-	static void add(const Unigine::Vector<QWidget *> &widgets, AreaType area = LAST_USED_AREA);
+	static void add(const Unigine::Vector<QWidget *> &widgets, AreaType area = AreaType::LAST_USED_AREA);
 	/// <summary>
 	/// Adds the specified set of tool windows to the specified area
 	/// according to the specified anchor type (<see cref="RefType"/>).
@@ -124,14 +125,38 @@ public:
 	/// <param name="area"> Window area to which the specified tool windows are to be added.</param>
 	/// <remarks> To get a window area use <see cref="getArea"/>()</remarks>
 	static void add(const Unigine::Vector<QWidget *> &widgets, RefType ref, QWidget *area);
+	/// <summary>
+	/// Adds the specified widget as a corner widget (child) to the specified window(parent).
+	/// It is a widget to be shown in the top-right corner of the window.
+	/// </summary>
+	/// <param name="parent"> Window to which the corner widget is to be added.</param>
+	/// <param name="child"> Corner widget to be added.</param>
 	static void addCornerWidget(QWidget *parent, QWidget *child);
 
 	/// <summary> Removes the specified tool window.</summary>
 	/// <param name="widget">Tool window to be removed.</param>
-	static void remove(QWidget *widget);
+	static bool remove(QWidget *widget);
 	/// <summary>Checks if the specified tool window exists.</summary>
 	/// <param name="widget">Tool window to be checked.</param>
 	static bool has(QWidget *widget);
+
+	/// <summary> Auxiliary information required to restore window state (insert it back to where it was taken from). See the <see cref="take"/> method.</summary>
+	struct RestoreState
+	{
+		QByteArray floating_window_geometry;
+		QPointer<QWidget> corner;
+		QPointer<QWidget> anchor;
+	};
+	/// <summary>Takes the specified window from the Window Manager and saves its current state to be used later
+	/// to restore it (<see cref="restore"/>()). This can be used for maximizing a viewport to fullscreen.</summary>
+	/// <param name="widget">Window to be taken.</param>
+	static RestoreState take(QWidget *widget);
+	/// <summary> Restores the specified window back to where it was taken from (<see cref="take"/>()) using the saved
+	/// state. This can be used to return a viewport back to normal state after maximizing it to fullscreen.</summary>
+	/// <param name="widget">Window to be restored.</param>
+	/// <param name="state">Previously saved restore state to be used.</param>
+	/// <returns> <b>true</b> if the state of the specified window is restored successfully; otherwise, <b>false</b>.</returns>
+	static bool restore(QWidget *widget, RestoreState state);
 
 	/// <summary>
 	/// Moves the specified tool window to the specified area of the main window.
@@ -140,7 +165,7 @@ public:
 	/// <param name="widget">Tool window to be moved.</param>
 	/// <param name="area">Main window area to which the specified tool window is to be moved.</param>
 	/// <remarks> To get a window area use <see cref="getArea"/>()</remarks>
-	static void move(QWidget *widget, AreaType area = LAST_USED_AREA);
+	static void move(QWidget *widget, AreaType area = AreaType::LAST_USED_AREA);
 	/// <summary>
 	/// Moves the specified tool window to the specified window area
 	/// according to the specified anchor type (<see cref="RefType"/>).
@@ -155,7 +180,7 @@ public:
 	/// </summary>
 	/// <param name="widgets"> List of tool windows to be moved.</param>
 	/// <param name="area"> Main window area to which the specified tool windows are to be moved.</param>
-	static void move(const Unigine::Vector<QWidget *> &widgets, AreaType area = LAST_USED_AREA);
+	static void move(const Unigine::Vector<QWidget *> &widgets, AreaType area = AreaType::LAST_USED_AREA);
 	/// <summary>
 	/// Moves the specified set of tool windows to the specified area
 	/// according to the specified anchor type (<see cref="RefType"/>).
@@ -189,9 +214,9 @@ public:
 	static bool isVisible(QWidget *widget);
 
 	/// <summary> Returns the area to which the specified tool window belongs.</summary>
-	/// <param name="child">Tool window for which the area is to be obtained.</param>
+	/// <param name="widget">Tool window for which the area is to be obtained.</param>
 	/// <returns> The area to which the specified tool window belongs; otherwise <b>nullptr</b>.</returns>
-	static QWidget *getArea(QWidget *child);
+	static QWidget *getArea(QWidget *widget);
 	/// <summary> Returns the list of all existing tool windows.</summary>
 	/// <returns> Vector containing all existing tool windows.</returns>
 	static Unigine::Vector<QWidget *> allWindows();
@@ -211,9 +236,9 @@ public:
 	/// <returns> Window area with the specified name (if it exists); otherwise <b>nullptr</b>.</returns>
 	static QWidget *getArea(const QString &area_name);
 	/// <summary> Returns the name of the area to which the specified tool window belongs.</summary>
-	/// <param name="child">Tool window for which the area name is to be obtained.</param>
+	/// <param name="widget">Tool window for which the area name is to be obtained.</param>
 	/// <returns> Name of the area to which the specified tool window belongs; otherwise an empty string.</returns>
-	static QString getAreaName(QWidget *child);
+	static QString getAreaName(QWidget *widget);
 
 	/// <summary> Returns the state of a floating area (a separate window that can be moved atop of the main window) to which the tool window belongs.
 	/// In case the parent area is not a floating one, an empty QByteArray shall be returned.
@@ -224,22 +249,22 @@ public:
 
 	/// <summary> Restores the state of the specified tool window in the window area with the specified name using the data of the previous session. 
 	/// In case of a failure to obtain the data from the previous session, default settings shall be used.</summary>
-	/// <param name="tool_window">Tool window to be restored.</param>
+	/// <param name="widget">Tool window to be restored.</param>
 	/// <param name="area_name">Name of the window area.</param>
 	/// <returns> <b>true</b> if the state of the specified tool window is restored successfully; otherwise, <b>false</b>.</returns>
-	static bool restoreLastWindowConfig(QWidget *tool_window, const QString &area_name);
+	static bool restoreLastWindowConfig(QWidget *widget, const QString &area_name);
 
 signals:
 	/// <summary>
 	/// This signal is emitted when a tool window is shown,
 	/// with the tool window as an argument.
 	/// </summary>
-	void windowShown  (QWidget *widget);
+	void windowShown (QWidget *widget);
 	/// <summary>
 	/// This signal is emitted when before a tool window is hidden,
 	/// with the tool window as an argument.
 	/// </summary>
-	void beforeHide   (QWidget *widget);
+	void beforeHide (QWidget *widget);
 	/// <summary>
 	/// This signal is emitted when a tool window is hidden,
 	/// with the tool window as an argument.</summary>

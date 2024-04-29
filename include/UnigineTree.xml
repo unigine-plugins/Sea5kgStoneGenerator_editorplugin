@@ -35,7 +35,7 @@
 		</member>
 		<member name="M:Unigine.Tree.empty const">
 			<summary>
-			Returns the 1 if the tree is empty; otherwise, 0 is returned.
+			1 if the tree is empty; otherwise, 0.
 			</summary>  
 			<returns>The empty flag.</returns>
 		</member>
@@ -121,14 +121,14 @@
 			Check if two iterators are not the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are not the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are not the same; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Tree.ConstIterator.operator!=(ConstIterator) const">
 			<summary>
 			Check if two iterators are not the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are not the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are not the same; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Tree.ConstIterator.operator* const">
 			<summary>
@@ -177,14 +177,14 @@
 			Check if two iterators are actually the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are the same; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Tree.ConstIterator.operator==(ConstIterator) const">
 			<summary>
 			Check if two iterators are actually the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are the same; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Tree.ConstIterator.~ConstIterator">
 			<summary>
@@ -213,14 +213,14 @@
 			Check if two iterators are not the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are not the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are not the same; otherwise 0.</returns>
 		</member>
 		<member name="M:Unigine.Tree.Iterator.operator!=(typenameTree{Key,Data}::ConstIterator) const">
 			<summary>
 			Check if two iterators are not the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are not the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are not the same; otherwise 0.</returns>
 		</member>
 		<member name="M:Unigine.Tree.Iterator.operator*">
 			<summary>
@@ -269,14 +269,14 @@
 			Check if two iterators are actually the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are the same; otherwise 0.</returns>
 		</member>
 		<member name="M:Unigine.Tree.Iterator.operator==(typenameTree{Key,Data}::ConstIterator) const">
 			<summary>
 			Check if two iterators are actually the same.
 			</summary> 
 			<param name="it"> The second iterator. </param> 
-			<returns>Returns 1 if iterators are the same; otherwise, 0 is returned.</returns>
+			<returns>1 if iterators are the same; otherwise 0.</returns>
 		</member>
 		<member name="M:Unigine.Tree.Iterator.~Iterator">
 			<summary>

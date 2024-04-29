@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -16,7 +16,7 @@
 
 
 #ifdef EDITOR_LIBRARY
-    #define UNIGINE_EDITOR_API UNIGINE_EXPORT
+	#define UNIGINE_EDITOR_API UNIGINE_EXPORT
 #else
-    #define UNIGINE_EDITOR_API UNIGINE_IMPORT
+	#define UNIGINE_EDITOR_API UNIGINE_IMPORT
 #endif

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -253,10 +253,6 @@ namespace Unigine {
 			 * @param type TypeID class.
 			 */
 			template <class Type> explicit TypeInfo(Type type) : id(type.id), name(type.name) { }
-			/**
-			 * Destructor.
-			 */
-			~TypeInfo() { }
 
 			/**
 			 * Access to the type identifier.

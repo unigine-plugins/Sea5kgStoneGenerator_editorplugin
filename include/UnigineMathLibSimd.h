@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -1325,15 +1325,15 @@ namespace Simd
 
 			for (int i = 0; i < num; i++)
 			{
-				const mat4 &m = *matrices[i];
+				const mat4 &mat = *matrices[i];
 
 				if (i + 4 < num)
 					_mm_prefetch((const char *)matrices[i + 4], _MM_HINT_NTA);
 
-				__m128 res_0 = _mm_shuffle_ps(m.sse.v0, m.sse.v1, _MM_PERM2(X, Y, X, Y));
-				__m128 res_1 = _mm_shuffle_ps(m.sse.v0, m.sse.v1, _MM_PERM2(Z, W, Z, W));
-				__m128 res_2 = _mm_shuffle_ps(m.sse.v2, m.sse.v3, _MM_PERM2(X, Y, X, Y));
-				__m128 res_3 = _mm_shuffle_ps(m.sse.v2, m.sse.v3, _MM_PERM2(Z, W, Z, W));
+				__m128 res_0 = _mm_shuffle_ps(mat.sse.v0, mat.sse.v1, _MM_PERM2(X, Y, X, Y));
+				__m128 res_1 = _mm_shuffle_ps(mat.sse.v0, mat.sse.v1, _MM_PERM2(Z, W, Z, W));
+				__m128 res_2 = _mm_shuffle_ps(mat.sse.v2, mat.sse.v3, _MM_PERM2(X, Y, X, Y));
+				__m128 res_3 = _mm_shuffle_ps(mat.sse.v2, mat.sse.v3, _MM_PERM2(Z, W, Z, W));
 				__m128 col_0 = _mm_shuffle_ps(res_0, res_2, _MM_PERM2(X, Z, X, Z));
 				__m128 col_1 = _mm_shuffle_ps(res_0, res_2, _MM_PERM2(Y, W, Y, W));
 				__m128 col_2 = _mm_shuffle_ps(res_1, res_3, _MM_PERM2(X, Z, X, Z));
@@ -1409,22 +1409,22 @@ namespace Simd
 
 		for (int i = 0; i < num; i++)
 		{
-			const dmat4 &m = *matrices[i];
+			const dmat4 &mat = *matrices[i];
 
-			ret[0].x = (float)(m00 * m.m00 + m01 * m.m10 + m02 * m.m20);
-			ret[0].y = (float)(m00 * m.m01 + m01 * m.m11 + m02 * m.m21);
-			ret[0].z = (float)(m00 * m.m02 + m01 * m.m12 + m02 * m.m22);
-			ret[0].w = (float)(m00 * m.m03 + m01 * m.m13 + m02 * m.m23 + m03);
+			ret[0].x = (float)(m00 * mat.m00 + m01 * mat.m10 + m02 * mat.m20);
+			ret[0].y = (float)(m00 * mat.m01 + m01 * mat.m11 + m02 * mat.m21);
+			ret[0].z = (float)(m00 * mat.m02 + m01 * mat.m12 + m02 * mat.m22);
+			ret[0].w = (float)(m00 * mat.m03 + m01 * mat.m13 + m02 * mat.m23 + m03);
 
-			ret[1].x = (float)(m10 * m.m00 + m11 * m.m10 + m12 * m.m20);
-			ret[1].y = (float)(m10 * m.m01 + m11 * m.m11 + m12 * m.m21);
-			ret[1].z = (float)(m10 * m.m02 + m11 * m.m12 + m12 * m.m22);
-			ret[1].w = (float)(m10 * m.m03 + m11 * m.m13 + m12 * m.m23 + m13);
+			ret[1].x = (float)(m10 * mat.m00 + m11 * mat.m10 + m12 * mat.m20);
+			ret[1].y = (float)(m10 * mat.m01 + m11 * mat.m11 + m12 * mat.m21);
+			ret[1].z = (float)(m10 * mat.m02 + m11 * mat.m12 + m12 * mat.m22);
+			ret[1].w = (float)(m10 * mat.m03 + m11 * mat.m13 + m12 * mat.m23 + m13);
 
-			ret[2].x = (float)(m20 * m.m00 + m21 * m.m10 + m22 * m.m20);
-			ret[2].y = (float)(m20 * m.m01 + m21 * m.m11 + m22 * m.m21);
-			ret[2].z = (float)(m20 * m.m02 + m21 * m.m12 + m22 * m.m22);
-			ret[2].w = (float)(m20 * m.m03 + m21 * m.m13 + m22 * m.m23 + m23);
+			ret[2].x = (float)(m20 * mat.m00 + m21 * mat.m10 + m22 * mat.m20);
+			ret[2].y = (float)(m20 * mat.m01 + m21 * mat.m11 + m22 * mat.m21);
+			ret[2].z = (float)(m20 * mat.m02 + m21 * mat.m12 + m22 * mat.m22);
+			ret[2].w = (float)(m20 * mat.m03 + m21 * mat.m13 + m22 * mat.m23 + m23);
 
 			ret += 3;
 		}

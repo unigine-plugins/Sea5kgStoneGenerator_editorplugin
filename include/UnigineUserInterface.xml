@@ -20,62 +20,6 @@
 			<param name="callback"> Callback type number. One of the callbacks defined in the Gui class (for example, CLICK, SHOW, HIDE, etc). </param> 
 			<returns>Callback number.</returns>
 		</member>
-		<member name="M:Unigine.UserInterface.addCallback(char,Unigine.Gui.CALLBACK_INDEX,Unigine.CallbackBase)">
-			<summary>
-			Adds a callback function of the specified type for the widget with the specified name.
-			The signature of the callback function must be as follows:
-			</summary> 
-			<param name="name"> Widget name. </param>
-			<param name="callback"> Callback type number. One of the callbacks defined in the Gui class (for example, CLICK, SHOW, HIDE, etc). </param>
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.UserInterface.addCallback(char,Unigine.Gui.CALLBACK_INDEX,Unigine.CallbackBase1{Unigine.Ptr{Unigine.Widget}})">
-			<summary>
-			Adds a callback function of the specified type for the widget with the specified name.
-			The signature of the callback function must be as follows:
-			</summary> 
-			<param name="name"> Widget name. </param>
-			<param name="callback"> Callback type number. One of the callbacks defined in the Gui class (for example, CLICK, SHOW, HIDE, etc). </param>
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.UserInterface.addCallback(char,Unigine.Gui.CALLBACK_INDEX,Unigine.CallbackBase2{Unigine.Ptr{Unigine.Widget},Unigine.Ptr{Unigine.Widget}})">
-			<summary>
-			Adds a callback function of the specified type for the widget with the specified name.
-			The signature of the callback function must be as follows:
-			</summary> 
-			<param name="name"> Widget name. </param>
-			<param name="callback"> Callback type number. One of the callbacks defined in the Gui class (for example, CLICK, SHOW, HIDE, etc). </param>
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.UserInterface.addCallback(char,Unigine.Gui.CALLBACK_INDEX,Unigine.CallbackBase3{Unigine.Ptr{Unigine.Widget},Unigine.Ptr{Unigine.Widget},int})">
-			<summary>
-			Adds a callback function of the specified type for the widget with the specified name.
-			The signature of the callback function must be as follows:
-			</summary> 
-			<param name="name"> Widget name. </param>
-			<param name="callback"> Callback type number. One of the callbacks defined in the Gui class (for example, CLICK, SHOW, HIDE, etc). </param>
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.UserInterface.removeCallback(char,Unigine.Gui.CALLBACK_INDEX,void)">
-			<summary>
-			Removes the specified callback from the list of callbacks of the specified type added for the widget with the given name.
-			</summary> 
-			<param name="name"> Widget name. </param>
-			<param name="callback"> Callback type number. One of the callbacks defined in the Gui class (for example, CLICK, SHOW, HIDE, etc). </param>
-			<param name="id"> Callback ID obtained when adding it. </param> 
-			<returns>True if the callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.UserInterface.clearCallbacks(char,Unigine.Gui.CALLBACK_INDEX)">
-			<summary>
-			Clears all callbacks of the specified type added for the widget with the given name.
-			</summary> 
-			<param name="name"> Widget name. </param>
-			<param name="callback"> Callback type number. One of the callbacks defined in the Gui class (for example, CLICK, SHOW, HIDE, etc). </param> 
-		</member>
 		<member name="M:Unigine.UserInterface.getCallbackInstanceData(int,Unigine.Gui.CALLBACK_INDEX) const">
 			<summary>
 			Returns the callback instance data.
@@ -131,10 +75,17 @@
 		</member>
 		<member name="M:Unigine.UserInterface.getWidget(int) const">
 			<summary>
-			Returns pointer to the widget with a given number.
+			Returns a widget with the given ID.
 			</summary> 
 			<param name="num"> Widget number. </param> 
 			<returns>Pointer to the widget with the given number.</returns>
+		</member>
+		<member name="M:Unigine.UserInterface.getWidgetByName(char) const">
+			<summary>
+			Returns a widget with the given name.
+			</summary> 
+			<param name="name"> Widget name. </param> 
+			<returns>Widget with the given ID.</returns>
 		</member>
 		<member name="M:Unigine.UserInterface.getWidgetExport(int) const">
 			<summary>

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -60,12 +60,6 @@ enum class SubObjectType
 	JOINT,
 	/// <summary> Billboard (ObjectBillboards).</summary>
 	BILLBOARD,
-	/// <summary> Physical force affecting particles (ObjectParticles).</summary>
-	FORCE,
-	/// <summary> Physical noise affecting particles (ObjectParticles).</summary>
-	NOISE,
-	/// <summary> Physical deflector affecting particles (ObjectParticles).</summary>
-	DEFLECTOR,
 	/// <summary> Spline point (WorldSplineGraph).</summary>
 	SPLINE_POINT,
 	/// <summary> Spline segment (WorldSplineGraph).</summary>

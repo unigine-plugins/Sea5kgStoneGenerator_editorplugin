@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -31,12 +31,13 @@ class Time
 public:
 	enum
 	{
-		CLOCKS_PER_SECOND = 1000000,
+		CLOCKS_PER_SECOND = 1'000'000,
 	};
-	UNIGINE_INLINE static double MicrosecondsToSeconds(long long microseconds) { return (double)microseconds / CLOCKS_PER_SECOND; }
-	UNIGINE_INLINE static double MicrosecondsToMilliseconds(long long microseconds) { return (double)(microseconds * 1000) / CLOCKS_PER_SECOND; }
-	UNIGINE_INLINE static double SecondsToMilliseconds(double seconds) { return seconds / 1000; }
-	UNIGINE_INLINE static double MillisecondsToSeconds(double milliseconds) { return milliseconds * 1000; }
+	UNIGINE_INLINE static double microsecondsToSeconds(long long microseconds) { return (double)microseconds / CLOCKS_PER_SECOND; }
+	UNIGINE_INLINE static double microsecondsToMilliseconds(long long microseconds) { return (double)(microseconds * 1000) / CLOCKS_PER_SECOND; }
+	UNIGINE_INLINE static double secondsToMilliseconds(double seconds) { return seconds * 1000; }
+	UNIGINE_INLINE static double millisecondsToSeconds(double milliseconds) { return milliseconds / 1000; }
+	UNIGINE_INLINE static int64_t secondsToNanoseconds(double seconds) { return int64_t(seconds * 1'000'000'000); }
 
 	/**
 	 * Returns CPU clocks counter.
@@ -57,14 +58,14 @@ public:
 	 *
 	 * @return Time in seconds.
 	 */
-	UNIGINE_INLINE static double getSeconds() { return MicrosecondsToSeconds(get()); }
+	UNIGINE_INLINE static double getSeconds() { return microsecondsToSeconds(get()); }
 
 	/**
 	 * Returns time in milliseconds.
 	 *
 	 * @return Time in milliseconds.
 	 */
-	UNIGINE_INLINE static double getMilliseconds() { return MicrosecondsToMilliseconds(get()); }
+	UNIGINE_INLINE static double getMilliseconds() { return microsecondsToMilliseconds(get()); }
 };
 
 struct Timer
@@ -74,10 +75,10 @@ struct Timer
 	// return elapsed time
 	UNIGINE_INLINE void begin() { begin_time = Time::get(); }
 	UNIGINE_INLINE long long end() const { return Time::get() - begin_time; }
-	UNIGINE_INLINE double endSeconds() const { return Time::MicrosecondsToSeconds(end()); }
-	UNIGINE_INLINE double endMilliseconds() const { return Time::MicrosecondsToMilliseconds(end()); }
+	UNIGINE_INLINE double endSeconds() const { return Time::microsecondsToSeconds(end()); }
+	UNIGINE_INLINE double endMilliseconds() const { return Time::microsecondsToMilliseconds(end()); }
 
 	UNIGINE_INLINE long long getBeginTime() const { return begin_time; }
 };
 
-} /* namespace Unigine */
+} // namespace Unigine

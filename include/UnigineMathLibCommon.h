@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -1235,20 +1235,6 @@ UNIGINE_INLINE __m128 _mm_rcp_ss_nr(__m128 v)
 	return _mm_sub_ss(_mm_add_ss(iv, iv), _mm_mul_ss(v, _mm_mul_ss(iv, iv)));
 }
 
-UNIGINE_INLINE __m128 _mm_rcp_ps_nr(__m128 v)
-{
-	__m128 iv = _mm_rcp_ps(v);
-	iv = _mm_sub_ps(_mm_add_ps(iv, iv), _mm_mul_ps(v, _mm_mul_ps(iv, iv)));
-	return _mm_sub_ps(_mm_add_ps(iv, iv), _mm_mul_ps(v, _mm_mul_ps(iv, iv)));
-}
-
-UNIGINE_INLINE __m128 _mm_rsqrt_ss_nr(__m128 v)
-{
-	__m128 iv = _mm_rsqrt_ss(v);
-	__m128 nr = _mm_mul_ss(_mm_mul_ss(v, iv), iv);
-	return _mm_mul_ss(_mm_mul_ss(_mm_set1_ps(0.5f), iv), _mm_sub_ss(_mm_set1_ps(3.0f), nr));
-}
-
 UNIGINE_INLINE __m128 _mm_rsqrt_ps_nr(__m128 v)
 {
 	__m128 iv = _mm_rsqrt_ps(v);
@@ -1256,30 +1242,17 @@ UNIGINE_INLINE __m128 _mm_rsqrt_ps_nr(__m128 v)
 	return _mm_mul_ps(_mm_mul_ps(_mm_set1_ps(0.5f), iv), _mm_sub_ps(_mm_set1_ps(3.0f), nr));
 }
 
-UNIGINE_INLINE __m128 _mm_dot33_ps(__m128 v0, __m128 v1)
-{
-	__m128 v2 = _mm_mul_ps(v0, v1);
-	__m128 v3 = _mm_add_ps(v2, _MM_SWIZZLE(v2, Y, X, Y, W));
-	return _mm_add_ps(v3, _MM_SWIZZLE(v2, Z, Z, X, W));
-}
-
-UNIGINE_INLINE __m128 _mm_dot44_ps(__m128 v0, __m128 v1)
-{
-	__m128 v2 = _mm_mul_ps(v0, v1);
-	v2 = _mm_add_ps(v2, _MM_SWIZZLE(v2, Y, X, W, Z));
-	return _mm_add_ps(v2, _MM_SWIZZLE(v2, Z, W, X, Y));
-}
+#define _mm_dot33_ps(v0, v1) _mm_dp_ps(v0, v1, 0x7f)
+#define _mm_dot44_ps(v0, v1) _mm_dp_ps(v0, v1, 0xff)
 
 UNIGINE_INLINE __m128 _mm_normalize3_ps(__m128 v)
 {
-	__m128 length2 = _mm_dot33_ps(v, v);
-	return _mm_mul_ps(v, _mm_rsqrt_ps_nr(length2));
+	return _mm_mul_ps(v, _MM_SWIZZLE(_mm_rsqrt_ss(_mm_dp_ps(v, v, 0x7f)), X, X, X, X));
 }
 
 UNIGINE_INLINE __m128 _mm_normalize4_ps(__m128 v)
 {
-	__m128 length2 = _mm_dot44_ps(v, v);
-	return _mm_mul_ps(v, _mm_rsqrt_ps_nr(length2));
+	return _mm_mul_ps(v, _MM_SWIZZLE(_mm_rsqrt_ss(_mm_dp_ps(v, v, 0xff)), X, X, X, X));
 }
 
 UNIGINE_INLINE __m128 _mm_cross_ps(__m128 v0, __m128 v1)

@@ -30,7 +30,7 @@
 		</member>
 		<member name="M:Unigine.World.getCollision(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
 			<summary>
-			Searches for all collider objects within a given bounding box.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+			Searches for all collider objects within a given bounding box.					As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="bb"> Bounding box. </param>
 			<param name="objects"> Array with collider objects' smart pointers. </param> 
@@ -38,7 +38,7 @@
 		</member>
 		<member name="M:Unigine.World.getCollision(Unigine.Math.WorldBoundSphere,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
 			<summary>
-			Searches for all collider objects within a given bounding sphere.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+			Searches for all collider objects within a given bounding sphere.					As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="bs"> Bounding sphere. </param>
 			<param name="objects"> Array with collider objects' smart pointers. </param> 
@@ -46,7 +46,7 @@
 		</member>
 		<member name="M:Unigine.World.getCollision(Unigine.Math.WorldBoundFrustum,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
 			<summary>
-			Searches for all collider objects within a given bounding frustum.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+			Searches for all collider objects within a given bounding frustum.					As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="bf"> Bounding frustum. </param>
 			<param name="objects"> Array with collider objects' smart pointers. </param> 
@@ -54,7 +54,7 @@
 		</member>
 		<member name="M:Unigine.World.getCollision(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
 			<summary>
-								Performs tracing from the p0 point to the p1 point to find all collider objects intersected by the line. This function detects intersection with surfaces (polygons) of mesh and terrain objects. 					Collisions with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Collision flag is enabled.						The surface has a material assigned.										As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Performs tracing from the p0 point to the p1 point to find all collider objects intersected by the line. This function detects intersection with surfaces (polygons) of mesh and terrain objects. 					Collisions with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Collision flag is enabled.						The surface has a material assigned.										As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="p0"> The start point coordinates. </param>
 			<param name="p1"> The end point coordinates. </param>
@@ -77,19 +77,19 @@
 		</member>
 		<member name="M:Unigine.World.setDistance(float)">
 			<summary>
-			Updates the distance, at which (and farther) nothing will be rendered or simulated.
+			Updates the distance at which (and farther) nothing will be rendered or simulated.
 			</summary> 
 			<param name="distance"> New distance in units. </param> 
 		</member>
 		<member name="M:Unigine.World.getDistance const">
 			<summary>
-			Returns a distance, at which (and farther) nothing will be rendered or simulated.
+			Returns a distance at which (and farther) nothing will be rendered or simulated.
 			</summary>  
 			<returns>Distance in units.</returns>
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int)">
 			<summary>
-								Performs tracing from the p0 point to the p1 point to find the first object intersected by the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object has a matching intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.										As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Performs tracing from the p0 point to the p1 point to find the first object intersected by the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object has a matching intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.										As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="p0"> Line start point coordinates. </param>
 			<param name="p1"> Line end point coordinates. </param>
@@ -98,7 +98,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
-								Performs tracing from the p0 point to the p1 point to find the first object intersected by the line (except for the ones passed in the exclude list). This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object has a matching intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.										As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Performs tracing from the p0 point to the p1 point to find the first object intersected by the line (except for the ones passed in the exclude list). This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object has a matching intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.										As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="p0"> Line start point coordinates. </param>
 			<param name="p1"> Line end point coordinates. </param>
@@ -108,7 +108,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Ptr{WorldIntersection})">
 			<summary>
-								Performs tracing from the p0 point to the p1 point to find the first object intersecting the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object is matching the intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.																As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Performs tracing from the p0 point to the p1 point to find the first object intersecting the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object is matching the intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.																As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="p0"> Coordinates of the line start point. </param>
 			<param name="p1"> Coordinates of the line end point. </param>
@@ -118,7 +118,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Ptr{WorldIntersectionNormal})">
 			<summary>
-								Performs tracing from the p0 point to the p1 point to find the first object intersecting the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object is matching the intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.																As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Performs tracing from the p0 point to the p1 point to find the first object intersecting the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object is matching the intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.																As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="p0"> Coordinates of the line start point. </param>
 			<param name="p1"> Coordinates of the line end point. </param>
@@ -128,7 +128,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Ptr{WorldIntersectionTexCoord})">
 			<summary>
-								Performs tracing from the p0 point to the p1 point to find the first object intersecting the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object is matching the intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.																As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Performs tracing from the p0 point to the p1 point to find the first object intersecting the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object is matching the intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.																As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="p0"> Coordinates of the line start point. </param>
 			<param name="p1"> Coordinates of the line end point. </param>
@@ -138,7 +138,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Ptr{WorldIntersection})">
 			<summary>
-								Performs tracing from the p0 point to the p1 point to find the first object intersecting the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object is matching the intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.																As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Performs tracing from the p0 point to the p1 point to find the first object intersecting the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object is matching the intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.																As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="p0"> Coordinates of the line start point. </param>
 			<param name="p1"> Coordinates of the line end point. </param>
@@ -149,7 +149,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Ptr{WorldIntersectionNormal})">
 			<summary>
-								Performs tracing from the p0 point to the p1 point to find the first object intersecting the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object is matching the intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.																As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Performs tracing from the p0 point to the p1 point to find the first object intersecting the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object is matching the intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.																As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="p0"> Coordinates of the line start point. </param>
 			<param name="p1"> Coordinates of the line end point. </param>
@@ -160,7 +160,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},Unigine.Ptr{WorldIntersectionTexCoord})">
 			<summary>
-								Performs tracing from the p0 point to the p1 point to find the first object intersected by the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object is matching the intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.																As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Performs tracing from the p0 point to the p1 point to find the first object intersected by the line. This function detects intersection with surfaces (polygons) of meshes. An intersection can be found only if an object is matching the intersection mask.					Intersections with the surface can be found only if the following conditions are fulfilled:											The surface is enabled.						Per-surface Intersection flag is enabled.						The surface has a material assigned.																As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="p0"> Coordinates of the line start point. </param>
 			<param name="p1"> Coordinates of the line end point. </param>
@@ -171,17 +171,17 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator},bool)">
 			<summary>
-								Performs tracing from the p0 point to the p1 point to find objects intersected by the line. This function detects intersection with objects' bounds.										As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Performs tracing from the p0 point to the p1 point to find objects intersected by the line. This function detects intersection with objects' bounds.																					As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="p0"> Coordinates of the line start point. </param>
 			<param name="p1"> Coordinates of the line end point. </param>
 			<param name="objects"> Array of intersected objects' smart pointers. </param>
-			<param name="check_surface_flags"> true if surface Intersection flags are to be taken into account when checking for intersections with objects; otherwise, false. When set to true objects with surface Intersection flags disabled (default setting) will be ignored as non-intersectable. </param> 
+			<param name="check_surface_flags"> true if surfaceIntersection flags are to be taken into account when checking for intersections with objects; otherwise, false. When set to true objects with surfaceIntersection flags disabled (default setting) will be ignored as non-intersectable. </param> 
 			<returns>true if intersections are found; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
 			<summary>
-								Searches for intersections with objects that are found in a given bounding box.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Searches for intersections with objects that are found in a given bounding box.					As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="bb"> Bounding box where intersection search will be performed. </param>
 			<param name="objects"> Array of intersected objects' smart pointers. </param> 
@@ -189,7 +189,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
-								Searches for intersections with nodes that are found in a given bounding box.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Searches for intersections with nodes that are found in a given bounding box.					As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="bb"> Bounding box where intersection search will be performed. </param>
 			<param name="nodes"> Array of intersected nodes' smart pointers. </param> 
@@ -197,7 +197,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundBox,Node::TYPE,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
-								Searches for intersections with specified type of nodes that are found in a given bounding box.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Searches for intersections with specified type of nodes that are found in a given bounding box.					As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="bb"> Bounding box where intersection search will be performed. </param>
 			<param name="type"> Node type filter. Only the nodes of the specified type will be checked. </param>
@@ -206,7 +206,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundSphere,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
 			<summary>
-								Searches for intersections with objects that are found in a given bounding sphere.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Searches for intersections with objects that are found in a given bounding sphere.					As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="bs"> Bounding sphere where intersection search will be performed. </param>
 			<param name="objects"> Array of intersected objects' smart pointers. </param> 
@@ -214,7 +214,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundSphere,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
-								Searches for intersections with nodes that are found in a given bounding sphere.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Searches for intersections with nodes that are found in a given bounding sphere.					As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="bs"> Bounding sphere where intersection search will be performed. </param>
 			<param name="nodes"> Array of intersected nodes' smart pointers. </param> 
@@ -222,7 +222,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundSphere,Node::TYPE,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
-								Searches for intersections with nodes of the specified type that are found in a given bounding sphere.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Searches for intersections with nodes of the specified type that are found in a given bounding sphere.					As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="bs"> Bounding sphere where intersection search will be performed. </param>
 			<param name="type"> Node type filter. Only the nodes of the specified type will be checked. </param>
@@ -231,7 +231,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundFrustum,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
 			<summary>
-								Searches for intersections with Objects that are found in a given bounding frustum. This method catches all objects independent of their visibility (i.e., if an object is disabled, any of its LODs are disabled, or it is out of the  visibility distance range, but is located within the bounding frustum, the intersection shall be detected). To check for intersections while taking into account the visibility aspect, use getVisibleIntersection(). Check the usage example applying this method.					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Searches for intersections with Objects that are found in a given bounding frustum. This method catches all objects independent of their visibility (i.e., if an object is disabled, any of its LODs are disabled, or it is out of the visibility distance range, but is located within the bounding frustum, the intersection shall be detected). To check for intersections while taking into account the visibility aspect, use						getVisibleIntersection(). Check the						usage example applying this method.																As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="bf"> Bounding frustum where intersection search will be performed. </param>
 			<param name="objects"> Array of intersected objects' smart pointers. </param> 
@@ -239,7 +239,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundFrustum,Node::TYPE,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
-								Searches for intersections with nodes of the specified type that are found in a given bounding frustum. This method catches all nodes of the specified type independent of their visibility (i.e., if an object is disabled, any of its LODs are disabled, or it is out of the  visibility distance range, but is located within the bounding frustum, the intersection shall be detected). To check for intersections while taking into account the visibility aspect, use getVisibleIntersection().					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Searches for intersections with nodes of the specified type that are found in a given bounding frustum. This method catches all nodes of the specified type independent of their visibility (i.e., if an object is disabled, any of its LODs are disabled, or it is out of the visibility distance range, but is located within the bounding frustum, the intersection shall be detected). To check for intersections while taking into account the visibility aspect, use						getVisibleIntersection().										As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="bf"> Bounding frustum where intersection search will be performed. </param>
 			<param name="type"> Node type filter. Only the nodes of the specified type will be checked. </param>
@@ -248,7 +248,7 @@
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.WorldBoundFrustum,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
-								Searches for intersections with nodes of the specified type that are found in a given bounding frustum. This method catches all nodes independent of their visibility (i.e., if an object is disabled, any of its LODs are disabled, or it is out of the  visibility distance range, but is located within the bounding frustum, the intersection shall be detected). To check for intersections while taking into account the visibility aspect, use getVisibleIntersection().					As a new node becomes a part of the BSP tree only after the updateSpatial() method is called (the engine calls the method automatically each frame after the world script update() code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
+								Searches for intersections with nodes of the specified type that are found in a given bounding frustum. This method catches all nodes independent of their visibility (i.e., if an object is disabled, any of its LODs are disabled, or it is out of the visibility distance range, but is located within the bounding frustum, the intersection shall be detected). To check for intersections while taking into account the visibility aspect, use						getVisibleIntersection().										As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
 			</summary> 
 			<param name="bf"> Bounding frustum where intersection search will be performed. </param>
 			<param name="nodes"> Array of intersected nodes' smart pointers. </param> 
@@ -256,7 +256,7 @@
 		</member>
 		<member name="M:Unigine.World.getVisibleIntersection(Unigine.Math.Vec3,Unigine.Math.WorldBoundFrustum,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator},float)">
 			<summary>
-			Searches for intersections with objects inside a given bounding frustum that are visible to the specified camera position, i.e. either of its LODs is within the visibility distance distance. Unlike the getIntersection() method, this one takes the "visibility" concept into account (hidden objects or the ones that are too far away won't be found). Check this usage example for more details.
+			Searches for intersections with objects inside a given bounding frustum that are visible to the specified camera position, i.e. either of its LODs is within the visibility distance distance. Unlike the					getIntersection()method, this one takes the "visibility" concept into account (hidden objects or the ones that are too far away won't be found). Check this					usage example for more details.
 			</summary> 
 			<param name="camera"> Position of the camera from which the visibility distance to objects is checked. </param>
 			<param name="bf"> Bounding frustum inside which intersection search is performed. </param>
@@ -266,7 +266,7 @@
 		</member>
 		<member name="M:Unigine.World.getVisibleIntersection(Unigine.Math.Vec3,Unigine.Math.WorldBoundFrustum,Node::TYPE,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},float)">
 			<summary>
-								Searches for intersections with nodes inside a given bounding frustum that are visible to the specified camera position, i.e. either of its LODs is within the visibility distance distance. Unlike the getIntersection() method, this one takes the "visibility" concept into account (hidden nodes or the ones that are too far away won't be found). Check this usage example for more details.					This method can be used only for nodes inherited from the Object class, i.e. they have sufraces that store LOD and visibility distance data.
+								Searches for intersections with nodes inside a given bounding frustum that are visible to the specified camera position, i.e. either of its LODs is within the visibility distance distance. Unlike the						getIntersection()method, this one takes the "visibility" concept into account (hidden nodes or the ones that are too far away won't be found). Check this						usage example for more details.					This method can be used only for nodes inherited from the Object class, i.e. they have sufraces that store LOD and visibility distance data.
 			</summary> 
 			<param name="camera"> Position of the camera from which the visibility distance to nodes is checked. </param>
 			<param name="bf"> Bounding frustum inside which intersection search is performed. </param>
@@ -313,7 +313,7 @@
 		</member>
 		<member name="M:Unigine.World.saveWorld">
 			<summary>
-			Saves the world.
+			Saves the World.
 			</summary>  
 			<returns>true, if the world has been saved successfully; otherwise false.</returns>
 		</member>
@@ -326,13 +326,13 @@
 		</member>
 		<member name="M:Unigine.World.reloadWorld">
 			<summary>
-			Reloads the world.
+			Reloads the World.
 			</summary>  
 			<returns>true, if the world has been reloaded successfully; otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.World.quitWorld">
 			<summary>
-			Closes the world.
+			Closes the World.
 			</summary>  
 			<returns>true, if the world has been quit successfully; otherwise false.</returns>
 		</member>
@@ -350,7 +350,7 @@
 		</member>
 		<member name="M:Unigine.World.addWorld(char)">
 			<summary>
-			Loads a world from a file and adds it to the current world.
+			Loads a world from a file and adds it to the current World.
 			</summary> 
 			<param name="name"> Name of the file describing the world. </param> 
 			<returns>1 if the world is loaded and added successfully; otherwise, 0.</returns>
@@ -363,68 +363,68 @@
 		</member>
 		<member name="M:Unigine.World.getPath const">
 			<summary>
-			Returns the current path to the *.world-file where the world is stored.
+								Returns the current path to the *.world-file where the world is stored.
 			</summary>  
 			<returns>Path to the *.world-file.</returns>
 		</member>
 		<member name="M:Unigine.World.setPhysicsSettings(char)">
 			<summary>
-			Sets the name of the *.physics file containing default physics settings to be used for the world.
+								Sets the name of the *.physics file containing default physics settings to be used for the World.
 			</summary> 
-			<param name="settings"> Name of the default *.physics asset to be used for the world. </param> 
+			<param name="settings"> Name of the default *.physics asset to be used for the World. </param> 
 		</member>
 		<member name="M:Unigine.World.getPhysicsSettings const">
 			<summary>
-			Returns the name of the *.physics file containing default physics settings currently used by the world.
+								Returns the name of the *.physics file containing default physics settings currently used by the World.
 			</summary>  
-			<returns>Name of the default *.physics asset used for the world.</returns>
+			<returns>Name of the default *.physics asset used for the World.</returns>
 		</member>
 		<member name="M:Unigine.World.setRenderSettings(char)">
 			<summary>
-			Sets the name of the *.render file containing default render settings to be used for the world.
+								Sets the name of the *.render file containing default render settings to be used for the World.
 			</summary> 
-			<param name="settings"> Name of the default *.render asset to be used for the world. </param> 
+			<param name="settings"> Name of the default *.render asset to be used for the World. </param> 
 		</member>
 		<member name="M:Unigine.World.getRenderSettings const">
 			<summary>
-			Returns the name of the *.render file containing default render settings currently used by the world.
+								Returns the name of the *.render file containing default render settings currently used by the World.
 			</summary>  
-			<returns>Name of the default *.render asset used for the world.</returns>
+			<returns>Name of the default *.render asset used for the World.</returns>
 		</member>
 		<member name="M:Unigine.World.setSoundSettings(char)">
 			<summary>
-			Sets the name of the *.sound file containing default sound settings to be used for the world.
+								Sets the name of the *.sound file containing default sound settings to be used for the World.
 			</summary> 
-			<param name="settings"> Name of the default *.sound asset to be used for the world. </param> 
+			<param name="settings"> Name of the default *.sound asset to be used for the World. </param> 
 		</member>
 		<member name="M:Unigine.World.getSoundSettings const">
 			<summary>
-			Returns the name of the *.sound file containing default sound settings currently used by the world.
+								Returns the name of the *.sound file containing default sound settings currently used by the World.
 			</summary>  
-			<returns>Name of the default *.sound asset used for the world.</returns>
+			<returns>Name of the default *.sound asset used for the World.</returns>
 		</member>
 		<member name="M:Unigine.World.setScriptName(char)">
 			<summary>
-			Sets the name of the world script file *.usc.
+								Sets the name of the world script file *.usc.
 			</summary> 
 			<param name="name"> Name of the world script file *.usc. </param> 
 		</member>
 		<member name="M:Unigine.World.getScriptName const">
 			<summary>
-			Returns the name of the world script file *.usc.
+								Returns the name of the world script file *.usc.
 			</summary>  
 			<returns>Name of the world script file *.usc.</returns>
 		</member>
 		<member name="M:Unigine.World.isNode(int) const">
 			<summary>
-			Checks if a node with a given ID exists in the world.
+			Checks if a node with a given ID exists in the World.
 			</summary> 
 			<param name="id"> Node ID. </param> 
 			<returns>true if the node with the given ID exists; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.World.getNodes(Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator}) const">
 			<summary>
-			Collects all instances of all nodes (either loaded from the *.world file or created dynamically at run time), including cache, Node Reference internals, etc. and puts them to the specified output list.					If you need only root nodes to be returned, use getRootNodes() instead
+								Collects all instances of all nodes (either loaded from the *.world file or created dynamically at run time), including cache, Node Reference internals, etc. and puts them to the specified output list.					If you need only root nodes to be returned, use getRootNodes() instead
 			</summary> 
 			<param name="nodes"> Array with node smart pointers. </param> 
 		</member>
@@ -471,13 +471,13 @@
 		</member>
 		<member name="M:Unigine.World.setUnpackNodeReferences(bool)">
 			<summary>
-			Enables or disables automatic unpacking of node references at run time. This option can be used to simplify hierarchy management, as when it is enabled all nodes contained in node references will be present in the world hierarchy. When disabled you have to check the hierarchy of each node reference individually (e.g. to find the number of children or manage some of them). The content of NodeReference nodes is unpacked only at run time and does not affect your *.world and *.node files. So, you can use all advantages of node references when building worlds in the UnigineEditor and manage a clear and straightforward hierarchy at run time. This option is available only via code, can be enabled in the System Script and works for all worlds used in your project.Auto-unpacking is disabled in C++ and UnigineScript only projects by default for backward compatibility.
+			Enables or disables automatic unpacking of node references at run time. This option can be used to simplify hierarchy management, as when it is enabled all nodes contained in node references will be present in the world hierarchy. When disabled you have to check the hierarchy of each node reference individually (e.g. to find the number of children or manage some of them). The content of NodeReference nodes is unpacked only at run time and does not affect your *.world and *.node files. So, you can use all advantages of node references when building worlds in the UnigineEditor and manage a clear and straightforward hierarchy at run time. This option is available only via code, can be enabled in the System Script and works for all worlds used in your project.					Auto-unpacking is disabled in C++ and UnigineScript only projects by default for backward compatibility.
 			</summary> 
 			<param name="references"> 1 - to enable automatic unpacking of node references at run time, 0 - to disable it. </param> 
 		</member>
 		<member name="M:Unigine.World.isUnpackNodeReferences const">
 			<summary>
-			Returns the value indicating if automatic unpacking of node references at run time is enabled. This option can be used to simplify hierarchy management, as when it is enabled all nodes contained in node references will be present in the world hierarchy. When disabled you have to check the hierarchy of each node reference individually (e.g. to find the number of children or manage some of them). The content of NodeReference nodes is unpacked only at run time and does not affect your *.world and *.node files. So, you can use all advantages of node references when building worlds in the UnigineEditor and manage a clear and straightforward hierarchy at run time.					This option is available only via code, can be enabled in the System Script and works for all worlds used in your project.Auto-unpacking is disabled in C++ and UnigineScript only projects by default for backward compatibility.
+			Returns the value indicating if automatic unpacking of node references at run time is enabled. This option can be used to simplify hierarchy management, as when it is enabled all nodes contained in node references will be present in the world hierarchy. When disabled you have to check the hierarchy of each node reference individually (e.g. to find the number of children or manage some of them). The content of NodeReference nodes is unpacked only at run time and does not affect your *.world and *.node files. So, you can use all advantages of node references when building worlds in the UnigineEditor and manage a clear and straightforward hierarchy at run time. This option is available only via code, can be enabled in the System Script and works for all worlds used in your project.					Auto-unpacking is disabled in C++ and UnigineScript only projects by default for backward compatibility.
 			</summary>  
 			<returns>1 if automatic unpacking of node references at run time is enabled; otherwise, 0.</returns>
 		</member>
@@ -533,7 +533,7 @@
 		</member>
 		<member name="M:Unigine.World.getNodeByType(int) const">
 			<summary>
-			Returns the first node of the specified type in the world. Hidden and system nodes are ignored.
+			Returns the first node of the specified type in the World. Hidden and system nodes are ignored.
 			</summary> 
 			<param name="type"> Node type identifier, one of the NODE_* values. </param> 
 			<returns>First node of the specified type, if it exists in the world; otherwise, nullptr.</returns>
@@ -547,7 +547,7 @@
 		</member>
 		<member name="M:Unigine.World.isNode(char) const">
 			<summary>
-			Checks if a node  with a given name exists in the world.
+			Checks if a node  with a given name exists in the World.
 			</summary> 
 			<param name="name"> Node name. </param> 
 			<returns>true if a node with the specified name exists in the world; otherwise, false.</returns>
@@ -577,47 +577,17 @@
 			<param name="node"> Root node, for which a new index is to be set. </param>
 			<param name="index"> New index to be set for the specified root node. </param> 
 		</member>
-		<member name="M:Unigine.World.addCallback(int,Unigine.CallbackBase1{char})">
-			<summary>
-			Adds a callback of the specified type. Callback functions can be used to determine actions to be performed when the world is loaded, saved, or cleared. The signature of the callback function must be as follows:
-			</summary> 
-			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param>
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.World.addCallback(int,Unigine.CallbackBase2{char,Unigine.Ptr{Unigine.Node}})">
-			<summary>
-			Adds a callback of the specified type. This method adds a callback function to be used to determine actions to be performed when a node in the world is saved. The signature of the callback function must be as follows:
-			</summary> 
-			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param>
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.World.removeCallback(int,void)">
-			<summary>
-			Removes the specified callback from the list of callbacks of the specified type. Callback functions can be used to determine actions to be performed when the world is loaded, saved, or cleared.
-			</summary> 
-			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param>
-			<param name="id"> Callback ID obtained when adding it. </param> 
-			<returns>True if the callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.World.clearCallbacks(int)">
-			<summary>
-			Clears all added callbacks of the specified type. Callback functions can be used to determine actions to be performed when the world is loaded, saved, or cleared.
-			</summary> 
-			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param> 
-		</member>
 		<member name="M:Unigine.World.setMovingImmovableNodeMode(World::MOVING_IMMOVABLE_NODES_MODE)">
 			<summary>
-								Sets a new mode of handling attempts to move nodes having the Immovable flag enabled.					Please be aware that there are two cases when you may disable warnings and allow movement of Immovable nodes:											At run-time for procedural generation of levels. This may cause some freezing but won't affect performance much. Upon completion of the generation process you should enable warnings again.						On world initialization, this will change world loading time but won't affect overall performance.
+								Sets a new mode of handling attempts to move nodes having the						Immovable flag enabled.										Please be aware that there are two cases when you may disable warnings and allow movement of						Immovable nodes:													At run-time for procedural generation of levels. This may cause some freezing but won't affect performance much. Upon completion of the generation process you should enable warnings again.							On world initialization, this will change world loading time but won't affect overall performance.
 			</summary> 
-			<param name="mode"> New handling mode for attempts to move Immovable nodes to be set. </param> 
+			<param name="mode"> New handling mode for attempts to moveImmovable nodes to be set. </param> 
 		</member>
 		<member name="M:Unigine.World.getMovingImmovableNodeMode const">
 			<summary>
-							Returns the current mode of handling attempts to move nodes having the Immovable flag enabled.				Please be aware that there are two cases when you may disable warnings and allow movement of Immovable nodes:											At run-time for procedural generation of levels. This may cause some freezing but won't affect performance much. Upon completion of the generation process you should enable warnings again.						On world initialization, this will change world loading time but won't affect overall performance.
+								Returns the current mode of handling attempts to move nodes having the						Immovable flag enabled.										Please be aware that there are two cases when you may disable warnings and allow movement of						Immovable nodes:													At run-time for procedural generation of levels. This may cause some freezing but won't affect performance much. Upon completion of the generation process you should enable warnings again.							On world initialization, this will change world loading time but won't affect overall performance.
 			</summary>  
-			<returns>Current handling mode for attempts to move Immovable nodes.</returns>
+			<returns>Current handling mode for attempts to moveImmovable nodes.</returns>
 		</member>
 		<member name="M:Unigine.World.setNodeIdSeed(unsignedint)">
 			<summary>
@@ -631,66 +601,6 @@
 			</summary> 
 			<param name="from"> Beginning of the range. </param>
 			<param name="to"> End of the range. </param> 
-		</member>
-		<member name="F:Unigine.World.CALLBACK_POST_WORLD_CLEAR">
-			<summary>
-			Callback to be fired after clearing the world.
-		</summary>
-		</member>
-		<member name="F:Unigine.World.CALLBACK_PRE_WORLD_CLEAR">
-			<summary>
-			Callback to be fired before clearing the world: either closing the current world or preparing to load the next world. This callback always takes place in Engine::swap(), i.e. in the end of the frame.
-		</summary>
-		</member>
-		<member name="F:Unigine.World.CALLBACK_POST_WORLD_SAVE">
-			<summary>
-			Callback to be fired after saving the world.
-		</summary>
-		</member>
-		<member name="F:Unigine.World.CALLBACK_PRE_WORLD_SAVE">
-			<summary>
-			Callback to be fired before saving the world.
-		</summary>
-		</member>
-		<member name="F:Unigine.World.CALLBACK_POST_WORLD_LOAD">
-			<summary>
-			Callback to be fired after loading the world.
-		</summary>
-		</member>
-		<member name="F:Unigine.World.CALLBACK_PRE_WORLD_LOAD">
-			<summary>
-			Callback to be fired before loading the world.
-		</summary>
-		</member>
-		<member name="F:Unigine.World.CALLBACK_POST_WORLD_SHUTDOWN">
-			<summary>
-			Callback to be fired after calling all WorldLogic::shutdown() methods.
-		</summary>
-		</member>
-		<member name="F:Unigine.World.CALLBACK_PRE_WORLD_SHUTDOWN">
-			<summary>
-			Callback to be fired before calling all WorldLogic::shutdown() methods.
-		</summary>
-		</member>
-		<member name="F:Unigine.World.CALLBACK_POST_WORLD_INIT">
-			<summary>
-			Callback to be fired after calling all WorldLogic::init() methods.					Forced closing of the Engine should be disabled with the -auto_quit 0						 command-line option.
-		</summary>
-		</member>
-		<member name="F:Unigine.World.CALLBACK_PRE_WORLD_INIT">
-			<summary>
-			Callback to be fired before calling all WorldLogic::init() methods.
-		</summary>
-		</member>
-		<member name="F:Unigine.World.CALLBACK_POST_NODE_SAVE">
-			<summary>
-			Callback to be fired after calling the World::saveNode() method.
-		</summary>
-		</member>
-		<member name="F:Unigine.World.CALLBACK_PRE_NODE_SAVE">
-			<summary>
-			Callback to be fired before calling the World::saveNode() method.
-		</summary>
 		</member>
 		<member name="F:Unigine.World.MOVING_IMMOVABLE_NODES_MODE_BAN">
 			<summary>

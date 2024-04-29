@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -25,10 +25,20 @@
 #include "UnigineCamera.h"
 #include "UnigineCallback.h"
 #include "UnigineGui.h"
+#include "UnigineEvent.h"
 
 namespace Unigine
 {
 
+class Widget;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<Widget> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &>>;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<Widget> &, int>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &, int>>;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<Widget> &, unsigned int>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &, unsigned int>>;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<Widget> &, const Ptr<Widget> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &, const Ptr<Widget> &>>;
 
 class UNIGINE_API Widget : public APIInterface
 {
@@ -122,7 +132,9 @@ public:
 	Ptr<Widget> getNextFocus() const;
 	int isFocused() const;
 	void setPosition(int x, int y);
+	void setPositionX(int positionx);
 	int getPositionX() const;
+	void setPositionY(int positiony);
 	int getPositionY() const;
 	int getScreenPositionX() const;
 	int getScreenPositionY() const;
@@ -169,19 +181,6 @@ public:
 	int getFontWrap() const;
 	void setToolTip(const char *str, int reset = 0);
 	const char *getToolTip() const;
-	void *addCallback(Gui::CALLBACK_INDEX callback, CallbackBase *func);
-	void *addCallback(Gui::CALLBACK_INDEX callback, CallbackBase1<Ptr<Widget>> *func);
-	void *addCallback(Gui::CALLBACK_INDEX callback, CallbackBase2<Ptr<Widget>, Ptr<Widget>> *func);
-	void *addCallback(Gui::CALLBACK_INDEX callback, CallbackBase3<Ptr<Widget>, Ptr<Widget>, int> *func);
-	bool removeCallback(Gui::CALLBACK_INDEX callback, void *id);
-	void clearCallbacks(Gui::CALLBACK_INDEX callback);
-	bool isCallback(int callback) const;
-	void setCallbackAccel(int callback, unsigned int key, int ctrl, int alt, int shift);
-	bool getCallbackAccel(int callback, unsigned int &key, int &ctrl, int &alt, int &shift) const;
-	int isCallbackAccel(unsigned int key, int ctrl, int alt, int shift) const;
-	void setCallbackEnabled(int callback, bool enabled);
-	int isCallbackEnabled(int callback) const;
-	void runCallback(int callback) const;
 	void addAttach(const Ptr<Widget> &w, const char *format = 0, int multiplier = 1, int flags = 0);
 	void removeAttach(const Ptr<Widget> &w);
 	void addChild(const Ptr<Widget> &w, int flags = -1);
@@ -193,6 +192,72 @@ public:
 	int getKeyActivity(unsigned int key) const;
 	void raise(const Ptr<Widget> &w);
 	void arrange();
+	void runEventShow();
+	void runEventHide();
+	void runEventFocusIn();
+	void runEventFocusOut();
+	void runEventChanged();
+	void runEventClicked(int mouse_buttons);
+	void runEventDoubleClicked();
+	void runEventPressed(int mouse_buttons);
+	void runEventReleased(int mouse_buttons);
+	void runEventKeyPressed(int key);
+	void runEventTextPressed(unsigned int code);
+	void runEventEnter();
+	void runEventLeave();
+	void runEventDragMove(const Ptr<Widget> &pointer);
+	void runEventDragDrop(const Ptr<Widget> &pointer);
+	Event<const Ptr<Widget> &> &getEventShow();
+	Event<const Ptr<Widget> &> &getEventHide();
+	Event<const Ptr<Widget> &> &getEventFocusIn();
+	Event<const Ptr<Widget> &> &getEventFocusOut();
+	Event<const Ptr<Widget> &> &getEventChanged();
+	Event<const Ptr<Widget> &, int> &getEventClicked();
+	Event<const Ptr<Widget> &> &getEventDoubleClicked();
+	Event<const Ptr<Widget> &, int> &getEventPressed();
+	Event<const Ptr<Widget> &, int> &getEventReleased();
+	Event<const Ptr<Widget> &, int> &getEventKeyPressed();
+	Event<const Ptr<Widget> &, unsigned int> &getEventTextPressed();
+	Event<const Ptr<Widget> &> &getEventEnter();
+	Event<const Ptr<Widget> &> &getEventLeave();
+	Event<const Ptr<Widget> &, const Ptr<Widget> &> &getEventDragMove();
+	Event<const Ptr<Widget> &, const Ptr<Widget> &> &getEventDragDrop();
+	Event<const Ptr<Widget> &> &getEventRemove();
+
+private:
+
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &>> event_show;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &>> event_show_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &>> event_hide;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &>> event_hide_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &>> event_focus_in;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &>> event_focus_in_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &>> event_focus_out;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &>> event_focus_out_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &>> event_changed;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &>> event_changed_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &, int>> event_clicked;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &, int>> event_clicked_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &>> event_double_clicked;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &>> event_double_clicked_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &, int>> event_pressed;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &, int>> event_pressed_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &, int>> event_released;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &, int>> event_released_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &, int>> event_key_pressed;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &, int>> event_key_pressed_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &, unsigned int>> event_text_pressed;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &, unsigned int>> event_text_pressed_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &>> event_enter;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &>> event_enter_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &>> event_leave;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &>> event_leave_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &, const Ptr<Widget> &>> event_drag_move;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &, const Ptr<Widget> &>> event_drag_move_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &, const Ptr<Widget> &>> event_drag_drop;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &, const Ptr<Widget> &>> event_drag_drop_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Widget> &>> event_remove;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Widget> &>> event_remove_connection;
 };
 typedef Ptr<Widget> WidgetPtr;
 

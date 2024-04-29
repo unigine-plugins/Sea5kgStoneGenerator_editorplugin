@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -18,11 +18,17 @@
 #include "UnigineImage.h"
 #include "UniginePtr.h"
 #include "UnigineMathLib.h"
+#include "UnigineMaterial.h"
 
 namespace Unigine
 {
 
 class InputGamePad;
+class InputVRDevice;
+class InputVRHead;
+class InputVRController;
+class InputVRTracker;
+class InputVRBaseStation;
 class InputJoystick;
 class InputEvent;
 class InputEventMouseButton;
@@ -32,6 +38,8 @@ class InputEventPadButton;
 class InputEventPadTouchMotion;
 class InputEventJoyButton;
 class InputEventJoyPovMotion;
+class InputEventVRButton;
+class InputEventVRButtonTouch;
 int inputEventsFilterFunc(Ptr<InputEvent> &e);
 //////////////////////////////////////////////////////////////////////////
 
@@ -227,38 +235,6 @@ public:
 		NUM_KEYS,
 	};
 
-	enum CALLBACK_INDEX
-	{
-		CALLBACK_MOUSE_DOWN = 0,
-		CALLBACK_MOUSE_UP,
-		CALLBACK_MOUSE_WHEEL,
-		CALLBACK_MOUSE_WHEEL_HORIZONTAL,
-		CALLBACK_MOUSE_MOTION,
-		CALLBACK_KEY_DOWN,
-		CALLBACK_KEY_UP,
-		CALLBACK_KEY_REPEAT,
-		CALLBACK_TEXT_PRESS,
-		CALLBACK_TOUCH_DOWN,
-		CALLBACK_TOUCH_UP,
-		CALLBACK_TOUCH_MOTION,
-		CALLBACK_GAMEPAD_CONNECTED,
-		CALLBACK_GAMEPAD_DISCONNECTED,
-		CALLBACK_GAMEPAD_BUTTON_DOWN,
-		CALLBACK_GAMEPAD_BUTTON_UP,
-		CALLBACK_GAMEPAD_AXIS_MOTION,
-		CALLBACK_GAMEPAD_TOUCH_DOWN,
-		CALLBACK_GAMEPAD_TOUCH_UP,
-		CALLBACK_GAMEPAD_TOUCH_MOTION,
-		CALLBACK_JOY_CONNECTED,
-		CALLBACK_JOY_DISCONNECTED,
-		CALLBACK_JOY_BUTTON_DOWN,
-		CALLBACK_JOY_BUTTON_UP,
-		CALLBACK_JOY_AXIS_MOTION,
-		CALLBACK_JOY_POV_MOTION,
-		CALLBACK_IMMEDIATE_INPUT,
-		NUM_CALLBACKS,
-	};
-
 	enum DEVICE
 	{
 		DEVICE_UNKNOWN = 0,
@@ -269,7 +245,7 @@ public:
 		DEVICE_DANCE_PAD,
 		DEVICE_GUITAR,
 		DEVICE_DRUM_KIT,
-		DEVICE_THROTTLE,
+		DEVICE_VR,
 	};
 
 	enum GAMEPAD_BUTTON
@@ -303,6 +279,35 @@ public:
 		GAMEPAD_AXIS_LEFT_TRIGGER,
 		GAMEPAD_AXIS_RIGHT_TRIGGER,
 		NUM_GAMEPAD_AXES,
+	};
+
+	enum VR_BUTTON
+	{
+		VR_BUTTON_SYSTEM_LEFT,
+		VR_BUTTON_SYSTEM_RIGHT,
+		VR_BUTTON_A,
+		VR_BUTTON_B,
+		VR_BUTTON_X,
+		VR_BUTTON_Y,
+		VR_BUTTON_GRIP_LEFT,
+		VR_BUTTON_AXIS_0_LEFT,
+		VR_BUTTON_AXIS_1_LEFT,
+		VR_BUTTON_AXIS_2_LEFT,
+		VR_BUTTON_AXIS_3_LEFT,
+		VR_BUTTON_AXIS_4_LEFT,
+		VR_BUTTON_GRIP_RIGHT,
+		VR_BUTTON_AXIS_0_RIGHT,
+		VR_BUTTON_AXIS_1_RIGHT,
+		VR_BUTTON_AXIS_2_RIGHT,
+		VR_BUTTON_AXIS_3_RIGHT,
+		VR_BUTTON_AXIS_4_RIGHT,
+		VR_BUTTON_DPAD_UP,
+		VR_BUTTON_DPAD_DOWN,
+		VR_BUTTON_DPAD_LEFT,
+		VR_BUTTON_DPAD_RIGHT,
+		VR_BUTTON_PROXIMITY_SENSOR,
+		VR_BUTTON_APPLICATION,
+		NUM_VR_BUTTONS,
 	};
 
 	enum JOYSTICK_POV
@@ -356,6 +361,12 @@ public:
 	static int getTouchEvents(int index, Vector<Ptr<InputEventTouch>> &events);
 	static int getNumGamePads();
 	static Ptr<InputGamePad> getGamePad(int num);
+	static int getNumVRDevices();
+	static Ptr<InputVRDevice> getVRDevice(int num);
+	static Ptr<InputVRHead> getVRHead();
+	static Ptr<InputVRController> getVRControllerLeft();
+	static Ptr<InputVRController> getVRControllerRight();
+	static Ptr<InputVRController> getVRControllerTreadmill();
 	static int getNumJoysticks();
 	static Ptr<InputJoystick> getJoystick(int num);
 	static bool isEmptyClipboard();
@@ -375,17 +386,40 @@ public:
 	static void setMouseCursorCustom(const Ptr<Image> &image, int x = 0, int y = 0);
 	static void clearMouseCursorCustom();
 	static void updateMouseCursor();
-	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase1<Input::MOUSE_BUTTON> *func);
-	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase2<int, int> *func);
-	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase1<Input::KEY> *func);
-	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase1<unsigned int> *func);
-	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase2<unsigned int, Input::GAMEPAD_BUTTON> *func);
-	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase2<unsigned int, Input::GAMEPAD_AXIS> *func);
-	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase3<unsigned int, int, int> *func);
-	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase2<unsigned int, int> *func);
-	static void *addCallback(Input::CALLBACK_INDEX callback, CallbackBase1<Ptr<InputEvent>> *func);
-	static bool removeCallback(Input::CALLBACK_INDEX callback, void *id);
-	static void clearCallbacks(Input::CALLBACK_INDEX callback);
+	static Event<Input::MOUSE_BUTTON> &getEventMouseDown();
+	static Event<Input::MOUSE_BUTTON> &getEventMouseUp();
+	static Event<int> &getEventMouseWheel();
+	static Event<int> &getEventMouseWheelHorizontal();
+	static Event<int, int> &getEventMouseMotion();
+	static Event<Input::KEY> &getEventKeyDown();
+	static Event<Input::KEY> &getEventKeyUp();
+	static Event<unsigned int> &getEventKeyRepeat();
+	static Event<unsigned int> &getEventTextPress();
+	static Event<int> &getEventTouchDown();
+	static Event<int> &getEventTouchUp();
+	static Event<int> &getEventTouchMotion();
+	static Event<int> &getEventGamepadConnected();
+	static Event<int> &getEventGamepadDisconnected();
+	static Event<int, Input::GAMEPAD_BUTTON> &getEventGamepadButtonDown();
+	static Event<int, Input::GAMEPAD_BUTTON> &getEventGamepadButtonUp();
+	static Event<int, Input::GAMEPAD_AXIS> &getEventGamepadAxisMotion();
+	static Event<int, int, int> &getEventGamepadTouchDown();
+	static Event<int, int, int> &getEventGamepadTouchUp();
+	static Event<int, int, int> &getEventGamepadTouchMotion();
+	static Event<int> &getEventVrDeviceConnected();
+	static Event<int> &getEventVrDeviceDisconnected();
+	static Event<int, Input::VR_BUTTON> &getEventVrDeviceButtonDown();
+	static Event<int, Input::VR_BUTTON> &getEventVrDeviceButtonUp();
+	static Event<int, Input::VR_BUTTON> &getEventVrDeviceButtonTouchDown();
+	static Event<int, Input::VR_BUTTON> &getEventVrDeviceButtonTouchUp();
+	static Event<int, int> &getEventVrDeviceAxisMotion();
+	static Event<int> &getEventJoyConnected();
+	static Event<int> &getEventJoyDisconnected();
+	static Event<int, int> &getEventJoyButtonDown();
+	static Event<int, int> &getEventJoyButtonUp();
+	static Event<int, int> &getEventJoyAxisMotion();
+	static Event<int, Input::JOYSTICK_POV> &getEventJoyPovMotion();
+	static Event<const Ptr<InputEvent> &> &getEventImmediateInput();
 	static int getEventsBuffer(int frame, Vector<Ptr<InputEvent>> &events);
 	static void sendEvent(const Ptr<InputEvent> &e);
 	static void setEventsFilter(int (*func)(Ptr<InputEvent> &e));
@@ -437,6 +471,194 @@ public:
 	void setVibration(float low_frequency, float high_frequency, float duration_ms = 100.0f);
 };
 typedef Ptr<InputGamePad> InputGamePadPtr;
+
+
+class UNIGINE_API InputVRDevice : public APIInterface
+{
+public:
+	static bool convertible(InputVRDevice *obj) { return obj != nullptr; }
+
+	enum TYPE
+	{
+		INPUT_VR_UNKNOWN,
+		INPUT_VR_DEVICE,
+		INPUT_VR_HEAD,
+		INPUT_VR_CONTROLLER,
+		INPUT_VR_TRACKER,
+		INPUT_VR_BASE_STATION,
+		NUM_TYPES,
+	};
+	bool isAvailable() const;
+	int getNumber() const;
+	const char *getName() const;
+	Input::DEVICE getDeviceType() const;
+	InputVRDevice::TYPE getType() const;
+	const char *getDeviceModelName() const;
+	bool hasYawDrift() const;
+	bool isCharging() const;
+	bool hasBattery() const;
+	bool canReportBatteryValue() const;
+	float getBatteryValue() const;
+	String getModelNumber() const;
+	String getSerialNumber() const;
+	String getManufacturerName() const;
+	unsigned long long getHardwareRevision() const;
+	unsigned long long getFirmwareVersion() const;
+	Math::Mat4 getWorldTransform() const;
+	Math::mat4 getTransform() const;
+	Math::vec3 getLinearVelocity() const;
+	Math::vec3 getAngularVelocity() const;
+	Math::vec3 getAngularAcceleration() const;
+	bool isTransformValid() const;
+	int getNumModels() const;
+	Math::mat4 getModelTransform(int num) const;
+	Math::Mat4 getModelWorldTransform(int num) const;
+	Ptr<Mesh> getModelMesh(int num);
+	Ptr<Texture> getModelTexture(int num);
+	const char *getModelName(int num);
+	Ptr<Mesh> getCombinedModelMesh() const;
+	Ptr<Texture> getCombinedModelTexture() const;
+	const char *getCombinedModelName() const;
+};
+typedef Ptr<InputVRDevice> InputVRDevicePtr;
+
+
+class UNIGINE_API InputVRHead : public InputVRDevice
+{
+public:
+	static bool convertible(InputVRDevice *obj) { return obj && obj->getType() == InputVRDevice::INPUT_VR_HEAD; }
+
+	enum MODEL_TYPE
+	{
+		MODEL_TYPE_UNKNOWN,
+		MODEL_TYPE_OCULUS_BEGIN,
+		MODEL_TYPE_OCULUS_DK2 = MODEL_TYPE_OCULUS_BEGIN,
+		MODEL_TYPE_OCULUS_CB,
+		MODEL_TYPE_OCULUS_OTHER,
+		MODEL_TYPE_OCULUS_E3_2015,
+		MODEL_TYPE_OCULUS_ES06,
+		MODEL_TYPE_OCULUS_ES09,
+		MODEL_TYPE_OCULUS_ES11,
+		MODEL_TYPE_OCULUS_RIFT,
+		MODEL_TYPE_OCULUS_RIFT_S,
+		MODEL_TYPE_OCULUS_END = MODEL_TYPE_OCULUS_RIFT_S,
+		MODEL_TYPE_VARJO_BEGIN,
+		MODEL_TYPE_VARJO_VR_1 = MODEL_TYPE_VARJO_BEGIN,
+		MODEL_TYPE_VARJO_XR_1,
+		MODEL_TYPE_VARJO_VR_2,
+		MODEL_TYPE_VARJO_VR_2_PRO,
+		MODEL_TYPE_VARJO_VR_3,
+		MODEL_TYPE_VARJO_XR_3,
+		MODEL_TYPE_VARJO_AERO,
+		MODEL_TYPE_VARJO_END = MODEL_TYPE_VARJO_AERO,
+		MODEL_TYPE_OPENVR_BEGIN,
+		MODEL_TYPE_OPENVR_HTC_VIVE = MODEL_TYPE_OPENVR_BEGIN,
+		MODEL_TYPE_OPENVR_HTC_VIVE_PRO,
+		MODEL_TYPE_OPENVR_HTC_FOCUS,
+		MODEL_TYPE_OPENVR_VALVE_INDEX,
+		MODEL_TYPE_OPENVR_END = MODEL_TYPE_OPENVR_VALVE_INDEX,
+		NUM_MODEL_TYPES,
+	};
+	InputVRHead::MODEL_TYPE getModelType() const;
+	bool hasButtons() const;
+	void setTrackingPositionEnabled(bool enabled);
+	bool isTrackingPositionEnabled() const;
+	void setTrackingRotationEnabled(bool enabled);
+	bool isTrackingRotationEnabled() const;
+	bool isButtonPressed(Input::VR_BUTTON button) const;
+	bool isButtonDown(Input::VR_BUTTON button) const;
+	bool isButtonUp(Input::VR_BUTTON button) const;
+	Ptr<InputEventVRButton> getButtonEvent(Input::VR_BUTTON button) const;
+	int getButtonEvents(Input::VR_BUTTON button, Vector<Ptr<InputEventVRButton>> &events);
+};
+typedef Ptr<InputVRHead> InputVRHeadPtr;
+
+
+class UNIGINE_API InputVRTracker : public InputVRDevice
+{
+public:
+	static bool convertible(InputVRDevice *obj) { return obj && obj->getType() == InputVRDevice::INPUT_VR_TRACKER; }
+
+	enum MODEL_TYPE
+	{
+		MODEL_TYPE_UNKNOWN = 0,
+		MODEL_TYPE_HTC_VIVE,
+		NUM_MODEL_TYPES,
+	};
+	InputVRTracker::MODEL_TYPE getModelType() const;
+};
+typedef Ptr<InputVRTracker> InputVRTrackerPtr;
+
+
+class UNIGINE_API InputVRBaseStation : public InputVRDevice
+{
+public:
+	static bool convertible(InputVRDevice *obj) { return obj && obj->getType() == InputVRDevice::INPUT_VR_BASE_STATION; }
+
+	enum MODEL_TYPE
+	{
+		MODEL_TYPE_UNKNOWN = 0,
+		MODEL_TYPE_HTC_VIVE,
+		MODEL_TYPE_VALVE,
+		NUM_MODEL_TYPES,
+	};
+	InputVRBaseStation::MODEL_TYPE getModelType() const;
+};
+typedef Ptr<InputVRBaseStation> InputVRBaseStationPtr;
+
+
+class UNIGINE_API InputVRController : public InputVRDevice
+{
+public:
+	static bool convertible(InputVRDevice *obj) { return obj && obj->getType() == InputVRDevice::INPUT_VR_CONTROLLER; }
+
+	enum MODEL_TYPE
+	{
+		MODEL_TYPE_UNKNOWN = 0,
+		MODEL_TYPE_HTC_VIVE,
+		MODEL_TYPE_OCULUS_RIFT,
+		MODEL_TYPE_VALVE_KNUCKLES,
+		NUM_MODEL_TYPES,
+	};
+	InputVRController::MODEL_TYPE getModelType() const;
+	void setFilter(float filter);
+	float getFilter() const;
+
+	enum CONTROLLER_TYPE
+	{
+		CONTROLLER_TYPE_UNKNOWN,
+		CONTROLLER_TYPE_HAND_LEFT,
+		CONTROLLER_TYPE_HAND_RIGHT,
+		CONTROLLER_TYPE_TREADMILL,
+		NUM_CONTROLLER_TYPES,
+	};
+	InputVRController::CONTROLLER_TYPE getControllerType() const;
+
+	enum AXIS_TYPE
+	{
+		AXIS_TYPE_NONE,
+		AXIS_TYPE_TRACK_PAD,
+		AXIS_TYPE_JOYSTICK,
+		AXIS_TYPE_TRIGGER,
+		NUM_AXIS_TYPES,
+	};
+	int getNumAxes() const;
+	InputVRController::AXIS_TYPE getAxisType(int axis) const;
+	float getAxis(int axis) const;
+	float getAxisDelta(int axis) const;
+	bool isButtonPressed(Input::VR_BUTTON button) const;
+	bool isButtonDown(Input::VR_BUTTON button) const;
+	bool isButtonUp(Input::VR_BUTTON button) const;
+	bool isButtonTouchPressed(Input::VR_BUTTON touch) const;
+	bool isButtonTouchDown(Input::VR_BUTTON touch) const;
+	bool isButtonTouchUp(Input::VR_BUTTON touch) const;
+	Ptr<InputEventVRButton> getButtonEvent(Input::VR_BUTTON button) const;
+	int getButtonEvents(Input::VR_BUTTON button, Vector<Ptr<InputEventVRButton>> &events);
+	Ptr<InputEventVRButtonTouch> getButtonTouchEvent(Input::VR_BUTTON button) const;
+	int getButtonTouchEvents(Input::VR_BUTTON button, Vector<Ptr<InputEventVRButtonTouch>> &events);
+	void setVibration(unsigned short duration_ms = 100);
+};
+typedef Ptr<InputVRController> InputVRControllerPtr;
 
 
 class UNIGINE_API InputJoystick : public APIInterface
@@ -495,6 +717,10 @@ public:
 		INPUT_EVENT_PAD_BUTTON,
 		INPUT_EVENT_PAD_AXIS_MOTION,
 		INPUT_EVENT_PAD_TOUCH_MOTION,
+		INPUT_EVENT_VR_DEVICE,
+		INPUT_EVENT_VR_BUTTON,
+		INPUT_EVENT_VR_BUTTON_TOUCH,
+		INPUT_EVENT_VR_AXIS_MOTION,
 		INPUT_EVENT_SYSTEM,
 		NUM_INPUT_EVENTS,
 	};
@@ -661,13 +887,13 @@ public:
 	};
 	static Ptr<InputEventJoyButton> create();
 	static Ptr<InputEventJoyButton> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos);
-	static Ptr<InputEventJoyButton> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos, InputEventJoyButton::ACTION action, int connection_id, int button);
+	static Ptr<InputEventJoyButton> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos, InputEventJoyButton::ACTION action, int connection_id, Input::JOYSTICK_POV button);
 	void setAction(InputEventJoyButton::ACTION action);
 	InputEventJoyButton::ACTION getAction() const;
 	void setConnectionID(int connectionid);
 	int getConnectionID() const;
-	void setButton(int button);
-	int getButton() const;
+	void setButton(Input::JOYSTICK_POV button);
+	Input::JOYSTICK_POV getButton() const;
 };
 typedef Ptr<InputEventJoyButton> InputEventJoyButtonPtr;
 
@@ -743,7 +969,7 @@ public:
 	};
 	static Ptr<InputEventPadButton> create();
 	static Ptr<InputEventPadButton> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos);
-	static Ptr<InputEventPadButton> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos, InputEventJoyButton::ACTION action, int connection_id, int button);
+	static Ptr<InputEventPadButton> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos, InputEventJoyButton::ACTION action, int connection_id, Input::GAMEPAD_BUTTON button);
 	void setAction(InputEventPadButton::ACTION action);
 	InputEventPadButton::ACTION getAction() const;
 	void setConnectionID(int connectionid);
@@ -784,7 +1010,7 @@ public:
 	};
 	static Ptr<InputEventPadTouchMotion> create();
 	static Ptr<InputEventPadTouchMotion> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos);
-	static Ptr<InputEventPadTouchMotion> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos, int connection_id, int action, int touch, int finger, float pressure, const Math::vec2 &position);
+	static Ptr<InputEventPadTouchMotion> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos, int connection_id, InputEventPadTouchMotion::ACTION action, int touch, int finger, float pressure, const Math::vec2 &position);
 	void setConnectionID(int connectionid);
 	int getConnectionID() const;
 	void setAction(InputEventPadTouchMotion::ACTION action);
@@ -799,6 +1025,92 @@ public:
 	float getPressure() const;
 };
 typedef Ptr<InputEventPadTouchMotion> InputEventPadTouchMotionPtr;
+
+
+class UNIGINE_API InputEventVRDevice : public InputEvent
+{
+public:
+	static bool convertible(InputEvent *obj) { return obj && obj->getType() == InputEvent::INPUT_EVENT_VR_DEVICE; }
+
+	enum ACTION
+	{
+		ACTION_CONNECTED = 0,
+		ACTION_DISCONNECTED,
+	};
+	static Ptr<InputEventVRDevice> create();
+	static Ptr<InputEventVRDevice> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos);
+	static Ptr<InputEventVRDevice> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos, InputEventVRDevice::ACTION action, int connection_id, InputVRDevice::TYPE type);
+	void setAction(InputEventVRDevice::ACTION action);
+	InputEventVRDevice::ACTION getAction() const;
+	void setConnectionID(int connectionid);
+	int getConnectionID() const;
+	void setType(InputEventVRDevice::TYPE type);
+	InputEventVRDevice::TYPE getType() const;
+};
+typedef Ptr<InputEventVRDevice> InputEventVRDevicePtr;
+
+
+class UNIGINE_API InputEventVRButton : public InputEvent
+{
+public:
+	static bool convertible(InputEvent *obj) { return obj && obj->getType() == InputEvent::INPUT_EVENT_VR_BUTTON; }
+
+	enum ACTION
+	{
+		ACTION_DOWN = 0,
+		ACTION_UP,
+	};
+	static Ptr<InputEventVRButton> create();
+	static Ptr<InputEventVRButton> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos);
+	static Ptr<InputEventVRButton> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos, InputEventVRButton::ACTION action, int connection_id, Input::VR_BUTTON button);
+	void setAction(InputEventVRButton::ACTION action);
+	InputEventVRButton::ACTION getAction() const;
+	void setConnectionID(int connectionid);
+	int getConnectionID() const;
+	void setButton(Input::VR_BUTTON button);
+	Input::VR_BUTTON getButton() const;
+};
+typedef Ptr<InputEventVRButton> InputEventVRButtonPtr;
+
+
+class UNIGINE_API InputEventVRButtonTouch : public InputEvent
+{
+public:
+	static bool convertible(InputEvent *obj) { return obj && obj->getType() == InputEvent::INPUT_EVENT_VR_BUTTON_TOUCH; }
+
+	enum ACTION
+	{
+		ACTION_DOWN = 0,
+		ACTION_UP,
+	};
+	static Ptr<InputEventVRButtonTouch> create();
+	static Ptr<InputEventVRButtonTouch> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos);
+	static Ptr<InputEventVRButtonTouch> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos, InputEventVRButtonTouch::ACTION action, int connection_id, Input::VR_BUTTON button);
+	void setAction(InputEventVRButtonTouch::ACTION action);
+	InputEventVRButtonTouch::ACTION getAction() const;
+	void setConnectionID(int connectionid);
+	int getConnectionID() const;
+	void setButton(Input::VR_BUTTON button);
+	Input::VR_BUTTON getButton() const;
+};
+typedef Ptr<InputEventVRButtonTouch> InputEventVRButtonTouchPtr;
+
+
+class UNIGINE_API InputEventVRAxisMotion : public InputEvent
+{
+public:
+	static bool convertible(InputEvent *obj) { return obj && obj->getType() == InputEvent::INPUT_EVENT_VR_AXIS_MOTION; }
+	static Ptr<InputEventVRAxisMotion> create();
+	static Ptr<InputEventVRAxisMotion> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos);
+	static Ptr<InputEventVRAxisMotion> create(unsigned long long timestamp, const Math::ivec2 &mouse_pos, int connection_id, int axis, float value);
+	void setConnectionID(int connectionid);
+	int getConnectionID() const;
+	void setAxis(int axis);
+	int getAxis() const;
+	void setValue(float value);
+	float getValue() const;
+};
+typedef Ptr<InputEventVRAxisMotion> InputEventVRAxisMotionPtr;
 
 
 class UNIGINE_API InputEventSystem : public InputEvent

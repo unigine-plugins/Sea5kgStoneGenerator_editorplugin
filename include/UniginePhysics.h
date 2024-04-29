@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -237,6 +237,9 @@ public:
 };
 typedef Ptr<ShapeConvex> ShapeConvexPtr;
 
+class Joint;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<Joint> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Joint> &>>;
 
 class UNIGINE_API Joint : public APIInterface
 {
@@ -304,14 +307,17 @@ public:
 	Math::Vec3 getAnchor1() const;
 	void setWorldAnchor(const Math::Vec3 &anchor);
 	Math::Vec3 getWorldAnchor() const;
-	void *addBrokenCallback(CallbackBase1<Ptr<Joint>> *func);
-	bool removeBrokenCallback(void *id);
-	void clearBrokenCallbacks();
+	Event<const Ptr<Joint> &> &getEventBroken();
 	void renderVisualizer(const Math::vec4 &color);
 	Ptr<Joint> clone() const;
 	void swap(const Ptr<Joint> &joint);
 	int saveState(const Ptr<Stream> &stream) const;
 	int restoreState(const Ptr<Stream> &stream);
+
+private:
+
+	EventHolder<EventInterfaceInvoker<const Ptr<Joint> &>> event_broken;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Joint> &>> event_broken_connection;
 };
 typedef Ptr<Joint> JointPtr;
 
@@ -622,6 +628,11 @@ public:
 };
 typedef Ptr<JointWheel> JointWheelPtr;
 
+class Body;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<Body> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Body> &>>;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<Body> &, int>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Body> &, int>>;
 
 class UNIGINE_API Body : public APIInterface
 {
@@ -723,21 +734,11 @@ public:
 	Ptr<Shape> getContactShape1(int num) const;
 	Ptr<Object> getContactObject(int num) const;
 	int getContactSurface(int num) const;
-	void *addFrozenCallback(CallbackBase1<Ptr<Body>> *func);
-	bool removeFrozenCallback(void *id);
-	void clearFrozenCallbacks();
-	void *addPositionCallback(CallbackBase1<Ptr<Body>> *func);
-	bool removePositionCallback(void *id);
-	void clearPositionCallbacks();
-	void *addContactEnterCallback(CallbackBase2<Ptr<Body>, int> *func);
-	bool removeContactEnterCallback(void *id);
-	void clearContactEnterCallbacks();
-	void *addContactLeaveCallback(CallbackBase2<Ptr<Body>, int> *func);
-	bool removeContactLeaveCallback(void *id);
-	void clearContactLeaveCallbacks();
-	void *addContactsCallback(CallbackBase1<Ptr<Body>> *func);
-	bool removeContactsCallback(void *id);
-	void clearContactsCallbacks();
+	Event<const Ptr<Body> &> &getEventFrozen();
+	Event<const Ptr<Body> &> &getEventPosition();
+	Event<const Ptr<Body> &, int> &getEventContactEnter();
+	Event<const Ptr<Body> &, int> &getEventContactLeave();
+	Event<const Ptr<Body> &> &getEventContacts();
 	void renderShapes();
 	void renderJoints();
 	void renderExternalContacts();
@@ -748,6 +749,19 @@ public:
 	void swap(const Ptr<Body> &body) const;
 	int saveState(const Ptr<Stream> &stream) const;
 	int restoreState(const Ptr<Stream> &stream);
+
+private:
+
+	EventHolder<EventInterfaceInvoker<const Ptr<Body> &>> event_frozen;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Body> &>> event_frozen_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Body> &>> event_position;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Body> &>> event_position_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Body> &, int>> event_contact_enter;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Body> &, int>> event_contact_enter_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Body> &, int>> event_contact_leave;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Body> &, int>> event_contact_leave_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Body> &>> event_contacts;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Body> &>> event_contacts_connection;
 };
 typedef Ptr<Body> BodyPtr;
 

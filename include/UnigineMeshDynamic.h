@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -17,6 +17,7 @@
 #include "UniginePtr.h"
 #include "UnigineVector.h"
 #include "UnigineStreams.h"
+#include "UnigineResourceExternalMemory.h"
 
 namespace Unigine
 {
@@ -28,15 +29,17 @@ public:
 
 	enum
 	{
-		IMMUTABLE_VERTEX = 1 << 0,
-		IMMUTABLE_INDICES = 1 << 1,
-		IMMUTABLE_ALL = (IMMUTABLE_VERTEX | IMMUTABLE_INDICES),
-		DYNAMIC_VERTEX = 1 << 2,
-		DYNAMIC_INDICES = 1 << 3,
-		DYNAMIC_ALL = (DYNAMIC_VERTEX | DYNAMIC_INDICES),
-		FLUSH_VERTEX = 1 << 4,
-		FLUSH_INDICES = 1 << 5,
-		FLUSH_ALL = (FLUSH_VERTEX | FLUSH_INDICES),
+		USAGE_IMMUTABLE_VERTEX = 1 << 0,
+		USAGE_IMMUTABLE_INDICES = 1 << 1,
+		USAGE_IMMUTABLE_ALL = (USAGE_IMMUTABLE_VERTEX | USAGE_IMMUTABLE_INDICES),
+		USAGE_DYNAMIC_VERTEX = 1 << 2,
+		USAGE_DYNAMIC_INDICES = 1 << 3,
+		USAGE_DYNAMIC_ALL = (USAGE_DYNAMIC_VERTEX | USAGE_DYNAMIC_INDICES),
+		USAGE_FLUSH_VERTEX = 1 << 4,
+		USAGE_FLUSH_INDICES = 1 << 5,
+		USAGE_FLUSH_ALL = (USAGE_FLUSH_VERTEX | USAGE_FLUSH_INDICES),
+		// misc
+		USAGE_MISC_SHARED = 1 << 6,
 	};
 
 	enum
@@ -66,10 +69,13 @@ public:
 	static Ptr<MeshDynamic> create(int flags);
 	void setFlags(int flags);
 	int getFlags() const;
+	bool isUsageShared() const;
 	void bind();
 	void unbind();
 	void flushVertex();
 	void flushIndices();
+	Ptr<ResourceExternalMemory> getExternalMemoryVertexBuffer() const;
+	Ptr<ResourceExternalMemory> getExternalMemoryIndexBuffer() const;
 	int renderSurface(int mode);
 	int renderInstancedSurface(int mode, int num);
 	int renderSurface(int mode, int base, int begin, int end);

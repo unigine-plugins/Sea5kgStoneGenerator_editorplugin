@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -755,6 +755,7 @@ public:
 			if (v != *(reinterpret_cast<Type *>(data) + i))
 				continue;
 			remove(i);
+			i--;
 		}
 	}
 

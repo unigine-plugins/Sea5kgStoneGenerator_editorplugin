@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -44,7 +44,8 @@ public:
 		NODE_TRIGGER,
 		NODE_REFERENCE,
 		NODE_EXTERN,
-		NODE_END = NODE_EXTERN,
+		NODE_ANIMATION_PLAYBACK,
+		NODE_END = NODE_ANIMATION_PLAYBACK,
 		WORLD_BEGIN,	// worlds
 		WORLD_SPLINE_GRAPH = WORLD_BEGIN,
 		WORLD_TRIGGER,
@@ -160,23 +161,6 @@ public:
 		EXTERN = NODE_EXTERN,
 	};
 
-	enum CALLBACK_INDEX
-	{
-		CALLBACK_PROPERTY_NODE_SLOTS_CHANGED,
-		CALLBACK_PROPERTY_NODE_ADD,
-		CALLBACK_PROPERTY_NODE_SWAP,
-		CALLBACK_PROPERTY_NODE_REMOVE,
-		CALLBACK_PROPERTY_CHANGE_ENABLED,
-		CALLBACK_PROPERTY_SURFACE_ADD,
-		CALLBACK_PROPERTY_SURFACE_REMOVE,
-		CALLBACK_CACHE_NODE_ADD,
-		CALLBACK_NODE_LOAD,
-		CALLBACK_NODE_CLONE,
-		CALLBACK_NODE_SWAP,
-		CALLBACK_NODE_REMOVE,
-		CALLBACK_NODE_CHANGE_ENABLED,
-	};
-
 	enum LIFETIME
 	{
 		LIFETIME_WORLD,
@@ -186,8 +170,8 @@ public:
 	static Ptr<Node> getCloneNode(const Ptr<Node> &original_node);
 	static Ptr<Property> getCloneProperty(const Ptr<Property> &original_property);
 	static Ptr<Node> getNode(int id);
-	static int isNode(const Ptr<Node> &node);
-	static int isNode(int id);
+	static bool isNode(const Ptr<Node> &node);
+	static bool isNode(int id);
 	static Node::TYPE getTypeID(const char *type);
 	static const char *getTypeName(Node::TYPE type);
 	Ptr<Node> clone() const;
@@ -316,6 +300,8 @@ public:
 	Math::WorldBoundSphere getHierarchyWorldBoundSphere(bool only_enabled_nodes = false) const;
 	Math::WorldBoundBox getHierarchySpatialBoundBox(bool only_enabled_nodes = false) const;
 	Math::WorldBoundSphere getHierarchySpatialBoundSphere(bool only_enabled_nodes = false) const;
+	void updateSpatialTree();
+	void updateSpatialTreeDelayed();
 	bool loadWorld(const Ptr<Xml> &xml);
 	bool saveWorld(const Ptr<Xml> &xml) const;
 	bool saveState(const Ptr<Stream> &stream) const;
@@ -358,6 +344,7 @@ public:
 	Math::Vec3 toWorld(const Math::vec3 &p) const;
 	Math::vec3 toLocal(const Math::Vec3 &p) const;
 	void renderVisualizer();
+	void renderBounds(bool render_node_bound = true, bool render_instance_bound = false);
 	void setVariable(const Variable &variable);
 	Variable  getVariable() const;
 	bool hasVariable() const;
@@ -367,14 +354,19 @@ public:
 	void removeVariable(const char *name);
 	Ptr<GeodeticPivot> getGeodeticPivot() const;
 	void updateEnabled();
-	static void *addCallback(Node::CALLBACK_INDEX callback, CallbackBase2<Ptr<Node>, Ptr<Property>> *func);
-	static void *addCallback(Node::CALLBACK_INDEX callback, CallbackBase3<Ptr<Node>, Ptr<Property>, int> *func);
-	static void *addCallback(Node::CALLBACK_INDEX callback, CallbackBase3<Ptr<Node>, int, int> *func);
-	static void *addCallback(Node::CALLBACK_INDEX callback, CallbackBase2<Ptr<Node>, Ptr<Node>> *func);
-	static void *addCallback(Node::CALLBACK_INDEX callback, CallbackBase2<Ptr<Node>, int> *func);
-	static void *addCallback(Node::CALLBACK_INDEX callback, CallbackBase1<Ptr<Node>> *func);
-	static bool removeCallback(Node::CALLBACK_INDEX callback, void *id);
-	static void clearCallbacks(Node::CALLBACK_INDEX callback);
+	static Event<const Ptr<Node> &, int> &getEventPropertyNodeSlotsChanged();
+	static Event<const Ptr<Node> &, const Ptr<Property> &, int> &getEventPropertyNodeAdd();
+	static Event<const Ptr<Node> &, const Ptr<Property> &, int> &getEventPropertyNodeRemove();
+	static Event<const Ptr<Node> &, const Ptr<Property> &, int> &getEventPropertyChangeEnabled();
+	static Event<const Ptr<Node> &, int, int> &getEventPropertyNodeSwap();
+	static Event<const Ptr<Node> &, const Ptr<Property> &> &getEventPropertySurfaceAdd();
+	static Event<const Ptr<Node> &, const Ptr<Property> &> &getEventPropertySurfaceRemove();
+	static Event<const Ptr<Node> &> &getEventCacheNodeAdd();
+	static Event<const Ptr<Node> &> &getEventNodeLoad();
+	static Event<const Ptr<Node> &> &getEventNodeRemove();
+	static Event<const Ptr<Node> &> &getEventNodeChangeEnabled();
+	static Event<const Ptr<Node> &, const Ptr<Node> &> &getEventNodeClone();
+	static Event<const Ptr<Node> &, const Ptr<Node> &> &getEventNodeSwap();
 };
 typedef Ptr<Node> NodePtr;
 

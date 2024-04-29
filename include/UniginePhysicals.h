@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -39,7 +39,7 @@ typedef Ptr<Physical> PhysicalPtr;
 class UNIGINE_API PhysicalForce : public Physical
 {
 public:
-	static int type() { return Node::PHYSICAL_FORCE; }
+	static Node::TYPE type() { return Node::PHYSICAL_FORCE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<PhysicalForce> create(float radius);
@@ -59,7 +59,7 @@ typedef Ptr<PhysicalForce> PhysicalForcePtr;
 class UNIGINE_API PhysicalTrigger : public Physical
 {
 public:
-	static int type() { return Node::PHYSICAL_TRIGGER; }
+	static Node::TYPE type() { return Node::PHYSICAL_TRIGGER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<PhysicalTrigger> create(Shape::TYPE type, const Math::vec3 &size);
@@ -85,12 +85,15 @@ public:
 	void setSize(const Math::vec3 &size);
 	Math::vec3 getSize() const;
 	void updateContacts();
-	void *addEnterCallback(CallbackBase1<Ptr<Body>> *func);
-	bool removeEnterCallback(void *id);
-	void clearEnterCallbacks();
-	void *addLeaveCallback(CallbackBase1<Ptr<Body>> *func);
-	bool removeLeaveCallback(void *id);
-	void clearLeaveCallbacks();
+	Event<const Ptr<Body> &> &getEventEnter();
+	Event<const Ptr<Body> &> &getEventLeave();
+
+private:
+
+	EventHolder<EventInterfaceInvoker<const Ptr<Body> &>> event_enter;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Body> &>> event_enter_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<Body> &>> event_leave;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<Body> &>> event_leave_connection;
 };
 typedef Ptr<PhysicalTrigger> PhysicalTriggerPtr;
 
@@ -99,7 +102,7 @@ typedef Ptr<PhysicalTrigger> PhysicalTriggerPtr;
 class UNIGINE_API PhysicalWater : public Physical
 {
 public:
-	static int type() { return Node::PHYSICAL_WATER; }
+	static Node::TYPE type() { return Node::PHYSICAL_WATER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<PhysicalWater> create(const Math::vec3 &size);
@@ -127,7 +130,7 @@ typedef Ptr<PhysicalWater> PhysicalWaterPtr;
 class UNIGINE_API PhysicalWind : public Physical
 {
 public:
-	static int type() { return Node::PHYSICAL_WIND; }
+	static Node::TYPE type() { return Node::PHYSICAL_WIND; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<PhysicalWind> create(const Math::vec3 &size);
@@ -149,7 +152,7 @@ typedef Ptr<PhysicalWind> PhysicalWindPtr;
 class UNIGINE_API PhysicalNoise : public Physical
 {
 public:
-	static int type() { return Node::PHYSICAL_NOISE; }
+	static Node::TYPE type() { return Node::PHYSICAL_NOISE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<PhysicalNoise> create(const Math::vec3 &size);

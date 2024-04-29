@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -218,24 +218,24 @@ private:
 			{
 				VectorStack<vec3> left;
 				VectorStack<vec3> right;
-				const vec3 *v0 = &vertex[i];
-				float d0 = dot(plane, *v0);
+				const vec3 *vertex0 = &vertex[i];
+				float dot0 = dot(plane, *vertex0);
 				for (int j = 0; j < 3; j++)
 				{
-					const vec3 *v1 = &vertex[i + (j + 1) % 3];
-					float d1 = dot(plane, *v1);
-					if (d0 <= 0.0f)
-						left.append(*v0);
-					if (d0 >= 0.0f)
-						right.append(*v0);
-					if ((d0 > 0.0f) != (d1 > 0.0f))
+					const vec3 *vertex1 = &vertex[i + (j + 1) % 3];
+					float dot1 = dot(plane, *vertex1);
+					if (dot0 <= 0.0f)
+						left.append(*vertex0);
+					if (dot0 >= 0.0f)
+						right.append(*vertex0);
+					if ((dot0 > 0.0f) != (dot1 > 0.0f))
 					{
-						float k = -d0 / (d1 - d0);
-						left.append(lerp(*v0, *v1, k));
-						right.append(lerp(*v0, *v1, k));
+						float k = -dot0 / (dot1 - dot0);
+						left.append(lerp(*vertex0, *vertex1, k));
+						right.append(lerp(*vertex0, *vertex1, k));
 					}
-					v0 = v1;
-					d0 = d1;
+					vertex0 = vertex1;
+					dot0 = dot1;
 				}
 				for (int j = 2; j < left.size(); j++)
 				{

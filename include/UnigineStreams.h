@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -39,6 +39,7 @@ public:
 		BLOB = 0,
 		FILE,
 		SOCKET,
+		SSL_SOCKET,
 		USER,	// User stream inherited from StreamBase
 		NUM_STREAMS,
 	};
@@ -257,35 +258,46 @@ typedef Ptr<Blob> BlobPtr;
 class UNIGINE_API Socket : public Stream
 {
 public:
-	static bool convertible(Stream *obj) { return obj && obj->getType() == Stream::SOCKET; }
-	static Ptr<Socket> create(int type);
-	static Ptr<Socket> create(int type, int port);
-	static Ptr<Socket> create(int type, const char *host, int port);
-	int open(int port) const;
-	int open(const char *host, int port) const;
-	int close() const;
-	int send(int size) const;
-	int recv(int size) const;
-	int bind() const;
-	int listen(int num) const;
-	int listenMulticastGroup() const;
-	int accept(const Ptr<Socket> &socket) const;
-	int connect() const;
-	int broadcast() const;
-	int block() const;
-	int nonblock() const;
-	int nodelay() const;
+	static bool convertible(Stream *obj) {
+		if(!obj)
+			return false;
+		int type = obj->getType();
+		switch(type)
+		{
+			case Stream::SOCKET:
+			case Stream::SSL_SOCKET:
+			return true;
+		}
+		return false;
+	}
+
+	enum SOCKET_TYPE
+	{
+		SOCKET_TYPE_STREAM = 0,	// Stream socket
+		SOCKET_TYPE_DGRAM,	// Datagram socket
+	};
+	static Ptr<Socket> create(Socket::SOCKET_TYPE type);
+	static Ptr<Socket> create(Socket::SOCKET_TYPE type, int port);
+	static Ptr<Socket> create(Socket::SOCKET_TYPE type, const char *host, int port);
+	bool open(int port);
+	bool open(const char *host, int port);
+	void close();
+	bool send(int size);
+	bool recv(int size);
+	bool bind();
+	bool listen(int num);
+	bool listenMulticastGroup();
+	bool accept(const Ptr<Socket> &socket);
+	bool connect();
+	bool broadcast();
+	bool block();
+	bool nonblock();
+	bool nodelay();
 	const char *getHost() const;
 	int getPort() const;
 	int getFD() const;
-	int isReadyToRead(int timeout_usec = 0) const;
-	int isReadyToWrite(int timeout_usec = 0) const;
-
-	enum
-	{
-		SOCKET_STREAM = 0,	// Stream socket
-		SOCKET_DGRAM,	// Datagram socket
-	};
+	bool isReadyToRead(int timeout_usec = 0) const;
+	bool isReadyToWrite(int timeout_usec = 0) const;
 };
 typedef Ptr<Socket> SocketPtr;
 

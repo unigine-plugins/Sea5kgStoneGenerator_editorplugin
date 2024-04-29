@@ -191,47 +191,17 @@
 			</summary>  
 			<returns>Returns the current blob offset.</returns>
 		</member>
-		<member name="M:Unigine.Stream.isAvailable const">
-			<summary>
-			Returns the status of the stream.
-			</summary>  
-			<returns>1 if the stream data is available; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Stream.setByteOrder(int)">
-			<summary>
-			Sets the endianness of the stream.
-			</summary> 
-			<param name="order"> A value indicating the endianness of the stream: 0 value is for LSB (least significant), 1 is for MSB (most significant). </param> 
-		</member>
-		<member name="M:Unigine.Stream.getByteOrder const">
-			<summary>
-			Returns the value indicating the endianness of the stream.
-			</summary>  
-			<returns>A value indicating the endianness of the stream: 0 value is for LSB (least significant), 1 is for MSB (most significant).</returns>
-		</member>
 		<member name="M:Unigine.Stream.isError const">
 			<summary>
 			Returns the status of the stream.
 			</summary>  
 			<returns>1 if there is a read/write error; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Stream.isOpened const">
-			<summary>
-			Returns the status of the stream.
-			</summary>  
-			<returns>1 if the stream is opened; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Stream.gets">
 			<summary>
 			Reads the stream data from the current position.
 			</summary>  
 			<returns>Stream data starting from the current position.</returns>
-		</member>
-		<member name="M:Unigine.Stream.getType const">
-			<summary>
-			Return the type of the stream.
-			</summary>  
-			<returns>A value indicating the type of the stream.</returns>
 		</member>
 		<member name="M:Unigine.Stream.puts(char)">
 			<summary>
@@ -1046,6 +1016,11 @@
 			A stream for sockets.
 		</summary>
 		</member>
+		<member name="F:Unigine.Stream.SSL_SOCKET">
+			<summary>
+			A stream for SSL sockets.
+		</summary>
+		</member>
 		<member name="F:Unigine.Stream.USER">
 			<summary>
 			A user stream inherited from StreamBase.
@@ -1139,24 +1114,24 @@
 			</summary>  
 			<returns>Offset in bytes from the beginning of the file.</returns>
 		</member>
-		<member name="M:Unigine.Socket.#ctor(int)">
+		<member name="M:Unigine.Socket.#ctor(Socket::SOCKET_TYPE)">
 			<summary>
-			Creates a socket and opens it on a given port. When the socket receives data, packets from all network interfaces will be received. When the socket sends data, the default IP address will be used.
+			Creates a socket of the specified type. When the socket receives data, packets from all network interfaces will be received. When the socket sends data, the default IP address will be used.
 			</summary> 
-			<param name="type"> Port, on which the socket will be opened. </param> 
+			<param name="type"> Socket type for TCP or UDP connections. </param> 
 		</member>
-		<member name="M:Unigine.Socket.#ctor(int,int)">
+		<member name="M:Unigine.Socket.#ctor(Socket::SOCKET_TYPE,int)">
 			<summary>
 			Creates a socket for TCP or UDP connections and opens it on a given port. When the socket receives data, packets from all network interfaces will be received. When the socket sends data, the default IP address will be used.
 			</summary> 
-			<param name="type"> Socket for TCP (SOCKET_STREAM variable) or UDP (SOCKET_DGRAM) connections. </param>
+			<param name="type"> Socket type for TCP or UDP connections. </param>
 			<param name="port"> Port, on which the socket will be opened. </param> 
 		</member>
-		<member name="M:Unigine.Socket.#ctor(int,char,int)">
+		<member name="M:Unigine.Socket.#ctor(Socket::SOCKET_TYPE,char,int)">
 			<summary>
 			Creates a socket for TCP or UDP connections and opens it on a given host and a given port. The host specifies the address, from and to which data will be sent.
 			</summary> 
-			<param name="type"> Socket for TCP (SOCKET_STREAM variable) or UDP (SOCKET_DGRAM) connections. </param>
+			<param name="type"> Socket type for TCP or UDP connections. </param>
 			<param name="host"> Host, on which the socket will be opened. </param>
 			<param name="port"> Port, on which the socket will be opened. </param> 
 		</member>
@@ -1178,119 +1153,119 @@
 			</summary>  
 			<returns>Port number.</returns>
 		</member>
-		<member name="M:Unigine.Socket.accept(Unigine.Ptr{Socket}) const">
+		<member name="M:Unigine.Socket.accept(Unigine.Ptr{Socket})">
 			<summary>
 			Accepts a connection on the socket.
 			</summary> 
 			<param name="socket"> Socket that is bound to an address and listens to connections. </param> 
 			<returns>1 if the connection is accepted; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Socket.bind const">
+		<member name="M:Unigine.Socket.bind">
 			<summary>
 			Binds the socket to an address figured out from the host used for socket initialization.
 			</summary>  
-			<returns>1 if the address is bound; otherwise, 0.</returns>
+			<returns>true if the address is bound; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Socket.block const">
+		<member name="M:Unigine.Socket.block">
 			<summary>
 			Sets up a blocking socket.
 			</summary>  
-			<returns>1 if the socket is opened; otherwise, 0.</returns>
+			<returns>true if the socket is opened; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Socket.broadcast const">
+		<member name="M:Unigine.Socket.broadcast">
 			<summary>
 			Sets up a broadcast socket. To create a broadcast socket, you need to create it with a broadcast host address first and then use this function.
 			</summary>  
-			<returns>1 if the socket is set up successfully ; otherwise, 0 is returned.</returns>
+			<returns>true if the socket is set up successfully; otherwise, false is returned.</returns>
 		</member>
-		<member name="M:Unigine.Socket.close const">
+		<member name="M:Unigine.Socket.close">
 			<summary>
 			Closes the socket.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Socket.connect const">
+		<member name="M:Unigine.Socket.connect">
 			<summary>
 			Initiates a connection on the socket.
 			</summary>  
-			<returns>1 if the connection is initialized; otherwise, 0.</returns>
+			<returns>true if the connection is initialized; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Socket.listen(int) const">
+		<member name="M:Unigine.Socket.listen(int)">
 			<summary>
 			Makes the socket listen to connections.
 			</summary> 
 			<param name="num"> Maximum number of pending connections. </param> 
-			<returns>1 if the socket has started listening; otherwise, 0.</returns>
+			<returns>true if the socket has started listening; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Socket.listenMulticastGroup const">
+		<member name="M:Unigine.Socket.listenMulticastGroup">
 			<summary>
 			Joins the socket to a multicast group. Available for UDP sockets only.					The socket class doesn't allow creating a multicast server.
 			</summary>  
-			<returns>1 if the sockect has been joined successfully; otherwise, 0.</returns>
+			<returns>true if the sockect has been joined successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Socket.nodelay const">
+		<member name="M:Unigine.Socket.nodelay">
 			<summary>
 			Enables Nagle's algorithm.
 			</summary>  
-			<returns>1 if the algorithm has been enabled successfully; otherwise, 0.</returns>
+			<returns>true if the algorithm has been enabled successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Socket.nonblock const">
+		<member name="M:Unigine.Socket.nonblock">
 			<summary>
 			Makes the socket a non-blocking one.
 			</summary>  
-			<returns>1 if the has become non-blocking; otherwise, 0.</returns>
+			<returns>true if the has become non-blocking; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Socket.open(int) const">
+		<member name="M:Unigine.Socket.open(int)">
 			<summary>
 			Opens the socket on a given port. When the socket receives data, packets from all network interfaces will be received. When the socket sends data, the default IP address will be used.
 			</summary> 
 			<param name="port"> Port number, on which the socket will be opened. </param>
 			<param name="host"> Host, on which the socket will be opened. </param> 
-			<returns>1 if the socket is opened successfully; otherwise, 0.</returns>
+			<returns>true if the socket is opened successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Socket.open(char,int) const">
+		<member name="M:Unigine.Socket.open(char,int)">
 			<summary>
 			Opens the socket on a given port. When the socket receives data, packets from all network interfaces will be received. When the socket sends data, the default IP address will be used.
 			</summary> 
 			<param name="host"> Host name, on which the socket will be opened. </param>
 			<param name="port"> Port number, on which the socket will be opened. </param> 
-			<returns>1 if the socket is opened successfully; otherwise, 0.</returns>
+			<returns>true if the socket is opened successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Socket.recv(int) const">
+		<member name="M:Unigine.Socket.recv(int)">
 			<summary>
 			Resizes an internal receiving buffer for a socket.
 			</summary> 
 			<param name="size"> Receive buffer size in bytes. </param> 
-			<returns>1 if the buffer is resized successfully; otherwise, 0.</returns>
+			<returns>true if the buffer is resized successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Socket.send(int) const">
+		<member name="M:Unigine.Socket.send(int)">
 			<summary>
 			Resizes an internal sending buffer for a socket.
 			</summary> 
 			<param name="size"> Send buffer size in bytes. </param> 
-			<returns>1 if the buffer is resized successfully; otherwise, 0.</returns>
+			<returns>true if the buffer is resized successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Socket.isReadyToRead(int) const">
 			<summary>
 			Returns a value indicating whether the socked is ready for reading data, waiting if necessary, to perform synchronous I/O.
 			</summary> 
 			<param name="timeout_usec"> The maximum time for to wait for the socket's response, in microseconds. By default, the timeout is 0 </param> 
-			<returns>1 if the socket is ready for reading data; otherwise, 0.</returns>
+			<returns>true if the socket is ready for reading data; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Socket.isReadyToWrite(int) const">
 			<summary>
 			Returns a value indicating whether the socked is ready for writing data, waiting if necessary, to perform synchronous I/O.
 			</summary> 
 			<param name="timeout_usec"> The maximum time for to wait for the socket's response, in microseconds. By default, the timeout is 0 </param> 
-			<returns>1 if the socket is ready for writing data; otherwise, 0.</returns>
+			<returns>true if the socket is ready for writing data; otherwise, false.</returns>
 		</member>
-		<member name="F:Unigine.Socket.SOCKET_DGRAM">
-			<summary>
-			Socket for UDP packets.
-		</summary>
-		</member>
-		<member name="F:Unigine.Socket.SOCKET_STREAM">
+		<member name="F:Unigine.Socket.SOCKET_TYPE_STREAM">
 			<summary>
 			Socket for TCP packets.
+		</summary>
+		</member>
+		<member name="F:Unigine.Socket.SOCKET_TYPE_DGRAM">
+			<summary>
+			Socket for UDP packets.
 		</summary>
 		</member>
 	</members>

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -245,9 +245,7 @@ UNIGINE_INLINE vecX<Size> lerp(const vecX<Size> &v0, const vecX<Size> &v1, float
 // Bisection solver
 //////////////////////////////////////////////////////////////////////////
 
-namespace
-{
-UNIGINE_INLINE float bi_polynom(const float *c, int size, float x)
+UNIGINE_INLINE float internal_bi_polynom(const float *c, int size, float x)
 {
 	float ret = 0.0f;
 	if (size)
@@ -262,15 +260,15 @@ UNIGINE_INLINE float bi_polynom(const float *c, int size, float x)
 	}
 	return ret;
 }
-UNIGINE_INLINE int bi_bisection(float &x, const float *c, int size, float x0, float x1, float iepsilon)
+UNIGINE_INLINE int internal_bi_bisection(float &x, const float *c, int size, float x0, float x1, float iepsilon)
 {
-	float y0 = bi_polynom(c, size, x0);
+	float y0 = internal_bi_polynom(c, size, x0);
 	if (Math::abs(y0) < Consts::EPS)
 	{
 		x = x0;
 		return 1;
 	}
-	float y1 = bi_polynom(c, size, x1);
+	float y1 = internal_bi_polynom(c, size, x1);
 	if (Math::abs(y1) < Consts::EPS)
 	{
 		x = x1;
@@ -282,7 +280,7 @@ UNIGINE_INLINE int bi_bisection(float &x, const float *c, int size, float x0, fl
 	for (int i = 0; i < num_iterations; i++)
 	{
 		x = (x0 + x1) * 0.5f;
-		float y = bi_polynom(c, size, x);
+		float y = internal_bi_polynom(c, size, x);
 		float v = y0 * y;
 		if (v < 0.0f)
 		{
@@ -297,40 +295,40 @@ UNIGINE_INLINE int bi_bisection(float &x, const float *c, int size, float x0, fl
 	}
 	return 1;
 }
-UNIGINE_INLINE int bi_solve(float *ret, const float *c, int size, float x0, float x1, float iepsilon)
+UNIGINE_INLINE int internal_bi_solve(float *ret, const float *c, int size, float x0, float x1, float iepsilon)
 {
 	float *r = ret;
 	float roots[32];
 	float derivative[32];
 	if (size == 1)
 	{
-		if (bi_bisection(*r, c, size, x0, x1, iepsilon))
+		if (internal_bi_bisection(*r, c, size, x0, x1, iepsilon))
 			r++;
 	} else
 	{
 		for (int i = 1; i < size; i++)
 			derivative[i - 1] = c[i] * Math::itof(i);
-		int num = bi_solve(roots, derivative, size - 1, x0, x1, iepsilon);
+		int num = internal_bi_solve(roots, derivative, size - 1, x0, x1, iepsilon);
 		if (num > 0)
 		{
-			if (bi_bisection(*r, c, size, x0, roots[0], iepsilon))
+			if (internal_bi_bisection(*r, c, size, x0, roots[0], iepsilon))
 				r++;
 			for (int i = 0; i < num - 1; i++)
 			{
-				if (bi_bisection(*r, c, size, roots[i], roots[i + 1], iepsilon))
+				if (internal_bi_bisection(*r, c, size, roots[i], roots[i + 1], iepsilon))
 					r++;
 			}
-			if (bi_bisection(*r, c, size, roots[num - 1], x1, iepsilon))
+			if (internal_bi_bisection(*r, c, size, roots[num - 1], x1, iepsilon))
 				r++;
 		} else
 		{
-			if (bi_bisection(*r, c, size, x0, x1, iepsilon))
+			if (internal_bi_bisection(*r, c, size, x0, x1, iepsilon))
 				r++;
 		}
 	}
 	return (int)(r - ret);
 }
-}
+
 UNIGINE_INLINE int biSolve(float *ret, const float *c, int size, float iepsilon)
 {
 	float range = 0.0f;
@@ -348,7 +346,7 @@ UNIGINE_INLINE int biSolve(float *ret, const float *c, int size, float iepsilon)
 			range = r;
 	}
 	range += 1.0f;
-	return bi_solve(ret, c, size, -range, range, iepsilon);
+	return internal_bi_solve(ret, c, size, -range, range, iepsilon);
 }
 
 template <int Size>
@@ -812,9 +810,7 @@ UNIGINE_INLINE matX<Size, Size> inverse(const matX<Size, Size> &m)
 // LU solver
 //////////////////////////////////////////////////////////////////////////
 
-namespace
-{
-UNIGINE_INLINE void lu_eliminate(float *ret, const float *column, const float *factor, int rows, int num)
+UNIGINE_INLINE void internal_lu_eliminate(float *ret, const float *column, const float *factor, int rows, int num)
 {
 	if (num > 3)
 	{
@@ -880,7 +876,6 @@ UNIGINE_INLINE void lu_eliminate(float *ret, const float *column, const float *f
 	} else if (num == 1)
 		*ret -= *column * *factor;
 }
-}
 
 UNIGINE_INLINE int luDecompose(float *m, int size, int *index)
 {
@@ -927,7 +922,7 @@ UNIGINE_INLINE int luDecompose(float *m, int size, int *index)
 			index[num] = j;
 			float *d0 = m + size * i;
 			float *d1 = m + size * num;
-			for (int j = 0; j < size; j++)
+			for (int k = 0; k < size; k++)
 			{
 				float d = *d0;
 				*d0 = *d1;
@@ -947,13 +942,13 @@ UNIGINE_INLINE int luDecompose(float *m, int size, int *index)
 		int to = size - ((size - i - 1) & 3);
 		for (int j = i + 1; j < to; j += 4)
 		{
-			lu_eliminate(d + 1, diagonal + 1, d, size, size - i - 1);
+			internal_lu_eliminate(d + 1, diagonal + 1, d, size, size - i - 1);
 			d += size << 2;
 		}
 		for (int j = to; j < size; j++)
 		{
-			float f = *d++;
-			Simd::mad(d, diagonal + 1, -f, d, size - i - 1);
+			float temp = *d++;
+			Simd::mad(d, diagonal + 1, -temp, d, size - i - 1);
 			d += size - 1;
 		}
 		diagonal += size + 1;

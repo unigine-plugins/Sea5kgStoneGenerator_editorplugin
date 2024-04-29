@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -35,6 +35,9 @@ namespace UnigineEditor
 ////////////////////////////////////////////////////////////////////////////////
 // Selection.
 ////////////////////////////////////////////////////////////////////////////////
+/// <summary>
+/// Selection class. This class is used to manage current selection (nodes, materials, properties, runtimes...) in the Editor.
+/// </summary>
 class UNIGINE_EDITOR_API Selection: public QObject
 {
 	Q_OBJECT

@@ -1088,42 +1088,6 @@
 			<param name="interpreter"> Interpreter pointer. </param> 
 			<returns>Returns 1 if the variable is a decal; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Variable.setDMat4(Unigine.dmat4)">
-			<summary>
-			Sets a 3x4 matrix for the variable.
-			</summary> 
-			<param name="m"> The value of the variable. </param> 
-		</member>
-		<member name="M:Unigine.Variable.getDMat4 const">
-			<summary>
-			Returns the current variable as a 3x4 matrix, if possible.
-			</summary>  
-			<returns>The value of the variable.</returns>
-		</member>
-		<member name="M:Unigine.Variable.isDMat4 const">
-			<summary>
-			Returns a value indicating if the variable is a 3x4 matrix.
-			</summary>  
-			<returns>Returns 1 if the variable is a 3x4 matrix; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Variable.setDouble(double)">
-			<summary>
-			Sets a double value for the variable.
-			</summary> 
-			<param name="v"> The value of the variable. </param> 
-		</member>
-		<member name="M:Unigine.Variable.getDouble const">
-			<summary>
-			Returns the current variable as a double value, if possible.
-			</summary>  
-			<returns>The value of the variable.</returns>
-		</member>
-		<member name="M:Unigine.Variable.isDouble const">
-			<summary>
-			Returns a value indicating if the variable is a double value.
-			</summary>  
-			<returns>1 if the variable is a double value; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Variable.setDVec2(Unigine.dvec2)">
 			<summary>
 			Sets a two component vector for the variable.
@@ -1271,24 +1235,6 @@
 			<param name="interpreter"> Interpreter pointer. </param> 
 			<returns>Type information.</returns>
 		</member>
-		<member name="M:Unigine.Variable.setFloat(float)">
-			<summary>
-			Sets a float value for the variable.
-			</summary> 
-			<param name="v"> The value of the variable. </param> 
-		</member>
-		<member name="M:Unigine.Variable.getFloat const">
-			<summary>
-			Returns the current variable as a float value, if possible.
-			</summary>  
-			<returns>The value of the variable.</returns>
-		</member>
-		<member name="M:Unigine.Variable.isFloat const">
-			<summary>
-			Returns a value indicating if the variable is a float value.
-			</summary>  
-			<returns>Returns 1 if the variable is a float value; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Variable.setGui(void,GuiPtr,int,int)">
 			<summary>
 			Sets a gui smart pointer for the variable.
@@ -1312,24 +1258,6 @@
 			<param name="interpreter"> Interpreter pointer. </param> 
 			<returns>Returns 1 if the variable is a gui; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Variable.setGUID(Unigine.UGUID)">
-			<summary>
-			Sets a GUID value for the variable.
-			</summary> 
-			<param name="g"> The value of the variable. </param> 
-		</member>
-		<member name="M:Unigine.Variable.getGUID">
-			<summary>
-			Returns the current variable as a GUID smart pointer, if possible.
-			</summary>  
-			<returns>The value of the variable.</returns>
-		</member>
-		<member name="M:Unigine.Variable.isGUID">
-			<summary>
-			Returns a value indicating if the variable is a GUID.
-			</summary>  
-			<returns>Returns 1 if the variable is a GUID; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Variable.setImage(void,ImagePtr,int,int)">
 			<summary>
 			Sets an image smart pointer for the variable.
@@ -1352,78 +1280,6 @@
 			</summary> 
 			<param name="interpreter"> Interpreter pointer. </param> 
 			<returns>Returns 1 if the variable is an image; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Variable.setInt(int)">
-			<summary>
-			Sets an integer value for the variable.
-			</summary> 
-			<param name="v"> The value of the variable. </param> 
-		</member>
-		<member name="M:Unigine.Variable.getInt const">
-			<summary>
-			Returns the current variable as an integer value, if possible.
-			</summary>  
-			<returns>The value of the variable.</returns>
-		</member>
-		<member name="M:Unigine.Variable.isInt const">
-			<summary>
-			Returns a value indicating if the variable is an integer value.
-			</summary>  
-			<returns>Returns 1 if the variable is an integer value; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Variable.setIVec2(Unigine.ivec2)">
-			<summary>
-			Sets an inverse two component vector for the variable.
-			</summary> 
-			<param name="v"> The value of the variable. </param> 
-		</member>
-		<member name="M:Unigine.Variable.getIVec2">
-			<summary>
-			Returns the current variable as an inverse two component vector, if possible.
-			</summary>  
-			<returns>The value of the variable.</returns>
-		</member>
-		<member name="M:Unigine.Variable.isIVec2">
-			<summary>
-			Returns a value indicating if the variable is an inverse two component vector.
-			</summary>  
-			<returns>1 if the variable is an inverse two component vector; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Variable.setIVec3(Unigine.ivec3)">
-			<summary>
-			Sets a three component vector for the variable.
-			</summary> 
-			<param name="v"> The value of the variable. </param> 
-		</member>
-		<member name="M:Unigine.Variable.getIVec3 const">
-			<summary>
-			Returns the current variable as a three component vector, if possible.
-			</summary>  
-			<returns>The value of the variable.</returns>
-		</member>
-		<member name="M:Unigine.Variable.isIVec3 const">
-			<summary>
-			Returns a value indicating if the variable is a three component vector.
-			</summary>  
-			<returns>Returns 1 if the variable is a three component vector; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Variable.setIVec4(Unigine.ivec4)">
-			<summary>
-			Sets a four component vector for the variable.
-			</summary> 
-			<param name="v"> The value of the variable. </param> 
-		</member>
-		<member name="M:Unigine.Variable.getIVec4 const">
-			<summary>
-			Returns the current variable as a four component vector, if possible.
-			</summary>  
-			<returns>The value of the variable.</returns>
-		</member>
-		<member name="M:Unigine.Variable.isIVec4 const">
-			<summary>
-			Returns a value indicating if the variable is a four component vector.
-			</summary>  
-			<returns>Returns 1 if the variable is a four component vector; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Variable.setJoint(void,JointPtr,int,int)">
 			<summary>
@@ -1487,24 +1343,6 @@
 			Returns a value indicating if the variable is a long long value.
 			</summary>  
 			<returns>1 if the variable is a long long value; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Variable.setMat4(Unigine.mat4)">
-			<summary>
-			Sets a 4x4 matrix for the variable.
-			</summary> 
-			<param name="m"> The value of the variable. </param> 
-		</member>
-		<member name="M:Unigine.Variable.getMat4 const">
-			<summary>
-			Returns the current variable as a 4x4 matrix, if possible.
-			</summary>  
-			<returns>The value of the variable.</returns>
-		</member>
-		<member name="M:Unigine.Variable.isMat4 const">
-			<summary>
-			Returns a value indicating if the variable is a 4x4 matrix.
-			</summary>  
-			<returns>1 if the variable is a 4x4 matrix; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Variable.setMaterial(void,MaterialPtr,int,int)">
 			<summary>
@@ -1696,24 +1534,6 @@
 			<param name="interpreter"> Interpreter pointer. </param> 
 			<returns>1 if the variable is a property parameter; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Variable.setQuat(Unigine.quat)">
-			<summary>
-			Sets a quaternion for the variable.
-			</summary> 
-			<param name="q"> The value of the variable. </param> 
-		</member>
-		<member name="M:Unigine.Variable.getQuat const">
-			<summary>
-			Returns the current variable as a quaternion, if possible.
-			</summary>  
-			<returns>The value of the variable.</returns>
-		</member>
-		<member name="M:Unigine.Variable.isQuat const">
-			<summary>
-			Returns a value indicating if the variable is a quaternion.
-			</summary>  
-			<returns>1 if the variable is a quaternion; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Variable.setRenderEnvironmentPreset(void,RenderEnvironmentPresetPtr,int,int)">
 			<summary>
 			Sets a RenderEnvironmentPreset smart pointer for the variable.
@@ -1781,24 +1601,6 @@
 			</summary> 
 			<param name="interpreter"> Interpreter pointer. </param> 
 			<returns>Returns 1 if the variable is a stream; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Variable.setString(char)">
-			<summary>
-			Sets a string for the variable.
-			</summary> 
-			<param name="s"> The value of the variable. </param> 
-		</member>
-		<member name="M:Unigine.Variable.getString const">
-			<summary>
-			Returns the current variable as a string, if possible.
-			</summary>  
-			<returns>The value of the variable.</returns>
-		</member>
-		<member name="M:Unigine.Variable.isString const">
-			<summary>
-			Returns a value indicating if the variable is a string.
-			</summary>  
-			<returns>Returns 1 if the variable is a string; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Variable.setTerrainGlobalLod(void,TerrainGlobalLodPtr,int,int)">
 			<summary>
@@ -1940,60 +1742,6 @@
 			Returns user class type.
 			</summary>  
 			<returns>User class type ID.</returns>
-		</member>
-		<member name="M:Unigine.Variable.setVec2(Unigine.vec2)">
-			<summary>
-			Sets a two component vector for the variable.
-			</summary> 
-			<param name="v"> The value of the variable. </param> 
-		</member>
-		<member name="M:Unigine.Variable.getVec2">
-			<summary>
-			Returns the current variable as a two component vector, if possible.
-			</summary>  
-			<returns>The value of the variable.</returns>
-		</member>
-		<member name="M:Unigine.Variable.isVec2">
-			<summary>
-			Returns a value indicating if the variable is a two component vector.
-			</summary>  
-			<returns>1 if the variable is a two component vector; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Variable.setVec3(Unigine.vec3)">
-			<summary>
-			Sets a three component vector for the variable.
-			</summary> 
-			<param name="v"> The value of the variable. </param> 
-		</member>
-		<member name="M:Unigine.Variable.getVec3 const">
-			<summary>
-			Returns the current variable as a three component vector, if possible.
-			</summary>  
-			<returns>The value of the variable.</returns>
-		</member>
-		<member name="M:Unigine.Variable.isVec3 const">
-			<summary>
-			Returns a value indicating if the variable is a three component vector.
-			</summary>  
-			<returns>Returns 1 if the variable is a three component vector; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Variable.setVec4(Unigine.vec4)">
-			<summary>
-			Sets a four component vector for the variable.
-			</summary> 
-			<param name="v"> The value of the variable. </param> 
-		</member>
-		<member name="M:Unigine.Variable.getVec4 const">
-			<summary>
-			Returns the current variable as a four component vector, if possible.
-			</summary>  
-			<returns>The value of the variable.</returns>
-		</member>
-		<member name="M:Unigine.Variable.isVec4 const">
-			<summary>
-			Returns a value indicating if the variable is a four component vector.
-			</summary>  
-			<returns>Returns 1 if the variable is a four component vector; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Variable.setWidget(void,WidgetPtr,int,int)">
 			<summary>

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -69,17 +69,6 @@ class UNIGINE_API FileSystem
 {
 public:
 	static int isInitialized();
-
-	enum CALLBACK_INDEX
-	{
-		CALLBACK_FILE_ADDED = 0,
-		CALLBACK_FILE_REMOVED,
-		CALLBACK_FILE_CHANGED,
-		CALLBACK_FILES_ADDED,
-		CALLBACK_FILES_REMOVED,
-		CALLBACK_FILES_CHANGED,
-		NUM_CALLBACKS,
-	};
 	static Ptr<FileSystemMount> getMount(const char *path);
 	static Ptr<FileSystemMount> getMount(const UGUID &guid);
 	static void getMounts(Vector<Ptr<FileSystemMount>> &container);
@@ -160,11 +149,13 @@ public:
 	static void addModifier(const char *name);
 	static void removeModifier(const char *name);
 	static void clearModifiers();
-	static void *addCallback(FileSystem::CALLBACK_INDEX callback, CallbackBase1<const Vector<FilePath> &> *func);
-	static void *addCallback(FileSystem::CALLBACK_INDEX callback, CallbackBase *func);
-	static void *addCallback(FileSystem::CALLBACK_INDEX callback, CallbackBase2<const char *, UGUID> *func);
-	static bool removeCallback(FileSystem::CALLBACK_INDEX callback, void *id);
-	static void clearCallbacks(FileSystem::CALLBACK_INDEX callback);
+	static Event<const UGUID &, const char *> &getEventFileAdded();
+	static Event<const UGUID &, const char *> &getEventFileRemoved();
+	static Event<const UGUID &, const char *> &getEventFileChanged();
+
+	static Event<const Vector<FilePath> &> &getEventFilesAdded();
+	static Event<const Vector<FilePath> &> &getEventFilesRemoved();
+	static Event<const Vector<FilePath> &> &getEventFilesChanged();
 };
 
 //////////////////////////////////////////////////////////////////////////

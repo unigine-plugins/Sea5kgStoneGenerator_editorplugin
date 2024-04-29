@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -49,7 +49,7 @@ typedef Ptr<Navigation> NavigationPtr;
 class UNIGINE_API NavigationMesh : public Navigation
 {
 public:
-	static int type() { return Node::NAVIGATION_MESH; }
+	static Node::TYPE type() { return Node::NAVIGATION_MESH; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<NavigationMesh> create();
@@ -72,7 +72,7 @@ typedef Ptr<NavigationMesh> NavigationMeshPtr;
 class UNIGINE_API NavigationSector : public Navigation
 {
 public:
-	static int type() { return Node::NAVIGATION_SECTOR; }
+	static Node::TYPE type() { return Node::NAVIGATION_SECTOR; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<NavigationSector> create(const Math::vec3 &arg1);
@@ -98,7 +98,7 @@ typedef Ptr<Obstacle> ObstaclePtr;
 class UNIGINE_API ObstacleBox : public Obstacle
 {
 public:
-	static int type() { return Node::OBSTACLE_BOX; }
+	static Node::TYPE type() { return Node::OBSTACLE_BOX; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObstacleBox> create(const Math::vec3 &arg1);
@@ -112,7 +112,7 @@ typedef Ptr<ObstacleBox> ObstacleBoxPtr;
 class UNIGINE_API ObstacleCapsule : public Obstacle
 {
 public:
-	static int type() { return Node::OBSTACLE_CAPSULE; }
+	static Node::TYPE type() { return Node::OBSTACLE_CAPSULE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObstacleCapsule> create(float radius, float height);
@@ -128,7 +128,7 @@ typedef Ptr<ObstacleCapsule> ObstacleCapsulePtr;
 class UNIGINE_API ObstacleSphere : public Obstacle
 {
 public:
-	static int type() { return Node::OBSTACLE_SPHERE; }
+	static Node::TYPE type() { return Node::OBSTACLE_SPHERE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<ObstacleSphere> create(float radius);

@@ -96,80 +96,61 @@
 			</summary> 
 			<param name="mask"> Integer, each bit of which is a mask. </param> 
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.getCollisionMask">
+		<member name="M:Unigine.PhysicalTrigger.getCollisionMask const">
 			<summary>
 			Sets the collision bit mask for the trigger:																		 the trigger will be activated if the entered body will have a matching							physical mask and at the same time its shape will have a matching collision mask.
 			</summary>  
 			<returns>Integer, each bit of which is a mask.</returns>
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.getContactDepth(int)">
+		<member name="M:Unigine.PhysicalTrigger.getContactDepth(int) const">
 			<summary>
 			Returns penetration depth by the given contact.
 			</summary> 
 			<param name="contact"> Contact number. </param> 
 			<returns>Penetration depth.</returns>
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.getContactNormal(int)">
+		<member name="M:Unigine.PhysicalTrigger.getContactNormal(int) const">
 			<summary>
 			Returns a normal of the contact point, in world coordinates.
 			</summary> 
 			<param name="contact"> Contact number. </param> 
 			<returns>Normal of the contact point.</returns>
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.getContactObject(int)">
+		<member name="M:Unigine.PhysicalTrigger.getContactObject(int) const">
 			<summary>
 			Returns an object participating in the contact with a physical trigger					.
 			</summary> 
 			<param name="contact"> Contact number. </param> 
 			<returns>Object in contact.</returns>
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.getContactPoint(int)">
+		<member name="M:Unigine.PhysicalTrigger.getContactPoint(int) const">
 			<summary>
 			Returns world coordinates of the contact point.
 			</summary> 
 			<param name="contact"> Contact number. </param> 
 			<returns>Contact point.</returns>
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.getContactShape(int)">
+		<member name="M:Unigine.PhysicalTrigger.getContactShape(int) const">
 			<summary>
 			Returns a shape that collided with a physical trigger.
 			</summary> 
 			<param name="contact"> Contact number. </param> 
 			<returns>Shape in contact.</returns>
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.getContactSurface(int)">
+		<member name="M:Unigine.PhysicalTrigger.getContactSurface(int) const">
 			<summary>
 			Returns the surface of the current object, which is in contact					.
 			</summary> 
 			<param name="contact"> Contact number. </param> 
 			<returns>Surface number.</returns>
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.addEnterCallback(Unigine.CallbackBase1{Unigine.Ptr{Unigine.Body}})">
-			<summary>
-								Adds a callback function to be fired when a body enters the physical trigger. The callback function must receive a Body as its first argument. In addition, it can also take 2 arguments of any type.
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added enter callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.removeEnterCallback(void)">
-			<summary>
-			Removes the specified callback from the list of enter callbacks.
-			</summary> 
-			<param name="id"> Enter callback ID obtained when adding it. </param> 
-			<returns>True if the enter callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.clearEnterCallbacks">
-			<summary>
-			Clears all added enter callbacks.
-			</summary>  
-		</member>
 		<member name="M:Unigine.PhysicalTrigger.setEnterCallbackName(char)">
 			<summary>
-			Sets a callback function to be fired on entering the physical trigger.											Unlike setEnterCallback() , this callback function accepts a body that entered the physical trigger and the physical trigger itself as arguments.
+			Sets a callback function to be fired on entering the physical trigger.
 			</summary> 
 			<param name="name"> Name of the callback function. </param> 
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.getEnterCallbackName">
+		<member name="M:Unigine.PhysicalTrigger.getEnterCallbackName const">
 			<summary>
 			Returns the name of the callback function fired on entering the physical trigger. This callback function is set via setEnterCallbackName() .
 			</summary>  
@@ -181,50 +162,31 @@
 			</summary> 
 			<param name="mask"> Integer, each bit of which is a mask. </param> 
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.getExclusionMask">
+		<member name="M:Unigine.PhysicalTrigger.getExclusionMask const">
 			<summary>
 			Returns the bit mask that prevent detecting collisions with shapes and bodies. This mask is independent of the collision mask. To avoid detecting collisions by a physical trigger for bodies and shapes with matching collision masks, at least one bit in exclusion masks should match.
 			</summary>  
 			<returns>Integer, each bit of which is a mask.</returns>
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.addLeaveCallback(Unigine.CallbackBase1{Unigine.Ptr{Unigine.Body}})">
-			<summary>
-								Adds a callback function to be fired when a body leaves the physical trigger. The callback function must receive a Body as its first argument. In addition, it can also take 2 arguments of any type.
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added leave callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.removeLeaveCallback(void)">
-			<summary>
-			Removes the specified callback from the list of leave callbacks.
-			</summary> 
-			<param name="id"> Leave callback ID obtained when adding it. </param> 
-			<returns>True if the leave callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.clearLeaveCallbacks">
-			<summary>
-			Clears all added leave callbacks.
-			</summary>  
-		</member>
 		<member name="M:Unigine.PhysicalTrigger.setLeaveCallbackName(char)">
 			<summary>
-			Sets the name of a callback function to be fired on leaving the physical trigger.											Unlike setLeaveCallback() , this callback function accepts a body that left the physical trigger and physical trigger itself as arguments.
+			Sets the name of a callback function to be fired on leaving the physical trigger.
 			</summary> 
 			<param name="name"> Name of the callback function. </param> 
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.getLeaveCallbackName">
+		<member name="M:Unigine.PhysicalTrigger.getLeaveCallbackName const">
 			<summary>
 			Returns the name of the callback function fired on leaving the physical trigger. This callback function is set via setLeaveCallbackName() .
 			</summary>  
 			<returns>Name of the callback function.</returns>
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.getNumBodies">
+		<member name="M:Unigine.PhysicalTrigger.getNumBodies const">
 			<summary>
 			Returns the total number of bodies intersecting with the physical trigger.
 			</summary>  
 			<returns>Number of bodies.</returns>
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.getNumContacts">
+		<member name="M:Unigine.PhysicalTrigger.getNumContacts const">
 			<summary>
 			Returns the total number of contacts with bodies, shapes and colliding surfaces in which a physical trigger participated.
 			</summary>  
@@ -236,7 +198,7 @@
 			</summary> 
 			<param name="type"> Shape type of the physical trigger:0 - Sphere1 - Capsule2 - Cylinder3 - Box  </param> 
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.getShapeType">
+		<member name="M:Unigine.PhysicalTrigger.getShapeType const">
 			<summary>
 			Returns the shape type of the physical trigger.
 			</summary>  
@@ -248,7 +210,7 @@
 			</summary> 
 			<param name="size"> New size of the physical trigger:Radius, in case of a sphere (pass the radius in the first element of the vector).Radius and height, in case of a capsule or a cylinder (pass the radius as the first vector element and the height as the second element).Dimensions along the X, Y and Z axes, in case of the box. </param> 
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.getSize">
+		<member name="M:Unigine.PhysicalTrigger.getSize const">
 			<summary>
 			Returns the current size of the physical trigger:											Radius, in case of a sphere (pass the radius in the first element of the vector).						Radius and height, in case of a capsule or a cylinder (pass the radius as the first vector element and the height as the second element).						Dimensions along the X, Y and Z axes, in case of the box.
 			</summary>  
@@ -262,7 +224,7 @@
 		</member>
 		<member name="M:Unigine.PhysicalTrigger.updateContacts">
 			<summary>
-			Forces a physical trigger to be updated, i.e. to recalculate its intersections with physical objects and colliders. After that, you can access all updated data; however, callback functions themselves will be executed only when physics flush is over.
+			Forces a physical trigger to be updated, i.e. to recalculate its intersections with physical objects and colliders. After that, you can access all updated data; however, event handler functions themselves will be executed only when physics flush is over.
 			</summary>  
 		</member>
 		<member name="M:Unigine.PhysicalNoise.#ctor(Unigine.Math.vec3)">

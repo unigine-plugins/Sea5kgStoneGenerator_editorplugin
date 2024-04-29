@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -40,6 +40,9 @@ public:
 	static int getSize();
 	static void setTextureName(const char *name);
 	static const char *getTextureName();
+	static int getNumHandlers();
+	static Ptr<Node> getHandlerNode(int num);
+	static float getHandlerSize(int num);
 	static void clear();
 	static void renderPoint3D(const Math::Vec3 &v, float size, const Math::vec4 &color, bool screen_space = false, float duration = 0.0f, bool depth_test = true);
 	static void renderLine3D(const Math::Vec3 &v0, const Math::Vec3 &v1, const Math::vec4 &color, float duration = 0.0f, bool depth_test = true);

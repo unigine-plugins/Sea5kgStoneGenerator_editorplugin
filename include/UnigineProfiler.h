@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -59,9 +59,9 @@ struct ScopedProfiler
 			Profiler::endMicro(id);
 	}
 };
-#define UNIGINE_PROFILER_SCOPED(NAME) ::Unigine::ScopedProfiler unigine_prof ## __LINE__(NAME)
-#define UNIGINE_PROFILER_SCOPED_GPU(NAME) ::Unigine::ScopedProfiler unigine_prof ## __LINE__(NAME, true)
-#define UNIGINE_PROFILER_FUNCTION ::Unigine::ScopedProfiler unigine_prof ## __LINE__(__FUNCTION__)
-#define UNIGINE_PROFILER_FUNCTION_GPU ::Unigine::ScopedProfiler unigine_prof ## __LINE__(__FUNCTION__, true)
+#define UNIGINE_PROFILER_SCOPED(NAME) ::Unigine::ScopedProfiler UNIGINE_CONCATENATE(unigine_prof, __LINE__)(NAME)
+#define UNIGINE_PROFILER_SCOPED_GPU(NAME) ::Unigine::ScopedProfiler UNIGINE_CONCATENATE(unigine_prof, __LINE__)(NAME, true)
+#define UNIGINE_PROFILER_FUNCTION ::Unigine::ScopedProfiler UNIGINE_CONCATENATE(unigine_prof, __LINE__)(__FUNCTION__)
+#define UNIGINE_PROFILER_FUNCTION_GPU ::Unigine::ScopedProfiler UNIGINE_CONCATENATE(unigine_prof, __LINE__)(__FUNCTION__, true)
 
 } // namespace Unigine

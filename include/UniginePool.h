@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -30,6 +30,7 @@ public:
 	static UNIGINE_INLINE void *operator new(size_t size)
 	{
 		assert(size == sizeof(Type) && "SystemPool::operator new(): bad object size");
+		UNIGINE_UNUSED(size)
 		return ::malloc(size);
 	}
 	static UNIGINE_INLINE void operator delete(void *ptr)
@@ -39,6 +40,7 @@ public:
 	static UNIGINE_INLINE void operator delete(void *ptr, size_t size)
 	{
 		assert(size == sizeof(Type) && "SystemPool::operator delete(): bad object size");
+		UNIGINE_UNUSED(size)
 		::free(ptr);
 	}
 };
@@ -56,6 +58,7 @@ public:
 	static UNIGINE_INLINE void *operator new(size_t size)
 	{
 		assert(size == sizeof(Type) && "FixedPool::operator new(): bad object size");
+		UNIGINE_UNUSED(size)
 		return allocate();
 	}
 	static UNIGINE_INLINE void operator delete(void *ptr)
@@ -65,6 +68,7 @@ public:
 	static UNIGINE_INLINE void operator delete(void *ptr, size_t size)
 	{
 		assert(size == sizeof(Type) && "FixedPool::operator delete(): bad object size");
+		UNIGINE_UNUSED(size)
 		deallocate(ptr);
 	}
 
@@ -248,6 +252,7 @@ public:
 	static UNIGINE_INLINE void *operator new(size_t size)
 	{
 		assert(size == sizeof(Type) && "InstancePool::operator new(): bad object size");
+		UNIGINE_UNUSED(size)
 		return allocate();
 	}
 	static UNIGINE_INLINE void operator delete(void *ptr)
@@ -257,6 +262,7 @@ public:
 	static UNIGINE_INLINE void operator delete(void *ptr, size_t size)
 	{
 		assert(size == sizeof(Type) && "InstancePool::operator delete(): bad object size");
+		UNIGINE_UNUSED(size)
 		deallocate(ptr);
 	}
 
@@ -284,12 +290,11 @@ private:
 
 		return Memory::allocate(sizeof(Type));
 	}
-	
+
 	static void deallocate(void *p)
 	{
 		if (p == nullptr)
 			return;
-		
 		if ((sizeof(Type) * pool_size) >= MemoryLimit)
 			return Memory::deallocate(p);
 
@@ -344,6 +349,7 @@ public:
 	static UNIGINE_INLINE void *operator new(size_t size)
 	{
 		assert(size == sizeof(Type) && "LocalPool::operator new(): bad object size");
+		UNIGINE_UNUSED(size)
 		return allocate(size);
 	}
 	static UNIGINE_INLINE void operator delete(void *ptr)
@@ -353,6 +359,7 @@ public:
 	static UNIGINE_INLINE void operator delete(void *ptr, size_t size)
 	{
 		assert(size == sizeof(Type) && "LocalPool::operator delete(): bad object size");
+		UNIGINE_UNUSED(size)
 		deallocate(ptr);
 	}
 
@@ -377,6 +384,8 @@ public:
 		#if defined(_LINUX) && defined(__ARM_EABI__)
 			if (sizeof(size_t) == 4 && !IS_ALIGNED16(ptr))
 				ptr = static_cast<size_t *>(ptr) - 2;
+		#else
+			UNIGINE_UNUSED(size)
 		#endif
 		deallocate(ptr);
 	}

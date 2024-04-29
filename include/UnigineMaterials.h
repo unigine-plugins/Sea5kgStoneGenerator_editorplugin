@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -26,15 +26,6 @@ class UNIGINE_API Materials
 {
 public:
 	static int isInitialized();
-
-	enum LOADING_MODE
-	{
-		LOADING_MODE_FAST = 0,
-		LOADING_MODE_FULL_MATERIALS,
-		LOADING_MODE_FULL_MATERIALS_SHADERS,
-	};
-	static void setLoadingMode(Materials::LOADING_MODE mode);
-	static Materials::LOADING_MODE getLoadingMode();
 	static Ptr<Material> loadMaterial(const char *path);
 	static bool isMaterialGUID(const UGUID &guid);
 	static int getNumMaterials();
@@ -49,20 +40,16 @@ public:
 	static bool removeMaterial(const UGUID &guid, bool remove_file = false, bool remove_children = true);
 	static bool replaceMaterial(const Ptr<Material> &material, const Ptr<Material> &new_material);
 	static bool saveMaterials();
-	static void compileShaders(const Vector<Ptr<Material>> &materials);
-	static void compileShaders();
 	static void setPrecompileAllShaders(bool shaders);
 	static bool isPrecompileAllShaders();
 	static void reloadMaterials();
 	static void destroyShaders();
 	static void destroyTextures();
+	static void createRenderMaterials();
 	static void createShaders();
-	static void *addBeginReloadCallback(CallbackBase *func);
-	static bool removeBeginReloadCallback(void *id);
-	static void clearBeginReloadCallbacks();
-	static void *addEndReloadCallback(CallbackBase *func);
-	static bool removeEndReloadCallback(void *id);
-	static void clearEndReloadCallbacks();
+	static void compileShaders();
+	static Event<> &getEventBeginReload();
+	static Event<> &getEventEndReload();
 };
 
 } // namespace Unigine

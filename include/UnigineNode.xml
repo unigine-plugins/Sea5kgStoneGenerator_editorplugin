@@ -59,7 +59,7 @@
 		</member>
 		<member name="M:Unigine.Node.setImmovable(bool)">
 			<summary>
-			Sets a value indicating if the node represents an immovable (clutter) object, which means it is moved to a separate spatial tree for immovable (static) objects optimizing node management. There are several restrictions on nodes considered immovable. Any action affecting the spatial tree is prohibited and causes a warning: you cannot change the node state (enabled/disabled), surfaces, bounds, trasformation, visibility distance, as well as move the node, assign a non-dummy physical body or even disable the Immovable flag as it also leads to rebiulding of the spatial tree.				You can disable these warnings by using the World::setMovingImmovableNodeMode()) method, if necessary.
+			Sets a value indicating if the node represents an immovable (clutter) object, which means it is moved to a separate spatial tree for immovable (static) objects optimizing node management. There are several restrictions on nodes considered immovable. Any action affecting the spatial tree is prohibited and causes a warning: you cannot change the node state (enabled/disabled), surfaces, bounds, trasformation, visibility distance, as well as move the node, assign a non-dummy physical body or even disable the					Immovable flag as it also leads to rebiulding of the spatial tree.					You can disable these warnings by using the World::setMovingImmovableNodeMode())						 method, if necessary.
 			</summary> 
 			<param name="immovable"> true to mark the node as an immovable object; otherwise, false. </param> 
 		</member>
@@ -155,13 +155,13 @@
 		</member>
 		<member name="M:Unigine.Node.isField const">
 			<summary>
-			Returns a value indicating if the node is a field node (its type is one of the FIELD_*).
+			Returns a value indicating if the node is a field node (its type is one of the					FIELD_*).
 			</summary>  
 			<returns>true if the node is a field node; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Node.isParticlesField const">
 			<summary>
-			Returns a value indicating if the node is a particles field node (its type is one of the PARTICLES_FIELD_*).
+			Returns a value indicating if the node is a particles field node (its type is one of the					PARTICLES_FIELD_*).
 			</summary>  
 			<returns>true if the node is a particles field node; otherwise, false.</returns>
 		</member>
@@ -551,9 +551,9 @@
 		</member>
 		<member name="M:Unigine.Node.hasQueryForce const">
 			<summary>
-			Returns a value indicating if the Culled By Occlusion Query option is force-enabled for the node by the Engine.
+			Returns a value indicating if the					Culled By Occlusion Queryoption is force-enabled for the node by the Engine.
 			</summary>  
-			<returns>true if the Culled By Occlusion Query option is force-enabled for the node by the Engine; otherwise, false.</returns>
+			<returns>true if theCulled By Occlusion Queryoption is force-enabled for the node by the Engine; otherwise,false.</returns>
 		</member>
 		<member name="M:Unigine.Node.getRootNode const">
 			<summary>
@@ -663,6 +663,19 @@
 			</summary> 
 			<param name="v"> Variable value. </param> 
 		</member>
+		<member name="M:Unigine.Node.setVariable(char,Unigine.Variable)">
+			<summary>
+			Sets the value of the single unnamed variable parameter of the node. If this variable does not exist it will be created with a specified value.
+			</summary> 
+			<param name="name"> Variable name. </param>
+			<param name="variable"> Variable value. </param> 
+		</member>
+		<member name="M:Unigine.Node.getVariable">
+			<summary>
+			Returns the single unnamed variable parameter of the node.
+			</summary>  
+			<returns>Variable if it exists; otherwise, variable with 0 value.</returns>
+		</member>
 		<member name="M:Unigine.Node.getVariable(char)">
 			<summary>
 			Returns the variable with a given name.
@@ -670,10 +683,11 @@
 			<param name="name"> Variable name. </param> 
 			<returns>Variable if it exists; otherwise, variable with 0 value.</returns>
 		</member>
-		<member name="M:Unigine.Node.getVariable">
+		<member name="M:Unigine.Node.getVariable(char) const">
 			<summary>
-			Returns the single unnamed variable parameter of the node.
-			</summary>  
+			Returns the variable with a given name.
+			</summary> 
+			<param name="name"> Variable name. </param> 
 			<returns>Variable if it exists; otherwise, variable with 0 value.</returns>
 		</member>
 		<member name="M:Unigine.Node.isImmovableSupported const">
@@ -976,44 +990,6 @@
 			<param name="angle_y"> Roll angle, in degrees. </param>
 			<param name="angle_z"> Yaw angle, in degrees. </param> 
 		</member>
-		<member name="M:Unigine.Node.addCallback(Unigine.Node.CALLBACK_INDEX,Unigine.CallbackBase2{Unigine.Ptr{Unigine.Node},Unigine.Ptr{Unigine.Property}})">
-			<summary>
-			Adds a callback of the specified type. Callback functions can be used to determine actions to be performed when adding or removing node and surface properties as well as when swapping node properties. The signature of the callback function must be as follows:
-			</summary> 
-			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param>
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Node.addCallback(Unigine.Node.CALLBACK_INDEX,Unigine.CallbackBase3{Unigine.Ptr{Unigine.Node},Unigine.Ptr{Unigine.Property},int})">
-			<summary>
-			Adds a callback of the specified type. Callback functions can be used to determine actions to be performed when adding or removing node and surface properties as well as when swapping node properties. The signature of the callback function must be as follows:
-			</summary> 
-			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param>
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Node.addCallback(Unigine.Node.CALLBACK_INDEX,Unigine.CallbackBase3{Unigine.Ptr{Unigine.Node},int,int})">
-			<summary>
-			Adds a callback of the specified type. Callback functions can be used to determine actions to be performed when adding or removing node and surface properties as well as when swapping node properties. The signature of the callback function must be as follows:
-			</summary> 
-			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param>
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added callback of the specified type, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Node.removeCallback(Unigine.Node.CALLBACK_INDEX,void)">
-			<summary>
-			Removes the specified callback from the list of callbacks of the specified type. Callback functions can be used to determine actions to be performed when adding or removing node and surface properties as well as when swapping node properties.
-			</summary> 
-			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param>
-			<param name="id"> Callback ID obtained when adding it. </param> 
-			<returns>True if the callback of the specified type with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.Node.clearCallbacks(Unigine.Node.CALLBACK_INDEX)">
-			<summary>
-			Clears all added callbacks of the specified type. Callback functions can be used to determine actions to be performed when adding or removing node and surface properties as well as when swapping node properties.
-			</summary> 
-			<param name="callback"> Callback type. One of the CALLBACK_* variables. </param> 
-		</member>
 		<member name="M:Unigine.Node.setDirection(Unigine.Math.vec3,Unigine.Math.vec3,MathLib::AXIS)">
 			<summary>
 			Updates the direction vector of the node and reorients this node: the specified axis of the node becomes oriented along the specified vector in local coordinates. For example, after running the code below, you will get the X axis of the node pointed along the Y axis in local coordinates.
@@ -1060,7 +1036,7 @@
 		</member>
 		<member name="M:Unigine.Node.setSaveToWorldEnabled(bool)">
 			<summary>
-			Sets a value indicating if saving to *.world file is enabled for the node.The node shall be saved to a *.world file only if this option is enabled for all of its ancestors as well.
+								Sets a value indicating if saving to *.world file is enabled for the node.					The node shall be saved to a *.world file only if this option is enabled for all of its ancestors as well.
 			</summary> 
 			<param name="enabled"> true to enable saving to *.world file for the node; 0 to disable. </param> 
 		</member>
@@ -1078,13 +1054,13 @@
 		</member>
 		<member name="M:Unigine.Node.isSaveToWorldEnabledSelf const">
 			<summary>
-			Returns a value indicating if saving to *.world file is enabled for the node.The node shall be saved to a *.world file only if this option is enabled for all of its ancestors as well (see the isSaveToWorldEnabled() method).
+								Returns a value indicating if saving to *.world file is enabled for the node.					The node shall be saved to a *.world file only if this option is enabled for all of its ancestors as well (see the isSaveToWorldEnabled() method).
 			</summary>  
 			<returns>true if saving to *.world file is enabled for the node; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Node.setShowInEditorEnabled(bool)">
 			<summary>
-			Sets a value indicating if displaying in the World Hierarchy window of the UnigineEditor is enabled for the node.The node shall be displayed in the hierarchy only if this option is enabled for all of its ancestors as well.
+			Sets a value indicating if displaying in the World Hierarchy window of the UnigineEditor is enabled for the node.					The node shall be displayed in the hierarchy only if this option is enabled for all of its ancestors as well.
 			</summary> 
 			<param name="enabled"> true to enable displaying in the World Hierarchy window of the UnigineEditor for the node; 0 to disable. </param> 
 		</member>
@@ -1102,19 +1078,19 @@
 		</member>
 		<member name="M:Unigine.Node.isShowInEditorEnabledSelf const">
 			<summary>
-			Returns a value indicating if displaying in the World Hierarchy window of the UnigineEditor is enabled for the node.The node shall be displayed only if this option is enabled for all of its ancestors as well (see the isShowInEditorEnabled() method).
+			Returns a value indicating if displaying in the World Hierarchy window of the UnigineEditor is enabled for the node.					The node shall be displayed only if this option is enabled for all of its ancestors as well (see the isShowInEditorEnabled() method).
 			</summary>  
 			<returns>true if displaying in the World Hierarchy window of the UnigineEditor is enabled for the node; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Node.getLifetime const">
 			<summary>
-			Returns the lifetime management type for the root (either parent or posessor) of the node, or for the node itself (if it is not a child and not possessed by any other node).Lifetime of each node in the hierarchy is defined by it's root (either parent or posessor). Thus, lifetime management type set for a child node that differs from the one set for the root is ignored.
+			Returns the lifetime management type for the root (either parent or posessor) of the node, or for the node itself (if it is not a child and not possessed by any other node).					Lifetime of each node in the hierarchy is defined by it's root (either parent or posessor). Thus, lifetime management type set for a child node that differs from the one set for the root is ignored.
 			</summary>  
 			<returns>Lifetime management type for the root node (see the LIFETIME enum).</returns>
 		</member>
 		<member name="M:Unigine.Node.getLifetimeSelf const">
 			<summary>
-			Returns the lifetime management type set for the node itself.Lifetime of each node in the hierarchy is defined by it's root (either parent or posessor). Setting lifetime management type for a child node different from the one set for the root has no effect.
+			Returns the lifetime management type set for the node itself.					Lifetime of each node in the hierarchy is defined by it's root (either parent or posessor). Setting lifetime management type for a child node different from the one set for the root has no effect.
 			</summary>  
 			<returns>Lifetime management type for the node (see the LIFETIME enum).</returns>
 		</member>
@@ -1138,43 +1114,53 @@
 			<summary>
 			Returns a bounding box with local coordinates that takes children into account, but doesn't participate in physics calculations. Exclusion of objects from the spatial tree significantly reduces the size of the tree and improves performance due to saving time on bounding box recalculation when transforming nodes.
 			</summary> 
-			<param name="only_enabled_nodes"> Set true to obtain the result taking into account only the nodes in the hierarchy that are enabled, or false - to take into account all nodes in the hierarchy regardless of their enabled state. </param> 
+			<param name="only_enabled_nodes"> Set true to obtain the result taking into account only the nodes in the hierarchy that are enabled, or false - to take into account all nodes in the hierarchy regardless of theirenabled state. </param> 
 			<returns>The bounding box with world coordinates.</returns>
 		</member>
 		<member name="M:Unigine.Node.getHierarchyBoundSphere(bool) const">
 			<summary>
 			Returns a bounding sphere with local coordinates that takes children into account, but doesn't participate in physics calculations. Exclusion of objects from the spatial tree significantly reduces the size of the tree and improves performance due to saving time on bounding sphere recalculation when transforming nodes.
 			</summary> 
-			<param name="only_enabled_nodes"> Set true to obtain the result taking into account only the nodes in the hierarchy that are enabled, or false - to take into account all nodes in the hierarchy regardless of their enabled state. </param> 
+			<param name="only_enabled_nodes"> Set true to obtain the result taking into account only the nodes in the hierarchy that are enabled, or false - to take into account all nodes in the hierarchy regardless of theirenabled state. </param> 
 			<returns>The bounding sphere with world coordinates.</returns>
 		</member>
 		<member name="M:Unigine.Node.getHierarchyWorldBoundBox(bool) const">
 			<summary>
 			Returns a bounding box with world coordinates that takes children into account, but doesn't participate in physics calculations. Exclusion of objects from the spatial tree significantly reduces the size of the tree and improves performance due to saving time on bounding box recalculation when transforming nodes.
 			</summary> 
-			<param name="only_enabled_nodes"> Set true to obtain the result taking into account only the nodes in the hierarchy that are enabled, or false - to take into account all nodes in the hierarchy regardless of their enabled state. </param> 
+			<param name="only_enabled_nodes"> Set true to obtain the result taking into account only the nodes in the hierarchy that are enabled, or false - to take into account all nodes in the hierarchy regardless of theirenabled state. </param> 
 			<returns>The bounding box with world coordinates.</returns>
 		</member>
 		<member name="M:Unigine.Node.getHierarchyWorldBoundSphere(bool) const">
 			<summary>
 			Returns a bounding sphere with world coordinates that takes children into account, but doesn't participate in physics calculations. Exclusion of objects from the spatial tree significantly reduces the size of the tree and improves performance due to saving time on bounding sphere recalculation when transforming nodes.
 			</summary> 
-			<param name="only_enabled_nodes"> Set true to obtain the result taking into account only the nodes in the hierarchy that are enabled, or false - to take into account all nodes in the hierarchy regardless of their enabled state. </param> 
+			<param name="only_enabled_nodes"> Set true to obtain the result taking into account only the nodes in the hierarchy that are enabled, or false - to take into account all nodes in the hierarchy regardless of theirenabled state. </param> 
 			<returns>The bounding sphere with world coordinates.</returns>
 		</member>
 		<member name="M:Unigine.Node.getHierarchySpatialBoundBox(bool) const">
 			<summary>
 			Returns a bounding box with world coordinates that takes all children and physics into account. This bounding box is used by the spatial tree.
 			</summary> 
-			<param name="only_enabled_nodes"> Set true to obtain the result taking into account only the nodes in the hierarchy that are enabled, or false - to take into account all nodes in the hierarchy regardless of their enabled state. </param> 
+			<param name="only_enabled_nodes"> Set true to obtain the result taking into account only the nodes in the hierarchy that are enabled, or false - to take into account all nodes in the hierarchy regardless of theirenabled state. </param> 
 			<returns>The bounding box with world coordinates.</returns>
 		</member>
 		<member name="M:Unigine.Node.getHierarchySpatialBoundSphere(bool) const">
 			<summary>
 			Returns a bounding sphere with world coordinates that takes all children and physics into account. This bounding sphere is used by the spatial tree.
 			</summary> 
-			<param name="only_enabled_nodes"> Set true to obtain the result taking into account only the nodes in the hierarchy that are enabled, or false - to take into account all nodes in the hierarchy regardless of their enabled state. </param> 
+			<param name="only_enabled_nodes"> Set true to obtain the result taking into account only the nodes in the hierarchy that are enabled, or false - to take into account all nodes in the hierarchy regardless of theirenabled state. </param> 
 			<returns>The bounding sphere with world coordinates.</returns>
+		</member>
+		<member name="M:Unigine.Node.updateSpatialTree">
+			<summary>
+			Updates node bounds in the spatial tree in the current frame. This method can be used in case you use some custom logic affecting node bounds or position and need to have your changes to be taken into account in the current frame, as well as to process such changes for your custom nodes (					ObjectExtern, NodeExtern) which are otherwise ignored. Calling this method enables you to apply changes for this node fast without complete tree recalculation. But you should be aware that node bounds fast-updated this way					might be inaccurate (they can only be expanded, as shrinking will require tree recalculation). In case you need to have 100% accurate bounds in the current frame, call the					 method. You can also simply tell the spatial tree to update node bounds in the next frame via the					 method.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Node.updateSpatialTreeDelayed">
+			<summary>
+			Mark node bounds in the spatial tree to be updated in the next frame (all bounds will be 100% accurate in this case unlike for the					 method). This method can be used in case you use some custom logic affecting node bounds or position, as well as to process such changes for your custom nodes (					ObjectExtern, NodeExtern) which are otherwise ignored. The changes will only be applied in the next frame, in case you need to have your changes to be taken into account right in the current frame use the					 method for 100% accurate bounds (slow), or the fast					 method which only expands node bounds if necessary.
+			</summary>  
 		</member>
 		<member name="M:Unigine.Node.getNumWorldTriggers const">
 			<summary>
@@ -1196,78 +1182,9 @@
 			<param name="num"> Target property slot number. </param> 
 			<returns>Lost property GUID.</returns>
 		</member>
-		<member name="M:Unigine.Node.setVariable(char,Unigine.Variable)">
+		<member name="M:Unigine.Node.renderBounds(bool,bool)">
 			<summary>
 			</summary>  
-		</member>
-		<member name="M:Unigine.Node.getVariable(char) const">
-			<summary>
-			</summary>  
-		</member>
-		<member name="F:Unigine.Node.CALLBACK_PROPERTY_NODE_SLOTS_CHANGED">
-			<summary>
-			Callback to be fired on changing the number of node's property slots. Callback function signature is as follows:										void Func(Node node, int num);
-		</summary>
-		</member>
-		<member name="F:Unigine.Node.CALLBACK_PROPERTY_NODE_ADD">
-			<summary>
-			Node property added callback. This callback is fired when a new property is assigned to the node.
-		</summary>
-		</member>
-		<member name="F:Unigine.Node.CALLBACK_PROPERTY_NODE_SWAP">
-			<summary>
-			Node property swapped callback. This callback is fired when two properties swap their positions in the list of node's properties.
-		</summary>
-		</member>
-		<member name="F:Unigine.Node.CALLBACK_PROPERTY_NODE_REMOVE">
-			<summary>
-			Node property removed callback. This callback is fired when a property is removed from the list of node's properties.
-		</summary>
-		</member>
-		<member name="F:Unigine.Node.CALLBACK_PROPERTY_CHANGE_ENABLED">
-			<summary>
-			Callback to be fired on changing node's property enabled state. Callback function signature is as follows:					void Func(Node node, Property prop, int prop_num);
-		</summary>
-		</member>
-		<member name="F:Unigine.Node.CALLBACK_PROPERTY_SURFACE_ADD">
-			<summary>
-			Surface property added callback. This callback is fired when a property is assigned to object's surface.
-		</summary>
-		</member>
-		<member name="F:Unigine.Node.CALLBACK_PROPERTY_SURFACE_REMOVE">
-			<summary>
-			Surface property removed callback. This callback is fired when a property is removed from object's surface.
-		</summary>
-		</member>
-		<member name="F:Unigine.Node.CALLBACK_CACHE_NODE_ADD">
-			<summary>
-								Fired only for the root node. If a nested node reference is loaded, the callback shall be fired for the node at the top of the hierarchy only, the one created by the user.
-		</summary>
-		</member>
-		<member name="F:Unigine.Node.CALLBACK_NODE_LOAD">
-			<summary>
-			Callback to be fired on loading a node from a file. Callback function signature is as follows:					void Func(Node node);
-		</summary>
-		</member>
-		<member name="F:Unigine.Node.CALLBACK_NODE_CLONE">
-			<summary>
-								Fired only for the root node.
-		</summary>
-		</member>
-		<member name="F:Unigine.Node.CALLBACK_NODE_SWAP">
-			<summary>
-								Fired only for the root node.
-		</summary>
-		</member>
-		<member name="F:Unigine.Node.CALLBACK_NODE_REMOVE">
-			<summary>
-								Fired for each deleted node.
-		</summary>
-		</member>
-		<member name="F:Unigine.Node.CALLBACK_NODE_CHANGE_ENABLED">
-			<summary>
-								Fired for each node that has changed its enabled state. Changing the state of the root node, causes the callback to be fired for all its children as well.
-		</summary>
 		</member>
 		<member name="F:Unigine.Node.ANY_TYPE">
 			<summary>
@@ -1302,6 +1219,11 @@
 		<member name="F:Unigine.Node.NODE_EXTERN">
 			<summary>
 			Extern node. See the NodeExtern class.
+		</summary>
+		</member>
+		<member name="F:Unigine.Node.NODE_ANIMATION_PLAYBACK">
+			<summary>
+			Animation playback node. See the NodeAnimationPlayback class.
 		</summary>
 		</member>
 		<member name="F:Unigine.Node.NODE_END">
@@ -1419,6 +1341,26 @@
 			End of the field nodes range.
 		</summary>
 		</member>
+		<member name="F:Unigine.Node.PARTICLES_FIELD_BEGIN">
+			<summary>
+			Beginning of the particles field range.
+		</summary>
+		</member>
+		<member name="F:Unigine.Node.PARTICLES_FIELD_SPACER">
+			<summary>
+			Particles Field Spacer node. See the ParticlesFieldSpacer class.
+		</summary>
+		</member>
+		<member name="F:Unigine.Node.PARTICLES_FIELD_DEFLECTOR">
+			<summary>
+			Particles Field Deflector node. See the ParticlesFieldDeflector class.
+		</summary>
+		</member>
+		<member name="F:Unigine.Node.PARTICLES_FIELD_END">
+			<summary>
+			End of the particles field nodes range.
+		</summary>
+		</member>
 		<member name="F:Unigine.Node.LIGHT_BEGIN">
 			<summary>
 			Begin of the light nodes range.
@@ -1432,6 +1374,11 @@
 		<member name="F:Unigine.Node.LIGHT_ENVIRONMENT_PROBE">
 			<summary>
 			Environment probe. See the LightEnvironmentProbe class.
+		</summary>
+		</member>
+		<member name="F:Unigine.Node.LIGHT_PLANAR_PROBE">
+			<summary>
+			Planar probe. See the LightPlanarProbe class.
 		</summary>
 		</member>
 		<member name="F:Unigine.Node.LIGHT_OMNI">
@@ -1822,6 +1769,31 @@
 		<member name="F:Unigine.Node.NUM_WORLDS">
 			<summary>
 			Counter of world node types.
+		</summary>
+		</member>
+		<member name="F:Unigine.Node.DUMMY">
+			<summary>
+			Dummy node. See the NodeDummy class.
+		</summary>
+		</member>
+		<member name="F:Unigine.Node.LAYER">
+			<summary>
+			Layer node. See the NodeLayer class.
+		</summary>
+		</member>
+		<member name="F:Unigine.Node.TRIGGER">
+			<summary>
+			Dummy node that can fire callbacks on its enabling/disabling or repositioning. See the NodeTrigger class.
+		</summary>
+		</member>
+		<member name="F:Unigine.Node.REFERENCE">
+			<summary>
+			Node reference that refers to an external NODE file. See the NodeReference class.
+		</summary>
+		</member>
+		<member name="F:Unigine.Node.EXTERN">
+			<summary>
+			Extern node. See the NodeExtern class.
 		</summary>
 		</member>
 		<member name="F:Unigine.Node.LIFETIME_WORLD">

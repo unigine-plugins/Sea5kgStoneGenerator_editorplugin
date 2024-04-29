@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -288,10 +288,10 @@ public:
 	#else
 		typedef pthread_t ID;
 	#endif
-	ID getRunningID() { return thread_id ;}
+	ID getRunningID() const { return thread_id ;}
 	// Returns the current thread identifier.
 	static ID getID();
-	bool isCurrentThread() { return getID() == getRunningID(); }
+	bool isCurrentThread() const { return getID() == getRunningID(); }
 
 	// Suspends thread execution.
 	// Timeout value is provided in milliseconds.

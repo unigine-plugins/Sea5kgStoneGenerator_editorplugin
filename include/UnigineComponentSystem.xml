@@ -4,30 +4,29 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.ComponentBase.#ctor(NodePtr,int)">
-			<summary>
-			Constructor. Creates a new component and adds it to the specified node. The created component will be associated with the node property having the specified number.
-			</summary> 
-			<param name="node"> Node, to which the created component is to be added. </param>
-			<param name="num"> Number of the node property, with which the created component will be associated. </param> 
-		</member>
 		<member name="M:Unigine.ComponentBase.getClassName">
 			<summary>
-			Returns the name of the class associated with the component.
+			Returns the name of the class associated with the component. The name is generated automatically in the COMPONENT macro.
 			</summary>  
 			<returns>Component class name.</returns>
 		</member>
+		<member name="M:Unigine.ComponentBase.getComponentDescription">
+			<summary>
+			Returns the component description. The description can be specified in the COMPONENT_DESCRIPTION macro.
+			</summary>  
+			<returns>Component description.</returns>
+		</member>
 		<member name="M:Unigine.ComponentBase.getPropertyName">
 			<summary>
-			Returns the name of the property associated with the component.
+			Returns the name of the property associated with the component. The name is automatically generated in the COMPONENT_DEFINE macro: in this case, the propert name will be same as the class name. To specify a custom name, use the COMPONENT and PROP_NAME macros instead.
 			</summary>  
 			<returns>Property name.</returns>
 		</member>
-		<member name="M:Unigine.ComponentBase.save_property(char)">
+		<member name="M:Unigine.ComponentBase.getParentPropertyName">
 			<summary>
-			Saves all parameters of the property associated with the component to the specified prop-file.
-			</summary> 
-			<param name="name"> Name of the target .prop-file. </param> 
+			Returns the name of the parent property from which the current property associated with the component is inherited. The name is automatically generated in the COMPONENT_DEFINE macro.
+			</summary>  
+			<returns>Parent property name.</returns>
 		</member>
 		<member name="M:Unigine.ComponentBase.setEnabled(int)">
 			<summary>
@@ -52,6 +51,12 @@
 			Returns a value indicating whether the property file associated with the component should be automatically generated each time C++ Component System is initialized or createPropertyFiles() method is called.					By default all components have their property files re-generated automatically, this behavior might not be suitable, when you modify properties manually after creation. In this case you can add the following macro to the header file containing your component's declaration:
 			</summary>  
 			<returns>1 if the property file associated with the component should be automatically generated each time C++ Component System is initialized or createPropertyFiles() method is called; otherwise 0.</returns>
+		</member>
+		<member name="M:Unigine.ComponentBase.getNode">
+			<summary>
+			Returns the node, to which the component is attached.
+			</summary>  
+			<returns>Node, to which the component is attached.</returns>
 		</member>
 		<member name="M:Unigine.ComponentBase.getProperty">
 			<summary>
@@ -79,11 +84,12 @@
 			<param name="node"> Node, from which the component is to be removed. </param> 
 			<returns>1 if the component was successfully removed from the specified node; otherwise 0.</returns>
 		</member>
-		<member name="M:Unigine.ComponentBase.getComponent(NodePtr)">
+		<member name="M:Unigine.ComponentBase.getComponent(NodePtr,bool)">
 			<summary>
 			Returns the first component of the specified type associated with the specified node. This method is equivalent to ComponentSystem::getComponent() method.
 			</summary> 
-			<param name="node"> Node, for which the component of this type is to be found. </param> 
+			<param name="node"> Node, for which the component of this type is to be found. </param>
+			<param name="enabled_only"> Enabled flag: true to get enabled component only, false to get component in any case. </param> 
 			<returns>Pointer to the component if it exists; otherwise, nullptr.</returns>
 		</member>
 		<member name="M:Unigine.ComponentBase.getComponents(NodePtr,Unigine.Vector{C*,int,Unigine.VectorAllocator})">
@@ -93,11 +99,12 @@
 			<param name="node"> Node, whose components are to be retrieved. </param>
 			<param name="components"> Buffer vector, to which all found components of this type will be put. </param> 
 		</member>
-		<member name="M:Unigine.ComponentBase.getComponentInChildren(NodePtr)">
+		<member name="M:Unigine.ComponentBase.getComponentInChildren(NodePtr,bool)">
 			<summary>
 			Returns the first component of this type found among all the children of the specified node (including the node itself). This method searches for the component in the following order:											node itself						node reference						node's children						children of node's children					This method is equivalent to					ComponentSystem::getComponentInChildren() method.
 			</summary> 
-			<param name="node"> Node, whose hierarchy is to be checked for the components of this type. </param> 
+			<param name="node"> Node, whose hierarchy is to be checked for the components of this type. </param>
+			<param name="enabled_only"> Enabled flag: true to get enabled component only, false to get component in any case. </param> 
 			<returns>Pointer to the component if it exists; otherwise, nullptr.</returns>
 		</member>
 		<member name="M:Unigine.ComponentBase.getComponentsInChildren(NodePtr,Unigine.Vector{C*,int,Unigine.VectorAllocator})">
@@ -107,11 +114,12 @@
 			<param name="node"> Node, whose hierarchy is to be checked for the components of this type. </param>
 			<param name="components"> Buffer vector, to which all found components of this type will be put. </param> 
 		</member>
-		<member name="M:Unigine.ComponentBase.getComponentInParent(NodePtr)">
+		<member name="M:Unigine.ComponentBase.getComponentInParent(NodePtr,bool)">
 			<summary>
 			Returns the first component of this type found among all predecessors and posessors of the specified node. This method is equivalent to ComponentSystem::getComponentInParent() method.
 			</summary> 
-			<param name="node"> Node, whose hierarchy is to be checked for the components of this type. </param> 
+			<param name="node"> Node, whose hierarchy is to be checked for the components of this type. </param>
+			<param name="enabled_only"> Enabled flag: true to get enabled component only, false to get component in any case. </param> 
 			<returns>Pointer to the component if it exists; otherwise, nullptr.</returns>
 		</member>
 		<member name="M:Unigine.ComponentBase.getComponentsInParent(NodePtr,Unigine.Vector{C*,int,Unigine.VectorAllocator})">
@@ -120,12 +128,6 @@
 			</summary> 
 			<param name="node"> Node, whose hierarchy is to be checked for the components of this type. </param>
 			<param name="components"> Buffer vector, to which all found components of this type will be put. </param> 
-		</member>
-		<member name="M:Unigine.ComponentBase.getNode">
-			<summary>
-			Returns the node, to which the component is attached.
-			</summary>  
-			<returns>Node, to which the component is attached.</returns>
 		</member>
 		<member name="M:Unigine.ComponentBase.setDestroyCallback(Unigine.CallbackBase)">
 			<summary>
@@ -137,6 +139,12 @@
 			<summary>
 			Removes a destroy callback function previously set by the setDestroyCallback() method. This callback function can be used to implement certain actions to be performed when a component is destroyed.
 			</summary>  
+		</member>
+		<member name="M:Unigine.ComponentBase.save_property(char)">
+			<summary>
+			Saves all parameters of the property associated with the component to the specified prop-file.
+			</summary> 
+			<param name="name"> Name of the target .prop-file. </param> 
 		</member>
 		<member name="M:Unigine.ComponentBase.on_enable">
 			<summary>
@@ -191,6 +199,24 @@
 			Performs initialization of C++ Component System, registration of all components and creation of all necessary property files.																		This method should me called in the AppSystemLogic::init() method.							If a property file for any component does not exist, it will be created automatically.
 			</summary>  
 		</member>
+		<member name="M:Unigine.ComponentSystem.addInitCallback(Unigine.CallbackBase)">
+			<summary>
+			Adds a callback which is called during ComponentSystem initialization.
+			</summary> 
+			<param name="callback"> Callback pointer. </param> 
+		</member>
+		<member name="M:Unigine.ComponentSystem.setEnabled(bool)">
+			<summary>
+			Enables or disables the C++ Component System. You can use it for performance debugging: enable or disable update(), postUpdate(), updatePhysics(), swap(), updateSync(), updateAsync() for all components.
+			</summary> 
+			<param name="enabled"> true to enable the C++ Component System, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.ComponentSystem.isEnabled">
+			<summary>
+			Returns a value indicating whether the C++ Component System is enabled. You can use it for performance debugging: check if update(), postUpdate(), updatePhysics(), swap(), updateSync(), updateAsync() are enabled/disabled for all components.
+			</summary>  
+			<returns>true if the C++ Component System is enabled, false if it is disabled.</returns>
+		</member>
 		<member name="M:Unigine.ComponentSystem.getNumComponents">
 			<summary>
 			Returns the total number of components registered in C++ Component System.					This method is very slow and should not be used often.
@@ -207,6 +233,12 @@
 			<summary>
 			Creates a property file for a registered component associated with the property with a given name.Parameters of each component are stored in a separate *.prop file. If this property file does not exist, it will be created in the data/ComponentSystem folder with a name obtained by the component's getPropertyName() method.
 			</summary>  
+		</member>
+		<member name="M:Unigine.ComponentSystem.initializeComponents(NodePtr)">
+			<summary>
+			Forces initialization of components associated with the given node in the currrent frame (it doesn't wait for the WorldLogic::update() callback execution).
+			</summary> 
+			<param name="node"> Node for which the components need to be initialized. </param> 
 		</member>
 		<member name="M:Unigine.ComponentSystem.createPropertyFile(char)">
 			<summary>
@@ -232,7 +264,12 @@
 		</member>
 		<member name="M:Unigine.ComponentSystem.registerComponent">
 			<summary>
-			Registers a user component derived from the ComponentBase class.																		Components must be registered in the AppSystemLogic::init() method.							If a property file for the component does not exist, it will be created automatically.
+			Registers a user component derived from the ComponentBase class.																		Components must be registered in the AppSystemLogic::init() method.							If a property file for the component does not exist, it will be created automatically.							It is recommended to use the REGISTER_COMPONENT macro instead.
+			</summary>  
+		</member>
+		<member name="M:Unigine.ComponentSystem.unregisterComponent">
+			<summary>
+			Deletes a user component derived from the ComponentBase class.
 			</summary>  
 		</member>
 		<member name="M:Unigine.ComponentSystem.addComponent(NodePtr)">
@@ -242,11 +279,12 @@
 			<param name="node"> Node, to which the component is to be added. </param> 
 			<returns>Pointer to the new added component, if it was successfully added to the specified node; otherwise nullptr.</returns>
 		</member>
-		<member name="M:Unigine.ComponentSystem.getComponent(NodePtr)">
+		<member name="M:Unigine.ComponentSystem.getComponent(NodePtr,bool)">
 			<summary>
 			Returns the first component of the specified type associated with the given node.
 			</summary> 
-			<param name="node"> Node, for which the component of the specified type is to be found. </param> 
+			<param name="node"> Node, for which the component of the specified type is to be found. </param>
+			<param name="enabled_only"> Enabled flag: true to get enabled component only, false to get component in any case. </param> 
 			<returns>Pointer to the component if any; otherwise, nullptr.</returns>
 		</member>
 		<member name="M:Unigine.ComponentSystem.getComponents(NodePtr,Unigine.Vector{C*,int,Unigine.VectorAllocator},int)">
@@ -257,11 +295,12 @@
 			<param name="out_components"> Buffer vector, to which all found components of the specified type will be added. </param>
 			<param name="clear_vector"> Flag indicating whether the buffer vector is to be cleared before adding the found components to it or not. Use 1 to clear the vector, 0 - to append new found components to the end of the vector. The default value is 1. </param> 
 		</member>
-		<member name="M:Unigine.ComponentSystem.getComponentInChildren(NodePtr)">
+		<member name="M:Unigine.ComponentSystem.getComponentInChildren(NodePtr,bool)">
 			<summary>
 			Returns the first component of the specified type found among all the children of the specified node (including the node itself). This method searches for the component in the following order:											node itself						node reference						node's children						children of node's children
 			</summary> 
-			<param name="node"> Node, whose hierarchy is to be checked for the specified type of component. </param> 
+			<param name="node"> Node, whose hierarchy is to be checked for the specified type of component. </param>
+			<param name="enabled_only"> Enabled flag: true to get enabled component only, false to get component in any case. </param> 
 			<returns>Pointer to the component if any; otherwise, nullptr.</returns>
 		</member>
 		<member name="M:Unigine.ComponentSystem.getComponentsInChildren(NodePtr,Unigine.Vector{C*,int,Unigine.VectorAllocator},int)">
@@ -272,11 +311,12 @@
 			<param name="out_components"> Buffer vector, to which all found components of the specified type will be added. </param>
 			<param name="clear_vector"> Flag indicating whether the buffer vector is to be cleared before adding the found components to it or not. Use 1 to clear the vector, 0 - to append new found components to the end of the vector. The default value is 1. </param> 
 		</member>
-		<member name="M:Unigine.ComponentSystem.getComponentInParent(NodePtr)">
+		<member name="M:Unigine.ComponentSystem.getComponentInParent(NodePtr,bool)">
 			<summary>
 			Returns the first component of the specified type found among all predecessors and posessors of the specified node.
 			</summary> 
-			<param name="node"> Node, whose hierarchy is to be checked. </param> 
+			<param name="node"> Node, whose hierarchy is to be checked. </param>
+			<param name="enabled_only"> Enabled flag: true to get enabled component only, false to get component in any case. </param> 
 			<returns>Pointer to the component if any; otherwise, nullptr.</returns>
 		</member>
 		<member name="M:Unigine.ComponentSystem.getComponentsInParent(NodePtr,Unigine.Vector{C*,int,Unigine.VectorAllocator},int)">
@@ -286,6 +326,20 @@
 			<param name="node"> Node, whose hierarchy is to be checked. </param>
 			<param name="out_components"> Buffer vector, to which all found components of the specified type will be added. </param>
 			<param name="clear_vector"> Flag indicating whether the buffer vector is to be cleared before adding the found components to it or not. Use 1 to clear the vector, 0 - to append new found components to the end of the vector. The default value is 1. </param> 
+		</member>
+		<member name="M:Unigine.ComponentSystem.getComponentInWorld(bool)">
+			<summary>
+			Returns the first component of this type found in the current world.
+			</summary> 
+			<param name="enabled_only"> Enabled flag: true to get enabled component only, false to get component in any case. </param> 
+			<returns>Pointer to the component if any; otherwise, nullptr.</returns>
+		</member>
+		<member name="M:Unigine.ComponentSystem.getComponentsInWorld(Unigine.Vector{C*,int,Unigine.VectorAllocator},bool)">
+			<summary>
+			Searches for all components of the specified type in the current world and puts them to the given buffer vector.
+			</summary> 
+			<param name="out_components"> Buffer vector, to which all found components of the specified type will be added. </param>
+			<param name="enabled_only"> Enabled flag: true to get only enabled components, false to get all components. </param> 
 		</member>
 		<member name="M:Unigine.ComponentSystem.removeComponent(NodePtr)">
 			<summary>

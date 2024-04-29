@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -247,7 +247,7 @@ typedef Ptr<Light> LightPtr;
 class UNIGINE_API LightVoxelProbe : public Light
 {
 public:
-	static int type() { return Node::LIGHT_VOXEL_PROBE; }
+	static Node::TYPE type() { return Node::LIGHT_VOXEL_PROBE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 
@@ -265,6 +265,13 @@ public:
 		BAKE_QUALITY_HIGH,
 		BAKE_QUALITY_ULTRA,
 	};
+
+	enum BLEND
+	{
+		BLEND_ALPHA_BLEND,
+		BLEND_ADDITIVE,
+		BLEND_MULTIPLICATIVE,
+	};
 	static Ptr<LightVoxelProbe> create();
 	void setBoxSize(const Math::vec3 &size);
 	Math::vec3 getBoxSize() const;
@@ -276,8 +283,8 @@ public:
 	float getAttenuationPower() const;
 	void setUseSkyColor(bool color);
 	bool isUseSkyColor() const;
-	void setAdditiveBlending(bool blending);
-	bool isAdditiveBlending() const;
+	void setBlendMode(LightVoxelProbe::BLEND mode);
+	LightVoxelProbe::BLEND getBlendMode() const;
 	void setAmbientBias(float bias);
 	float getAmbientBias() const;
 	void setAmbientCubicFiltering(bool filtering);
@@ -328,7 +335,7 @@ typedef Ptr<LightVoxelProbe> LightVoxelProbePtr;
 class UNIGINE_API LightEnvironmentProbe : public Light
 {
 public:
-	static int type() { return Node::LIGHT_ENVIRONMENT_PROBE; }
+	static Node::TYPE type() { return Node::LIGHT_ENVIRONMENT_PROBE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 
@@ -337,6 +344,12 @@ public:
 		PROJECTION_MODE_SPHERE = 0,
 		PROJECTION_MODE_BOX,
 		PROJECTION_MODE_RAYMARCHING,
+	};
+
+	enum LAST_STEP_MODE
+	{
+		LAST_STEP_MODE_ENVIRONMENT_PROBE,
+		LAST_STEP_MODE_ONLY_SKY,
 	};
 
 	enum SPECULAR_BRDF_MODE
@@ -413,6 +426,12 @@ public:
 	float getSphereReflectionParallax() const;
 	void setRaymarchingNoiseFramesNumber(int number);
 	int getRaymarchingNoiseFramesNumber() const;
+	void setRaymarchingLastStepMode(LightEnvironmentProbe::LAST_STEP_MODE mode);
+	LightEnvironmentProbe::LAST_STEP_MODE getRaymarchingLastStepMode() const;
+	void setRaymarchingAmbientOcclusionIntensity(float intensity);
+	float getRaymarchingAmbientOcclusionIntensity() const;
+	void setRaymarchingAmbientOcclusionRadius(float radius);
+	float getRaymarchingAmbientOcclusionRadius() const;
 	void setRaymarchingDiffuseStepSize(float size);
 	float getRaymarchingDiffuseStepSize() const;
 	void setRaymarchingDiffuseNumRays(int rays);
@@ -421,16 +440,20 @@ public:
 	int getRaymarchingDiffuseNumSteps() const;
 	void setRaymarchingDiffuseThreshold(float threshold);
 	float getRaymarchingDiffuseThreshold() const;
+	void setRaymarchingDiffuseThresholdBinarySearch(float search);
+	float getRaymarchingDiffuseThresholdBinarySearch() const;
 	void setRaymarchingDiffuseThresholdOcclusion(float occlusion);
 	float getRaymarchingDiffuseThresholdOcclusion() const;
 	void setRaymarchingDiffuseMipOffset(float offset);
 	float getRaymarchingDiffuseMipOffset() const;
 	void setRaymarchingDiffuseInformationLostRaysMultiplier(float multiplier);
 	float getRaymarchingDiffuseInformationLostRaysMultiplier() const;
-	void setRaymarchingDiffuseReconstructionSamplesScreen(int screen);
-	int getRaymarchingDiffuseReconstructionSamplesScreen() const;
-	void setRaymarchingDiffuseReconstructionSamplesCubemap(int cubemap);
-	int getRaymarchingDiffuseReconstructionSamplesCubemap() const;
+	void setRaymarchingDiffuseReconstructionSamples(int samples);
+	int getRaymarchingDiffuseReconstructionSamples() const;
+	void setRaymarchingDiffusePerspectiveCompensation(float compensation);
+	float getRaymarchingDiffusePerspectiveCompensation() const;
+	void setRaymarchingDiffuseNonLinearStepSize(float size);
+	float getRaymarchingDiffuseNonLinearStepSize() const;
 	void setRaymarchingDiffuseTranslucenceAnisotropy(float anisotropy);
 	float getRaymarchingDiffuseTranslucenceAnisotropy() const;
 	void setRaymarchingSpecularStepSize(float size);
@@ -443,6 +466,8 @@ public:
 	float getRaymarchingSpecularNumStepsRoughnessThreshold() const;
 	void setRaymarchingSpecularThreshold(float threshold);
 	float getRaymarchingSpecularThreshold() const;
+	void setRaymarchingSpecularThresholdBinarySearch(float search);
+	float getRaymarchingSpecularThresholdBinarySearch() const;
 	void setRaymarchingSpecularThresholdOcclusion(float occlusion);
 	float getRaymarchingSpecularThresholdOcclusion() const;
 	void setRaymarchingSpecularMipOffset(float offset);
@@ -451,10 +476,12 @@ public:
 	float getRaymarchingSpecularInformationLostRaysMultiplier() const;
 	void setRaymarchingSpecularReplaceWithDiffuseRoughnessThreshold(float threshold);
 	float getRaymarchingSpecularReplaceWithDiffuseRoughnessThreshold() const;
-	void setRaymarchingSpecularReconstructionSamplesScreen(int screen);
-	int getRaymarchingSpecularReconstructionSamplesScreen() const;
-	void setRaymarchingSpecularReconstructionSamplesCubemap(int cubemap);
-	int getRaymarchingSpecularReconstructionSamplesCubemap() const;
+	void setRaymarchingSpecularReconstructionSamples(int samples);
+	int getRaymarchingSpecularReconstructionSamples() const;
+	void setRaymarchingSpecularPerspectiveCompensation(float compensation);
+	float getRaymarchingSpecularPerspectiveCompensation() const;
+	void setRaymarchingSpecularNonLinearStepSize(float size);
+	float getRaymarchingSpecularNonLinearStepSize() const;
 	void setRaymarchingSpecularBRDF(LightEnvironmentProbe::SPECULAR_BRDF_MODE raymarchingspecularbrdf);
 	LightEnvironmentProbe::SPECULAR_BRDF_MODE getRaymarchingSpecularBRDF() const;
 	void setGrabMode(LightEnvironmentProbe::GRAB_MODE mode);
@@ -467,6 +494,10 @@ public:
 	LightEnvironmentProbe::GRAB_SUPERSAMPLING getGrabSupersampling() const;
 	void setGrabDistanceScale(float scale);
 	float getGrabDistanceScale() const;
+	void setGrabEnvironmentAmbientIntensity(float intensity);
+	float getGrabEnvironmentAmbientIntensity() const;
+	void setGrabEnvironmentReflectionIntensity(float intensity);
+	float getGrabEnvironmentReflectionIntensity() const;
 	void setGrabZNear(float znear);
 	float getGrabZNear() const;
 	void setGrabZFar(float zfar);
@@ -501,7 +532,7 @@ typedef Ptr<LightEnvironmentProbe> LightEnvironmentProbePtr;
 class UNIGINE_API LightPlanarProbe : public Light
 {
 public:
-	static int type() { return Node::LIGHT_PLANAR_PROBE; }
+	static Node::TYPE type() { return Node::LIGHT_PLANAR_PROBE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 
@@ -561,7 +592,7 @@ typedef Ptr<LightPlanarProbe> LightPlanarProbePtr;
 class UNIGINE_API LightOmni : public Light
 {
 public:
-	static int type() { return Node::LIGHT_OMNI; }
+	static Node::TYPE type() { return Node::LIGHT_OMNI; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<LightOmni> create(const Math::vec4 &color, float attenuation_distance, const char *name = 0);
@@ -593,7 +624,7 @@ typedef Ptr<LightOmni> LightOmniPtr;
 class UNIGINE_API LightProj : public Light
 {
 public:
-	static int type() { return Node::LIGHT_PROJ; }
+	static Node::TYPE type() { return Node::LIGHT_PROJ; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<LightProj> create(const Math::vec4 &color, float attenuation_distance, float fov, const char *name = 0);
@@ -631,7 +662,7 @@ typedef Ptr<LightProj> LightProjPtr;
 class UNIGINE_API LightWorld : public Light
 {
 public:
-	static int type() { return Node::LIGHT_WORLD; }
+	static Node::TYPE type() { return Node::LIGHT_WORLD; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 
@@ -656,6 +687,8 @@ public:
 	LightWorld::SHADOW_CASCADE_MODE getShadowCascadeMode() const;
 	void setNumShadowCascades(int cascades);
 	int getNumShadowCascades() const;
+	void setOneCascadePerFrame(bool frame);
+	bool isOneCascadePerFrame() const;
 	void setShadowCascadeBorder(int num, float r);
 	float getShadowCascadeBorder(int num) const;
 	Math::vec2 getRenderShadowDepthRange() const;

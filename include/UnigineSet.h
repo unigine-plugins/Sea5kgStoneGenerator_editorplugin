@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -17,7 +17,7 @@
 
 namespace Unigine
 {
-	
+
 template<typename Key, typename Allocator>
 struct SetData
 {
@@ -118,7 +118,7 @@ public:
 		return *this;
 	}
 
-	Set(Set &&o)
+	Set(Set &&o) noexcept
 	{
 		Parent::length = o.length;
 		Parent::root = o.root;
@@ -134,7 +134,7 @@ public:
 			append(v);
 	}
 
-	Set &operator=(Set &&o)
+	Set &operator=(Set &&o) noexcept
 	{
 		if (Parent::root == o.root)
 			return *this;

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -42,15 +42,7 @@ public:
 		, data(o.data)
 	{}
 
-	MapData(MapData &&o)
-		: parent(nullptr)
-		, right(nullptr)
-		, left(nullptr)
-		, balance(0)
-		, key(std::move(o.key))
-		, data(std::move(o.data))
-	{}
-
+	MapData(MapData &&o) = delete;
 	MapData &operator=(const MapData &o) = delete;
 	MapData &operator=(MapData &&o) = delete;
 
@@ -206,7 +198,7 @@ public:
 
 	UNIGINE_INLINE Iterator append(const Key &key, Type &&t)
 	{
-		Node *node = Parent::do_append(std::move(key));
+		Node *node = Parent::do_append(key);
 		node->data =  std::move(t);
 		return Iterator(node);
 	}
@@ -252,7 +244,7 @@ public:
 
 	UNIGINE_INLINE Iterator insert(const Key &key, Type &&t)
 	{
-		Node *node = Parent::do_append(std::move(key));
+		Node *node = Parent::do_append(key);
 		node->data =  std::move(t);
 		return Iterator(node);
 	}
@@ -270,7 +262,7 @@ public:
 	template <typename ... Args>
 	UNIGINE_INLINE Type &emplace(const Key &key, Args && ... args)
 	{
-		Node *node = Parent::do_append(std::move(key));
+		Node *node = Parent::do_append(key);
 		node->data = Type(std::forward<Args>(args)...);
 		return node->data;
 	}

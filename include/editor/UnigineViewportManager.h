@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -107,7 +107,7 @@ public:
 	static Unigine::Math::ivec2 getViewportWindowSize(ViewportWindowId viewport_id);
 
 	/// <summary> Sets a value indicating if rectangular selection for viewport windows is enabled.</summary>
-	/// <param name="enable"> <b>true</b> to enable rectangular selection for viewport windows; <b>false</b> - to disable it.</param>
+	/// <param name="enable"><b>true</b> to enable rectangular selection for viewport windows; <b>false</b> - to disable it.</param>
 	static void setEnabledRectangleSelection(bool enable);
 	/// <summary> Returns a value indicating if rectangular selection for viewport windows is enabled.</summary>
 	/// <returns> <b>true</b> if rectangular selection for viewport windows is enabled; otherwise, <b>false</b>.</returns>
@@ -123,8 +123,16 @@ public:
 	static void focusOnNodeList(ViewportWindowId viewport_id,
 		const Unigine::Vector<Unigine::NodePtr> &nodes);
 
+	/// <summary> Sets the current camera focus for the viewport window with the specified ID on the specified node
+	/// based on its bounds (the viewport will be adjusted to display the specified node with its bounds).</summary>
+	/// <param name="viewport_id">ID of the viewport window.</param>
+	/// <param name="node">Node to be focused on.</param>
 	static void focusOnNodeBoundBased(ViewportWindowId viewport_id, const Unigine::NodePtr &node);
 
+	/// <summary> Sets the current camera focus for the viewport window with the specified ID on the specified nodes
+	/// based on their bounds (the viewport will be adjusted to display the specified nodes with their bounds).</summary>
+	/// <param name="viewport_id">ID of the viewport window.</param>
+	/// <param name="nodes">List of nodes to be focused on.</param>
 	static void focusOnNodeListBoundBased(ViewportWindowId viewport_id,
 		const Unigine::Vector<Unigine::NodePtr> &nodes);
 
@@ -156,6 +164,10 @@ public:
 	/// <summary> Activates placement mode for the specified nodes. The nodes are to be placed at the location within the viewport where the left mouse button is clicked. If the Esc key is pressed before clicking within the viewport the current node placement operation will be cancelled. This behavior can be observed in the Editor, when the user creates a node via the <b>Create</b> menu. This function will automatically create all necessary Undo Actions (for adding nodes to the world and for selecting them).</summary>
 	/// <param name="nodes">Vector containing nodes to be placed at the point within the viewport clicked by the user.</param>
 	static void placeNodeList(const Unigine::Vector<Unigine::NodePtr> &nodes);
+
+	/// <summary> Returns a value indicating if selection is enabled for the specified node type.</summary>
+	/// <returns> <b>true</b> if selection for specified node type is enabled; otherwise, <b>false</b>.</returns>
+	static bool isNodeTypeSelectable(Unigine::Node::TYPE node_type);
 };
 
 } // namespace UnigineEditor

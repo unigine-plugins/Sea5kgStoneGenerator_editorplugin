@@ -1,0 +1,4022 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="F:Unigine.AnimationBind.ANIMATION_BIND">
+			<summary>
+			Generic binding.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationBind.ANIMATION_BIND_NODE">
+			<summary>
+			Binding to a node.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationBind.ANIMATION_BIND_PROPERTY_PARAMETER">
+			<summary>
+			Binding to a property parameter.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationBind.ANIMATION_BIND_MATERIAL">
+			<summary>
+			Binding to a material.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationBind.ANIMATION_BIND_RUNTIME">
+			<summary>
+			Binding to a runtime object.
+		</summary>
+		</member>
+		<member name="M:Unigine.AnimationBindMaterial.#ctor">
+			<summary>
+			Constructor. Creates an empty material binding.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationBindMaterial.setMaterialDescription(Unigine.UGUID,Unigine.UGUID)">
+			<summary>
+			Sets the description parameters of the animated material. This method is used if the access mode is set to
+			</summary> 
+			<param name="guid"> GUID of the animated material. </param>
+			<param name="file_guid"> GUID of the file describing the animated material. </param> 
+		</member>
+		<member name="M:Unigine.AnimationBindMaterial.setObjectDescription(int,char)">
+			<summary>
+			Sets the description parameters of the object to which a surface with the animated material belongs. This method is used if the access mode is set to .
+			</summary> 
+			<param name="id"> ID of the object, to which a surface with the animated material belongs. </param>
+			<param name="name"> Name of the object, to which a surface with the animated material belongs. </param> 
+		</member>
+		<member name="M:Unigine.AnimationBindMaterial.setSurfaceDescription(char,int)">
+			<summary>
+			Sets the description parameters of the surface to which the animated material is assigned. This method is used if the access mode is set to
+			</summary> 
+			<param name="name"> Name of the surface, to which the animated material is assigned. </param>
+			<param name="index"> Number of the surface, to which the animated material is assigned. </param> 
+		</member>
+		<member name="F:Unigine.AnimationBindMaterial.ACCESS_FROM_ASSET">
+			<summary>
+			The material to be animated is obtained from a material asset (.mat).
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationBindMaterial.ACCESS_FROM_SURFACE">
+			<summary>
+			The material to be animated is obtained from a surface of an object. In this case we'll get a child material inherited from the one assigned to the surface.
+		</summary>
+		</member>
+		<member name="M:Unigine.AnimationBindNode.#ctor">
+			<summary>
+			Constructor. Creates an empty node binding.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationBindNode.setNodeDescription(int,char)">
+			<summary>
+			Sets the description components of the animated node.
+			</summary> 
+			<param name="id"> ID of the node, to be animated. </param>
+			<param name="name"> name of the node, to be animated. </param> 
+		</member>
+		<member name="M:Unigine.AnimationBindPropertyParameter.#ctor">
+			<summary>
+			Constructor. Creates an empty property parameter binding.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationBindPropertyParameter.setPropertyDescription(Unigine.UGUID,Unigine.UGUID)">
+			<summary>
+			Sets the description components of the animated property parameter. This method is used if the access mode is set to .
+			</summary> 
+			<param name="guid"> GUID of the property to which the animated parameter belongs. </param>
+			<param name="file_guid"> GUID of the file describing the property to which the animated parameter belongs. </param> 
+		</member>
+		<member name="M:Unigine.AnimationBindPropertyParameter.setNodeDescription(int,char)">
+			<summary>
+			Sets the description components of the animated property parameter. This method is used if the access mode is set to .
+			</summary> 
+			<param name="id"> ID of the node property, to which the animated parameter belongs. </param>
+			<param name="name"> name of the node, to which a property with the animated parameter belongs. </param> 
+		</member>
+		<member name="M:Unigine.AnimationBindPropertyParameter.setNodePropertyDescription(char,int)">
+			<summary>
+			Sets the description components of the animated property parameter. This method is used if the access mode is set to  or .
+			</summary> 
+			<param name="name"> Name of the property, to which the animated parameter belongs. </param>
+			<param name="index"> index of the property, to which the animated parameter belongs. </param> 
+		</member>
+		<member name="M:Unigine.AnimationBindPropertyParameter.setSurfaceDescription(char,int)">
+			<summary>
+			Sets the description components of the animated property parameter. This method is used if the access mode is set to .
+			</summary> 
+			<param name="name"> number of the surface, to which a property with the animated parameter is assigned. </param>
+			<param name="index"> number of the surface, to which a property with the animated parameter is assigned. </param> 
+		</member>
+		<member name="F:Unigine.AnimationBindPropertyParameter.ACCESS_FROM_ASSET">
+			<summary>
+			The material to be animated is obtained from a material asset (.mat).
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationBindPropertyParameter.ACCESS_FROM_NODE">
+			<summary>
+			The material to be animated is obtained from a node.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationBindPropertyParameter.ACCESS_FROM_SURFACE">
+			<summary>
+			The material to be animated is obtained from a surface of an object. In this case we'll get a child property inherited from the one assigned to the surface.
+		</summary>
+		</member>
+		<member name="M:Unigine.AnimationBindRuntime.#ctor">
+			<summary>
+			Constructor. Creates an empty runtime object binding.
+			</summary>  
+		</member>
+		<member name="F:Unigine.AnimationCurve.ANIMATION_CURVE">
+			<summary>
+			The animation curve storing values.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationCurve.ANIMATION_CURVE_INT">
+			<summary>
+			The animation curve storing integer values (see the AnimationCurveInt class).
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationCurve.ANIMATION_CURVE_FLOAT">
+			<summary>
+			The animation curve storing float values (see the AnimationCurveIntFloat class).
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationCurve.ANIMATION_CURVE_DOUBLE">
+			<summary>
+			The animation curve storing double values (see the AnimationCurveDouble class).
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationCurve.ANIMATION_CURVE_BOOL">
+			<summary>
+			The animation curve storing boolean values (see the AnimationCurveBool class).
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationCurve.ANIMATION_CURVE_SCALAR">
+			<summary>
+			The animation curve storing  scalar values (see the AnimationCurveScalar class).
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationCurve.ANIMATION_CURVE_QUAT">
+			<summary>
+			The animation curve storing quaternion values (see the AnimationCurveQuat class).
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationCurve.ANIMATION_CURVE_STRING">
+			<summary>
+			The animation curve storing string values (see the AnimationCurveString class).
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationCurve.ANIMATION_CURVE_UGUID">
+			<summary>
+			The animation curve storing UGUID values (see the AnimationCurveUGUID class).
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationCurve.KEY_TYPE_CONSTANT">
+			<summary>
+			The left key value is used within the whole segment between two keys.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationCurve.KEY_TYPE_LINEAR">
+			<summary>
+			Linear interpolation between two keys is used.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationCurve.KEY_TYPE_SMOOTH">
+			<summary>
+			A Bézier curve is used for interpolation, with the left and the right tangent of each key symmetric to the origin.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationCurve.KEY_TYPE_BREAK">
+			<summary>
+			A Bézier curve is used for interpolation, with a possibility to configure the left and the right tangent of each key independently.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationCurve.NUM_KEY_TYPES">
+			<summary>
+			The total number of types of interpolation between the keys.
+		</summary>
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.#ctor">
+			<summary>
+			Constructor. Creates a new boolean animation curve instance.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.copy(Unigine.Ptr{AnimationCurveBool})">
+			<summary>
+			Copies all data (key points and tangents) from the specified source curve.
+			</summary> 
+			<param name="curve"> Source curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.addKey(float,bool)">
+			<summary>
+			Adds a new key point with the specified value at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The boolean value of the key. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.addKey(float,bool,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds a new key point with the specified value and type at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The boolean value of the key. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.addKey(float,bool,AnimationCurve::KEY_TYPE,Unigine.Math.vec2,Unigine.Math.vec2)">
+			<summary>
+			Adds a new key point with the specified value, type and tangents at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The boolean value of the key. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param>
+			<param name="left_tangent"> Coordinates of the left tangent at the key point. </param>
+			<param name="right_tangent"> Coordinates of the right tangent at the key point. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.removeKey(int)">
+			<summary>
+			Removes the key point with the specified index from the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.moveKey(int,float)">
+			<summary>
+			Moves the key point with the specified number to a new time position (preserving the tangents). The index of key point will be updated automatically. This method can be used to implement dragging of keys on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="new_time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>New index of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.setKeyType(int,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Sets the interpolation type for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.getKeyType(int) const">
+			<summary>
+			Returns the interpolation type of the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>Interpolation type set for the key, one of the KEY_TYPE_* values.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.getKeyTime(int) const">
+			<summary>
+			Returns the current time of the key point with the specified index.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The time of the specified key point on the timeline, in seconds.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.getDefaultKeyValue const">
+			<summary>
+			Returns the default value for all keys in the curve.
+			</summary>  
+			<returns>Default value for all keys in the curve.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.setKeyValue(int,bool)">
+			<summary>
+			Sets the value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="value"> The boolean value of the key. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.getKeyValue(int) const">
+			<summary>
+			Returns the current value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The boolean value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.setKeyLeftTangent(int,Unigine.Math.vec2)">
+			<summary>
+			Sets new coordinates for the left tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="left_tangent"> Coordinates of the left tangent at the specified key point to be set. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.getKeyLeftTangent(int) const">
+			<summary>
+			Returns the current coordinates for the left tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>Coordinates of the left tangent at the specified key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.setKeyRightTangent(int,Unigine.Math.vec2)">
+			<summary>
+			Sets new coordinates for the right tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="right_tangent"> Coordinates of the right tangent at the specified key point to be set. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.getKeyRightTangent(int) const">
+			<summary>
+			Returns the current coordinates for the right tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>Coordinates of the right tangent at the specified key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.setTypeOfAllKeys(AnimationCurve::KEY_TYPE)">
+			<summary>
+			Sets the interpolation type for all keys of the curve.
+			</summary> 
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.clear">
+			<summary>
+			Clears the curve removing all key points and tangents.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.getValueByTime(float)">
+			<summary>
+			Returns the key value at the specified key point of the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The curve value at the specified key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the key value using the normalized time value of the key.
+			</summary> 
+			<param name="normalized_time"> The normalized time value of the key. </param> 
+			<returns>The curve value at the specified key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.save(Unigine.Ptr{Unigine.Blob}) const">
+			<summary>
+			Saves the curve data to a blob.
+			</summary> 
+			<param name="blob"> Blob to which the curve data will be saved. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveBool.load(Unigine.Ptr{Unigine.Blob})">
+			<summary>
+			Loads the curve data from the blob.
+			</summary> 
+			<param name="blob"> Blob storing the curve data. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.#ctor">
+			<summary>
+			Constructor. Creates a new animation curve instance containing double-precision values.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.copy(Unigine.Ptr{AnimationCurveDouble})">
+			<summary>
+			Copies all data (key points and tangents) from the specified source curve.
+			</summary> 
+			<param name="curve"> Source curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.addKey(float,double)">
+			<summary>
+			Adds a new key point with the specified value at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The double-precision value of the key. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.addKey(float,double,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds a new key point with the specified value and type at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The double-precision value of the key. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.addKey(float,double,AnimationCurve::KEY_TYPE,Unigine.Math.vec2,Unigine.Math.vec2)">
+			<summary>
+			Adds a new key point with the specified value, type and tangents at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The double-precision value of the key. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param>
+			<param name="left_tangent"> Coordinates of the left tangent at the key point. </param>
+			<param name="right_tangent"> Coordinates of the right tangent at the key point. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.removeKey(int)">
+			<summary>
+			Removes the key point with the specified index from the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.moveKey(int,float)">
+			<summary>
+			Moves the key point with the specified number to a new time position (preserving the tangents). The index of key point will be updated automatically. This method can be used to implement dragging of keys on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="new_time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>New index of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.setKeyType(int,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Sets the interpolation type for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.getKeyType(int) const">
+			<summary>
+			Returns the interpolation type of the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>Interpolation type set for the key, one of the KEY_TYPE_* values.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.getKeyTime(int) const">
+			<summary>
+			Returns the current time of the key point with the specified index.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The time of the specified key point on the timeline, in seconds.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.setKeyValue(int,double)">
+			<summary>
+			Sets the value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="value"> The double-precision value of the key. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.getKeyValue(int) const">
+			<summary>
+			Returns the current value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The double-precision value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.setKeyLeftTangent(int,Unigine.Math.vec2)">
+			<summary>
+			Sets new coordinates for the left tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="left_tangent"> Coordinates of the left tangent at the specified key point to be set. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.getKeyLeftTangent(int) const">
+			<summary>
+			Returns the current coordinates for the left tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>Coordinates of the left tangent at the specified key point to be set.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.setKeyRightTangent(int,Unigine.Math.vec2)">
+			<summary>
+			Sets new coordinates for the right tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="right_tangent"> Coordinates of the right tangent at the specified key point to be set. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.getKeyRightTangent(int) const">
+			<summary>
+			Returns the current coordinates for the right tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>Coordinates of the right tangent at the specified key point to be set.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.setTypeOfAllKeys(AnimationCurve::KEY_TYPE)">
+			<summary>
+			Sets the interpolation type for all keys of the curve.
+			</summary> 
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.clear">
+			<summary>
+			Clears the curve removing all key points and tangents.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.getValueByTime(float)">
+			<summary>
+			Returns the key value at the specified key point of the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The double-precision value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the key value using the normalized time value of the key.
+			</summary> 
+			<param name="normalized_time"> The normalized time value of the key. </param> 
+			<returns>The double-precision value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.save(Unigine.Ptr{Unigine.Blob}) const">
+			<summary>
+			Saves the curve data to a blob.
+			</summary> 
+			<param name="blob"> Blob to which the curve data will be saved. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveDouble.load(Unigine.Ptr{Unigine.Blob})">
+			<summary>
+			Loads the curve data from the blob.
+			</summary> 
+			<param name="blob"> Blob storing the curve data. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.#ctor">
+			<summary>
+			Constructor. Creates a new animation curve instance containing floating point precision values.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.copy(Unigine.Ptr{AnimationCurveFloat})">
+			<summary>
+			Copies all data (key points and tangents) from the specified source curve.
+			</summary> 
+			<param name="curve"> Source curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.addKey(float,float)">
+			<summary>
+			Adds a new key point with the specified value at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The float value of the key. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.addKey(float,float,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds a new key point with the specified value and type at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The float value of the key. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.addKey(float,float,AnimationCurve::KEY_TYPE,Unigine.Math.vec2,Unigine.Math.vec2)">
+			<summary>
+			Adds a new key point with the specified value, type and tangents at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The float value of the key. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param>
+			<param name="left_tangent"> Coordinates of the left tangent at the key point. </param>
+			<param name="right_tangent"> Coordinates of the right tangent at the key point. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.removeKey(int)">
+			<summary>
+			Removes the key point with the specified index from the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.moveKey(int,float)">
+			<summary>
+			Moves the key point with the specified number to a new time position (preserving the tangents). The index of key point will be updated automatically. This method can be used to implement dragging of keys on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="new_time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>New index of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.setKeyType(int,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Sets the interpolation type for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.getKeyType(int) const">
+			<summary>
+			Returns the interpolation type of the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>Interpolation type set for the key, one of the KEY_TYPE_* values.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.getKeyTime(int) const">
+			<summary>
+			Returns the current time of the key point with the specified index.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The time of the specified key point on the timeline, in seconds.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.setKeyValue(int,float)">
+			<summary>
+			Sets the value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="value"> The float value of the key. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.getKeyValue(int) const">
+			<summary>
+			Returns the current value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The float value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.setKeyLeftTangent(int,Unigine.Math.vec2)">
+			<summary>
+			Sets new coordinates for the left tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="left_tangent"> Coordinates of the left tangent at the specified key point to be set. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.getKeyLeftTangent(int) const">
+			<summary>
+			Returns the current coordinates for the left tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>Coordinates of the left tangent at the specified key point to be set.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.setKeyRightTangent(int,Unigine.Math.vec2)">
+			<summary>
+			Sets new coordinates for the right tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="right_tangent"> Coordinates of the right tangent at the specified key point to be set. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.getKeyRightTangent(int) const">
+			<summary>
+			Returns the current coordinates for the right tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>Coordinates of the right tangent at the specified key point to be set.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.setTypeOfAllKeys(AnimationCurve::KEY_TYPE)">
+			<summary>
+			Sets the interpolation type for all keys of the curve.
+			</summary> 
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.clear">
+			<summary>
+			Clears the curve removing all key points and tangents.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.getValueByTime(float)">
+			<summary>
+			Returns the key value at the specified key point of the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The float value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the key value using the normalized time value of the key.
+			</summary> 
+			<param name="normalized_time"> The normalized time value of the key. </param> 
+			<returns>The float value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.save(Unigine.Ptr{Unigine.Blob}) const">
+			<summary>
+			Saves the curve data to a blob.
+			</summary> 
+			<param name="blob"> Blob to which the curve data will be saved. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveFloat.load(Unigine.Ptr{Unigine.Blob})">
+			<summary>
+			Loads the curve data from the blob.
+			</summary> 
+			<param name="blob"> Blob storing the curve data. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.#ctor">
+			<summary>
+			Constructor. Creates a new animation curve instance containing integer values.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.copy(Unigine.Ptr{AnimationCurveInt})">
+			<summary>
+			Copies all data (key points and tangents) from the specified source curve.
+			</summary> 
+			<param name="curve"> Source curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.addKey(float,int)">
+			<summary>
+			Adds a new key point with the specified value at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The integer value of the key. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.addKey(float,int,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds a new key point with the specified value and type at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The integer value of the key. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.addKey(float,int,AnimationCurve::KEY_TYPE,Unigine.Math.vec2,Unigine.Math.vec2)">
+			<summary>
+			Adds a new key point with the specified value, type and tangents at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The integer value of the key. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param>
+			<param name="left_tangent"> Coordinates of the left tangent at the key point. </param>
+			<param name="right_tangent"> Coordinates of the right tangent at the key point. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.removeKey(int)">
+			<summary>
+			Removes the key point with the specified index from the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.moveKey(int,float)">
+			<summary>
+			Moves the key point with the specified number to a new time position (preserving the tangents). The index of key point will be updated automatically. This method can be used to implement dragging of keys on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="new_time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>New index of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.setKeyType(int,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Sets the interpolation type for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.getKeyType(int) const">
+			<summary>
+			Returns the interpolation type of the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>Interpolation type set for the key, one of the KEY_TYPE_* values.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.getKeyTime(int) const">
+			<summary>
+			Returns the current time of the key point with the specified index.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The time of the specified key point on the timeline, in seconds.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.setKeyValue(int,int)">
+			<summary>
+			Sets the value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="value"> The integer value of the key. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.getKeyValue(int) const">
+			<summary>
+			Returns the current value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The integer value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.setKeyLeftTangent(int,Unigine.Math.vec2)">
+			<summary>
+			Sets new coordinates for the left tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="left_tangent"> Coordinates of the left tangent at the specified key point to be set. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.getKeyLeftTangent(int) const">
+			<summary>
+			Returns the current coordinates for the left tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>Coordinates of the left tangent at the specified key point to be set.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.setKeyRightTangent(int,Unigine.Math.vec2)">
+			<summary>
+			Sets new coordinates for the right tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="right_tangent"> Coordinates of the right tangent at the specified key point to be set. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.getKeyRightTangent(int) const">
+			<summary>
+			Returns the current coordinates for the right tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>Coordinates of the right tangent at the specified key point to be set.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.setTypeOfAllKeys(AnimationCurve::KEY_TYPE)">
+			<summary>
+			Sets the interpolation type for all keys of the curve.
+			</summary> 
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.clear">
+			<summary>
+			Clears the curve removing all key points and tangents.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.getValueByTime(float)">
+			<summary>
+			Returns the key value at the specified key point of the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The integer value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the key value using the normalized time value of the key.
+			</summary> 
+			<param name="normalized_time"> The normalized time value of the key. </param> 
+			<returns>The integer value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.save(Unigine.Ptr{Unigine.Blob}) const">
+			<summary>
+			Saves the curve data to a blob.
+			</summary> 
+			<param name="blob"> Blob to which the curve data will be saved. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveInt.load(Unigine.Ptr{Unigine.Blob})">
+			<summary>
+			Loads the curve data from the blob.
+			</summary> 
+			<param name="blob"> Blob storing the curve data. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveQuat.#ctor">
+			<summary>
+			Constructor. Creates a new animation curve instance containing quaternion values.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveQuat.copy(Unigine.Ptr{AnimationCurveQuat})">
+			<summary>
+			Copies all data (key points and tangents) from the specified source curve.
+			</summary> 
+			<param name="curve"> Source curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveQuat.addKey(float,Unigine.Math.quat)">
+			<summary>
+			Adds a new key point with the specified value at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The quaternion value of the key. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveQuat.removeKey(int)">
+			<summary>
+			Removes the key point with the specified index from the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveQuat.moveKey(int,float)">
+			<summary>
+			Moves the key point with the specified number to a new time position (preserving the tangents). The index of key point will be updated automatically. This method can be used to implement dragging of keys on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="new_time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>New index of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveQuat.getKeyTime(int) const">
+			<summary>
+			Returns the current time of the key point with the specified index.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The time of the specified key point on the timeline, in seconds.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveQuat.setKeyValue(int,Unigine.Math.quat)">
+			<summary>
+			Sets the value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="value"> The quaternion value of the key. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveQuat.getKeyValue(int) const">
+			<summary>
+			Returns the current value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The quaternion value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveQuat.clear">
+			<summary>
+			Clears the curve removing all key points and tangents.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveQuat.getValueByTime(float)">
+			<summary>
+			Returns the key value at the specified key point of the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The quaternion value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveQuat.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the key value using the normalized time value of the key.
+			</summary> 
+			<param name="time"> The normalized time value of the key. </param> 
+			<returns>The quaternion value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveQuat.save(Unigine.Ptr{Unigine.Blob}) const">
+			<summary>
+			Saves the curve data to a blob.
+			</summary> 
+			<param name="blob"> Blob to which the curve data will be saved. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveQuat.load(Unigine.Ptr{Unigine.Blob})">
+			<summary>
+			Loads the curve data from the blob.
+			</summary> 
+			<param name="blob"> Blob storing the curve data. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.#ctor">
+			<summary>
+			Constructor. Creates a new animation curve instance containing scalar values.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.copy(Unigine.Ptr{AnimationCurveScalar})">
+			<summary>
+			Copies all data (key points and tangents) from the specified source curve.
+			</summary> 
+			<param name="curve"> Source curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.addKey(float,Unigine.Math.Scalar)">
+			<summary>
+			Adds a new key point with the specified value at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The scalar value of the key. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.addKey(float,Unigine.Math.Scalar,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds a new key point with the specified value and type at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The scalar value of the key. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.addKey(float,Unigine.Math.Scalar,AnimationCurve::KEY_TYPE,Unigine.Math.vec2,Unigine.Math.vec2)">
+			<summary>
+			Adds a new key point with the specified value, type and tangents at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The scalar value of the key. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param>
+			<param name="left_tangent"> Coordinates of the left tangent at the key point. </param>
+			<param name="right_tangent"> Coordinates of the right tangent at the key point. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.removeKey(int)">
+			<summary>
+			Removes the key point with the specified index from the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.moveKey(int,float)">
+			<summary>
+			Moves the key point with the specified number to a new time position (preserving the tangents). The index of key point will be updated automatically. This method can be used to implement dragging of keys on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="new_time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>New index of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.setKeyType(int,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Sets the interpolation type for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.getKeyType(int) const">
+			<summary>
+			Returns the interpolation type of the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>Interpolation type set for the key, one of the KEY_TYPE_* values.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.getKeyTime(int) const">
+			<summary>
+			Returns the current time of the key point with the specified index.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The time of the specified key point on the timeline, in seconds.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.setKeyValue(int,Unigine.Math.Scalar)">
+			<summary>
+			Sets the value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="value"> The scalar value of the key. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.getKeyValue(int) const">
+			<summary>
+			Returns the current value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The scalar value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.setKeyLeftTangent(int,Unigine.Math.vec2)">
+			<summary>
+			Sets new coordinates for the left tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="left_tangent"> Coordinates of the left tangent at the specified key point to be set. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.getKeyLeftTangent(int) const">
+			<summary>
+			Returns the current coordinates for the left tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>Coordinates of the left tangent at the specified key point to be set.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.setKeyRightTangent(int,Unigine.Math.vec2)">
+			<summary>
+			Sets new coordinates for the right tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="right_tangent"> Coordinates of the right tangent at the specified key point to be set. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.getKeyRightTangent(int) const">
+			<summary>
+			Returns the current coordinates for the right tangent at the specified key point of the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>Coordinates of the right tangent at the specified key point to be set.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.setTypeOfAllKeys(AnimationCurve::KEY_TYPE)">
+			<summary>
+			Sets the interpolation type for all keys of the curve.
+			</summary> 
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.clear">
+			<summary>
+			Clears the curve removing all key points and tangents.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.getValueByTime(float)">
+			<summary>
+			Returns the key value at the specified key point of the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The scalar value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the key value using the normalized time value of the key.
+			</summary> 
+			<param name="time"> The normalized time value of the key. </param> 
+			<returns>The scalar value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.save(Unigine.Ptr{Unigine.Blob}) const">
+			<summary>
+			Saves the curve data to a blob.
+			</summary> 
+			<param name="blob"> Blob to which the curve data will be saved. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveScalar.load(Unigine.Ptr{Unigine.Blob})">
+			<summary>
+			Loads the curve data from the blob.
+			</summary> 
+			<param name="blob"> Blob storing the curve data. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveString.#ctor">
+			<summary>
+			Constructor. Creates a new animation curve instance containing string values.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveString.copy(Unigine.Ptr{AnimationCurveString})">
+			<summary>
+			Copies all data (key points and tangents) from the specified source curve.
+			</summary> 
+			<param name="curve"> Source curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveString.addKey(float,char)">
+			<summary>
+			Adds a new key point with the specified value at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The string value of the key. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveString.removeKey(int)">
+			<summary>
+			Removes the key point with the specified index from the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveString.moveKey(int,float)">
+			<summary>
+			Moves the key point with the specified number to a new time position (preserving the tangents). The index of key point will be updated automatically. This method can be used to implement dragging of keys on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="new_time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>New index of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveString.getKeyTime(int) const">
+			<summary>
+			Returns the current time of the key point with the specified index.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The time of the specified key point on the timeline, in seconds.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveString.setKeyValue(int,char)">
+			<summary>
+			Sets the value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="value"> The string value of the key. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveString.getKeyValue(int) const">
+			<summary>
+			Returns the current value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The string value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveString.clear">
+			<summary>
+			Clears the curve removing all key points and tangents.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveString.getValueByTime(float)">
+			<summary>
+			Returns the key value at the specified key point of the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The string value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveString.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the key value using the normalized time value of the key.
+			</summary> 
+			<param name="time"> The normalized time value of the key. </param> 
+			<returns>The string value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveString.save(Unigine.Ptr{Unigine.Blob}) const">
+			<summary>
+			Saves the curve data to a blob.
+			</summary> 
+			<param name="blob"> Blob to which the curve data will be saved. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveString.load(Unigine.Ptr{Unigine.Blob})">
+			<summary>
+			Loads the curve data from the blob.
+			</summary> 
+			<param name="blob"> Blob storing the curve data. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveUGUID.#ctor">
+			<summary>
+			Constructor. Creates a new animation curve instance containing UGUID values.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveUGUID.copy(Unigine.Ptr{AnimationCurveUGUID})">
+			<summary>
+			Copies all data (key points and tangents) from the specified source curve.
+			</summary> 
+			<param name="curve"> Source curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveUGUID.addKey(float,Unigine.UGUID)">
+			<summary>
+			Adds a new key point with the specified value at the specified point of the timeline to the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The UGUID value of the key. </param> 
+			<returns>Index of the added key point.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveUGUID.removeKey(int)">
+			<summary>
+			Removes the key point with the specified index from the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveUGUID.moveKey(int,float)">
+			<summary>
+			Moves the key point with the specified number to a new time position (preserving the tangents). The index of key point will be updated automatically. This method can be used to implement dragging of keys on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="new_time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>New index of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveUGUID.getKeyTime(int) const">
+			<summary>
+			Returns the current time of the key point with the specified index.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The time of the specified key point on the timeline, in seconds.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveUGUID.setKeyValue(int,Unigine.UGUID)">
+			<summary>
+			Sets the value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param>
+			<param name="value"> The UGUID value of the key. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveUGUID.getKeyValue(int) const">
+			<summary>
+			Returns the current value for the specified key on the curve.
+			</summary> 
+			<param name="index"> Key point number, in the range from 0 to the total number of key points in the curve. </param> 
+			<returns>The UGUID value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveUGUID.clear">
+			<summary>
+			Clears the curve removing all key points and tangents.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationCurveUGUID.getValueByTime(float)">
+			<summary>
+			Returns the key value at the specified key point of the curve.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The UGUID value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveUGUID.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the key value using the normalized time value of the key.
+			</summary> 
+			<param name="time"> The normalized time value of the key. </param> 
+			<returns>The UGUID value of the key.</returns>
+		</member>
+		<member name="M:Unigine.AnimationCurveUGUID.save(Unigine.Ptr{Unigine.Blob}) const">
+			<summary>
+			Saves the curve data to a blob.
+			</summary> 
+			<param name="blob"> Blob to which the curve data will be saved. </param> 
+		</member>
+		<member name="M:Unigine.AnimationCurveUGUID.load(Unigine.Ptr{Unigine.Blob})">
+			<summary>
+			Loads the curve data from the blob.
+			</summary> 
+			<param name="blob"> Blob storing the curve data. </param> 
+		</member>
+		<member name="M:Unigine.AnimationFrame.#ctor">
+			<summary>
+			Constructor. Creates an empty animation frame.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationFrame.copy(Unigine.Ptr{AnimationFrame})">
+			<summary>
+			Copies the data from the specified source frame to the frame.
+			</summary> 
+			<param name="frame"> Source frame. </param> 
+		</member>
+		<member name="M:Unigine.AnimationFrame.clear">
+			<summary>
+			Clears animation frame data.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationFrame.getModifierInfos(Unigine.Vector{Unigine.Ptr{AnimationModifierInfo},int,Unigine.VectorAllocator})">
+			<summary>
+			Collects information on all modifiers that are active in this frame and puts it to the specified output buffer.
+			</summary> 
+			<param name="infos"> Output buffer for information on all modifiers that are active in this frame. </param> 
+			<returns>Number of modifiers.</returns>
+		</member>
+		<member name="M:Unigine.AnimationFrame.interpolate(Unigine.Ptr{AnimationFrame},float)">
+			<summary>
+			Interpolates values of all modifiers of the frame between the current frame and the specified one with the given interpolation coefficient and updates all frame modifiers with interpolated values: val = interpolate(val, frame_val, k).
+			</summary> 
+			<param name="frame"> Target animation frame. </param>
+			<param name="k"> Interpolation coefficient. </param> 
+		</member>
+		<member name="M:Unigine.AnimationFrame.interpolate(Unigine.Ptr{AnimationFrame},float,Unigine.Ptr{AnimationMask})">
+			<summary>
+			Interpolates values of all modifiers of the frame between the current frame and the specified one with the given interpolation coefficient. Values of modifiers that belong to the specified exclusion mask are ignored and kept unchanged. All frame modifiers are updated with interpolated values: val = interpolate(val, frame_val, k).
+			</summary> 
+			<param name="frame"> Target animation frame. </param>
+			<param name="k"> Interpolation coefficient. </param>
+			<param name="exclude_mask"> Animation mask to be excluded from interpolation. </param> 
+		</member>
+		<member name="M:Unigine.AnimationMask.#ctor">
+			<summary>
+			Constructor. Creates an empty AnimationMask with default parameters.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationMask.addInfo(Unigine.Ptr{AnimationModifierInfo})">
+			<summary>
+			Adds a new animation modifier description to the mask.
+			</summary> 
+			<param name="info"> Description of an animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationMask.removeInfo(Unigine.Ptr{AnimationModifierInfo})">
+			<summary>
+			Removes the specified animation modifier description from the mask.
+			</summary> 
+			<param name="info"> Description of an animation modifier to be removed. </param> 
+		</member>
+		<member name="M:Unigine.AnimationMask.containsInfo(Unigine.Ptr{AnimationModifierInfo}) const">
+			<summary>
+			Returns a value indicating if the mask contains the specified animation modifier description.
+			</summary> 
+			<param name="info"> Description of an animation modifier to be checked. </param> 
+			<returns>true if the mask contains the specified animation modifier description; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.AnimationMask.getInfoByIndex(int) const">
+			<summary>
+			Returns a description of the animation modifier with the specified index.
+			</summary> 
+			<param name="index"> Animation modifier description index. </param> 
+			<returns>Description of an animation modifier with the specified index.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifier.save(Unigine.Ptr{Unigine.Blob}) const">
+			<summary>
+			Saves the animation modifier data to a blob.
+			</summary> 
+			<param name="blob"> Blob to which the animation modifier data will be saved. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifier.load(Unigine.Ptr{Unigine.Blob})">
+			<summary>
+			Loads the animation modifier data from the blob.
+			</summary> 
+			<param name="blob"> Blob storing the animation modifier data. </param> 
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER">
+			<summary>
+			The animation modifier.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_INT">
+			<summary>
+			The animation modifier using integer values.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_BOOL">
+			<summary>
+			The animation modifier using boolean values.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_QUAT">
+			<summary>
+			The animation modifier using quaternions.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_SCALAR">
+			<summary>
+			The animation modifier using scalar values.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_FLOAT">
+			<summary>
+			The animation modifier using floating point values.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_DOUBLE">
+			<summary>
+			The animation modifier using double precision values.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_STRING">
+			<summary>
+			The animation modifier using strings.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_UGUID">
+			<summary>
+			The animation modifier using UGUIDs.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_IVEC2">
+			<summary>
+			The animation modifier using 2-component vectors of integer values.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_IVEC3">
+			<summary>
+			The animation modifier using 3-component vectors of integer values.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_IVEC4">
+			<summary>
+			The animation modifier using 4-component vectors of integer values.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_VEC2">
+			<summary>
+			The animation modifier using 2-component vectors.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_FVEC2">
+			<summary>
+			The animation modifier using 2-component vectors of floating point values.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_DVEC2">
+			<summary>
+			The animation modifier using 2-component vectors of double precision values.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_VEC3">
+			<summary>
+			The animation modifier using 3-component vectors.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_FVEC3">
+			<summary>
+			The animation modifier using 3-component vectors of floating point values.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_DVEC3">
+			<summary>
+			The animation modifier using 3-component vectors of double precision values.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_VEC4">
+			<summary>
+			The animation modifier using 4-component vectors.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_FVEC4">
+			<summary>
+			The animation modifier using 4-component vectors of floating point values.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_DVEC4">
+			<summary>
+			The animation modifier using 4-component vectors of double precision values.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_MAT4">
+			<summary>
+			The animation modifier using 4x4 matrices.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_NODE">
+			<summary>
+			The animation modifier animating nodes.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_BONES">
+			<summary>
+			The animation modifier animating bones.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifier.ANIMATION_MODIFIER_TRACK">
+			<summary>
+			The animation modifier using tracks.
+		</summary>
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.#ctor">
+			<summary>
+			Constructor. Creates a new animation modifier for bones.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.copy(Unigine.Ptr{AnimationModifierBones})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.setNumBones(int)">
+			<summary>
+			Sets the number of bones to be affected by the animation modifier.
+			</summary> 
+			<param name="bones"> The number of bones to be affected by the animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.getNumBones const">
+			<summary>
+			Returns the number of bones affected by the animation modifier.
+			</summary>  
+			<returns>The number of bones affected by the animation modifier.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.getValueByTime(float,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
+			<summary>
+			Returns the number of bones affected by the animation modifier and saves the transformation values of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="transforms"> Transformation matrices to save the returned values. </param> 
+			<returns>The number of bones affected by the animation modifier.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.addValue(float,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
+			<summary>
+			Adds the transformation values to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="transforms"> Transformation matrices. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.setCurvePosX(int,Unigine.Ptr{AnimationCurveFloat})">
+			<summary>
+			Sets the curve storing the bone positions along the X axis.
+			</summary> 
+			<param name="bone_index"> Index of the bone. </param>
+			<param name="in_curve"> The animation curve storing the bone positions along the X axis. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.getCurvePosX(int) const">
+			<summary>
+			Returns the curve storing the bone positions along the X axis.
+			</summary> 
+			<param name="bone_index"> Index of the bone. </param> 
+			<returns>The animation curve storing the bone positions along the X axis.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.setCurvePosY(int,Unigine.Ptr{AnimationCurveFloat})">
+			<summary>
+			Sets the curve storing the bone positions along the Y axis.
+			</summary> 
+			<param name="bone_index"> Index of the bone. </param>
+			<param name="in_curve"> The animation curve storing the bone positions along the Y axis. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.getCurvePosY(int) const">
+			<summary>
+			Returns the curve storing the bone positions along the Y axis.
+			</summary> 
+			<param name="bone_index"> Index of the bone. </param> 
+			<returns>The animation curve storing the bone positions along the Y axis.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.setCurvePosZ(int,Unigine.Ptr{AnimationCurveFloat})">
+			<summary>
+			Sets the curve storing the bone positions along the Z axis.
+			</summary> 
+			<param name="bone_index"> Index of the bone. </param>
+			<param name="in_curve"> The animation curve storing the bone positions along the Z axis. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.getCurvePosZ(int) const">
+			<summary>
+			Returns the curve storing the bone positions along the Z axis.
+			</summary> 
+			<param name="bone_index"> Index of the bone. </param> 
+			<returns>The animation curve storing the bone positions along the Z axis.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.setCurveRot(int,Unigine.Ptr{AnimationCurveQuat})">
+			<summary>
+			Sets the curve storing the bone transforms.
+			</summary> 
+			<param name="bone_index"> Index of the bone. </param>
+			<param name="in_curve"> The animation curve storing the bone transforms. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.getCurveRot(int) const">
+			<summary>
+			Returns the curve storing the bone transforms.
+			</summary> 
+			<param name="bone_index"> Index of the bone. </param> 
+			<returns>The animation curve storing the bone transforms.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.setCurveScaleX(int,Unigine.Ptr{AnimationCurveFloat})">
+			<summary>
+			Sets the animation curve storing the bone scaling along the X axis.
+			</summary> 
+			<param name="bone_index"> Index of the bone. </param>
+			<param name="in_curve"> The animation curve storing the bone scaling along the X axis. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.getCurveScaleX(int) const">
+			<summary>
+			Returns the animation curve storing the bone scaling along the X axis.
+			</summary> 
+			<param name="bone_index"> Index of the bone. </param> 
+			<returns>The animation curve storing the bone scaling along the X axis.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.setCurveScaleY(int,Unigine.Ptr{AnimationCurveFloat})">
+			<summary>
+			Sets the animation curve storing the bone scaling along the Y axis.
+			</summary> 
+			<param name="bone_index"> Index of the bone. </param>
+			<param name="in_curve"> The animation curve storing the bone scaling along the Y axis. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.getCurveScaleY(int) const">
+			<summary>
+			Returns the animation curve storing the bone scaling along the Y axis.
+			</summary> 
+			<param name="bone_index"> Index of the bone. </param> 
+			<returns>The animation curve storing the bone scaling along the Y axis.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.setCurveScaleZ(int,Unigine.Ptr{AnimationCurveFloat})">
+			<summary>
+			Sets the animation curve storing the bone scaling along the Z axis.
+			</summary> 
+			<param name="bone_index"> Index of the bone. </param>
+			<param name="in_curve"> The animation curve storing the bone scaling along the Z axis. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBones.getCurveScaleZ(int) const">
+			<summary>
+			Returns the animation curve storing the bone scaling along the Z axis.
+			</summary> 
+			<param name="bone_index"> Index of the bone. </param> 
+			<returns>The animation curve storing the bone scaling along the Z axis.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierBool.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBool.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBool.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBool.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBool.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBool.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBool.copy(Unigine.Ptr{AnimationModifierBool})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBool.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierBool.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierBool.addValue(float,bool,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierBool.getDefaultValue const">
+			<summary>
+			Returns the default value for all modifier elements.
+			</summary>  
+			<returns>Default value for all modifier elements.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec2.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec2.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec2.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec2.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec2.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec2.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec2.copy(Unigine.Ptr{AnimationModifierDVec2})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec2.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec2.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec2.addValue(float,Unigine.Math.dvec2,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec2.updateUniformTime(bool,bool)">
+			<summary>
+			Changes the value that defines if the modifier values are changed uniformly along the timeline. Enabling the uniform time allows avoiding such cases as speeding up or slowing down due to the curve shape.
+			</summary> 
+			<param name="enabled"> The current value. </param>
+			<param name="force_update"> The target value. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec3.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec3.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec3.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec3.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec3.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec3.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec3.copy(Unigine.Ptr{AnimationModifierDVec3})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec3.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec3.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec3.addValue(float,Unigine.Math.dvec3,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec3.updateUniformTime(bool,bool)">
+			<summary>
+			Changes the value that defines if the modifier values are changed uniformly along the timeline. Enabling the uniform time allows avoiding such cases as speeding up or slowing down due to the curve shape.
+			</summary> 
+			<param name="enabled"> The current value. </param>
+			<param name="force_update"> The target value. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec4.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec4.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec4.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec4.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec4.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec4.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec4.copy(Unigine.Ptr{AnimationModifierDVec4})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec4.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec4.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec4.addValue(float,Unigine.Math.dvec4,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDVec4.updateUniformTime(bool,bool)">
+			<summary>
+			Changes the value that defines if the modifier values are changed uniformly along the timeline. Enabling the uniform time allows avoiding such cases as speeding up or slowing down due to the curve shape.
+			</summary> 
+			<param name="enabled"> The current value. </param>
+			<param name="force_update"> The target value. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDouble.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDouble.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDouble.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDouble.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDouble.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDouble.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDouble.copy(Unigine.Ptr{AnimationModifierDouble})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDouble.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierDouble.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierDouble.addValue(float,double,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierDouble.updateUniformTime(bool,bool)">
+			<summary>
+			Changes the value that defines if the modifier values are changed uniformly along the timeline. Enabling the uniform time allows avoiding such cases as speeding up or slowing down due to the curve shape.
+			</summary> 
+			<param name="enabled"> The current value. </param>
+			<param name="force_update"> The target value. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec2.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec2.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec2.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec2.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec2.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec2.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec2.copy(Unigine.Ptr{AnimationModifierFVec2})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec2.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec2.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec2.addValue(float,Unigine.Math.vec2,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec2.updateUniformTime(bool,bool)">
+			<summary>
+			Changes the value that defines if the modifier values are changed uniformly along the timeline. Enabling the uniform time allows avoiding such cases as speeding up or slowing down due to the curve shape.
+			</summary> 
+			<param name="enabled"> The current value. </param>
+			<param name="force_update"> The target value. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec3.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec3.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec3.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec3.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec3.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec3.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec3.copy(Unigine.Ptr{AnimationModifierFVec3})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec3.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec3.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec3.addValue(float,Unigine.Math.vec3,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec3.updateUniformTime(bool,bool)">
+			<summary>
+			Changes the value that defines if the modifier values are changed uniformly along the timeline. Enabling the uniform time allows avoiding such cases as speeding up or slowing down due to the curve shape.
+			</summary> 
+			<param name="enabled"> The current value. </param>
+			<param name="force_update"> The target value. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec4.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec4.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec4.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec4.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec4.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec4.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec4.copy(Unigine.Ptr{AnimationModifierFVec4})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec4.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec4.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec4.addValue(float,Unigine.Math.vec4,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFVec4.updateUniformTime(bool,bool)">
+			<summary>
+			Changes the value that defines if the modifier values are changed uniformly along the timeline. Enabling the uniform time allows avoiding such cases as speeding up or slowing down due to the curve shape.
+			</summary> 
+			<param name="enabled"> The current value. </param>
+			<param name="force_update"> The target value. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFloat.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFloat.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFloat.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFloat.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFloat.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFloat.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFloat.copy(Unigine.Ptr{AnimationModifierFloat})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFloat.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierFloat.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierFloat.addValue(float,float,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierFloat.updateUniformTime(bool,bool)">
+			<summary>
+			Changes the value that defines if the modifier values are changed uniformly along the timeline. Enabling the uniform time allows avoiding such cases as speeding up or slowing down due to the curve shape.
+			</summary> 
+			<param name="enabled"> The current value. </param>
+			<param name="force_update"> The target value. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec2.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec2.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec2.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec2.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec2.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec2.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec2.copy(Unigine.Ptr{AnimationModifierIVec2})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec2.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec2.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec2.addValue(float,Unigine.Math.ivec2,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec3.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec3.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec3.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec3.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec3.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec3.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec3.copy(Unigine.Ptr{AnimationModifierIVec3})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec3.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec3.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec3.addValue(float,Unigine.Math.ivec3,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec4.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec4.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec4.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec4.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec4.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec4.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec4.copy(Unigine.Ptr{AnimationModifierIVec4})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec4.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec4.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierIVec4.addValue(float,Unigine.Math.ivec4,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierInt.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierInt.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierInt.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierInt.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierInt.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierInt.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierInt.copy(Unigine.Ptr{AnimationModifierInt})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierInt.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierInt.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierInt.addValue(float,int,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierMat4.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierMat4.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierMat4.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierMat4.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierMat4.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierMat4.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierMat4.copy(Unigine.Ptr{AnimationModifierMat4})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierMat4.addValue(float,Unigine.Math.Mat4)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierMat4.updateUniformTime(bool,bool)">
+			<summary>
+			Changes the value that defines if the modifier values are changed uniformly along the timeline. Enabling the uniform time allows avoiding such cases as speeding up or slowing down due to the curve shape.
+			</summary> 
+			<param name="enabled"> The current value. </param>
+			<param name="force_update"> The target value. </param> 
+		</member>
+		<member name="F:Unigine.AnimationModifierMat4.FOLLOW_MODE_NONE">
+			<summary>
+			The modified object is rotated using the result of interpolation between the keys.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifierMat4.FOLLOW_MODE_X">
+			<summary>
+			The modified object's X axis follows the transformation curve.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifierMat4.FOLLOW_MODE_Y">
+			<summary>
+			The modified object's Y axis follows the transformation curve.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifierMat4.FOLLOW_MODE_Z">
+			<summary>
+			The modified object's Z axis follows the transformation curve.
+		</summary>
+		</member>
+		<member name="M:Unigine.AnimationModifierNode.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierNode.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierNode.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierNode.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierNode.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierNode.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierNode.copy(Unigine.Ptr{AnimationModifierNode})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierNode.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierNode.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierNode.addValue(float,int)">
+			<summary>
+			Adds the node to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="node_id"> Identifier of the node. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierQuat.#ctor(AnimationModifierQuat::MODE,AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="mode"> The mode of obtaining the rotation data. </param>
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierQuat.#ctor(AnimationModifierQuat::MODE,AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="mode"> The mode of obtaining the rotation data. </param>
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierQuat.#ctor(AnimationModifierQuat::MODE,AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="mode"> The mode of obtaining the rotation data. </param>
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierQuat.#ctor(AnimationModifierQuat::MODE,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="mode"> The mode of obtaining the rotation data. </param>
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierQuat.#ctor(AnimationModifierQuat::MODE,char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="mode"> The mode of obtaining the rotation data. </param>
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierQuat.#ctor(AnimationModifierQuat::MODE,char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="mode"> The mode of obtaining the rotation data. </param>
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierQuat.copy(Unigine.Ptr{AnimationModifierQuat})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierQuat.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierQuat.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierQuat.addQuatValue(float,Unigine.Math.quat)">
+			<summary>
+			Adds the quaternion value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierQuat.addAnglesValue(float,Unigine.Math.vec3,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the angles value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierQuat.updateUniformTime(bool,bool)">
+			<summary>
+			Changes the value that defines if the modifier values are changed uniformly along the timeline. Enabling the uniform time allows avoiding such cases as speeding up or slowing down due to the curve shape.
+			</summary> 
+			<param name="enabled"> The current value. </param>
+			<param name="force_update"> The target value. </param> 
+		</member>
+		<member name="F:Unigine.AnimationModifierQuat.MODE_QUAT">
+			<summary>
+			Rotation value is obtained from AnimationCurveQuat.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifierQuat.MODE_ANGLES_XYZ">
+			<summary>
+			Three AnimationCurveFloat curves are used for each angle, and their data are used to compose a quaternion with the {X, Y, Z} order of coordinates.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationModifierQuat.MODE_ANGLES_ZYX">
+			<summary>
+			Three AnimationCurveFloat curves are used for each angle, and their data are used to compose a quaternion with the {Z, Y, X} order of coordinates.
+		</summary>
+		</member>
+		<member name="M:Unigine.AnimationModifierScalar.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierScalar.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierScalar.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierScalar.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierScalar.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierScalar.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierScalar.copy(Unigine.Ptr{AnimationModifierScalar})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierScalar.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierScalar.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierScalar.addValue(float,Unigine.Math.Scalar,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierScalar.updateUniformTime(bool,bool)">
+			<summary>
+			Changes the value that defines if the modifier values are changed uniformly along the timeline. Enabling the uniform time allows avoiding such cases as speeding up or slowing down due to the curve shape.
+			</summary> 
+			<param name="enabled"> The current value. </param>
+			<param name="force_update"> The target value. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierString.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierString.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierString.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierString.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierString.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierString.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierString.copy(Unigine.Ptr{AnimationModifierString})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierString.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierString.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierString.addValue(float,char)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierTrack.#ctor">
+			<summary>
+			Constructor. Creates a new modifier to animate objects using tracks.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationModifierTrack.addTrack(char,float)">
+			<summary>
+			Adds a track at the specified point of the timeline.
+			</summary> 
+			<param name="path"> Path to the track. </param>
+			<param name="begin_time"> Time on the timeline, in seconds, for this track to start. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierTrack.setTrackTimeCurve(Unigine.Ptr{AnimationCurveFloat})">
+			<summary>
+			Sets the time curve to be used by the track.
+			</summary> 
+			<param name="curve"> Time curve for the track. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierUGUID.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierUGUID.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierUGUID.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierUGUID.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierUGUID.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierUGUID.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierUGUID.copy(Unigine.Ptr{AnimationModifierUGUID})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierUGUID.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierUGUID.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierUGUID.addValue(float,Unigine.UGUID)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec2.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec2.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec2.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec2.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec2.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec2.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec2.copy(Unigine.Ptr{AnimationModifierVec2})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec2.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierVec2.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierVec2.addValue(float,Unigine.Math.Vec2,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec2.updateUniformTime(bool,bool)">
+			<summary>
+			Changes the value that defines if the modifier values are changed uniformly along the timeline. Enabling the uniform time allows avoiding such cases as speeding up or slowing down due to the curve shape.
+			</summary> 
+			<param name="enabled"> The current value. </param>
+			<param name="force_update"> The target value. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec3.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec3.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec3.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec3.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec3.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec3.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec3.copy(Unigine.Ptr{AnimationModifierVec3})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec3.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierVec3.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierVec3.addValue(float,Unigine.Math.Vec3,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec3.updateUniformTime(bool,bool)">
+			<summary>
+			Changes the value that defines if the modifier values are changed uniformly along the timeline. Enabling the uniform time allows avoiding such cases as speeding up or slowing down due to the curve shape.
+			</summary> 
+			<param name="enabled"> The current value. </param>
+			<param name="force_update"> The target value. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec4.#ctor(AnimParams::PARAM)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec4.#ctor(AnimParams::PARAM,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec4.#ctor(AnimParams::PARAM,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec4.#ctor(char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec4.#ctor(char,int)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_index"> Index of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec4.#ctor(char,char)">
+			<summary>
+			Creates the animation modifier to animate the specified parameter.
+			</summary> 
+			<param name="param"> Parameter to be animated by the modifier. </param>
+			<param name="param_name"> Name of the parameter. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec4.copy(Unigine.Ptr{AnimationModifierVec4})">
+			<summary>
+			Copies all data from the specified source animation modifier.
+			</summary> 
+			<param name="modifier"> Source animation modifier. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec4.getValueByTime(float)">
+			<summary>
+			Returns the value of the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierVec4.getValueByNormalizedTime(float)">
+			<summary>
+			Returns the normalized value of the modifier at the specified time.
+			</summary> 
+			<param name="normalized_time"> The normalized time value. </param> 
+			<returns>The modifier value at the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationModifierVec4.addValue(float,Unigine.Math.Vec4,AnimationCurve::KEY_TYPE)">
+			<summary>
+			Adds the value to the modifier at the specified time.
+			</summary> 
+			<param name="time"> Time of the key on the timeline, in seconds. </param>
+			<param name="value"> The modifier value at the specified time. </param>
+			<param name="type"> Interpolation type set for the key, one of the KEY_TYPE_* values. </param> 
+		</member>
+		<member name="M:Unigine.AnimationModifierVec4.updateUniformTime(bool,bool)">
+			<summary>
+			Changes the value that defines if the modifier values are changed uniformly along the timeline. Enabling the uniform time allows avoiding such cases as speeding up or slowing down due to the curve shape.
+			</summary> 
+			<param name="enabled"> The current value. </param>
+			<param name="force_update"> The target value. </param> 
+		</member>
+		<member name="F:Unigine.AnimationObject.ANIMATION_OBJECT">
+			<summary>
+			Generic animation object.
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationObject.ANIMATION_OBJECT_NODE">
+			<summary>
+			Animation object used to animate a node (see the AnimationObjectNode class).
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationObject.ANIMATION_OBJECT_MATERIAL">
+			<summary>
+			Animation object used to animate a material (see the AnimationObjectMaterial class).
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationObject.ANIMATION_OBJECT_PROPERTY_PARAMETER">
+			<summary>
+			Animation object used to animate a parameter of a property (see the AnimationObjectPropertyParameter class).
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationObject.ANIMATION_OBJECT_RUNTIME">
+			<summary>
+			Animation object used to animate a runtime object (see the AnimationObjectRuntime class).
+		</summary>
+		</member>
+		<member name="F:Unigine.AnimationObject.ANIMATION_OBJECT_TRACK">
+			<summary>
+			Animation object used to animate an animation track (see the AnimationObjectTrack class).
+		</summary>
+		</member>
+		<member name="M:Unigine.AnimationObjectMaterial.#ctor(char)">
+			<summary>
+			Constructor. Creates a new material animation object with the specified name.
+			</summary> 
+			<param name="name"> Material animation object name. </param> 
+		</member>
+		<member name="M:Unigine.AnimationObjectMaterial.setPlaybackOverriddenBind(Unigine.Ptr{AnimationPlayback},Unigine.Ptr{AnimationBindMaterial})">
+			<summary>
+			Sets a new binding of the animation object to a specific material for the specified playback (binding override).
+			</summary> 
+			<param name="playback"> Animation playback for which a new binding of the animation object is to be added. </param>
+			<param name="bind"> Binding to a specific material to be animated. </param> 
+		</member>
+		<member name="M:Unigine.AnimationObjectMaterial.getPlaybackOverriddenBind(Unigine.Ptr{AnimationPlayback})">
+			<summary>
+			Returns the current binding of the animation object to a specific material for the specified playback (binding override).
+			</summary> 
+			<param name="playback"> Animation playback for which a material binding of the animation object is to be retrieved. </param> 
+			<returns>Overridden binding to a specific animated material.</returns>
+		</member>
+		<member name="M:Unigine.AnimationObjectNode.#ctor(char)">
+			<summary>
+			Constructor. Creates a new node animation object with the specified name.
+			</summary> 
+			<param name="name"> Node animation object name. </param> 
+		</member>
+		<member name="M:Unigine.AnimationObjectNode.setPlaybackOverriddenBind(Unigine.Ptr{AnimationPlayback},Unigine.Ptr{AnimationBindNode})">
+			<summary>
+			Sets a new binding of the animation object to a specific node for the specified playback (binding override).
+			</summary> 
+			<param name="playback"> Animation playback for which a new binding of the animation object is to be added. </param>
+			<param name="bind"> Binding to a specific node to be animated. </param> 
+		</member>
+		<member name="M:Unigine.AnimationObjectNode.getPlaybackOverriddenBind(Unigine.Ptr{AnimationPlayback})">
+			<summary>
+			Returns the current binding of the animation object to a specific node for the specified playback (binding override).
+			</summary> 
+			<param name="playback"> Animation playback for which a node binding of the animation object is to be retrieved. </param> 
+			<returns>Overridden binding to a specific node animated.</returns>
+		</member>
+		<member name="M:Unigine.AnimationObjectPropertyParameter.#ctor(char)">
+			<summary>
+			Constructor. Creates a new property parameter animation object with the specified name.
+			</summary> 
+			<param name="name"> Property parameter animation object name. </param> 
+		</member>
+		<member name="M:Unigine.AnimationObjectPropertyParameter.setPlaybackOverriddenBind(Unigine.Ptr{AnimationPlayback},Unigine.Ptr{AnimationBindPropertyParameter})">
+			<summary>
+			Sets a new binding of the animation object to a specific property parameter for the specified playback (binding override).
+			</summary> 
+			<param name="playback"> Animation playback for which a new binding of the animation object is to be added. </param>
+			<param name="bind"> Binding to a specific property parameter to be animated. </param> 
+		</member>
+		<member name="M:Unigine.AnimationObjectPropertyParameter.getPlaybackOverriddenBind(Unigine.Ptr{AnimationPlayback})">
+			<summary>
+			Returns the current binding of the animation object to a specific property parameter for the specified playback (binding override).
+			</summary> 
+			<param name="playback"> Animation playback for which a property parameter binding of the animation object is to be retrieved. </param> 
+			<returns>Overridden binding to a specific property parameter animated.</returns>
+		</member>
+		<member name="M:Unigine.AnimationObjectRuntime.#ctor(char)">
+			<summary>
+			Constructor. Creates a new runtime animation object with the specified name.
+			</summary> 
+			<param name="name"> Property parameter animation object name. </param> 
+		</member>
+		<member name="M:Unigine.AnimationObjectRuntime.setPlaybackOverriddenBind(Unigine.Ptr{AnimationPlayback},Unigine.Ptr{AnimationBindRuntime})">
+			<summary>
+			Sets a new binding of the animation object to a specific runtime object for the specified playback (binding override).
+			</summary> 
+			<param name="playback"> Animation playback for which a new binding of the animation object is to be added. </param>
+			<param name="bind"> Binding to a specific runtime object to be animated. </param> 
+		</member>
+		<member name="M:Unigine.AnimationObjectRuntime.getPlaybackOverriddenBind(Unigine.Ptr{AnimationPlayback})">
+			<summary>
+			Returns the current binding of the animation object to a specific runtime object for the specified playback (binding override).
+			</summary> 
+			<param name="playback"> Animation playback for which a runtime object binding of the animation object is to be retrieved. </param> 
+			<returns>Overridden binding to a specific runtime object animated.</returns>
+		</member>
+		<member name="M:Unigine.AnimationObjectTrack.#ctor(char)">
+			<summary>
+			Constructor. Creates a new track animation object with the specified name.
+			</summary> 
+			<param name="name"> Track animation object name. </param> 
+		</member>
+		<member name="M:Unigine.AnimationPlayback.#ctor">
+			<summary>
+			Constructor. Creates an empty playback with default settings.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationPlayback.getObject(int) const">
+			<summary>
+			Returns an animation object by its index.
+			</summary> 
+			<param name="index"> Animation object index. </param> 
+			<returns>Animation object with the specified index.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.containsObject(Unigine.Ptr{AnimationObject}) const">
+			<summary>
+			Returns a value indicating if the animation playback contains the specified animation object.
+			</summary> 
+			<param name="anim_obj"> Animation object to be checked. </param> 
+			<returns>true if the the animation playback contains the specified animation object; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.clear">
+			<summary>
+			Clears the animation playback removing all animation objects, layers and tracks from it.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationPlayback.apply(float)">
+			<summary>
+			Calculates actual values for all modifiers of all tracks played at the specified moment (taking weights into account) and applied to real animated objects (overrides of animation objects for this playback).
+			</summary> 
+			<param name="time"> Time value for which the resulting changes are to be calculated and applied to animated objects. </param> 
+		</member>
+		<member name="M:Unigine.AnimationPlayback.apply(Unigine.Ptr{AnimationFrame})">
+			<summary>
+			Applies the specified animation frame - actual values are calculated for all modifiers of all tracks played at this frame (taking weights into account) and applied to real animated objects (overrides of animation objects for this playback).
+			</summary> 
+			<param name="frame"> Animation frame to be applied. </param> 
+		</member>
+		<member name="M:Unigine.AnimationPlayback.play">
+			<summary>
+			Plays the animation playback either from the start or from the moment when the playback was paused (see ).
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationPlayback.pause">
+			<summary>
+			Pauses the animation playback, so the playback can be resumed from this moment upon calling .
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationPlayback.stop">
+			<summary>
+			Stops the animation playback.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationPlayback.setTrack(Unigine.Ptr{AnimationTrack})">
+			<summary>
+			Sets the first animation track of the first layer.
+			</summary> 
+			<param name="track"> New animation track to be set as the first track of the first layer. </param> 
+		</member>
+		<member name="M:Unigine.AnimationPlayback.getTrack const">
+			<summary>
+			Returns the first animation track of the first layer.
+			</summary>  
+			<returns>First animation track of the first layer.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.addLayer">
+			<summary>
+			Adds a new animation layer to the playback.
+			</summary>  
+			<returns>Index of the new added layer.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.addLayer(Unigine.Ptr{AnimationTrack})">
+			<summary>
+			Adds a new animation layer to the playback and adds the specified animation track to this new layer.
+			</summary> 
+			<param name="track"> Animation track to be added to the new created layer. </param> 
+			<returns>Index of the new added layer.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.removeLayer(int)">
+			<summary>
+			Removes the animation layer with the specified index from the playback.
+			</summary> 
+			<param name="index"> Index of the layer to be removed. </param> 
+		</member>
+		<member name="M:Unigine.AnimationPlayback.getNumLayers const">
+			<summary>
+			Returns the total number of animation layers in the playback.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationPlayback.addLayerTrack(int)">
+			<summary>
+			Adds a new empty animation track to the layer with the specified index.
+			</summary> 
+			<param name="layer_index"> Layer index. </param> 
+			<returns>Index of the new added animation track.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.addLayerTrack(int,Unigine.Ptr{AnimationTrack})">
+			<summary>
+			Adds the specified animation track to the layer with the specified index.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track"> New track to be added to the layer. </param> 
+			<returns>Index of the new added animation track.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.removeLayerTrack(int,int)">
+			<summary>
+			Removes the animation track with the specified index from the specified layer.
+			</summary> 
+			<param name="layer_index"> Index of the layer containing the track to be removed. </param>
+			<param name="track_index"> Index of the track to be removed. </param> 
+		</member>
+		<member name="M:Unigine.AnimationPlayback.getNumLayerTracks(int) const">
+			<summary>
+			Returns the number of animation tracks for the layer with the specified index.
+			</summary> 
+			<param name="layer_index"> Layer index. </param> 
+			<returns>Number of animation tracks for the layer.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.setLayerTrack(int,int,Unigine.Ptr{AnimationTrack})">
+			<summary>
+			Sets the specified animation track by index for the specified layer.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track_index"> Track index. </param>
+			<param name="track"> Animation track to be set for the given layer. </param> 
+		</member>
+		<member name="M:Unigine.AnimationPlayback.getLayerTrack(int,int) const">
+			<summary>
+			Returns the animation track by index for the specified layer.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track_index"> Track index. </param> 
+			<returns>Animation track set for the given layer.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.setLayerTrackBeginTime(int,int,float)">
+			<summary>
+			Sets a new offset time (from the beginning of the playback) for the specified track of the specified layer.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track_index"> Track index. </param>
+			<param name="offest"> Offset time to be set, in seconds. </param> 
+		</member>
+		<member name="M:Unigine.AnimationPlayback.getLayerTrackBeginTime(int,int) const">
+			<summary>
+			Returns the current offset time (from the beginning of the playback) for the specified track of the specified layer.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track_index"> Track index. </param> 
+			<returns>Current offset time, in seconds.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.setLayerTrackSpeed(int,int,float)">
+			<summary>
+			Sets a new speed factor value for the specified track of the specified layer.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track_index"> Track index. </param>
+			<param name="speed"> New speed factor value to be set (the value of 2 means that the track is played 2 times faster, while 0.5f will slow it down 2 times). </param> 
+		</member>
+		<member name="M:Unigine.AnimationPlayback.getLayerTrackSpeed(int,int) const">
+			<summary>
+			Returns the current speed factor value for the specified track of the specified layer.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track_index"> Track index. </param> 
+			<returns>Current speed factor value (the value of 2 means that the track is played 2 times faster, while 0.5f will slow it down 2 times).</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.setLayerTrackApplyBefore(int,int,bool)">
+			<summary>
+			Sets the flag specifying if the start frame of the track is applied to the playback before the track starts.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track_index"> Track index. </param>
+			<param name="is_apply"> true to enable applying the start frame of the track before the track starts; false - to disable it. </param> 
+		</member>
+		<member name="M:Unigine.AnimationPlayback.isLayerTrackApplyBefore(int,int) const">
+			<summary>
+			Returns the flag specifying if the the start frame of the track is applied to the playback before the track starts.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track_index"> Track index. </param> 
+			<returns>true if the start frame of the track is applied to the playback before the track starts; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.setLayerTrackApplyAfter(int,int,bool)">
+			<summary>
+			Sets the flag specifying if the end frame of the track is applied to the playback after the track ends.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track_index"> Track index. </param>
+			<param name="is_apply"> true to enable applying the end frame of the track after the track ends; false - to disable it. </param> 
+		</member>
+		<member name="M:Unigine.AnimationPlayback.isLayerTrackApplyAfter(int,int) const">
+			<summary>
+			Returns the flag specifying if the end frame of the track is applied to the playback after the track ends.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track_index"> Track index. </param> 
+			<returns>true if the end frame of the track is applied to the playback after the track ends; false - to disable it.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.setLayerTrackWeightCurve(int,int,Unigine.Ptr{AnimationCurveFloat})">
+			<summary>
+			Sets a new weight curve for the specified track of the specified layer. Weights are used for mixing multiple simultaneously played tracks together. The weight curve defines the dynamics of track weight change over time.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track_index"> Track index. </param>
+			<param name="curve"> Weight curve to be set for the specified track. </param> 
+		</member>
+		<member name="M:Unigine.AnimationPlayback.getLayerTrackWeightCurve(int,int) const">
+			<summary>
+			Returns the current weight curve for the specified track of the specified layer. Weights are used for mixing multiple simultaneously played tracks together. The weight curve defines the dynamics of track weight change over time.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track_index"> Track index. </param> 
+			<returns>Weight curve for the specified track.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.setLayerTrackLinearFade(int,int,float,bool,bool)">
+			<summary>
+			Enables linear fading (in, out, or both) for the track across the specified effect time span. This method automatically updates the weight curve for the track.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track_index"> Track index. </param>
+			<param name="effect_time"> Time interval (in seconds) across which the fading effect is applied. Both fade-in and fade-out intervals (if used together) are equal to this value. </param>
+			<param name="use_fade_in"> Set true to enable the fade-in effect for the track; false - to disable it. </param>
+			<param name="use_fade_out"> Set true to enable the fade-out effect for the track; false - to disable it. </param> 
+		</member>
+		<member name="M:Unigine.AnimationPlayback.getLayerTrackDuration(int,int) const">
+			<summary>
+			Returns the current duration for the specified track of the specified layer.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track_index"> Track index. </param> 
+			<returns>Track duration, in seconds.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.getLayerTrackEndTime(int,int) const">
+			<summary>
+			Returns the current end time for the specified track of the specified layer.
+			</summary> 
+			<param name="layer_index"> Layer index. </param>
+			<param name="track_index"> Track index. </param> 
+			<returns>Track end time, in seconds.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.getLayerDuration(int) const">
+			<summary>
+			Returns the duration of the animation layer with the specified index.
+			</summary> 
+			<param name="layer_index"> Layer index. </param> 
+			<returns>Duration of the layer, in seconds.</returns>
+		</member>
+		<member name="M:Unigine.AnimationTrack.#ctor">
+			<summary>
+			Constructor. Creates an empty track with default settings.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationTrack.#ctor(char)">
+			<summary>
+			Constructor. Creates an empty track with default settings and specified name.
+			</summary> 
+			<param name="name"> Animation track name. </param> 
+		</member>
+		<member name="M:Unigine.AnimationTrack.copy(Unigine.Ptr{AnimationTrack})">
+			<summary>
+			Copies all data from the specified source track to the track.
+			</summary> 
+			<param name="track"> Source animation track. </param> 
+		</member>
+		<member name="M:Unigine.AnimationTrack.clear">
+			<summary>
+			Clears the animation track removing all animation objects and modifiers from it. This method also resets track duration to 0.
+			</summary>  
+		</member>
+		<member name="M:Unigine.AnimationTrack.containsObject(Unigine.Ptr{AnimationObject})">
+			<summary>
+			Returns a value indicating if the animation track contains the specified animation object.
+			</summary> 
+			<param name="anim_obj"> Animation object to be checked. </param> 
+			<returns>true if the the animation playback contains the specified animation object; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.AnimationTrack.getObject(int) const">
+			<summary>
+			Returns an animation object by its index.
+			</summary> 
+			<param name="index"> Animation object index. </param> 
+			<returns>Animation object with the specified index.</returns>
+		</member>
+		<member name="M:Unigine.AnimationTrack.addObject(Unigine.Ptr{AnimationObject})">
+			<summary>
+			Adds the specified animation object to the track.
+			</summary> 
+			<param name="anim_obj"> Animation object to be added. </param> 
+			<returns>Index of the new animation object added on success; otherwise, -1.</returns>
+		</member>
+		<member name="M:Unigine.AnimationTrack.removeObject(Unigine.Ptr{AnimationObject})">
+			<summary>
+			Removes the specified animation object along with all modifiers added for it.
+			</summary> 
+			<param name="anim_obj"> Animation object to be removed. </param> 
+		</member>
+		<member name="M:Unigine.AnimationTrack.addObjectModifier(Unigine.Ptr{AnimationObject},Unigine.Ptr{AnimationModifier})">
+			<summary>
+			Adds the specified modifier to the specified animation object to control changes of a certain parameter over time.
+			</summary> 
+			<param name="anim_obj"> Target animation object to which a modifier should be added. </param>
+			<param name="modifier"> Animation modifier to be added. </param> 
+		</member>
+		<member name="M:Unigine.AnimationTrack.updateObjectModifier(Unigine.Ptr{AnimationObject},Unigine.Ptr{AnimationModifier})">
+			<summary>
+			Updates the specified modifier for the specified animation object.
+			</summary> 
+			<param name="anim_obj"> Target animation object to which a modifier should be added. </param>
+			<param name="modifier"> New source animation modifier to be used. </param> 
+			<returns>true if the specified modifier was successfully updated for the animation object; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.AnimationTrack.removeObjectModifier(Unigine.Ptr{AnimationObject},Unigine.Ptr{AnimationModifier})">
+			<summary>
+			Removes the specified modifier from the specified animation object.
+			</summary> 
+			<param name="anim_obj"> Target animation object from which a modifier should be removed. </param>
+			<param name="modifier"> Animation modifier to be removed. </param> 
+		</member>
+		<member name="M:Unigine.AnimationTrack.getObjectModifiers(Unigine.Ptr{AnimationObject},Unigine.Vector{Unigine.Ptr{AnimationModifier},int,Unigine.VectorAllocator}) const">
+			<summary>
+			Collects all modifiers for the specified  animation object and puts them to the out_modifiers buffer.
+			</summary> 
+			<param name="anim_obj"> Animation object. </param>
+			<param name="out_modifiers"> Output buffer for the list of all modifiers for the specified object. </param> 
+			<returns>Number of modifiers for the specified object.</returns>
+		</member>
+		<member name="M:Unigine.AnimationTrack.addObjectModifier(char,Unigine.Ptr{AnimationModifier})">
+			<summary>
+			Adds the specified modifier to the animation object with the specified name to control changes of a certain parameter over time.
+			</summary> 
+			<param name="anim_obj_name"> Name of the target animation object to which a modifier should be added. </param>
+			<param name="modifier"> Animation modifier to be added. </param> 
+		</member>
+		<member name="M:Unigine.AnimationTrack.addSingletonModifier(Unigine.Ptr{AnimationModifier})">
+			<summary>
+			Adds the specified singleton animation modifier to control changes of a certain parameter of some Engine's singleton class, such as Physics, Render, etc.
+			</summary> 
+			<param name="modifier"> Singleton animation modifier to be added. </param> 
+		</member>
+		<member name="M:Unigine.AnimationTrack.updateSingletonModifier(Unigine.Ptr{AnimationModifier})">
+			<summary>
+			Updates the specified singleton animation modifier used to control changes of a certain parameter of some Engine's singleton class, such as Physics, Render, etc.
+			</summary> 
+			<param name="modifier"> Singleton animation modifier to be updated. </param> 
+			<returns>true if the specified singleton modifier was successfully updated; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.AnimationTrack.removeSingletonModifier(Unigine.Ptr{AnimationModifier})">
+			<summary>
+			Removes the specified singleton animation modifier from the track.
+			</summary> 
+			<param name="modifier"> Singleton animation modifier to be removed. </param> 
+		</member>
+		<member name="M:Unigine.AnimationTrack.getSingletonModifiers(Unigine.Vector{Unigine.Ptr{AnimationModifier},int,Unigine.VectorAllocator}) const">
+			<summary>
+			Collects all singleton animation modifiers of the track and puts them to the out_modifiers buffer.
+			</summary> 
+			<param name="out_modifiers"> Output buffer for the list of all singleton modifiers of the track. </param> 
+			<returns>Number of singleton animation modifiers of the track.</returns>
+		</member>
+		<member name="M:Unigine.AnimationTrack.getFrame(float)">
+			<summary>
+			Returns the animation frame for the specified moment of time. A frame can be thought of as a vertical slice of values of all tracks and modifiers played at the specified moment.
+			</summary> 
+			<param name="time"> Time (in seconds) for which a frame is to be obtained. </param> 
+			<returns>Animation frame for the specified time.</returns>
+		</member>
+		<member name="M:Unigine.AnimationTrack.getFrameByNormalizedTime(float)">
+			<summary>
+			Returns the animation frame for the specified moment of time (normalized).  A frame can be thought of as a vertical slice of values of all tracks and modifiers played at the specified moment.
+			</summary> 
+			<param name="time"> Normalized time value (in the [0.0f, 1.0f] range) for which a frame is to be obtained . </param> 
+			<returns>Animation frame for the specified time.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getObjectByIndex(int) const">
+			<summary>
+			Returns an animation object by its index in the common list of animation objects.
+			</summary> 
+			<param name="index"> Animation object index. </param> 
+			<returns>Animation object with the specified index</returns>
+		</member>
+		<member name="M:Unigine.Animations.getObjectByID(int) const">
+			<summary>
+			Returns an animation object by its ID.
+			</summary> 
+			<param name="id"> Animation object ID. </param> 
+			<returns>Animation object with the specified ID.</returns>
+		</member>
+		<member name="M:Unigine.Animations.containsObject(int) const">
+			<summary>
+			Returns a value indicating if an animation object with the specified ID exists.
+			</summary> 
+			<param name="id"> Animation object ID. </param> 
+			<returns>true if the animation object with the specified ID exists; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getObjectIndex(Unigine.Ptr{AnimationObject}) const">
+			<summary>
+			Returns an index of the specified animation object in the common list.
+			</summary> 
+			<param name="obj"> Animation object for which an index is to be found. </param> 
+			<returns>Animation object index in the common list of animation objects if it is found; otherwise, -1.</returns>
+		</member>
+		<member name="M:Unigine.Animations.loadTracks">
+			<summary>
+			Loads all animation tracks.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Animations.unloadTracks">
+			<summary>
+			Unloads all animation tracks.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Animations.reloadTracks">
+			<summary>
+			Reloads all animation tracks.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Animations.loadTrack(char)">
+			<summary>
+			Loads an animation track from the specified file path.
+			</summary> 
+			<param name="path"> Path to the source track file (.utrack). </param> 
+			<returns>Result of loading operation.</returns>
+		</member>
+		<member name="M:Unigine.Animations.reloadTrack(char)">
+			<summary>
+			Reloads an animation track from the specified file path.
+			</summary> 
+			<param name="path"> Path to the source track file (.utrack). </param> 
+			<returns>Result of reloading operation.</returns>
+		</member>
+		<member name="M:Unigine.Animations.saveTrack(Unigine.Ptr{AnimationTrack},char)">
+			<summary>
+			Saves the specified animation track to the specified file path.
+			</summary> 
+			<param name="track"> Animation track to be saved. </param>
+			<param name="path"> Path to which the specified animation track is to be saved. </param> 
+			<returns>Result of saving operation.</returns>
+		</member>
+		<member name="M:Unigine.Animations.saveTrackPrecomputed(Unigine.Ptr{AnimationTrack},int,bool,char)">
+			<summary>
+			Saves the precomputed version of the specified animation track to the specified file path.
+			</summary> 
+			<param name="track"> Animation track to be saved. </param>
+			<param name="num_frames"> Number of frames to be saved. </param>
+			<param name="is_looped_frames"> Set true if the animation track should be looped; otherwise, false. </param>
+			<param name="path"> Path to which the specified animation track is to be saved. </param> 
+			<returns>Result of saving operation.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getTrackByIndex(int)">
+			<summary>
+			Returns an animation track by its index in the common list of tracks.
+			</summary> 
+			<param name="index"> Animation track index in the common list of tracks. </param> 
+			<returns>Animation track with the specified index.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getTrackByGUID(Unigine.UGUID)">
+			<summary>
+			Returns an animation track by its GUID.
+			</summary> 
+			<param name="guid"> GUID of the animation track. </param> 
+			<returns>Animation track with the specified GUID.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getTrackByFileGUID(Unigine.UGUID)">
+			<summary>
+			Returns an animation track by the GUID of the animation track file (.utrack).
+			</summary> 
+			<param name="guid"> GUID of the animation track file (.utrack). </param> 
+			<returns>Animation track with the specified file GUID.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getTrackByPath(char)">
+			<summary>
+			Returns an animation track by the path to the animation track file (.utrack).
+			</summary> 
+			<param name="path"> Path to the animation track file (.utrack). </param> 
+			<returns>Animation track with the specified file GUID.</returns>
+		</member>
+		<member name="M:Unigine.Animations.containsTrack(Unigine.UGUID)">
+			<summary>
+			Returns a value indicating if an animation track with the specified GUID exists.
+			</summary> 
+			<param name="guid"> GUID of the animation track. </param> 
+			<returns>true if the animation track with the specified GUID exists; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getTrackIndex(Unigine.Ptr{AnimationTrack})">
+			<summary>
+			Returns an index of the specified animation track in the common list.
+			</summary> 
+			<param name="track"> Animation track for which an index is to be found. </param> 
+			<returns>Animation track index in the common list of animation tracks if it is found; otherwise, -1.</returns>
+		</member>
+		<member name="M:Unigine.Animations.loadPlaybacks">
+			<summary>
+			Loads all animation playbacks.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Animations.loadPlayback(char)">
+			<summary>
+			Loads an animation playback from the specified file path.
+			</summary> 
+			<param name="path"> Path to the source animation playback file (.uplay). </param> 
+			<returns>Result of loading operation.</returns>
+		</member>
+		<member name="M:Unigine.Animations.savePlayback(Unigine.Ptr{AnimationPlayback},char)">
+			<summary>
+			Saves the specified animation playback to the specified file path.
+			</summary> 
+			<param name="playback"> Animation playback to be saved. </param>
+			<param name="path"> Path to which the specified animation playback is to be saved. </param> 
+			<returns>Result of saving operation.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getPlaybackByIndex(int) const">
+			<summary>
+			Returns an animation playback by its index in the common list of tracks.
+			</summary> 
+			<param name="index"> Animation playback index in the common list of playbacks. </param> 
+			<returns>Animation playback with the specified index.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getPlaybackByGUID(Unigine.UGUID) const">
+			<summary>
+			Returns an animation playback by its GUID.
+			</summary> 
+			<param name="guid"> GUID of the animation playback. </param> 
+			<returns>Animation playback with the specified GUID.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getPlaybackByFileGUID(Unigine.UGUID) const">
+			<summary>
+			Returns an animation playback by the GUID of the animation track file (.uplay).
+			</summary> 
+			<param name="guid"> GUID of the animation playback file (.uplay). </param> 
+			<returns>Animation track with the specified file GUID.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getPlaybackByPath(char) const">
+			<summary>
+			Returns an animation playback by the path to the animation track file (.uplay).
+			</summary> 
+			<param name="path"> Path to the animation playback file (.uplay). </param> 
+			<returns>Animation playback with the specified file GUID.</returns>
+		</member>
+		<member name="M:Unigine.Animations.containsPlayback(Unigine.UGUID) const">
+			<summary>
+			Returns a value indicating if an animation playback with the specified GUID exists.
+			</summary> 
+			<param name="guid"> GUID of the animation playback. </param> 
+			<returns>true if the animation playback with the specified GUID exists; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getPlaybackIndex(Unigine.Ptr{AnimationPlayback}) const">
+			<summary>
+			Returns an index of the specified animation playback in the common list.
+			</summary> 
+			<param name="playback"> Animation playback for which an index is to be found. </param> 
+			<returns>Animation track index in the common list of animation tracks if it is found; otherwise, -1.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getClasses(Unigine.Vector{String,int,Unigine.VectorAllocator})">
+			<summary>
+			Obtains the list of names of all available classes that can be animated and puts it to the specified output buffer.
+			</summary> 
+			<param name="out_classes"> Output buffer for the list of the Engine's classes that can be animated. </param> 
+			<returns>Number of the Engine's classes that can be animated.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getSingletonClasses(Unigine.Vector{String,int,Unigine.VectorAllocator})">
+			<summary>
+			Obtains the list of names of all Engine's singleton-classes and puts it to the specified output buffer.
+			</summary> 
+			<param name="out_classes"> Output buffer for the list of the Engine's singleton-classes. </param> 
+			<returns>Number of the Engine's singleton-classes.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getParentClass(char) const">
+			<summary>
+			Returns the name of the parent class for the specified class.
+			</summary> 
+			<param name="class_name"> Name of the class for which the parent class is to be found. </param> 
+			<returns>Name of the parent class.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getDerivedClasses(char,Unigine.Vector{String,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Obtains the list of all classes derived from the specified one and puts it to the specified output buffer.
+			</summary> 
+			<param name="class_name"> Name of the class for which derived classes are to be found. </param>
+			<param name="out_classes"> Output buffer for the list of classes derived from the specified class. </param> 
+			<returns>Number of derived classes.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getClassParameters(char,Unigine.Vector{int,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Obtains the list of all animation parameter for the specified class and puts it to the specified output buffer.
+			</summary> 
+			<param name="class_name"> Name of the class for which the list of animation parameters is to be found. </param>
+			<param name="out_parameters"> Output buffer for the list of parameters of the specified class. </param> 
+			<returns>Number of animation parameters for the specified class.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getParameterName(AnimParams::PARAM) const">
+			<summary>
+			Returns the name of the specified the specified animation parameter.
+			</summary> 
+			<param name="param"> Animation parameter. </param> 
+			<returns>Animation parameter name.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getParameterModifierType(AnimParams::PARAM) const">
+			<summary>
+			Returns the type of modifier used for the specified animation parameter.
+			</summary> 
+			<param name="param"> Animation parameter. </param> 
+			<returns>Modifier type for the specified parameter.</returns>
+		</member>
+		<member name="M:Unigine.Animations.getParameterByName(char) const">
+			<summary>
+			Returns an animation parameter by its name.
+			</summary> 
+			<param name="param_name"> Animation parameter name. </param> 
+			<returns>Animation parameter with the specified name.</returns>
+		</member>
+		<member name="M:Unigine.Animations.convertToUanims(char,Unigine.Vector{String,int,Unigine.VectorAllocator})">
+			<summary>
+			Converts all track-files in the old					Tracker format (					.track) from the specfied folder to the new animation formats  (.utrack / .uplay).
+			</summary> 
+			<param name="folder_path"> Path to the folder containing track-files in the oldTracker format (.track) to be converted to the new track format (.utrack). </param>
+			<param name="playbacks"> List ofTracker animation tracks in old format (.track) to be converted to the new playback format(.uplay). </param> 
+		</member>
+		<member name="M:Unigine.Animations.convertToUanims(Unigine.Vector{String,int,Unigine.VectorAllocator},Unigine.Vector{String,int,Unigine.VectorAllocator})">
+			<summary>
+			Converts the specified lists of tracks in the old					Tracker format (					.track) to the new animation formats (.utrack / .uplay).
+			</summary> 
+			<param name="tracks"> List ofTracker animation tracks in old format (.track) to be converted to the new track format (.utrack). </param>
+			<param name="playbacks"> List ofTracker animation tracks in old format (.track) to be converted to the new playback format(.uplay). </param> 
+		</member>
+		<member name="M:Unigine.Animations.checkUtrackTypes">
+			<summary>
+			Checks all old-style animation parameter types (used in the					Tracker tool) versus their equivalents in the new Animation System and outputs them to the console. In case of unknown parameter types the corresponding message is displayed.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Animations.animToBonesModifier(char,Unigine.Ptr{AnimationModifierBones},float) const">
+			<summary>
+			Converts the specified mesh animation file (.anim) to a modifier for					ObjectMeshSkinned bones (					AnimationModifierBones) and puts it to the specified					AnimationModifierBones instance.
+			</summary> 
+			<param name="anim_path"> Math to the mesh animation file (.anim) to be converted. </param>
+			<param name="out_modifier"> Resulting animation modifier. </param>
+			<param name="duration"> Target animation duration, in seconds. </param> 
+			<returns>true if the specified mesh animation file was successfully converted; otherwise, false.</returns>
+		</member>
+		<member name="F:Unigine.Animations.RESULT_TRACK_ERROR">
+			<summary>
+			A track-related error has occurred.
+		</summary>
+		</member>
+		<member name="F:Unigine.Animations.RESULT_NEW_TRACK_LOADED">
+			<summary>
+			A new animation track is loaded.
+		</summary>
+		</member>
+		<member name="F:Unigine.Animations.RESULT_TRACK_IS_ALREADY_LOADED">
+			<summary>
+			The animation track is already loaded.
+		</summary>
+		</member>
+		<member name="F:Unigine.Animations.RESULT_TRACK_RELOADED">
+			<summary>
+			The animation track is reloaded.
+		</summary>
+		</member>
+		<member name="F:Unigine.Animations.RESULT_TRACK_SAVED">
+			<summary>
+			The animation track is saved.
+		</summary>
+		</member>
+		<member name="F:Unigine.Animations.RESULT_TRACK_UNLOADED">
+			<summary>
+			The animation track is unloaded.
+		</summary>
+		</member>
+		<member name="F:Unigine.Animations.RESULT_PLAYBACK_ERROR">
+			<summary>
+			A playback-related error has occurred.
+		</summary>
+		</member>
+		<member name="F:Unigine.Animations.RESULT_NEW_PLAYBACK_LOADED">
+			<summary>
+			A new animation playback is loaded.
+		</summary>
+		</member>
+		<member name="F:Unigine.Animations.RESULT_PLAYBACK_IS_ALREADY_LOADED">
+			<summary>
+			The animation playback is already loaded.
+		</summary>
+		</member>
+		<member name="F:Unigine.Animations.RESULT_PLAYBACK_SAVED">
+			<summary>
+			The animation playback is saved.
+		</summary>
+		</member>
+	</members>
+</doc>

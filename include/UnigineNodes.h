@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -15,16 +15,48 @@
 #pragma once
 
 #include "UnigineNode.h"
+#include "UnigineAnimation.h"
 
 namespace Unigine
 {
+
+class AnimationPlayback;
+//////////////////////////////////////////////////////////////////////////
+
+class UNIGINE_API NodeAnimationPlayback : public Node
+{
+public:
+	static Node::TYPE type() { return Node::NODE_ANIMATION_PLAYBACK; }
+	static bool convertible(Node *node) { return (node && node->getType() == type()); }
+
+	static Ptr<NodeAnimationPlayback> create();
+	void play();
+	void pause();
+	void stop();
+	bool isPlaying() const;
+	void setTime(float time);
+	float getTime() const;
+	void setLoop(bool loop);
+	bool isLoop() const;
+	void setSpeed(float speed);
+	float getSpeed() const;
+	void setTrackFileGUID(const UGUID &trackfileguid);
+	UGUID getTrackFileGUID() const;
+	void setTrackPath(const char *path);
+	const char *getTrackPath() const;
+	void setPlayOnEnable(bool enable);
+	bool isPlayOnEnable() const;
+	void setRestartOnEnable(bool enable);
+	bool isRestartOnEnable() const;
+};
+typedef Ptr<NodeAnimationPlayback> NodeAnimationPlaybackPtr;
 
 //////////////////////////////////////////////////////////////////////////
 
 class UNIGINE_API NodeDummy : public Node
 {
 public:
-	static int type() { return Node::NODE_DUMMY; }
+	static Node::TYPE type() { return Node::NODE_DUMMY; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<NodeDummy> create();
@@ -36,7 +68,7 @@ typedef Ptr<NodeDummy> NodeDummyPtr;
 class UNIGINE_API NodeLayer : public Node
 {
 public:
-	static int type() { return Node::NODE_LAYER; }
+	static Node::TYPE type() { return Node::NODE_LAYER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<NodeLayer> create(const char *path);
@@ -50,7 +82,7 @@ typedef Ptr<NodeLayer> NodeLayerPtr;
 class UNIGINE_API NodeReference : public Node
 {
 public:
-	static int type() { return Node::NODE_REFERENCE; }
+	static Node::TYPE type() { return Node::NODE_REFERENCE; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<NodeReference> create(const char *path);
@@ -62,12 +94,15 @@ public:
 };
 typedef Ptr<NodeReference> NodeReferencePtr;
 
+class NodeTrigger;
+template class UNIGINE_API EventHolder<EventInterfaceInvoker<const Ptr<NodeTrigger> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<NodeTrigger> &>>;
 //////////////////////////////////////////////////////////////////////////
 
 class UNIGINE_API NodeTrigger : public Node
 {
 public:
-	static int type() { return Node::NODE_TRIGGER; }
+	static Node::TYPE type() { return Node::NODE_TRIGGER; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<NodeTrigger> create();
@@ -75,12 +110,15 @@ public:
 	void setEnabledCallbackName(const char *name);
 	const char *getPositionCallbackName() const;
 	void setPositionCallbackName(const char *name);
-	void *addEnabledCallback(CallbackBase1<Ptr<NodeTrigger>> *func);
-	bool removeEnabledCallback(void *id);
-	void clearEnabledCallbacks();
-	void *addPositionCallback(CallbackBase1<Ptr<NodeTrigger>> *func);
-	bool removePositionCallback(void *id);
-	void clearPositionCallbacks();
+	Event<const Ptr<NodeTrigger> &> &getEventEnabled();
+	Event<const Ptr<NodeTrigger> &> &getEventPosition();
+
+private:
+
+	EventHolder<EventInterfaceInvoker<const Ptr<NodeTrigger> &>> event_enabled;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<NodeTrigger> &>> event_enabled_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<NodeTrigger> &>> event_position;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<NodeTrigger> &>> event_position_connection;
 };
 typedef Ptr<NodeTrigger> NodeTriggerPtr;
 
@@ -90,7 +128,7 @@ class NodeExternBase;
 class UNIGINE_API NodeExtern : public Node
 {
 public:
-	static int type() { return Node::NODE_EXTERN; }
+	static Node::TYPE type() { return Node::NODE_EXTERN; }
 	static bool convertible(Node *node) { return (node && node->getType() == type()); }
 
 	static Ptr<NodeExtern> create(int class_id);

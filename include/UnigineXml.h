@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -73,6 +73,11 @@ public:
 	int getIntArg(const char *name, int value) const;
 	bool setIntArrayArg(const char *name, const int *src, int src_size, int radix = 10);
 	bool getIntArrayArg(const char *name, int *dest, int dest_size) const;
+	bool setLongArg(const char *name, long long value, int radix = 10);
+	long long getLongArg(const char *name) const;
+	long long getLongArg(const char *name, long long value) const;
+	bool setLongArrayArg(const char *name, const long long *src, int src_size, int radix = 10);
+	bool getLongArrayArg(const char *name, long long *dest, int dest_size) const;
 	bool setFloatArg(const char *name, float value);
 	float getFloatArg(const char *name) const;
 	float getFloatArg(const char *name, float value) const;

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -154,6 +154,22 @@ public:
 		o.clear();
 	}
 
+	using Parent::remove;
+
+	UNIGINE_INLINE void remove(const HashMap &o)
+	{
+		if (&o == this)
+			Parent::clear();
+		else
+		{
+			for (Counter i = 0; i < o.capacity; ++i)
+			{
+				if (o.data[i] == nullptr)
+					continue;
+				Parent::do_remove(o.data[i]->hash, o.data[i]->key);
+			}
+		}
+	}
 	UNIGINE_INLINE Iterator insert(const Key &key, const Type &value) { return Iterator(do_emplace(key, value), Parent::data + Parent::capacity); }
 	UNIGINE_INLINE Iterator insert(const Key &key, Type &&value) { return Iterator(do_emplace(key, std::move(value)), Parent::data + Parent::capacity); }
 	UNIGINE_INLINE Iterator insert(Key &&key, const Type &value) { return Iterator(do_emplace(std::move(key), value), Parent::data + Parent::capacity); }

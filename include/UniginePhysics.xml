@@ -1331,129 +1331,34 @@
 			<param name="num"> Contact number in the range from 0 to the total number of contacts. </param> 
 			<returns>Surface number.</returns>
 		</member>
-		<member name="M:Unigine.Body.addFrozenCallback(Unigine.CallbackBase1{Unigine.Ptr{Unigine.Body}})">
-			<summary>
-			Adds a callback function to be called when a given body freezes.  The signature of the frozen callback function must be as follows:					You can set a callback function as follows:					Physics-based callbacks are executed in the main tread, as they are mainly used for creation, destruction or modification of other objects.					Example: Setting a body frozen callback function for a certain class:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added frozen callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Body.removeFrozenCallback(void)">
-			<summary>
-			Removes the specified callback from the list of frozen callbacks.
-			</summary> 
-			<param name="id"> Frozen callback ID obtained when adding it. </param> 
-			<returns>True if the frozen callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.Body.clearFrozenCallbacks">
-			<summary>
-			Clears all added frozen callbacks.
-			</summary>  
-		</member>
-		<member name="M:Unigine.Body.addPositionCallback(Unigine.CallbackBase1{Unigine.Ptr{Unigine.Body}})">
-			<summary>
-			Adds a callback function to be called when a given body moves a certain distance (rotation is not taken into account). The signature of the position callback function must be as follows:					You can set a callback function as follows:					Physics-based callbacks are executed in the main tread, as they are mainly used for creation, destruction or modification of other objects.					Example: Setting a body position callback function for a certain class:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added position callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Body.removePositionCallback(void)">
-			<summary>
-			Removes the specified callback from the list of position callbacks.
-			</summary> 
-			<param name="id"> Position callback ID obtained when adding it. </param> 
-			<returns>True if the position callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.Body.clearPositionCallbacks">
-			<summary>
-			Clears all added position callbacks.
-			</summary>  
-		</member>
-		<member name="M:Unigine.Body.addContactsCallback(Unigine.CallbackBase1{Unigine.Ptr{Unigine.Body}})">
-			<summary>
-			Adds a callback function to be called after adding new contacts and before removing the ones that cease to exist. This callback can be used to get all contacts of the body including new ones (enter) and the ending ones (leave). Leave contacts are removed after the callback execution stage, so this is the only point where you can still get them.					The signature of the contacts callback function must be as follows:					You can set a callback function as follows:					Example: Setting a body contacts callback function for a certain class:					Physics-based callbacks are executed in the main tread, as they are mainly used for creation, destruction or modification of other objects.
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added contact callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Body.removeContactsCallback(void)">
-			<summary>
-			Removes the specified callback from the list of contacts callbacks. This callback is called after adding new contacts and before removing the ones that cease to exist. It can be used to get all contacts of the body including new ones (enter) and the ending ones (leave). Leave contacts are removed after the callback execution stage, so this is the only point where you can still get them.
-			</summary> 
-			<param name="id"> Contact callback ID obtained when adding it. </param> 
-			<returns>true if the contacts callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.Body.clearContactsCallbacks">
-			<summary>
-			Clears all added contacts callbacks. This callback is called after adding new contacts and before removing the ones that cease to exist. It can be used to get all contacts of the body including new ones (enter) and the ending ones (leave). Leave contacts are removed after the callback execution stage, so this is the only point where you can still get them.
-			</summary>  
-		</member>
-		<member name="M:Unigine.Body.addContactEnterCallback(Unigine.CallbackBase2{Unigine.Ptr{Unigine.Body},int})">
-			<summary>
-			Adds a callback function to be called when a contact with the body emerges (the body begins touching another body). 					The signature of the callback function must be as follows:					You can set a callback function as follows:					Example: Setting a body contact enter callback function for a certain class:					Physics-based callbacks are executed in the main tread, as they are mainly used for creation, destruction or modification of other objects.
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added contact enter callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Body.removeContactEnterCallback(void)">
-			<summary>
-			Removes the specified callback from the list of contact enter callbacks. These callbacks are called when a contact with the body emerges (the body begins touching another body).
-			</summary> 
-			<param name="id"> Contact callback ID obtained when adding it. </param> 
-			<returns>true if the contact enter callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.Body.clearContactEnterCallbacks">
-			<summary>
-			Clears all added contact enter callbacks. These callbacks are called when a contact with the body emerges (the body begins touching another body).
-			</summary>  
-		</member>
-		<member name="M:Unigine.Body.addContactLeaveCallback(Unigine.CallbackBase2{Unigine.Ptr{Unigine.Body},int})">
-			<summary>
-			Adds a callback function to be called when a contact with the body ends (the body stops touching another body). 					The signature of the callback function must be as follows:					You can set a callback function as follows:					Example: Setting a body contact leave callback function for a certain class:					Physics-based callbacks are executed in the main tread, as they are mainly used for creation, destruction or modification of other objects.
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added contact leave callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Body.removeContactLeaveCallback(void)">
-			<summary>
-			Removes the specified callback from the list of contact leave callbacks. These callbacks are called when a contact with the body ends (the body stops touching another body).
-			</summary> 
-			<param name="id"> Contact callback ID obtained when adding it. </param> 
-			<returns>true if the contact leave callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.Body.clearContactLeaveCallbacks">
-			<summary>
-			Clears all added contact leave callbacks. These callbacks are called when a contact with the body ends (the body stops touching another body).
-			</summary>  
-		</member>
 		<member name="M:Unigine.Body.renderContacts">
 			<summary>
-			Renders all contact points of the body including internal and external ones (handled by other bodies).					You should enable the engine visualizer via the show_visualizer 1 console command.
+			Renders all contact points of the body including internal and external ones (handled by other bodies).					You should enable the engine visualizer via the						show_visualizer 1 console command.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Body.renderExternalContacts">
 			<summary>
-			Renders all external contacts of the body (handled by other bodies).					You should enable the engine visualizer via the show_visualizer 1 console command.
+			Renders all external contacts of the body (handled by other bodies).					You should enable the engine visualizer via the						show_visualizer 1 console command.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Body.renderInternalContacts">
 			<summary>
-			Renders all internal contacts of the body (handled by it).					You should enable the engine visualizer via the show_visualizer 1 console command.
+			Renders all internal contacts of the body (handled by it).					You should enable the engine visualizer via the						show_visualizer 1 console command.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Body.renderJoints">
 			<summary>
-			Renders joints to which the body is connected.					You should enable the engine visualizer via the show_visualizer 1 console command.
+			Renders joints to which the body is connected.					You should enable the engine visualizer via the						show_visualizer 1 console command.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Body.renderShapes">
 			<summary>
-			Renders shapes comprising the body.					You should enable the engine visualizer via the show_visualizer 1 console command.
+			Renders shapes comprising the body.					You should enable the engine visualizer via the						show_visualizer 1 console command.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Body.renderVisualizer">
 			<summary>
-			Renders shapes, joints and contact points of the body.					You should enable the engine visualizer via the show_visualizer 1 console command.
+			Renders shapes, joints and contact points of the body.					You should enable the engine visualizer via the						show_visualizer 1 console command.
 			</summary>  
 		</member>
 		<member name="M:Unigine.Body.clone(Unigine.Ptr{Unigine.Object}) const">
@@ -2958,25 +2863,6 @@
 			</summary>  
 			<returns>Positive number if the joint is broken; otherwise, 0. </returns>
 		</member>
-		<member name="M:Unigine.Joint.addBrokenCallback(Unigine.CallbackBase1{Unigine.Ptr{Unigine.Joint}})">
-			<summary>
-			Adds a callback function to be called when the joint breaks. The signature of the broken callback function must be as follows:					You can set a callback function as follows:										Example: Setting a joint broken callback function for a certain class:
-			</summary> 
-			<param name="func"> Callback pointer. </param> 
-			<returns>ID of the last added broken callback, if the callback was added successfully; otherwise, nullptr. This ID can be used to remove this callback when necessary.</returns>
-		</member>
-		<member name="M:Unigine.Joint.removeBrokenCallback(void)">
-			<summary>
-			Removes the specified callback from the list of broken callbacks.
-			</summary> 
-			<param name="id"> Broken callback ID obtained when adding it. </param> 
-			<returns>True if the broken callback with the given ID was removed successfully; otherwise false.</returns>
-		</member>
-		<member name="M:Unigine.Joint.clearBrokenCallbacks">
-			<summary>
-			Clears all added broken callbacks.
-			</summary>  
-		</member>
 		<member name="M:Unigine.Joint.setCollision(int)">
 			<summary>
 			Sets a value indicating if collisions between the connected bodies are enabled.
@@ -3963,7 +3849,7 @@
 			<param name="body0"> First body to be connected with the joint. </param>
 			<param name="body1"> Second body to be connected with the joint. </param>
 			<param name="anchor"> Anchor coordinates. </param>
-			<param name="size"> Axis coordinates. </param> 
+			<param name="axis"> Axis coordinates. </param> 
 		</member>
 		<member name="M:Unigine.JointPrismatic.setAxis0(Unigine.Math.vec3)">
 			<summary>
@@ -4948,7 +4834,7 @@
 			<summary>
 			Returns the current velocity vector of the shape.
 			</summary>  
-			<returns>Current celocity vector, each component represents shape's velocity along the corresponding axis, in units per second.</returns>
+			<returns>Current velocity vector, each component represents shape's velocity along the corresponding axis, in units per second.</returns>
 		</member>
 		<member name="M:Unigine.Shape.getVolume const">
 			<summary>

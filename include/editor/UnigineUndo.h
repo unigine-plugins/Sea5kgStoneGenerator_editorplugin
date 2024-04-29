@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -106,7 +106,7 @@ public:
 	/// <summary>
 	/// This method allows action to do some internal cleanup.
 	/// Return value indicates whether the action is still sane.
-	/// Whenever it returns false asset system will delete invalid action
+	/// Whenever it returns false undo manager will delete invalid action
 	/// for good.
 	/// </summary>
 	virtual bool validate() { return true; }

@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -42,12 +42,17 @@
 	#endif
 #endif
 
- /*
+/*
  */
 #ifdef _WIN32
 	#define UNIGINE_EXPORT		__declspec(dllexport)
 	#define UNIGINE_IMPORT		__declspec(dllimport)
 	#define UNIGINE_INLINE		__forceinline
+	#define UNIGINE_RESTRICT	__restrict
+#elif UNIGINE_PS5
+	#define UNIGINE_EXPORT		__declspec(dllexport)
+	#define UNIGINE_IMPORT		__declspec(dllimport)
+	#define UNIGINE_INLINE		inline
 	#define UNIGINE_RESTRICT	__restrict
 #else
 	#define UNIGINE_EXPORT		__attribute__((visibility("default")))
@@ -113,7 +118,7 @@
 	#define UNIGINE_ASSERT(EXP)	(static_cast<void>(0))
 #else
 	#ifdef _LINUX
-		#define UNIGINE_ASSERT(EXP) { if (EXP) { } else { Unigine::Log::fatal("%s:%d: %s: Assertion: '%s'\n",__FILE__,__LINE__,__ASSERT_FUNCTION,#EXP); } }
+		#define UNIGINE_ASSERT(EXP) { if (EXP) { } else { Unigine::Log::fatal("%s:%d: %s: Assertion: '%s'\n",__FILE__,__LINE__,__func__,#EXP); } }
 	#elif defined(_MACOS) || defined(_IOS)
 		#define UNIGINE_ASSERT(EXP) { if (EXP) { } else { Unigine::Log::fatal("%s:%d: %s: Assertion: '%s'\n",__FILE__,__LINE__,__PRETTY_FUNCTION__,#EXP); } }
 	#else

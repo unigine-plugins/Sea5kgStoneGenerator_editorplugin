@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -16,6 +16,7 @@
 
 #include "UnigineImage.h"
 #include "UnigineCurve2d.h"
+#include "UnigineResourceExternalMemory.h"
 
 namespace Unigine
 {
@@ -108,53 +109,54 @@ public:
 		FORMAT_USAGE_IMMUTABLE = 1 << 10,
 		FORMAT_USAGE_DYNAMIC = 1 << 11,
 		FORMAT_USAGE_STAGING = 1 << 12,
-		FORMAT_USAGE_MASK = FORMAT_USAGE_UNORDERED_ACCESS | FORMAT_USAGE_RENDER | FORMAT_USAGE_IMMUTABLE | FORMAT_USAGE_DYNAMIC | FORMAT_USAGE_STAGING,
+		FORMAT_USAGE_SHARED = 1 << 13,
+		FORMAT_USAGE_MASK = FORMAT_USAGE_UNORDERED_ACCESS | FORMAT_USAGE_RENDER | FORMAT_USAGE_IMMUTABLE | FORMAT_USAGE_DYNAMIC | FORMAT_USAGE_STAGING | FORMAT_USAGE_SHARED,
 		FORMAT_FLAGS = FORMAT_MASK | FORMAT_MULTISAMPLE_MASK | FORMAT_USAGE_MASK,
 	};
 
 	enum
 	{
 		// wrapping
-		SAMPLER_WRAP_CLAMP_X = 1 << 13,
-		SAMPLER_WRAP_CLAMP_Y = 1 << 14,
-		SAMPLER_WRAP_CLAMP_Z = 1 << 15,
+		SAMPLER_WRAP_CLAMP_X = 1 << 14,
+		SAMPLER_WRAP_CLAMP_Y = 1 << 15,
+		SAMPLER_WRAP_CLAMP_Z = 1 << 16,
 		SAMPLER_WRAP_CLAMP = SAMPLER_WRAP_CLAMP_X | SAMPLER_WRAP_CLAMP_Y | SAMPLER_WRAP_CLAMP_Z,
-		SAMPLER_WRAP_BORDER_X = 1 << 16,
-		SAMPLER_WRAP_BORDER_Y = 1 << 17,
-		SAMPLER_WRAP_BORDER_Z = 1 << 18,
-		SAMPLER_WRAP_BORDER_ONE = 1 << 19,
+		SAMPLER_WRAP_BORDER_X = 1 << 17,
+		SAMPLER_WRAP_BORDER_Y = 1 << 18,
+		SAMPLER_WRAP_BORDER_Z = 1 << 19,
+		SAMPLER_WRAP_BORDER_ONE = 1 << 20,
 		SAMPLER_WRAP_BORDER = SAMPLER_WRAP_BORDER_X | SAMPLER_WRAP_BORDER_Y | SAMPLER_WRAP_BORDER_Z,
 		SAMPLER_WRAP_MASK = SAMPLER_WRAP_CLAMP | SAMPLER_WRAP_BORDER | SAMPLER_WRAP_BORDER_ONE,
 		// filter
-		SAMPLER_FILTER_POINT = 1 << 20,
-		SAMPLER_FILTER_LINEAR = 1 << 21,
-		SAMPLER_FILTER_BILINEAR = 1 << 22,
-		SAMPLER_FILTER_TRILINEAR = 1 << 23,
+		SAMPLER_FILTER_POINT = 1 << 21,
+		SAMPLER_FILTER_LINEAR = 1 << 22,
+		SAMPLER_FILTER_BILINEAR = 1 << 23,
+		SAMPLER_FILTER_TRILINEAR = 1 << 24,
 		SAMPLER_FILTER_MASK = SAMPLER_FILTER_POINT | SAMPLER_FILTER_LINEAR | SAMPLER_FILTER_BILINEAR | SAMPLER_FILTER_TRILINEAR,
 		// anisotropy
-		SAMPLER_ANISOTROPY_1 = 1 << 24,
-		SAMPLER_ANISOTROPY_2 = 1 << 25,
-		SAMPLER_ANISOTROPY_4 = 1 << 26,
-		SAMPLER_ANISOTROPY_8 = 1 << 27,
-		SAMPLER_ANISOTROPY_16 = 1 << 28,
+		SAMPLER_ANISOTROPY_1 = 1 << 25,
+		SAMPLER_ANISOTROPY_2 = 1 << 26,
+		SAMPLER_ANISOTROPY_4 = 1 << 27,
+		SAMPLER_ANISOTROPY_8 = 1 << 28,
+		SAMPLER_ANISOTROPY_16 = 1 << 29,
 		SAMPLER_ANISOTROPY_MASK = SAMPLER_ANISOTROPY_1 | SAMPLER_ANISOTROPY_2 | SAMPLER_ANISOTROPY_4 | SAMPLER_ANISOTROPY_8 | SAMPLER_ANISOTROPY_16,
 		// shadow
-		SAMPLER_SHADOW_COMPARE = 1 << 29,
+		SAMPLER_SHADOW_COMPARE = 1 << 30,
 		SAMPLER_SHADOW_MASK = SAMPLER_SHADOW_COMPARE,
 		SAMPLER_FLAGS = SAMPLER_WRAP_MASK | SAMPLER_FILTER_MASK | SAMPLER_ANISOTROPY_MASK | SAMPLER_SHADOW_MASK,
 	};
 	static Ptr<Texture> create();
-	bool create(const Ptr<Image> &image, int flags = 1<<21);
-	bool create2D(int width, int height, int format, int flags = 1<<21);
-	bool create3D(int width, int height, int depth, int format, int flags = 1<<21);
-	bool createCube(int width, int height, int format, int flags = 1<<21);
-	bool create2DArray(int width, int height, int num_layers, int format, int flags = 1<<21);
-	bool createCubeArray(int width, int height, int num_layers, int format, int flags = 1<<21);
+	bool create(const Ptr<Image> &image, int flags = 1<<22);
+	bool create2D(int width, int height, int format, int flags = 1<<22);
+	bool create3D(int width, int height, int depth, int format, int flags = 1<<22);
+	bool createCube(int width, int height, int format, int flags = 1<<22);
+	bool create2DArray(int width, int height, int num_layers, int format, int flags = 1<<22);
+	bool createCubeArray(int width, int height, int num_layers, int format, int flags = 1<<22);
 	int fromGLTexture2D(unsigned int tex_id, int width, int height, int format, int flags);
 	int fromGLTexture2D(unsigned int tex_id, int width, int height, int format, int internal_format, int flags);
 	int fromD3D11Texture2D(void *ptr, int width, int height, int format, int flags);
 	int fromD3D11Texture2D(void *ptr, int width, int height, int format, int internal_format, int flags);
-	bool load(const char *name, int flags = 1<<21);
+	bool load(const char *name, int flags = 1<<22);
 	bool setImage(const Ptr<Image> &image);
 	bool setImage2D(const Ptr<Image> &image, int offset_x, int offset_y, int texture_format = -1);
 	bool setImageLayer(const Ptr<Image> &image, int layer, int texture_format = -1);
@@ -167,6 +169,7 @@ public:
 	int getType() const;
 	const char *getTypeName() const;
 	static const char *getTypeName(int type);
+	Ptr<ResourceExternalMemory> getResourceExternalMemory() const;
 	bool is2DType() const;
 	bool is3DType() const;
 	bool isCubeType() const;
@@ -175,6 +178,7 @@ public:
 	static int formatTextureToImage(int texture_format);
 	static int typeTextureToImage(int texture_type);
 	static size_t getVideoMemoryUsage(int width, int height, int format, int num_mipmaps, int flags, int num_faces, int num_layers, int depth);
+	size_t getVideoMemoryUsage() const;
 	int getFormat() const;
 	const char *getFormatName() const;
 	int getImageFormat() const;
@@ -190,6 +194,12 @@ public:
 	bool isColorFormat() const;
 	bool isDepthFormat() const;
 	int getNumChannels() const;
+	bool isUsageUnorderedAccess() const;
+	bool isUsageRender() const;
+	bool isUsageImmutable() const;
+	bool isUsageDynamic() const;
+	bool isUsageStaging() const;
+	bool isUsageShared() const;
 	int getWidth(int level = 0) const;
 	int getHeight(int level = 0) const;
 	int getDepth(int level = 0) const;
@@ -217,12 +227,6 @@ public:
 	void renderCubeArray(int face, int layer, float x0 = -1.0f, float y0 = -1.0f, float x1 = 1.0f, float y1 = 1.0f);
 	void setDebugName(const char *name);
 	const char *getDebugName() const;
-	void bindVertex(int unit) const;
-	void unbindVertex(int unit) const;
-	void bindFragment(int unit) const;
-	void unbindFragment(int unit) const;
-	void bindCompute(int unit) const;
-	void unbindCompute(int unit) const;
 	int getGLTarget() const;
 	int getGLInternalFormat() const;
 	int getGLPixelFormat() const;
@@ -245,15 +249,21 @@ public:
 
 	enum
 	{
-		GPU_RESOURCE = 0,
-		IMMUTABLE = 1,
-		CPU_RESOURCE = 2,
-		STAGING = 3,
+		USAGE_GPU_RESOURCE = 1 << 0,
+		USAGE_IMMUTABLE = 1 << 1,
+		USAGE_CPU_RESOURCE = 1 << 2,
+		USAGE_STAGING = 1 << 3,
+		USAGE_SHARED = 1 << 4,
 	};
 	static Ptr<StructuredBuffer> create();
-	int create(int flags, void *data, unsigned int structure_size, unsigned int num_elements);
+	int create(int flags, const void *data, unsigned int structure_size, unsigned int num_elements);
 	int create(int flags, unsigned int structure_size, unsigned int num_elements);
 	int getData(void *data);
+	bool isUsageGPUResource() const;
+	bool isUsageImmutable() const;
+	bool isUsageCPUResource() const;
+	bool isUsageStaging() const;
+	bool isUsageShared() const;
 	void clear();
 	void destroy();
 	void clearBuffer();
@@ -261,18 +271,7 @@ public:
 	int getNumElements() const;
 	void setDebugName(const char *name);
 	const char *getDebugName() const;
-	void bindVertex(int unit) const;
-	void unbindVertex(int unit) const;
-	void bindControl(int unit) const;
-	void unbindControl(int unit) const;
-	void bindEvaluate(int unit) const;
-	void unbindEvaluate(int unit) const;
-	void bindGeometry(int unit) const;
-	void unbindGeometry(int unit) const;
-	void bindFragment(int unit) const;
-	void unbindFragment(int unit) const;
-	void bindCompute(int unit) const;
-	void unbindCompute(int unit) const;
+	Ptr<ResourceExternalMemory> getResourceExternalMemory() const;
 	int getGLBufferID() const;
 	void * getD3D11ShaderResourceView() const;
 	void * getD3D11UnorderedAccessView() const;
@@ -352,9 +351,7 @@ public:
 	int getResolution() const;
 	void setFlags(int flags);
 	int getFlags() const;
-	void *addChangedCallback(CallbackBase *func);
-	bool removeChangedCallback(void *id);
-	void clearChangedCallbacks();
+	Event<> &getEventChanged();
 };
 typedef Ptr<TextureRamp> TextureRampPtr;
 

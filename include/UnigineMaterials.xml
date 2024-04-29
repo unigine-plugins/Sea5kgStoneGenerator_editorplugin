@@ -4,18 +4,6 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.Materials.setLoadingMode(Materials::LOADING_MODE)">
-			<summary>
-			Sets loading mode for materials to be used by the Engine at startup. By default materials loading in UNIGINE is optimized to reduce spikes during run time as much as possible, as they are totally unacceptable for simulators, as well as for a lot of other applications. However, this approach may significantly increase memory consumption and loading time at Engine’s and Editor startup. This may be a problem in case of insufficient memory capacity or when it is necessary to perform a lot of iterations quickly (e.g. development stage). This option enables you to choose between low memory consumption  with faster loading time and smooth spikes-free run-time operation.
-			</summary> 
-			<param name="mode"> Materials loading mode to be used by the Engine. One of the LOADING_MODE_* values. </param> 
-		</member>
-		<member name="M:Unigine.Materials.getLoadingMode const">
-			<summary>
-			Returns the current loading mode for materials used by the Engine at startup. By default materials loading in UNIGINE is optimized to reduce spikes during run time as much as possible, as they are totally unacceptable for simulators, as well as for a lot of other applications. However, this approach may significantly increase memory consumption and loading time at Engine’s and Editor startup. This may be a problem in case of insufficient memory capacity or when it is necessary to perform a lot of iterations quickly (e.g. development stage). This option enables you to choose between low memory consumption  with faster loading time and smooth spikes-free run-time operation.
-			</summary>  
-			<returns>Materials loading mode currently used by the Engine. One of the LOADING_MODE_* values.</returns>
-		</member>
 		<member name="M:Unigine.Materials.loadMaterial(char)">
 			<summary>
 			Loads a material stored by the given path. The function can be used to load materials created during application execution or stored outside the data directory.
@@ -73,15 +61,22 @@
 		</member>
 		<member name="M:Unigine.Materials.setCachedMaterial(Unigine.Ptr{Unigine.Material})">
 			<summary>
-			</summary>  
+								Sets the material to be modified in runtime. This method is used together with setCachedState and getCachedMaterial() to change the material state in runtime without the necessity to recalculate the materials every frame and recompile the shaders. Using these methods is highly recommended if the material states are changed almost every frame or several times per frame.										Let's review an example use case that can make use of these methods. Assume that you have a performance-consuming material and you want to reduce its quality when it's rendered in reflections. The following pseudo code demonstrates the approach to using these methods:
+			</summary> 
+			<param name="mat"> The material to be modified in runtime. </param> 
 		</member>
 		<member name="M:Unigine.Materials.getCachedMaterial">
 			<summary>
+								Returns the material modified in runtime. This method is used together with setCachedMaterial() and setCachedState to change the material state in runtime without the necessity to recalculate the materials every frame and recompile the shaders. Using these methods is highly recommended if the material states are changed almost every frame or several times per frame.										Let's review an example use case that can make use of these methods. Assume that you have a performance-consuming material and you want to reduce its quality when it's rendered in reflections. The following pseudo code demonstrates the approach to using these methods:
 			</summary>  
+			<returns>The material modified in runtime.</returns>
 		</member>
 		<member name="M:Unigine.Materials.setCachedState(char,int)">
 			<summary>
-			</summary>  
+								Sets the target state for the material to modify it in runtime. This method is used together with setCachedMaterial() and getCachedMaterial() to change the material state in runtime without the necessity to recalculate the materials every frame and recompile the shaders. Using these methods is highly recommended if the material states are changed almost every frame or several times per frame.										Let's review an example use case that can make use of these methods. Assume that you have a performance-consuming material and you want to reduce its quality when it's rendered in reflections. The following pseudo code demonstrates the approach to using these methods:
+			</summary> 
+			<param name="name"> The name of the state to be changed. </param>
+			<param name="value"> The target state value. </param> 
 		</member>
 		<member name="M:Unigine.Materials.removeMaterial(Unigine.UGUID,bool,bool)">
 			<summary>
@@ -105,12 +100,6 @@
 			Saves changes made for all loaded materials.
 			</summary>  
 			<returns>true if materials are saved successfully; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Materials.compileShaders(Unigine.Vector{Unigine.Ptr{Unigine.Material},int,Unigine.VectorAllocator})">
-			<summary>
-			Compiles shaders for all specified materials.
-			</summary> 
-			<param name="materials"> Vector containing the list of materials for which shaders are to be compiled. </param> 
 		</member>
 		<member name="M:Unigine.Materials.compileShaders">
 			<summary>
@@ -149,20 +138,10 @@
 			Creates all shaders for all loaded materials.
 			</summary>  
 		</member>
-		<member name="F:Unigine.Materials.LOADING_MODE_FULL_MATERIALS_SHADERS">
+		<member name="M:Unigine.Materials.createRenderMaterials">
 			<summary>
-			Caching for materials and shaders - Caching of materials is enabled along with shader cache generation and loading. This mode requires compilation of all shaders resulting in long loading times. Everything is kept in memory with no streaming required. This mode is the best as it ensures stable work and significant reduction of spikes, but takes a lot of memory and increases loading time at startup. Recommended for production phase (when you hand over your application to the end user).This mode is enabled by default, in case of invalid shaders cache in your project both, the Engine and UnigineEditor may take too long to load. Switch mode for faster loading if necessary!
-		</summary>
-		</member>
-		<member name="F:Unigine.Materials.LOADING_MODE_FULL_MATERIALS">
-			<summary>
-			Caching for materials - materials are created at Engine's startup rather than at run time. Engine startup takes more time than for the first mode and more memory is used. There are less spikes in this mode, but they occur sometimes. This mode can be enabled on a constant basis for a small project having a small number of materials (in case of satisfactory performance and sufficient memory amount).
-		</summary>
-		</member>
-		<member name="F:Unigine.Materials.LOADING_MODE_FAST">
-			<summary>
-			No caching - minimum memory consumption and maximum Engine loading speed. Сaching for materials and shaders is disabled, so everything is loaded on demand resulting in lots of freezes, spikes, etc. This method can be used when spikes are less important than memory consumption. Recommended for fast iterations during the application development phase as less time is spent on launching your application and loading resources.
-		</summary>
+			Creates render materials (internal materials required for rendering). For example, you can create all necessary render materials during initialization to avoid spikes that may occur later.
+			</summary>  
 		</member>
 	</members>
 </doc>

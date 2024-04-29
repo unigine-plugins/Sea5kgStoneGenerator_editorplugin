@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -15,7 +15,8 @@
 #pragma once
 
 #define UNIGINE_VERSION_MAJOR "2"
-#define UNIGINE_VERSION_MINOR "17"
+#define UNIGINE_VERSION_MINOR "18"
 #define UNIGINE_VERSION_PATCH "0"
 #define UNIGINE_VERSION_REVISION "1"
-#define UNIGINE_VERSION "2.17.0.1"
+#define UNIGINE_VERSION "2.18.0.1"
+#define UNIGINE_SDK_VERSION "2.18.1"

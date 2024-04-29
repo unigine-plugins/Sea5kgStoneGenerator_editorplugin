@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2023, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -93,14 +93,14 @@ struct Palette
 		return !(*this == value);
 	}
 
-	UNIGINE_INLINE float &operator[](StringStack<> color)
+	UNIGINE_INLINE float &operator[](const StringStack<> &color)
 	{
 		int index = colorNameToIndex(color);
 
 		assert((index >= 0) && (index < SIZE) && "Palette::operator[](): index out of bounds");
 		return colors[index];
 	}
-	UNIGINE_INLINE float operator[](StringStack<> color) const
+	UNIGINE_INLINE float operator[](const StringStack<> &color) const
 	{
 		int index = colorNameToIndex(color);
 		
