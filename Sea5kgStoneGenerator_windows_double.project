@@ -7973,12 +7973,12 @@
     },
     "sdk": {
         "edition": "community",
-        "internal_version": 54,
-        "key": "tier0_bin_windows-2.17",
+        "internal_version": 55,
+        "key": "tier0_bin_windows-2.18.1",
         "name": "UNIGINE 2 Community",
-        "path": "C:/Users/mrsea/AppData/Local/unigine/browser/sdks/community_windows_2.17_bin",
+        "path": "C:/Users/mrsea/AppData/Local/unigine/browser/sdks/community_windows_2.18.1_bin",
         "type": "bin",
-        "version": "2.17"
+        "version": "2.18.1"
     },
     "version": "2"
 }
