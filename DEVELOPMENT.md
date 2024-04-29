@@ -17,7 +17,7 @@ $ sudo apt install qt5-default cmake gcc git-core
 ```
 
 Windows:
-- install cmake >= 3.20 
+- install cmake >= 3.20
 - install Visual Studio 2015
 - install qt 5.12.3 (And set system environment variable `QTDIR=C:\Qt\Qt5.12.3\5.12.3\`)
 - install python3 (for command scripts)
