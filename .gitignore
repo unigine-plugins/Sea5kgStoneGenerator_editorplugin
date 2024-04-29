@@ -1,7 +1,10 @@
 /bin
 /bin_double
 /bin_float
-/data
+/data/*
+!/data/plugins
+/data/plugins/*
+!/data/plugins/Sea5kg
 /source/plugins/Local
 /source/plugins/Unigine
 /launch_debug*

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asset version="2.18.0.1">
+	<guid>c0b76756e60f040c854f6ab286776ef6c1fa74f8</guid>
+	<type>material</type>
+	<hash>9b996d1f</hash>
+	<runtimes>
+		<runtime id="c0b76756e60f040c854f6ab286776ef6c1fa74f8" name="gray_tree" link="0" type="5"/>
+	</runtimes>
+	<parameters>
+		<parameter type="bool" name="unchanged">1</parameter>
+	</parameters>
+</asset>

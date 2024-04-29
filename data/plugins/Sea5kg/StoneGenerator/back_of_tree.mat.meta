@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asset version="2.18.0.1">
+	<guid>dfbcecf5a9cebca83aa3a6898aa355fb93d0fb73</guid>
+	<type>material</type>
+	<hash>3bb6d427</hash>
+	<runtimes>
+		<runtime id="dfbcecf5a9cebca83aa3a6898aa355fb93d0fb73" name="back_of_tree" link="0" type="5"/>
+	</runtimes>
+	<parameters>
+		<parameter type="bool" name="unchanged">1</parameter>
+	</parameters>
+</asset>

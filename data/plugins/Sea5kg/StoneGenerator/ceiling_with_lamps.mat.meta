@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asset version="2.18.0.1">
+	<guid>8ecf8c0b020b8ec4d5058c7f4ef3ba13aca43919</guid>
+	<type>material</type>
+	<hash>faed8b</hash>
+	<runtimes>
+		<runtime id="8ecf8c0b020b8ec4d5058c7f4ef3ba13aca43919" name="ceiling_with_lamps" link="0" type="5"/>
+	</runtimes>
+	<parameters>
+		<parameter type="bool" name="unchanged">1</parameter>
+	</parameters>
+</asset>

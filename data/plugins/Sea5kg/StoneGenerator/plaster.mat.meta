@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asset version="2.18.0.1">
+	<guid>3e5b425a4c30190f0e359876d391462fafa4fb1c</guid>
+	<type>material</type>
+	<hash>a547c1d5</hash>
+	<runtimes>
+		<runtime id="3e5b425a4c30190f0e359876d391462fafa4fb1c" name="plaster" link="0" type="5"/>
+	</runtimes>
+	<parameters>
+		<parameter type="bool" name="unchanged">1</parameter>
+	</parameters>
+</asset>

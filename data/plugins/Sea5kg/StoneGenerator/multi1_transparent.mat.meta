@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asset version="2.18.0.1">
+	<guid>6990178e3478476f6e45c16a270d43ac384a2af0</guid>
+	<type>material</type>
+	<hash>4d16307f</hash>
+	<runtimes>
+		<runtime id="6990178e3478476f6e45c16a270d43ac384a2af0" name="multi1_transparent" link="0" type="5"/>
+	</runtimes>
+	<parameters>
+		<parameter type="bool" name="unchanged">1</parameter>
+	</parameters>
+</asset>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asset version="2.18.0.1">
+	<guid>4ff3ec8d29b36d51635ec5a18a9b4d79a003e44b</guid>
+	<type>material</type>
+	<hash>3831a7e3</hash>
+	<runtimes>
+		<runtime id="4ff3ec8d29b36d51635ec5a18a9b4d79a003e44b" name="concrete2" link="0" type="5"/>
+	</runtimes>
+	<parameters>
+		<parameter type="bool" name="unchanged">1</parameter>
+	</parameters>
+</asset>

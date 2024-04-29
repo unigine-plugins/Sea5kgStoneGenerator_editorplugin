@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asset version="2.18.0.1">
+	<guid>5e293b0ba74164239f8deb7f00f7e282f1bf7019</guid>
+	<type>material</type>
+	<hash>96c4be1</hash>
+	<runtimes>
+		<runtime id="5e293b0ba74164239f8deb7f00f7e282f1bf7019" name="asphalt_photo" link="0" type="5"/>
+	</runtimes>
+	<parameters>
+		<parameter type="bool" name="unchanged">1</parameter>
+	</parameters>
+</asset>
