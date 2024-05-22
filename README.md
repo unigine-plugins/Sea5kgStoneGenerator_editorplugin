@@ -11,7 +11,7 @@ v0.0.5
 Plugin for Unigine Editor https://unigine.com/get-unigine/
 
 Preview on Youtube:
-- https://www.youtube.com/watch?v=7TaOFSUmlas
+- [https://www.youtube.com/watch?v=7TaOFSUmlas](https://www.youtube.com/watch?v=cIa-ExbNgLo&list=PL-Ky59xTi1WRCFocly-FhrFLLKwdbqEkO)
 
 ![preview](preview.gif)
 
