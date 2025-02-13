@@ -21,7 +21,7 @@
 #include "UnigineGUID.h"
 #include "UnigineCurve2d.h"
 #include "UniginePalette.h"
-#include "UnigineMeshStatic.h"
+#include "UnigineMeshRender.h"
 #include "UnigineTextures.h"
 
 namespace Unigine
@@ -124,26 +124,25 @@ typedef Ptr<RenderEnvironmentPreset> RenderEnvironmentPresetPtr;
 class UNIGINE_API Render
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
-	enum STREAMING_TEXTURES
+	enum STREAMING_MODE
 	{
-		STREAMING_TEXTURES_ASYNC,
-		STREAMING_TEXTURES_FORCE,
-	};
-
-	enum STREAMING_MESHES
-	{
-		STREAMING_MESHES_ASYNC,
-		STREAMING_MESHES_FORCE,
-		STREAMING_MESHES_ALL,
+		STREAMING_MODE_ASYNC,
+		STREAMING_MODE_FORCE,
 	};
 
 	enum STREAMING_MESHES_PREFETCH
 	{
 		STREAMING_MESHES_PREFETCH_DISABLE,
 		STREAMING_MESHES_PREFETCH_RADIUS,
-		STREAMING_MESHES_PREFETCH_FULL,
+	};
+
+	enum STREAMING_VRAM_BUDGET
+	{
+		STREAMING_VRAM_BUDGET_SYSTEM,
+		STREAMING_VRAM_BUDGET_DRIVER,
+		STREAMING_VRAM_BUDGET_FULL_GPU_MEMORY,
 	};
 
 	enum SHADERS_COMPILE_MODE
@@ -155,7 +154,6 @@ public:
 	enum RENDER_API
 	{
 		API_NULL = 0,
-		API_OPENGL,
 		API_DIRECT3D11,
 		API_DIRECT3D12,
 		API_VULKAN,
@@ -235,6 +233,13 @@ public:
 	{
 		SHOW_TEXTURE_RESOLUTION_UV_MODE_0,
 		SHOW_TEXTURE_RESOLUTION_UV_MODE_1,
+	};
+
+	enum SHOW_TEXTURE_RESOLUTION_STREAMING_ACCOUNTING
+	{
+		SHOW_TEXTURE_RESOLUTION_STREAMING_ACCOUNTING_MODE_ACTUAL,
+		SHOW_TEXTURE_RESOLUTION_STREAMING_ACCOUNTING_MODE_REQUESTED,
+		SHOW_TEXTURE_RESOLUTION_STREAMING_ACCOUNTING_MODE_SOURCE,
 	};
 
 	enum PASS
@@ -329,6 +334,13 @@ public:
 		GGX_MIPMAPS_QUALITY_ULTRA,
 	};
 
+	enum MATERIALS_QUALITY
+	{
+		MATERIALS_QUALITY_LOW = 0,
+		MATERIALS_QUALITY_MEDIUM,
+		MATERIALS_QUALITY_HIGH,
+	};
+
 	enum
 	{
 		HAZE_DISABLED = 0,
@@ -406,10 +418,9 @@ public:
 	static void renderTAA(const Ptr<Texture> &color_texture, const Ptr<Texture> &color_old_texture);
 	static void beginDebugGroup(const char *name);
 	static void endDebugGroup();
+	static void memoryClear();
 	static int getAPI();
 	static bool isAPISupported(int api);
-	static int getGPUName();
-	static int getGPUMemory();
 	static size_t getMaxTextureBufferSize();
 	static bool isFlipped();
 	static int getNumInstances();
@@ -563,10 +574,10 @@ public:
 	static bool isGbufferLightmap();
 	static void setDebug(bool debug);
 	static bool isDebug();
+	static void setMaterialsQuality(Render::MATERIALS_QUALITY quality);
+	static Render::MATERIALS_QUALITY getMaterialsQuality();
 	static void setLatency(int latency);
 	static int getLatency();
-	static void setMaxNumActiveTargets(int targets);
-	static int getMaxNumActiveTargets();
 	static void setTexturesQuality(int quality);
 	static int getTexturesQuality();
 	static void setTexturesMaxResolution(int resolution);
@@ -579,34 +590,32 @@ public:
 	static int getTexturesAnisotropy();
 	static void setForceStreaming(bool streaming);
 	static bool isForceStreaming();
-	static void setStreamingMaxThreads(int threads);
-	static int getStreamingMaxThreads();
+	static void setStreamingFreeSpaceVRAM(int streamingfreespacevram);
+	static int getStreamingFreeSpaceVRAM();
+	static void setStreamingFreeSpaceRAM(int streamingfreespaceram);
+	static int getStreamingFreeSpaceRAM();
+	static void setStreamingVRAMOvercommit(bool overcommit);
+	static bool isStreamingVRAMOvercommit();
+	static void setStreamingVRAMBudget(Render::STREAMING_VRAM_BUDGET budget);
+	static Render::STREAMING_VRAM_BUDGET getStreamingVRAMBudget();
+	static void setStreamingUsageLimitVRAM(int streamingusagelimitvram);
+	static int getStreamingUsageLimitVRAM();
+	static void setStreamingUsageLimitRAM(int streamingusagelimitram);
+	static int getStreamingUsageLimitRAM();
 	static void setStreamingParticlesMemoryLimit(int limit);
 	static int getStreamingParticlesMemoryLimit();
-	static void setStreamingBudgetLoading(float loading);
-	static float getStreamingBudgetLoading();
-	static void setStreamingBudgetDestroyTextures(float textures);
-	static float getStreamingBudgetDestroyTextures();
-	static void setStreamingBudgetDestroyMeshes(float meshes);
-	static float getStreamingBudgetDestroyMeshes();
-	static void setStreamingTexturesMode(Render::STREAMING_TEXTURES mode);
-	static Render::STREAMING_TEXTURES getStreamingTexturesMode();
-	static void setStreamingTexturesMemoryLimit(int limit);
-	static int getStreamingTexturesMemoryLimit();
-	static void setStreamingTexturesLifeTime(int time);
-	static int getStreamingTexturesLifeTime();
-	static void setStreamingMeshesModeVRAM(Render::STREAMING_MESHES streamingmeshesmodevram);
-	static Render::STREAMING_MESHES getStreamingMeshesModeVRAM();
-	static void setStreamingMeshesLimitVRAM(int streamingmesheslimitvram);
-	static int getStreamingMeshesLimitVRAM();
-	static void setStreamingMeshesLifeTimeVRAM(int streamingmesheslifetimevram);
-	static int getStreamingMeshesLifeTimeVRAM();
-	static void setStreamingMeshesModeRAM(Render::STREAMING_MESHES streamingmeshesmoderam);
-	static Render::STREAMING_MESHES getStreamingMeshesModeRAM();
-	static void setStreamingMeshesLimitRAM(int streamingmesheslimitram);
-	static int getStreamingMeshesLimitRAM();
-	static void setStreamingMeshesLifeTimeRAM(int streamingmesheslifetimeram);
-	static int getStreamingMeshesLifeTimeRAM();
+	static void setStreamingTexturesMode(Render::STREAMING_MODE mode);
+	static Render::STREAMING_MODE getStreamingTexturesMode();
+	static void setStreamingTexturesMipmaps(bool mipmaps);
+	static bool isStreamingTexturesMipmaps();
+	static void setStreamingTexturesMipmapsDensity(float density);
+	static float getStreamingTexturesMipmapsDensity();
+	static void setStreamingAnimationsLifeTime(int time);
+	static int getStreamingAnimationsLifeTime();
+	static void setStreamingMeshesModeVRAM(Render::STREAMING_MODE streamingmeshesmodevram);
+	static Render::STREAMING_MODE getStreamingMeshesModeVRAM();
+	static void setStreamingMeshesModeRAM(Render::STREAMING_MODE streamingmeshesmoderam);
+	static Render::STREAMING_MODE getStreamingMeshesModeRAM();
 	static void setStreamingMeshesPrefetchCollision(Render::STREAMING_MESHES_PREFETCH collision);
 	static Render::STREAMING_MESHES_PREFETCH getStreamingMeshesPrefetchCollision();
 	static void setStreamingMeshesPrefetchIntersection(Render::STREAMING_MESHES_PREFETCH intersection);
@@ -700,10 +709,16 @@ public:
 	static float getTAAPixelOffset();
 	static void setTAACatmullResampling(bool resampling);
 	static bool isTAACatmullResampling();
+	static void setTAACatmullResamplingSharpness(float sharpness);
+	static float getTAACatmullResamplingSharpness();
 	static void setTAASamples(int samples);
 	static int getTAASamples();
 	static void setTAAEdgesFrameCountMultiplier(float multiplier);
 	static float getTAAEdgesFrameCountMultiplier();
+	static void setTAAInformationLostDepthThreshold(float threshold);
+	static float getTAAInformationLostDepthThreshold();
+	static void setTAAInformationLostFrameCount(float count);
+	static float getTAAInformationLostFrameCount();
 	static void setFXAA(bool fxaa);
 	static bool isFXAA();
 	static void setFXAAIntensity(float intensity);
@@ -732,6 +747,8 @@ public:
 	static Render::RENDER_DLSS_PRESET getDLSSPreset();
 	static void setFSRMode(Render::RENDER_FSR_MODE mode);
 	static Render::RENDER_FSR_MODE getFSRMode();
+	static void setFSRAutoReactiveEnabled(bool enabled);
+	static bool isFSRAutoReactiveEnabled();
 	static void setFSREnableSharpness(bool sharpness);
 	static bool isFSREnableSharpness();
 	static void setFSRSharpness(float sharpness);
@@ -784,8 +801,6 @@ public:
 	static int getSSRTGINumRays();
 	static void setSSRTGINumSteps(int steps);
 	static int getSSRTGINumSteps();
-	static void setSSRTGINoiseStep(float step);
-	static float getSSRTGINoiseStep();
 	static void setSSRTGIStepSize(float size);
 	static float getSSRTGIStepSize();
 	static void setSSAO(bool ssao);
@@ -918,8 +933,14 @@ public:
 	static int getDenoiseNumBlurIterations();
 	static void setDenoiseInformationLostDepthThreshold(float threshold);
 	static float getDenoiseInformationLostDepthThreshold();
+	static void setDenoiseWrongVelocityFixByDepthEnabled(bool enabled);
+	static bool isDenoiseWrongVelocityFixByDepthEnabled();
+	static void setDenoiseWrongVelocityFixByDepthThreshold(float threshold);
+	static float getDenoiseWrongVelocityFixByDepthThreshold();
 	static void setDenoiseAOMaskRadius(float radius);
 	static float getDenoiseAOMaskRadius();
+	static void setDenoiseColorClampingBlurResolution(int resolution);
+	static int getDenoiseColorClampingBlurResolution();
 	static void setDenoiseColorClampingBlurRadius(float radius);
 	static float getDenoiseColorClampingBlurRadius();
 	static void setDenoiseColorClampingBlurIntensity(float intensity);
@@ -972,6 +993,8 @@ public:
 	static int getSSSSSInterleavedColorClamping();
 	static void setSSSSSInterleavedSamples(int samples);
 	static int getSSSSSInterleavedSamples();
+	static void setSSSSSTAA(bool ssssstaa);
+	static bool isSSSSSTAA();
 	static void setSSSSSTAAFixFlicker(bool flicker);
 	static bool isSSSSSTAAFixFlicker();
 	static void setSSSSSTAAAntialiasingInMotion(bool motion);
@@ -1109,18 +1132,34 @@ public:
 	static float getBloomPower();
 	static void setLocalTonemapper(bool tonemapper);
 	static bool isLocalTonemapper();
+	static void setLocalTonemapperDebug(bool debug);
+	static bool isLocalTonemapperDebug();
+	static void setLocalTonemapperBlurResolution(int resolution);
+	static int getLocalTonemapperBlurResolution();
+	static void setLocalTonemapperBlurUpscale(bool upscale);
+	static bool isLocalTonemapperBlurUpscale();
+	static void setLocalTonemapperBlurUpscaleKernelSize(int size);
+	static int getLocalTonemapperBlurUpscaleKernelSize();
 	static void setLocalTonemapperNumBlurIterations(int iterations);
 	static int getLocalTonemapperNumBlurIterations();
-	static void setLocalTonemapperDepthThreshold(float threshold);
-	static float getLocalTonemapperDepthThreshold();
 	static void setLocalTonemapperTonemappingIntensity(float intensity);
 	static float getLocalTonemapperTonemappingIntensity();
 	static void setLocalTonemapperEffectOnDarkAreas(float areas);
 	static float getLocalTonemapperEffectOnDarkAreas();
+	static void setLocalTonemapperEffectOnDarkAreasGamma(float gamma);
+	static float getLocalTonemapperEffectOnDarkAreasGamma();
 	static void setLocalTonemapperTargetMiddleGray(float gray);
 	static float getLocalTonemapperTargetMiddleGray();
 	static void setLocalTonemapperLumaBlurredIntensity(float intensity);
 	static float getLocalTonemapperLumaBlurredIntensity();
+	static void setLocalTonemapperDepthDifferenceEnabled(bool enabled);
+	static bool isLocalTonemapperDepthDifferenceEnabled();
+	static void setLocalTonemapperDepthThreshold(float threshold);
+	static float getLocalTonemapperDepthThreshold();
+	static void setLocalTonemapperColorDifferenceEnabled(bool enabled);
+	static bool isLocalTonemapperColorDifferenceEnabled();
+	static void setLocalTonemapperColorDifferenceThreshold(float threshold);
+	static float getLocalTonemapperColorDifferenceThreshold();
 	static void setTonemapper(bool tonemapper);
 	static bool isTonemapper();
 	static void setTonemapperMode(Render::TONEMAPPER mode);
@@ -1245,6 +1284,8 @@ public:
 	static bool isColorCorrectionSaturationPerColor();
 	static void setColorCorrectionHuePerColor(bool color);
 	static bool isColorCorrectionHuePerColor();
+	static void setMultithreaded(bool multithreaded);
+	static bool isMultithreaded();
 	static Ptr<TextureRamp> getColorCorrectionRamp();
 	static void resetColorCorrectionRamp();
 	static void resetColorCorrectionSaturationRamp();
@@ -1266,6 +1307,10 @@ public:
 	static int getEnvironmentHazeGradient();
 	static void setEnvironmentHazeScreenSpaceGlobalIllumination(bool illumination);
 	static bool isEnvironmentHazeScreenSpaceGlobalIllumination();
+	static void setEnvironmentHazeScreenSpaceGlobalIlluminationDistanceMin(float val);
+	static float getEnvironmentHazeScreenSpaceGlobalIlluminationDistanceMin();
+	static void setEnvironmentHazeScreenSpaceGlobalIlluminationDistanceMax(float val);
+	static float getEnvironmentHazeScreenSpaceGlobalIlluminationDistanceMax();
 	static void setEnvironmentHazeTemporalFilter(bool filter);
 	static bool isEnvironmentHazeTemporalFilter();
 	static void setEnvironmentHazeColorizationThreshold(float threshold);
@@ -1345,6 +1390,16 @@ public:
 	static int getDirectLightingInterleavedSamples();
 	static void setIndirectLightingInterleaved(bool interleaved);
 	static bool isIndirectLightingInterleaved();
+	static void setIndirectLightingInterleavedCatmullResampling(bool resampling);
+	static bool isIndirectLightingInterleavedCatmullResampling();
+	static void setIndirectLightingInterleavedColorClamping(int clamping);
+	static int getIndirectLightingInterleavedColorClamping();
+	static void setIndirectLightingInterleavedColorClampingIntensity(float intensity);
+	static float getIndirectLightingInterleavedColorClampingIntensity();
+	static void setIndirectLightingInterleavedColorClampingVelocityThreshold(float threshold);
+	static float getIndirectLightingInterleavedColorClampingVelocityThreshold();
+	static void setIndirectLightingInterleavedSamples(int samples);
+	static int getIndirectLightingInterleavedSamples();
 	static void setLightmapColor(const Math::vec4 &color);
 	static Math::vec4 getLightmapColor();
 	static void setShadows(bool shadows);
@@ -1811,11 +1866,13 @@ public:
 	static Render::SHOW_TEXTURE_RESOLUTION getShowTextureResolution();
 	static void setShowTextureResolutionUVMode(Render::SHOW_TEXTURE_RESOLUTION_UV mode);
 	static Render::SHOW_TEXTURE_RESOLUTION_UV getShowTextureResolutionUVMode();
+	static void setShowTextureResolutionStreamingAccountingMode(Render::SHOW_TEXTURE_RESOLUTION_STREAMING_ACCOUNTING mode);
+	static Render::SHOW_TEXTURE_RESOLUTION_STREAMING_ACCOUNTING getShowTextureResolutionStreamingAccountingMode();
 	static void setShowTextureResolutionBlend(float blend);
 	static float getShowTextureResolutionBlend();
 	static int getHDRTextureFormat();
 
-	enum
+	enum TEXTURE_ACCESSORY
 	{
 		TEXTURE_ACCESSORY_NONE = 0,
 		TEXTURE_ACCESSORY_GBUFFER,
@@ -1824,27 +1881,33 @@ public:
 		TEXTURE_ACCESSORY_OCCLUDERS,
 		TEXTURE_ACCESSORY_EXTERNAL,
 	};
-	static Ptr<Texture> getTemporaryTexture(int width, int height, int depth, int format, int flags, int type, const char *name, int accessory);
-	static Ptr<Texture> getTemporaryTexture(int width, int height, int depth, int format, int flags, int type, const char *name);
-	static Ptr<Texture> getTemporaryTexture(int width, int height, int depth, int format, int flags, int type);
-	static Ptr<Texture> getTemporaryTexture(const Ptr<Texture> &texture, const char *name, int accessory);
-	static Ptr<Texture> getTemporaryTexture(const Ptr<Texture> &texture, const char *name);
-	static Ptr<Texture> getTemporaryTexture(const Ptr<Texture> &texture);
-	static Ptr<Texture> getTemporaryTexture2D(int width, int height, int format, int flags = -1, const char *name = 0, int accessory = 0);
-	static Ptr<Texture> getTemporaryTexture2DArray(int width, int height, int depth, int format, int flags = -1, const char *name = 0, int accessory = 0);
-	static Ptr<Texture> getTemporaryTexture3D(int width, int height, int depth, int format, int flags = -1, const char *name = 0, int accessory = 0);
-	static Ptr<Texture> getTemporaryTextureCube(int width, int height, int format, int flags = -1, const char *name = 0, int accessory = 0);
-	static Ptr<Texture> getTemporaryOldTexture(const Ptr<Material> &mat, int texture_id, int width, int height, int depth, int format, int flags, int type, const char *name, int accessory);
-	static Ptr<Texture> getTemporaryOldTexture(const Ptr<Material> &mat, int texture_id, int width, int height, int depth, int format, int flags, int type, const char *name);
-	static Ptr<Texture> getTemporaryOldTexture(const Ptr<Material> &mat, int texture_id, int width, int height, int depth, int format, int flags, int type);
-	static Ptr<Texture> getTemporaryOldTexture(const Ptr<Material> &mat, int texture_id, const Ptr<Texture> &texture, const char *name, int accessory);
-	static Ptr<Texture> getTemporaryOldTexture(const Ptr<Material> &mat, int texture_id, const Ptr<Texture> &texture, const char *name);
-	static Ptr<Texture> getTemporaryOldTexture(const Ptr<Material> &mat, int texture_id, const Ptr<Texture> &texture);
-	static Ptr<Texture> getTemporaryOldTexture2D(const Ptr<Material> &mat, int texture_id, int width, int height, int format, int flags = -1, const char *name = 0, int accessory = 0);
-	static Ptr<Texture> getTemporaryOldTexture2DArray(const Ptr<Material> &mat, int texture_id, int width, int height, int depth, int format, int flags = -1, const char *name = 0, int accessory = 0);
-	static Ptr<Texture> getTemporaryOldTexture3D(const Ptr<Material> &mat, int texture_id, int width, int height, int depth, int format, int flags = -1, const char *name = 0, int accessory = 0);
-	static Ptr<Texture> getTemporaryOldTextureCube(const Ptr<Material> &mat, int texture_id, int width, int height, int format, int flags = -1, const char *name = 0, int accessory = 0);
+
+	enum TEXTURE_LIFETIME
+	{
+		TEXTURE_LIFETIME_FRAME_VIEWPORT = 0,
+		TEXTURE_LIFETIME_FRAME_APPLICATION,
+		TEXTURE_LIFETIME_APPLICATION,
+	};
+	static Ptr<Texture> getTemporaryTexture(int width, int height, int depth, int format, int flags, int type, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE, Render::TEXTURE_LIFETIME lifetime = Render::TEXTURE_LIFETIME_FRAME_VIEWPORT, bool auto_release = false);
+	static Ptr<Texture> getTemporaryTexture(const Ptr<Texture> &texture, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE, Render::TEXTURE_LIFETIME lifetime = Render::TEXTURE_LIFETIME_FRAME_VIEWPORT, bool auto_release = false);
+	static Ptr<Texture> getTemporaryTexture(const Ptr<Image> &image, int flags = -1, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE, Render::TEXTURE_LIFETIME lifetime = Render::TEXTURE_LIFETIME_FRAME_VIEWPORT, bool auto_release = false);
+	static Ptr<Texture> getTemporaryTexture2D(int width, int height, int format, int flags = -1, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE, Render::TEXTURE_LIFETIME lifetime = Render::TEXTURE_LIFETIME_FRAME_VIEWPORT, bool auto_release = false);
+	static Ptr<Texture> getTemporaryTexture2DArray(int width, int height, int depth, int format, int flags = -1, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE, Render::TEXTURE_LIFETIME lifetime = Render::TEXTURE_LIFETIME_FRAME_VIEWPORT, bool auto_release = false);
+	static Ptr<Texture> getTemporaryTexture3D(int width, int height, int depth, int format, int flags = -1, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE, Render::TEXTURE_LIFETIME lifetime = Render::TEXTURE_LIFETIME_FRAME_VIEWPORT, bool auto_release = false);
+	static Ptr<Texture> getTemporaryTextureCube(int width, int height, int format, int flags = -1, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE, Render::TEXTURE_LIFETIME lifetime = Render::TEXTURE_LIFETIME_FRAME_VIEWPORT, bool auto_release = false);
+	static Ptr<Texture> getTemporaryTextureCubeArray(int width, int height, int depth, int format, int flags = -1, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE, Render::TEXTURE_LIFETIME lifetime = Render::TEXTURE_LIFETIME_FRAME_VIEWPORT, bool auto_release = false);
+	static Ptr<Texture> getTemporaryOldTexture(const Ptr<Material> &mat, int texture_id, int width, int height, int depth, int format, int flags, int type, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE);
+	static Ptr<Texture> getTemporaryOldTexture(const Ptr<Material> &mat, int texture_id, const Ptr<Texture> &texture, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE);
+	static Ptr<Texture> getTemporaryOldTexture(const Ptr<Material> &mat, int texture_id, const Ptr<Image> &image, int flags = -1, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE);
+	static Ptr<Texture> getTemporaryOldTexture2D(const Ptr<Material> &mat, int texture_id, int width, int height, int format, int flags = -1, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE);
+	static Ptr<Texture> getTemporaryOldTexture2DArray(const Ptr<Material> &mat, int texture_id, int width, int height, int depth, int format, int flags = -1, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE);
+	static Ptr<Texture> getTemporaryOldTexture3D(const Ptr<Material> &mat, int texture_id, int width, int height, int depth, int format, int flags = -1, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE);
+	static Ptr<Texture> getTemporaryOldTextureCube(const Ptr<Material> &mat, int texture_id, int width, int height, int format, int flags = -1, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE);
+	static Ptr<Texture> getTemporaryOldTextureCubeArray(const Ptr<Material> &mat, int texture_id, int width, int height, int depth, int format, int flags = -1, const char *name = 0, Render::TEXTURE_ACCESSORY accessory = Render::TEXTURE_ACCESSORY_NONE);
 	static void releaseTemporaryTexture(const Ptr<Texture> &texture);
+	static void releaseTemporaryTextures(const Vector<Ptr<Texture>> &textures);
+	static bool isTemporaryTexture(const Ptr<Texture> &texture);
+	static bool isTemporaryOldTexture(const Ptr<Texture> &texture);
 	static Ptr<RenderTarget> getTemporaryRenderTarget();
 	static void releaseTemporaryRenderTarget(const Ptr<RenderTarget> &render_target);
 	static Ptr<Texture> getBlack2DTexture();
@@ -1878,17 +1941,10 @@ public:
 	static bool saveWorld(const Ptr<Xml> &xml);
 	static bool restoreState(const Ptr<Stream> &stream);
 	static bool saveState(const Ptr<Stream> &stream);
-	static void destroyCacheTexture(const UGUID &guid);
-	static void createCacheTexture(const UGUID &guid);
 	static Ptr<Texture> getCacheTexture(const UGUID &guid, bool forced = false);
-	static void reloadCacheTexture(const UGUID &guid);
-	static void destroyCacheTextures();
-	static void unloadCacheTextures();
-	static void loadCacheTextures();
 	static void * getD3D11Factory();
 	static void * getD3D11Device();
 	static void * getD3D11Context();
-	static void * getGLContext();
 	static void reloadResource(const char *path);
 	static void reloadResource(const Vector<String> &paths);
 };
@@ -1898,7 +1954,7 @@ public:
 class UNIGINE_API RenderState
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
 	enum
 	{
@@ -2069,7 +2125,7 @@ public:
 class UNIGINE_API Renderer
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
 	enum
 	{
@@ -2125,6 +2181,7 @@ public:
 		Math::vec4 modelview_projection_old_w;
 
 		float camera_fov;
+		int shadow_cascade_target;
 	};
 
 
@@ -2198,6 +2255,8 @@ public:
 	static bool isShadow();
 	static bool isStereo();
 	static bool isStereoPeripheral();
+	static void setVR(bool vr);
+	static bool isVR();
 	static int getViewportMask();
 	static int getReflectionViewportMask();
 	static int getSkipFlags();
@@ -2252,13 +2311,6 @@ public:
 	static void setShaderParameters(Render::PASS pass, const Ptr<Material> &material, bool is_screen_space);
 	static void setShaderParameters(Render::PASS pass, const Ptr<Object> &object, int surface, bool is_screen_space);
 	static Vector<Ptr<Object>> getObjects();
-	struct RenderSurface
-	{
-		Ptr<Object> object;
-		int surface;
-	};
-	static void getAllSurfaces(Vector<Renderer::RenderSurface> &surfaces);
-
 	static int getWidth();
 	static int getHeight();
 	static Ptr<RenderTarget> getRenderTarget();
@@ -2297,7 +2349,7 @@ public:
 	static Ptr<Texture> createCustomTexture2DArray(const char *name, int width, int height, int depth, int format, int flags = 0);
 	static Ptr<Texture> createCustomTexture2D(const char *name, int width, int height, int format, int flags = 0);
 	static Ptr<Texture> getCustomTexture(const char *name);
-	static void renderMeshStatic(const Ptr<MeshStatic> &mesh, const Ptr<Material> &material, const char *pass_name, const Math::Mat4 &transform, const Ptr<Camera> &camera);
+	static void renderMesh(const Ptr<MeshRender> &mesh, const Ptr<Material> &material, const char *pass_name, const Math::Mat4 &transform, const Ptr<Camera> &camera);
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -2305,7 +2357,7 @@ public:
 class UNIGINE_API BakeLighting
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
 	enum LIGHTMAP_QUALITY
 	{

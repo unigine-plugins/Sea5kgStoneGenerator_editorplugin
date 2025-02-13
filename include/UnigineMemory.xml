@@ -30,35 +30,16 @@
 			<param name="ptr"> Pointer to the allocated memory block. </param>
 			<param name="size"> Size of the allocated memory block. </param> 
 		</member>
-		<member name="M:Unigine.Memory.getHeapUsage">
-			<summary>
-			Shows the overall amount of allocated memory pools in bytes.
-			</summary>  
-			<returns>Allocated memory pools in bytes.</returns>
-		</member>
 		<member name="M:Unigine.Memory.getMemoryUsage">
 			<summary>
 			Shows the overall amount of used memory in bytes.
 			</summary>  
 			<returns>Used memory in bytes.</returns>
 		</member>
-		<member name="M:Unigine.Memory.getSystemUsage">
+		<member name="M:Unigine.Memory.logInfo">
 			<summary>
-			Shows the overall amount of used system memory in bytes.
+			Prints information on small allocations in the static and dynamic memory pools.
 			</summary>  
-			<returns>Used system memory in bytes.</returns>
-		</member>
-		<member name="M:Unigine.Memory.getNumAllocations">
-			<summary>
-			Shows overall number of memory allocation operations.
-			</summary>  
-			<returns>Number of memory allocations.</returns>
-		</member>
-		<member name="M:Unigine.Memory.getNumFrameAllocations">
-			<summary>
-			Number of memory allocations between calls of this function, which is called each frame by the engine.
-			</summary>  
-			<returns>Number of memory allocations between calls of this function.</returns>
 		</member>
 	</members>
 </doc>

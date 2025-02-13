@@ -219,6 +219,21 @@
 			</summary>  
 			<returns>Squared length of the vector.</returns>
 		</member>
+		<member name="M:Unigine.Math.vec4.lengthFast const">
+			<summary>
+			Returns the fast-calculated length of the vector.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Math.vec4.iLength const">
+			<summary>
+			Returns the inverted length of the vector.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Math.vec4.iLengthFast const">
+			<summary>
+			Returns the fast-calculated inverted length of the vector.
+			</summary>  
+		</member>
 		<member name="M:Unigine.Math.vec4.maxXY const">
 			<summary>
 			Compares the X and Y components of the vector and returns the greater one.
@@ -239,7 +254,7 @@
 		</member>
 		<member name="M:Unigine.Math.vec4.normalize">
 			<summary>
-			Returns normalized vector.
+			Returns a normalized vector.
 			</summary>  
 			<returns>Normalized vector.</returns>
 		</member>
@@ -251,13 +266,13 @@
 		</member>
 		<member name="M:Unigine.Math.vec4.normalizeFast">
 			<summary>
-			Returns normalized vector, calculated using the fast inverse square root algorithm.
+			Returns a normalized vector, calculated using the fast inverse square root algorithm.
 			</summary>  
 			<returns>Normalized vector.</returns>
 		</member>
 		<member name="M:Unigine.Math.vec4.normalizeValidFast">
 			<summary>
-			Returns normalized vector, calculated using the fast inverse square root algorithm. Check for the zero vector is performed: if the argument is a zero vector, then a zero vector is returned.
+			Returns a normalized vector, calculated using the fast inverse square root algorithm. Check for the zero vector is performed: if the argument is a zero vector, then a zero vector is returned.
 			</summary>  
 			<returns>Normalized vector.</returns>
 		</member>
@@ -319,6 +334,13 @@
 			<param name="v"> Vector. </param> 
 			<returns>Resulting vector.</returns>
 		</member>
+		<member name="M:Unigine.Math.vec4.operator+=(float)">
+			<summary>
+			Performs addition of the specified value.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>This vector.</returns>
+		</member>
 		<member name="M:Unigine.Math.vec4.operator+=(Unigine.vec4)">
 			<summary>
 			Performs vector addition.
@@ -338,6 +360,13 @@
 			</summary> 
 			<param name="v"> Vector. </param> 
 			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.vec4.operator-=(float)">
+			<summary>
+			Subtracts the argument from all elements of the vector.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>This vector.</returns>
 		</member>
 		<member name="M:Unigine.Math.vec4.operator/=(float)">
 			<summary>
@@ -366,6 +395,13 @@
 			</summary> 
 			<param name="v"> Source vector. </param> 
 			<returns>Result.</returns>
+		</member>
+		<member name="M:Unigine.Math.vec4.operator=(float)">
+			<summary>
+			Sets the vector components equal to specified scalar value: x=val, y=val, z=val, w=val.
+			</summary> 
+			<param name="v"> Scalar value. </param> 
+			<returns>This vector.</returns>
 		</member>
 		<member name="M:Unigine.Math.vec4.operator[](int)">
 			<summary>
@@ -401,13 +437,13 @@
 		</member>
 		<member name="M:Unigine.Math.vec4.div(float)">
 			<summary>
-			Returns the result of division of the vector by the value of the specified arguments.
+			Performs division of the vector by the value of the specified arguments.
 			</summary> 
 			<param name="v"> A float divisor value. </param> 
 		</member>
 		<member name="M:Unigine.Math.vec4.div(Unigine.vec4)">
 			<summary>
-			Returns the result of division of the vector by the value of the specified arguments.
+			Performs division of the vector by the value of the specified arguments.
 			</summary> 
 			<param name="v"> A vec3 divisor value. </param> 
 		</member>
@@ -428,13 +464,6 @@
 			</summary> 
 			<param name="v"> Value. </param> 
 		</member>
-		<member name="M:Unigine.Math.vec4.operator+=(float)">
-			<summary>
-			Performs addition of the specified value.
-			</summary> 
-			<param name="v"> Value. </param> 
-			<returns>This vector.</returns>
-		</member>
 		<member name="M:Unigine.Math.vec4.sub(float)">
 			<summary>
 			Subtracts the argument from all elements of the vector.
@@ -447,35 +476,6 @@
 			</summary> 
 			<param name="v"> Value. </param> 
 		</member>
-		<member name="M:Unigine.Math.vec4.operator-=(float)">
-			<summary>
-			Subtracts the argument from all elements of the vector.
-			</summary> 
-			<param name="v"> Value. </param> 
-			<returns>This vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.vec4.operator=(float)">
-			<summary>
-			Sets the vector components equal to specified scalar value: x=val, y=val, z=val, w=val.
-			</summary> 
-			<param name="v"> Scalar value. </param> 
-			<returns>This vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.vec4.lengthFast const">
-			<summary>
-			Returns the length of the vector (fast version).
-			</summary>  
-		</member>
-		<member name="M:Unigine.Math.vec4.iLength const">
-			<summary>
-			Returns the inverted length of the vector.
-			</summary>  
-		</member>
-		<member name="M:Unigine.Math.vec4.iLengthFast const">
-			<summary>
-			Returns the inverted length of the vector (fast version).
-			</summary>  
-		</member>
 		<member name="M:Unigine.Math.vec4.parseColor(char)">
 			<summary>
 			Converts a color string in the Web format (RRGGBB / #RRGGBB or RRGGBBAA / #RRGGBBAA) into its vec4 equivalent.
@@ -485,7 +485,16 @@
 		</member>
 		<member name="M:Unigine.Math.vec4.hash const">
 			<summary>
+			Returns a hash obtained by mixing the hash values of vector components.
 			</summary>  
+			<returns>32-bit hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.vec4.rgbToLuma(Unigine.vec4)">
+			<summary>
+			Returns the perceived brightness of the color.
+			</summary> 
+			<param name="color"> Color. </param> 
+			<returns>Perceived brightness of the color.</returns>
 		</member>
 		<member name="F:Unigine.Math.vec4.vec4_blue">
 			<summary>

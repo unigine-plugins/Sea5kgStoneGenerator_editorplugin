@@ -4,13 +4,6 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.Hasher class.create(Unigine.UGUID)">
-			<summary>
-			Converts the given value to the type supported by the hash table. For example:
-			</summary> 
-			<param name="v"> The value to convert from. </param> 
-			<returns>The converted value supported by the hash table.</returns>
-		</member>
 		<member name="M:Unigine.UGUID.#ctor">
 			<summary>
 			Default constructor. Creates an empty 0-filled UGUID.
@@ -24,8 +17,21 @@
 		</member>
 		<member name="M:Unigine.UGUID.#ctor(unsignedchar)">
 			<summary>
+			Constructor. Creates a UGUID from the given source value. UGUID is generated using the SHA1 algorithm.
 			</summary> 
 			<param name="value_"> Source character. </param> 
+		</member>
+		<member name="M:Unigine.UGUID.#ctor(unsignedint)">
+			<summary>
+			Constructor. Creates a UGUID from the given source value. UGUID is generated using the SHA1 algorithm.
+			</summary> 
+			<param name="value_"> Source character. </param> 
+		</member>
+		<member name="M:Unigine.UGUID.#ctor(String)">
+			<summary>
+			Constructor. Creates a UGUID from the given source string. UGUID is generated using the SHA1 algorithm.
+			</summary> 
+			<param name="str"> Source string. </param> 
 		</member>
 		<member name="M:Unigine.UGUID.UGUID(Unigine.UGUID)">
 			<summary>
@@ -63,12 +69,6 @@
 			</summary>  
 			<returns>Hash generated for the UGUID value.</returns>
 		</member>
-		<member name="M:Unigine.UGUID.hashLong const">
-			<summary>
-			Returns a hash for the UGUID value.
-			</summary>  
-			<returns>Hash generated for the UGUID value.</returns>
-		</member>
 		<member name="M:Unigine.UGUID.clear">
 			<summary>
 			Clears the UGUID value. All 40 bytes are set to 0.
@@ -86,35 +86,24 @@
 			</summary>  
 			<returns>true if the value is valid; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.UGUID.setFileSystemString(char)">
-			<summary>
-			Sets the string containing the UGUID value with the filesystem prefix "guid://".
-			</summary> 
-			<param name="str"> UGUID value with the filesystem prefix "guid://" to be set. </param> 
-		</member>
-		<member name="M:Unigine.UGUID.getFileSystemString">
-			<summary>
-			Returns the string containing the UGUID value with the filesystem prefix "guid://".
-			</summary>  
-			<returns>UGUID value with the filesystem prefix "guid://".</returns>
-		</member>
 		<member name="M:Unigine.UGUID.setString(char)">
 			<summary>
 			Sets the UGUID value equal to a given 40-character hexadecimal string.
 			</summary> 
 			<param name="str"> 40-character hexadecimal string representing the UGUID value. </param> 
 		</member>
-		<member name="M:Unigine.UGUID.getString">
-			<summary>
-			Returns the UGUID value as a 40-character hexadecimal string.
-			</summary>  
-			<returns>40-character hexadecimal string representing the UGUID value.</returns>
-		</member>
 		<member name="M:Unigine.UGUID.operator=(char)">
 			<summary>
 			Performs UGUID assignment. The value of the destination UGUID is set equal to the source hexadecimal string.
 			</summary> 
 			<param name="str"> Source string. A 40-character hexadecimal string representing the UGUID value. </param> 
+			<returns>Result.</returns>
+		</member>
+		<member name="M:Unigine.UGUID.operator=(String)">
+			<summary>
+			Performs UGUID assignment. The value of the destination UGUID is set equal to the source string.
+			</summary> 
+			<param name="str"> Source string. </param> 
 			<returns>Result.</returns>
 		</member>
 		<member name="M:Unigine.UGUID.operator=(Unigine.UGUID)">
@@ -188,7 +177,9 @@
 		</member>
 		<member name="M:Unigine.UGUID.getValue const">
 			<summary>
+			Returns the pointer to the internal data buffer.
 			</summary>  
+			<returns>Pointer to the internal data buffer.</returns>
 		</member>
 		<member name="M:Unigine.UGUID.operator[](int)">
 			<summary>
@@ -200,7 +191,9 @@
 		<member name="M:Unigine.UGUID.operator[](int)">
 			<summary>
 			Item access by index.
-			</summary>  
+			</summary> 
+			<param name="index"> Array item index </param> 
+			<returns>Array item</returns>
 		</member>
 		<member name="M:Unigine.UGUID.operator const char *">
 			<summary>
@@ -212,6 +205,12 @@
 			<summary>
 			Returns the pointer to the current string.
 			</summary>  
+		</member>
+		<member name="M:Unigine.UGUID.makeString const">
+			<summary>
+			Creates a 40-character hexadecimal string representing the GUID value.
+			</summary>  
+			<returns>40-character hexadecimal string representing the GUID value.</returns>
 		</member>
 		<member name="F:Unigine.UGUID.empty">
 			<summary>
@@ -236,6 +235,11 @@
 		<member name="F:Unigine.UGUID.VALUE_SIZE">
 			<summary>
 			GUID value size in bytes (24).
+		</summary>
+		</member>
+		<member name="F:Unigine.UGUID.NUM_VALUE_INT">
+			<summary>
+			The amount of integer values in the GUID.
 		</summary>
 		</member>
 	</members>

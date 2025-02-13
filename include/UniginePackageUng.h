@@ -33,20 +33,21 @@ public:
 	};
 	static int isSupported();
 	static Ptr<PackageUng> create(const char *password = 0, int compression_type = 2);
-	int load(const char *name);
-	int createPackage(const char *name);
+	bool load(const char *name);
+	bool createPackage(const char *name);
 	Ptr<PackageUng> clone();
 	void close();
 	int getNumFiles() const;
 	const char *getFileName(int num);
-	int selectFile(const char *name, int &size);
-	int readFile(unsigned char *data, int size);
-	int writeFile(const char *name, const unsigned char *data, int size);
+	bool selectFile(const char *name, size_t &size);
+	bool readFile(unsigned char *data, size_t size);
+	bool writeFile(const char *name, const unsigned char *data, size_t size);
 	bool removeFile(const char *name);
 	bool removeFile(int num);
 	int getCompressionType() const;
 	bool containsFile(const char *name) const;
 	int findFile(const char *name) const;
+	size_t getFileSize(int num) const;
 };
 typedef Ptr<PackageUng> PackageUngPtr;
 

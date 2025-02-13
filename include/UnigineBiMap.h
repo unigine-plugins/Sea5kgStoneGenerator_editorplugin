@@ -20,7 +20,7 @@
 namespace Unigine
 {
 
-template<typename Key, typename Type, typename Allocator>
+template<typename Key, typename Type>
 struct BiMapData
 {
 public:
@@ -100,9 +100,6 @@ public:
 	const Key key;
 	const Type data;
 
-	static UNIGINE_INLINE void *operator new(size_t size) { return Allocator::allocate(size); }
-	static UNIGINE_INLINE void operator delete(void *ptr) { Allocator::deallocate(ptr); }
-
 	~BiMapData()
 	{
 		delete left;
@@ -111,13 +108,13 @@ public:
 
 };
 
-template<typename Key, typename Type, typename Allocator = TreeAllocator>
-class BiMap : public Tree<Key, BiMapData<Key, Type, Allocator>, Allocator>
+template<typename Key, typename Type>
+class BiMap : public Tree<Key, BiMapData<Key, Type>>
 {
 public:
-	using Node = typename Unigine::BiMapData<Key, Type, Allocator>;
-	using Data = Node;
-	using Parent = Tree<Key, Node, Allocator>;
+	using NodeType = typename Unigine::BiMapData<Key, Type>;
+	using Data = NodeType;
+	using Parent = Tree<Key, NodeType>;
 	using Iterator = typename Parent::Iterator;
 	using ConstIterator = typename Parent::ConstIterator;
 
@@ -134,7 +131,7 @@ public:
 		: root_value{nullptr}
 	{
 		for (const auto &it: list)
-			do_append_value(Parent::do_append_node(new Node(it.first, nullptr, it.second)));
+			do_append_value(Parent::do_append_node(new NodeType(it.first, nullptr, it.second)));
 	}
 
 	BiMap(const BiMap &o)
@@ -144,7 +141,7 @@ public:
 		Parent::root = nullptr;
 
 		for (const auto &it: o)
-			do_append_value(Parent::do_append_node(new Node(it.key, nullptr, it.data)));
+			do_append_value(Parent::do_append_node(new NodeType(it.key, nullptr, it.data)));
 	}
 
 	BiMap &operator=(const BiMap &o)
@@ -157,7 +154,7 @@ public:
 		root_value = nullptr;
 
 		for (const auto &it: o)
-			do_append_value(Parent::do_append_node(new Node(it.key, nullptr, it.data)));
+			do_append_value(Parent::do_append_node(new NodeType(it.key, nullptr, it.data)));
 		return *this;
 	}
 
@@ -194,7 +191,7 @@ public:
 		Parent::length = o.length;
 		o.length = i;
 
-		Node *n = Parent::root;
+		NodeType *n = Parent::root;
 		Parent::root = o.root;
 		o.root = n;
 
@@ -215,8 +212,8 @@ public:
 	{
 		size_t ret = 0;
 		ret += sizeof(Parent::length);
-		ret += 2 * sizeof(Node *);
-		ret += Parent::length * sizeof(Node);
+		ret += 2 * sizeof(NodeType *);
+		ret += Parent::length * sizeof(NodeType);
 		return ret;
 	}
 
@@ -300,22 +297,22 @@ public:
 
 	UNIGINE_INLINE Iterator appendFast(const Key &key, const Type &value)
 	{
-		return do_append_value(Parent::do_append_node(new Node(key, nullptr, value)));
+		return do_append_value(Parent::do_append_node(new NodeType(key, nullptr, value)));
 	}
 
 	UNIGINE_INLINE Iterator appendFast(Key &&key, const Type &value)
 	{
-		return do_append_value(Parent::do_append_node(new Node(std::move(key), nullptr, value)));
+		return do_append_value(Parent::do_append_node(new NodeType(std::move(key), nullptr, value)));
 	}
 
 	UNIGINE_INLINE Iterator appendFast(const Key &key, Type &&value)
 	{
-		return do_append_value(Parent::do_append_node(new Node(key, nullptr, std::move(value))));
+		return do_append_value(Parent::do_append_node(new NodeType(key, nullptr, std::move(value))));
 	}
 
 	UNIGINE_INLINE Iterator appendFast(Key &&key, Type &&value)
 	{
-		return do_append_value(Parent::do_append_node(new Node(std::move(key), nullptr, std::move(value))));
+		return do_append_value(Parent::do_append_node(new NodeType(std::move(key), nullptr, std::move(value))));
 	}
 
 	UNIGINE_INLINE void appendFast(const BiMap &m)
@@ -334,19 +331,19 @@ public:
 	template <typename ... Args>
 	UNIGINE_INLINE const Type &emplaceFast(const Key &key, Args && ... args)
 	{
-		return do_append_value(Parent::do_append_node(new Node(key, nullptr, std::forward<Args>(args)...)))->data;
+		return do_append_value(Parent::do_append_node(new NodeType(key, nullptr, std::forward<Args>(args)...)))->data;
 	}
 
 	template <typename ... Args>
 	UNIGINE_INLINE const Type &emplaceFast(Key &&key, Args && ... args)
 	{
-		return do_append_value(Parent::do_append_node(new Node(std::move(key), nullptr, std::forward<Args>(args)...)))->data;
+		return do_append_value(Parent::do_append_node(new NodeType(std::move(key), nullptr, std::forward<Args>(args)...)))->data;
 	}
 
 	template <typename T>
 	UNIGINE_INLINE bool contains(const T &key) const
 	{
-		Node *node = Parent::root;
+		NodeType *node = Parent::root;
 		while (node && (node->key == key) == 0)
 			node = node->dirs[key < node->key];
 		return node != nullptr;
@@ -355,7 +352,7 @@ public:
 	template <typename TypeKey>
 	UNIGINE_INLINE bool contains(const TypeKey &key, const Type &value) const
 	{
-		const Node *node = Parent::do_find(key);
+		const NodeType *node = Parent::do_find(key);
 		return node != nullptr && node->data == value;
 	}
 
@@ -373,13 +370,13 @@ public:
 	UNIGINE_INLINE const Type &operator[](const Key &key) const { return get(key); }
 	UNIGINE_INLINE const Type &get(const Key &key) const
 	{
-		Node *node = Parent::do_find(key);
+		NodeType *node = Parent::do_find(key);
 		assert(node != nullptr && "BiMap::operator[] bad key");
 		return node->data;
 	}
 	UNIGINE_INLINE const Key &getKey(const Type &value) const
 	{
-		Node *node = do_find_value(value);
+		NodeType *node = do_find_value(value);
 		assert(node != nullptr && "BiMap::getKey bad value");
 		return node->key;
 	}
@@ -395,7 +392,7 @@ public:
 
 	UNIGINE_INLINE bool remove(const Key &key)
 	{
-		Node *node = do_remove_value(Parent::do_remove(key));
+		NodeType *node = do_remove_value(Parent::do_remove(key));
 		bool ret = node != nullptr;
 		delete node;
 		return ret;
@@ -403,14 +400,14 @@ public:
 
 	UNIGINE_INLINE bool remove(const Iterator &it)
 	{
-		Node *node = do_remove_value(Parent::do_remove(it.get()));
+		NodeType *node = do_remove_value(Parent::do_remove(it.get()));
 		bool ret = node != nullptr;
 		delete node;
 		return ret;
 	}
 	UNIGINE_INLINE bool remove(const ConstIterator &it)
 	{
-		Node *node = do_remove_value(Parent::do_remove(it.get()));
+		NodeType *node = do_remove_value(Parent::do_remove(it.get()));
 		bool ret = node != nullptr;
 		delete node;
 		return ret;
@@ -432,7 +429,7 @@ public:
 
 	UNIGINE_INLINE bool removeData(const Type &value)
 	{
-		Node *node = do_remove_value(Parent::do_remove(do_find_value(value)));
+		NodeType *node = do_remove_value(Parent::do_remove(do_find_value(value)));
 		bool ret = node != nullptr;
 		delete node;
 		return ret;
@@ -447,7 +444,7 @@ public:
 
 	UNIGINE_INLINE bool take(const Key &key, Type &ret)
 	{
-		Node *node = do_remove_value(Parent::do_remove(key));
+		NodeType *node = do_remove_value(Parent::do_remove(key));
 		if (node == nullptr)
 			return false;
 		ret = std::move(node->data);
@@ -464,7 +461,7 @@ public:
 
 	UNIGINE_INLINE bool takeData(const Type &value, Key &ret)
 	{
-		Node *node = do_remove_value(Parent::do_remove(do_find_value(value)));
+		NodeType *node = do_remove_value(Parent::do_remove(do_find_value(value)));
 		if (node == nullptr)
 			return false;
 		ret = std::move(node->data);
@@ -474,34 +471,34 @@ public:
 
 	UNIGINE_INLINE Type value(const Key &key) const
 	{
-		Node *node = Parent::do_find(key);
+		NodeType *node = Parent::do_find(key);
 		return node == nullptr ? Type{} : node->data;
 	}
 
 	UNIGINE_INLINE Type value(const Key &key, const Type &def) const
 	{
-		Node *node = Parent::do_find(key);
+		NodeType *node = Parent::do_find(key);
 		return node == nullptr ? def : node->data;
 	}
 	UNIGINE_INLINE const Type &valueRef(const Key &key, const Type &def) const
 	{
-		Node *node = Parent::do_find(key);
+		NodeType *node = Parent::do_find(key);
 		return node == nullptr ? def : node->data;
 	}
 
 	UNIGINE_INLINE Key key(const Type &value) const
 	{
-		Node *node = do_find_value(value);
+		NodeType *node = do_find_value(value);
 		return node == nullptr ? Key() : node->key;
 	}
 	UNIGINE_INLINE Key key(const Type &value, const Key &def) const
 	{
-		Node *node = do_find_value(value);
+		NodeType *node = do_find_value(value);
 		return node == nullptr ? def : node->key;
 	}
 	UNIGINE_INLINE const Key &keyRef(const Type &value, const Key &def) const
 	{
-		Node *node = do_find_value(value);
+		NodeType *node = do_find_value(value);
 		return node == nullptr ? def : node->key;
 	}
 
@@ -554,20 +551,20 @@ public:
 private:
 
 	template<typename T>
-	UNIGINE_INLINE Node *do_find_value(const T &value) const
+	UNIGINE_INLINE NodeType *do_find_value(const T &value) const
 	{
-		Node *node = root_value;
+		NodeType *node = root_value;
 		while (node && (node->data == value) == 0)
 			node = node->dirs_value[value < node->data];
 		return node;
 	}
 
-	Node *&do_find_value_node(const Type &value, Node *&parent)
+	NodeType *&do_find_value_node(const Type &value, NodeType *&parent)
 	{
 		if (root_value == nullptr)
 			return root_value;
 
-		Node *node = root_value;
+		NodeType *node = root_value;
 		int dir = -1;
 		while (node && (node->data == value) == 0)
 		{
@@ -578,14 +575,14 @@ private:
 	}
 
 	template<typename TypeKey, typename TypeValue>
-	Node *do_replace(TypeKey &&key, TypeValue &&value)
+	NodeType *do_replace(TypeKey &&key, TypeValue &&value)
 	{
-		Node *parent = nullptr;
-		Node *&finded_node = Parent::do_find_node(key, parent);
+		NodeType *parent = nullptr;
+		NodeType *&finded_node = Parent::do_find_node(key, parent);
 		if (finded_node == nullptr)
 		{
 			++Parent::length;
-			Node *node = new Node(std::forward<TypeKey>(key), parent, std::forward<TypeValue>(value));
+			NodeType *node = new NodeType(std::forward<TypeKey>(key), parent, std::forward<TypeValue>(value));
 			finded_node = node;
 			if (parent)
 				Parent::rebalance_insert(node);
@@ -605,13 +602,13 @@ private:
 	}
 
 	template<typename TypeKey, typename TypeValue>
-	Node *do_replace_data(TypeKey &&key, TypeValue &&value)
+	NodeType *do_replace_data(TypeKey &&key, TypeValue &&value)
 	{
-		Node *parent_value = nullptr;
-		Node *&finded_node = do_find_value_node(value, parent_value);
+		NodeType *parent_value = nullptr;
+		NodeType *&finded_node = do_find_value_node(value, parent_value);
 		if (finded_node == nullptr)
 		{
-			Node *node = new Node(std::forward<TypeKey>(key), nullptr, std::forward<TypeValue>(value));
+			NodeType *node = new NodeType(std::forward<TypeKey>(key), nullptr, std::forward<TypeValue>(value));
 			finded_node = node;
 			node->parent_value = parent_value;
 			if (parent_value)
@@ -633,14 +630,14 @@ private:
 	}
 
 	template<typename TypeKey, typename ... Args>
-	Node *do_replace_emplace(TypeKey &&key, Args && ... args)
+	NodeType *do_replace_emplace(TypeKey &&key, Args && ... args)
 	{
-		Node *parent = nullptr;
-		Node *&finded_node = Parent::do_find_node(key, parent);
+		NodeType *parent = nullptr;
+		NodeType *&finded_node = Parent::do_find_node(key, parent);
 		if (finded_node == nullptr)
 		{
 			++Parent::length;
-			Node *node = new Node(std::forward<TypeKey>(key), parent, std::forward<Args>(args)...);
+			NodeType *node = new NodeType(std::forward<TypeKey>(key), parent, std::forward<Args>(args)...);
 			finded_node = node;
 			if (parent)
 				Parent::rebalance_insert(node);
@@ -660,10 +657,10 @@ private:
 		return finded_node;
 	}
 
-	Node *do_append_value(Node *data)
+	NodeType *do_append_value(NodeType *data)
 	{
-		Node *parent = nullptr;
-		Node *&finded_node = do_find_value_node(data->data, parent);
+		NodeType *parent = nullptr;
+		NodeType *&finded_node = do_find_value_node(data->data, parent);
 		if (finded_node == nullptr)
 		{
 			data->parent_value = parent;
@@ -677,16 +674,16 @@ private:
 		return nullptr;
 	}
 
-	Node *do_remove_value(Node *node)
+	NodeType *do_remove_value(NodeType *node)
 	{
 		if (root_value == nullptr)
 			return nullptr;
 		if (node == nullptr)
 			return nullptr;
 
-		Node *parent = node->parent_value;
-		Node *target = node->parent_value;
-		Node *child;
+		NodeType *parent = node->parent_value;
+		NodeType *target = node->parent_value;
+		NodeType *child;
 		bool left = false;
 		if (node->left_value == nullptr)
 			child = node->right_value;
@@ -704,7 +701,7 @@ private:
 				root_value = target;
 
 			child = target->right_value;
-			Node *targe_parent = target->parent_value;
+			NodeType *targe_parent = target->parent_value;
 			target->parent_value = parent;
 			target->left_value = node->left_value;
 			node->left_value->parent_value = target;
@@ -743,10 +740,10 @@ private:
 		return node;
 	}
 
-	void rotate_left_value(Node *n)
+	void rotate_left_value(NodeType *n)
 	{
-		Node *parent = n->parent_value;
-		Node *right = n->right_value;
+		NodeType *parent = n->parent_value;
+		NodeType *right = n->right_value;
 		n->right_value = right->left_value;
 		if (n->right_value)
 			n->right_value->parent_value = n;
@@ -762,10 +759,10 @@ private:
 		parent->dirs_value[parent->left_value == n] = right;
 	}
 
-	void rotate_right_value(Node *n)
+	void rotate_right_value(NodeType *n)
 	{
-		Node *parent = n->parent_value;
-		Node *left = n->left_value;
+		NodeType *parent = n->parent_value;
+		NodeType *left = n->left_value;
 		n->left_value = left->right_value;
 		if (n->left_value)
 			n->left_value->parent_value = n;
@@ -781,21 +778,21 @@ private:
 		parent->dirs_value[parent->left_value == n] = left;
 	}
 
-	void rotate_left_right_value(Node *parent)
+	void rotate_left_right_value(NodeType *parent)
 	{
 		rotate_left_value(parent->left_value);
 		rotate_right_value(parent);
 	}
 
-	void rotate_right_left_value(Node *parent)
+	void rotate_right_left_value(NodeType *parent)
 	{
 		rotate_right_value(parent->right_value);
 		rotate_left_value(parent);
 	}
 
-	void rebalance_insert_value(Node *node)
+	void rebalance_insert_value(NodeType *node)
 	{
-		Node *parent = node;
+		NodeType *parent = node;
 		do
 		{
 			node = parent;
@@ -815,7 +812,7 @@ private:
 					return;
 				}
 
-				Node *child = node->right_value;
+				NodeType *child = node->right_value;
 				parent->balance_value = node->balance_value = 0;
 				if (child->balance_value == -1) parent->balance_value = 1;
 				else if (child->balance_value == 1) node->balance_value = -1;
@@ -838,7 +835,7 @@ private:
 					return;
 				}
 
-				Node *child = node->left_value;
+				NodeType *child = node->left_value;
 				parent->balance_value = node->balance_value = 0;
 				if (child->balance_value == 1) parent->balance_value = -1;
 				else if (child->balance_value == -1) node->balance_value = 1;
@@ -850,9 +847,9 @@ private:
 		} while (parent->parent_value);
 	}
 
-	void rebalance_remove_value(Node *node, bool left)
+	void rebalance_remove_value(NodeType *node, bool left)
 	{
-		for (Node *parent; node; node = parent)
+		for (NodeType *parent; node; node = parent)
 		{
 			parent = node->parent_value;
 			if (left)
@@ -865,7 +862,7 @@ private:
 				if (node->balance_value == 0)
 					continue;
 
-				Node *child = node->right_value;
+				NodeType *child = node->right_value;
 
 				if (child->balance_value == 0)
 				{
@@ -881,7 +878,7 @@ private:
 					continue;
 				}
 
-				Node *child_left = child->left_value;
+				NodeType *child_left = child->left_value;
 				node->balance_value = child->balance_value = 0;
 				if (child_left->balance_value == 1)
 					node->balance_value = -1;
@@ -901,7 +898,7 @@ private:
 				if (node->balance_value == 0)
 					continue;
 
-				Node *child = node->left_value;
+				NodeType *child = node->left_value;
 				if (child->balance_value == 0)
 				{
 					node->balance_value = -1;
@@ -917,7 +914,7 @@ private:
 					continue;
 				}
 
-				Node *child_right = child->right_value;
+				NodeType *child_right = child->right_value;
 				node->balance_value = child->balance_value = 0;
 				if (child_right->balance_value == -1)
 					node->balance_value = 1;
@@ -932,7 +929,7 @@ private:
 	}
 
 private:
-	Node *root_value;
+	NodeType *root_value;
 
 };
 

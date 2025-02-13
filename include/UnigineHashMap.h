@@ -15,422 +15,348 @@
 
 #include <UnigineHash.h>
 #include <UniginePair.h>
-#include "UniginePool.h"
+
+#include <type_traits>
 
 namespace Unigine
 {
 
-template<typename Key, typename Type, typename HashType>
-struct HashMapData : InstancePool<HashMapData<Key, Type, HashType>>
+namespace Internal
 {
+template<class Key, class Value>
+struct HashMapData
+{
+	using HashType = typename Hasher<Key>::HashType;
+	template<class K, std::enable_if_t<!IsSame<K, HashMapData>::value, int> = 0>
+	UNIGINE_INLINE HashMapData(HashType h, K &&k)
+		: hash(h)
+		, key(std::forward<K>(k))
+		, data()
+	{}
+	template<class K, class... Args, std::enable_if_t<!IsSame<K, HashMapData>::value, int> = 0>
+	UNIGINE_INLINE HashMapData(HashType h, K &&k, Args &&...args)
+		: hash(h)
+		, key(std::forward<K>(k))
+		, data(std::forward<Args>(args)...)
+	{}
+
+	UNIGINE_INLINE friend bool operator==(const HashMapData &l, const HashMapData &r)
+	{
+		return l.hash == r.hash && l.key == r.key && l.data == r.data;
+	}
+	UNIGINE_INLINE friend bool operator!=(const HashMapData &l, const HashMapData &r) { return !(l == r); }
+
 	const HashType hash;
 	const Key key;
-	Type data;
-	HashMapData(HashType h, const Key &k)
-		: hash(h)
-		, key(k)
-		, data{}
-	{}
-	HashMapData(HashType h, Key &&k)
-		: hash(h)
-		, key(std::move(k))
-		, data{}
-	{}
-	template<typename ... Args>
-	HashMapData(HashType h, const Key &k, Args && ... args)
-		: hash(h)
-		, key(k)
-		, data(std::forward<Args>(args)...)
-	{}
-	template<typename ... Args>
-	HashMapData(HashType h, Key &&k, Args && ... args)
-		: hash(h)
-		, key(std::move(k))
-		, data(std::forward<Args>(args)...)
-	{}
-
+	Value data;
 };
 
-template <typename Key, typename Type, typename Counter = unsigned int>
-class HashMap : public Hash<Key, HashMapData<Key, Type, typename Hasher<Key>::HashType>, typename Hasher<Key>::HashType, Counter>
+template<class K, class V>
+struct FlatHashMapPolicy
 {
-public:
-
+	using Key = K;
+	using Value = V;
+	using Slot = HashMapData<Key, Value>;
+	using Element = HashMapData<Key, Value>;
 	using HashType = typename Hasher<Key>::HashType;
-	using Data = HashMapData<Key, Type, HashType>;
-	using Parent = Hash<Key, HashMapData<Key, Type, typename Hasher<Key>::HashType>, typename Hasher<Key>::HashType, Counter>;
-	using Iterator = typename Parent::Iterator;
-	using ConstIterator = typename Parent::ConstIterator;
 
-	using iterator = typename Parent::iterator;
-	using const_iterator = typename Parent::const_iterator;
+	UNIGINE_INLINE static HashType hash(const Slot &s) { return s.hash; }
+	UNIGINE_INLINE static const Key &key(const Slot &s) { return s.key; }
 
-	HashMap() noexcept
+	template<class... Args>
+	UNIGINE_INLINE static void construct(Slot &slot, HashType hash, Args &&...args)
 	{
-		Parent::data = nullptr;
-		Parent::length = 0;
-		Parent::capacity = 0;
+		new (&slot) Slot(hash, std::forward<Args>(args)...);
+	}
+	UNIGINE_INLINE static void construct(Slot &slot, const Slot &from) { new (&slot) Slot(from); }
+	UNIGINE_INLINE static void construct(Slot &slot, Slot &&from)
+	{
+		new (&slot) Slot(from.hash, std::move(const_cast<Key &>(from.key)), std::move(from.data));
 	}
 
-	~HashMap()
+	UNIGINE_INLINE static void swap(Slot &s0, Slot &s1)
 	{
-		if (Parent::data == nullptr)
+		std::swap(const_cast<HashType &>(s0.hash), const_cast<HashType &>(s1.hash));
+		std::swap(const_cast<Key &>(s0.key), const_cast<Key &>(s1.key));
+		std::swap(s0.data, s1.data);
+	}
+
+	template<class... Args>
+	UNIGINE_INLINE static void replace(Slot &slot, Args &&...args)
+	{
+		slot.data = Value(std::forward<Args>(args)...);
+	}
+	UNIGINE_INLINE static void replace(Slot &slot, const Slot &from) { slot.data = from.data; }
+	UNIGINE_INLINE static void replace(Slot &slot, Slot &&from) { slot.data = std::move(from.data); }
+
+	UNIGINE_INLINE static Element &element(Slot &slot) { return slot; }
+
+	UNIGINE_INLINE static void destruct(Slot &slot) { slot.~Slot(); }
+};
+
+template<class K, class V>
+struct BucketHashMapPolicy
+{
+	using Key = K;
+	using Value = V;
+	using Slot = HashMapData<Key, Value> *;
+	using Element = HashMapData<Key, Value>;
+	using HashType = typename Hasher<Key>::HashType;
+
+	UNIGINE_INLINE static HashType hash(const Slot &s) { return s->hash; }
+	UNIGINE_INLINE static const Key &key(const Slot &s) { return s->key; }
+
+	template<class... Args>
+	UNIGINE_INLINE static void construct(Slot &slot, HashType hash, Args &&...args)
+	{
+		slot = new (Memory::allocatePool<sizeof(Element)>()) Element(hash, std::forward<Args>(args)...);
+	}
+	UNIGINE_INLINE static void construct(Slot &slot, const Slot &from)
+	{
+		slot = new (Memory::allocatePool<sizeof(Element)>()) Element(from->hash, from->key, from->data);
+	}
+	UNIGINE_INLINE static void construct(Slot &slot, Slot &&from)
+	{
+		slot = from;
+		from = nullptr;
+	}
+
+	UNIGINE_INLINE static void swap(Slot &s0, Slot &s1)
+	{
+		Slot temp = s0;
+		s0 = s1;
+		s1 = temp;
+	}
+
+	template<class... Args>
+	UNIGINE_INLINE static void replace(Slot &slot, Args &&...args)
+	{
+		slot->data.~Value();
+		new (&slot->data) Value(std::forward<Args>(args)...);
+	}
+	UNIGINE_INLINE static void replace(Slot &slot, const Slot &from) { slot->data = from->data; }
+	UNIGINE_INLINE static void replace(Slot &slot, Slot &&from) { std::swap(slot, from); }
+
+	UNIGINE_INLINE static Element &element(Slot &slot) { return *slot; }
+
+	UNIGINE_INLINE static void destruct(Slot &slot)
+	{
+		if (!slot)
 			return;
-		for (Counter i = 0; i < Parent::capacity; ++i)
-			delete Parent::data[i];
-		Memory::deallocate(Parent::data);
+		slot->~Element();
+		Memory::deallocatePool<sizeof(Element)>(slot);
 	}
-	HashMap(std::initializer_list<Pair<Key, Type>> list)
-	{
-		Parent::data = nullptr;
-		Parent::length = 0;
-		Parent::capacity = 0;
-		Parent::reserve(static_cast<Counter>(list.size()));
-		for (const auto &it : list)
-			do_emplace(it.first, it.second);
-	}
-	HashMap(const HashMap &o)
-	{
-		Parent::data = nullptr;
-		Parent::length = 0;
-		Parent::capacity = 0;
-		Parent::rehash(o.capacity);
-		for (const auto &it : o)
-			do_emplace_hash(it.hash, it.key, it.data);
-	}
+};
 
-	HashMap(HashMap &&o) noexcept
+template<class Self, class Policy, class Counter>
+class HashMapBase : public Hash<Policy, Counter>
+{
+	using Base = Hash<Policy, Counter>;
+public:
+	using Key = typename Policy::Key;
+	using Value = typename Policy::Value;
+	using Slot = typename Policy::Slot;
+	using Iterator = typename Base::Iterator;
+	using ConstIterator = typename Base::ConstIterator;
+	using Parent = Hash<Policy, Counter>;
+
+	using Base::Base;
+	HashMapBase() = default;
+
+	HashMapBase(std::initializer_list<Pair<Key, Value>> init)
 	{
-		Parent::length = o.length;
-		Parent::capacity = o.capacity;
-		Parent::data = o.data;
-
-		o.length = 0;
-		o.capacity = 0;
-		o.data = nullptr;
-	}
-
-	HashMap &operator=(const HashMap &o)
-	{
-		if (this == &o)
-			return *this;
-		Parent::clear();
-		Parent::reserve(static_cast<Counter>(o.capacity * HASH_LOAD_FACTOR));
-		for (const auto &it : o)
-			do_emplace_hash(it.hash, it.key, it.data);
-		return *this;
-	}
-
-	HashMap &operator=(HashMap &&o)
-	{
-		if (this == &o)
-			return *this;
-		for (Counter i = 0; i < Parent::capacity; ++i)
-			delete Parent::data[i];
-		Memory::deallocate(Parent::data);
-		Parent::length = o.length;
-		Parent::capacity = o.capacity;
-		Parent::data = o.data;
-
-		o.length = 0;
-		o.capacity = 0;
-		o.data = nullptr;
-		return *this;
-	}
-
-	UNIGINE_INLINE Iterator append(const Key &key, const Type &value) { return Iterator(do_emplace(key, value), Parent::data + Parent::capacity); }
-	UNIGINE_INLINE Iterator append(const Key &key, Type &&value) { return Iterator(do_emplace(key, std::move(value)), Parent::data + Parent::capacity); }
-	UNIGINE_INLINE Iterator append(Key &&key, const Type &value) { return Iterator(do_emplace(std::move(key), value), Parent::data + Parent::capacity); }
-	UNIGINE_INLINE Iterator append(Key &&key, Type && value) { return Iterator(do_emplace(std::move(key), std::move(value)), Parent::data + Parent::capacity); }
-	UNIGINE_INLINE void append(const HashMap &o)
-	{
-		for (const auto &it : o)
-			do_emplace_hash(it.hash, it.key, it.data);
-	}
-	UNIGINE_INLINE void append(HashMap &&o)
-	{
-		for (const auto &it : o)
-			do_emplace_hash(it.hash, std::move(it.key), std::move(it.data));
-		o.clear();
-	}
-
-	using Parent::remove;
-
-	UNIGINE_INLINE void remove(const HashMap &o)
-	{
-		if (&o == this)
-			Parent::clear();
-		else
+		Parent::reserve(init.size());
+		for (const auto &v : init)
 		{
-			for (Counter i = 0; i < o.capacity; ++i)
-			{
-				if (o.data[i] == nullptr)
-					continue;
-				Parent::do_remove(o.data[i]->hash, o.data[i]->key);
-			}
+			Parent::emplace(v.first, v.second);
 		}
 	}
-	UNIGINE_INLINE Iterator insert(const Key &key, const Type &value) { return Iterator(do_emplace(key, value), Parent::data + Parent::capacity); }
-	UNIGINE_INLINE Iterator insert(const Key &key, Type &&value) { return Iterator(do_emplace(key, std::move(value)), Parent::data + Parent::capacity); }
-	UNIGINE_INLINE Iterator insert(Key &&key, const Type &value) { return Iterator(do_emplace(std::move(key), value), Parent::data + Parent::capacity); }
-	UNIGINE_INLINE Iterator insert(Key &&key, Type && value) { return Iterator(do_emplace(std::move(key), std::move(value)), Parent::data + Parent::capacity); }
-	UNIGINE_INLINE void insert(const HashMap &o) { append(o); }
-	UNIGINE_INLINE void insert(HashMap &&o) { append(std::move(o)); }
 
-	UNIGINE_INLINE Type &append(const Key &key) { return Parent::do_append(key)->data; }
-	UNIGINE_INLINE Type &append(Key &&key) { return Parent::do_append(std::move(key))->data; }
-
-	UNIGINE_INLINE Type &insert(const Key &key) { return Parent::do_append(key)->data; }
-	UNIGINE_INLINE Type &insert(Key &&key) { return Parent::do_append(std::move(key))->data; }
-
-	template <typename ... Args>
-	UNIGINE_INLINE Type &emplace(const Key &key, Args && ... args) { return (*do_emplace(key, std::forward<Args>(args)...))->data; }
-	template <typename ... Args>
-	UNIGINE_INLINE Type &emplace(Key &&key, Args && ... args) { return (*do_emplace(std::move(key), std::forward<Args>(args)...))->data; }
-
-	UNIGINE_INLINE Type take(const Key &key, const Type &def) { return do_take(Hasher<Key>::create(key), key, def); }
-	UNIGINE_INLINE Type take(const Key &key) { return do_take(Hasher<Key>::create(key), key); }
-	UNIGINE_INLINE Type take(const Iterator &it) { return do_take(it->hash, it->key); }
-	UNIGINE_INLINE Type take(const ConstIterator &it) { return do_take(it->hash, it->key); }
-
-	UNIGINE_INLINE Type &operator[](const Key &key) noexcept { return get(key); }
-	UNIGINE_INLINE Type &operator[](Key &&key) noexcept { return get(std::move(key)); }
-	UNIGINE_INLINE const Type &operator[](const Key &key) const noexcept { return get(key); }
-
-	UNIGINE_INLINE Type &get(Key &&key) noexcept { return Parent::do_append(std::move(key))->data; }
-	UNIGINE_INLINE Type &get(const Key &key) noexcept { return Parent::do_append(key)->data; }
-
-	template <typename T>
-	UNIGINE_INLINE const Type &get(const T &key) const noexcept
+	using Base::append;
+	Iterator append(const Key &key, const Value &value) { return Parent::emplace(key, value); }
+	Iterator append(const Key &key, Value &&value) { return Parent::emplace(key, std::move(value)); }
+	Iterator append(Key &&key, const Value &value) { return Parent::emplace(std::move(key), value); }
+	Iterator append(Key &&key, Value &&value)
 	{
-		const Data * const *d = Parent::do_find(key);
-		assert(d != nullptr && "Hash::get() const : bad key.");
-		return (*d)->data;
+		return Parent::emplace(std::move(key), std::move(value));
+	}
+	template<class K, std::enable_if_t<!Internal::IsBaseOf<Base, K>::value && !Internal::IsBaseOf<Vector<Key>, K>::value, int> = 0>
+	Value &append(K &&k)
+	{
+		return Parent::emplace_noreplace(std::forward<K>(k))->data;
 	}
 
-	template <typename T>
-	UNIGINE_INLINE const Type &get(const T &key, const Type &value) const noexcept
+	using Base::insert;
+	Iterator insert(const Key &key, const Value &value) { return Parent::emplace(key, value); }
+	Iterator insert(const Key &key, Value &&value) { return Parent::emplace(key, std::move(value)); }
+	Iterator insert(Key &&key, const Value &value) { return Parent::emplace(std::move(key), value); }
+	Iterator insert(Key &&key, Value &&value)
 	{
-		const Data *const *d = Parent::do_find(key);
-		if (!d)
-			return value;
-		return (*d)->data;
+		return Parent::emplace(std::move(key), std::move(value));
+	}
+	template<class K, std::enable_if_t<!Internal::IsBaseOf<Base, K>::value && !Internal::IsBaseOf<Vector<Key>, K>::value, int> = 0>
+	Value &insert(K &&k)
+	{
+		return Parent::emplace_noreplace(std::forward<K>(k))->data;
 	}
 
-	using Parent::contains;
-
-	template <typename T>
-	UNIGINE_INLINE bool contains(const T &key, const Type &value) const noexcept
+	template<class K>
+	Value take(const K &k, const Value &def)
 	{
-		const Data * const *d = Parent::do_find(key);
-		return d != nullptr && (*d)->data == value;
+		auto it = Parent::find(k);
+		return it != Parent::end() ? take(it) : def;
 	}
 
-	template<typename T>
-	UNIGINE_INLINE Iterator findData(const T &t) noexcept
+	template<class K>
+	Value take(const K &k)
 	{
-		Iterator end_it = Parent::end();
-		for (Iterator it = Parent::begin(); it != end_it; ++it)
-			if (it->data == t)
+		auto it = Parent::find(k);
+		return it != Parent::end() ? take(it) : Value{};
+	}
+
+	Value take(Iterator it)
+	{
+		Value result = std::move(it->data);
+		Parent::erase(it);
+		return result;
+	}
+
+	Value take(ConstIterator it) { return take(it.it_); }
+
+	using Base::contains;
+
+	template<class K, class V>
+	bool contains(const K &k, const V &v) const
+	{
+		auto it = Parent::find(k);
+		return it != Parent::end() && it->data == v;
+	}
+
+	template<class V>
+	Iterator findData(const V &v)
+	{
+		auto e = Parent::end();
+		for (auto it = Parent::begin(); it != e; ++it)
+		{
+			if (it->data == v)
 				return it;
-		return end_it;
+		}
+		return e;
 	}
 
-	template<typename T>
-	UNIGINE_INLINE ConstIterator findData(const T &t) const noexcept
+	template<class V>
+	ConstIterator findData(const V &v) const
 	{
-		ConstIterator end_it = Parent::end();
-		for (ConstIterator it = Parent::begin(); it != end_it; ++it)
-			if (it->data == t)
-				return it;
-		return end_it;
+		return const_cast<HashMapBase *>(this)->findData(v);
 	}
 
-	template<typename T>
-	UNIGINE_INLINE Type value(const T &key) const noexcept
+	template<class V>
+	void removeData(const V &v)
 	{
-		const Data * const *d = Parent::do_find(key);
-		return d == nullptr ? Type{} : (*d)->data;
+		auto it = const_cast<HashMapBase *>(this)->findData(v);
+		if (it != Parent::end())
+			Parent::remove(it);
 	}
 
-	template<typename T>
-	UNIGINE_INLINE Type value(const T &key, const Type &def) const noexcept
+	template<class K>
+	Value &get(K &&k)
 	{
-		const Data * const *d = Parent::do_find(key);
-		return d == nullptr ? def : (*d)->data;
+		return append(std::forward<K>(k));
 	}
 
-	template<typename T>
-	UNIGINE_INLINE const Type &valueRef(const T &key, const Type &def) const noexcept
+	template<class K>
+	const Value &get(const K &k) const
 	{
-		const Data * const *d = Parent::do_find(key);
-		return d == nullptr ? def : (*d)->data;
+		Counter pos;
+		bool result = Parent::do_find(k, pos);
+		assert(result); UNIGINE_UNUSED(result);
+		return Policy::element(Parent::get_slot_data()[pos]).data;
 	}
 
-	UNIGINE_INLINE Vector<Type> values() const
+	template<class K>
+	const Value &get(const K &k, const Value &value) const
 	{
-		Vector<Type> values;
+		Counter pos;
+		return Parent::do_find(k, pos) ? Policy::element(Parent::get_slot_data()[pos]).data : value;
+	}
+
+	template<typename K>
+	Value &operator[](K &&k)
+	{
+		return get(std::forward<K>(k));
+	}
+
+	template<typename K>
+	const Value &operator[](const K &k) const
+	{
+		return get(k);
+	}
+
+	template<typename K>
+	Value value(const K &k) const
+	{
+		Counter pos;
+		return Parent::do_find(k, pos) ? Policy::element(Parent::get_slot_data()[pos]).data : Value{};
+	}
+
+	template<typename K>
+	const Value &value(const K &k, const Value &value) const
+	{
+		return get(k, value);
+	}
+
+	template<typename K>
+	const Value &valueRef(const K &k) const
+	{
+		return Parent::get(k);
+	}
+
+	template<typename K>
+	const Value &valueRef(const K &k, const Value &value) const
+	{
+		return get(k, value);
+	}
+
+	Vector<Value> values() const
+	{
+		Vector<Value> values;
 		getValues(values);
 		return values;
 	}
 
-	UNIGINE_INLINE void getValues(Vector<Type> &values) const
+	void getValues(Vector<Value> &values) const
 	{
-		values.allocate(values.size() + Parent::length);
-		for (Counter i = 0; i < Parent::capacity; ++i)
-		{
-			if (Parent::data[i] == nullptr)
-				continue;
-			values.appendFast(Parent::data[i]->data);
-		}
+		values.clear();
+		values.allocate(Parent::size());
+		Parent::traverse_full_slots([&values](Slot *slot) { values.appendFast(Policy::element(*slot).data); });
 	}
+};
 
-	UNIGINE_INLINE void getPairs(Vector<Pair<Key, Type>> &pairs) const
-	{
-		pairs.allocate(pairs.size() + Parent::length);
-		for (Counter i = 0; i < Parent::capacity; ++i)
-		{
-			if (Parent::data[i] == nullptr)
-				continue;
-			pairs.appendFast(MakePair(Parent::data[i]->key, Parent::data[i]->data));
-		}
-	}
+} // namespace Internal
 
-	UNIGINE_INLINE bool operator==(const HashMap &o) const noexcept
-	{
-		if (Parent::length != o.length)
-			return false;
+template<class Key, class Value, class Counter = unsigned int>
+class HashMap
+	: public Internal::HashMapBase<HashMap<Key, Value, Counter>,
+		  Internal::FlatHashMapPolicy<Key, Value>, Counter>
+{
+	using Base = Internal::HashMapBase<HashMap<Key, Value, Counter>,
+		Internal::FlatHashMapPolicy<Key, Value>, Counter>;
 
-		for (Counter i = 0; i < Parent::capacity; ++i)
-		{
-			if (Parent::data[i] == nullptr)
-				continue;
+public:
+	using Base::Base;
+};
 
-			auto other_data = o.do_find(Parent::data[i]->key);
-			if (other_data == nullptr)
-				return false;
-			if ((*other_data)->data != Parent::data[i]->data)
-				return false;
-		}
 
-		return true;
-	}
+template<class Key, class Value, class Counter = unsigned int>
+class BucketHashMap
+	: public Internal::HashMapBase<HashMap<Key, Value, Counter>,
+		  Internal::BucketHashMapPolicy<Key, Value>, Counter>
+{
+	using Base = Internal::HashMapBase<HashMap<Key, Value, Counter>,
+		Internal::BucketHashMapPolicy<Key, Value>, Counter>;
 
-	UNIGINE_INLINE bool operator!=(const HashMap &o) const noexcept { return !(*this == o); }
-
-private:
-
-	template<typename ... Args>
-	Data **do_emplace_hash(HashType hash, const Key &key, Args && ... args)
-	{
-		if (Parent::capacity == 0)
-			Parent::realloc();
-		Counter index = hash & (Parent::capacity - 1);
-		while (Parent::data[index])
-		{
-			if (Parent::data[index]->hash == hash && Parent::data[index]->key == key)
-			{
-				Parent::data[index]->data = Type(std::forward<Args>(args)...);
-				return Parent::data + index;
-			}
-			index = (index + 1) & (Parent::capacity - 1);
-		}
-
-		Data *d = new Data(hash, key, std::forward<Args>(args)...);
-		Parent::data[index] = d;
-		++Parent::length;
-		if (Parent::is_need_realloc())
-			Parent::realloc(&index);
-
-		return Parent::data + index;
-	}
-
-	template<typename ... Args>
-	UNIGINE_INLINE Data **do_emplace(const Key &key, Args && ... args)
-	{
-		return do_emplace_hash(Hasher<Key>::create(key), key, std::forward<Args>(args)...);
-	}
-
-	template<typename ... Args>
-	Data **do_emplace_hash(HashType hash, Key &&key, Args && ... args)
-	{
-		if (Parent::capacity == 0)
-			Parent::realloc();
-		Counter index = hash & (Parent::capacity - 1);
-		while (Parent::data[index])
-		{
-			if (Parent::data[index]->hash == hash && Parent::data[index]->key == key)
-			{
-				Parent::data[index]->data = Type(std::forward<Args>(args)...);
-				return Parent::data + index;
-			}
-			index = (index + 1) & (Parent::capacity - 1);
-		}
-
-		Data *d = new Data(hash, std::move(key), std::forward<Args>(args)...);
-		Parent::data[index] = d;
-		++Parent::length;
-		if (Parent::is_need_realloc())
-			Parent::realloc(&index);
-		return Parent::data + index;
-	}
-
-	template<typename ... Args>
-	UNIGINE_INLINE Data **do_emplace(Key &&key, Args && ... args)
-	{
-		return do_emplace_hash(Hasher<Key>::create(key), std::move(key), std::forward<Args>(args)...);
-	}
-
-	Type do_take(HashType hash, const Key &key, Type def)
-	{
-		if (Parent::length == 0)
-			return def;
-		Counter index = hash & (Parent::capacity - 1);
-
-		while (Parent::data[index])
-		{
-			if (Parent::data[index]->hash == hash && Parent::data[index]->key == key)
-				break;
-			index = (index + 1) & (Parent::capacity - 1);
-		}
-
-		if (Parent::data[index] == nullptr)
-			return def;
-
-		Type ret = std::move(Parent::data[index]->data);
-		delete Parent::data[index];
-		Parent::data[index] = nullptr;
-
-		--Parent::length;
-		Parent::rehash_data(index);
-		return ret;
-	}
-
-	Type do_take(HashType hash, const Key &key)
-	{
-		if (Parent::length == 0)
-			return Type();
-		Counter index = hash & (Parent::capacity - 1);
-
-		while (Parent::data[index])
-		{
-			if (Parent::data[index]->hash == hash && Parent::data[index]->key == key)
-				break;
-			index = (index + 1) & (Parent::capacity - 1);
-		}
-
-		if (Parent::data[index] == nullptr)
-			return Type();
-
-		Type ret = std::move(Parent::data[index]->data);
-		delete Parent::data[index];
-		Parent::data[index] = nullptr;
-
-		--Parent::length;
-		Parent::rehash_data(index);
-		return ret;
-	}
-
+public:
+	using Base::Base;
 };
 
 } // namespace Unigine

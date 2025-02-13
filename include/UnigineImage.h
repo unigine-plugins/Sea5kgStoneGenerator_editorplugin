@@ -171,6 +171,16 @@ public:
 		GGX_MIPMAPS_QUALITY_HIGH,
 		GGX_MIPMAPS_QUALITY_ULTRA,
 	};
+	struct SaveImageInfo
+	{
+		int type = Image::IMAGE_2D;
+		int format = Image::FORMAT_R8;
+		int width = 0;
+		int height = 0;
+		int depth = 1;
+		int num_layers = 1;
+		int num_mipmaps = 1;
+	};
 	bool create2D(int width, int height, int format, int num_mipmaps = 1, bool clear = true, bool allocate = true);
 	bool create3D(int width, int height, int depth, int format, int num_mipmaps = 1, bool clear = true, bool allocate = true);
 	bool createCube(int width, int height, int format, int num_mipmaps = 1, bool clear = true, bool allocate = true);
@@ -189,9 +199,13 @@ public:
 	bool load(const Ptr<Stream> &stream);
 	bool saveDDS(const Ptr<Stream> &stream) const;
 	bool loadDDS(const Ptr<Stream> &stream);
-	static Vector<String> getSupportedExtensions();
-	static bool isSupportedExtension(const char *ext);
-	static bool isSupported(const char *path);
+	static Vector<String> getSupportedLoadExtensions();
+	static bool isSupportedLoadExtension(const char *extension);
+	static bool isSupportedLoad(const char *path);
+	static Vector<String> getSupportedSaveExtensions();
+	static bool isSupportedSaveExtension(const char *extension);
+	static bool isSupportedSaveExtension(const char *extension, const Image::SaveImageInfo &save_info);
+	static bool isSupportedSave(const char *path);
 	void clear();
 	bool isLoaded() const;
 	int getType() const;
@@ -206,6 +220,7 @@ public:
 	static const char *getFormatName(int format);
 	static int getFormat(int num_channels, int format);
 	static int getRawFormat(int format);
+	int getRawFormat() const;
 	static bool isRawFormat(int format);
 	bool isRawFormat() const;
 	static bool isUCharFormat(int format);
@@ -281,8 +296,8 @@ public:
 	bool removeMipmaps();
 	bool combineMipmaps();
 	bool decombineMipmaps();
-	int convertToType(int type);
-	int convertToFormat(int new_format);
+	bool convertToType(int type);
+	bool convertToFormat(int new_format);
 	bool decombine();
 	bool combine(int new_format = -1);
 	bool decompress();
@@ -292,8 +307,8 @@ public:
 	Image::Pixel toPixel(const Math::vec4 &color);
 	static Math::vec4 toVec4(int format, const Image::Pixel &p);
 	Math::vec4 toVec4(const Image::Pixel &pixel);
-	void get(int id, Math::dvec4 &value) const;
-	void set(int id, const Math::dvec4 &value);
+	void get(size_t offset, Math::dvec4 &value) const;
+	void set(size_t offset, const Math::dvec4 &value);
 	Math::vec4 get(const Math::ivec2 &coord, int offset) const;
 	void get(const Math::ivec2 &coord, int offset, Math::vec4 &p00, Math::vec4 &p01, Math::vec4 &p10, Math::vec4 &p11) const;
 	void get8F(const Math::ivec2 &coord, Math::vec4 &p) const;
@@ -345,7 +360,7 @@ public:
 	unsigned char * getPixelsCubeArray(int face, int layer, int level = 0) const;
 	void setPixels(unsigned char *pixels);
 	void getPixels(const Ptr<Blob> &blob) const;
-	int setPixels(const Ptr<Blob> &blob);
+	bool setPixels(const Ptr<Blob> &blob);
 };
 typedef Ptr<Image> ImagePtr;
 
@@ -447,8 +462,9 @@ public:
 	bool save(const char *path) const;
 	void load(const Ptr<Json> &json);
 	void save(const Ptr<Json> &json) const;
+	bool adaptForSaving(const Ptr<Image> &image, const char *extension);
 	void updateParameters(const Ptr<Image> &image);
-	bool runCpu(const Ptr<Image> &image);
+	bool runCPU(const Ptr<Image> &image);
 	bool run(CallbackBase1<Ptr<Image>> *on_converted, const Ptr<Image> &image);
 };
 typedef Ptr<ImageConverter> ImageConverterPtr;

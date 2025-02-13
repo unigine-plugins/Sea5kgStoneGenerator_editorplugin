@@ -65,7 +65,7 @@ public:
 	bool isIEEEStrictness() const;
 	void clear() const;
 	void destroy() const;
-	int findParameter(const char *name);
+	int findParameter(const char *name) const;
 	void setParameterFloat(int id, float value);
 	void setParameterFloat(const char *name, float value);
 	void setParameterFloat2(int id, const Math::vec2 &value);
@@ -147,7 +147,6 @@ public:
 	void flushParameters() const;
 	void bind() const;
 	void unbind() const;
-	int getGLProgramID() const;
 	void * getD3D11VertexShader() const;
 	void * getD3D11ControlShader() const;
 	void * getD3D11EvaluateShader() const;

@@ -402,7 +402,34 @@
 		</member>
 		<member name="M:Unigine.Math.vec3.hash const">
 			<summary>
+			Returns a hash obtained by mixing the hash values of vector components.
 			</summary>  
+			<returns>32-bit hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.vec3.reflect(Unigine.vec3,Unigine.vec3,Unigine.vec3)">
+			<summary>
+			Computes the reflection of a vector (v0) about another vector (v1) and stores the result in the ret value.
+			</summary> 
+			<param name="ret"> Vector to store the returned value. </param>
+			<param name="v0"> Vector to be reflected. </param>
+			<param name="v1"> Vector to reflect about. </param> 
+			<returns>Reflected vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.vec3.reflect(Unigine.vec3,Unigine.vec3)">
+			<summary>
+			Computes the reflection of a vector (v0) about another vector (v1) and stores the result in the ret value.
+			</summary> 
+			<param name="v0"> Vector to be reflected. </param>
+			<param name="v1"> Vector to reflect about. </param> 
+			<returns>Reflected vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.vec3.areCollinear(Unigine.vec3,Unigine.vec3)">
+			<summary>
+			Checks if the vectors are collinear.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>true if the vectors are collinear; otherwise, false.</returns>
 		</member>
 		<member name="F:Unigine.Math.vec3.vec3_back">
 			<summary>

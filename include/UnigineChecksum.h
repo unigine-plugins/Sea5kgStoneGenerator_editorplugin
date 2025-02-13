@@ -70,10 +70,10 @@ public:
 	UNIGINE_INLINE CRC32() { begin(); }
 
 	UNIGINE_INLINE void begin() { value = 0xffffffff; }
-	UNIGINE_INLINE void update(const void *data, int size)
+	UNIGINE_INLINE void update(const void *data, size_t size)
 	{
 		const unsigned char *d = (const unsigned char *)data;
-		for (int i = 0; i < size; i++)
+		for (size_t i = 0; i < size; i++)
 			value = CRC32Table::table[(value ^ (*d++)) & 0xff] ^ (value >> 8);
 	}
 	UNIGINE_INLINE int end()
@@ -83,14 +83,14 @@ public:
 	}
 
 	// calculate checksum for the single data block
-	UNIGINE_INLINE static int calculate(const void *data, int size, bool big_endian = true)
+	UNIGINE_INLINE static int calculate(const void *data, size_t size, bool big_endian = true)
 	{
 		CRC32 crc32;
 		crc32.update(data, size);
 		return big_endian ? crc32.end() : CRC32Table::endian(crc32.end());
 	}
 
-	UNIGINE_INLINE static unsigned int calcCrc32(const void *data, int size)
+	UNIGINE_INLINE static unsigned int calcCrc32(const void *data, size_t size)
 	{
 		unsigned int crc = ~((unsigned int)0);
 		const unsigned char *p = (const unsigned char *)data;
@@ -119,15 +119,15 @@ public:
 		counter[0] = 0;
 		counter[1] = 0;
 	}
-	void update(const void *data, int size)
+	void update(const void *data, size_t size)
 	{
 		const unsigned char *src = (const unsigned char *)data;
 
 		unsigned int old_counter = counter[0];
 		int old_size = (old_counter >> 3) & 0x3f;
 
-		counter[0] += size << 3;
-		counter[1] += size >> 29;
+		counter[0] += static_cast<unsigned int>(size << 3);
+		counter[1] += static_cast<unsigned int>(size >> 29);
 
 		if (counter[0] < old_counter)
 			counter[1]++;
@@ -136,7 +136,7 @@ public:
 		{
 			unsigned char *b = (unsigned char *)buffer + old_size;
 			old_size = 64 - old_size;
-			if (size < old_size)
+			if (size < static_cast<size_t>(old_size))
 			{
 				memcpy(b, src, size);
 				return;
@@ -214,7 +214,7 @@ public:
 	}
 
 	// calculate checksum for the single data block
-	UNIGINE_INLINE static int calculate(const void *data, int size, bool big_endian = true)
+	UNIGINE_INLINE static int calculate(const void *data, size_t size, bool big_endian = true)
 	{
 		unsigned int value[4];
 		MD5 md5;
@@ -222,13 +222,13 @@ public:
 		md5.endMD5(value, big_endian);
 		return (int)(value[0] ^ value[1] ^ value[2] ^ value[3]);
 	}
-	UNIGINE_INLINE static void calculate(unsigned int *value, const void *data, int size, bool big_endian = true)
+	UNIGINE_INLINE static void calculate(unsigned int *value, const void *data, size_t size, bool big_endian = true)
 	{
 		MD5 md5;
 		md5.update(data, size);
 		md5.endMD5(value, big_endian);
 	}
-	UNIGINE_INLINE static void calculateD3D(unsigned int *value, const void *data, int size)
+	UNIGINE_INLINE static void calculateD3D(unsigned int *value, const void *data, size_t size)
 	{
 		MD5 md5;
 		md5.update(data, size);
@@ -357,15 +357,15 @@ public:
 		counter[0] = 0;
 		counter[1] = 0;
 	}
-	void update(const void *data, int size)
+	void update(const void *data, size_t size)
 	{
 		const unsigned char *src = (const unsigned char *)data;
 
 		unsigned int old_counter = counter[0];
 		int old_size = (old_counter >> 3) & 0x3f;
 
-		counter[0] += size << 3;
-		counter[1] += size >> 29;
+		counter[0] += static_cast<unsigned int>(size << 3);
+		counter[1] += static_cast<unsigned int>(size >> 29);
 
 		if (counter[0] < old_counter)
 			counter[1]++;
@@ -374,7 +374,7 @@ public:
 		{
 			unsigned char *b = (unsigned char *)buffer + old_size;
 			old_size = 64 - old_size;
-			if (size < old_size)
+			if (size < static_cast<size_t>(old_size))
 			{
 				memcpy(b, src, size);
 				return;
@@ -411,7 +411,9 @@ public:
 			transform(state, buffer);
 			memset(buffer, 0, 56);
 		} else
+		{
 			memset(b, 0, size);
+		}
 
 		buffer[14] = CRC32Table::endian(counter[1]);
 		buffer[15] = CRC32Table::endian(counter[0]);
@@ -422,7 +424,7 @@ public:
 	}
 
 	// calculate checksum for the single data block
-	UNIGINE_INLINE static int calculate(const void *data, int size, bool big_endian = true)
+	UNIGINE_INLINE static int calculate(const void *data, size_t size, bool big_endian = true)
 	{
 		unsigned int value[5];
 		SHA1 sha1;
@@ -430,7 +432,7 @@ public:
 		sha1.end(value, big_endian);
 		return (int)(value[0] ^ value[1] ^ value[2] ^ value[3] ^ value[4]);
 	}
-	UNIGINE_INLINE static void calculate(unsigned int *value, const void *data, int size, bool big_endian = true)
+	UNIGINE_INLINE static void calculate(unsigned int *value, const void *data, size_t size, bool big_endian = true)
 	{
 		SHA1 sha1;
 		sha1.update(data, size);
@@ -597,11 +599,11 @@ public:
 		state[6] = 0x1f83d9ab;
 		state[7] = 0x5be0cd19;
 	}
-	void update(const void *data, int size)
+	void update(const void *data, size_t size)
 	{
 		const unsigned char *src = (const unsigned char *)data;
 
-		for (int i = 0; i < size; ++i)
+		for (size_t i = 0; i < size; ++i)
 		{
 			buffer[buffer_len] = src[i];
 			buffer_len++;
@@ -648,7 +650,7 @@ public:
 			value[k] = big_endian ? state[k] : CRC32Table::endian(state[k]);
 	}
 
-	UNIGINE_INLINE static int calculate(const void *data, int size, bool big_endian = true)
+	UNIGINE_INLINE static int calculate(const void *data, size_t size, bool big_endian = true)
 	{
 		unsigned int value[8];
 		SHA256 sha256;
@@ -656,7 +658,7 @@ public:
 		sha256.end(value, big_endian);
 		return (int)(value[0] ^ value[1] ^ value[2] ^ value[3] ^ value[4] ^ value[5] ^ value[6] ^ value[7]);
 	}
-	UNIGINE_INLINE static void calculate(unsigned int *value, const void *data, int size, bool big_endian = true)
+	UNIGINE_INLINE static void calculate(unsigned int *value, const void *data, size_t size, bool big_endian = true)
 	{
 		SHA256 sha256;
 		sha256.update(data, size);
@@ -753,7 +755,7 @@ public:
 		* @param big_endian Flag to control endianness of the result.
 		* @return The 32-bit CRC checksum.
 		*/
-	UNIGINE_INLINE static int CRC32(const void *data, int size, bool big_endian = true) { return CRC32::calculate(data, size, big_endian); }
+	UNIGINE_INLINE static int CRC32(const void *data, size_t size, bool big_endian = true) { return CRC32::calculate(data, size, big_endian); }
 
 	/**
 		* Calculates the 32-bit MD5 checksum.
@@ -763,7 +765,7 @@ public:
 		* @param big_endian Flag to control endianness of the result.
 		* @return The 32-bit MD5 checksum.
 		*/
-	UNIGINE_INLINE static int MD5(const void *data, int size, bool big_endian = true) { return MD5::calculate(data, size, big_endian); }
+	UNIGINE_INLINE static int MD5(const void *data, size_t size, bool big_endian = true) { return MD5::calculate(data, size, big_endian); }
 
 	/**
 		* Calculates the 64-bit MD5 checksum.
@@ -773,7 +775,7 @@ public:
 		* @param big_endian Flag to control endianness of the result.
 		* @return The 64-bit MD5 checksum.
 		*/
-	UNIGINE_INLINE static unsigned long long MD5_64(const void *data, int size, bool big_endian = true)
+	UNIGINE_INLINE static unsigned long long MD5_64(const void *data, size_t size, bool big_endian = true)
 	{
 		unsigned long long v[2];
 		MD5::calculate((unsigned int *)v, data, size, big_endian);
@@ -788,7 +790,7 @@ public:
 		* @param size The input data size in bytes.
 		* @param big_endian Flag to control endianness of the result.
 		*/
-	UNIGINE_INLINE static void MD5(unsigned int *value, const void *data, int size, bool big_endian = true) { MD5::calculate(value, data, size, big_endian); }
+	UNIGINE_INLINE static void MD5(unsigned int *value, const void *data, size_t size, bool big_endian = true) { MD5::calculate(value, data, size, big_endian); }
 	
 	/**
 		* Calculates the 32-bit SHA1 checksum.
@@ -798,7 +800,7 @@ public:
 		* @param big_endian Flag to control endianness of the result.
 		* @return The 32-bit SHA1 checksum.
 		*/
-	UNIGINE_INLINE static int SHA1(const void *data, int size, bool big_endian = true) { return SHA1::calculate(data, size, big_endian); }
+	UNIGINE_INLINE static int SHA1(const void *data, size_t size, bool big_endian = true) { return SHA1::calculate(data, size, big_endian); }
 
 	/**
 		* Calculates the 160-bit SHA1 checksum.
@@ -808,7 +810,7 @@ public:
 		* @param size The input data size in bytes.
 		* @param big_endian Flag to control endianness of the result.
 		*/
-	UNIGINE_INLINE static void SHA1(unsigned int *value, const void *data, int size, bool big_endian = true) { SHA1::calculate(value, data, size, big_endian); }
+	UNIGINE_INLINE static void SHA1(unsigned int *value, const void *data, size_t size, bool big_endian = true) { SHA1::calculate(value, data, size, big_endian); }
 
 	/**
 	* Calculates the 32-bit SHA256 checksum.
@@ -818,7 +820,7 @@ public:
 	* @param big_endian Flag to control endianness of the result.
 	* @return The 32-bit SHA256 checksum.
 	*/
-	UNIGINE_INLINE static int SHA256(const void *data, int size, bool big_endian = true) { return SHA256::calculate(data, size, big_endian); }
+	UNIGINE_INLINE static int SHA256(const void *data, size_t size, bool big_endian = true) { return SHA256::calculate(data, size, big_endian); }
 
 	/**
 	* Calculates the 256-bit SHA256 checksum.
@@ -828,7 +830,7 @@ public:
 	* @param size The input data size in bytes.
 	* @param big_endian Flag to control endianness of the result.
 	*/
-	UNIGINE_INLINE static void SHA256(unsigned int *value, const void *data, int size, bool big_endian = true) { SHA256::calculate(value, data, size, big_endian); }
+	UNIGINE_INLINE static void SHA256(unsigned int *value, const void *data, size_t size, bool big_endian = true) { SHA256::calculate(value, data, size, big_endian); }
 };
 	
 } /* namespace Unigine */

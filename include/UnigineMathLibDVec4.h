@@ -22,9 +22,12 @@ namespace Math
 
 struct alignas(16) dvec4
 {
+	/// <summary>Constructor. Initializes the vector using the given values.</summary>
 	UNIGINE_INLINE constexpr dvec4(double v, ConstexprTag): x(v), y(v), z(v), w(v) {}
+	/// <summary>Constructor. Initializes the vector using the given values.</summary>
 	UNIGINE_INLINE constexpr dvec4(double x, double y, double z, double w, ConstexprTag) : x(x), y(y), z(z), w(w) {}
 
+	/// <summary>Default constructor. Produces a zero vector.</summary>
 	UNIGINE_INLINE dvec4()
 		: x(0.0)
 		, y(0.0)
@@ -33,6 +36,7 @@ struct alignas(16) dvec4
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
+	/// <summary>Constructor. Initializes the vector using a given value: x=v, y=v, z=v, w=v.</summary>
 	UNIGINE_INLINE explicit dvec4(double v)
 		: x(v)
 		, y(v)
@@ -41,6 +45,7 @@ struct alignas(16) dvec4
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
+	/// <summary>Constructor. Initializes the vector using the given values.</summary>
 	UNIGINE_INLINE dvec4(double x, double y, double z = 0.0, double w = 0.0)
 		: x(x)
 		, y(y)
@@ -49,6 +54,7 @@ struct alignas(16) dvec4
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
+	/// <summary>Constructor. Initializes the vector using a given pointer to the array of elements: x=v[0], y=v[1], z=v[2], w=v[3].</summary>
 	UNIGINE_INLINE explicit dvec4(const double *v)
 		: x(v[0])
 		, y(v[1])
@@ -57,12 +63,14 @@ struct alignas(16) dvec4
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
+	/// <summary>Constructor. Initializes the vector by copying a given source vector.</summary>
 	UNIGINE_INLINE dvec4(const dvec4 &v)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(v);
 	}
 
+	/// <summary>Constructor. Initializes the vector using a given two-component vec2 source vector: x=v.x, y=v.y, z=0.0f, w=1.0f.</summary>
 	UNIGINE_INLINE explicit dvec4(const dvec2 &v)
 		: x(v.x)
 		, y(v.y)
@@ -71,6 +79,7 @@ struct alignas(16) dvec4
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
+	/// <summary>Sets the vector using a two-component vec2 source vector and two scalars.</summary>
 	UNIGINE_INLINE dvec4(const dvec2 &v, double z, double w)
 		: x(v.x)
 		, y(v.y)
@@ -79,6 +88,7 @@ struct alignas(16) dvec4
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
+	/// <summary>Constructor. Initializes the vector using the values of two vec2 source vectors.</summary>
 	UNIGINE_INLINE dvec4(const dvec2 &v0, const dvec2 &v1)
 		: x(v0.x)
 		, y(v0.y)
@@ -88,6 +98,7 @@ struct alignas(16) dvec4
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
 
+	/// <summary>Constructor. Initializes the vector using a given three-component vec3 source vector: x=v.x, y=v.y, z=v.z, w=1.0.</summary>
 	UNIGINE_INLINE explicit dvec4(const dvec3 &v)
 		: x(v.x)
 		, y(v.y)
@@ -96,6 +107,7 @@ struct alignas(16) dvec4
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
+	/// <summary>Constructor. Initializes the vector using a given three-component source vector and a scalar.</summary>
 	UNIGINE_INLINE dvec4(const dvec3 &v, double w)
 		: x(v.x)
 		, y(v.y)
@@ -105,6 +117,7 @@ struct alignas(16) dvec4
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
 
+	/// <summary>Constructor. Initializes the vector using a given source vector.</summary>
 	UNIGINE_INLINE explicit dvec4(const vec4 &v)
 		: x(v.x)
 		, y(v.y)
@@ -123,14 +136,21 @@ struct alignas(16) dvec4
 		}
 	#endif
 
+	/// <summary>Constructor. Initializes the vector using a given source vector.</summary>
 	UNIGINE_INLINE explicit dvec4(const hvec4 &v);
+	/// <summary>Constructor. Initializes the vector using a given source vector.</summary>
 	UNIGINE_INLINE explicit dvec4(const ivec4 &v);
+	/// <summary>Constructor. Initializes the vector using a given source vector.</summary>
 	UNIGINE_INLINE explicit dvec4(const bvec4 &v);
+	/// <summary>Constructor. Initializes the vector using a given source vector.</summary>
 	UNIGINE_INLINE explicit dvec4(const svec4 &v);
 
 
+	/// <summary>Sets the vector using a given scalar value: x=v, y=v, z=v, w=v.</summary>
 	UNIGINE_INLINE void set(double v) { x = v; y = v; z = v; w = v; }
+	/// <summary>Sets the vector by components.</summary>
 	UNIGINE_INLINE void set(double x_, double y_, double z_, double w_) { x = x_; y = y_; z = z_; w = w_; }
+	/// <summary>Sets the vector using a two-component source vector and two scalars.</summary>
 	UNIGINE_INLINE void set(const dvec2 &v, double z_ = 0.0, double w_ = 1.0)
 	{
 		x = v.x;
@@ -138,6 +158,7 @@ struct alignas(16) dvec4
 		z = z_;
 		w = w_;
 	}
+	/// <summary>Sets the vector using a three-component source vector and a scalar.</summary>
 	UNIGINE_INLINE void set(const dvec3 &v, double w_ = 1.0)
 	{
 		x = v.x;
@@ -145,11 +166,13 @@ struct alignas(16) dvec4
 		z = v.z;
 		w = w_;
 	}
+	/// <summary>Sets the vector equal to the specified source vector.</summary>
 	UNIGINE_INLINE void set(const dvec4 &v)
 	{
 		sse.v0 = v.sse.v0;
 		sse.v1 = v.sse.v1;
 	}
+	/// <summary>Sets the vector using the array of elements: x=val[0], y=val[1], z=val[2], w=val[3].</summary>
 	UNIGINE_INLINE void set(const double *v)
 	{
 		x = v[0];
@@ -158,6 +181,7 @@ struct alignas(16) dvec4
 		w = v[3];
 	}
 
+	/// <summary>Returns the pointer to the array of elements: v[0]=x, v[1]=y, v[2]=z, v[3]=w.</summary>
 	UNIGINE_INLINE void get(double *v) const
 	{
 		v[0] = x;
@@ -165,19 +189,27 @@ struct alignas(16) dvec4
 		v[2] = z;
 		v[3] = w;
 	}
+	/// <summary>Returns the pointer to the vector.</summary>
 	UNIGINE_INLINE double *get() { return v; }
+	/// <summary>Returns the constant pointer to the vector.</summary>
 	UNIGINE_INLINE const double *get() const { return v; }
 
+	/// <summary>Performs type conversion to double *.</summary>
 	UNIGINE_INLINE operator double *() { return v; }
+	/// <summary>Performs type conversion to const double *.</summary>
 	UNIGINE_INLINE operator const double *() const { return v; }
+	/// <summary>Performs type conversion to void *.</summary>
 	UNIGINE_INLINE operator void *() { return v; }
+	/// <summary>Performs type conversion to const void *.</summary>
 	UNIGINE_INLINE operator const void *() const { return v; }
 
+	/// <summary>Performs array access to the vector item reference by using given item index.</summary>
 	UNIGINE_INLINE double &operator[](int i)
 	{
 		assert((unsigned int)i < 4 && "dvec4::operator[](): bad index");
 		return v[i];
 	}
+	/// <summary>Performs array access to the vector item by using given item index.</summary>
 	UNIGINE_INLINE double operator[](int i) const
 	{
 		assert((unsigned int)i < 4 && "dvec4::operator[](): bad index");
@@ -185,6 +217,7 @@ struct alignas(16) dvec4
 	}
 
 	
+	/// <summary>Multiplies the vector by the value of the specified argument.</summary>
 	UNIGINE_INLINE void mul(double v)
 	{
 		#ifdef USE_SSE
@@ -198,6 +231,7 @@ struct alignas(16) dvec4
 			w *= v;
 		#endif
 	}
+	/// <summary>Multiplies the vector by the value of the specified argument.</summary>
 	UNIGINE_INLINE void mul(const dvec4 &v)
 	{
 		#ifdef USE_SSE
@@ -210,16 +244,21 @@ struct alignas(16) dvec4
 			w *= v.w;
 		#endif
 	}
+	/// <summary>Multiplies the X, Y, and Z components of the vector by the value of the specified argument.</summary>
 	UNIGINE_INLINE void mul3(double v)
 	{
 		x *= v;
 		y *= v;
 		z *= v;
 	}
+	/// <summary>Performs scalar multiplication.</summary>
 	UNIGINE_INLINE dvec4 &operator*=(double v) { mul(v); return *this; }
+	/// <summary>Performs vector multiplication.</summary>
 	UNIGINE_INLINE dvec4 &operator*=(const dvec4 &v) { mul(v); return *this; }
 
+	/// <summary>Returns the result of division of the vector by the value of the specified argument.</summary>
 	UNIGINE_INLINE void div(double v) { mul(rcp(v)); }
+	/// <summary>Returns the result of division of the vector by the value of the specified argument.</summary>
 	UNIGINE_INLINE void div(const dvec4 &v)
 	{
 		#ifdef USE_SSE
@@ -232,10 +271,14 @@ struct alignas(16) dvec4
 			w /= v.w;
 		#endif
 	}
+	/// <summary>Performs component-wise division of the vector by the scalar. Implemented using the calculation of inverse scalar value with subsequent component-wise multiplication.</summary>
 	UNIGINE_INLINE dvec4 &operator/=(double v) { div(v); return *this; }
+	/// <summary>Performs component-wise division of vectors.</summary>
 	UNIGINE_INLINE dvec4 &operator/=(const dvec4 &v) { div(v); return *this; }
 
+	/// <summary>Returns the sum of vector components.</summary>
 	UNIGINE_INLINE double sum() const { return x + y + z + w; }
+	/// <summary>Performs addition of the specified argument to each component of the vector.</summary>
 	UNIGINE_INLINE void add(double v)
 	{
 		#ifdef USE_SSE
@@ -249,6 +292,7 @@ struct alignas(16) dvec4
 			w += v;
 		#endif
 	}
+	/// <summary>Performs component-wise addition of vector values.</summary>
 	UNIGINE_INLINE void add(const dvec4 &v)
 	{
 		#ifdef USE_SSE
@@ -261,9 +305,12 @@ struct alignas(16) dvec4
 			w += v.w;
 		#endif
 	}
+	/// <summary>Performs addition of the specified argument to each component of the vector.</summary>
 	UNIGINE_INLINE dvec4 &operator+=(double v) { add(v); return *this; }
+	/// <summary>Performs component-wise addition of vector values.</summary>
 	UNIGINE_INLINE dvec4 &operator+=(const dvec4 &v) { add(v); return *this; }
 
+	/// <summary>Subtracts the argument from each element of the vector.</summary>
 	UNIGINE_INLINE void sub(double v)
 	{
 		#ifdef USE_SSE
@@ -277,6 +324,7 @@ struct alignas(16) dvec4
 			w += v;
 		#endif
 	}
+	/// <summary>Performs component-wise subtraction of vector values.</summary>
 	UNIGINE_INLINE void sub(const dvec4 &v)
 	{
 		#ifdef USE_SSE
@@ -289,17 +337,26 @@ struct alignas(16) dvec4
 			w -= v.w;
 		#endif
 	}
+	/// <summary>Subtracts the argument from each element of the vector.</summary>
 	UNIGINE_INLINE dvec4 &operator-=(double v) { sub(v); return *this; }
+	/// <summary>Performs component-wise subtraction of vector values.</summary>
 	UNIGINE_INLINE dvec4 &operator-=(const dvec4 &v) { sub(v); return *this; }
 	
+	/// <summary>Performs vector assignment. Destination vector = Source vector.</summary>
 	UNIGINE_INLINE dvec4 &operator=(const dvec4 &v) { set(v); return *this; }
+	/// <summary>Performs vector negation.</summary>
 	UNIGINE_INLINE dvec4 operator-() const { return dvec4(-x, -y, -z, -w); }
 
+	/// <summary>Returns the squared length of the vector.</summary>
 	UNIGINE_INLINE double length2() const { return x * x + y * y + z * z + w * w; }
+	/// <summary>Returns the length of the vector.</summary>
 	UNIGINE_INLINE double length() const { return sqrt(length2()); }
+	/// <summary>Returns the inverted length of the vector.</summary>
 	UNIGINE_INLINE double iLength() const { return rsqrt(length2()); }
 
+	/// <summary>Returns a normalized vector.</summary>
 	UNIGINE_INLINE dvec4 &normalize() { mul(iLength()); return *this; }
+	/// <summary>Normalizes a vector, makes its magnitude equal to 1. When normalized, a vector keeps the same direction but its length is equal to 1. Check for the zero vector is performed: if the argument is a zero vector, then a zero vector is returned.</summary>
 	UNIGINE_INLINE dvec4 &normalizeValid()
 	{
 		double length = length2();
@@ -308,11 +365,14 @@ struct alignas(16) dvec4
 		return *this;
 	}
 
+	/// <summary>Returns the vector with normalized XYZ components.</summary>
 	UNIGINE_INLINE dvec4 &normalize3()
 	{
 		mul3(xyz.iLength());
 		return *this;
 	}
+
+	/// <summary>Returns the vector with normalized XYZ components. Check for the zero vector is performed: if the argument is a zero vector, then a zero vector is returned.</summary>
 	UNIGINE_INLINE dvec4 &normalizeValid3()
 	{
 		double length = xyz.length2();
@@ -321,6 +381,7 @@ struct alignas(16) dvec4
 		return *this;
 	}
 
+	/// <summary>Returns the absolute values of the vector components.</summary>
 	UNIGINE_INLINE dvec4 &abs()
 	{
 		x = Math::abs(x);
@@ -330,10 +391,16 @@ struct alignas(16) dvec4
 		return *this;
 	}
 
+	/// <summary>Compares the X and Y components of the vector and returns the greater one.</summary>
 	UNIGINE_INLINE double maxXY() const { return Math::max(x, y); }
+	/// <summary>Compares the X, Y, and Z components of the vector and returns the greatest one.</summary>
 	UNIGINE_INLINE double maxXYZ() const { return Math::max(maxXY(), z); }
+	/// <summary>Compares all components of the vector and returns the greatest value.</summary>
 	UNIGINE_INLINE double max() const { return Math::max(maxXYZ(), w); }
 
+	/// <summary>Returns a 64-bit hash generated for the vector.</summary>
+	UNIGINE_INLINE unsigned long long hash64() const { return hashMixer(hashMixer(hashMixer(_hash.x, _hash.y), _hash.z), _hash.w); }
+	/// <summary>Returns a hash obtained by mixing the hash values of vector components.</summary>
 	UNIGINE_INLINE unsigned int hash() const { return hashCast64To32(hashCombine(hashCombine(hashCombine(hashInteger(x), y), z), w)); }
 
 	#ifdef USE_SSE
@@ -361,6 +428,14 @@ struct alignas(16) dvec4
 			dvec2 zw;
 		} swizzle;
 
+		struct
+		{
+			unsigned long long x;
+			unsigned long long y;
+			unsigned long long z;
+			unsigned long long w;
+		} _hash;
+
 		#ifdef USE_SSE
 			sse_data sse; // DO NOT TOUCH UNLESS ABSOLUTELY SURE
 		#endif
@@ -372,9 +447,12 @@ constexpr dvec4 dvec4_one(1.0, ConstexprTag{});
 constexpr dvec4 dvec4_eps(Consts::EPS, ConstexprTag{});
 constexpr dvec4 dvec4_inf(Consts::INF, ConstexprTag{});
 
+/// <summary>Calculates the length of a given vector.</summary>
 UNIGINE_INLINE double length(const dvec4 &v) { return v.length(); }
+/// <summary>Calculates the squared length of a given vector. This method is much faster than length() - the calculation is basically the same only without the slow Sqrt call. If you are using lengths simply to compare distances, then it is faster to compare squared lengths against the squares of distances as the comparison gives the same result.</summary>
 UNIGINE_INLINE double length2(const dvec4 &v) { return v.length2(); }
 
+/// <summary>Calculates the squared distance between the two given vectors. The squared distance is calculated as: length2(v0 - v1). This method is much faster than distance() - the calculation is basically the same only without the slow Sqrt call. If you simply want to compare distances, then it is faster to compare squared distances against the squares of distances as the comparison gives the same result.</summary>
 UNIGINE_INLINE double distance2(const dvec4 &v0, const dvec4 &v1)
 {
 	#ifdef USE_SSE
@@ -390,6 +468,7 @@ UNIGINE_INLINE double distance2(const dvec4 &v0, const dvec4 &v1)
 		return length2(v0 - v1);
 	#endif
 }
+/// <summary>Calculates the distance between the two given vectors. The distance is calculated as: length(v0 - v1).</summary>
 UNIGINE_INLINE double distance(const dvec4 &v0, const dvec4 &v1)
 {
 	#ifdef USE_SSE
@@ -406,39 +485,48 @@ UNIGINE_INLINE double distance(const dvec4 &v0, const dvec4 &v1)
 	#endif
 }
 
+/// <summary>Normalizes a vector, makes its magnitude equal to 1. When normalized, a vector keeps the same direction but its length is equal to 1.</summary>
 UNIGINE_INLINE dvec4 normalize(const dvec4 &v)
 {
 	dvec4 ret = v;
 	return ret.normalize();
 }
+/// <summary>Normalizes a vector, makes its magnitude equal to 1. When normalized, a vector keeps the same direction but its length is equal to 1. Check for the zero vector is performed: if the argument is a zero vector, then a zero vector is returned.</summary>
 UNIGINE_INLINE dvec4 normalizeValid(const dvec4 &v)
 {
 	dvec4 ret = v;
 	return ret.normalizeValid();
 }
 
+/// <summary>Normalizes a vector making its magnitude equal to 1. The vector is normalized as if it has only the first three components (the fourth one is ignored).</summary>
 UNIGINE_INLINE dvec4 normalize3(const dvec4 &v)
 {
 	dvec4 ret = v;
 	return ret.normalize3();
 }
+/// <summary>Normalizes a vector making its magnitude equal to 1. The vector is normalized as if it has only the first three components (the fourth one is ignored). Check for the zero vector is performed: if the argument is a zero vector, then a zero vector is returned.</summary>
 UNIGINE_INLINE dvec4 normalizeValid3(const dvec4 &v)
 {
 	dvec4 ret = v;
 	return ret.normalizeValid3();
 }
 
+/// <summary>Compares two vectors according to the degree of precision equal to 1.0e-6f.</summary>
 UNIGINE_INLINE int compare(const dvec4 &v0, const dvec4 &v1)
 {
 	return (compare(v0.x, v1.x) && compare(v0.y, v1.y) && compare(v0.z, v1.z) && compare(v0.w, v1.w));
 }
+/// <summary>Compares two vectors according to the specified degree of precision (epsilon).</summary>
 UNIGINE_INLINE int compare(const dvec4 &v0, const dvec4 &v1, double epsilon)
 {
 	return (compare(v0.x, v1.x, epsilon) && compare(v0.y, v1.y, epsilon) && compare(v0.z, v1.z, epsilon) && compare(v0.w, v1.w, epsilon));
 }
+/// <summary>Vector equal comparison.</summary>
 UNIGINE_INLINE int operator==(const dvec4 &v0, const dvec4 &v1) { return compare(v0, v1); }
+/// <summary>Vector not equal comparison.</summary>
 UNIGINE_INLINE int operator!=(const dvec4 &v0, const dvec4 &v1) { return !compare(v0, v1); }
 
+/// <summary>Returns the result of a component-wise multiplication of a vector by a scalar value by saving it in the ret argument.</summary>
 UNIGINE_INLINE dvec4 &mul(dvec4 &ret, const dvec4 &v0, double v1)
 {
 	#ifdef USE_SSE
@@ -453,6 +541,7 @@ UNIGINE_INLINE dvec4 &mul(dvec4 &ret, const dvec4 &v0, double v1)
 	#endif
 	return ret;
 }
+/// <summary>Returns the result of a component-wise multiplication of two vectors by saving it in the ret argument.</summary>
 UNIGINE_INLINE dvec4 &mul(dvec4 &ret, const dvec4 &v0, const dvec4 &v1)
 {
 	#ifdef USE_SSE
@@ -466,20 +555,26 @@ UNIGINE_INLINE dvec4 &mul(dvec4 &ret, const dvec4 &v0, const dvec4 &v1)
 	#endif
 	return ret;
 }
+/// <summary>Returns the result of a component-wise multiplication of a vector by a scalar value.</summary>
 UNIGINE_INLINE dvec4 mul(const dvec4 &v0, double v1)
 {
 	dvec4 ret;
 	return mul(ret, v0, v1);
 }
+/// <summary>Returns the result of a component-wise multiplication of two vectors.</summary>
 UNIGINE_INLINE dvec4 mul(const dvec4 &v0, const dvec4 &v1)
 {
 	dvec4 ret;
 	return mul(ret, v0, v1);
 }
+/// <summary>Multiplication operator.</summary>
 UNIGINE_INLINE dvec4 operator*(const dvec4 &v0, double v1) { return mul(v0, v1); }
+/// <summary>Multiplication operator.</summary>
 UNIGINE_INLINE dvec4 operator*(const dvec4 &v0, const dvec4 &v1) { return mul(v0, v1); }
 
+/// <summary>Returns the result of a component-wise division of a vector by a scalar value by saving it in the ret argument.</summary>
 UNIGINE_INLINE dvec4 &div(dvec4 &ret, const dvec4 &v0, double v1) { return mul(ret, v0, rcp(v1)); }
+/// <summary>Returns the result of a component-wise division of two vectors by saving it in the ret argument.</summary>
 UNIGINE_INLINE dvec4 &div(dvec4 &ret, const dvec4 &v0, const dvec4 &v1)
 {
 	#ifdef USE_SSE
@@ -493,19 +588,24 @@ UNIGINE_INLINE dvec4 &div(dvec4 &ret, const dvec4 &v0, const dvec4 &v1)
 	#endif
 	return ret;
 }
+/// <summary>Returns the result of a component-wise division of a vector by a scalar value.</summary>
 UNIGINE_INLINE dvec4 div(const dvec4 &v0, double v1)
 {
 	dvec4 ret;
 	return div(ret, v0, v1);
 }
+/// <summary>Returns the result of a component-wise division of two vectors.</summary>
 UNIGINE_INLINE dvec4 div(const dvec4 &v0, const dvec4 &v1)
 {
 	dvec4 ret;
 	return div(ret, v0, v1);
 }
+/// <summary>Division operator.</summary>
 UNIGINE_INLINE dvec4 operator/(const dvec4 &v0, double v1) { return div(v0, v1); }
+/// <summary>Division operator.</summary>
 UNIGINE_INLINE dvec4 operator/(const dvec4 &v0, const dvec4 &v1) { return div(v0, v1); }
 
+/// <summary>Returns the result of a component-wise addition of a vector with a scalar value by saving it in the ret argument.</summary>
 UNIGINE_INLINE dvec4 &add(dvec4 &ret, const dvec4 &v0, double v1)
 {
 	#ifdef USE_SSE
@@ -520,6 +620,7 @@ UNIGINE_INLINE dvec4 &add(dvec4 &ret, const dvec4 &v0, double v1)
 	#endif
 	return ret;
 }
+/// <summary>Returns the result of a component-wise addition of two vectors by saving it in the ret argument.</summary>
 UNIGINE_INLINE dvec4 &add(dvec4 &ret, const dvec4 &v0, const dvec4 &v1)
 {
 	#ifdef USE_SSE
@@ -533,19 +634,24 @@ UNIGINE_INLINE dvec4 &add(dvec4 &ret, const dvec4 &v0, const dvec4 &v1)
 	#endif
 	return ret;
 }
+/// <summary>Returns the result of a component-wise addition of a vector with a scalar value.</summary>
 UNIGINE_INLINE dvec4 add(const dvec4 &v0, double v1)
 {
 	dvec4 ret;
 	return add(ret, v0, v1);
 }
+/// <summary>Returns the result of a component-wise addition of two vectors.</summary>
 UNIGINE_INLINE dvec4 add(const dvec4 &v0, const dvec4 &v1)
 {
 	dvec4 ret;
 	return add(ret, v0, v1);
 }
+/// <summary>Addition operator.</summary>
 UNIGINE_INLINE dvec4 operator+(const dvec4 &v0, double v1) { return add(v0, v1); }
+/// <summary>Addition operator.</summary>
 UNIGINE_INLINE dvec4 operator+(const dvec4 &v0, const dvec4 &v1) { return add(v0, v1); }
 
+/// <summary>Returns the result of a component-wise subtraction of a scalar value from a vector by saving it in the ret argument.</summary>
 UNIGINE_INLINE dvec4 &sub(dvec4 &ret, const dvec4 &v0, double v1)
 {
 	#ifdef USE_SSE
@@ -560,6 +666,7 @@ UNIGINE_INLINE dvec4 &sub(dvec4 &ret, const dvec4 &v0, double v1)
 	#endif
 	return ret;
 }
+/// <summary>Returns the result of a component-wise subtraction (v0 - v1) by saving it in the ret argument.</summary>
 UNIGINE_INLINE dvec4 &sub(dvec4 &ret, const dvec4 &v0, const dvec4 &v1)
 {
 	#ifdef USE_SSE
@@ -573,19 +680,24 @@ UNIGINE_INLINE dvec4 &sub(dvec4 &ret, const dvec4 &v0, const dvec4 &v1)
 	#endif
 	return ret;
 }
+/// <summary>Returns the result of a component-wise subtraction of a scalar value from a vector.</summary>
 UNIGINE_INLINE dvec4 sub(const dvec4 &v0, double v1)
 {
 	dvec4 ret;
 	return sub(ret, v0, v1);
 }
+/// <summary>Returns the result of a component-wise subtraction (v0 - v1).</summary>
 UNIGINE_INLINE dvec4 sub(const dvec4 &v0, const dvec4 &v1)
 {
 	dvec4 ret;
 	return sub(ret, v0, v1);
 }
+/// <summary>Subtraction operator.</summary>
 UNIGINE_INLINE dvec4 operator-(const dvec4 &v0, double v1) { return sub(v0, v1); }
+/// <summary>Subtraction operator.</summary>
 UNIGINE_INLINE dvec4 operator-(const dvec4 &v0, const dvec4 &v1) { return sub(v0, v1); }
 
+/// <summary>Returns the result of multiplication of each component of the first vector by the double value and addition of the corresponding component of the second vector (a * b + c). The result is assigned to the ret argument.</summary>
 UNIGINE_INLINE dvec4 &mad(dvec4 &ret, const dvec4 &v0, double v1, const dvec4 &v2)
 {
 	#ifdef USE_SSE
@@ -600,6 +712,7 @@ UNIGINE_INLINE dvec4 &mad(dvec4 &ret, const dvec4 &v0, double v1, const dvec4 &v
 	#endif
 	return ret;
 }
+/// <summary>Returns the result of multiplication of each component of the first vector by the corresponding component of the second vector and addition of the corresponding component of the third vector (a * b + c). The result is assigned to the ret argument.</summary>
 UNIGINE_INLINE dvec4 &mad(dvec4 &ret, const dvec4 &v0, const dvec4 &v1, const dvec4 &v2)
 {
 	#ifdef USE_SSE
@@ -613,34 +726,43 @@ UNIGINE_INLINE dvec4 &mad(dvec4 &ret, const dvec4 &v0, const dvec4 &v1, const dv
 	#endif
 	return ret;
 }
+/// <summary>Returns the result of multiplication of each component of the first vector by the double value and addition of the corresponding component of the second vector (a * b + c).</summary>
 UNIGINE_INLINE dvec4 mad(const dvec4 &v0, double v1, const dvec4 &v2)
 {
 	dvec4 ret;
 	return mad(ret, v0, v1, v2);
 }
+/// <summary>Returns the result of multiplication of each component of the first vector by the corresponding component of the second vector and addition of the corresponding component of the third vector (a * b + c).</summary>
 UNIGINE_INLINE dvec4 mad(const dvec4 &v0, const dvec4 &v1, const dvec4 &v2)
 {
 	dvec4 ret;
 	return mad(ret, v0, v1, v2);
 }
 
+/// <summary>Dot product of vectors.</summary>
 UNIGINE_INLINE double dot(const dvec3 &v0, const dvec4 &v1)
 {
 	return v0.x * v1.x + v0.y * v1.y + v0.z * v1.z + v1.w;
 }
+/// <summary>Dot product of vectors.</summary>
 UNIGINE_INLINE double dot(const dvec4 &v0, const dvec3 &v1)
 {
 	return v0.x * v1.x + v0.y * v1.y + v0.z * v1.z + v0.w;
 }
+/// <summary>Dot product of vectors.</summary>
 UNIGINE_INLINE double dot(const dvec4 &v0, const dvec4 &v1)
 {
 	return v0.x * v1.x + v0.y * v1.y + v0.z * v1.z + v0.w * v1.w;
 }
 
+/// <summary>Dot product only of three components of vectors. W component of four-component vector is ignored.</summary>
 UNIGINE_INLINE double dot3(const dvec3 &v0, const dvec4 &v1) { return dot(v0, v1.xyz); }
+/// <summary>Dot product only of three components of vectors. W component of four-component vector is ignored.</summary>
 UNIGINE_INLINE double dot3(const dvec4 &v0, const dvec3 &v1) { return dot(v0.xyz, v1); }
+/// <summary>Dot product only of three components of vectors. W components of four-component vectors are ignored.</summary>
 UNIGINE_INLINE double dot3(const dvec4 &v0, const dvec4 &v1) { return dot(v0.xyz, v1.xyz); }
 
+/// <summary>Compares the arguments component-wise and returns the minimum value for each component by saving it in the ret argument.</summary>
 UNIGINE_INLINE dvec4 &min(dvec4 &ret, const dvec4 &v0, const dvec4 &v1)
 {
 	#ifdef USE_SSE
@@ -654,12 +776,14 @@ UNIGINE_INLINE dvec4 &min(dvec4 &ret, const dvec4 &v0, const dvec4 &v1)
 	#endif
 	return ret;
 }
+/// <summary>Compares the arguments component-wise and returns the minimum value for each component.</summary>
 UNIGINE_INLINE dvec4 min(const dvec4 &v0, const dvec4 &v1)
 {
 	dvec4 ret;
 	return min(ret, v0, v1);
 }
 
+/// <summary>Compares the arguments component-wise and returns the maximum value for each component by saving it in the ret argument.</summary>
 UNIGINE_INLINE dvec4 &max(dvec4 &ret, const dvec4 &v0, const dvec4 &v1)
 {
 	#ifdef USE_SSE
@@ -673,12 +797,14 @@ UNIGINE_INLINE dvec4 &max(dvec4 &ret, const dvec4 &v0, const dvec4 &v1)
 	#endif
 	return ret;
 }
+/// <summary>Compares the arguments component-wise and returns the maximum value for each component.</summary>
 UNIGINE_INLINE dvec4 max(const dvec4 &v0, const dvec4 &v1)
 {
 	dvec4 ret;
 	return max(ret, v0, v1);
 }
 
+/// <summary>Clamps the value (v) within the minimum (v0) and maximum (v1) limits and saves the result in the ret argument.</summary>
 UNIGINE_INLINE dvec4 &clamp(dvec4 &ret, const dvec4 &v, const dvec4 &v0, const dvec4 &v1)
 {
 	#ifdef USE_SSE
@@ -692,12 +818,14 @@ UNIGINE_INLINE dvec4 &clamp(dvec4 &ret, const dvec4 &v, const dvec4 &v0, const d
 	#endif
 	return ret;
 }
+/// <summary>Clamps the value (v) within the minimum (v0) and maximum (v1) limits and returns the result.</summary>
 UNIGINE_INLINE dvec4 clamp(const dvec4 &v, const dvec4 &v0, const dvec4 &v1)
 {
 	dvec4 ret;
 	return clamp(ret, v, v0, v1);
 }
 
+/// <summary>Clamps the vector component values within the range [0.0, 1.0] and saves the result in the ret argument.</summary>
 UNIGINE_INLINE dvec4 &saturate(dvec4 &ret, const dvec4 &v)
 {
 	#ifdef USE_SSE
@@ -711,12 +839,14 @@ UNIGINE_INLINE dvec4 &saturate(dvec4 &ret, const dvec4 &v)
 	#endif
 	return ret;
 }
+/// <summary>Clamps the vector component values within the range [0.0, 1.0] and returns the result.</summary>
 UNIGINE_INLINE dvec4 saturate(const dvec4 &v)
 {
 	dvec4 ret;
 	return saturate(ret, v);
 }
 
+/// <summary>Interpolates the vector component values according to the formula v0 + (v1 - v0) * k and saves the result in the ret argument.</summary>
 UNIGINE_INLINE dvec4 &lerp(dvec4 &ret, const dvec4 &v0, const dvec4 &v1, double k)
 {
 	#ifdef USE_SSE
@@ -731,12 +861,14 @@ UNIGINE_INLINE dvec4 &lerp(dvec4 &ret, const dvec4 &v0, const dvec4 &v1, double 
 	#endif
 	return ret;
 }
+/// <summary>Returns the vector component values interpolated according to the formula v0 + (v1 - v0) * k.</summary>
 UNIGINE_INLINE dvec4 lerp(const dvec4 &v0, const dvec4 &v1, double k)
 {
 	dvec4 ret;
 	return lerp(ret, v0, v1, k);
 }
 
+/// <summary>Performs linear interpolation between three vectors.</summary>
 UNIGINE_INLINE dvec4 &lerp3(dvec4 &ret, const dvec4 &v0, const dvec4 &v1, const dvec4 &v2, float k)
 {
 	if (k < 0.5f)
@@ -745,12 +877,14 @@ UNIGINE_INLINE dvec4 &lerp3(dvec4 &ret, const dvec4 &v0, const dvec4 &v1, const 
 		lerp(ret, v1, v2, k * 2.0 - 1.0);
 	return ret;
 }
+/// <summary>Performs linear interpolation between three vectors.</summary>
 UNIGINE_INLINE dvec4 lerp3(const dvec4 &v0, const dvec4 &v1, const dvec4 &v2, float k)
 {
 	dvec4 ret;
 	return lerp3(ret, v0, v1, v2, k);
 }
 
+/// <summary>Returns the cross product of two vectors.</summary>
 UNIGINE_INLINE dvec4 &cross(dvec4 &ret, const dvec3 &v0, const dvec3 &v1)
 {
 	ret.x = v0.y * v1.z - v0.z * v1.y;
@@ -759,7 +893,9 @@ UNIGINE_INLINE dvec4 &cross(dvec4 &ret, const dvec3 &v0, const dvec3 &v1)
 	return ret;
 }
 
+/// <summary>Returns an argument rounded to the nearest integral value.</summary>
 UNIGINE_INLINE dvec4 round(const dvec4 &v) { return {round(v.x), round(v.y), round(v.z), round(v.w)}; }
+/// <summary>Returns the largest integral value that's less than or equal to the argument.</summary>
 UNIGINE_INLINE dvec4 floor(const dvec4 &v)
 {
 	#ifdef USE_SSE
@@ -768,6 +904,7 @@ UNIGINE_INLINE dvec4 floor(const dvec4 &v)
 		return {floor(v.x), floor(v.y), floor(v.z), floor(v.w)};
 	#endif
 }
+/// <summary>Returns the smallest integral value that's greater than or equal to the argument.</summary>
 UNIGINE_INLINE dvec4 ceil(const dvec4 &v)
 {
 	#ifdef USE_SSE
@@ -777,20 +914,26 @@ UNIGINE_INLINE dvec4 ceil(const dvec4 &v)
 	#endif
 }
 
+/// <summary>Returns the absolute value of the specified argument.</summary>
 UNIGINE_INLINE dvec4 abs(const dvec4 &v)
 {
 	return {abs(v.x), abs(v.y), abs(v.z), abs(v.w)};
 }
+/// <summary>Returns the fractional part of the argument.</summary>
 UNIGINE_INLINE dvec4 frac(const dvec4 &v)
 {
 	return {frac(v.x), frac(v.y), frac(v.z), frac(v.w)};
 }
 
+/// <summary>Returns the value calculated according to the formula: (v - v0) / (v1 - v0) clamped within 0.0f and 1.0f.</summary>
 UNIGINE_INLINE dvec4 inverseLerp(const dvec4 &v0, const dvec4 &v1, const dvec4 &v)
 {
 	return saturate((v - v0) / (v1 - v0));
 }
 
+/// <summary>Transforms the value from the source range to the corresponding value within target range.</summary>
+/// <param name="value">The value within the source range, which is to be reranged.</param>
+/// <param name="range">X and Y define the source range, Z and W define the target range.</param>
 UNIGINE_INLINE double changeRange(double value, const dvec4 &range)
 {
 	return saturate(value - range.x) / range.y * range.w + range.z;

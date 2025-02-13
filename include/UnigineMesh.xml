@@ -13,7 +13,7 @@
 			<summary>
 			Constructor. Creates a mesh using the specified file.
 			</summary> 
-			<param name="name"> Path to the mesh file. </param> 
+			<param name="path"> Path to the mesh file. </param> 
 		</member>
 		<member name="M:Unigine.Mesh.#ctor(Unigine.Ptr{Unigine.Mesh})">
 			<summary>
@@ -26,70 +26,6 @@
 			Copies the data including bones, surfaces, and animations from the specified source mesh.
 			</summary> 
 			<param name="mesh"> Source mesh instance. </param> 
-		</member>
-		<member name="M:Unigine.Mesh.setAnimationBones(int,Unigine.Vector{short,int,Unigine.VectorAllocator})">
-			<summary>
-			Copies bones from the given array to the current array of animation bones.
-			</summary> 
-			<param name="animation"> Animation number. </param>
-			<param name="bones"> Array of bones taking part in the animation to be set. </param> 
-		</member>
-		<member name="M:Unigine.Mesh.getAnimationBones(int,Unigine.Vector{short,int,Unigine.VectorAllocator}) const">
-			<summary>
-			Adds all bones of the given animation to the given array of bones.
-			</summary> 
-			<param name="animation"> Animation number. </param>
-			<param name="bones"> Array with indices of bones taking part in the animation. </param> 
-		</member>
-		<member name="M:Unigine.Mesh.setAnimationFrame(int,int,Unigine.Vector{Unigine.Math.vec3,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.quat,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.vec3,int,Unigine.VectorAllocator})">
-			<summary>
-			Updates the animation frame coordinates, rotation quaternions and scaling vectors.
-			</summary> 
-			<param name="animation"> Animation number. </param>
-			<param name="num"> Frame number in the array of the animation frames. </param>
-			<param name="xyz"> Array with coordinates of the animation frame. </param>
-			<param name="rot"> Array with rotation quaternions of the animation frame. </param>
-			<param name="scale"> Array with scaling vectors of the animation frame. </param> 
-		</member>
-		<member name="M:Unigine.Mesh.setAnimationFrame(int,int,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
-			<summary>
-			Updates the animation frame coordinates, rotation quaternions and scaling vectors.
-			</summary> 
-			<param name="animation"> Animation number. </param>
-			<param name="num"> Frame number in the array of the animation frames. </param>
-			<param name="frames"> Matrix that includes coordinates, rotation quaternions and scaling vectors of the animation frame. </param> 
-		</member>
-		<member name="M:Unigine.Mesh.getAnimationFrame(int,int,Unigine.Vector{Unigine.Math.vec3,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.quat,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.vec3,int,Unigine.VectorAllocator}) const">
-			<summary>
-			Adds the animation frame coordinates, rotation quaternions and scaling vectors to the given matrix passed to the function as the third argument. The matrix can be set by using the setAnimationFrame() method.
-			</summary> 
-			<param name="animation"> Animation number. </param>
-			<param name="num"> Frame number in the array of the animation frames. </param>
-			<param name="xyz"> Array with coordinates of the animation frame. </param>
-			<param name="rot"> Array with rotation quaternions of the animation frame. </param>
-			<param name="scale"> Array with scaling vectors of the animation frame. </param> 
-		</member>
-		<member name="M:Unigine.Mesh.getAnimationFrame(int,int,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator}) const">
-			<summary>
-			Adds the animation frame coordinates, rotation quaternions and scaling vectors to the given matrix passed to the function as the third argument. The matrix can be set by using the setAnimationFrame() method.
-			</summary> 
-			<param name="animation"> Animation number. </param>
-			<param name="num"> Frame number in the array of the animation frames. </param>
-			<param name="frames"> Matrix that includes coordinates, rotation quaternions and scaling vectors of the animation frame. </param> 
-		</member>
-		<member name="M:Unigine.Mesh.setAnimationName(int,char)">
-			<summary>
-			Sets a name for the given animation.
-			</summary> 
-			<param name="animation"> Animation number. </param>
-			<param name="name"> Animation name to be set. </param> 
-		</member>
-		<member name="M:Unigine.Mesh.getAnimationName(int) const">
-			<summary>
-			Returns the name of the given animation.
-			</summary> 
-			<param name="animation"> Animation number. </param> 
-			<returns>Animation name.</returns>
 		</member>
 		<member name="M:Unigine.Mesh.setBoneName(int,char)">
 			<summary>
@@ -133,32 +69,27 @@
 			<param name="bone"> Bone number. </param> 
 			<returns>Transformation matrix.</returns>
 		</member>
-		<member name="M:Unigine.Mesh.setBoneTransforms(Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator},int,int)">
+		<member name="M:Unigine.Mesh.setBoneTransforms(Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
 			<summary>
-			Updates the array of the world-space transformation matrices for bones of the given animation frame.					If the passed animation number is -1,  the bind pose will be updated to the given array.
+			Updates the array of the world-space transformation matrices for bones.
 			</summary> 
-			<param name="transforms"> Array of transformation matrices to be set. Its size must be equal to the number of animation bones. </param>
-			<param name="animation"> Animation number. The default value is -1. </param>
-			<param name="frame"> Animation frame number. The default value is 0. </param> 
+			<param name="transforms"> Array of transformation matrices to be set. Its size must be equal to the number of animation bones. </param> 
 			<returns>Returns 1 if the array of bones' transformations is updated successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Mesh.getBoneTransforms(Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator},int,int) const">
+		<member name="M:Unigine.Mesh.getBoneTransforms(Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator}) const">
 			<summary>
 			Appends the world-space transformation matrices for bones of the given animation frame to the given array.					If the passed animation number is -1, the bind pose will be added to the given array.The number of array elements must be equal to the number of animation bones.
 			</summary> 
-			<param name="transforms"> Array of transformation matrices. </param>
-			<param name="animation"> Animation number. The default value is -1. </param>
-			<param name="frame"> Animation frame number. The default value is 0. </param> 
-			<returns>Returns 1 if the array of bones' transformations is filled successfully; otherwise, 0.</returns>
+			<param name="transforms"> Target array for transformation matrices. </param> 
 		</member>
-		<member name="M:Unigine.Mesh.setBoundBox(Unigine.BoundBox,int)">
+		<member name="M:Unigine.Mesh.setBoundBox(Unigine.Math.BoundBox,int)">
 			<summary>
 			Sets the bounding box for the given mesh surface.
 			</summary> 
 			<param name="bb"> Bounding box to be set. </param>
 			<param name="surface"> Mesh surface number. </param> 
 		</member>
-		<member name="M:Unigine.Mesh.setBoundBox(Unigine.BoundBox)">
+		<member name="M:Unigine.Mesh.setBoundBox(Unigine.Math.BoundBox)">
 			<summary>
 			Sets the bounding box for the given mesh surface.
 			</summary> 
@@ -177,13 +108,13 @@
 			</summary>  
 			<returns>Bounding box.</returns>
 		</member>
-		<member name="M:Unigine.Mesh.setBoundSphere(Unigine.BoundSphere)">
+		<member name="M:Unigine.Mesh.setBoundSphere(Unigine.Math.BoundSphere)">
 			<summary>
 			Sets the bounding sphere for the given mesh surface.
 			</summary> 
 			<param name="bs"> Bounding sphere to be set. </param> 
 		</member>
-		<member name="M:Unigine.Mesh.setBoundSphere(Unigine.BoundSphere,int)">
+		<member name="M:Unigine.Mesh.setBoundSphere(Unigine.Math.BoundSphere,int)">
 			<summary>
 			Sets the bounding sphere for the given mesh surface.
 			</summary> 
@@ -281,26 +212,6 @@
 			<param name="surface"> Mesh surface number. </param>
 			<param name="target"> Surface target number. The default value is 0. </param> 
 			<returns>Vertex normal.</returns>
-		</member>
-		<member name="M:Unigine.Mesh.setNumAnimationFrames(int,int)">
-			<summary>
-			Sets the number of animation frames for the given animation.
-			</summary> 
-			<param name="animation"> Animation number in the range from 0 to the total number of mesh animations.To get the total number of mesh animations, call the getNumAnimations() method. </param>
-			<param name="num"> Number of the animation frames to be set. </param> 
-		</member>
-		<member name="M:Unigine.Mesh.getNumAnimationFrames(int) const">
-			<summary>
-			Returns the number of animation frames for the given animation.
-			</summary> 
-			<param name="animation"> Animation number in the range from 0 to the total number of mesh animations.To get the total number of mesh animations, call the getNumAnimations() method. </param> 
-			<returns>Number of the animation frames.</returns>
-		</member>
-		<member name="M:Unigine.Mesh.getNumAnimations const">
-			<summary>
-			Returns the total number of mesh animations.
-			</summary>  
-			<returns>Number of the mesh animations.</returns>
 		</member>
 		<member name="M:Unigine.Mesh.getNumBones const">
 			<summary>
@@ -687,13 +598,6 @@
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Bone weights associated with the given weight.</returns>
 		</member>
-		<member name="M:Unigine.Mesh.addAnimation(char)">
-			<summary>
-			Appends an animation with a given name to the current mesh.
-			</summary> 
-			<param name="name"> Name of the animation. This argument is empty by default. </param> 
-			<returns>Number of mesh animations.</returns>
-		</member>
 		<member name="M:Unigine.Mesh.addBone(char,int)">
 			<summary>
 			Appends a new mesh bone.
@@ -908,13 +812,6 @@
 			<param name="surface"> Mesh surface number. The default value is -1 (all of the mesh surfaces). </param> 
 			<returns>1 if indices are created successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Mesh.createIntersection(int)">
-			<summary>
-			Calculates a potentially visible set for the given surface. This function prepares the mesh for working with getIntersection() method.
-			</summary> 
-			<param name="surface"> Mesh surface number. The default value is -1 (all of the mesh surfaces). </param> 
-			<returns>1 if the potentially visible set is calculated successfully; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Mesh.createNormals(int,int)">
 			<summary>
 			Creates normals for the given surface target.
@@ -947,12 +844,6 @@
 			<param name="angle"> Angle between normals used to calculate the mean vertex normal. </param>
 			<param name="surfaces"> List of surface numbers, for which tangents are to be created. </param> 
 			<returns>1 if the tangents are created successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Mesh.findAnimation(char) const">
-			<summary>
-			Searches for the animation by the name and returns its number.
-			</summary> 
-			<param name="name"> Name of the animation. </param> 
 		</member>
 		<member name="M:Unigine.Mesh.findBone(char) const">
 			<summary>
@@ -991,15 +882,15 @@
 		</member>
 		<member name="M:Unigine.Mesh.info(char) const">
 			<summary>
-			Returns an information about the given mesh or animation.
+			Returns the information about the given mesh or animation.
 			</summary> 
-			<param name="name"> Mesh or animation name. </param> 
+			<param name="path"> Mesh or animation name. </param> 
 		</member>
 		<member name="M:Unigine.Mesh.load(char)">
 			<summary>
 			Loads the mesh with the given name for the current mesh.
 			</summary> 
-			<param name="name"> Mesh name. </param> 
+			<param name="path"> Mesh name. </param> 
 			<returns>1 if the mesh is loaded successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Mesh.optimizeIndices(int,int)">
@@ -1028,13 +919,8 @@
 			<summary>
 			Saves the given mesh in either MESH or ANIM file format. Creates the given mesh path if it doesn’t exist yet (including subdirectories).
 			</summary> 
-			<param name="name"> Path to the mesh including the file name and extension — *.mesh or *.anim. </param> 
+			<param name="path"> Path to the mesh including the file name and extension — *.mesh or *.anim. </param> 
 			<returns>1 if the mesh is saved successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Mesh.sortAnimations">
-			<summary>
-			Sort all animations by their names.
-			</summary>  
 		</member>
 		<member name="M:Unigine.Mesh.sortSurfaces">
 			<summary>
@@ -1165,6 +1051,20 @@
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Triangle indices.</returns>
 		</member>
+		<member name="M:Unigine.Mesh.getMemoryUsage const">
+			<summary>
+			Returns the amount of memory used by the mesh in bytes.
+			</summary>  
+			<returns>Used memory in bytes.</returns>
+		</member>
+		<member name="M:Unigine.Mesh.hasSpatialTree(int) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.Mesh.createSpatialTree(int)">
+			<summary>
+			</summary>  
+		</member>
 		<member name="F:Unigine.Mesh.LIGHTMAP_RESOLUTION_MODE_4096">
 			<summary>
 			Lightmap resolution 4096 x 4096.
@@ -1219,6 +1119,215 @@
 			<summary>
 			Vertex cache optimization flag.
 		</summary>
+		</member>
+		<member name="M:Unigine.MeshAnimation.#ctor">
+			<summary>
+			Constructor. Creates an empty mesh.
+			</summary>  
+		</member>
+		<member name="M:Unigine.MeshAnimation.#ctor(char)">
+			<summary>
+			Constructor. Creates a mesh animation using the specified file.
+			</summary> 
+			<param name="path"> Path to the mesh animation file. </param> 
+		</member>
+		<member name="M:Unigine.MeshAnimation.#ctor(Unigine.Ptr{MeshAnimation})">
+			<summary>
+			Constructor. Creates a mesh animation using the specified source mesh animation.
+			</summary> 
+			<param name="src"> Source mesh animation instance. </param> 
+		</member>
+		<member name="M:Unigine.MeshAnimation.assignFrom(Unigine.Ptr{MeshAnimation})">
+			<summary>
+			Copies the animation data from the source: bones, list of animated bones, and animation frames.
+			</summary> 
+			<param name="src"> Source mesh animation instance. </param> 
+		</member>
+		<member name="M:Unigine.MeshAnimation.clear">
+			<summary>
+			Clears the mesh animation data: bones, list of animated bones, and animation frames.
+			</summary>  
+		</member>
+		<member name="M:Unigine.MeshAnimation.flipYZ">
+			<summary>
+			Flips the Y and Z axes for the animation:													Y axis becomes equal to -Z							Z axis becomes equal to Y
+			</summary>  
+			<returns>1 if the axes are flipped successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.MeshAnimation.info(char) const">
+			<summary>
+			Returns the information about the specified animation.
+			</summary> 
+			<param name="path"> Path to the file containing animation. </param> 
+		</member>
+		<member name="M:Unigine.MeshAnimation.load(char)">
+			<summary>
+			Loads the animation (bone names and bone parent indices) from the specified file.
+			</summary> 
+			<param name="path"> Path to the file containing animation. </param> 
+			<returns>1 if the animation is loaded from the file successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.MeshAnimation.save(char) const">
+			<summary>
+			Saves the given animation in the ANIM file format. Creates the given file if it doesn’t exist yet (including subdirectories).
+			</summary> 
+			<param name="path"> Path to a file including the file name and extension to which animation is to be saved (*.anim). </param> 
+			<returns>1 if the animation is saved successfully; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.MeshAnimation.findBone(char) const">
+			<summary>
+			Searches for a bone with a given name and returns its number.
+			</summary> 
+			<param name="name"> Name of the bone. </param> 
+			<returns>Bone number.</returns>
+		</member>
+		<member name="M:Unigine.MeshAnimation.addBone(char,int)">
+			<summary>
+			Appends a new mesh bone.
+			</summary> 
+			<param name="name"> Bone name. This argument is empty by default. </param>
+			<param name="parent"> Parent bone number. The default value is -1 (the new bone has no parent bone). </param> 
+			<returns>Number of mesh bones.</returns>
+		</member>
+		<member name="M:Unigine.MeshAnimation.setBoneName(int,char)">
+			<summary>
+			Sets the name for the given bone.
+			</summary> 
+			<param name="bone"> Bone number. </param>
+			<param name="name"> Bone name. </param> 
+		</member>
+		<member name="M:Unigine.MeshAnimation.getBoneName(int) const">
+			<summary>
+			Returns the name of the given bone.
+			</summary> 
+			<param name="bone"> Bone number. </param> 
+			<returns>Bone name.</returns>
+		</member>
+		<member name="M:Unigine.MeshAnimation.setBoneParent(int,int)">
+			<summary>
+			Sets the bone specified as the second argument as the parent bone for the bone specified as the first argument.
+			</summary> 
+			<param name="bone"> Number of the bone, for which the parent will be returned. </param>
+			<param name="parent"> Parent bone number, if the parent exists; otherwise, -1. </param> 
+		</member>
+		<member name="M:Unigine.MeshAnimation.getBoneParent(int) const">
+			<summary>
+			Returns the number of the parent bone for a given one.
+			</summary> 
+			<param name="bone"> Number of the bone, for which the parent will be returned. </param> 
+			<returns>Parent bone number, if the parent exists; otherwise, -1.</returns>
+		</member>
+		<member name="M:Unigine.MeshAnimation.setBoneTransform(int,Unigine.Math.mat4)">
+			<summary>
+			Sets a transformation matrix for the given bone (without considering node transformations).						Bones can be scaled only uniformly.
+			</summary> 
+			<param name="bone"> Bone number. </param>
+			<param name="transform"> Transformation matrix. </param> 
+		</member>
+		<member name="M:Unigine.MeshAnimation.getBoneTransform(int) const">
+			<summary>
+			Returns a transformation matrix of the given bone relatively to the parent object (not considering transformations of the Mesh Skinned node itself).
+			</summary> 
+			<param name="bone"> Bone number. </param> 
+			<returns>Transformation matrix.</returns>
+		</member>
+		<member name="M:Unigine.MeshAnimation.setBoneTransforms(Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets transformation matrices for all bones. The transforms are in the object-space coordinates (not local, i.e. not bound to the parent bone).
+			</summary> 
+			<param name="transforms"> Transformation matrices in the object-space coordinates. </param> 
+			<returns>1 if transforms are set successfully for bones. The return value of 0 means that the number of transforms did not match the number of bones</returns>
+		</member>
+		<member name="M:Unigine.MeshAnimation.getBoneTransforms(Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Returns transformation matrices for all bones The transforms are in the object-space coordinates (not local, i.e. not bound to the parent bone).
+			</summary> 
+			<param name="transforms"> Transformation matrices in the object-space coordinates. </param> 
+		</member>
+		<member name="M:Unigine.MeshAnimation.getNumAnimationBones const">
+			<summary>
+			Returns the total number of mesh animation bones.
+			</summary>  
+			<returns>Number of the mesh animation bones.</returns>
+		</member>
+		<member name="M:Unigine.MeshAnimation.getAnimationBoneID(int) const">
+			<summary>
+			Returns the mesh bone ID for the specified animated bone.
+			</summary> 
+			<param name="num"> Bone index in the list of animated bones. </param> 
+			<returns>Bone ID in the list of mesh bones.</returns>
+		</member>
+		<member name="M:Unigine.MeshAnimation.setAnimationBones(Unigine.Vector{short,int,Unigine.VectorAllocator})">
+			<summary>
+			Copies bones from the given array to the current array of animation bones.
+			</summary> 
+			<param name="bone_indices"> Array of bones taking part in the animation to be set. </param> 
+		</member>
+		<member name="M:Unigine.MeshAnimation.getAnimationBones(Unigine.Vector{short,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Adds all bones of the given animation to the given array of bones.
+			</summary> 
+			<param name="bone_indices"> Array with indices of bones taking part in the animation. </param> 
+		</member>
+		<member name="M:Unigine.MeshAnimation.setAnimationBoneTransforms(Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator},int)">
+			<summary>
+			Sets transforms for the specified frame. This method applies transformations to all bones in the mesh, then takes transforms for animated bones and writes them into the frame. All transfomrs are object-bound.
+			</summary> 
+			<param name="transforms"> Animation bone transformation matrix, in the object space. </param>
+			<param name="frame"> Animation frame. </param> 
+			<returns>0, if the number of transforms doesn't match the number of bones in the mesh.</returns>
+		</member>
+		<member name="M:Unigine.MeshAnimation.getAnimationBoneTransforms(Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator},int) const">
+			<summary>
+			Returns a transformation matrix for the specified frame. If bones are animated, transforms for them are taken from the frame, if bones are not animated, their transforms are taken from the mesh. All transforms are object-bound.
+			</summary> 
+			<param name="transforms"> Animation bone transformation matrix, in the object space. </param>
+			<param name="frame"> Animation frame. </param> 
+			<returns>Always returns 1, as it always performs correctly.</returns>
+		</member>
+		<member name="M:Unigine.MeshAnimation.setNumFrames(int)">
+			<summary>
+			Sets the number of frames for the animation.
+			</summary> 
+			<param name="num"> Number of the animation frames. </param> 
+		</member>
+		<member name="M:Unigine.MeshAnimation.getNumFrames const">
+			<summary>
+			Returns the number of frames for the animation.
+			</summary>  
+			<returns>Number of the animation frames.</returns>
+		</member>
+		<member name="M:Unigine.MeshAnimation.setFrame(int,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets the animation frame transformation matrices. If the number of transforms does not match the number of animated bones, the method won't be applied.
+			</summary> 
+			<param name="frame"> Frame number in the array of the animation frames. </param>
+			<param name="bones"> Bones transformation matrices in local space — relevant to the parent bone. </param> 
+		</member>
+		<member name="M:Unigine.MeshAnimation.getFrame(int,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Returns the animation frame transformation matrices.
+			</summary> 
+			<param name="frame"> Frame number in the array of the animation frames. </param>
+			<param name="bones"> Bones transformation matrices in local space — relevant to the parent bone. </param> 
+		</member>
+		<member name="M:Unigine.MeshAnimation.setFrame(int,Unigine.Vector{Unigine.Math.vec3,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.quat,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.vec3,int,Unigine.VectorAllocator})">
+			<summary>
+			Sets the animation frame coordinates, rotation quaternions and scaling vectors.
+			</summary> 
+			<param name="frame"> Frame number in the array of the animation frames. </param>
+			<param name="xyz"> Array with coordinates of the animation frame. </param>
+			<param name="rot"> Array with rotation quaternions of the animation frame. </param>
+			<param name="scale"> Array with scaling vectors of the animation frame. </param> 
+		</member>
+		<member name="M:Unigine.MeshAnimation.getFrame(int,Unigine.Vector{Unigine.Math.vec3,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.quat,int,Unigine.VectorAllocator},Unigine.Vector{Unigine.Math.vec3,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Returns the animation frame coordinates, rotation quaternions and scaling vectors.
+			</summary> 
+			<param name="frame"> Frame number in the array of the animation frames. </param>
+			<param name="xyz"> Array with coordinates of the animation frame. </param>
+			<param name="rot"> Array with rotation quaternions of the animation frame. </param>
+			<param name="scale"> Array with scaling vectors of the animation frame. </param> 
 		</member>
 	</members>
 </doc>

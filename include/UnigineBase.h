@@ -92,20 +92,12 @@
 	#define UNIGINE_PRINTF(FORMAT,LIST)
 	#define UNIGINE_SCANF(FORMAT,LIST)
 #endif
-
-/*
- */
 #ifdef _WIN32
-	#pragma warning(disable:4100)	// 'identifier' : unreferenced formal parameter
-	#pragma warning(disable:4127)	// conditional expression is constant
-	#pragma warning(disable:4201)	// nonstandard extension used : nameless struct/union
-	#pragma warning(disable:4250)	// 'class1' : inherits 'class2::member' via dominance
-	#pragma warning(disable:4316)	// object allocated on the heap may not be aligned for this type
-	#pragma warning(disable:4324)	// 'struct_name' : structure was padded due to __declspec(align())
-	#pragma warning(disable:4505)	// 'function' : unreferenced local function has been removed
-	#pragma warning(disable:4512)	// 'class' : assignment operator could not be generated
-	#pragma warning(disable:4702)	// unreachable code
-	#pragma warning(disable:4714)	// function 'function' marked as __forceinline not inlined
+	#pragma warning(disable:4100) // 'identifier' : unreferenced formal parameter
+	#pragma warning(disable:4201) // nonstandard extension used : nameless struct/union
+	#pragma warning(disable:4324) // 'structname': structure was padded due to alignment specifier
+	#pragma warning(disable:4458) // declaration of 'identifier' hides class member
+	#pragma warning(disable:4714) // The given function was selected for inline expansion, but the compiler did not perform the inlining.
 #endif
 
 /*
@@ -115,13 +107,17 @@
 /*
  */
 #ifdef NDEBUG
-	#define UNIGINE_ASSERT(EXP)	(static_cast<void>(0))
+	#define UNIGINE_FATAL(EXP)	(void)(EXP)
+	#define UNIGINE_ASSERT(EXP)	(void)(EXP)
 #else
 	#ifdef _LINUX
+		#define UNIGINE_FATAL(EXP) { Unigine::Log::fatal("%s:%d: Assertion: '%s'\n",__FILE__,__LINE__,EXP); }
 		#define UNIGINE_ASSERT(EXP) { if (EXP) { } else { Unigine::Log::fatal("%s:%d: %s: Assertion: '%s'\n",__FILE__,__LINE__,__func__,#EXP); } }
 	#elif defined(_MACOS) || defined(_IOS)
+		#define UNIGINE_FATAL(EXP) { Unigine::Log::fatal("%s:%d: %s: Assertion: '%s'\n",__FILE__,__LINE__,__PRETTY_FUNCTION__,EXP); }
 		#define UNIGINE_ASSERT(EXP) { if (EXP) { } else { Unigine::Log::fatal("%s:%d: %s: Assertion: '%s'\n",__FILE__,__LINE__,__PRETTY_FUNCTION__,#EXP); } }
 	#else
+		#define UNIGINE_FATAL(EXP) { Unigine::Log::fatal("%s:%d: Assertion: '%s'\n",__FILE__,__LINE__,EXP); }
 		#define UNIGINE_ASSERT(EXP) { if (EXP) { } else { Unigine::Log::fatal("%s:%d: Assertion: '%s'\n",__FILE__,__LINE__,#EXP); } }
 	#endif
 #endif

@@ -1,0 +1,45 @@
+<node type="LightWorld">
+	<scattering>1</scattering>
+	<disable_angle>90</disable_angle>
+	<shadow_resolution>5</shadow_resolution>
+	<transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</transform>
+	<lens_flare_enabled>0</lens_flare_enabled>
+	<lens_flare_texture>core/textures/lens_flares_default.png</lens_flare_texture>
+	<lens_flare_occlusion_fade>1</lens_flare_occlusion_fade>
+	<lens_flare_occlusion_fade_border>0.200000003</lens_flare_occlusion_fade_border>
+	<lens_flare_position_offset>0 0 0</lens_flare_position_offset>
+	<lens_flare_use_light_color>1</lens_flare_use_light_color>
+	<lens_flare_billboards num="31">
+		<billboard name="billboard_0" offset="0" size="10" rotate="0" uv_lower_left="0 0" uv_upper_right="0.5 0.5" color="1 1 1 1" offset_scale="1" intensity="0.800000012"/>
+		<billboard name="billboard_1" offset="0" size="0.289999992" rotate="0" uv_lower_left="0.5 0.75" uv_upper_right="0.75 1" color="1 1 1 1" offset_scale="1" intensity="0.0299999993"/>
+		<billboard name="billboard_2" offset="0.0529999994" size="0.860000014" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.941176534 0.788235366 1 1" offset_scale="1" intensity="0.5"/>
+		<billboard name="billboard_3" offset="0.0900000036" size="0.49000001" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.772549093 0.796078503 1 1" offset_scale="1" intensity="0.75999999"/>
+		<billboard name="billboard_4" offset="0.122000001" size="0.409999996" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.792156935 1 0.82745105 1" offset_scale="1" intensity="0.200000003"/>
+		<billboard name="billboard_5" offset="0.203999996" size="0.330000013" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.80392164 0.894117713 1 1" offset_scale="1" intensity="0.300000012"/>
+		<billboard name="billboard_6" offset="0.432999998" size="0.649999976" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.929411829 1 0.768627524 1" offset_scale="1" intensity="0.200000003"/>
+		<billboard name="billboard_7" offset="0.477999985" size="1.5" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.807843208 1 0.886274576 1" offset_scale="1" intensity="0.349999994"/>
+		<billboard name="billboard_8" offset="0.52700001" size="0.810000002" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="1 0.90196085 0.788235366 1" offset_scale="1" intensity="0.200000003"/>
+		<billboard name="billboard_9" offset="0.600000024" size="0.409999996" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.768627524 1 0.894117713 1" offset_scale="1" intensity="0.200000003"/>
+		<billboard name="billboard_10" offset="0.615999997" size="0.569999993" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.796078503 1 0.921568692 1" offset_scale="1" intensity="0.400000006"/>
+		<billboard name="billboard_11" offset="0.652999997" size="0.779999971" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.831372619 0.933333397 1 1" offset_scale="1" intensity="0.349999994"/>
+		<billboard name="billboard_12" offset="0.717999995" size="1.71000004" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.878431439 1 0.796078503 1" offset_scale="1" intensity="0.150000006"/>
+		<billboard name="billboard_13" offset="0.754999995" size="1.13999999" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.760784388 1 0.843137324 1" offset_scale="1" intensity="0.0500000007"/>
+		<billboard name="billboard_14" offset="0.967000008" size="0.540000021" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="1 0.878431439 0.772549093 1" offset_scale="1" intensity="0.100000001"/>
+		<billboard name="billboard_15" offset="0.338999987" size="0.289999992" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.674509823 1 0.698039234 1" offset_scale="1" intensity="0.300000012"/>
+		<billboard name="billboard_16" offset="0.00499999989" size="2" rotate="1" uv_lower_left="0 0.75" uv_upper_right="0.25 1" color="1 1 1 1" offset_scale="0" intensity="0.0799999982"/>
+		<billboard name="billboard_17" offset="-0.75" size="1" rotate="1" uv_lower_left="0.5 0.5" uv_upper_right="0.75 0.75" color="1 1 1 1" offset_scale="12.2399998" intensity="0.289999992"/>
+		<billboard name="billboard_18" offset="0.75" size="1" rotate="1" uv_lower_left="0.5 0.5" uv_upper_right="0.75 0.75" color="1 1 1 1" offset_scale="12.2399998" intensity="0.289999992"/>
+		<billboard name="billboard_19" offset="0" size="10" rotate="0" uv_lower_left="0.5 0" uv_upper_right="1 0.5" color="1 1 1 1" offset_scale="1" intensity="0.140000001"/>
+		<billboard name="billboard_20" offset="0.245199993" size="0.610000014" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.972549081 1 0.898039281 1" offset_scale="1" intensity="0.289999992"/>
+		<billboard name="billboard_21" offset="-0.1184" size="0.800000012" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.972549081 1 0.898039281 1" offset_scale="1" intensity="0.270000011"/>
+		<billboard name="billboard_22" offset="-0.170000002" size="0.435000002" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.972549081 1 0.898039281 1" offset_scale="1" intensity="0.239999995"/>
+		<billboard name="billboard_23" offset="-0.223599985" size="0.660000026" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.972549081 1 0.898039281 1" offset_scale="1" intensity="0.200000003"/>
+		<billboard name="billboard_24" offset="-0.340499997" size="1.39499998" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.654901981 1 0.847058892 1" offset_scale="1" intensity="0.209999993"/>
+		<billboard name="billboard_25" offset="-0.474399984" size="0.944999993" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="1 0.917647123 0.811764777 1" offset_scale="1" intensity="0.349999994"/>
+		<billboard name="billboard_26" offset="-0.899999976" size="2.2650001" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.94901967 1 0.80392164 1" offset_scale="1" intensity="0.300000012"/>
+		<billboard name="billboard_20" offset="0.845000029" size="3.19000006" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.972549081 1 0.898039281 1" offset_scale="1" intensity="0.180000007"/>
+		<billboard name="billboard_20" offset="1" size="7.78999996" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.972549081 1 0.898039281 1" offset_scale="1" intensity="0.200000003"/>
+		<billboard name="billboard_20" offset="0.936999977" size="0.449999988" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.972549081 1 0.898039281 1" offset_scale="1" intensity="0.180000007"/>
+		<billboard name="billboard_20" offset="1" size="1.03999996" rotate="0" uv_lower_left="0.75 0.75" uv_upper_right="1 1" color="0.972549081 1 0.898039281 1" offset_scale="1" intensity="0.150000006"/>
+	</lens_flare_billboards>
+</node>

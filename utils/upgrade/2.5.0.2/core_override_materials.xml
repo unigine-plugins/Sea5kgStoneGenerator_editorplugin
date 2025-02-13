@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<>
+	<material name="billboards_stars" parent="billboards_base" base_material="billboards_base"/>
+	<material name="debug_albedo" parent="debug_materials" base_material="render_composite_deferred"/>
+	<material name="debug_ambient_light" parent="debug_materials" base_material="render_composite_deferred"/>
+	<material name="debug_bent_normals" parent="debug_materials" base_material="render_composite_deferred"/>
+	<material name="debug_cubemaps" parent="debug_materials" base_material="render_composite_deferred"/>
+	<material name="debug_diffuse_light" parent="debug_materials" base_material="render_composite_deferred"/>
+	<material name="debug_highlights" parent="debug_materials" base_material="render_composite_deferred"/>
+	<material name="debug_lights" parent="debug_materials" base_material="render_composite_deferred"/>
+	<material name="debug_materials" parent="render_composite_deferred" base_material="render_composite_deferred"/>
+	<material name="debug_metalness" parent="debug_materials" base_material="render_composite_deferred"/>
+	<material name="debug_normals" parent="debug_materials" base_material="render_composite_deferred"/>
+	<material name="debug_reflections" parent="debug_materials" base_material="render_composite_deferred"/>
+	<material name="debug_roughness" parent="debug_materials" base_material="render_composite_deferred"/>
+	<material name="debug_ssao" parent="debug_materials" base_material="render_composite_deferred"/>
+	<material name="debug_ssgi" parent="debug_materials" base_material="render_composite_deferred"/>
+	<material name="debug_ssr" parent="debug_materials" base_material="render_composite_deferred"/>
+	<material name="mesh_base_error" parent="mesh_base" base_material="mesh_base"/>
+	<material name="particles_base_error" parent="particles_base" base_material="particles_base"/>
+	<material name="post_sensor_green" parent="post_sensor" base_material="post_sensor"/>
+	<material name="post_sensor_heat" parent="post_sensor" base_material="post_sensor"/>
+	<material name="post_sensor_red" parent="post_sensor" base_material="post_sensor"/>
+	<material name="post_sensor_white" parent="post_sensor" base_material="post_sensor"/>
+	<material name="water_global_beaufort_0" parent="water_global_base" base_material="water_global_base"/>
+	<material name="water_global_beaufort_1" parent="water_global_base" base_material="water_global_base"/>
+	<material name="water_global_beaufort_10" parent="water_global_base" base_material="water_global_base"/>
+	<material name="water_global_beaufort_11" parent="water_global_base" base_material="water_global_base"/>
+	<material name="water_global_beaufort_12" parent="water_global_base" base_material="water_global_base"/>
+	<material name="water_global_beaufort_2" parent="water_global_base" base_material="water_global_base"/>
+	<material name="water_global_beaufort_3" parent="water_global_base" base_material="water_global_base"/>
+	<material name="water_global_beaufort_4" parent="water_global_base" base_material="water_global_base"/>
+	<material name="water_global_beaufort_5" parent="water_global_base" base_material="water_global_base"/>
+	<material name="water_global_beaufort_6" parent="water_global_base" base_material="water_global_base"/>
+	<material name="water_global_beaufort_7" parent="water_global_base" base_material="water_global_base"/>
+	<material name="water_global_beaufort_8" parent="water_global_base" base_material="water_global_base"/>
+	<material name="water_global_beaufort_9" parent="water_global_base" base_material="water_global_base"/>
+</>

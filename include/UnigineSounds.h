@@ -25,7 +25,7 @@ namespace Unigine
 class UNIGINE_API Sound
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
 	enum
 	{
@@ -89,7 +89,7 @@ public:
 class UNIGINE_API Sounds
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	static bool isDeviceConnected();
 	static bool isDeviceEnumerationSupported();
 	static int getNumDevices();

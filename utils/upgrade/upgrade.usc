@@ -1,0 +1,189 @@
+#!/usr/bin/env usc
+
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
+
+string scripts[0] = (
+	"2.5.0.1",
+	"2.5.0.2",
+	"2.7.0.0",
+	"2.7.0.1",
+	"2.7.0.2",
+	"2.7.0.3",
+	"2.7.0.4",
+	"2.7.1.0",
+	"2.7.2.0",
+	"2.7.2.1",
+	"2.7.2.2",
+	"2.7.3.0",
+	"2.8.0.0",
+	"2.9.0.0",
+	"2.10.0.0",
+	"2.11.0.0",
+	"2.12.0.0",
+	"2.12.0.1",
+	"2.12.0.2",
+	"2.13.0.0",
+	"2.14.0.0",
+	"2.14.1.0",
+	"2.15.0.0",
+	"2.15.0.1",
+	"2.15.1.0",
+	"2.16.0.0",
+	"2.16.0.1",
+	"2.16.0.2",
+	"2.16.1.0",
+	"2.17.0.0",
+	"2.17.0.1",
+	"2.18.0.0",
+	"2.18.0.1",
+	"2.19.0.0",
+	"2.19.0.1",
+	"2.19.0.2",
+	"2.19.0.3",
+);
+
+int usc_executables_by_version[] = (
+	"2.5.0.1" : "bin/usc_2.5.0.1_x64",
+	"2.5.0.2" : "bin/usc_2.18.0.1_x64",
+	"2.7.0.0" : "bin/usc_2.18.0.1_x64",
+	"2.7.0.1" : "bin/usc_2.18.0.1_x64",
+	"2.7.0.2" : "bin/usc_2.18.0.1_x64",
+	"2.7.0.3" : "bin/usc_2.18.0.1_x64",
+	"2.7.0.4" : "bin/usc_2.18.0.1_x64",
+	"2.7.1.0" : "bin/usc_2.18.0.1_x64",
+	"2.7.2.0" : "bin/usc_2.18.0.1_x64",
+	"2.7.2.1" : "bin/usc_2.18.0.1_x64",
+	"2.7.2.2" : "bin/usc_2.18.0.1_x64",
+	"2.7.3.0" : "bin/usc_2.18.0.1_x64",
+	"2.8.0.0" : "bin/usc_2.18.0.1_x64",
+	"2.9.0.0" : "bin/usc_2.18.0.1_x64",
+	"2.10.0.0" : "bin/usc_2.18.0.1_x64",
+	"2.11.0.0" : "bin/usc_2.18.0.1_x64",
+	"2.12.0.0" : "bin/usc_2.18.0.1_x64",
+	"2.12.0.1" : "bin/usc_2.18.0.1_x64",
+	"2.12.0.2" : "bin/usc_2.18.0.1_x64",
+	"2.13.0.0" : "bin/usc_2.18.0.1_x64",
+	"2.14.0.0" : "bin/usc_2.18.0.1_x64",
+	"2.14.1.0" : "bin/usc_2.18.0.1_x64",
+	"2.15.0.0" : "bin/usc_2.18.0.1_x64",
+	"2.15.0.1" : "bin/usc_2.18.0.1_x64",
+	"2.15.1.0" : "bin/usc_2.18.0.1_x64",
+	"2.16.0.0" : "bin/usc_2.18.0.1_x64",
+	"2.16.0.1" : "bin/usc_2.18.0.1_x64",
+	"2.16.0.2" : "bin/usc_2.18.0.1_x64",
+	"2.16.1.0" : "bin/usc_2.18.0.1_x64",
+	"2.17.0.0" : "bin/usc_2.18.0.1_x64",
+	"2.17.0.1" : "bin/usc_2.18.0.1_x64",
+	"2.18.0.0" : "bin/usc_2.18.0.1_x64",
+	"2.18.0.1" : "bin/usc_2.18.0.1_x64",
+	"2.19.0.0" : "",
+	"2.19.0.1" : "",
+	"2.19.0.2" : "",
+	"2.19.0.3" : ""
+);
+
+string quote(string str)
+{
+	return "\"" + str + "\"";
+}
+
+string getExtension(string path)
+{
+	string file = basename(path);
+	
+	if(file == "." || file == "..")
+		return "";
+	
+	if(extension(file) != "")								// "foo.bar"
+		return "." + extension(file);
+	else if(strlen(file) && file[strlen(file) - 1] == '.')	// "foo.""
+		return ".";
+	else													// "foo"
+		return "";
+}
+
+string start_version = "2.5.0.1";
+
+int versionLess(string left_version, string right_version)
+{
+	int _arrayLexicographicalLess(int left[], int right[])
+	{
+		for (int i = 0; i < left.size(); i++)
+		{
+			if (left[i] != right[i])
+				return left[i] < right[i];
+		}
+		return 0;
+	}
+	int left[4];
+	sscanf(left_version, "%d.%d.%d.%d", left);
+	int right[4];
+	sscanf(right_version, "%d.%d.%d.%d", right);
+	return _arrayLexicographicalLess(left, right);
+}
+
+void main()
+{
+	string usc_path = replace(getArg(-1), "\\", "/");
+	if(!is_absolute(usc_path))
+		usc_path = absname(currdir() + "/",usc_path);
+	
+	string script_dir = pathname(replace(__FILE__,"\\","/"));
+	if(!is_absolute(script_dir))
+		script_dir = absname(currdir() + "/",script_dir);
+	
+	string arguments_str = "";
+	forloop(int i = 1; getNumArgs())
+	{
+		string arg = getArg(i);
+		
+		if(arg == "--start_version")
+		{
+			i++;
+			if(i < getNumArgs())
+				start_version = getArg(i);
+			continue;
+		}
+		
+		if(strchr(arg, ' ') != -1)
+			arg = quote(arg);
+		arguments_str += " " + arg;
+	}
+	
+	log.message("Start migration\n\n");
+	
+	foreach(string version; scripts)
+	{
+		if(versionLess(version, start_version))
+			continue;
+		
+		string script = absname(script_dir, version + "/upgrade.usc");
+		string usc_executable_by_version = usc_executables_by_version[version];
+		string bin_path = usc_path;
+		if(usc_executable_by_version != "")
+		{
+			string abs_usc_path = absname(script_dir, usc_executable_by_version + getExtension(usc_path));
+			if(is_file(abs_usc_path))
+			{
+				bin_path = abs_usc_path;
+			}
+		}
+		
+		string include_path = dirname(script);
+		string cmd = format("%s %s --include_path %s%s", quote(bin_path), quote(script), quote(include_path), arguments_str);
+		int ret = system(cmd,1);
+		if (ret != 0)
+			log.error("Command finished with error: %s\n", cmd);
+	}
+}

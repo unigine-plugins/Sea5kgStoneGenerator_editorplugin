@@ -1,0 +1,124 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.MeshRender.#ctor">
+			<summary>
+			Constructor. Creates an empty static mesh.
+			</summary>  
+		</member>
+		<member name="M:Unigine.MeshRender.load(char)">
+			<summary>
+			Loads the mesh using the specified path.
+			</summary> 
+			<param name="path"> Path to the mesh. </param> 
+			<returns>true if the mesh is loaded successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.MeshRender.load(Unigine.Ptr{Unigine.Mesh})">
+			<summary>
+			Loads the specified mesh.
+			</summary> 
+			<param name="mesh"> The mesh to be loaded. </param> 
+			<returns>true if the mesh is loaded successfully; otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.MeshRender.clear">
+			<summary>
+			Clears the mesh (including its surfaces and bounds).
+			</summary>  
+		</member>
+		<member name="M:Unigine.MeshRender.bind">
+			<summary>
+			Binds the mesh data (index and vertex buffers) to the input assembler stage.
+			</summary>  
+		</member>
+		<member name="M:Unigine.MeshRender.unbind">
+			<summary>
+			Unbinds the mesh data (index and vertex buffers).
+			</summary>  
+		</member>
+		<member name="M:Unigine.MeshRender.renderSurface(int,int,int)">
+			<summary>
+			Renders the surface.
+			</summary> 
+			<param name="mode"> Rendering mode. One of the MODE_* variables. </param>
+			<param name="surface"> Surface number. </param>
+			<param name="target"> Surface target number. The default value is 0. </param> 
+			<returns>Number of primitives rendered. Primitive type is determined by the rendering mode.</returns>
+		</member>
+		<member name="M:Unigine.MeshRender.renderInstancedSurface(int,int,int,int)">
+			<summary>
+			Renders the specified number of instances of the surface.
+			</summary> 
+			<param name="mode"> Rendering mode. One of the MODE_* variables. </param>
+			<param name="num"> Number of instances to be rendered. </param>
+			<param name="surface"> Surface number. </param>
+			<param name="target"> Surface target number. The default value is 0. </param> 
+			<returns>Number of primitives rendered. Primitive type is determined by the rendering mode.</returns>
+		</member>
+		<member name="M:Unigine.MeshRender.render(int,int,int)">
+			<summary>
+			Renders the static mesh with the specified settings and mode.
+			</summary> 
+			<param name="mode"> Rendering mode. One of the MODE_* variables. </param>
+			<param name="surface"> Surface number (use -1 for all surfaces). </param>
+			<param name="target"> Surface target number. The default value is 0. </param> 
+			<returns>Number of primitives rendered. Primitive type is determined by the rendering mode.</returns>
+		</member>
+		<member name="M:Unigine.MeshRender.renderInstanced(int,int,int,int)">
+			<summary>
+			Renders the specified number of instances of the surface.
+			</summary> 
+			<param name="mode"> Rendering mode. One of the MODE_* variables. </param>
+			<param name="num"> Number of instances to be rendered. </param>
+			<param name="surface"> Surface number (use -1 for all surfaces). </param>
+			<param name="target"> Surface target number. The default value is 0. </param> 
+			<returns>Number of primitives rendered. Primitive type is determined by the rendering mode.</returns>
+		</member>
+		<member name="M:Unigine.MeshRender.getSystemMemoryUsage const">
+			<summary>
+			Returns the current amount of system memory used by the static mesh, in bytes.
+			</summary>  
+			<returns>System memory amount used by the static mesh, in bytes.</returns>
+		</member>
+		<member name="M:Unigine.MeshRender.getVideoMemoryUsage const">
+			<summary>
+			Returns the current amount of video memory used by the static mesh.
+			</summary>  
+			<returns>Video memory amount used by the static mesh, in bytes.</returns>
+		</member>
+		<member name="M:Unigine.MeshRender.updateDebugName">
+			<summary>
+			Updates the friendly name for GPU debugging (RenderDoc, NVIDIA Nsight).
+			</summary>  
+		</member>
+		<member name="M:Unigine.MeshRender.setDebugName(char)">
+			<summary>
+			Sets a friendly name for GPU debugging (RenderDoc, NVIDIA Nsight). It can be used to help you determine if the corresponding object interface pointer caused the leak. Memory leaks are reported by the debug software layer by outputting a list of object interface pointers along with their friendly names.
+			</summary> 
+			<param name="name"> Friendly debug name to be set. </param> 
+		</member>
+		<member name="M:Unigine.MeshRender.getDebugName const">
+			<summary>
+			Returns the currently used friendly name for GPU debugging (RenderDoc, NVIDIA Nsight). It can be used to help you determine if the corresponding object interface pointer caused the leak. Memory leaks are reported by the debug software layer by outputting a list of object interface pointers along with their friendly names.
+			</summary>  
+			<returns>Friendly debug name.</returns>
+		</member>
+		<member name="F:Unigine.MeshRender.MODE_TRIANGLES">
+			<summary>
+			Rendering of mesh surface as triangles.
+		</summary>
+		</member>
+		<member name="F:Unigine.MeshRender.MODE_TRIANGLE_PATCHES">
+			<summary>
+			Rendering of mesh surface as triangles at tesselation.
+		</summary>
+		</member>
+		<member name="F:Unigine.MeshRender.MODE_QUAD_PATCHES">
+			<summary>
+			Rendering of mesh surface as quads at tesselation.
+		</summary>
+		</member>
+	</members>
+</doc>

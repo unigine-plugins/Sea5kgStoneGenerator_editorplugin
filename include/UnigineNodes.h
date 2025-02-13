@@ -34,8 +34,12 @@ public:
 	void pause();
 	void stop();
 	bool isPlaying() const;
-	void setTime(float time);
+	void setTime(float time, float from = -1.0f, float to = -1.0f);
 	float getTime() const;
+	void setTimeTo(float to);
+	float getTimeTo() const;
+	void setTimeFrom(float from);
+	float getTimeFrom() const;
 	void setLoop(bool loop);
 	bool isLoop() const;
 	void setSpeed(float speed);

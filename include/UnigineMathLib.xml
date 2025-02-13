@@ -95,12 +95,21 @@
 			<param name="v"> Source vector. </param> 
 			<returns>Vector with absolute values.</returns>
 		</member>
+		<member name="M:Unigine.Math.add3(float*UNIGINE_RESTRICT,float*UNIGINE_RESTRICT,float*UNIGINE_RESTRICT)">
+			<summary>
+			Returns the result of a componentwise addition of three components of vectors by storing it in the array.
+			</summary> 
+			<param name="ret"> Array to store the return value. </param>
+			<param name="v0"> Pointer to vector. </param>
+			<param name="v1"> Pointer to vector. </param> 
+			<returns>Pointer to the array that stores the return value.</returns>
+		</member>
 		<member name="M:Unigine.Math.bezier(float,float,float)">
 			<summary>
 			Calculates the value of a cubic Bezier function for t = time.													A cubic Bezier curve is represented by				4 points. Po				 is the start point, P1				 and P2				 are control points 1 and 2 and P3				 is the end point. The start and end point denote the beginning and end points of the path and the control points determine how the path moves from the start to the finish. As can be seen from the image, the only variable changing is t which determines how far the path has progressed from P0 to P3. Cubic Bezier curves are used as timing functions particularly for keyframe interpolation.
 			</summary> 
-			<param name="t"> Coordinates of the four points of the curve along the horizontal T (times) axis in the range [0.0f, 1.0f]. </param>
-			<param name="v"> Coordinates of the four points of the curve along the vertical V (values) axis in the range [0.0f, 1.0f]. </param>
+			<param name="times"> Coordinates of the four points of the curve along the horizontal T (times) axis in the range [0.0f, 1.0f]. </param>
+			<param name="values"> Coordinates of the four points of the curve along the vertical V (values) axis in the range [0.0f, 1.0f]. </param>
 			<param name="time"> Time in the range [0, 1], for which the value of the Bezier function is to be calculated. </param> 
 			<returns>Value of the Bezier function.</returns>
 		</member>
@@ -108,8 +117,8 @@
 			<summary>
 			Calculates the value of a cubic Bezier function for t = time.													A cubic Bezier curve is represented by				4 points. Po				 is the start point, P1				 and P2				 are control points 1 and 2 and P3				 is the end point. The start and end point denote the beginning and end points of the path and the control points determine how the path moves from the start to the finish. As can be seen from the image, the only variable changing is t which determines how far the path has progressed from P0 to P3. Cubic Bezier curves are used as timing functions particularly for keyframe interpolation.
 			</summary> 
-			<param name="t"> Coordinates of the four points of the curve along the horizontal T (times) axis in the range [0.0f, 1.0f]. </param>
-			<param name="v"> Coordinates of the four points of the curve along the vertical V (values) axis in the range [0.0f, 1.0f]. </param>
+			<param name="times"> Coordinates of the four points of the curve along the horizontal T (times) axis in the range [0.0f, 1.0f]. </param>
+			<param name="values"> Coordinates of the four points of the curve along the vertical V (values) axis in the range [0.0f, 1.0f]. </param>
 			<param name="time"> Time in the range [0, 1], for which the value of the Bezier function is to be calculated. </param> 
 			<returns>Value of the Bezier function.</returns>
 		</member>
@@ -177,6 +186,20 @@
 			<param name="v"> Vector storing values. </param> 
 			<returns>Vector storing the smallest integer values not less than v.</returns>
 		</member>
+		<member name="M:Unigine.Math.ceilInt(float)">
+			<summary>
+			Returns the smallest value that's greater than or equal to the argument, stored as an integer.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>Resulting int value.</returns>
+		</member>
+		<member name="M:Unigine.Math.ceilInt(double)">
+			<summary>
+			Returns the smallest value that's greater than or equal to the argument, stored as an integer.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>Resulting int value.</returns>
+		</member>
 		<member name="M:Unigine.Math.changeRange(double,Unigine.dvec4)">
 			<summary>
 			Transforms the value from the source range to the corresponding value within target range.
@@ -184,6 +207,92 @@
 			<param name="value"> The value within the source range. </param>
 			<param name="range"> The vector containing 4 values: values X and Y define the source range, values Z and W define the target range. </param> 
 			<returns>The value within the target range.</returns>
+		</member>
+		<member name="M:Unigine.Math.checkMask(int,int)">
+			<summary>
+			Checks if any of the bits specified in bits are set in mask.
+			</summary> 
+			<param name="mask"> Bit mask to be checked. </param>
+			<param name="bits"> Bits in the mask to be checked. </param> 
+			<returns>true if there is at least one bit that is specified in both mask and bits, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Math.checkMask(unsignedint,unsignedint)">
+			<summary>
+			Checks if any of the bits specified in bits are set in mask.
+			</summary> 
+			<param name="mask"> Bit mask to be checked. </param>
+			<param name="bits"> Bits in the mask to be checked. </param> 
+			<returns>true if there is at least one bit that is specified in both mask and bits, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Math.checkMask(unsignedint,int)">
+			<summary>
+			Checks if any of the bits specified in bits are set in mask.
+			</summary> 
+			<param name="mask"> Bit mask to be checked. </param>
+			<param name="bits"> Bits in the mask to be checked. </param> 
+			<returns>true if there is at least one bit that is specified in both mask and bits, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Math.checkMask(int,unsignedint)">
+			<summary>
+			Checks if any of the bits specified in bits are set in mask.
+			</summary> 
+			<param name="mask"> Bit mask to be checked. </param>
+			<param name="bits"> Bits in the mask to be checked. </param> 
+			<returns>true if there is at least one bit that is specified in both mask and bits, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Math.checkRange(float,float,float)">
+			<summary>
+			Checks if the input value is within the specified range.
+			</summary> 
+			<param name="value"> Input value. </param>
+			<param name="range_min"> Minimum value of the range. </param>
+			<param name="range_max"> Maximum value of the range. </param> 
+			<returns>true if the value is within the range, otherwise — false.</returns>
+		</member>
+		<member name="M:Unigine.Math.checkRange(double,double,double)">
+			<summary>
+			Checks if the input value is within the specified range.
+			</summary> 
+			<param name="value"> Input value. </param>
+			<param name="range_min"> Minimum value of the range. </param>
+			<param name="range_max"> Maximum value of the range. </param> 
+			<returns>true if the value is within the range, otherwise — false.</returns>
+		</member>
+		<member name="M:Unigine.Math.checkRange(int,int,int)">
+			<summary>
+			Checks if the input value is within the specified range.
+			</summary> 
+			<param name="value"> Input value. </param>
+			<param name="range_min"> Minimum value of the range. </param>
+			<param name="range_max"> Maximum value of the range. </param> 
+			<returns>true if the value is within the range, otherwise — false.</returns>
+		</member>
+		<member name="M:Unigine.Math.checkRange(longlong,longlong,longlong)">
+			<summary>
+			Checks if the input value is within the specified range.
+			</summary> 
+			<param name="value"> Input value. </param>
+			<param name="range_min"> Minimum value of the range. </param>
+			<param name="range_max"> Maximum value of the range. </param> 
+			<returns>true if the value is within the range, otherwise — false.</returns>
+		</member>
+		<member name="M:Unigine.Math.checkRange(short,short,short)">
+			<summary>
+			Checks if the input value is within the specified range.
+			</summary> 
+			<param name="value"> Input value. </param>
+			<param name="range_min"> Minimum value of the range. </param>
+			<param name="range_max"> Maximum value of the range. </param> 
+			<returns>true if the value is within the range, otherwise — false.</returns>
+		</member>
+		<member name="M:Unigine.Math.checkRange(char,char,char)">
+			<summary>
+			Checks if the input value is within the specified range.
+			</summary> 
+			<param name="value"> Input value. </param>
+			<param name="range_min"> Minimum value of the range. </param>
+			<param name="range_max"> Maximum value of the range. </param> 
+			<returns>true if the value is within the range, otherwise — false.</returns>
 		</member>
 		<member name="M:Unigine.Math.clamp(double,double,double)">
 			<summary>
@@ -339,7 +448,7 @@
 		</member>
 		<member name="M:Unigine.Math.compare(float,float)">
 			<summary>
-			Compares two scalars of the float type according to the degree of precision equal to 1.0e-6f.
+			Checks if the two scalars of the float type are exactly equal.
 			</summary> 
 			<param name="v0"> First float scalar. </param>
 			<param name="v1"> Second float scalar. </param> 
@@ -347,7 +456,7 @@
 		</member>
 		<member name="M:Unigine.Math.compare(double,double)">
 			<summary>
-			Compares two scalars of the double type according to the degree of precision equal to 1.0e-6f.
+			Checks if the two scalars of the double type are exactly equal.
 			</summary> 
 			<param name="v0"> First double scalar. </param>
 			<param name="v1"> Second double scalar. </param> 
@@ -355,7 +464,7 @@
 		</member>
 		<member name="M:Unigine.Math.compare(float,float,float)">
 			<summary>
-			Compares two scalars of the float type according to the specified degree of precision.
+			Compares two values to determine if they can be considered equal within a given tolerance (epsilon).
 			</summary> 
 			<param name="v0"> First scalar. </param>
 			<param name="v1"> Second scalar. </param>
@@ -364,7 +473,7 @@
 		</member>
 		<member name="M:Unigine.Math.compare(double,double,double)">
 			<summary>
-			Compares two scalars of the double type according to the specified degree of precision.
+			Compares two values to determine if they can be considered equal within a given tolerance (epsilon).
 			</summary> 
 			<param name="v0"> First scalar. </param>
 			<param name="v1"> Second scalar. </param>
@@ -565,6 +674,14 @@
 			<param name="q"> Quaternion. </param> 
 			<returns>Conjugate of a given quaternion.</returns>
 		</member>
+		<member name="M:Unigine.Math.conjugate(Unigine.quat,Unigine.quat)">
+			<summary>
+			Returns the conjugate of a given quaternion.
+			</summary> 
+			<param name="ret"> Argument to store the result. </param>
+			<param name="q"> Quaternion. </param> 
+			<returns>Conjugate of a given quaternion.</returns>
+		</member>
 		<member name="M:Unigine.Math.cross(Unigine.vec2,Unigine.vec2)">
 			<summary>
 			Cross product of vectors.
@@ -642,6 +759,15 @@
 			<param name="v1"> Second vector. </param> 
 			<returns>Resulting vector.</returns>
 		</member>
+		<member name="M:Unigine.Math.cross3(float*UNIGINE_RESTRICT,float*UNIGINE_RESTRICT,float*UNIGINE_RESTRICT)">
+			<summary>
+			Returns the cross product of three components of vectors by storing it in the array.
+			</summary> 
+			<param name="ret"> Array to store the return value. </param>
+			<param name="v0"> Pointer to vector. </param>
+			<param name="v1"> Pointer to vector. </param> 
+			<returns>Pointer to the array that stores the return value.</returns>
+		</member>
 		<member name="M:Unigine.Math.distance(Unigine.vec2,Unigine.vec2)">
 			<summary>
 			Calculates the distance between the two given vectors. The distance is calculated as: length(v0 - v1).
@@ -667,6 +793,14 @@
 			<returns>Distance between the two given vectors.</returns>
 		</member>
 		<member name="M:Unigine.Math.distance2(Unigine.vec2,Unigine.vec2)">
+			<summary>
+			Calculates the squared distance between the two given vectors. The squared distance is calculated as: length2(v0 - v1). This method is much faster than distance() - the calculation is basically the same only without the slow Sqrt call. If you simply want to compare distances, then it is faster to compare squared distances against the squares of distances as the comparison gives the same result.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Squared distance between the two given vectors.</returns>
+		</member>
+		<member name="M:Unigine.Math.distance2(Unigine.dvec2,Unigine.dvec2)">
 			<summary>
 			Calculates the squared distance between the two given vectors. The squared distance is calculated as: length2(v0 - v1). This method is much faster than distance() - the calculation is basically the same only without the slow Sqrt call. If you simply want to compare distances, then it is faster to compare squared distances against the squares of distances as the comparison gives the same result.
 			</summary> 
@@ -802,6 +936,15 @@
 			<param name="v1"> Second vector. </param> 
 			<returns>Resulting scalar.</returns>
 		</member>
+		<member name="M:Unigine.Math.dot2(float,float,float)">
+			<summary>
+			Returns the dot product between a 2-component vector v and another 2-component vector defined by (x, y).
+			</summary> 
+			<param name="v"> Pointer to the first vector. </param>
+			<param name="x"> X component of the second vector. </param>
+			<param name="y"> Y component of the second vector. </param> 
+			<returns>Resulting scalar.</returns>
+		</member>
 		<member name="M:Unigine.Math.dot3(Unigine.dvec3,Unigine.dvec4)">
 			<summary>
 			Dot product of three components of vectors. W components of four-component vectors are ignored.
@@ -848,6 +991,16 @@
 			</summary> 
 			<param name="v0"> First vector. </param>
 			<param name="v1"> Second vector. </param> 
+			<returns>Resulting scalar.</returns>
+		</member>
+		<member name="M:Unigine.Math.dot3(float,float,float,float)">
+			<summary>
+			Returns the dot product between a 3-component vector v and another 3-component vector defined by (x, y, z).
+			</summary> 
+			<param name="v"> Pointer to the first vector. </param>
+			<param name="x"> X component of the second vector. </param>
+			<param name="y"> Y component of the second vector. </param>
+			<param name="z"> Z component of the second vector. </param> 
 			<returns>Resulting scalar.</returns>
 		</member>
 		<member name="M:Unigine.Math.dtof(double)">
@@ -927,6 +1080,20 @@
 			<param name="v"> Vector storing values. </param> 
 			<returns>Vector storing the largest integer values not greater than v.</returns>
 		</member>
+		<member name="M:Unigine.Math.floorInt(float)">
+			<summary>
+			Returns the largest value that is less than or equal to the argument, stored as an integer.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>Resulting int value.</returns>
+		</member>
+		<member name="M:Unigine.Math.floorInt(double)">
+			<summary>
+			Returns the largest value that is less than or equal to the argument, stored as an integer.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>Resulting int value.</returns>
+		</member>
 		<member name="M:Unigine.Math.frac(float)">
 			<summary>
 			Returns the fractional part of the argument.
@@ -1001,6 +1168,14 @@
 			<param name="up"> Up vector, around which the other two vectors are rotated. </param> 
 			<returns>Angle between the given vectors, in degrees within the range [-180.0; 180.0].</returns>
 		</member>
+		<member name="M:Unigine.Math.getBit(Type,int)">
+			<summary>
+			Extracts a specific bit from an integer value and returns it as a boolean.
+			</summary> 
+			<param name="value"> Value. </param>
+			<param name="bit"> The bit of the value. </param> 
+			<returns>true if the specified bit in the value is set, othewise false.</returns>
+		</member>
 		<member name="M:Unigine.Math.gradient4(float,Unigine.vec4)">
 			<summary>
 			Returns a gradient value for the specified argument using four key components. The gradient value is determined as follows:				smoothstep() method.
@@ -1008,6 +1183,134 @@
 			<param name="x"> Argument. </param>
 			<param name="gradient"> Vector with four key components. </param> 
 			<returns>Gradient value.</returns>
+		</member>
+		<member name="M:Unigine.Math.hashInteger(unsignedint)">
+			<summary>
+			Computes a 32-bit hash value from an input value.
+			</summary> 
+			<param name="v"> Input value. </param> 
+			<returns>Hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.hashInteger(float)">
+			<summary>
+			Computes a 32-bit hash value from an input value.
+			</summary> 
+			<param name="v"> Input value. </param> 
+			<returns>Hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.hashInteger(int)">
+			<summary>
+			Computes a 32-bit hash value from an input value.
+			</summary> 
+			<param name="v"> Input value. </param> 
+			<returns>Hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.hashInteger(unsignedlonglong)">
+			<summary>
+			Computes a 64-bit hash value from an input value.
+			</summary> 
+			<param name="v"> Input value. </param> 
+			<returns>Hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.hashInteger(double)">
+			<summary>
+			Computes a 64-bit hash value from an input value.
+			</summary> 
+			<param name="v"> Input value. </param> 
+			<returns>Hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.hashInteger(longlong)">
+			<summary>
+			Computes a 64-bit hash value from an input value.
+			</summary> 
+			<param name="v"> Input value. </param> 
+			<returns>Hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.hashMixer(unsignedint,unsignedint)">
+			<summary>
+			Mixes two hash values.
+			</summary> 
+			<param name="hash_0"> Input value. </param>
+			<param name="hash_1"> Input value. </param> 
+			<returns>Mixed hash.</returns>
+		</member>
+		<member name="M:Unigine.Math.hashMixer(unsignedlonglong,unsignedlonglong)">
+			<summary>
+			Mixes two hash values.
+			</summary> 
+			<param name="hash_0"> Input value. </param>
+			<param name="hash_1"> Input value. </param> 
+			<returns>Mixed hash.</returns>
+		</member>
+		<member name="M:Unigine.Math.hashCombine(unsignedint,unsignedint)">
+			<summary>
+			Returns a hash obtained by mixing the hash provided as an argument with a hash obtained for the specified value.
+			</summary> 
+			<param name="hash"> Input hash. </param>
+			<param name="value"> Input value. </param> 
+			<returns>Combined hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.hashCombine(unsignedint,float)">
+			<summary>
+			Returns a hash obtained by mixing the hash provided as an argument with a hash obtained for the specified value.
+			</summary> 
+			<param name="hash"> Input hash. </param>
+			<param name="value"> Input value. </param> 
+			<returns>Combined hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.hashCombine(unsignedint,int)">
+			<summary>
+			Returns a hash obtained by mixing the hash provided as an argument with a hash obtained for the specified value.
+			</summary> 
+			<param name="hash"> Input hash. </param>
+			<param name="value"> Input value. </param> 
+			<returns>Combined hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.hashCombine(unsignedlonglong,unsignedlonglong)">
+			<summary>
+			Returns a hash obtained by mixing the hash provided as an argument with a hash obtained for the specified value.
+			</summary> 
+			<param name="hash"> Input hash. </param>
+			<param name="value"> Input value. </param> 
+			<returns>Combined hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.hashCombine(unsignedlonglong,double)">
+			<summary>
+			Returns a hash obtained by mixing the hash provided as an argument with a hash obtained for the specified value.
+			</summary> 
+			<param name="hash"> Input hash. </param>
+			<param name="value"> Input value. </param> 
+			<returns>Combined hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.hashCombine(unsignedlonglong,longlong)">
+			<summary>
+			Returns a hash obtained by mixing the hash provided as an argument with a hash obtained for the specified value.
+			</summary> 
+			<param name="hash"> Input hash. </param>
+			<param name="value"> Input value. </param> 
+			<returns>Combined hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.hashCast64To32(unsignedlonglong)">
+			<summary>
+			Casts the 64-bit hash value to the 32-bit hash value.
+			</summary> 
+			<param name="value"> Input 64-bit hash value. </param> 
+			<returns>32-bit hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.inverse(Unigine.quat)">
+			<summary>
+			Returns inverse of the quaternion.
+			</summary> 
+			<param name="q"> Quaternion. </param> 
+			<returns>Return value.</returns>
+		</member>
+		<member name="M:Unigine.Math.inverse(Unigine.quat,Unigine.quat)">
+			<summary>
+			Returns inverse of the quaternion.
+			</summary> 
+			<param name="ret"> Argument to store the output. </param>
+			<param name="q"> Quaternion. </param> 
+			<returns>Return value.</returns>
 		</member>
 		<member name="M:Unigine.Math.inverseLerp(float,float,float)">
 			<summary>
@@ -1080,6 +1383,269 @@
 			<param name="v1"> Vector storing the values that specify the endings of the intervals. </param>
 			<param name="v"> The values within the specified intervals. </param> 
 			<returns>Coefficients of the values within a specified intervals.</returns>
+		</member>
+		<member name="M:Unigine.Math.contrastLerp(Unigine.vec4,Unigine.vec4,float,float,float)">
+			<summary>
+			Performs a smooth interpolation between two vectors (point_a and point_b) using a specified coefficient range to create a smooth transition effect.
+			</summary> 
+			<param name="point_a"> Vector. </param>
+			<param name="point_b"> Vector. </param>
+			<param name="coef_min_bound"> The minimum value defining the range of the coefficient for the smoothstep function, creating a softened transition over the range. </param>
+			<param name="coef_max_bound"> The maximum value defining the range of the coefficient for the smoothstep function, creating a softened transition over the range. </param>
+			<param name="coef"> The coefficient value that determines the interpolation position between vectors. </param> 
+			<returns>.</returns>
+		</member>
+		<member name="M:Unigine.Math.isFinite(float)">
+			<summary>
+			Returns a value indicating that the given value is a finite number, meaning it is neither NaN nor infinity (positive or negative).
+			</summary> 
+			<param name="x"> Value. </param> 
+			<returns>true if the argument is a finite number; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isFinite(double)">
+			<summary>
+			Returns a value indicating that the given value is a finite number, meaning it is neither NaN nor infinity (positive or negative).
+			</summary> 
+			<param name="x"> Value. </param> 
+			<returns>true if the argument is a finite number; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isFinite(Vector2)">
+			<summary>
+			Returns a value indicating that any component of the argument is a finite number, meaning it is neither NaN nor infinity (positive or negative).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument is a finite number; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isFinite(Vector3)">
+			<summary>
+			Returns a value indicating that any component of the argument is a finite number, meaning it is neither NaN nor infinity (positive or negative).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument is a finite number; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isFinite(Vector4)">
+			<summary>
+			Returns a value indicating that any component of the argument is a finite number, meaning it is neither NaN nor infinity (positive or negative).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument is a finite number; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isFinite(Unigine.vec2)">
+			<summary>
+			Returns a value indicating that any component of the argument is a finite number, meaning it is neither NaN nor infinity (positive or negative).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument is a finite number; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isFinite(Unigine.vec3)">
+			<summary>
+			Returns a value indicating that any component of the argument is a finite number, meaning it is neither NaN nor infinity (positive or negative).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument is a finite number; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isFinite(Unigine.vec4)">
+			<summary>
+			Returns a value indicating that any component of the argument is a finite number, meaning it is neither NaN nor infinity (positive or negative).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument is a finite number; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isFinite(Unigine.quat)">
+			<summary>
+			Returns a value indicating that any component of the argument is a finite number, meaning it is neither NaN nor infinity (positive or negative).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument is a finite number; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isFinite(Unigine.dvec2)">
+			<summary>
+			Returns a value indicating that any component of the argument is a finite number, meaning it is neither NaN nor infinity (positive or negative).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument is a finite number; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isFinite(Unigine.dvec3)">
+			<summary>
+			Returns a value indicating that any component of the argument is a finite number, meaning it is neither NaN nor infinity (positive or negative).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument is a finite number; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isFinite(Unigine.dvec4)">
+			<summary>
+			Returns a value indicating that any component of the argument is a finite number, meaning it is neither NaN nor infinity (positive or negative).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument is a finite number; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isInf(float)">
+			<summary>
+			Returns a value indicating whether the argument evaluates to negative or positive infinity.
+			</summary> 
+			<param name="x"> Value. </param> 
+			<returns>true if the argument evaluates to negative or positive infinity; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isInf(double)">
+			<summary>
+			Returns a value indicating whether the argument evaluates to negative or positive infinity.
+			</summary> 
+			<param name="x"> Value. </param> 
+			<returns>true if the argument evaluates to negative or positive infinity; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isInf(Vector2)">
+			<summary>
+			Returns a value indicating whether any component of the argument evaluates to negative or positive infinity.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument evaluates to negative or positive infinity; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isInf(Vector3)">
+			<summary>
+			Returns a value indicating whether any component of the argument evaluates to negative or positive infinity.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument evaluates to negative or positive infinity; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isInf(Vector4)">
+			<summary>
+			Returns a value indicating whether any component of the argument evaluates to negative or positive infinity.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument evaluates to negative or positive infinity; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isInf(Unigine.vec2)">
+			<summary>
+			Returns a value indicating whether any component of the argument evaluates to negative or positive infinity.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument evaluates to negative or positive infinity; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isInf(Unigine.vec3)">
+			<summary>
+			Returns a value indicating whether any component of the argument evaluates to negative or positive infinity.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument evaluates to negative or positive infinity; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isInf(Unigine.vec4)">
+			<summary>
+			Returns a value indicating whether any component of the argument evaluates to negative or positive infinity.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument evaluates to negative or positive infinity; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isInf(Unigine.quat)">
+			<summary>
+			Returns a value indicating whether any component of the argument evaluates to negative or positive infinity.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument evaluates to negative or positive infinity; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isInf(Unigine.dvec2)">
+			<summary>
+			Returns a value indicating whether any component of the argument evaluates to negative or positive infinity.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument evaluates to negative or positive infinity; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isInf(Unigine.dvec3)">
+			<summary>
+			Returns a value indicating whether any component of the argument evaluates to negative or positive infinity.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument evaluates to negative or positive infinity; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isInf(Unigine.dvec4)">
+			<summary>
+			Returns a value indicating whether any component of the argument evaluates to negative or positive infinity.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if any component of the argument evaluates to negative or positive infinity; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isNan(float)">
+			<summary>
+			Returns a value that indicates whether the argument is not a number (NaN).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if the argument is not a number (NaN); otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isNan(double)">
+			<summary>
+			Returns a value that indicates whether the argument is not a number (NaN).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if the argument is not a number (NaN); otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isNan(Vector2)">
+			<summary>
+			Returns a value that indicates whether the argument contains at least one component, which is not a number (NaN).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if the argument contains at least one component, which is not a number (NaN); otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isNan(Vector3)">
+			<summary>
+			Returns a value that indicates whether the argument contains at least one component, which is not a number (NaN).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if the argument contains at least one component, which is not a number (NaN); otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isNan(Vector4)">
+			<summary>
+			Returns a value that indicates whether the argument contains at least one component, which is not a number (NaN).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if the argument contains at least one component, which is not a number (NaN); otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isNan(Unigine.vec2)">
+			<summary>
+			Returns a value that indicates whether the argument contains at least one component, which is not a number (NaN).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if the argument contains at least one component, which is not a number (NaN); otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isNan(Unigine.vec3)">
+			<summary>
+			Returns a value that indicates whether the argument contains at least one component, which is not a number (NaN).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if the argument contains at least one component, which is not a number (NaN); otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isNan(Unigine.vec4)">
+			<summary>
+			Returns a value that indicates whether the argument contains at least one component, which is not a number (NaN).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if the argument contains at least one component, which is not a number (NaN); otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isNan(Unigine.quat)">
+			<summary>
+			Returns a value that indicates whether the argument contains at least one component, which is not a number (NaN).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if the argument contains at least one component, which is not a number (NaN); otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isNan(Unigine.dvec2)">
+			<summary>
+			Returns a value that indicates whether the argument contains at least one component, which is not a number (NaN).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if the argument contains at least one component, which is not a number (NaN); otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isNan(Unigine.dvec3)">
+			<summary>
+			Returns a value that indicates whether the argument contains at least one component, which is not a number (NaN).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if the argument contains at least one component, which is not a number (NaN); otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isNan(Unigine.dvec4)">
+			<summary>
+			Returns a value that indicates whether the argument contains at least one component, which is not a number (NaN).
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>true if the argument contains at least one component, which is not a number (NaN); otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Math.isrgb(float)">
 			<summary>
@@ -1269,6 +1835,15 @@
 			<param name="k"> Interpolation coefficient. </param> 
 			<returns>Interpolated value.</returns>
 		</member>
+		<member name="M:Unigine.Math.lerp(longlong,longlong,longlong)">
+			<summary>
+			Returns the interpolated value according to the following formula: v0 + (v					1 - v					0) * k				.
+			</summary> 
+			<param name="v0"> First long long value. </param>
+			<param name="v1"> Second long long value. </param>
+			<param name="k"> Interpolation coefficient. </param> 
+			<returns>Interpolated value.</returns>
+		</member>
 		<member name="M:Unigine.Math.lerp(Unigine.vec2,Unigine.vec2,float)">
 			<summary>
 			Returns the interpolated vector according to the following formula: v0 + (v					1 - v					0) * k				.
@@ -1350,6 +1925,35 @@
 			<param name="k"> Interpolation coefficient. </param> 
 			<returns>Interpolated vector.</returns>
 		</member>
+		<member name="M:Unigine.Math.lerp(Unigine.mat4,Unigine.mat4,Unigine.mat4,float)">
+			<summary>
+			Returns the interpolated matrix according to the following formula: m0 + (m					1 - m					0) * k				.
+			</summary> 
+			<param name="ret"> The matrix to store the result. </param>
+			<param name="m0"> The value of the first matrix. </param>
+			<param name="m1"> The value of the second matrix. </param>
+			<param name="k"> Interpolation coefficient. </param> 
+			<returns>The resulting matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.lerp(Unigine.dmat4,Unigine.dmat4,Unigine.dmat4,double)">
+			<summary>
+			Returns the interpolated matrix according to the following formula: m0 + (m					1 - m					0) * k				.
+			</summary> 
+			<param name="ret"> The matrix to store the result. </param>
+			<param name="m0"> The value of the first matrix. </param>
+			<param name="m1"> The value of the second matrix. </param>
+			<param name="k"> Interpolation coefficient. </param> 
+			<returns>The resulting matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.lerp(Unigine.dmat4,Unigine.dmat4,double)">
+			<summary>
+			Returns the interpolated matrix according to the following formula: m0 + (m					1 - m					0) * k				.
+			</summary> 
+			<param name="m0"> The value of the first matrix. </param>
+			<param name="m1"> The value of the second matrix. </param>
+			<param name="k"> Interpolation coefficient. </param> 
+			<returns>The resulting matrix.</returns>
+		</member>
 		<member name="M:Unigine.Math.lerp(Type,Type,Type)">
 			<summary>
 			Returns the interpolated value according to the following formula: v0 + (v					1 - v					0) * k				.
@@ -1358,6 +1962,48 @@
 			<param name="v1"> Second value. </param>
 			<param name="k"> Interpolation coefficient. </param> 
 			<returns>Interpolated value.</returns>
+		</member>
+		<member name="M:Unigine.Math.lerpOne(float,float)">
+			<summary>
+			Performs the interpolation: v0 * (1.0f - k) + k.
+			</summary> 
+			<param name="v0"> Value for interpolation. </param>
+			<param name="k"> Interpolation coefficient. </param> 
+			<returns>Interpolated value.</returns>
+		</member>
+		<member name="M:Unigine.Math.lerpOne(double,double)">
+			<summary>
+			Performs the interpolation: v0 * (1.0f - k) + k.
+			</summary> 
+			<param name="v0"> Value for interpolation. </param>
+			<param name="k"> Interpolation coefficient. </param> 
+			<returns>Interpolated value.</returns>
+		</member>
+		<member name="M:Unigine.Math.lerpZero(float,float)">
+			<summary>
+			Performs the interpolation of the following type: v0 * (1.0f - k).
+			</summary> 
+			<param name="v0"> Value for interpolation. </param>
+			<param name="k"> Interpolation coefficient. </param> 
+			<returns>Interpolated value.</returns>
+		</member>
+		<member name="M:Unigine.Math.lerpZero(double,double)">
+			<summary>
+			Performs the interpolation of the following type: v0 * (1.0f - k).
+			</summary> 
+			<param name="v0"> Value for interpolation. </param>
+			<param name="k"> Interpolation coefficient. </param> 
+			<returns>Interpolated value.</returns>
+		</member>
+		<member name="M:Unigine.Math.lerp3(Unigine.vec4,Unigine.vec4,Unigine.vec4,float)">
+			<summary>
+			Performs linear interpolation between three vectors.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param>
+			<param name="v2"> Third vector. </param>
+			<param name="k"> Interpolation coefficient in the range [0.0f, 1.0f]. </param> 
+			<returns>Interpolated vector.</returns>
 		</member>
 		<member name="M:Unigine.Math.ltof(longlong)">
 			<summary>
@@ -1375,7 +2021,7 @@
 		</member>
 		<member name="M:Unigine.Math.max(float,float)">
 			<summary>
-			Returns the maximum value.
+			Compares the arguments and returns the maximum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1383,7 +2029,7 @@
 		</member>
 		<member name="M:Unigine.Math.max(double,double)">
 			<summary>
-			Returns the maximum value.
+			Compares the arguments and returns the maximum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1391,7 +2037,7 @@
 		</member>
 		<member name="M:Unigine.Math.max(int,int)">
 			<summary>
-			Returns the maximum value.
+			Compares the arguments and returns the maximum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1399,7 +2045,7 @@
 		</member>
 		<member name="M:Unigine.Math.max(longlong,longlong)">
 			<summary>
-			Returns the maximum value.
+			Compares the arguments and returns the maximum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1407,7 +2053,7 @@
 		</member>
 		<member name="M:Unigine.Math.max(Unigine.vec2,Unigine.vec2)">
 			<summary>
-			Returns the maximum value.
+			Compares the arguments and returns the maximum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1415,7 +2061,7 @@
 		</member>
 		<member name="M:Unigine.Math.max(Unigine.vec3,Unigine.vec3)">
 			<summary>
-			Returns the maximum value.
+			Compares the arguments and returns the maximum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1423,7 +2069,7 @@
 		</member>
 		<member name="M:Unigine.Math.max(Unigine.vec4,Unigine.vec4)">
 			<summary>
-			Returns the maximum value.
+			Compares the arguments and returns the maximum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1431,7 +2077,7 @@
 		</member>
 		<member name="M:Unigine.Math.max(Unigine.dvec2,Unigine.dvec2)">
 			<summary>
-			Returns the maximum value.
+			Compares the arguments and returns the maximum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1439,7 +2085,7 @@
 		</member>
 		<member name="M:Unigine.Math.max(Unigine.dvec3,Unigine.dvec3)">
 			<summary>
-			Returns the maximum value.
+			Compares the arguments and returns the maximum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1447,7 +2093,7 @@
 		</member>
 		<member name="M:Unigine.Math.max(Unigine.dvec4,Unigine.dvec4)">
 			<summary>
-			Returns the maximum value.
+			Compares the arguments and returns the maximum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1455,7 +2101,7 @@
 		</member>
 		<member name="M:Unigine.Math.max(Unigine.ivec2,Unigine.ivec2)">
 			<summary>
-			Returns the maximum value.
+			Compares the arguments and returns the maximum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1463,7 +2109,7 @@
 		</member>
 		<member name="M:Unigine.Math.max(Unigine.ivec3,Unigine.ivec3)">
 			<summary>
-			Returns the maximum value.
+			Compares the arguments and returns the maximum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1471,7 +2117,7 @@
 		</member>
 		<member name="M:Unigine.Math.max(Unigine.ivec4,Unigine.ivec4)">
 			<summary>
-			Returns the maximum value.
+			Compares the arguments and returns the maximum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1479,7 +2125,7 @@
 		</member>
 		<member name="M:Unigine.Math.max(bvec4,bvec4)">
 			<summary>
-			Returns the maximum value.
+			Compares the arguments and returns the maximum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1487,7 +2133,7 @@
 		</member>
 		<member name="M:Unigine.Math.max(Type,Type)">
 			<summary>
-			Returns the maximum value.
+			Compares the arguments and returns the maximum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1495,7 +2141,7 @@
 		</member>
 		<member name="M:Unigine.Math.min(float,float)">
 			<summary>
-			Returns the minimum value.
+			Compares the arguments and returns the minimum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1503,7 +2149,7 @@
 		</member>
 		<member name="M:Unigine.Math.min(double,double)">
 			<summary>
-			Returns the minimum value.
+			Compares the arguments and returns the minimum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1511,7 +2157,7 @@
 		</member>
 		<member name="M:Unigine.Math.min(int,int)">
 			<summary>
-			Returns the minimum value.
+			Compares the arguments and returns the minimum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1519,7 +2165,7 @@
 		</member>
 		<member name="M:Unigine.Math.min(longlong,longlong)">
 			<summary>
-			Returns the minimum value.
+			Compares the arguments and returns the minimum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1527,7 +2173,7 @@
 		</member>
 		<member name="M:Unigine.Math.min(Unigine.vec2,Unigine.vec2)">
 			<summary>
-			Returns the minimum value.
+			Compares the arguments and returns the minimum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1535,7 +2181,7 @@
 		</member>
 		<member name="M:Unigine.Math.min(Unigine.vec3,Unigine.vec3)">
 			<summary>
-			Returns the minimum value.
+			Compares the arguments and returns the minimum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1543,7 +2189,7 @@
 		</member>
 		<member name="M:Unigine.Math.min(Unigine.vec4,Unigine.vec4)">
 			<summary>
-			Returns the minimum value.
+			Compares the arguments and returns the minimum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1551,7 +2197,7 @@
 		</member>
 		<member name="M:Unigine.Math.min(Unigine.dvec2,Unigine.dvec2)">
 			<summary>
-			Returns the minimum value.
+			Compares the arguments and returns the minimum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1559,7 +2205,7 @@
 		</member>
 		<member name="M:Unigine.Math.min(Unigine.dvec3,Unigine.dvec3)">
 			<summary>
-			Returns the minimum value.
+			Compares the arguments and returns the minimum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1567,7 +2213,7 @@
 		</member>
 		<member name="M:Unigine.Math.min(Unigine.dvec4,Unigine.dvec4)">
 			<summary>
-			Returns the minimum value.
+			Compares the arguments and returns the minimum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1575,7 +2221,7 @@
 		</member>
 		<member name="M:Unigine.Math.min(Unigine.ivec2,Unigine.ivec2)">
 			<summary>
-			Returns the minimum value.
+			Compares the arguments and returns the minimum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1583,7 +2229,7 @@
 		</member>
 		<member name="M:Unigine.Math.min(Unigine.ivec3,Unigine.ivec3)">
 			<summary>
-			Returns the minimum value.
+			Compares the arguments and returns the minimum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1591,7 +2237,7 @@
 		</member>
 		<member name="M:Unigine.Math.min(Unigine.ivec4,Unigine.ivec4)">
 			<summary>
-			Returns the minimum value.
+			Compares the arguments and returns the minimum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1599,7 +2245,7 @@
 		</member>
 		<member name="M:Unigine.Math.min(bvec4,bvec4)">
 			<summary>
-			Returns the minimum value.
+			Compares the arguments and returns the minimum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
@@ -1607,11 +2253,20 @@
 		</member>
 		<member name="M:Unigine.Math.min(Type,Type)">
 			<summary>
-			Returns the minimum value.
+			Compares the arguments and returns the minimum value.
 			</summary> 
 			<param name="v0"> First value. </param>
 			<param name="v1"> Second value. </param> 
 			<returns>Minimum value.</returns>
+		</member>
+		<member name="M:Unigine.Math.mul3(float*UNIGINE_RESTRICT,float*UNIGINE_RESTRICT,float)">
+			<summary>
+			Returns the result of a componentwise multiplication of a 3-component vector with a scalar value.
+			</summary> 
+			<param name="ret"> Array to store the return value. </param>
+			<param name="v0"> 3-component vector. </param>
+			<param name="v1"> Scalar value. </param> 
+			<returns>Pointer to the array that stores the return value.</returns>
 		</member>
 		<member name="M:Unigine.Math.normalize(Unigine.quat)">
 			<summary>
@@ -1662,6 +2317,13 @@
 			<param name="v"> A four-component dvec4 vector to be normalized. </param> 
 			<returns>Normalized vector.</returns>
 		</member>
+		<member name="M:Unigine.Math.normalizeAngle(float)">
+			<summary>
+			Normalizes an input angle to the range (−180, 180).
+			</summary> 
+			<param name="angle"> Angle value, in degrees. </param> 
+			<returns>Normalized angle value, in degrees.</returns>
+		</member>
 		<member name="M:Unigine.Math.normalizeValid(Unigine.quat)">
 			<summary>
 			Normalizes a quaternion, makes its magnitude equal to 1. When normalized, a quaternion keeps the same oreintation but its magnitude is equal to 1. Check for the zero vector is performed: if the argument is a zero vector, then a zero vector is returned.
@@ -1711,6 +2373,18 @@
 			<param name="v"> A four-component dvec4 vector to be normalized. </param> 
 			<returns>Normalized vector.</returns>
 		</member>
+		<member name="M:Unigine.Math.normalize2(float)">
+			<summary>
+			Normalizes a 2-component vector, making it a unit vector (a vector with a length of 1) while preserving its direction.
+			</summary> 
+			<param name="v"> Pointer to the vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.normalize3(float)">
+			<summary>
+			Normalizes a 3-component vector, making it a unit vector (a vector with a length of 1) while preserving its direction.
+			</summary> 
+			<param name="v"> Pointer to the vector. </param> 
+		</member>
 		<member name="M:Unigine.Math.normalize3(Unigine.vec4)">
 			<summary>
 			Normalizes a vector making its magnitude equal to 1. The vector is normalized as if it has only the first three components (the fourth one is ignored).
@@ -1746,6 +2420,27 @@
 			<param name="arg"> Argument. </param> 
 			<returns>The nearest upper power of 2 number.</returns>
 		</member>
+		<member name="M:Unigine.Math.ispot(int)">
+			<summary>
+			Checks if the argument value is a power of two by using bitwise operations. Doesn't check the zero value.
+			</summary> 
+			<param name="v"> Argument value. </param> 
+			<returns>1 if the value is a power of two; otherwise, 0.</returns>
+		</member>
+		<member name="M:Unigine.Math.isqrt(int)">
+			<summary>
+			Returns the integer square root of the argument value by using bitwise operations.
+			</summary> 
+			<param name="v"> Argument value. </param> 
+			<returns>Integer square root of the value.</returns>
+		</member>
+		<member name="M:Unigine.Math.overlay(float,float,float)">
+			<summary>
+			Performs overlay A over B with blending coefficient.
+			</summary> 
+			<param name="x"> Blending coefficient. </param> 
+			<returns>Resulting value.</returns>
+		</member>
 		<member name="M:Unigine.Math.rcp(float)">
 			<summary>
 			Returns the reciprocal of the specified argument.
@@ -1760,6 +2455,56 @@
 			<param name="v"> Argument. </param> 
 			<returns>Reciprocal of the argument.</returns>
 		</member>
+		<member name="M:Unigine.Math.rcpFast(float)">
+			<summary>
+			Returns the approximated (quicker calculated) reciprocal of the specified argument.
+			</summary> 
+			<param name="v"> Argument. </param> 
+			<returns>Reciprocal of the argument.</returns>
+		</member>
+		<member name="M:Unigine.Math.rerange(float,float,float,float,float)">
+			<summary>
+			Returns the value that corresponds to the input value remapped within the limits of the output range.
+			</summary> 
+			<param name="in"> Input value. </param>
+			<param name="in_range_min"> Minimum value of the input range. </param>
+			<param name="in_range_max"> Maximum value of the input range. </param>
+			<param name="out_range_min"> Minimum value of the output range. </param>
+			<param name="out_range_max"> Maximum value of the output range. </param> 
+			<returns>Output value that corresponds to the input value remapped in the output range.</returns>
+		</member>
+		<member name="M:Unigine.Math.rerange(double,double,double,double,double)">
+			<summary>
+			Returns the value that corresponds to the input value remapped within the limits of the output range.
+			</summary> 
+			<param name="in"> Input value. </param>
+			<param name="in_range_min"> Minimum value of the input range. </param>
+			<param name="in_range_max"> Maximum value of the input range. </param>
+			<param name="out_range_min"> Minimum value of the output range. </param>
+			<param name="out_range_max"> Maximum value of the output range. </param> 
+			<returns>Output value that corresponds to the input value remapped in the output range.</returns>
+		</member>
+		<member name="M:Unigine.Math.reverseBits(unsignedint)">
+			<summary>
+			Returns the value with the reversed order of the bits.
+			</summary> 
+			<param name="value"> Value to be converted. </param> 
+			<returns>Resulting value.</returns>
+		</member>
+		<member name="M:Unigine.Math.rotate(Unigine.quat)">
+			<summary>
+			Returns a resulting matrix for rotation by the specified angle around the axis specified as a quaternion/vector/vector components.
+			</summary> 
+			<param name="q"> Quaternion. </param> 
+			<returns>Resulting rotation matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.rotate3(Unigine.quat)">
+			<summary>
+			Returns a resulting matrix for rotation by the specified angle around the axis specified as a quaternion/vector/vector components. The resulting matrix size for this method is 3 x 3.
+			</summary> 
+			<param name="q"> Quaternion. </param> 
+			<returns>Resulting rotation matrix.</returns>
+		</member>
 		<member name="M:Unigine.Math.round(double)">
 			<summary>
 			Rounds an argument to the nearest integer value.				In halfway cases, when an argument has a fractional part of exactly 0.5, the function rounds away from zero to the integer with larger magnitude.											3.5	 -&gt; 4						- 3.5	 -&gt;	- 4
@@ -1770,6 +2515,13 @@
 		<member name="M:Unigine.Math.round(float)">
 			<summary>
 			Rounds an argument to the nearest integer value.				In halfway cases, when an argument has a fractional part of exactly 0.5, the function rounds away from zero to the integer with larger magnitude.											3.5	 -&gt; 4						- 3.5	 -&gt;	- 4
+			</summary> 
+			<param name="v"> Argument. </param> 
+			<returns>Nearest integer value to the argument.</returns>
+		</member>
+		<member name="M:Unigine.Math.roundFast(float)">
+			<summary>
+			Rounds an argument to the nearest integer value by adding 0.5 to the argument and discarding the decimal part.				This method works for positive numbers but has limitations for negative numbers because it doesn't handle rounding in the traditional way for negative values.
 			</summary> 
 			<param name="v"> Argument. </param> 
 			<returns>Nearest integer value to the argument.</returns>
@@ -1841,6 +2593,13 @@
 			</summary> 
 			<param name="v"> Argument. </param> 
 			<returns>Sign of the argument. 1.0 if v &gt;= 0.0 ; -1.0 if v &lt; 0.0.</returns>
+		</member>
+		<member name="M:Unigine.Math.signMask(int)">
+			<summary>
+			Returns the sign of the argument value.
+			</summary> 
+			<param name="v"> Value. </param> 
+			<returns>0 if the value is positive or zero, -1, if the value is negative.</returns>
 		</member>
 		<member name="M:Unigine.Math.slerp(Unigine.quat,Unigine.quat,float)">
 			<summary>
@@ -1950,12 +2709,29 @@
 			<param name="color"> Value to convert. </param> 
 			<returns>sRGB color value.</returns>
 		</member>
+		<member name="M:Unigine.Math.step(float,float)">
+			<summary>
+			Checks whether the value a is greater than or equal to b.
+			</summary> 
+			<param name="a"> Value. </param>
+			<param name="b"> Value. </param> 
+			<returns>true if a is greater than or equal to b, otherwise false.</returns>
+		</member>
 		<member name="M:Unigine.Math.stoi(Scalar)">
 			<summary>
 			Converts a scalar value (float or double, depending on the precision) to an integer value.
 			</summary> 
 			<param name="v"> Scalar value (float or double, depending on the precision). </param> 
 			<returns>Integer value.</returns>
+		</member>
+		<member name="M:Unigine.Math.sub3(float*UNIGINE_RESTRICT,float*UNIGINE_RESTRICT,float*UNIGINE_RESTRICT)">
+			<summary>
+			Returns the result of a componentwise subtraction of three components of vectors by storing it in the array.
+			</summary> 
+			<param name="ret"> Array to store the return value. </param>
+			<param name="v0"> Pointer to vector. </param>
+			<param name="v1"> Pointer to vector. </param> 
+			<returns>Pointer to the array that stores the return value.</returns>
 		</member>
 		<member name="M:Unigine.Math.swap(Type,Type)">
 			<summary>
@@ -1971,6 +2747,70 @@
 			<param name="v0"> The first array. </param>
 			<param name="v1"> The second array. </param>
 			<param name="size"> The array size. </param> 
+		</member>
+		<member name="M:Unigine.Math.floatToIntBits(float)">
+			<summary>
+			Returns an integer corresponding to the bits of the given value.
+			</summary> 
+			<param name="value"> Value to be converted. </param> 
+			<returns>Resulting value.</returns>
+		</member>
+		<member name="M:Unigine.Math.floatToUIntBits(float)">
+			<summary>
+			Returns an unsigned integer corresponding to the bits of the given value.
+			</summary> 
+			<param name="value"> Value to be converted. </param> 
+			<returns>Resulting value.</returns>
+		</member>
+		<member name="M:Unigine.Math.intBitsToFloat(int)">
+			<summary>
+			Returns the float corresponding to the given bits.
+			</summary> 
+			<param name="value"> Value to be converted. </param> 
+			<returns>Resulting value.</returns>
+		</member>
+		<member name="M:Unigine.Math.intBitsToFloat(unsignedint)">
+			<summary>
+			Returns the float corresponding to the given bits.
+			</summary> 
+			<param name="value"> Value to be converted. </param> 
+			<returns>Resulting value.</returns>
+		</member>
+		<member name="M:Unigine.Math.floatToLongBits(double)">
+			<summary>
+			Returns a long long value corresponding to the given value.
+			</summary> 
+			<param name="value"> Value to be converted. </param> 
+			<returns>Resulting value.</returns>
+		</member>
+		<member name="M:Unigine.Math.floatToULongBits(double)">
+			<summary>
+			Returns a long long value corresponding to the given value.
+			</summary> 
+			<param name="value"> Value to be converted. </param> 
+			<returns>Resulting value.</returns>
+		</member>
+		<member name="M:Unigine.Math.longBitsToFloat(longlong)">
+			<summary>
+			Returns the double corresponding to the given bits.
+			</summary> 
+			<param name="value"> Value to be converted. </param> 
+			<returns>Resulting value.</returns>
+		</member>
+		<member name="M:Unigine.Math.longBitsToFloat(unsignedlonglong)">
+			<summary>
+			Returns the double corresponding to the given bits.
+			</summary> 
+			<param name="value"> Value to be converted. </param> 
+			<returns>Resulting value.</returns>
+		</member>
+		<member name="M:Unigine.Math.doubleIntToLong(unsignedint,unsignedint)">
+			<summary>
+			Returns a conversion of two unsigned integer values to a unsigned long long value.
+			</summary> 
+			<param name="a1"> Source value. </param>
+			<param name="a2"> Source value. </param> 
+			<returns>Resulting value.</returns>
 		</member>
 		<member name="M:Unigine.Math.toFloat(double)">
 			<summary>
@@ -2420,6 +3260,146 @@
 			<param name="value"> Const char ptr value. </param> 
 			<returns>Unsigned int value.</returns>
 		</member>
+		<member name="M:Unigine.Math.toLong(int)">
+			<summary>
+			Converts an integer value to a long value.
+			</summary> 
+			<param name="value"> Integer value. </param> 
+			<returns>Long value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toLong(float)">
+			<summary>
+			Converts a float value to a long value.
+			</summary> 
+			<param name="value"> Float value. </param> 
+			<returns>Long value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toLong(double)">
+			<summary>
+			Converts a double value to a long value.
+			</summary> 
+			<param name="value"> Double value. </param> 
+			<returns>Long value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toLong(char)">
+			<summary>
+			Converts a character value to a long value.
+			</summary> 
+			<param name="value"> Char value. </param> 
+			<returns>Long value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toLong(bool)">
+			<summary>
+			Converts a boolean value to a long value.
+			</summary> 
+			<param name="value"> Boolean value. </param> 
+			<returns>Long value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toLong(unsignedint)">
+			<summary>
+			Converts an unsigned int value to a long value.
+			</summary> 
+			<param name="v"> Unsigned int value. </param> 
+			<returns>Int value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toLong(unsignedchar)">
+			<summary>
+			Converts an unsigned char value to a long value.
+			</summary> 
+			<param name="v"> Unsigned char value. </param> 
+			<returns>Int value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toLong(half)">
+			<summary>
+			Converts a half value to a long value.
+			</summary> 
+			<param name="v"> Half value. </param> 
+			<returns>Int value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toLong(String)">
+			<summary>
+			Converts a const String value to a long value.
+			</summary> 
+			<param name="v"> const String value. </param> 
+			<returns>Int value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toLong(char)">
+			<summary>
+			Converts a const char pointer value to a long value.
+			</summary> 
+			<param name="v"> const char ptr value. </param> 
+			<returns>Int value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toULong(int)">
+			<summary>
+			Converts an integer value to an unsigned long value.
+			</summary> 
+			<param name="value"> Integer value. </param> 
+			<returns>Long value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toULong(float)">
+			<summary>
+			Converts a float value to an unsigned long value.
+			</summary> 
+			<param name="value"> Float value. </param> 
+			<returns>Long value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toULong(double)">
+			<summary>
+			Converts a double value to an unsigned long value.
+			</summary> 
+			<param name="value"> Double value. </param> 
+			<returns>Long value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toULong(char)">
+			<summary>
+			Converts a character value to an unsigned long value.
+			</summary> 
+			<param name="value"> Char value. </param> 
+			<returns>Long value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toULong(bool)">
+			<summary>
+			Converts a boolean value to an unsigned long value.
+			</summary> 
+			<param name="value"> Boolean value. </param> 
+			<returns>Long value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toULong(unsignedint)">
+			<summary>
+			Converts an unsigned int value to an unsigned long value.
+			</summary> 
+			<param name="v"> Unsigned int value. </param> 
+			<returns>Int value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toULong(unsignedchar)">
+			<summary>
+			Converts an unsigned char value to an unsigned long value.
+			</summary> 
+			<param name="v"> Unsigned char value. </param> 
+			<returns>Int value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toULong(half)">
+			<summary>
+			Converts a half value to an unsigned long value.
+			</summary> 
+			<param name="v"> Half value. </param> 
+			<returns>Int value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toULong(String)">
+			<summary>
+			Converts a const String value to an unsigned long value.
+			</summary> 
+			<param name="v"> const String value. </param> 
+			<returns>Int value.</returns>
+		</member>
+		<member name="M:Unigine.Math.toULong(char)">
+			<summary>
+			Converts a const char pointer value to an unsigned long value.
+			</summary> 
+			<param name="v"> const char ptr value. </param> 
+			<returns>Int value.</returns>
+		</member>
 		<member name="M:Unigine.Math.toChar(float)">
 			<summary>
 			Converts a float value to a character value.
@@ -2800,11 +3780,28 @@
 		</member>
 		<member name="M:Unigine.Math.udiv(int,int)">
 			<summary>
-			Performs integer division with rounding up.
+			Performs integer division with rounding up: it adds 1 to the result if there is a remainder from the division.
 			</summary> 
 			<param name="x"> First argument. </param>
 			<param name="y"> Second argument. </param> 
 			<returns>The rounded up quotient of two arguments that satisfies the following condition: y * z &gt;= x.</returns>
+		</member>
+		<member name="M:Unigine.Math.vogelDisk(uint,uint,float)">
+			<summary>
+			Returns a generated set of points with X and Y coordinates in the [-1; 1] range that describe a circle with uniform distribution of samples inside. This method is suitable for getting uniform distribution of coordinates for a circle. For example you can use it is a loop to generate UV coordinates offset for making the uniform circular blur effect. You can use the current loop iteration index as the i argument and the maximum number of iterations — as count.
+			</summary> 
+			<param name="i"> Index of the current point for the disk. </param>
+			<param name="count"> Number of points. </param>
+			<param name="noise"> Normalized noise. </param> 
+			<returns>Set of points with X and Y coordinates in the [-1; 1] range that describe a circle with uniform distribution of samples inside.</returns>
+		</member>
+		<member name="M:Unigine.Math.vogelDisk(uint,uint)">
+			<summary>
+			Returns a generated set of points with X and Y coordinates in the [-1; 1] range that describe a circle with uniform distribution of samples inside. This method is suitable for getting uniform distribution of coordinates for a circle. For example you can use it is a loop to generate UV coordinates offset for making the uniform circular blur effect. You can use the current loop iteration index as the i argument and the maximum number of iterations — as count.
+			</summary> 
+			<param name="i"> Index of the current point for the disk. </param>
+			<param name="count"> Number of points. </param> 
+			<returns>Set of points with X and Y coordinates in the [-1; 1] range that describe a circle with uniform distribution of samples inside.</returns>
 		</member>
 		<member name="M:Unigine.Math.operator==(ControlsPtr,ControlsPtr,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...)">
 			<summary>
@@ -2840,6 +3837,129 @@
 			<param name="x1"> The second xml. </param> 
 			<returns>Returns 1 if two values are the same; otherwise, 0.</returns>
 		</member>
+		<member name="M:Unigine.Math.operator==(Unigine.vec2,Unigine.vec2)">
+			<summary>
+			Vector equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator==(Unigine.vec3,Unigine.vec3)">
+			<summary>
+			Vector equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator==(Unigine.vec4,Unigine.vec4)">
+			<summary>
+			Vector equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator==(Unigine.dvec2,Unigine.dvec2)">
+			<summary>
+			Vector equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator==(Unigine.dvec3,Unigine.dvec3)">
+			<summary>
+			Vector equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator==(Unigine.dvec4,Unigine.dvec4)">
+			<summary>
+			Vector equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator==(Unigine.ivec2,Unigine.ivec2)">
+			<summary>
+			Vector equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator==(Unigine.ivec3,Unigine.ivec3)">
+			<summary>
+			Vector equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator==(Unigine.ivec4,Unigine.ivec4)">
+			<summary>
+			Vector equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator==(bvec4,bvec4)">
+			<summary>
+			Vector equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator==(svec4,svec4)">
+			<summary>
+			Vector equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator==(Unigine.mat4,Unigine.mat4)">
+			<summary>
+			Matrix equal comparison.
+			</summary> 
+			<param name="m0"> The first matrix. </param>
+			<param name="m1"> The second matrix. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator==(Unigine.dmat4,Unigine.dmat4)">
+			<summary>
+			Matrix equal comparison.
+			</summary> 
+			<param name="m0"> The first matrix. </param>
+			<param name="m1"> The second matrix. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator==(Unigine.quat,Unigine.quat)">
+			<summary>
+			Quaternion equal comparison.
+			</summary> 
+			<param name="q0"> The first quaternion. </param>
+			<param name="q1"> The second quaternion. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator==(String,String)">
+			<summary>
+			String equal comparison.
+			</summary> 
+			<param name="s0"> The first string. </param>
+			<param name="s1"> The second string. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator==">
+			<summary>
+			
+			</summary>  
+		</member>
+		<member name="M:Unigine.Math.operator==">
+			<summary>
+			
+			</summary>  
+		</member>
+		<member name="M:Unigine.Math.operator==(TypeInfo,TypeInfo)">
+			<summary>
+			Check if two TypeInfo classes are referenced the same types.
+			</summary> 
+			<param name="t0"> The first TypeIndo class. </param>
+			<param name="t1"> The second TypeIndo class. </param> 
+			<returns>Returns 1 if types are the same; otherwise, 0 is returned.</returns>
+		</member>
 		<member name="M:Unigine.Math.operator!=(ControlsPtr,ControlsPtr,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...,...)">
 			<summary>
 			Checks if two controls are not the same controls.
@@ -2874,19 +3994,128 @@
 			<param name="x1"> The second xml. </param> 
 			<returns>Returns 1 if two values are not the same; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Math.operator==(Unigine.vec2,Unigine.vec2)">
-			<summary>
-			Vector equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
 		<member name="M:Unigine.Math.operator!=(Unigine.vec2,Unigine.vec2)">
 			<summary>
 			Vector not equal comparison.
 			</summary> 
 			<param name="v0"> The first vector. </param>
 			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator!=(Unigine.vec3,Unigine.vec3)">
+			<summary>
+			Vector not equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator!=(Unigine.vec4,Unigine.vec4)">
+			<summary>
+			Vector not equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator!=(Unigine.dvec2,Unigine.dvec2)">
+			<summary>
+			Vector not equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator!=(Unigine.dvec3,Unigine.dvec3)">
+			<summary>
+			Vector not equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator!=(Unigine.dvec4,Unigine.dvec4)">
+			<summary>
+			Vector not equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator!=(Unigine.ivec2,Unigine.ivec2)">
+			<summary>
+			Vector not equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator!=(Unigine.ivec3,Unigine.ivec3)">
+			<summary>
+			Vector not equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator!=(Unigine.ivec4,Unigine.ivec4)">
+			<summary>
+			Vector not equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator!=(bvec4,bvec4)">
+			<summary>
+			Vector not equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator!=(svec4,svec4)">
+			<summary>
+			Vector not equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator!=(Unigine.mat4,Unigine.mat4)">
+			<summary>
+			Matrix not equal comparison.
+			</summary> 
+			<param name="m0"> The first matrix. </param>
+			<param name="m1"> The second matrix. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator!=(Unigine.dmat4,Unigine.dmat4)">
+			<summary>
+			Matrix not equal comparison.
+			</summary> 
+			<param name="m0"> The first matrix. </param>
+			<param name="m1"> The second matrix. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator!=(Unigine.quat,Unigine.quat)">
+			<summary>
+			Quaternion not equal comparison.
+			</summary> 
+			<param name="q0"> The first quaternion. </param>
+			<param name="q1"> The second quaternion. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator!=(String,String)">
+			<summary>
+			String not equal comparison.
+			</summary> 
+			<param name="s0"> The first string. </param>
+			<param name="s1"> The second string. </param> 
+		</member>
+		<member name="M:Unigine.Math.operator!=">
+			<summary>
+			
+			</summary>  
+		</member>
+		<member name="M:Unigine.Math.operator!=">
+			<summary>
+			
+			</summary>  
+		</member>
+		<member name="M:Unigine.Math.operator!=(TypeInfo,TypeInfo)">
+			<summary>
+			Check if two TypeInfo classes are not referenced the same types.
+			</summary> 
+			<param name="t0"> The first TypeIndo class. </param>
+			<param name="t1"> The second TypeIndo class. </param> 
+			<returns>Returns 1 if types are not the same; otherwise, 0 is returned.</returns>
 		</member>
 		<member name="M:Unigine.Math.operator*(Unigine.vec2,float)">
 			<summary>
@@ -2904,36 +4133,6 @@
 			<param name="v1"> Second vector. </param> 
 			<returns>Resulting vector.</returns>
 		</member>
-		<member name="M:Unigine.Math.operator+(Unigine.vec2,Unigine.vec2)">
-			<summary>
-			Vector addition.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator-(Unigine.vec2,Unigine.vec2)">
-			<summary>
-			Vector subtraction.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator==(Unigine.vec3,Unigine.vec3)">
-			<summary>
-			Vector equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
-		<member name="M:Unigine.Math.operator!=(Unigine.vec3,Unigine.vec3)">
-			<summary>
-			Vector not equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
 		<member name="M:Unigine.Math.operator*(Unigine.vec3,float)">
 			<summary>
 			Scalar multiplication.
@@ -2949,44 +4148,6 @@
 			<param name="v0"> First vector. </param>
 			<param name="v1"> Second vector. </param> 
 			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator+(Unigine.vec3,Unigine.vec3)">
-			<summary>
-			Vector addition.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator+(Unigine.vec3,float)">
-			<summary>
-			Adds the float value to all vector components.
-			</summary> 
-			<param name="v0"> Vector. </param>
-			<param name="v1"> Float value. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator-(Unigine.vec3,Unigine.vec3)">
-			<summary>
-			Vector subtraction.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator==(Unigine.vec4,Unigine.vec4)">
-			<summary>
-			Vector equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
-		<member name="M:Unigine.Math.operator!=(Unigine.vec4,Unigine.vec4)">
-			<summary>
-			Vector not equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
 		</member>
 		<member name="M:Unigine.Math.operator*(Unigine.vec4,float)">
 			<summary>
@@ -3004,36 +4165,6 @@
 			<param name="v1"> Second vector. </param> 
 			<returns>Resulting vector.</returns>
 		</member>
-		<member name="M:Unigine.Math.operator+(Unigine.vec4,Unigine.vec4)">
-			<summary>
-			Vector addition.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator-(Unigine.vec4,Unigine.vec4)">
-			<summary>
-			Vector subtraction.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator==(Unigine.dvec2,Unigine.dvec2)">
-			<summary>
-			Vector equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
-		<member name="M:Unigine.Math.operator!=(Unigine.dvec2,Unigine.dvec2)">
-			<summary>
-			Vector not equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
 		<member name="M:Unigine.Math.operator*(Unigine.dvec2,double)">
 			<summary>
 			Scalar multiplication.
@@ -3049,36 +4180,6 @@
 			<param name="v0"> First vector. </param>
 			<param name="v1"> Second vector. </param> 
 			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator+(Unigine.dvec2,Unigine.dvec2)">
-			<summary>
-			Vector addition.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator-(Unigine.dvec2,Unigine.dvec2)">
-			<summary>
-			Vector subtraction.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator==(Unigine.dvec3,Unigine.dvec3)">
-			<summary>
-			Vector equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
-		<member name="M:Unigine.Math.operator!=(Unigine.dvec3,Unigine.dvec3)">
-			<summary>
-			Vector not equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
 		</member>
 		<member name="M:Unigine.Math.operator*(Unigine.dvec3,double)">
 			<summary>
@@ -3096,36 +4197,6 @@
 			<param name="v1"> Second vector. </param> 
 			<returns>Resulting vector.</returns>
 		</member>
-		<member name="M:Unigine.Math.operator+(Unigine.dvec3,Unigine.dvec3)">
-			<summary>
-			Vector addition.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator-(Unigine.dvec3,Unigine.dvec3)">
-			<summary>
-			Vector subtraction.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator==(Unigine.dvec4,Unigine.dvec4)">
-			<summary>
-			Vector equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
-		<member name="M:Unigine.Math.operator!=(Unigine.dvec4,Unigine.dvec4)">
-			<summary>
-			Vector not equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
 		<member name="M:Unigine.Math.operator*(Unigine.dvec4,double)">
 			<summary>
 			Scalar multiplication.
@@ -3141,36 +4212,6 @@
 			<param name="v0"> First vector. </param>
 			<param name="v1"> Second vector. </param> 
 			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator+(Unigine.dvec4,Unigine.dvec4)">
-			<summary>
-			Vector addition.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator-(Unigine.dvec4,Unigine.dvec4)">
-			<summary>
-			Vector subtraction.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator==(Unigine.ivec2,Unigine.ivec2)">
-			<summary>
-			Vector equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
-		<member name="M:Unigine.Math.operator!=(Unigine.ivec2,Unigine.ivec2)">
-			<summary>
-			Vector not equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
 		</member>
 		<member name="M:Unigine.Math.operator*(Unigine.ivec2,int)">
 			<summary>
@@ -3188,84 +4229,6 @@
 			<param name="v1"> Second vector. </param> 
 			<returns>Resulting vector.</returns>
 		</member>
-		<member name="M:Unigine.Math.operator%(Unigine.ivec2,int)">
-			<summary>
-			Modulus operation.
-			</summary> 
-			<param name="v0"> The value of the vector. </param>
-			<param name="v1"> The value of the scalar. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator%(Unigine.ivec4,int)">
-			<summary>
-			Modulus operation.
-			</summary> 
-			<param name="v0"> The value of the vector. </param>
-			<param name="v1"> The value of the scalar. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator/(Unigine.ivec2,int)">
-			<summary>
-			Scalar division.
-			</summary> 
-			<param name="v0"> The value of the vector. </param>
-			<param name="v1"> The value of the scalar. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator/(Unigine.ivec2,Unigine.ivec2)">
-			<summary>
-			Vector division.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator+(Unigine.ivec2,Unigine.ivec2)">
-			<summary>
-			Vector addition.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator-(Unigine.ivec2,Unigine.ivec2)">
-			<summary>
-			Vector subtraction.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator&lt;&lt;(Unigine.ivec2,int)">
-			<summary>
-			Left bit shift.
-			</summary> 
-			<param name="v0"> The value of the vector. </param>
-			<param name="v1"> The shift amount. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator&gt;&gt;(Unigine.ivec2,int)">
-			<summary>
-			Right bit shift.
-			</summary> 
-			<param name="v0"> The value of the vector. </param>
-			<param name="v1"> The shift amount. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator==(Unigine.ivec3,Unigine.ivec3)">
-			<summary>
-			Vector equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
-		<member name="M:Unigine.Math.operator!=(Unigine.ivec3,Unigine.ivec3)">
-			<summary>
-			Vector not equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
 		<member name="M:Unigine.Math.operator*(Unigine.ivec3,int)">
 			<summary>
 			Scalar multiplication.
@@ -3282,68 +4245,6 @@
 			<param name="v1"> Second vector. </param> 
 			<returns>Resulting vector.</returns>
 		</member>
-		<member name="M:Unigine.Math.operator/(Unigine.ivec3,int)">
-			<summary>
-			Scalar division.
-			</summary> 
-			<param name="v0"> The value of the vector. </param>
-			<param name="v1"> The value of the scalar. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator/(Unigine.ivec3,Unigine.ivec3)">
-			<summary>
-			Vector division.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator+(Unigine.ivec3,Unigine.ivec3)">
-			<summary>
-			Vector addition.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator-(Unigine.ivec3,Unigine.ivec3)">
-			<summary>
-			Vector subtraction.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator&lt;&lt;(Unigine.ivec3,int)">
-			<summary>
-			Left bit shift.
-			</summary> 
-			<param name="v0"> The value of the vector. </param>
-			<param name="v1"> The shift amount. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator&gt;&gt;(Unigine.ivec3,int)">
-			<summary>
-			Right bit shift.
-			</summary> 
-			<param name="v0"> The value of the vector. </param>
-			<param name="v1"> The shift amount. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator==(Unigine.ivec4,Unigine.ivec4)">
-			<summary>
-			Vector equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
-		<member name="M:Unigine.Math.operator!=(Unigine.ivec4,Unigine.ivec4)">
-			<summary>
-			Vector not equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
 		<member name="M:Unigine.Math.operator*(Unigine.ivec4,int)">
 			<summary>
 			Scalar multiplication.
@@ -3359,96 +4260,6 @@
 			<param name="v0"> First vector. </param>
 			<param name="v1"> Second vector. </param> 
 			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator/(Unigine.ivec4,int)">
-			<summary>
-			Scalar division.
-			</summary> 
-			<param name="v0"> The value of the vector. </param>
-			<param name="v1"> The value of the scalar. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator/(Unigine.ivec4,Unigine.ivec4)">
-			<summary>
-			Vector division.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator+(Unigine.ivec4,Unigine.ivec4)">
-			<summary>
-			Vector addition.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator-(Unigine.ivec4,Unigine.ivec4)">
-			<summary>
-			Vector subtraction.
-			</summary> 
-			<param name="v0"> First vector. </param>
-			<param name="v1"> Second vector. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator&lt;&lt;(Unigine.ivec4,int)">
-			<summary>
-			Left bit shift.
-			</summary> 
-			<param name="v0"> The value of the vector. </param>
-			<param name="v1"> The shift amount. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator&gt;&gt;(Unigine.ivec4,int)">
-			<summary>
-			Right bit shift.
-			</summary> 
-			<param name="v0"> The value of the vector. </param>
-			<param name="v1"> The shift amount. </param> 
-			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator==(bvec4,bvec4)">
-			<summary>
-			Vector equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
-		<member name="M:Unigine.Math.operator!=(bvec4,bvec4)">
-			<summary>
-			Vector not equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
-		<member name="M:Unigine.Math.operator==(svec4,svec4)">
-			<summary>
-			Vector equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
-		<member name="M:Unigine.Math.operator!=(svec4,svec4)">
-			<summary>
-			Vector not equal comparison.
-			</summary> 
-			<param name="v0"> The first vector. </param>
-			<param name="v1"> The second vector. </param> 
-		</member>
-		<member name="M:Unigine.Math.operator==(Unigine.mat4,Unigine.mat4)">
-			<summary>
-			Matrix equal comparison.
-			</summary> 
-			<param name="m0"> The first matrix. </param>
-			<param name="m1"> The second matrix. </param> 
-		</member>
-		<member name="M:Unigine.Math.operator!=(Unigine.mat4,Unigine.mat4)">
-			<summary>
-			Matrix not equal comparison.
-			</summary> 
-			<param name="m0"> The first matrix. </param>
-			<param name="m1"> The second matrix. </param> 
 		</member>
 		<member name="M:Unigine.Math.operator*(Unigine.mat4,float)">
 			<summary>
@@ -3530,36 +4341,6 @@
 			<param name="m1"> The value of the second matrix. </param> 
 			<returns>The resulting matrix.</returns>
 		</member>
-		<member name="M:Unigine.Math.operator+(Unigine.mat4,Unigine.mat4)">
-			<summary>
-			Matrix addition.
-			</summary> 
-			<param name="m0"> The value of the first matrix. </param>
-			<param name="m1"> The value of the second matrix. </param> 
-			<returns>The resulting matrix.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator-(Unigine.mat4,Unigine.mat4)">
-			<summary>
-			Matrix subtraction.
-			</summary> 
-			<param name="m0"> The value of the first matrix. </param>
-			<param name="m1"> The value of the second matrix. </param> 
-			<returns>The resulting matrix.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator==(Unigine.dmat4,Unigine.dmat4)">
-			<summary>
-			Matrix equal comparison.
-			</summary> 
-			<param name="m0"> The first matrix. </param>
-			<param name="m1"> The second matrix. </param> 
-		</member>
-		<member name="M:Unigine.Math.operator!=(Unigine.dmat4,Unigine.dmat4)">
-			<summary>
-			Matrix not equal comparison.
-			</summary> 
-			<param name="m0"> The first matrix. </param>
-			<param name="m1"> The second matrix. </param> 
-		</member>
 		<member name="M:Unigine.Math.operator*(Unigine.dmat4,double)">
 			<summary>
 			Matrix multiplication.
@@ -3567,6 +4348,22 @@
 			<param name="m"> The value of the matrix. </param>
 			<param name="v"> The value of the scalar. </param> 
 			<returns>The resulting matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator*(Unigine.dmat4,Unigine.vec2)">
+			<summary>
+			Vector multiplication.
+			</summary> 
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator*(Unigine.vec2,Unigine.dmat4)">
+			<summary>
+			Vector multiplication.
+			</summary> 
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>Resulting vector.</returns>
 		</member>
 		<member name="M:Unigine.Math.operator*(Unigine.dmat4,Unigine.vec3)">
 			<summary>
@@ -3593,6 +4390,22 @@
 			<returns>Resulting vector.</returns>
 		</member>
 		<member name="M:Unigine.Math.operator*(Unigine.vec4,Unigine.dmat4)">
+			<summary>
+			Vector multiplication.
+			</summary> 
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator*(Unigine.dmat4,Unigine.dvec2)">
+			<summary>
+			Vector multiplication.
+			</summary> 
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator*(Unigine.dvec2,Unigine.dmat4)">
 			<summary>
 			Vector multiplication.
 			</summary> 
@@ -3639,36 +4452,6 @@
 			<param name="m0"> The value of the first matrix. </param>
 			<param name="m1"> The value of the second matrix. </param> 
 			<returns>The resulting matrix.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator+(Unigine.dmat4,Unigine.dmat4)">
-			<summary>
-			Matrix addition.
-			</summary> 
-			<param name="m0"> The value of the first matrix. </param>
-			<param name="m1"> The value of the second matrix. </param> 
-			<returns>The resulting matrix.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator-(Unigine.dmat4,Unigine.dmat4)">
-			<summary>
-			Matrix subtraction.
-			</summary> 
-			<param name="m0"> The value of the first matrix. </param>
-			<param name="m1"> The value of the second matrix. </param> 
-			<returns>The resulting matrix.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator==(Unigine.quat,Unigine.quat)">
-			<summary>
-			Quaternion equal comparison.
-			</summary> 
-			<param name="q0"> The first quaternion. </param>
-			<param name="q1"> The second quaternion. </param> 
-		</member>
-		<member name="M:Unigine.Math.operator!=(Unigine.quat,Unigine.quat)">
-			<summary>
-			Quaternion not equal comparison.
-			</summary> 
-			<param name="q0"> The first quaternion. </param>
-			<param name="q1"> The second quaternion. </param> 
 		</member>
 		<member name="M:Unigine.Math.operator*(Unigine.quat,float)">
 			<summary>
@@ -3718,17 +4501,105 @@
 			<param name="q1"> The value of the second quaternion. </param> 
 			<returns>The resulting quaternion.</returns>
 		</member>
+		<member name="M:Unigine.Math.operator+(Unigine.vec2,Unigine.vec2)">
+			<summary>
+			Vector addition.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator+(Unigine.vec3,Unigine.vec3)">
+			<summary>
+			Vector addition.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator+(Unigine.vec3,float)">
+			<summary>
+			Adds the float value to all vector components.
+			</summary> 
+			<param name="v0"> Vector. </param>
+			<param name="v1"> Float value. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator+(Unigine.vec4,Unigine.vec4)">
+			<summary>
+			Vector addition.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator+(Unigine.dvec2,Unigine.dvec2)">
+			<summary>
+			Vector addition.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator+(Unigine.dvec3,Unigine.dvec3)">
+			<summary>
+			Vector addition.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator+(Unigine.dvec4,Unigine.dvec4)">
+			<summary>
+			Vector addition.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator+(Unigine.ivec2,Unigine.ivec2)">
+			<summary>
+			Vector addition.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator+(Unigine.ivec3,Unigine.ivec3)">
+			<summary>
+			Vector addition.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator+(Unigine.ivec4,Unigine.ivec4)">
+			<summary>
+			Vector addition.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator+(Unigine.mat4,Unigine.mat4)">
+			<summary>
+			Matrix addition.
+			</summary> 
+			<param name="m0"> The value of the first matrix. </param>
+			<param name="m1"> The value of the second matrix. </param> 
+			<returns>The resulting matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator+(Unigine.dmat4,Unigine.dmat4)">
+			<summary>
+			Matrix addition.
+			</summary> 
+			<param name="m0"> The value of the first matrix. </param>
+			<param name="m1"> The value of the second matrix. </param> 
+			<returns>The resulting matrix.</returns>
+		</member>
 		<member name="M:Unigine.Math.operator+(Unigine.quat,Unigine.quat)">
 			<summary>
 			Quaternion addition.
-			</summary> 
-			<param name="q0"> The value of the first quaternion. </param>
-			<param name="q1"> The value of the second quaternion. </param> 
-			<returns>The resulting quaternion.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator-(Unigine.quat,Unigine.quat)">
-			<summary>
-			Quaternion subtraction.
 			</summary> 
 			<param name="q0"> The value of the first quaternion. </param>
 			<param name="q1"> The value of the second quaternion. </param> 
@@ -3751,39 +4622,289 @@
 			
 			</summary>  
 		</member>
-		<member name="M:Unigine.Math.operator==(String,String)">
+		<member name="M:Unigine.Math.operator-(Unigine.vec2,Unigine.vec2)">
 			<summary>
-			String equal comparison.
+			Vector subtraction.
 			</summary> 
-			<param name="s0"> The first string. </param>
-			<param name="s1"> The second string. </param> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
 		</member>
-		<member name="M:Unigine.Math.operator==">
+		<member name="M:Unigine.Math.operator-(Unigine.vec3,Unigine.vec3)">
 			<summary>
-			
-			</summary>  
-		</member>
-		<member name="M:Unigine.Math.operator==">
-			<summary>
-			
-			</summary>  
-		</member>
-		<member name="M:Unigine.Math.operator!=(String,String)">
-			<summary>
-			String not equal comparison.
+			Vector subtraction.
 			</summary> 
-			<param name="s0"> The first string. </param>
-			<param name="s1"> The second string. </param> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
 		</member>
-		<member name="M:Unigine.Math.operator!=">
+		<member name="M:Unigine.Math.operator-(Unigine.vec4,Unigine.vec4)">
 			<summary>
-			
-			</summary>  
+			Vector subtraction.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
 		</member>
-		<member name="M:Unigine.Math.operator!=">
+		<member name="M:Unigine.Math.operator-(Unigine.dvec2,Unigine.dvec2)">
 			<summary>
-			
-			</summary>  
+			Vector subtraction.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator-(Unigine.dvec3,Unigine.dvec3)">
+			<summary>
+			Vector subtraction.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator-(Unigine.dvec4,Unigine.dvec4)">
+			<summary>
+			Vector subtraction.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator-(Unigine.ivec2,Unigine.ivec2)">
+			<summary>
+			Vector subtraction.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator-(Unigine.ivec3,Unigine.ivec3)">
+			<summary>
+			Vector subtraction.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator-(Unigine.ivec4,Unigine.ivec4)">
+			<summary>
+			Vector subtraction.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator-(Unigine.mat4,Unigine.mat4)">
+			<summary>
+			Matrix subtraction.
+			</summary> 
+			<param name="m0"> The value of the first matrix. </param>
+			<param name="m1"> The value of the second matrix. </param> 
+			<returns>The resulting matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator-(Unigine.dmat4,Unigine.dmat4)">
+			<summary>
+			Matrix subtraction.
+			</summary> 
+			<param name="m0"> The value of the first matrix. </param>
+			<param name="m1"> The value of the second matrix. </param> 
+			<returns>The resulting matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator-(Unigine.quat,Unigine.quat)">
+			<summary>
+			Quaternion subtraction.
+			</summary> 
+			<param name="q0"> The value of the first quaternion. </param>
+			<param name="q1"> The value of the second quaternion. </param> 
+			<returns>The resulting quaternion.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator%(Unigine.ivec2,int)">
+			<summary>
+			Modulus operation.
+			</summary> 
+			<param name="v0"> The value of the vector. </param>
+			<param name="v1"> The value of the scalar. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator%(Unigine.ivec4,int)">
+			<summary>
+			Modulus operation.
+			</summary> 
+			<param name="v0"> The value of the vector. </param>
+			<param name="v1"> The value of the scalar. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator/(Unigine.ivec2,int)">
+			<summary>
+			Scalar division.
+			</summary> 
+			<param name="v0"> The value of the vector. </param>
+			<param name="v1"> The value of the scalar. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator/(Unigine.ivec2,Unigine.ivec2)">
+			<summary>
+			Vector division.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator/(Unigine.ivec3,int)">
+			<summary>
+			Scalar division.
+			</summary> 
+			<param name="v0"> The value of the vector. </param>
+			<param name="v1"> The value of the scalar. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator/(Unigine.ivec3,Unigine.ivec3)">
+			<summary>
+			Vector division.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator/(Unigine.vec2,Unigine.ivec2)">
+			<summary>
+			Vector division.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator/(Unigine.ivec4,int)">
+			<summary>
+			Scalar division.
+			</summary> 
+			<param name="v0"> The value of the vector. </param>
+			<param name="v1"> The value of the scalar. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator/(Unigine.ivec4,Unigine.ivec4)">
+			<summary>
+			Vector division.
+			</summary> 
+			<param name="v0"> First vector. </param>
+			<param name="v1"> Second vector. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator&lt;&lt;(Unigine.ivec2,int)">
+			<summary>
+			Left bit shift.
+			</summary> 
+			<param name="v0"> The value of the vector. </param>
+			<param name="v1"> The shift amount. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator&lt;&lt;(Unigine.ivec3,int)">
+			<summary>
+			Left bit shift.
+			</summary> 
+			<param name="v0"> The value of the vector. </param>
+			<param name="v1"> The shift amount. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator&lt;&lt;(Unigine.ivec4,int)">
+			<summary>
+			Left bit shift.
+			</summary> 
+			<param name="v0"> The value of the vector. </param>
+			<param name="v1"> The shift amount. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator&gt;&gt;(Unigine.ivec2,int)">
+			<summary>
+			Right bit shift.
+			</summary> 
+			<param name="v0"> The value of the vector. </param>
+			<param name="v1"> The shift amount. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator&gt;&gt;(Unigine.ivec3,int)">
+			<summary>
+			Right bit shift.
+			</summary> 
+			<param name="v0"> The value of the vector. </param>
+			<param name="v1"> The shift amount. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator&gt;&gt;(Unigine.ivec4,int)">
+			<summary>
+			Right bit shift.
+			</summary> 
+			<param name="v0"> The value of the vector. </param>
+			<param name="v1"> The shift amount. </param> 
+			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.mod(float,float)">
+			<summary>
+			Returns the floating-point remainder of the division operation: first argument / second argument.
+			</summary> 
+			<param name="x"> Value. </param>
+			<param name="y"> Value. </param> 
+			<returns>Resulting float value.</returns>
+		</member>
+		<member name="M:Unigine.Math.mod(double,double)">
+			<summary>
+			Returns the floating-point remainder of the division operation: first argument / second argument.
+			</summary> 
+			<param name="x"> Value. </param>
+			<param name="y"> Value. </param> 
+			<returns>Resulting double value.</returns>
+		</member>
+		<member name="M:Unigine.Math.mad(float,float,float)">
+			<summary>
+			Returns the result of multiplication of the first value by the second value and addition of the third value (a * b + c).
+			</summary> 
+			<param name="a"> Value. </param>
+			<param name="b"> Value. </param>
+			<param name="c"> Value. </param> 
+			<returns>Return value.</returns>
+		</member>
+		<member name="M:Unigine.Math.mad(double,double,double)">
+			<summary>
+			Returns the result of multiplication of the first value by the second value and addition of the third value (a * b + c).
+			</summary> 
+			<param name="a"> Value. </param>
+			<param name="b"> Value. </param>
+			<param name="c"> Value. </param> 
+			<returns>Return value.</returns>
+		</member>
+		<member name="M:Unigine.Math.select(int,int,int)">
+			<summary>
+			Returns one of the two argument values (v0 and v1) based on the specified condition (c). This method is efficient for selecting between two values without branching, which can be beneficial in performance-critical code where branching might introduce overhead.
+			</summary> 
+			<param name="c"> Condition to be checked. </param>
+			<param name="v0"> Value to be returned in case the condition is true (non-zero). </param>
+			<param name="v1"> Value to be returned in case the condition is false (zero). </param> 
+			<returns>One of the two argument values (v0 and v1) based on the specified condition.</returns>
+		</member>
+		<member name="M:Unigine.Math.select(int,float,float)">
+			<summary>
+			Returns one of the two argument values (v0 and v1) based on the specified condition (c). This method is efficient for selecting between two values without branching, which can be beneficial in performance-critical code where branching might introduce overhead.
+			</summary> 
+			<param name="c"> Condition to be checked. </param>
+			<param name="v0"> Value to be returned in case the condition is true (non-zero). </param>
+			<param name="v1"> Value to be returned in case the condition is false (zero). </param> 
+			<returns>One of the two argument values (v0 and v1) based on the specified condition.</returns>
+		</member>
+		<member name="M:Unigine.Math.select(float,float,float)">
+			<summary>
+			Returns one of the two argument values (v0 and v1) based on the specified condition (c). This method is efficient for selecting between two values without branching, which can be beneficial in performance-critical code where branching might introduce overhead.
+			</summary> 
+			<param name="c"> Condition to be checked. </param>
+			<param name="v0"> Value to be returned in case the condition is true (non-zero). </param>
+			<param name="v1"> Value to be returned in case the condition is false (zero). </param> 
+			<returns>One of the two argument values (v0 and v1) based on the specified condition.</returns>
+		</member>
+		<member name="M:Unigine.Math.operator&lt;(Unigine.dvec2,Unigine.dvec2)">
+			<summary>
+			Vector less than comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
 		</member>
 		<member name="M:Unigine.Math.operator&lt;(String,String)">
 			<summary>
@@ -3802,6 +4923,13 @@
 			
 			</summary>  
 		</member>
+		<member name="M:Unigine.Math.operator&gt;(Unigine.dvec2,Unigine.dvec2)">
+			<summary>
+			Vector greater than comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
 		<member name="M:Unigine.Math.operator&gt;(String,String)">
 			<summary>
 			String greater than comparison.
@@ -3818,6 +4946,13 @@
 			<summary>
 			
 			</summary>  
+		</member>
+		<member name="M:Unigine.Math.operator&lt;=(Unigine.dvec2,Unigine.dvec2)">
+			<summary>
+			Vector less than or equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
 		</member>
 		<member name="M:Unigine.Math.operator&lt;=(String,String)">
 			<summary>
@@ -3836,6 +4971,13 @@
 			
 			</summary>  
 		</member>
+		<member name="M:Unigine.Math.operator&gt;=(Unigine.dvec2,Unigine.dvec2)">
+			<summary>
+			Vector greater than or equal comparison.
+			</summary> 
+			<param name="v0"> The first vector. </param>
+			<param name="v1"> The second vector. </param> 
+		</member>
 		<member name="M:Unigine.Math.operator&gt;=(String,String)">
 			<summary>
 			String greater or equal to comparison.
@@ -3852,22 +4994,6 @@
 			<summary>
 			
 			</summary>  
-		</member>
-		<member name="M:Unigine.Math.operator==(TypeInfo,TypeInfo)">
-			<summary>
-			Check if two TypeInfo classes are referenced the same types.
-			</summary> 
-			<param name="t0"> The first TypeIndo class. </param>
-			<param name="t1"> The second TypeIndo class. </param> 
-			<returns>Returns 1 if types are the same; otherwise, 0 is returned.</returns>
-		</member>
-		<member name="M:Unigine.Math.operator!=(TypeInfo,TypeInfo)">
-			<summary>
-			Check if two TypeInfo classes are not referenced the same types.
-			</summary> 
-			<param name="t0"> The first TypeIndo class. </param>
-			<param name="t1"> The second TypeIndo class. </param> 
-			<returns>Returns 1 if types are not the same; otherwise, 0 is returned.</returns>
 		</member>
 		<member name="F:Unigine.Math.AXIS_X">
 			<summary>
@@ -3958,6 +5084,13 @@
 			<param name="v"> Power. </param> 
 			<returns>e raised to the specified power (ev).</returns>
 		</member>
+		<member name="M:Unigine.Math.expFast(float)">
+			<summary>
+			Returns e raised to the specified power (ev				) - the approximated (quicker calculated) value.
+			</summary> 
+			<param name="v"> Power. </param> 
+			<returns>e raised to the specified power (ev).</returns>
+		</member>
 		<member name="M:Unigine.Math.exp2(float)">
 			<summary>
 			Returns 2 raised to the specified power (2v				).
@@ -3968,6 +5101,13 @@
 		<member name="M:Unigine.Math.exp2(double)">
 			<summary>
 			Returns 2 raised to the specified power (2v				).
+			</summary> 
+			<param name="v"> Power. </param> 
+			<returns>2 raised to the specified power (2v).</returns>
+		</member>
+		<member name="M:Unigine.Math.exp2Fast(float)">
+			<summary>
+			Returns 2 raised to the specified power (2v				) - the approximated (quicker calculated) value.
 			</summary> 
 			<param name="v"> Power. </param> 
 			<returns>2 raised to the specified power (2v).</returns>
@@ -3985,6 +5125,41 @@
 			</summary> 
 			<param name="v"> Argument. </param> 
 			<returns>Natural logarithm of the argument.</returns>
+		</member>
+		<member name="M:Unigine.Math.logFast(float)">
+			<summary>
+			Returns the approximated (quicker calculated) natural logarithm of the argument.
+			</summary> 
+			<param name="v"> Argument. </param> 
+			<returns>Approximated natural logarithm of the argument.</returns>
+		</member>
+		<member name="M:Unigine.Math.log2(int)">
+			<summary>
+			Returns the base-2 logarithm of the argument.
+			</summary> 
+			<param name="v"> Argument. </param> 
+			<returns>Base-2 logarithm of the argument.</returns>
+		</member>
+		<member name="M:Unigine.Math.log2(float)">
+			<summary>
+			Returns the base-2 logarithm of the argument.
+			</summary> 
+			<param name="v"> Argument. </param> 
+			<returns>Base-2 logarithm of the argument.</returns>
+		</member>
+		<member name="M:Unigine.Math.log2(double)">
+			<summary>
+			Returns the base-2 logarithm of the argument.
+			</summary> 
+			<param name="v"> Argument. </param> 
+			<returns>Base-2 logarithm of the argument.</returns>
+		</member>
+		<member name="M:Unigine.Math.log2Fast(float)">
+			<summary>
+			Returns the approximated (quicker calculated) base-2 logarithm of the argument.
+			</summary> 
+			<param name="v"> Argument. </param> 
+			<returns>Approximated base-2 logarithm of the argument.</returns>
 		</member>
 		<member name="M:Unigine.Math.log10(float)">
 			<summary>
@@ -4016,6 +5191,14 @@
 			<param name="y"> Power. </param> 
 			<returns>Argument raised to the specified power (xy).</returns>
 		</member>
+		<member name="M:Unigine.Math.powFast(float,float)">
+			<summary>
+			Returns the argument raised to the specified power (ab). Doesn't perform the check that the first argument is a negative value.
+			</summary> 
+			<param name="a"> Argument. </param>
+			<param name="b"> Power. </param> 
+			<returns>Argument raised to the specified power (ab).</returns>
+		</member>
 		<member name="M:Unigine.Math.pow2(float)">
 			<summary>
 			Returns the argument raised to the power of 2 (squared).
@@ -4036,6 +5219,13 @@
 			</summary> 
 			<param name="x"> Argument. </param> 
 			<returns>Argument raised to the power of 2 (squared).</returns>
+		</member>
+		<member name="M:Unigine.Math.nextPow2(unsignedlonglong)">
+			<summary>
+			Returns the next power of 2 greater than or equal to a given argument.
+			</summary> 
+			<param name="x"> Argument. </param> 
+			<returns>Power of 2 greater than or equal to a given argument.</returns>
 		</member>
 		<member name="M:Unigine.Math.dsqrt(double)">
 			<summary>
@@ -4064,6 +5254,27 @@
 			</summary> 
 			<param name="v"> Argument. </param> 
 			<returns>Inverted square root of the argument.</returns>
+		</member>
+		<member name="M:Unigine.Math.ssqrt(Scalar)">
+			<summary>
+			Returns the square root of the argument.
+			</summary> 
+			<param name="v"> Argument. </param> 
+			<returns>Square root of the argument.</returns>
+		</member>
+		<member name="M:Unigine.Math.sqrtFast(float)">
+			<summary>
+			Returns an approximation of the square root.
+			</summary> 
+			<param name="v"> Argument. </param> 
+			<returns>Approximated square root of the argument.</returns>
+		</member>
+		<member name="M:Unigine.Math.rsqrtFast(float)">
+			<summary>
+			Returns an approximation of the inverted square root.
+			</summary> 
+			<param name="v"> Argument. </param> 
+			<returns>Approximation of the inverted square root of the argument.</returns>
 		</member>
 		<member name="M:Unigine.Math.composeRotationXYZ(Unigine.vec3)">
 			<summary>
@@ -4144,9 +5355,9 @@
 		</member>
 		<member name="M:Unigine.Math.cubeTransform(int)">
 			<summary>
-			Returns cube viewing matrix for the given cube face.
+			Returns a transformation matrix (cube viewing matrix) for the specified face of a cube map. Cube maps are often used in rendering for environment mapping, reflection, or skyboxes. Each face of a cube map corresponds to one of the six directions: positive and negative X, Y, and Z axes.
 			</summary> 
-			<param name="face"> Cube face number. </param> 
+			<param name="face"> Face number, one of the following: 0 (X+), 1 (X-), 2 (Y+), 3 (Y-), 4 (Z+),5 (Z-). </param> 
 			<returns>Cube viewing matrix.</returns>
 		</member>
 		<member name="M:Unigine.Math.decomposePerspectiveFov(Unigine.mat4)">
@@ -4311,6 +5522,14 @@
 			<param name="m"> Matrix to be inverted. </param> 
 			<returns>Inverse of the matrix.</returns>
 		</member>
+		<member name="M:Unigine.Math.inverse(Unigine.dmat4,Unigine.dmat4)">
+			<summary>
+			Returns inverse of a matrix. The inverse of a matrix is a matrix that if multiplied by the original would result in identity matrix: AA				-1 = A				-1A = I.
+			</summary> 
+			<param name="ret"> Output matrix, to which the inverted matrix will be put. </param>
+			<param name="m"> Matrix to be inverted. </param> 
+			<returns>Inverse of the matrix.</returns>
+		</member>
 		<member name="M:Unigine.Math.inverse(Unigine.mat4)">
 			<summary>
 			Returns inverse of a matrix. The inverse of a matrix is a matrix that if multiplied by the original would result in identity matrix: AA				-1 = A				-1A = I.
@@ -4332,6 +5551,21 @@
 			<param name="m"> Matrix to be inverted. </param> 
 			<returns>Inverse of the matrix.</returns>
 		</member>
+		<member name="M:Unigine.Math.inverse4(Unigine.dmat4)">
+			<summary>
+			Inverts a matrix that consists of a 3×4 sub-matrix (upper left) and a translation vector. The last row of the matrix is ignored. Compared to the inverse() function, this one is a bit faster and, which is more important, more stable. A matrix suitable for such inversion looks like this:				The function does the same as inverse (dmat4)
+			</summary> 
+			<param name="m"> Matrix to be inverted. </param> 
+			<returns>Inverse of the matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.inverse4(Unigine.dmat4,Unigine.dmat4)">
+			<summary>
+			Inverts a matrix that consists of a 3×4 sub-matrix (upper left) and a translation vector. The last row of the matrix is ignored. Compared to the inverse() function, this one is a bit faster and, which is more important, more stable. A matrix suitable for such inversion looks like this:				The function does the same as inverse (dmat4)
+			</summary> 
+			<param name="ret"> Output matrix, to which the orthonormalized matrix will be put. </param>
+			<param name="m"> Matrix to be inverted. </param> 
+			<returns>Inverse of the matrix.</returns>
+		</member>
 		<member name="M:Unigine.Math.jacobi(mat3,mat3)">
 			<summary>
 			Returns the Jacobian matrix for the given 3x3 matrix.
@@ -4342,22 +5576,22 @@
 		</member>
 		<member name="M:Unigine.Math.lookAt(Unigine.vec3,Unigine.vec3,Unigine.vec3,int)">
 			<summary>
-			Returns the viewing matrix for the given eye point, target point, up and forward direction vectors. The forward direction vector is pointed along the specified axis. By default, it is negative Z.
+			Returns a view matrix for the given eye point, target point, up and forward direction vectors. The forward direction vector is oriented along the specified axis (negative Z, by default). This function is used to create a view matrix that positions and orients a camera or object in 3D space to "look at" a given target point.
 			</summary> 
-			<param name="position"> Position coordinates of the eye point. </param>
-			<param name="target"> Position of the target point. </param>
+			<param name="position"> Coordinates of the eye point position. </param>
+			<param name="target"> Coordinates of the target point position. </param>
 			<param name="up"> Direction of the up vector. </param>
-			<param name="axis"> Axis along which the forward direction vector is pointed. The default is negative Z. </param> 
+			<param name="axis"> Axis along which the forward direction vector is oriented (which axis should face the target). One of the AXIS_* values (by default it's AXIS_NZ). </param> 
 			<returns>The viewing matrix.</returns>
 		</member>
 		<member name="M:Unigine.Math.lookAt(Unigine.dvec3,Unigine.dvec3,Unigine.vec3,int)">
 			<summary>
-			Returns the viewing matrix for the given eye point, target point, up and forward direction vectors. The forward direction vector is pointed along the specified axis. By default, it is negative Z.
+			Returns a view matrix for the given eye point, target point, up and forward direction vectors. The forward direction vector is oriented along the specified axis (negative Z, by default). This function is used to create a view matrix that positions and orients a camera or object in 3D space to "look at" a given target point.
 			</summary> 
-			<param name="position"> Position coordinates of the eye point. </param>
-			<param name="target"> Position coordinates of the target point. </param>
+			<param name="position"> Coordinates of the eye point position. </param>
+			<param name="target"> Coordinates of the target point position. </param>
 			<param name="up"> Direction of the up vector. </param>
-			<param name="axis"> Axis along which the forward direction vector is pointed. The default is negative Z. </param> 
+			<param name="axis"> Axis along which the forward direction vector is oriented (which axis should face the target). One of the AXIS_* values (by default it's AXIS_NZ). </param> 
 			<returns>The viewing matrix.</returns>
 		</member>
 		<member name="M:Unigine.Math.obliqueProjection(Unigine.mat4,Unigine.vec4)">
@@ -4442,6 +5676,20 @@
 			<param name="m"> Matrix to be orthonormalized. </param> 
 			<returns>Orthonormal matrix.</returns>
 		</member>
+		<member name="M:Unigine.Math.isOrthoProjection(Unigine.mat4)">
+			<summary>
+			Returns a value indicating if the specified projection matrix represents an orthographic projection.
+			</summary> 
+			<param name="projection"> Projection matrix. </param> 
+			<returns>true if there is the specified projection matrix represents an orthographic projection, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.Math.isPerspectiveProjection(Unigine.mat4)">
+			<summary>
+			Returns a value indicating if the specified projection matrix represents a perspective projection.
+			</summary> 
+			<param name="projection"> Projection matrix. </param> 
+			<returns>true if there is the specified projection matrix represents a perspective projection, otherwise false.</returns>
+		</member>
 		<member name="M:Unigine.Math.perspective(float,float,float,float)">
 			<summary>
 			Returns perspective projection matrix.
@@ -4500,6 +5748,36 @@
 			<param name="v0"> Vector to be reflected. </param>
 			<param name="v1"> Normal vector to the reflection plane. </param> 
 			<returns>Reflected vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.removeScale(Unigine.mat4,Unigine.vec3)">
+			<summary>
+			Resets the transformation scale by replacing the scale component of the transformation matrix with a vec3_one (vector filled with ones). The original scale is stored in the vector argument.
+			</summary> 
+			<param name="ret"> Matrix to store the output. </param>
+			<param name="scale"> Vector to store the scale component of the transformation. </param> 
+			<returns>Output matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.removeScale(Unigine.mat4)">
+			<summary>
+			Resets the transformation scale by replacing the scale component of the transformation matrix with a vec3_one (vector filled with ones).
+			</summary> 
+			<param name="ret"> Matrix to store the output. </param> 
+			<returns>Output matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.removeScale(Unigine.dmat4,Unigine.vec3)">
+			<summary>
+			Resets the transformation scale by replacing the scale component of the transformation matrix with a vec3_one (vector filled with ones). The original scale is stored in the vector argument.
+			</summary> 
+			<param name="ret"> Matrix to store the output. </param>
+			<param name="scale"> Vector to store the scale component of the transformation. </param> 
+			<returns>Output matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.removeScale(Unigine.dmat4)">
+			<summary>
+			Resets the transformation scale by replacing the scale component of the transformation matrix with a vec3_one (vector filled with ones).
+			</summary> 
+			<param name="ret"> Matrix to store the output. </param> 
+			<returns>Output matrix.</returns>
 		</member>
 		<member name="M:Unigine.Math.rotateX(float)">
 			<summary>
@@ -4649,6 +5927,14 @@
 			<param name="forward"> Forward direction vector defining the direction to look in. </param> 
 			<returns>Rotation quaternion.</returns>
 		</member>
+		<member name="M:Unigine.Math.rotationFromTo(Unigine.vec3,Unigine.vec3)">
+			<summary>
+			Returns the rotation quaternion for the specified source and target directions. For more information see Matrix Transformations.
+			</summary> 
+			<param name="from_dir"> Vector defining the initial direction. </param>
+			<param name="to_dir"> Vector defining the target direction. </param> 
+			<returns>Rotation quaternion.</returns>
+		</member>
 		<member name="M:Unigine.Math.scale(float,float,float)">
 			<summary>
 			Returns scaling matrix for the specified scaling vector (X, Y, Z):
@@ -4683,30 +5969,30 @@
 		</member>
 		<member name="M:Unigine.Math.setTo(Unigine.dvec3,Unigine.dvec3,Unigine.vec3,int)">
 			<summary>
-			Returns the transformation matrix, which puts an object to the specified position and sets it orientation to the specified target point. At that, the forward direction vector is pointed along the specified axis. By default, it is negative Z.
+			Returns the a transformation matrix, which puts an object to the specified position and sets it orientation to the specified target point. The forward direction vector is oriented along the specified axis (negative Z, by default). This function is similar to the lookAt() function, but instead of creating a view matrix for a camera, it creates a model matrix for positioning and orienting an object. This can be used to position objects in world space, aligning them to look at a target while maintaining a specific orientation relative to the "up" direction.
 			</summary> 
-			<param name="position"> Position of the eye point. </param>
-			<param name="target"> Position of the target point. </param>
+			<param name="position"> Coordinates of the eye point position. </param>
+			<param name="target"> Coordinates of the target point position. </param>
 			<param name="up"> Direction of the up vector. </param>
-			<param name="axis"> Axis along which the forward direction vector is pointed. The default is negative Z. </param> 
+			<param name="axis"> Axis along which the forward direction vector is oriented (which axis should face the target). One of the AXIS_* values (by default it's AXIS_NZ). </param> 
 			<returns>Transformation matrix.</returns>
 		</member>
 		<member name="M:Unigine.Math.setTo(Unigine.vec3,Unigine.vec3,Unigine.vec3,int)">
 			<summary>
-			Returns the transformation matrix, which puts an object to the specified position and sets it orientation to the specified target point. At that, the forward direction vector is pointed along the specified axis. By default, it is negative Z.
+			Returns the a transformation matrix, which puts an object to the specified position and sets it orientation to the specified target point. The forward direction vector is oriented along the specified axis (negative Z, by default). This function is similar to the lookAt() function, but instead of creating a view matrix for a camera, it creates a model matrix for positioning and orienting an object. This can be used to position objects in world space, aligning them to look at a target while maintaining a specific orientation relative to the "up" direction.
 			</summary> 
-			<param name="position"> Position of the eye point. </param>
-			<param name="target"> Position of the target point. </param>
+			<param name="position"> Coordinates of the eye point position. </param>
+			<param name="target"> Coordinates of the target point position. </param>
 			<param name="up"> Direction of the up vector. </param>
-			<param name="axis"> Axis along which the forward direction vector is pointed. The default is negative Z. </param> 
+			<param name="axis"> Axis along which the forward direction vector is oriented (which axis should face the target). One of the AXIS_* values (by default it's AXIS_NZ). </param> 
 			<returns>Transformation matrix.</returns>
 		</member>
 		<member name="M:Unigine.Math.symmetryProjection(Unigine.mat4)">
 			<summary>
-			Returns the symmetry projection matrix.
+			Returns a symmetric projection matrix for the specified input projection matrix. Symmetric projection ensures that the view frustum is symmetric about the x and y axes, based on the original frustum dimensions. This could be useful in cases where asymmetry in the projection matrix might cause issues, such as distortion in the rendered scene or when performing specific visual effects (e.g., mirroring or aligning views). The result is a projection matrix that maintains the same depth-related behavior as the original one but ensures symmetry in the x and y directions.
 			</summary> 
-			<param name="projection"> Projection matrix. </param> 
-			<returns>The symmetry projection matrix.</returns>
+			<param name="projection"> Input projection matrix. </param> 
+			<returns>Symmetric projection matrix.</returns>
 		</member>
 		<member name="M:Unigine.Math.translate(float,float,float)">
 			<summary>
@@ -4831,49 +6117,63 @@
 		</member>
 		<member name="M:Unigine.Math.acos(float)">
 			<summary>
-			Returns the arc cosine of the given argument - the angle in radians, whose cosine is equal to the argument. a == cos(acos(a)) for every value of a that is within acos()'s range.
+			Returns the arccosine of the given argument - the angle in radians, whose cosine is equal to the argument. a == cos(acos(a)) for every value of a that is within acos()'s range.
 			</summary> 
 			<param name="v"> Argument. </param> 
-			<returns>Arc cosine of the argument, in radians.</returns>
+			<returns>Arccosine of the argument, in radians.</returns>
 		</member>
 		<member name="M:Unigine.Math.acos(double)">
 			<summary>
-			Returns the arc cosine of the given argument - the angle in radians, whose cosine is equal to the argument. a == cos(acos(a)) for every value of a that is within acos()'s range.
+			Returns the arccosine of the given argument - the angle in radians, whose cosine is equal to the argument. a == cos(acos(a)) for every value of a that is within acos()'s range.
 			</summary> 
 			<param name="v"> Argument. </param> 
-			<returns>Arc cosine of the argument, in radians.</returns>
+			<returns>Arccosine of the argument, in radians.</returns>
+		</member>
+		<member name="M:Unigine.Math.acosFast(float)">
+			<summary>
+			Returns the approximated, but calculated more quickly, arccosine of the given argument.
+			</summary> 
+			<param name="a"> Argument, in radians. </param> 
+			<returns>Approximated arccosine of the argument.</returns>
 		</member>
 		<member name="M:Unigine.Math.asin(float)">
 			<summary>
-			Returns the arc sine of the given argument - the angle in radians, whose sine is equal to the argument. a == sin(asin(a)) for every value of a that is within asin()'s range.
+			Returns the arcsine of the given argument - the angle in radians, whose sine is equal to the argument. a == sin(asin(a)) for every value of a that is within asin()'s range.
 			</summary> 
 			<param name="v"> Argument. </param> 
-			<returns>Arc sine of the argument, in radians.</returns>
+			<returns>Arcsine of the argument, in radians.</returns>
 		</member>
 		<member name="M:Unigine.Math.asin(double)">
 			<summary>
-			Returns the arc sine of the given argument - the angle in radians, whose sine is equal to the argument. a == sin(asin(a)) for every value of a that is within asin()'s range.
+			Returns the arcsine of the given argument - the angle in radians, whose sine is equal to the argument. a == sin(asin(a)) for every value of a that is within asin()'s range.
 			</summary> 
 			<param name="v"> Argument. </param> 
-			<returns>Arc sine of the argument, in radians.</returns>
+			<returns>Arcsine of the argument, in radians.</returns>
+		</member>
+		<member name="M:Unigine.Math.asinFast(float)">
+			<summary>
+			Returns the approximated, but calculated more quickly, arcsine of the given argument.
+			</summary> 
+			<param name="a"> Argument, in radians. </param> 
+			<returns>Approximated arcsine of the argument.</returns>
 		</member>
 		<member name="M:Unigine.Math.atan(float)">
 			<summary>
-			Returns the arc tangent of the given argument - the angle in radians, whose tangent is equal to the argument. a == tan(atan(a)) for every value of a that is within atan()'s range.
+			Returns the arctangent of the given argument - the angle in radians, whose tangent is equal to the argument. a == tan(atan(a)) for every value of a that is within atan()'s range.
 			</summary> 
 			<param name="v"> Argument. </param> 
-			<returns>Arc tangent of the argument, in radians.</returns>
+			<returns>Arctangent of the argument, in radians.</returns>
 		</member>
 		<member name="M:Unigine.Math.atan(double)">
 			<summary>
-			Returns the arc tangent of the given argument - the angle in radians, whose tangent is equal to the argument. a == tan(atan(a)) for every value of a that is within atan()'s range.
+			Returns the arctangent of the given argument - the angle in radians, whose tangent is equal to the argument. a == tan(atan(a)) for every value of a that is within atan()'s range.
 			</summary> 
 			<param name="v"> Argument. </param> 
-			<returns>Arc tangent of the argument, in radians.</returns>
+			<returns>Arctangent of the argument, in radians.</returns>
 		</member>
 		<member name="M:Unigine.Math.atan2(float,float)">
 			<summary>
-			Returns the arc tangent of two arguments (x and y). It is similar to calculating the arc tangent of y / x, except that the signs of both arguments are used to determine the quadrant of the result.
+			Returns the arctangent of two arguments (x and y). It is similar to calculating the arctangent of y / x, except that the signs of both arguments are used to determine the quadrant of the result.
 			</summary> 
 			<param name="y"> First argument. </param>
 			<param name="x"> Second argument. </param> 
@@ -4881,7 +6181,7 @@
 		</member>
 		<member name="M:Unigine.Math.atan2(double,double)">
 			<summary>
-			Returns the arc tangent of two arguments (x and y). It is similar to calculating the arc tangent of y / x, except that the signs of both arguments are used to determine the quadrant of the result.
+			Returns the arctangent of two arguments (x and y). It is similar to calculating the arctangent of y / x, except that the signs of both arguments are used to determine the quadrant of the result.
 			</summary> 
 			<param name="y"> First argument. </param>
 			<param name="x"> Second argument. </param> 
@@ -4901,6 +6201,20 @@
 			<param name="a"> Argument, in radians. </param> 
 			<returns>Cosine of the argument.</returns>
 		</member>
+		<member name="M:Unigine.Math.cosFast(float)">
+			<summary>
+			Returns the approximated, but calculated more quickly, cosine of the given argument.
+			</summary> 
+			<param name="a"> Argument, in radians. </param> 
+			<returns>Approximated cosine of the argument.</returns>
+		</member>
+		<member name="M:Unigine.Math.cosFastFixed(float)">
+			<summary>
+			Returns the approximated, but calculated more quickly, cosine of the given argument in range [-pi*0.5, pi*0.5].
+			</summary> 
+			<param name="a"> Argument, in radians, in range [-pi*0.5, pi*0.5]. </param> 
+			<returns>Approximated cosine of the argument.</returns>
+		</member>
 		<member name="M:Unigine.Math.sin(float)">
 			<summary>
 			Returns the sine of the given argument.
@@ -4914,6 +6228,44 @@
 			</summary> 
 			<param name="a"> Argument, in radians. </param> 
 			<returns>Sine of the argument.</returns>
+		</member>
+		<member name="M:Unigine.Math.sinFast(float)">
+			<summary>
+			Returns the approximated, but calculated more quickly, sine of the given argument.
+			</summary> 
+			<param name="a"> Argument, in radians. </param> 
+			<returns>Approximated sine of the argument.</returns>
+		</member>
+		<member name="M:Unigine.Math.sinFastFixed(float)">
+			<summary>
+			Returns the approximated, but calculated more quickly, sine of the given argument in range [-pi*0.5, pi*0.5].
+			</summary> 
+			<param name="a"> Argument, in radians, in range [-pi*0.5, pi*0.5]. </param> 
+			<returns>Approximated sine of the argument.</returns>
+		</member>
+		<member name="M:Unigine.Math.sincos(float,float,float)">
+			<summary>
+			Calculates sine and cosine values for the specified angle value given in radians and puts them to out_sin and out_cos.
+			</summary> 
+			<param name="angle"> Angle, in radians. </param>
+			<param name="s"> Variable, to which the calculated sine value is to be put. </param>
+			<param name="c"> Variable, to which the calculated cosine value is to be put. </param> 
+		</member>
+		<member name="M:Unigine.Math.sincos(double,double,double)">
+			<summary>
+			Calculates sine and cosine values for the specified angle value given in radians and puts them to out_sin and out_cos.
+			</summary> 
+			<param name="angle"> Angle, in radians. </param>
+			<param name="s"> Variable, to which the calculated sine value is to be put. </param>
+			<param name="c"> Variable, to which the calculated cosine value is to be put. </param> 
+		</member>
+		<member name="M:Unigine.Math.sincosFast(float,float,float)">
+			<summary>
+			Calculates approximated sine and cosine values for the specified angle value given in radians and puts them to out_sin and out_cos.
+			</summary> 
+			<param name="angle"> Angle, in radians. </param>
+			<param name="s"> Variable, to which the calculated sine value is to be put. </param>
+			<param name="c"> Variable, to which the calculated cosine value is to be put. </param> 
 		</member>
 		<member name="M:Unigine.Math.tan(float)">
 			<summary>

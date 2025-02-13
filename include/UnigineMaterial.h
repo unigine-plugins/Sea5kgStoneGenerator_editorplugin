@@ -41,7 +41,6 @@ public:
 		OPTION_VIEWPORT_MASK,
 		OPTION_BLEND_SRC,
 		OPTION_BLEND_DEST,
-		OPTION_DEPTH_MASK,
 		OPTION_DEPTH_TEST,
 		OPTION_TWO_SIDED,
 		OPTION_CAST_PROJ_OMNI_SHADOW,
@@ -84,8 +83,8 @@ public:
 		TEXTURE_SOURCE_DIRECT_LIGHTS,
 		TEXTURE_SOURCE_INDIRECT_LIGHTS,
 		TEXTURE_SOURCE_LIGHTING_INFORMATION_LOST,
-		TEXTURE_SOURCE_INDIRECT_DIFFUSE,
-		TEXTURE_SOURCE_INDIRECT_SPECULAR,
+		TEXTURE_SOURCE_INDIRECT_DIFFUSE_FINAL,
+		TEXTURE_SOURCE_INDIRECT_SPECULAR_FINAL,
 		TEXTURE_SOURCE_BENT_NORMAL,
 		TEXTURE_SOURCE_SSAO,
 		TEXTURE_SOURCE_SSGI,
@@ -200,7 +199,8 @@ public:
 	const char *getNamespaceName() const;
 	const char *getManualName() const;
 	UGUID getGUID() const;
-	const char *getPath() const;
+	UGUID getFileGUID() const;
+	String getFilePath() const;
 	bool isNodeTypeSupported(Node::TYPE type) const;
 	bool isNodeSupported(const Ptr<Node> &node) const;
 	bool canRenderNode() const;
@@ -240,8 +240,6 @@ public:
 	int getShadowMask() const;
 	void setViewportMask(int mask);
 	int getViewportMask() const;
-	void setDepthMask(int mask);
-	int getDepthMask() const;
 	void setOrder(int order);
 	int getOrder() const;
 	void setCastShadow(bool shadow);
@@ -254,9 +252,11 @@ public:
 	bool isTwoSided() const;
 	void setOverlap(bool overlap);
 	bool isOverlap() const;
-	bool checkShaderCache() const;
-	bool checkShaderCache(Render::PASS pass, Node::TYPE node_type) const;
-	bool compileShader(Render::PASS pass, Node::TYPE node_type);
+	bool needCreateShaderCache() const;
+	bool needCreateShaderCache(Render::PASS pass, Node::TYPE node_type) const;
+	bool shaderCacheExist(Render::PASS pass, Node::TYPE node_type) const;
+	void createShaderForce(Render::PASS pass, Node::TYPE node_type);
+	void createShaderAsync(Render::PASS pass, Node::TYPE node_type);
 	Ptr<Shader> getShaderAsync(Render::PASS pass, int node);
 	Ptr<Shader> getShaderAsync(Render::PASS pass);
 	Ptr<Shader> getShaderAsync(const char *pass, int node);
@@ -265,8 +265,10 @@ public:
 	Ptr<Shader> getShaderForce(Render::PASS pass);
 	Ptr<Shader> getShaderForce(const char *pass, int node);
 	Ptr<Shader> getShaderForce(const char *pass);
+	void createRenderMaterials();
+	void createShaderCache(bool recursive = false);
 	void createShaders(bool recursive = false);
-	void compileShaders(bool recursive = false);
+	void createShadersFromCache(bool recursive = false);
 	void destroyTextures();
 	int getNumParameters() const;
 	int findParameter(const char *name) const;
@@ -355,6 +357,8 @@ public:
 	int getTextureSamplerFlags(int num) const;
 	void setTextureSamplerFlags(int num, int sampler_flags);
 	int getTextureFormatFlags(int num) const;
+	void setTextureStreamingDensityMultiplier(int num, float streaming_density_multiplier);
+	float getTextureStreamingDensityMultiplier(int num) const;
 	int getTextureImage(int num, const Ptr<Image> &image) const;
 	int setTextureImage(int num, const Ptr<Image> &image);
 	Ptr<Texture> getTexture(int num);

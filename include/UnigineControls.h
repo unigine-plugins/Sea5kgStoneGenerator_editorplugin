@@ -26,7 +26,7 @@ namespace Unigine
 class UNIGINE_API ControlsApp
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	static void setPath(const char *path);
 	static const char *getPath();
 	static void setAutosave(bool autosave);

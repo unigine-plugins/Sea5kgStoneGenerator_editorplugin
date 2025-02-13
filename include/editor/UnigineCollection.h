@@ -54,7 +54,7 @@ public:
 	/// <param name='value_name'> Name of the collection element to be checked.</param>
 	/// <returns> <b>true</b> if the collection contains an element with the specified name; otherwise, <b>false</b>.</returns>
 	bool hasValue(const char *value_name) const;
-		/// <summary> Returns the list of names of all elements in the collection as a vector of strings.</summary>
+	/// <summary> Returns the list of names of all elements in the collection as a vector of strings.</summary>
 	/// <returns> The list of names of all elements in the collection.</returns>
 	Unigine::Vector<Unigine::String> getNames() const;
 	/// <summary> Saves to the vector of strings specified as the argument the list of names of all elements in the collection.</summary>

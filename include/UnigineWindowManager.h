@@ -257,6 +257,8 @@ public:
 	bool isProfilerUsage() const;
 	void setVisualizerUsage(bool usage);
 	bool isVisualizerUsage() const;
+	void setAspectCorrection(bool correction);
+	bool isAspectCorrection() const;
 	void setSkipRenderEngine(bool engine);
 	bool isSkipRenderEngine() const;
 	bool isFullscreen() const;
@@ -318,6 +320,7 @@ public:
 	bool containsNestedWindowInHierarchy(const Ptr<EngineWindow> &window) const;
 	void setTabTitle(int index, const char *title);
 	void setTabIcon(int index, const Ptr<Image> &image);
+	void setCurrentTab(int tab);
 	int getCurrentTab() const;
 	int getTabWidth(int index) const;
 	int getTabHeight(int index) const;
@@ -492,7 +495,7 @@ typedef Ptr<SystemDialog> SystemDialogPtr;
 class UNIGINE_API WindowManager
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
 	enum DPI_AWARENESS
 	{

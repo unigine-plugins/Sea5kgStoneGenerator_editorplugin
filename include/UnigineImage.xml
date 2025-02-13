@@ -227,12 +227,6 @@
 			<param name="layer"> Image layer number. </param> 
 			<returns>Pixel color represented by a Pixel structure.</returns>
 		</member>
-		<member name="M:Unigine.Image.is2DType const">
-			<summary>
-			Returns a value indicating if the image is a 2D image.
-			</summary>  
-			<returns>true if the image is a 2D image; otherwise - false.</returns>
-		</member>
 		<member name="M:Unigine.Image.set3D(int,int,int,Image::Pixel)">
 			<summary>
 			Sets a color of a given pixel of a 3D image. Compressed formats are not supported.
@@ -300,24 +294,6 @@
 			</summary> 
 			<param name="uvw"> Float coordinates of a pixel in the range [0.0f; 1.0f]. </param> 
 			<returns>Pixel color represented by a Pixel structure with float components in the range [0.0f, 1.0f].</returns>
-		</member>
-		<member name="M:Unigine.Image.is3DType const">
-			<summary>
-			Returns a value indicating if the image is a 3D image.
-			</summary>  
-			<returns>1 if the image is a 3D image; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Image.isArrayType const">
-			<summary>
-			Returns a value indicating if the image is of an array type (see *_ARRAY variables).
-			</summary>  
-			<returns>1 if the image is of an array type; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Image.getBlockSize const">
-			<summary>
-			Returns the compressed image block size.
-			</summary>  
-			<returns>Block size in bytes.</returns>
 		</member>
 		<member name="M:Unigine.Image.isCombinedFormat const">
 			<summary>
@@ -461,12 +437,6 @@
 			<param name="layer"> Image layer number. </param> 
 			<returns>Pixel color represented by a Pixel structure.</returns>
 		</member>
-		<member name="M:Unigine.Image.isCubeType const">
-			<summary>
-			Returns a value indicating if the image is Cube image.
-			</summary>  
-			<returns>1 if the image is a cube image; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Image.getDepth(int) const">
 			<summary>
 			Returns the image depth on a given mipmap level.
@@ -487,12 +457,6 @@
 			<param name="format"> Image format identifier. See the FORMAT_* variables. </param> 
 			<returns>1 if the specified format is a float format; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Image.getFormat const">
-			<summary>
-			Returns a numerical code of the image format.
-			</summary>  
-			<returns>Numerical code of the image format. See the FORMAT_* variables.</returns>
-		</member>
 		<member name="M:Unigine.Image.getFormat(int,int)">
 			<summary>
 			Returns a numerical code of the image format for the specified format and number of channels.
@@ -500,12 +464,6 @@
 			<param name="num_channels"> Number of channels in the [1; 4] range. </param>
 			<param name="format"> Numerical code of the image format. See the FORMAT_* variables. </param> 
 			<returns>Numerical code of the image format for the specified number of channels.</returns>
-		</member>
-		<member name="M:Unigine.Image.getFormatName const">
-			<summary>
-			Returns an image format name.
-			</summary>  
-			<returns>Image format name. The following values can be returned: R8, RG8, RGB8, RGBA8, R16, RG16, RGB16, RGBA16, R16F, RG16F, RGB16F, RGBA16F, R32F, RG32F, RGB32F, RGBA32F, RGB565, RGBA4, RGB5A1, RGB10A2, DXT1, DXT3, DXT5, ATI1, ATI2.</returns>
 		</member>
 		<member name="M:Unigine.Image.getFormatName(int)">
 			<summary>
@@ -534,12 +492,6 @@
 			<param name="level"> Mipmap level in range from 0 to the total number of mipmaps. This is an optional argument. </param> 
 			<returns>Image height if the image exists (its height is larger than 0); otherwise, 1.</returns>
 		</member>
-		<member name="M:Unigine.Image.isLoaded const">
-			<summary>
-			Returns a value indicating whether the image is loaded.
-			</summary>  
-			<returns>1 if the image is loaded; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Image.setChannelInt(int,int)">
 			<summary>
 			Sets an integer value for a given image channel. Compressed and combined image formats are not supported.
@@ -564,42 +516,12 @@
 			<param name="channel_1"> Number of the second channel in range from 0 to number of channels - 1. </param> 
 			<returns>true if the two specified channels were swapped successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Image.getNumChannels const">
-			<summary>
-			Returns the number of image channels.
-			</summary>  
-			<returns>Number of image channels.</returns>
-		</member>
-		<member name="M:Unigine.Image.getNumFaces const">
-			<summary>
-			Returns the number of faces in the image.
-			</summary>  
-			<returns>Number of image faces.</returns>
-		</member>
-		<member name="M:Unigine.Image.getNumLayers const">
-			<summary>
-			Returns the number of layers in the image.
-			</summary>  
-			<returns>Number of layers.</returns>
-		</member>
-		<member name="M:Unigine.Image.getNumMipmaps const">
-			<summary>
-			Returns the number of mipmaps stored with the image.
-			</summary>  
-			<returns>Number of mipmap levels.</returns>
-		</member>
 		<member name="M:Unigine.Image.getOffset(int) const">
 			<summary>
 			Returns the image offset on a given mipmap level.
 			</summary> 
 			<param name="level"> Mipmap level in range from 0 to the total number of mipmaps. </param> 
 			<returns>Image offset, in bytes.</returns>
-		</member>
-		<member name="M:Unigine.Image.getNumPixels const">
-			<summary>
-			Returns the number of Pixels in the image.
-			</summary>  
-			<returns>Number of pixels.</returns>
 		</member>
 		<member name="M:Unigine.Image.setPixels(unsignedchar)">
 			<summary>
@@ -667,12 +589,6 @@
 			<param name="level"> Mipmap level in range from 0 to the total number of mipmaps. This is an optional argument. </param> 
 			<returns>Pointer to the array of pixels.</returns>
 		</member>
-		<member name="M:Unigine.Image.getPixelSize const">
-			<summary>
-			Returns the uncompressed image pixel size.
-			</summary>  
-			<returns>Pixel size, in bytes.</returns>
-		</member>
 		<member name="M:Unigine.Image.getPixelsSize(int,int,int)">
 			<summary>
 			Returns the size of all pixels for the image of the specified format and size.
@@ -681,12 +597,6 @@
 			<param name="w"> Image width, in pixels. </param>
 			<param name="h"> Image width, in pixels. </param> 
 			<returns>Size of all pixels of the specified image, in bytes.</returns>
-		</member>
-		<member name="M:Unigine.Image.getPixelsSize const">
-			<summary>
-			Returns the size of all pixels of the image.
-			</summary>  
-			<returns>Size of all pixels of the image, in bytes.</returns>
 		</member>
 		<member name="M:Unigine.Image.isRawFormat const">
 			<summary>
@@ -727,18 +637,6 @@
 			</summary> 
 			<param name="level"> Mipmap level in range from 0 to the total number of mipmaps. </param> 
 			<returns>Image depth stride in bytes.</returns>
-		</member>
-		<member name="M:Unigine.Image.getType const">
-			<summary>
-			Returns a numerical code of the image type.
-			</summary>  
-			<returns>Numerical code of the image type: 0 for a 2D image, 1 for a 3D image, 2 for a cube image, 3 for a 2D Array. See the Unigine::Image:: Enumeration with IMAGE_* prefixes.</returns>
-		</member>
-		<member name="M:Unigine.Image.getTypeName const">
-			<summary>
-			Returns an image type name.
-			</summary>  
-			<returns>Image type name: 2D for a 2D image, 3D for a 3D image, Cube for a cube image, 2D_Array for a 2D Array.</returns>
 		</member>
 		<member name="M:Unigine.Image.getTypeName(int)">
 			<summary>
@@ -999,7 +897,7 @@
 			<param name="allocate"> true to allocate memory for the created image. This value should be always set to true. </param> 
 			<returns>true if the cube array image is successfully created; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Image.createMipmaps(Image::FILTER,float,float,float)">
+		<member name="M:Unigine.Image.createMipmaps(Image::FILTER,float)">
 			<summary>
 			Generates mipmaps for the image. Mipmaps cannot be created for compressed and combined image formats.
 			</summary> 
@@ -1212,24 +1110,6 @@
 			<param name="format"> Image format identifier. See the FORMAT_* variables. </param> 
 			<returns>Block size for the specified image format.</returns>
 		</member>
-		<member name="M:Unigine.Image.getDepth const">
-			<summary>
-			Returns the image depth, in pixels.
-			</summary>  
-			<returns>Image depth, in pixels</returns>
-		</member>
-		<member name="M:Unigine.Image.getHeight const">
-			<summary>
-			Returns the image height, in pixels.
-			</summary>  
-			<returns>Image height, in pixels</returns>
-		</member>
-		<member name="M:Unigine.Image.getWidth const">
-			<summary>
-			Returns the image width, in pixels.
-			</summary>  
-			<returns>Image width, in pixels</returns>
-		</member>
 		<member name="M:Unigine.Image.invertChannel(unsignedchar)">
 			<summary>
 			Inverts the values stored in the specified channel. Channels of images of half (FORMAT_R16F to FORMAT_RGBA16F) and float (FORMAT_R32F to FORMAT_RGBA32F) formats cannot be inverted.
@@ -1257,18 +1137,6 @@
 			</summary> 
 			<param name="format"> Image format identifier. See the FORMAT_* variables. </param> 
 			<returns>Identifier of the uncompressed image (stored in R8, RG8, RGB8, RGBA8, R16, RG16, RGB16, RGBA16, R16F, RG16F, RGB16F, RGBA16F, R32F, RG32F, RGB32F, RGBA32F format).</returns>
-		</member>
-		<member name="M:Unigine.Image.setFileCompression(Image::FILE_COMPRESSION)">
-			<summary>
-			File compression type to be used for the image. Compression is applied only when saving the image into the *.texture format.
-			</summary> 
-			<param name="compression"> File compression type to be used for the image. One of the FILE_COMPRESSION_* values. </param> 
-		</member>
-		<member name="M:Unigine.Image.getFileCompression const">
-			<summary>
-			Returns the image file compression type. Compression is applied only when saving the image into the *.texture format.
-			</summary>  
-			<returns>File compression type used for the image. One of the FILE_COMPRESSION_* values.</returns>
 		</member>
 		<member name="M:Unigine.Image.calcRange(Unigine.Math.dvec2)">
 			<summary>

@@ -4,25 +4,102 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.Time.MicrosecondsToSeconds(longlong)">
+		<member name="M:Unigine.Time.microsecondsToNanoseconds(longlong)">
 			<summary>
-			Converts microseconds to seconds.
+			Converts microseconds to nanoseconds.
 			</summary> 
 			<param name="microseconds"> Microseconds. </param> 
-			<returns>Seconds.</returns>
+			<returns>Nanoseconds.</returns>
 		</member>
-		<member name="M:Unigine.Time.MicrosecondsToMilliseconds(longlong)">
+		<member name="M:Unigine.Time.microsecondsToMilliseconds(longlong)">
 			<summary>
 			Converts microseconds to milliseconds.
 			</summary> 
 			<param name="microseconds"> Microseconds. </param> 
 			<returns>Milliseconds.</returns>
 		</member>
+		<member name="M:Unigine.Time.microsecondsToSeconds(longlong)">
+			<summary>
+			Converts microseconds to seconds.
+			</summary> 
+			<param name="microseconds"> Microseconds. </param> 
+			<returns>Seconds.</returns>
+		</member>
+		<member name="M:Unigine.Time.millisecondsToNanoseconds(double)">
+			<summary>
+			Converts milliseconds to nanoseconds.
+			</summary> 
+			<param name="milliseconds"> Milliseconds. </param> 
+			<returns>Nanoseconds.</returns>
+		</member>
+		<member name="M:Unigine.Time.millisecondsToMicroseconds(double)">
+			<summary>
+			Converts milliseconds to microseconds.
+			</summary> 
+			<param name="milliseconds"> Milliseconds. </param> 
+			<returns>Microseconds.</returns>
+		</member>
+		<member name="M:Unigine.Time.millisecondsToSeconds(double)">
+			<summary>
+			Converts milliseconds to seconds.
+			</summary> 
+			<param name="milliseconds"> Milliseconds. </param> 
+			<returns>Seconds.</returns>
+		</member>
+		<member name="M:Unigine.Time.secondsToNanoseconds(double)">
+			<summary>
+			Converts seconds to nanoseconds.
+			</summary> 
+			<param name="seconds"> Seconds. </param> 
+			<returns>Nanoseconds.</returns>
+		</member>
+		<member name="M:Unigine.Time.secondsToMicroseconds(double)">
+			<summary>
+			Converts seconds to microseconds.
+			</summary> 
+			<param name="seconds"> Seconds. </param> 
+			<returns>Microseconds.</returns>
+		</member>
+		<member name="M:Unigine.Time.secondsToMilliseconds(double)">
+			<summary>
+			Converts seconds to milliseconds.
+			</summary> 
+			<param name="seconds"> Seconds. </param> 
+			<returns>Milliseconds.</returns>
+		</member>
+		<member name="M:Unigine.Time.hertzToNanoseconds(double)">
+			<summary>
+			Converts frequency given in hertz to nanoseconds.
+			</summary> 
+			<param name="hertz"> Hertz. </param> 
+			<returns>Nanoseconds.</returns>
+		</member>
+		<member name="M:Unigine.Time.hertzToMicroseconds(double)">
+			<summary>
+			Converts frequency given in hertz to microseconds.
+			</summary> 
+			<param name="hertz"> Hertz. </param> 
+			<returns>Microseconds.</returns>
+		</member>
+		<member name="M:Unigine.Time.hertzToMilliseconds(double)">
+			<summary>
+			Converts frequency given in hertz to milliseconds.
+			</summary> 
+			<param name="hertz"> Hertz. </param> 
+			<returns>Milliseconds.</returns>
+		</member>
+		<member name="M:Unigine.Time.hertzToSeconds(double)">
+			<summary>
+			Converts frequency given in hertz to seconds.
+			</summary> 
+			<param name="hertz"> Hertz. </param> 
+			<returns>Seconds.</returns>
+		</member>
 		<member name="M:Unigine.Time.getClock">
 			<summary>
-			Returns CPU clocks counter.
+			Returns CPU clock counter.
 			</summary>  
-			<returns>CPU clocks counter.</returns>
+			<returns>CPU clock counter.</returns>
 		</member>
 		<member name="M:Unigine.Time.get">
 			<summary>

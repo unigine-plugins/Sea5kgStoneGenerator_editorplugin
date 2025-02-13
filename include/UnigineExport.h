@@ -61,8 +61,8 @@ private:
 
 };
 
-template class UNIGINE_API Map<String, Factory<String, Exporter>::FuncPtr>;
 template class UNIGINE_API Factory<String, Exporter>;
+template class UNIGINE_API Map<String, Factory<String, Exporter>::FuncPtr>;
 template class UNIGINE_API Map<String, String>;
 template class UNIGINE_API Map<String, Vector<String>>;
 
@@ -72,7 +72,7 @@ class UNIGINE_API Export
 	~Export();
 public:
 
-	static Export * get();
+	static Export *get();
 
 	template<typename Type>
 	void registerExporter(const char *type_name, const Vector<String> &extensions)
@@ -82,7 +82,7 @@ public:
 		{
 			if (type_by_extension.contains(ext))
 			{
-				Log::warning("Extensions \"%s\" already registered.\n", ext.get());
+				Log::warning("Export::registerExporter: Extension \"%s\" is already registered.\n", ext.get());
 				continue;
 			}
 			type_by_extension.append(ext, type_name);
@@ -95,16 +95,19 @@ public:
 	Exporter *createExporter(const char *type_name) const;
 	Exporter *createExporterByFileName(const char *file_name) const;
 
+	bool isSupportedExporterType(const char *type_name) const;
 	Vector<String> getExporterTypes() const;
 	void getExporterTypes(Vector<String> &types) const;
 
 	bool isSupportedExtension(const char *extension) const;
 	Vector<String> getSupportedExtensions() const;
 	void getSupportedExtensions(Vector<String> &extensions) const;
+	Vector<String> getSupportedExtensionsByType(const char *type_name) const;
+	void getSupportedExtensionsByType(const char *type_name, Vector<String> &extensions) const;
 
 	String getExporterTypeByExtension(const char *extension) const;
 
-	bool doExport(const NodePtr& root_node, const char *output_filepath) const;
+	bool doExport(const NodePtr &root_node, const char *output_filepath) const;
 
 private:
 	void export_info();

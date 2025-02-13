@@ -20,6 +20,7 @@ namespace Unigine
 namespace Math
 {
 
+/// <summary>Converts Hue color value to RGB (Red, Green, Blue) color values.</summary>
 UNIGINE_INLINE vec3 hueToRgb(float hue)
 {
 	float r = abs(hue * 6.0f - 3.0f) - 1.0f;
@@ -28,10 +29,9 @@ UNIGINE_INLINE vec3 hueToRgb(float hue)
 	return saturate(vec3(r, g, b));
 }
 
+/// <summary>Converts RGB (Red, Green, Blue) color values to HCV (Hue, Chroma, Value) color values.</summary>
 UNIGINE_INLINE vec3 rgbToHcv(vec3 rgb)
 {
-	rgb = saturate(rgb);
-
 	// Based on work by Sam Hocevar and Emil Persson
 	vec4 p = (rgb.y < rgb.z) ? vec4(rgb.z, rgb.y, -1.0f, 2.0f / 3.0f) : vec4(rgb.y, rgb.z, 0.0f, -1.0f / 3.0f);
 	vec4 q = (rgb.x < p.x) ? vec4(p.x, p.y, p.w, rgb.x) : vec4(rgb.x, p.y, p.z, p.x);
@@ -41,18 +41,24 @@ UNIGINE_INLINE vec3 rgbToHcv(vec3 rgb)
 	return vec3(h, c, q.x);
 }
 
+/// <summary>Converts RGB (Red, Green, Blue) color values to HSV (Hue, Saturation, Value) color values.</summary>
 UNIGINE_INLINE vec3 rgbToHsv(vec3 rgb)
 {
+	float V = rgb.max();
+	rgb /= V + Consts::EPS;
+
 	vec3 hcv = rgbToHcv(rgb);
 	float S = hcv.y / (hcv.z + Consts::EPS);
-	return vec3(hcv.x, S, hcv.z);
+	return vec3(hcv.x, S, V);
 }
+/// <summary>Converts HSV (Hue, Saturation, Value) color values to RGB (Red, Green, Blue) color values.</summary>
 UNIGINE_INLINE vec3 hsvToRgb(vec3 hsv)
 {
 	vec3 rgb = hueToRgb(hsv.x);
 	return ((rgb - vec3_one) * hsv.y + vec3_one) * hsv.z;
 }
 
+/// <summary>Converts RGB (Red, Green, Blue) color values to HCY (Hue, Chroma, Luma) color values.</summary>
 UNIGINE_INLINE vec3 rgbToHcy(vec3 rgb)
 {
 	vec3 HCYwts = vec3(0.299f, 0.587f, 0.114f);
@@ -67,6 +73,7 @@ UNIGINE_INLINE vec3 rgbToHcy(vec3 rgb)
 		hcv.y *= (1 - Z) / (Consts::EPS + 1 - Y);
 	return vec3(hcv.x, hcv.y, Y);
 }
+/// <summary>Converts HCY (Hue, Chroma, Luma) to RGB (Red, Green, Blue) color values.</summary>
 UNIGINE_INLINE vec3 hcyToRgb(vec3 hcy)
 {
 	vec3 HCYwts = vec3(0.299f, 0.587f, 0.114f);
@@ -80,6 +87,7 @@ UNIGINE_INLINE vec3 hcyToRgb(vec3 hcy)
 	return (rgb - z) * hcy.y + hcy.z;
 }
 
+/// <summary>Converts RGB (Red, Green, Blue) color values to HCL (Hue, Chroma, Luminance) color values.</summary>
 UNIGINE_INLINE vec3 rgbToHcl(vec3 rgb)
 {
 	float HCLgamma = 3;
@@ -103,6 +111,7 @@ UNIGINE_INLINE vec3 rgbToHcl(vec3 rgb)
 	hcl.z = lerp(-U, V, Q) / (HCLmaxL * 2);
 	return hcl;
 }
+/// <summary>Converts HCL (Hue, Chroma, Luminance) to RGB (Red, Green, Blue) color values.</summary>
 UNIGINE_INLINE vec3 hclToRgb(vec3 hcl)
 {
 	float HCLgamma = 3;
@@ -165,6 +174,7 @@ UNIGINE_INLINE vec3 hclToRgb(vec3 hcl)
 	return rgb;
 }
 
+/// <summary>Converts RGB (Red, Green, Blue) color values to HSL (Hue, Saturation, Lightness) color values.</summary>
 UNIGINE_INLINE vec3 rgbToHsl(vec3 rgb)
 {
 	vec3 hcv = rgbToHcv(rgb);
@@ -172,16 +182,17 @@ UNIGINE_INLINE vec3 rgbToHsl(vec3 rgb)
 	float s = hcv.y / (1.0f + Consts::EPS - abs(l * 2.0f - 1.0f));
 	return vec3(hcv.x, s, l);
 }
+/// <summary>Converts HSL (Hue, Saturation, Lightness) to RGB (Red, Green, Blue) color values.</summary>
 UNIGINE_INLINE vec3 hslToRgb(vec3 hsl)
 {
-	vec3 res = saturate(hsl);
-	vec3 color = saturate(vec3(abs(res.x * 6.0f - 3.0f) - 1.0f,
-						  2.0f - abs(res.x * 6.0f - 2.0f),
-						  2.0f - abs(res.x * 6.0f - 4.0f)));
-	float c = (1.0f - abs(2.0f * res.z - 1.0f)) * res.y;
-	return (color - vec3_half) * c + vec3(res.z);
+	vec3 color = saturate(vec3(abs(hsl.x * 6.0f - 3.0f) - 1.0f,
+						  2.0f - abs(hsl.x * 6.0f - 2.0f),
+						  2.0f - abs(hsl.x * 6.0f - 4.0f)));
+	float c = (1.0f - abs(2.0f * hsl.z - 1.0f)) * hsl.y;
+	return (color - vec3_half) * c + vec3(hsl.z);
 }
 
+/// <summary>Converts RGB (Red, Green, Blue) color values to YUV (Luminance, Delta Blue, Delta Red) color values.</summary>
 UNIGINE_INLINE vec3 rgbToYuv(vec3 rgb)
 {
 	float y = 0.299f * rgb.x + 0.587f * rgb.y + 0.114f * rgb.z; // Luma
@@ -189,6 +200,7 @@ UNIGINE_INLINE vec3 rgbToYuv(vec3 rgb)
 	float v = 0.615f * rgb.x - 0.515f * rgb.y - 0.100f * rgb.z; // Delta Red
 	return vec3(y, u, v);
 }
+/// <summary>Converts YUV (Luminance, Delta Blue, Delta Red) to RGB (Red, Green, Blue) color values.</summary>
 UNIGINE_INLINE vec3 yuvToRgb(vec3 yuv)
 {
 	float r = yuv.x + 1.140f * yuv.z;
@@ -197,6 +209,7 @@ UNIGINE_INLINE vec3 yuvToRgb(vec3 yuv)
 	return vec3(r, g, b);
 }
 
+/// <summary>Converts RGB (Red, Green, Blue) color values to YCbCr (Luma, Chrominance Blue, Chrominance Red) color values.</summary>
 UNIGINE_INLINE vec3 rgbToYcbcr(vec3 rgb)
 {
 	float Y = 0.299f * rgb.x + 0.587f * rgb.y + 0.114f * rgb.z; // Luminance
@@ -204,6 +217,7 @@ UNIGINE_INLINE vec3 rgbToYcbcr(vec3 rgb)
 	float Cr = 0.500f * rgb.x - 0.419f * rgb.y - 0.081f * rgb.z; // Chrominance Red
 	return vec3(Y, Cb + 128.0f / 255.0f, Cr + 128.0f / 255.0f);
 }
+/// <summary>Converts YCbCr (Luma, Chrominance Blue, Chrominance Red) to RGB (Red, Green, Blue) color values.</summary>
 UNIGINE_INLINE vec3 ycbcrToRgb(vec3 ycc)
 {
 	vec3 c = ycc - vec3(0.0f, 128.0f / 255.0f, 128.0f / 255.0f);
@@ -213,6 +227,7 @@ UNIGINE_INLINE vec3 ycbcrToRgb(vec3 ycc)
 	return vec3(r, g, b);
 }
 
+/// <summary>Converts RGB (Red, Green, Blue) color values to YCgCo (Luma, Chrominance Green, Chrominance Orange) color values.</summary>
 UNIGINE_INLINE vec3 rgbToYcgco(vec3 rgb)
 {
 	float Y = 0.25f * rgb.x + 0.5f * rgb.y + 0.25f * rgb.z;	// Luminance
@@ -220,6 +235,7 @@ UNIGINE_INLINE vec3 rgbToYcgco(vec3 rgb)
 	float Co = 0.50f * rgb.x - 0.5f * rgb.z; // Chrominance Orange
 	return vec3(Y, Cg, Co);
 }
+/// <summary>Converts YCgCo (Luma, Chrominance Green, Chrominance Orange) color values to RGB (Red, Green, Blue) color values.</summary>
 UNIGINE_INLINE vec3 ycgcoToRgb(vec3 ycc)
 {
 	float r = ycc.x - ycc.y + ycc.z;

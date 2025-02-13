@@ -37,7 +37,9 @@ namespace Math
 class Convex
 {
 public:
+	/// <summary>Constructor. Initializes the new convex shape by clearing data of the prevoius shape.</summary>
 	UNIGINE_INLINE Convex() { clear(); }
+	/// <summary>Constructor. Initializes the new convex shape using the given shape.</summary>
 	Convex(const Convex &convex)
 	{
 		clear();
@@ -49,6 +51,7 @@ public:
 	}
 	UNIGINE_INLINE ~Convex() { clear(); }
 
+	/// <summary>Sets the convex shape to be equal the given convex shape.</summary>
 	Convex &operator=(const Convex &convex)
 	{
 		if (this == &convex)
@@ -65,6 +68,7 @@ public:
 	}
 
 	// clear
+	/// <summary>Clears the data of the prevoius convex shape.</summary>
 	void clear()
 	{
 		volume = 0.0;
@@ -78,6 +82,10 @@ public:
 	}
 
 	// create convex
+	/// <summary>Creates the convex shape using the given vertices.</summary>
+	/// <param name="vertex_">Vector of vertices.</param>
+	/// <param name="num_vertex_">Number of vertices in the vector.</param>
+	/// <param name="error">Approximation error (value in range [0, 1], a higher value mean fewer vertices). Convex hulls with fewer vertices are processed faster.</param>
 	bool create(const vec3 *v, int num_vertex, float error = 0.01f)
 	{
 		// copy vertices
@@ -89,6 +97,10 @@ public:
 
 		return create(temp_vertex.get(), temp_vertex.size(), error);
 	}
+	/// <summary>Creates the convex shape using the given vertices.</summary>
+	/// <param name="vertex_">Vector of vertices.</param>
+	/// <param name="num_vertex_">Number of vertices in the vector.</param>
+	/// <param name="error">Approximation error (value in range [0, 1], a higher value mean fewer vertices). Convex hulls with fewer vertices are processed faster.</param>
 	bool create(const dvec3 *v, int num_vertex, float error = 0.01f)
 	{
 		clear();
@@ -192,18 +204,27 @@ public:
 
 
 	// vertices
+	/// <summary>Returns the number of vertices the convex shape consists of.</summary>
 	UNIGINE_INLINE int getNumVertex() const { return vertex.size(); }
+	/// <summary>Returns the pointer to the array of vertices for the convex shape.</summary>
 	UNIGINE_INLINE const dvec3 *getVertex() const { return vertex.get(); }
+	/// <summary>Returns the vertex with the given number.</summary>
 	UNIGINE_INLINE const dvec3 &getVertex(int num) const { return vertex[num]; }
 
 	// faces
+	/// <summary>Returns the number of faces for this convex shape.</summary>
 	UNIGINE_INLINE int getNumFaces() const { return faces.size(); }
+	/// <summary>Returns the number of vertices for the given face.</summary>
 	UNIGINE_INLINE int getNumFaceVertex(int face) const { return faces[face].vertex.size(); }
+	/// <summary>Returns the specified vertex of the specified face.</summary>
 	UNIGINE_INLINE int getFaceVertex(int face, int num) const { return faces[face].vertex[num]; }
 
 	// parameters
+	/// <summary>Returns the convex shape volume.</summary>
 	UNIGINE_INLINE double getVolume() const { return volume; }
+	/// <summary>Returns the merge threshold.</summary>
 	UNIGINE_INLINE double getThreshold() const { return threshold; }
+	/// <summary>Returns the center of the convex shape.</summary>
 	dvec3 getCenter() const
 	{
 		double integral_x = 0.0;
@@ -233,6 +254,7 @@ public:
 		integral_z /= 24.0;
 		return dvec3(integral_x, integral_y, integral_z) / volume;
 	}
+	/// <summary>Returns the inertia matrix.</summary>
 	mat3 getInertia() const
 	{
 		mat3 inertia;
@@ -287,6 +309,7 @@ public:
 	}
 
 	// closest point
+	/// <summary>Returns the closest convex shape's point to the given point.</summary>
 	dvec3 getClosestPoint(const dvec3 &point) const
 	{
 		dvec3 p, clip, v10, v20;
@@ -338,6 +361,7 @@ public:
 	}
 
 	// bounding box
+	/// <summary>Calculates the convex shape's bounding box (minimum and maximum vertices).</summary>
 	UNIGINE_INLINE void getBoundBox(dvec3 &min, dvec3 &max) const
 	{
 		Simd::minMaxVec3(min, max, vertex.get(), sizeof(dvec3), vertex.size());

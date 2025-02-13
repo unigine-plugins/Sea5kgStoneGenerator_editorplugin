@@ -28,7 +28,7 @@ namespace Unigine
 class UNIGINE_API VREyeTracking
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
 	enum STATUS
 	{

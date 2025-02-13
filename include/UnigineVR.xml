@@ -23,6 +23,12 @@
 			</summary>  
 			<returns>true if the feature is available; otherwise, false.</returns>
 		</member>
+		<member name="M:Unigine.VR.hasFeatureHandTracking const">
+			<summary>
+			Returns a value indicating if hand tracking is available. This feature is available for the Varjo devices only.					If VR is not initialized, the function will return false.
+			</summary>  
+			<returns>true if the feature is available; otherwise, false.</returns>
+		</member>
 		<member name="M:Unigine.VR.hasFeatureTrackingSpaceRaw const">
 			<summary>
 			Returns a value indicating if poses can be provided in the coordinate system defined by the tracker driver.					If VR is not initialized, the function will return false.
@@ -31,7 +37,7 @@
 		</member>
 		<member name="M:Unigine.VR.hasFeatureMotionPrediction const">
 			<summary>
-			Returns a value indicating if motion prediction is available. This feature is available for the Varjo devices only. It allows the engine to submit the velocity from the GBuffer to the Varjo Composer. 					If VR is not initialized, the function will return false.
+			Returns a value indicating if motion prediction is available. This feature is available for the Varjo devices only. It allows the engine to submit the velocity from the GBuffer to the Varjo Composer.					If VR is not initialized, the function will return false.
 			</summary>  
 			<returns>true if the feature is available; otherwise, false.</returns>
 		</member>
@@ -43,31 +49,31 @@
 		</member>
 		<member name="M:Unigine.VR.hasFeatureReportProximitySensor const">
 			<summary>
-			Returns a value indicating if proximity sensor reporting is available.						If VR is not initialized, the function will return false.
+			Returns a value indicating if proximity sensor reporting is available.					If VR is not initialized, the function will return false.
 			</summary>  
 			<returns>true if the feature is available; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.VR.hasFeatureSupportForTreadmill const">
 			<summary>
-			Returns a value indicating if the user treadmill support is available.						If VR is not initialized, the function will return false.
+			Returns a value indicating if the user treadmill support is available.					If VR is not initialized, the function will return false.
 			</summary>  
 			<returns>true if the feature is available; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.VR.hasFeatureSupportForBaseStations const">
 			<summary>
-			Returns a value indicating if the base stations support is available.						If VR is not initialized, the function will return false.
+			Returns a value indicating if the base stations support is available.					If VR is not initialized, the function will return false.
 			</summary>  
 			<returns>true if the feature is available; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.VR.hasFeatureSupportForTrackers const">
 			<summary>
-			Returns a value indicating if support for trackers is available.						If VR is not initialized, the function will return false.
+			Returns a value indicating if support for trackers is available.					If VR is not initialized, the function will return false.
 			</summary>  
 			<returns>true if the feature is available; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.VR.hasFeatureSupportForRenderModelComponents const">
 			<summary>
-			Returns a value indicating if support for render model components is available.						If VR is not initialized, the function will return false.
+			Returns a value indicating if support for render model components is available.					If VR is not initialized, the function will return false.
 			</summary>  
 			<returns>true if the feature is available; otherwise, false.</returns>
 		</member>
@@ -75,6 +81,45 @@
 			<summary>
 			Sets the zero pose to the current tracker position.
 			</summary>  
+			<returns>true if the pose is reset successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VR.hasFeatureSupportForRenderModel const">
+			<summary>
+			Returns a value indicating if VR API can provide Render Models for the controllers.					If VR is not initialized, the function will return false.
+			</summary>  
+			<returns>true if the feature is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VR.hasFeatureFadeToColor const">
+			<summary>
+			Returns a value indicating if the FadeToColor feature is available.					If VR is not initialized, the function will return false.
+			</summary>  
+			<returns>true if the feature is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VR.hasFeatureFadeGrid const">
+			<summary>
+			Returns the value indicating if the FadeGrid feature is available.					If VR is not initialized, the function will return false.
+			</summary>  
+			<returns>true if the feature is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VR.hasFeatureGetAudioDevice const">
+			<summary>
+			Returns the value indicating if VR API can return Audio Device name (usually Oculus only).					If VR is not initialized, the function will return false.
+			</summary>  
+			<returns>true if the feature is available; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VR.fadeToColor(float,Unigine.Math.vec4,bool)">
+			<summary>
+			Fades the engine render to the specified color over time.
+			</summary> 
+			<param name="seconds"> Fade period, in seconds. </param>
+			<param name="color"> Target color. </param> 
+		</member>
+		<member name="M:Unigine.VR.fadeGrid(float,bool)">
+			<summary>
+			Fades the engine render to/from the grid over the specified time.
+			</summary> 
+			<param name="seconds"> Fade period, in seconds. </param>
+			<param name="fade_in"> true fades render to grid; false fades grid to render. </param> 
 		</member>
 		<member name="F:Unigine.VR.API_NULL">
 			<summary>
@@ -89,6 +134,11 @@
 		<member name="F:Unigine.VR.API_OPENVR">
 			<summary>
 			OpenVR API.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.API_OPENXR">
+			<summary>
+			OpenXR API.
 		</summary>
 		</member>
 		<member name="F:Unigine.VR.VIEWPORT_TYPE_CONTEXT">
@@ -199,6 +249,51 @@
 		<member name="F:Unigine.VR.TRACKING_SPACE_END">
 			<summary>
 			The last element to be used for iteration.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.DEBUG_MODE_DISABLED">
+			<summary>
+			Debug VR context is disabled.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.DEBUG_MODE_ENABLED">
+			<summary>
+			Debug VR context is enabled.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.DEBUG_MODE_ENABLED_BREAK_ON_ERROR">
+			<summary>
+			Debug VR context with the break on error option is enabled (only on debug binaries).
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.RUNTIME_TYPE_UNKNOWN">
+			<summary>
+			The runtime type is unknown.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.RUNTIME_TYPE_NULL">
+			<summary>
+			The runtime is null.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.RUNTIME_TYPE_STEAMVR">
+			<summary>
+			SteamVR runtime.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.RUNTIME_TYPE_OCULUS">
+			<summary>
+			Oculus runtime.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.RUNTIME_TYPE_VARJO">
+			<summary>
+			Varjo runtime.
+		</summary>
+		</member>
+		<member name="F:Unigine.VR.RUNTIME_TYPE_WMR">
+			<summary>
+			Windows Mixed Reality OpenXR runtime.
 		</summary>
 		</member>
 	</members>

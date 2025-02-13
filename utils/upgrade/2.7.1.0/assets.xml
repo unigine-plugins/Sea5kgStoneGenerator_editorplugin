@@ -1,0 +1,1485 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
+-->
+
+<assets>
+	<!------------------------------------------------------------>
+	<!-- Meshes -->
+	<!------------------------------------------------------------>
+	<asset path="core/meshes/material_ball.mesh">
+		<guid>8a2c5575a9df884ab60275ad406e7600e49597e2</guid>
+		<type>mesh</type>
+		<runtimes>
+			<runtime name="material_ball.mesh" id="8a2c5575a9df884ab60275ad406e7600e49597e2"/>
+		</runtimes>
+	</asset>
+
+	<!------------------------------------------------------------>
+	<!-- Textures -->
+	<!------------------------------------------------------------>
+	<asset path="core/textures/lens_flares_default.png">
+		<guid>72bd2af2b9fc9ca75981720509d16165ce38b8a5</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="lens_flares_default.png" id="72bd2af2b9fc9ca75981720509d16165ce38b8a5"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/light_base_omni.dds">
+		<guid>022bf2ab3f135ad1a490ecea8ce4b60cf8488a3a</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="light_base_omni.dds" id="022bf2ab3f135ad1a490ecea8ce4b60cf8488a3a"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/light_base_proj.dds">
+		<guid>a464bf4eb11d243a8b4df30531fde7b278d580a9</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="light_base_proj.dds" id="a464bf4eb11d243a8b4df30531fde7b278d580a9"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/mesh_indirect.dds">
+		<guid>ea1b5c8562e041e1a9031f60583c489f8dbf14c5</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mesh_indirect.dds" id="ea1b5c8562e041e1a9031f60583c489f8dbf14c5"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/mesh_layer_mask.dds">
+		<guid>2ba3d92b408d6b164bcb300f790cae75cbea4cf5</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mesh_layer_mask.dds" id="2ba3d92b408d6b164bcb300f790cae75cbea4cf5"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/mesh_leaf_color.dds">
+		<guid>8f5752e36236780dc74797f0ba78b039972d74b9</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mesh_leaf_color.dds" id="8f5752e36236780dc74797f0ba78b039972d74b9"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/mesh_leaf_noise_2d.dds">
+		<guid>189719c3572ea3b80c4d03240edba87ce3daa4d2</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mesh_leaf_noise_2d.dds" id="189719c3572ea3b80c4d03240edba87ce3daa4d2"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/mesh_leaf_noise_3d.dds">
+		<guid>5b97aaa5136da1a325c40150b006061b47432544</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mesh_leaf_noise_3d.dds" id="5b97aaa5136da1a325c40150b006061b47432544"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/mesh_leaf_thickness.dds">
+		<guid>f2d767f42504ff3f4e24de12e1c5ef943f16a822</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mesh_leaf_thickness.dds" id="f2d767f42504ff3f4e24de12e1c5ef943f16a822"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/mesh_lut_shading.dds">
+		<guid>f6df2466480b6bd09ff883d91af9011e91dbc01a</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mesh_lut_shading.dds" id="f6df2466480b6bd09ff883d91af9011e91dbc01a"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/mesh_noise_diffuse.dds">
+		<guid>1322705e6f60058f150e64bb81f43dea17b71e77</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mesh_noise_diffuse.dds" id="1322705e6f60058f150e64bb81f43dea17b71e77"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/mesh_noise_mask.dds">
+		<guid>3186f00a64c66bce1b9e927486b23a61800eed37</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mesh_noise_mask.dds" id="3186f00a64c66bce1b9e927486b23a61800eed37"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/mesh_noise_specular.dds">
+		<guid>5d54c8a53df2bce590f4059a16284bcd11d8cda1</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mesh_noise_specular.dds" id="5d54c8a53df2bce590f4059a16284bcd11d8cda1"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/mesh_overlap_mask.dds">
+		<guid>d000e9e192954b8486a43dd732dee10501ecf72f</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mesh_overlap_mask.dds" id="d000e9e192954b8486a43dd732dee10501ecf72f"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/mesh_paint_noise.dds">
+		<guid>b3f456971e643ba8f0b2ed24f0912505ff766258</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mesh_paint_noise.dds" id="b3f456971e643ba8f0b2ed24f0912505ff766258"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/mesh_reflection.dds">
+		<guid>3927daed7cff4d81de7f670dd4a20197877e91c9</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mesh_reflection.dds" id="3927daed7cff4d81de7f670dd4a20197877e91c9"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/no_imagery_data.dds">
+		<guid>b0d94d3515b2e88572861ff7cd6966471dc4a90f</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="no_imagery_data.dds" id="b0d94d3515b2e88572861ff7cd6966471dc4a90f"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/particles_base_attenuation.dds">
+		<guid>9695d57d22a0665ab467a8d6bea90e1e25b42cd5</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="particles_base_attenuation.dds" id="9695d57d22a0665ab467a8d6bea90e1e25b42cd5"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/particles_base_diffuse.dds">
+		<guid>25502e2f7b13e08219c2a1e4c62ce7dee7417cbf</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="particles_base_diffuse.dds" id="25502e2f7b13e08219c2a1e4c62ce7dee7417cbf"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/particles_base_normal.dds">
+		<guid>88b6b1efef721f00cf9398c8b5f08c6b4fbfad34</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="particles_base_normal.dds" id="88b6b1efef721f00cf9398c8b5f08c6b4fbfad34"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/post_filter_reflection_vignette.dds">
+		<guid>64088eb77a7ca2c899108a09c3ad6b1cd941fe0d</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="post_filter_reflection_vignette.dds" id="64088eb77a7ca2c899108a09c3ad6b1cd941fe0d"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/post_filter_wet_normal.dds">
+		<guid>c62764d2f4c2320e40f2cea92bc20b77baca1d27</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="post_filter_wet_normal.dds" id="c62764d2f4c2320e40f2cea92bc20b77baca1d27"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/render_composite_dithering.dds">
+		<guid>3029b50b55b2d3e5d7ae2c4536836c220955b5b4</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="render_composite_dithering.dds" id="3029b50b55b2d3e5d7ae2c4536836c220955b5b4"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/render_hdr_bokeh_iris.dds">
+		<guid>0c5c7dca62e0f075bc7497f81bdfe9aec6b2ee1b</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="render_hdr_bokeh_iris.dds" id="0c5c7dca62e0f075bc7497f81bdfe9aec6b2ee1b"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/render_hdr_lens_vignette.dds">
+		<guid>2a1fd85054ccff517ff8c967525de5aff0056bb4</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="render_hdr_lens_vignette.dds" id="2a1fd85054ccff517ff8c967525de5aff0056bb4"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/render_hdr_shaft_noise.dds">
+		<guid>7bab339a31bca0f276afe06f1016378fbe743939</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="render_hdr_shaft_noise.dds" id="7bab339a31bca0f276afe06f1016378fbe743939"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/render_occlusion_noise.dds">
+		<guid>09b155979b58f73c3d232800e5f370f59fbdf1a0</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="render_occlusion_noise.dds" id="09b155979b58f73c3d232800e5f370f59fbdf1a0"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/render_volumetric_noise.dds">
+		<guid>3585b2194803e83e824b6bee76bb65297fe1a83b</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="render_volumetric_noise.dds" id="3585b2194803e83e824b6bee76bb65297fe1a83b"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/sky_base_background.dds">
+		<guid>9154446becf4434fcabf82177bb1532fd0124fad</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="sky_base_background.dds" id="9154446becf4434fcabf82177bb1532fd0124fad"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/sky_base_clouds_0.dds">
+		<guid>e16a40067ebd143a160fc69c08ebefc6cda4d53c</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="sky_base_clouds_0.dds" id="e16a40067ebd143a160fc69c08ebefc6cda4d53c"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/sky_base_clouds_1.dds">
+		<guid>26e4f4d3f5aea60d340d85f378bda7b69066ba25</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="sky_base_clouds_1.dds" id="26e4f4d3f5aea60d340d85f378bda7b69066ba25"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/sky_base_density.dds">
+		<guid>37461fef2d72daea7a226745397d0327ad90787c</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="sky_base_density.dds" id="37461fef2d72daea7a226745397d0327ad90787c"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/sky_base_mask.png">
+		<guid>78592c1ce78ec682e89f5558ff40fcf7a8deae68</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="sky_base_mask.png" id="78592c1ce78ec682e89f5558ff40fcf7a8deae68"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/sky_base_mask_0.dds">
+		<guid>ce1aa1606a9db211bdc08b918cd68e08db5c47c8</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="sky_base_mask_0.dds" id="ce1aa1606a9db211bdc08b918cd68e08db5c47c8"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/sky_base_mask_1.dds">
+		<guid>5350f4d903a2f858ef22d23ec214d24e9eefa46c</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="sky_base_mask_1.dds" id="5350f4d903a2f858ef22d23ec214d24e9eefa46c"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/sky_base_noise.dds">
+		<guid>f39015d9c1296fd3f8c256ddf3eca732c3a63a05</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="sky_base_noise.dds" id="f39015d9c1296fd3f8c256ddf3eca732c3a63a05"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/sky_base_volume.dds">
+		<guid>98e8def547f4e40e0072cd268114bbd799b4156b</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="sky_base_volume.dds" id="98e8def547f4e40e0072cd268114bbd799b4156b"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/terrain_base_diffuse.dds">
+		<guid>ed280515f5679283e01c4ef513da53bfb930cd78</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="terrain_base_diffuse.dds" id="ed280515f5679283e01c4ef513da53bfb930cd78"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/terrain_base_normal.dds">
+		<guid>a96d54460ceaccbfbe2f694d7c3dd3028df0ff36</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="terrain_base_normal.dds" id="a96d54460ceaccbfbe2f694d7c3dd3028df0ff36"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/terrain_base_specular.dds">
+		<guid>0ce19725e18473a45d009693783c5b47e4ada85a</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="terrain_base_specular.dds" id="0ce19725e18473a45d009693783c5b47e4ada85a"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/volume_base_cloud_attenuation.dds">
+		<guid>ea515587c4fe8099a29d8c3fa333da5f7678de31</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="volume_base_cloud_attenuation.dds" id="ea515587c4fe8099a29d8c3fa333da5f7678de31"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/volume_base_cloud_density.dds">
+		<guid>34175fbd86edd102ab7fa17f701053b9a36c8ed6</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="volume_base_cloud_density.dds" id="34175fbd86edd102ab7fa17f701053b9a36c8ed6"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/volume_base_fog_noise.dds">
+		<guid>d979f686c22b6cbff029933e2d6490ee6236e99f</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="volume_base_fog_noise.dds" id="d979f686c22b6cbff029933e2d6490ee6236e99f"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/volume_base_omni_attenuation.dds">
+		<guid>7f007b6ade028423fffa18e4fec82097418ea60c</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="volume_base_omni_attenuation.dds" id="7f007b6ade028423fffa18e4fec82097418ea60c"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/volume_base_proj_attenuation.dds">
+		<guid>35d987f84c0681c9b575fd13edfc11a03cf1a3bb</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="volume_base_proj_attenuation.dds" id="35d987f84c0681c9b575fd13edfc11a03cf1a3bb"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/volume_base_proj_diffuse.dds">
+		<guid>4c773a07e2054239168a5187d0ed71ad10db3c99</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="volume_base_proj_diffuse.dds" id="4c773a07e2054239168a5187d0ed71ad10db3c99"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/volume_base_shaft_noise.dds">
+		<guid>471de804625aee18f9608d4147ae493c73c08fd3</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="volume_base_shaft_noise.dds" id="471de804625aee18f9608d4147ae493c73c08fd3"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/water_base_caps.dds">
+		<guid>8c3bea59ca77bd849756e12347b6daf8bcc82458</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="water_base_caps.dds" id="8c3bea59ca77bd849756e12347b6daf8bcc82458"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/water_base_foam.dds">
+		<guid>153213b5a9c5d959b6bc31b12ea6a658b38b39b7</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="water_base_foam.dds" id="153213b5a9c5d959b6bc31b12ea6a658b38b39b7"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/water_base_normal.dds">
+		<guid>e8cec6e3506da322d1a95264d39813a5abac65ef</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="water_base_normal.dds" id="e8cec6e3506da322d1a95264d39813a5abac65ef"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/water_base_reflection.dds">
+		<guid>3f62a0dfa8a359f218a6feafeede6d66a0f8b06c</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="water_base_reflection.dds" id="3f62a0dfa8a359f218a6feafeede6d66a0f8b06c"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/buildings/b1_level1_atlas_alb.dds">
+		<guid>0c40ae1197df44f7194b7837ee3355747b159bbd</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="b1_level1_atlas_alb.dds" id="0c40ae1197df44f7194b7837ee3355747b159bbd"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/buildings/b1_level1_atlas_blank_alb.dds">
+		<guid>209223525dca69a0fcb0beb5731582b5f90f17cf</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="b1_level1_atlas_blank_alb.dds" id="209223525dca69a0fcb0beb5731582b5f90f17cf"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/buildings/b1_level2_atlas_alb.dds">
+		<guid>85edcbcfb81c7b4819c7ff656aa0aa4222abf0f7</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="b1_level2_atlas_alb.dds" id="85edcbcfb81c7b4819c7ff656aa0aa4222abf0f7"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/buildings/b1_level2_atlas_blank_alb.dds">
+		<guid>d17296c8a69640d3c44a515c2a7ad5634ecc1b60</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="b1_level2_atlas_blank_alb.dds" id="d17296c8a69640d3c44a515c2a7ad5634ecc1b60"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/buildings/b2_level1_atlas_alb.dds">
+		<guid>badef8fb7418499586d25da29dc3964803904f74</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="b2_level1_atlas_alb.dds" id="badef8fb7418499586d25da29dc3964803904f74"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/buildings/b2_level1_atlas_blank_alb.dds">
+		<guid>15ac98fe768235314d23277fd9b642e5c377115b</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="b2_level1_atlas_blank_alb.dds" id="15ac98fe768235314d23277fd9b642e5c377115b"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/buildings/b2_level2_atlas_alb.dds">
+		<guid>00eb950dc0cf1a9ab100b1f5e79151dea10d5709</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="b2_level2_atlas_alb.dds" id="00eb950dc0cf1a9ab100b1f5e79151dea10d5709"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/buildings/b2_level2_atlas_blank_alb.dds">
+		<guid>785ff6e3b3917f985156fc0cd582f4691362cd9e</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="b2_level2_atlas_blank_alb.dds" id="785ff6e3b3917f985156fc0cd582f4691362cd9e"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/buildings/roof_bitumed_alb.dds">
+		<guid>8c0b4e6ac34641b7d50ab4b9e3bb6615bc37ba51</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="roof_bitumed_alb.dds" id="8c0b4e6ac34641b7d50ab4b9e3bb6615bc37ba51"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/buildings/roof_bitumed_sh.dds">
+		<guid>d983788c941772c5901b50b086a133504411be43</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="roof_bitumed_sh.dds" id="d983788c941772c5901b50b086a133504411be43"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/buildings/roof_detail.dds">
+		<guid>e4d299078df70a69aaadd12d2f969ba2c5250f8f</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="roof_detail.dds" id="e4d299078df70a69aaadd12d2f969ba2c5250f8f"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/clouds/cloud_noise.dds">
+		<guid>71072b09cfdc22269143e05fa57467d2458d3acf</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="cloud_noise.dds" id="71072b09cfdc22269143e05fa57467d2458d3acf"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/clouds/cloud_noise_detail.dds">
+		<guid>61b0b59df82cb279bd434ebf41e02e1eaed10c19</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="cloud_noise_detail.dds" id="61b0b59df82cb279bd434ebf41e02e1eaed10c19"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/clouds/curl_noise.dds">
+		<guid>aa32add3ec0a44e0ca1c0d2ad531975f388cdb9f</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="curl_noise.dds" id="aa32add3ec0a44e0ca1c0d2ad531975f388cdb9f"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/clouds/default_coverage.dds">
+		<guid>b54a67af925478f0947c2fcb4682cc89f2df454e</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="default_coverage.dds" id="b54a67af925478f0947c2fcb4682cc89f2df454e"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/common/black.dds">
+		<guid>d15782a509aae84ba85cebcb4e69571f60a7e33a</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="black.dds" id="d15782a509aae84ba85cebcb4e69571f60a7e33a"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/common/checker_d.dds">
+		<guid>edf5dbe16c25c3185d9ce7b15e99469442484856</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="checker_d.dds" id="edf5dbe16c25c3185d9ce7b15e99469442484856"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/common/environment_default.dds">
+		<guid>fdce52252458c90169b884999ed107ed4f612ffe</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="environment_default.dds" id="fdce52252458c90169b884999ed107ed4f612ffe"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/common/environment_probe_default.dds">
+		<guid>7a524e344adcf1c64aac9ba8feb410ab624d0ef9</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="environment_probe_default.dds" id="7a524e344adcf1c64aac9ba8feb410ab624d0ef9"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/common/environment_white.dds">
+		<guid>6d057be675fe9fc6e79842ed26dcc7ac341c6002</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="environment_white.dds" id="6d057be675fe9fc6e79842ed26dcc7ac341c6002"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/common/grain.dds">
+		<guid>4ad9b94d61fe5819fd6436ee3490736745d3be0e</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="grain.dds" id="4ad9b94d61fe5819fd6436ee3490736745d3be0e"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/common/noise.dds">
+		<guid>df7a5f2766dedfe11a5f2a91917ef4deff3baa5b</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="noise.dds" id="df7a5f2766dedfe11a5f2a91917ef4deff3baa5b"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/common/normal.dds">
+		<guid>692dbb7d56d633e22551bd47f4d92cd2d498270d</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="normal.dds" id="692dbb7d56d633e22551bd47f4d92cd2d498270d"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/common/red.dds">
+		<guid>a8106e01d8743fe2b0601f5d30c9eaf6cee2a4ca</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="red.dds" id="a8106e01d8743fe2b0601f5d30c9eaf6cee2a4ca"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/common/white.dds">
+		<guid>5219d6ddb5dbd1520e843a369ad2b64326bb24e2</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="white.dds" id="5219d6ddb5dbd1520e843a369ad2b64326bb24e2"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/grass/noise.dds">
+		<guid>5f88b453b0694618fda82a50f745114ae4f4f2e4</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="noise.dds" id="5f88b453b0694618fda82a50f745114ae4f4f2e4"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/leaf/color.dds">
+		<guid>13a5cfbdb0fa29542b384848c12daf762fe10b84</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="color.dds" id="13a5cfbdb0fa29542b384848c12daf762fe10b84"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/leaf/noise_2d.dds">
+		<guid>7f881940897e7e9f6361d580766b1acbf205ca86</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="noise_2d.dds" id="7f881940897e7e9f6361d580766b1acbf205ca86"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/leaf/noise_3d.dds">
+		<guid>7f47c8d6e46f8545705795d5e35b65c3651356ff</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="noise_3d.dds" id="7f47c8d6e46f8545705795d5e35b65c3651356ff"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/material_ball/material_ball_a.dds">
+		<guid>0e08b8f18447237ced396f371ff7e0223810fc0a</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="material_ball_a.dds" id="0e08b8f18447237ced396f371ff7e0223810fc0a"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/material_ball/material_ball_alb.dds">
+		<guid>0d463d68ab92b767480cd86cea043eb36d851de5</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="material_ball_alb.dds" id="0d463d68ab92b767480cd86cea043eb36d851de5"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/material_ball/material_ball_met.dds">
+		<guid>a2d92f5806407b592d874092bd2a4fcf2499b94b</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="material_ball_met.dds" id="a2d92f5806407b592d874092bd2a4fcf2499b94b"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/material_ball/material_ball_n.dds">
+		<guid>9816388607f1ad3c7a24bb4391dc25f437bd8a9f</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="material_ball_n.dds" id="9816388607f1ad3c7a24bb4391dc25f437bd8a9f"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/particles/attenuation.dds">
+		<guid>cb2d9080d21b1acb7ce22a97f0cab1ddadef7872</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="attenuation.dds" id="cb2d9080d21b1acb7ce22a97f0cab1ddadef7872"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/particles/diffuse.dds">
+		<guid>608a8dc4c5a4b83bf534a24c501b2190f73fd599</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="diffuse.dds" id="608a8dc4c5a4b83bf534a24c501b2190f73fd599"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/particles/normal.dds">
+		<guid>9632876d2b9fee295c00eb4edde19b7aa44d9966</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="normal.dds" id="9632876d2b9fee295c00eb4edde19b7aa44d9966"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/scattering_lut/preset_0/base.tga">
+		<guid>cd518d3796c6bd6e996a25f695bace323b8f2b69</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="base.tga" id="cd518d3796c6bd6e996a25f695bace323b8f2b69"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/scattering_lut/preset_0/ground.tga">
+		<guid>7a89cb0ce3e53ed8bf592e710cf2e394c4f4d819</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="ground.tga" id="7a89cb0ce3e53ed8bf592e710cf2e394c4f4d819"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/scattering_lut/preset_0/light_color.tga">
+		<guid>a543adc9eb319e3f88d3ef80a6cdfa10390cd26b</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="light_color.tga" id="a543adc9eb319e3f88d3ef80a6cdfa10390cd26b"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/scattering_lut/preset_0/mie.tga">
+		<guid>e3120f350170783531c278607a4b366265cfbfc9</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mie.tga" id="e3120f350170783531c278607a4b366265cfbfc9"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/scattering_lut/preset_1/base.tga">
+		<guid>273a674fad0cb1658ca1d293b73e48e3f6e629bd</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="base.tga" id="273a674fad0cb1658ca1d293b73e48e3f6e629bd"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/scattering_lut/preset_1/ground.tga">
+		<guid>2bb96ca45ec3f031e6da824c87d6f0b10778f8de</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="ground.tga" id="2bb96ca45ec3f031e6da824c87d6f0b10778f8de"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/scattering_lut/preset_1/light_color.tga">
+		<guid>d798cb1e62ee2d61a673b602b3fd94acc56b564b</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="light_color.tga" id="d798cb1e62ee2d61a673b602b3fd94acc56b564b"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/scattering_lut/preset_1/mie.tga">
+		<guid>9f2f4594005da4e941a5d275268a8ebdea663b79</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mie.tga" id="9f2f4594005da4e941a5d275268a8ebdea663b79"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/scattering_lut/preset_2/base.tga">
+		<guid>cb3dbb4e699ac80e4405d1d1cfe838e8a6819c5e</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="base.tga" id="cb3dbb4e699ac80e4405d1d1cfe838e8a6819c5e"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/scattering_lut/preset_2/ground.tga">
+		<guid>1836f8f719a986b82463903157fb907236594d3a</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="ground.tga" id="1836f8f719a986b82463903157fb907236594d3a"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/scattering_lut/preset_2/light_color.tga">
+		<guid>05462bf386517bdde2ee432e50c888cd653f1f42</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="light_color.tga" id="05462bf386517bdde2ee432e50c888cd653f1f42"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/scattering_lut/preset_2/mie.tga">
+		<guid>b1114d0c046f1d7c4df1a44ae88c8ae95e69e3e0</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="mie.tga" id="b1114d0c046f1d7c4df1a44ae88c8ae95e69e3e0"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/sensor/lut_green.dds">
+		<guid>e038d46e26ad35b1e7775c22e5377971790cb075</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="lut_green.dds" id="e038d46e26ad35b1e7775c22e5377971790cb075"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/sensor/lut_heat.dds">
+		<guid>2a3d6d41edb8ac91336265af489c891e9d772658</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="lut_heat.dds" id="2a3d6d41edb8ac91336265af489c891e9d772658"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/sensor/lut_red.dds">
+		<guid>434ab133edf4b06c916e3d36bd646d04746da384</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="lut_red.dds" id="434ab133edf4b06c916e3d36bd646d04746da384"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/sensor/lut_white.dds">
+		<guid>e237a1333473ddcc4729b8cfa3bee53e75991b77</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="lut_white.dds" id="e237a1333473ddcc4729b8cfa3bee53e75991b77"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/syncker/syncker_box.dds">
+		<guid>a1f236114c97f6d475535572ddae4d5d66449974</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="syncker_box.dds" id="a1f236114c97f6d475535572ddae4d5d66449974"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/syncker/syncker_sphere.dds">
+		<guid>c4cfebc00545163555252f0ee901c72ea839da46</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="syncker_sphere.dds" id="c4cfebc00545163555252f0ee901c72ea839da46"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/water_global/caustics.dds">
+		<guid>ac1a3a438bd1e86b966d072a9f16e2703460be21</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="caustics.dds" id="ac1a3a438bd1e86b966d072a9f16e2703460be21"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/water_global/foam_d.dds">
+		<guid>52f38ec6b14bcb981ade156a36d1b7e739f7412c</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="foam_d.dds" id="52f38ec6b14bcb981ade156a36d1b7e739f7412c"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/water_global/height_map.dds">
+		<guid>e8772a2688ce8129905b279f10968623a5ddaca7</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="height_map.dds" id="e8772a2688ce8129905b279f10968623a5ddaca7"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/water_global/shoreline_lut.png">
+		<guid>a69f6434c9cb8bfe9fe0cd8af20df6dfd2d0b756</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="shoreline_lut.png" id="a69f6434c9cb8bfe9fe0cd8af20df6dfd2d0b756"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/water_global/water_depth_lut.tga">
+		<guid>9baa3e95ea88cd4a62620bb25d2a6b08ad8e9655</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="water_depth_lut.tga" id="9baa3e95ea88cd4a62620bb25d2a6b08ad8e9655"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/water_global/water_detail_n.dds">
+		<guid>8baa0631703930d425599a934979dc1b77548c3c</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="water_detail_n.dds" id="8baa0631703930d425599a934979dc1b77548c3c"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/water_global/water_detail_weak_n.dds">
+		<guid>2ff69e549c1d5f93de6de3a7528f8b008a418dac</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="water_detail_weak_n.dds" id="2ff69e549c1d5f93de6de3a7528f8b008a418dac"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/world_light/celestial_body_moon.png">
+		<guid>32e9a2dce08f292cedf2dc9d208b019f27a586a0</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="celestial_body_moon.png" id="32e9a2dce08f292cedf2dc9d208b019f27a586a0"/>
+		</runtimes>
+	</asset>
+	<asset path="core/textures/world_light/celestial_body_sun.png">
+		<guid>b3db7f8b07c4a9f1746a7d5ac3937fadafd3c0c5</guid>
+		<type>texture</type>
+		<runtimes>
+			<runtime name="celestial_body_sun.png" id="b3db7f8b07c4a9f1746a7d5ac3937fadafd3c0c5"/>
+		</runtimes>
+	</asset>
+
+	<!------------------------------------------------------------>
+	<!-- Materials -->
+	<!------------------------------------------------------------>
+	<asset path="core/materials/default/billboards/billboards_base.basemat">
+		<guid>70acb55f5084822bca33891daaea9648142ab18c</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="billboards_base" id="70acb55f5084822bca33891daaea9648142ab18c"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/billboards/billboards_cloud_base.basemat">
+		<guid>2a16c9913fb835943445d0b3e2cccc7fdc9b8d7a</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="billboards_cloud_base" id="2a16c9913fb835943445d0b3e2cccc7fdc9b8d7a"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/billboards/billboards_impostor_base.basemat">
+		<guid>08332de6bc179218af7e0714b35ed4fe566fb809</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="billboards_impostor_base" id="08332de6bc179218af7e0714b35ed4fe566fb809"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/billboards/lens_base.basemat">
+		<guid>4e6e0648ed62b632aa90eee6aa6102c490e85f16</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="lens_base" id="4e6e0648ed62b632aa90eee6aa6102c490e85f16"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/billboards/lens_visibility.basemat">
+		<guid>d615d872c734de6250079ea879e72e5ead2ae96e</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="lens_visibility" id="d615d872c734de6250079ea879e72e5ead2ae96e"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/clouds/clouds_base.basemat">
+		<guid>70889d39d4538634ad8be842640f7206ffd17c21</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="clouds_base" id="70889d39d4538634ad8be842640f7206ffd17c21"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/decal/decal_base.basemat">
+		<guid>d626ba7f36683890e57d35177133036d85ee9053</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="decal_base" id="d626ba7f36683890e57d35177133036d85ee9053"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/grass/grass_base.basemat">
+		<guid>333412e9d86cbad371301ef8345533fea57fa810</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="grass_base" id="333412e9d86cbad371301ef8345533fea57fa810"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/grass/grass_impostor_base.basemat">
+		<guid>b53081c17d3147e6d8fe191d61b8c9db779f92b5</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="grass_impostor_base" id="b53081c17d3147e6d8fe191d61b8c9db779f92b5"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/gui/gui_base.basemat">
+		<guid>45130945fbfdc3e6f898cbb99e9d01e51d3f4bbd</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="gui_base" id="45130945fbfdc3e6f898cbb99e9d01e51d3f4bbd"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/gui/text_base.basemat">
+		<guid>8230661da494b0c1e2c7ac49ce3a4fd5bbaa36ee</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="text_base" id="8230661da494b0c1e2c7ac49ce3a4fd5bbaa36ee"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/mesh/mesh_base.basemat">
+		<guid>401e90ccd85f4f2bb97c19ab9e1351325c4012eb</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="mesh_base" id="401e90ccd85f4f2bb97c19ab9e1351325c4012eb"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/particles/particles_base.basemat">
+		<guid>4083cb64c467e37d46cfbeb2e71d5869b57b23f0</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="particles_base" id="4083cb64c467e37d46cfbeb2e71d5869b57b23f0"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/post/post_blur_radial.basemat">
+		<guid>79fc7d725babe2a5f3fb7a5bbf7f8fd37e3dd904</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_blur_radial" id="79fc7d725babe2a5f3fb7a5bbf7f8fd37e3dd904"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/post/post_color_correction.basemat">
+		<guid>2caa57e75d4d03ccbfd31845ae246d800947d04b</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_color_correction" id="2caa57e75d4d03ccbfd31845ae246d800947d04b"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/post/post_filter_rgb2rgbl.basemat">
+		<guid>dd8ac1e87eb37eb864bd6eacf45cf6f193f23fb8</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_filter_rgb2rgbl" id="dd8ac1e87eb37eb864bd6eacf45cf6f193f23fb8"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/post/post_filter_rgb2yuv.basemat">
+		<guid>344a64d6bce61c7c5ea7fc380220dd2d53f5d8e3</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_filter_rgb2yuv" id="344a64d6bce61c7c5ea7fc380220dd2d53f5d8e3"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/post/post_filter_sobel.basemat">
+		<guid>a21555ec09c755789b8296d98a99692d7b2a66d2</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_filter_sobel" id="a21555ec09c755789b8296d98a99692d7b2a66d2"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/post/post_filter_wet.basemat">
+		<guid>118560195c4232eab75a3fc23a380a0736316494</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_filter_wet" id="118560195c4232eab75a3fc23a380a0736316494"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/post/post_hblur_2d.basemat">
+		<guid>c2e80338ae5d4f959b01848efc298ac30af1572f</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_hblur_2d" id="c2e80338ae5d4f959b01848efc298ac30af1572f"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/post/post_hblur_cube.basemat">
+		<guid>019cae791bd4d3eacc4d373b0f1dbc4b82e7a7fa</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_hblur_cube" id="019cae791bd4d3eacc4d373b0f1dbc4b82e7a7fa"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/post/post_hblur_gauss.basemat">
+		<guid>236b32791639fc2703ea23d793de728bce335242</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_hblur_gauss" id="236b32791639fc2703ea23d793de728bce335242"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/post/post_hblur_mask.basemat">
+		<guid>2ea3eb2cd64d6bb62be042d3f78ddc6368ca92e8</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_hblur_mask" id="2ea3eb2cd64d6bb62be042d3f78ddc6368ca92e8"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/post/post_vblur_2d.basemat">
+		<guid>22839daf64f459b37c62e21d083b8cdd3781ebd7</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_vblur_2d" id="22839daf64f459b37c62e21d083b8cdd3781ebd7"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/post/post_vblur_cube.basemat">
+		<guid>456685a81abe07cd71cb0a52f9408b5aad619e50</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_vblur_cube" id="456685a81abe07cd71cb0a52f9408b5aad619e50"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/post/post_vblur_gauss.basemat">
+		<guid>30b6f9c4bbfbdf9184b1a50dff16524750e6d963</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_vblur_gauss" id="30b6f9c4bbfbdf9184b1a50dff16524750e6d963"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/post/post_vblur_mask.basemat">
+		<guid>2c9ca6a119601def5f5f321d4523ee8e7c9e3f70</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_vblur_mask" id="2c9ca6a119601def5f5f321d4523ee8e7c9e3f70"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/sensor/post_sensor.basemat">
+		<guid>a6d3c23f9fb69fffd5fe6aaa55c6a64559ba1f06</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_sensor" id="a6d3c23f9fb69fffd5fe6aaa55c6a64559ba1f06"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/sky/sky_base.basemat">
+		<guid>8a62967f7fc99c1d8b76398a5cb395fd662d9eac</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="sky_base" id="8a62967f7fc99c1d8b76398a5cb395fd662d9eac"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/terrain/terrain_base.basemat">
+		<guid>27c8c867ea90d9e1cdd1458afe0cc128affb2f03</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="terrain_base" id="27c8c867ea90d9e1cdd1458afe0cc128affb2f03"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/terrain/terrain_global_base.basemat">
+		<guid>9b95475cf08896bb853da91e60729e6925427623</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="terrain_global_base" id="9b95475cf08896bb853da91e60729e6925427623"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/volume/volume_cloud_base.basemat">
+		<guid>65b7b1475886f7b3eafb68286e4a8733c75d2912</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="volume_cloud_base" id="65b7b1475886f7b3eafb68286e4a8733c75d2912"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/volume/volume_fog_base.basemat">
+		<guid>a3e5411c529dfbdf1027b39f1946ac437cf827a4</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="volume_fog_base" id="a3e5411c529dfbdf1027b39f1946ac437cf827a4"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/volume/volume_light_base.basemat">
+		<guid>d6ced8e87e163c86cded294ea5e2d87216a74680</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="volume_light_base" id="d6ced8e87e163c86cded294ea5e2d87216a74680"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/volume/volume_omni_base.basemat">
+		<guid>2c5771583c77296d61e5db8bffd1c8af1a03aef3</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="volume_omni_base" id="2c5771583c77296d61e5db8bffd1c8af1a03aef3"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/volume/volume_proj_base.basemat">
+		<guid>e443f5f4d258dde0c8c45e0f2e055812e8fa197f</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="volume_proj_base" id="e443f5f4d258dde0c8c45e0f2e055812e8fa197f"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/volume/volume_shaft_base.basemat">
+		<guid>7b42f6244bf0dfc6a0540f577a5b22eb78f865a7</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="volume_shaft_base" id="7b42f6244bf0dfc6a0540f577a5b22eb78f865a7"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/water/water_global_base.basemat">
+		<guid>6dc5ebdbd396c71a211e9af9124aeef621909430</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="water_global_base" id="6dc5ebdbd396c71a211e9af9124aeef621909430"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/water/water_mesh_base.basemat">
+		<guid>73c651fd13f94b722fadf2ed4a08890f8ccf134e</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="water_mesh_base" id="73c651fd13f94b722fadf2ed4a08890f8ccf134e"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/buildings/buildings_preset_0.mat">
+		<guid>24f9547d55024a80280af16e6bc3c65dc3035ff4</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="buildings_preset_0" id="24f9547d55024a80280af16e6bc3c65dc3035ff4"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/buildings/buildings_preset_0_level_1_blank.mat">
+		<guid>c4418ee3e81038b32ea8cf973b80691932360970</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="buildings_preset_0_level_1_blank" id="c4418ee3e81038b32ea8cf973b80691932360970"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/buildings/buildings_preset_0_level_2_blank.mat">
+		<guid>72272248f715c9aa17aa7ad4e60a4ad75ae1e1c1</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="buildings_preset_0_level_2_blank" id="72272248f715c9aa17aa7ad4e60a4ad75ae1e1c1"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/buildings/buildings_preset_0_level_2_complex.mat">
+		<guid>ed13d01c769ecb8603d5d41ebdf44dad14ac28d3</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="buildings_preset_0_level_2_complex" id="ed13d01c769ecb8603d5d41ebdf44dad14ac28d3"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/buildings/buildings_preset_0_roof.mat">
+		<guid>1e76b69c308e2c369059f4288ac5f4c0a65b5ae4</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="buildings_preset_0_roof" id="1e76b69c308e2c369059f4288ac5f4c0a65b5ae4"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/buildings/buildings_preset_1.mat">
+		<guid>95d0c1ab9b6ceedb1c083497b0cca9cf206bc8f2</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="buildings_preset_1" id="95d0c1ab9b6ceedb1c083497b0cca9cf206bc8f2"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/buildings/buildings_preset_1_level_1_blank.mat">
+		<guid>3b157231bfa01b480316781412374da25c2bcc0e</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="buildings_preset_1_level_1_blank" id="3b157231bfa01b480316781412374da25c2bcc0e"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/buildings/buildings_preset_1_level_2_blank.mat">
+		<guid>5004ff69c06bc9b75ece90ecb29b534e57a803bc</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="buildings_preset_1_level_2_blank" id="5004ff69c06bc9b75ece90ecb29b534e57a803bc"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/buildings/buildings_preset_1_level_2_complex.mat">
+		<guid>53326b58040891cae3f2b3db0836ccacb05d5cbf</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="buildings_preset_1_level_2_complex" id="53326b58040891cae3f2b3db0836ccacb05d5cbf"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/buildings/buildings_preset_1_roof.mat">
+		<guid>5e0f3c0c8ce25dc2eb42f185460f660519f763c5</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="buildings_preset_1_roof" id="5e0f3c0c8ce25dc2eb42f185460f660519f763c5"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/billboards/billboards_stars.mat">
+		<guid>553f9d03eb3e95ef4f81fe52a5b1aad3b9d94511</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="billboards_stars" id="553f9d03eb3e95ef4f81fe52a5b1aad3b9d94511"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_albedo.mat">
+		<guid>ec648f93fbf82039833e7def0ed76d9bbb44e6a2</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_albedo" id="ec648f93fbf82039833e7def0ed76d9bbb44e6a2"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_ambient_light.mat">
+		<guid>b03488d605c8bcb8dd4eec60a42b7f9506f3d4f3</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_ambient_light" id="b03488d605c8bcb8dd4eec60a42b7f9506f3d4f3"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_bent_normals.mat">
+		<guid>e90e9a0ba2fafc6a0c907f63e17d4adf1e4b2e22</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_bent_normals" id="e90e9a0ba2fafc6a0c907f63e17d4adf1e4b2e22"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_bevel.mat">
+		<guid>8c9a30a71a2d5633b6b86ba6c1f2c8277bebbf64</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_bevel" id="8c9a30a71a2d5633b6b86ba6c1f2c8277bebbf64"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_cubemaps.mat">
+		<guid>1a94303f78be8feaaf2c24ad1a25042eff5f6aa0</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_cubemaps" id="1a94303f78be8feaaf2c24ad1a25042eff5f6aa0"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_diffuse_light.mat">
+		<guid>e809893aa2a0b06b183949e6e30b5a86c4f850c0</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_diffuse_light" id="e809893aa2a0b06b183949e6e30b5a86c4f850c0"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_highlights.mat">
+		<guid>eb40098cb80df71476d76e13b1fe049c9f4d2983</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_highlights" id="eb40098cb80df71476d76e13b1fe049c9f4d2983"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_lights.mat">
+		<guid>7bab9c273a355d71408ff133d2163818041b4338</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_lights" id="7bab9c273a355d71408ff133d2163818041b4338"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_materials.mat">
+		<guid>2aac3d6a3c7f986d04955977c5660ff68cee47b9</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_materials" id="2aac3d6a3c7f986d04955977c5660ff68cee47b9"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_metalness.mat">
+		<guid>68fba4d7e23b94cd5c7613eea5fbe41d8e4fbd39</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_metalness" id="68fba4d7e23b94cd5c7613eea5fbe41d8e4fbd39"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_normals.mat">
+		<guid>8e20e6ac2cf63708d5493b1021b5ced1ab08fce9</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_normals" id="8e20e6ac2cf63708d5493b1021b5ced1ab08fce9"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_reflections.mat">
+		<guid>a1f4572ec0870aecf956120b940823116d772bfc</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_reflections" id="a1f4572ec0870aecf956120b940823116d772bfc"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_roughness.mat">
+		<guid>87583a831f7e80204529569d5913e8455ce98996</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_roughness" id="87583a831f7e80204529569d5913e8455ce98996"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_ssao.mat">
+		<guid>3bf769b30bc907886fcd08b475da0665d7b6873f</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_ssao" id="3bf769b30bc907886fcd08b475da0665d7b6873f"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_ssgi.mat">
+		<guid>3719cceb1da21303c8310c26c7126c2777ae3ded</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_ssgi" id="3719cceb1da21303c8310c26c7126c2777ae3ded"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/debug/debug_ssr.mat">
+		<guid>8065f4ce1c294c8df4eac20309539be1a39c7c47</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="debug_ssr" id="8065f4ce1c294c8df4eac20309539be1a39c7c47"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/sensor/post_sensor_green.mat">
+		<guid>19a181cc831bedbdefe97d193d1aa76fbac66260</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_sensor_green" id="19a181cc831bedbdefe97d193d1aa76fbac66260"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/sensor/post_sensor_heat.mat">
+		<guid>153e6c29c36ec1a0be3922f12928e8c75d53e58b</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_sensor_heat" id="153e6c29c36ec1a0be3922f12928e8c75d53e58b"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/sensor/post_sensor_red.mat">
+		<guid>668515a810feac4b6532b0d6f2cf53947b33ca32</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_sensor_red" id="668515a810feac4b6532b0d6f2cf53947b33ca32"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/sensor/post_sensor_white.mat">
+		<guid>6c9028091619e0c167f3e8e32b7d067784cbfcb0</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="post_sensor_white" id="6c9028091619e0c167f3e8e32b7d067784cbfcb0"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/water/water_global_beaufort_0.mat">
+		<guid>2b2715defd315702eb033360afa3363f14093dd5</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="water_global_beaufort_0" id="2b2715defd315702eb033360afa3363f14093dd5"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/water/water_global_beaufort_1.mat">
+		<guid>d3781dcd5b9b2b9712b49cb90a3ecb92d1e3a1ce</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="water_global_beaufort_1" id="d3781dcd5b9b2b9712b49cb90a3ecb92d1e3a1ce"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/water/water_global_beaufort_10.mat">
+		<guid>2dab2a69017ea81bf362cf5c13591c4f3db6602f</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="water_global_beaufort_10" id="2dab2a69017ea81bf362cf5c13591c4f3db6602f"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/water/water_global_beaufort_11.mat">
+		<guid>152ed71b013f6ab69ff97498166b75c87ec52744</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="water_global_beaufort_11" id="152ed71b013f6ab69ff97498166b75c87ec52744"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/water/water_global_beaufort_12.mat">
+		<guid>0898dfc5fa38ee10677e41f06e473ecea33c2243</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="water_global_beaufort_12" id="0898dfc5fa38ee10677e41f06e473ecea33c2243"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/water/water_global_beaufort_2.mat">
+		<guid>45eed02508fd6d42fb07a480c27ab22f062f0160</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="water_global_beaufort_2" id="45eed02508fd6d42fb07a480c27ab22f062f0160"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/water/water_global_beaufort_3.mat">
+		<guid>ec34947401557120a3f8bd54853468ffadf930d6</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="water_global_beaufort_3" id="ec34947401557120a3f8bd54853468ffadf930d6"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/water/water_global_beaufort_4.mat">
+		<guid>59de0aeb6089af15d769ce4068447bcd13fea0b9</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="water_global_beaufort_4" id="59de0aeb6089af15d769ce4068447bcd13fea0b9"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/water/water_global_beaufort_5.mat">
+		<guid>aae5875b60263a28be3e70a16c0884173d81e3cd</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="water_global_beaufort_5" id="aae5875b60263a28be3e70a16c0884173d81e3cd"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/water/water_global_beaufort_6.mat">
+		<guid>399afc0df7ef6f302614e5ceed1cb122d6d99223</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="water_global_beaufort_6" id="399afc0df7ef6f302614e5ceed1cb122d6d99223"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/water/water_global_beaufort_7.mat">
+		<guid>9d9933328da3a529b179097bb94f96f62d40354b</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="water_global_beaufort_7" id="9d9933328da3a529b179097bb94f96f62d40354b"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/water/water_global_beaufort_8.mat">
+		<guid>6b797e5ef8ea647e75f6102e37ba37033ac87209</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="water_global_beaufort_8" id="6b797e5ef8ea647e75f6102e37ba37033ac87209"/>
+		</runtimes>
+	</asset>
+	<asset path="core/materials/default/water/water_global_beaufort_9.mat">
+		<guid>92d4bf7b4f78d8452abf18ca6ed0d3772d2c30c5</guid>
+		<type>material</type>
+		<runtimes>
+			<runtime name="water_global_beaufort_9" id="92d4bf7b4f78d8452abf18ca6ed0d3772d2c30c5"/>
+		</runtimes>
+	</asset>
+
+	<!------------------------------------------------------------>
+	<!-- Properties -->
+	<!------------------------------------------------------------>
+	<asset path="core/properties/node_base.prop">
+		<guid>1c613bbca0afd78c1ef165fc8e419352c5903d9e</guid>
+		<type>property</type>
+		<runtimes>
+			<runtime name="node_base" id="1c613bbca0afd78c1ef165fc8e419352c5903d9e"/>
+		</runtimes>
+	</asset>
+	<asset path="core/properties/surface_base.prop">
+		<guid>d99ebc8ef5769d70b1e46992309cc3e7d1aa2faa</guid>
+		<type>property</type>
+		<runtimes>
+			<runtime name="surface_base" id="d99ebc8ef5769d70b1e46992309cc3e7d1aa2faa"/>
+		</runtimes>
+	</asset>
+
+	<!------------------------------------------------------------>
+	<!-- Sounds -->
+	<!------------------------------------------------------------>
+	<asset path="core/sounds/sound_source.oga">
+		<guid>e0db9f51925cafcaf7142ef137811b09861b5ef6</guid>
+		<type>sound</type>
+		<runtimes>
+			<runtime name="sound_source.oga" id="e0db9f51925cafcaf7142ef137811b09861b5ef6"/>
+		</runtimes>
+	</asset>
+
+	<!------------------------------------------------------------>
+	<!-- Fonts -->
+	<!------------------------------------------------------------>
+	<asset path="core/gui/console.ttf">
+		<guid>1e9486a5f20f532d84cd662282b967814a1f19d3</guid>
+		<type>font</type>
+		<runtimes>
+			<runtime name="console.ttf" id="1e9486a5f20f532d84cd662282b967814a1f19d3"/>
+		</runtimes>
+	</asset>
+	<asset path="core/gui/font.ttf">
+		<guid>671a9d3da0f30578b529fb38d7e2f421f82fa096</guid>
+		<type>font</type>
+		<runtimes>
+			<runtime name="font.ttf" id="671a9d3da0f30578b529fb38d7e2f421f82fa096"/>
+		</runtimes>
+	</asset>
+	<asset path="core/gui/fontb.ttf">
+		<guid>d0bbedb8b6a245e7285b0d9e8e25599ce76a380a</guid>
+		<type>font</type>
+		<runtimes>
+			<runtime name="fontb.ttf" id="d0bbedb8b6a245e7285b0d9e8e25599ce76a380a"/>
+		</runtimes>
+	</asset>
+	<asset path="core/gui/fontbi.ttf">
+		<guid>299b7d226659e867eeeae96320d46079f2d80546</guid>
+		<type>font</type>
+		<runtimes>
+			<runtime name="fontbi.ttf" id="299b7d226659e867eeeae96320d46079f2d80546"/>
+		</runtimes>
+	</asset>
+	<asset path="core/gui/fonti.ttf">
+		<guid>408ea8f5735d4f8c70a6044b5cd3779cbcba4615</guid>
+		<type>font</type>
+		<runtimes>
+			<runtime name="fonti.ttf" id="408ea8f5735d4f8c70a6044b5cd3779cbcba4615"/>
+		</runtimes>
+	</asset>
+
+</assets>

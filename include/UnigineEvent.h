@@ -38,6 +38,7 @@ protected:
 
 	virtual ~EventBase()
 	{
+		ScopedReentrantLock lock(mutex);
 		assert(invoke_stack.empty());
 
 		while (callbacks.size())
@@ -68,7 +69,7 @@ protected:
 
 	template <typename Class>
 	typename std::enable_if<!std::is_base_of<EventConnections, Class>::value, EventConnectionId>::type
-	add(Class &obj, CallbackBase *callback)
+	add_unsafe(Class &obj, CallbackBase *callback)
 	{
 		UNIGINE_UNUSED(obj)
 		return append(callback);
@@ -82,9 +83,35 @@ protected:
 		return add(c, callback);
 	}
 
+	EventConnectionId add(EventConnection &c, EventConnections &obj, CallbackBase *callback)
+	{
+		UNIGINE_UNUSED(obj)
+		return add(c, callback);
+	}
+
 	EventConnectionId add(EventConnections &connections, CallbackBase *callback)
 	{
-		EventConnection *connection = new EventConnection();
+		if (connections.empty_connections.empty())
+		{
+			for (int i = 0; i < connections.connections.size(); i++)
+			{
+				if (connections.connections[i]->isValid())
+					continue;
+				connections.empty_connections.append(connections.connections[i]);
+				connections.connections.removeFast(i);
+				i--;
+			}
+		}
+
+		EventConnection *connection = nullptr;
+		if (connections.empty_connections.size() > 0)
+		{
+			connection = connections.empty_connections.takeLast();
+		} else
+		{
+			connection = new EventConnection();
+		}
+
 		connection->event = this;
 		callback->connection = connection;
 		connections.connections.append(connection);
@@ -94,7 +121,7 @@ protected:
 	virtual bool remove(CallbackBase *callback)
 	{
 		ScopedReentrantLock lock(mutex);
-		short id = callbacks.findIndex(callback);
+		int id = callbacks.findIndex(callback);
 		if (id == -1)
 			return false;
 
@@ -110,7 +137,7 @@ protected:
 	virtual bool remove(EventConnection *connection)
 	{
 		ScopedReentrantLock lock(mutex);
-		short id = 0;
+		int id = 0;
 		while (id < callbacks.size() && (callbacks[id]->connection != connection))
 			++id;
 		if (id >= callbacks.size())
@@ -130,9 +157,9 @@ protected:
 	virtual bool remove(uint32_t hash)
 	{
 		ScopedReentrantLock lock(mutex);
-		for (short i = 0; i < callbacks.size(); ++i)
+		for (int i = 0; i < callbacks.size(); ++i)
 		{
-			if (callbacks[i]->getHash() == hash && (callbacks[i]->connection == nullptr))
+			if (callbacks[i]->getHash() == hash)
 			{
 				auto callback = callbacks[i];
 
@@ -172,20 +199,20 @@ protected:
 
 	struct Invoke
 	{
-		void remove(short index)
+		void remove(int index)
 		{
 			if (index <= current)
 				--current;
 			if (index <= size)
 				--size;
 		}
-		short current;
-		short size;
+		int current;
+		int size;
 	};
 
 	bool enabled{true};
 	mutable ReentrantMutex mutex;
-	Vector<CallbackBase*, short> callbacks;
+	Vector<CallbackBase*> callbacks;
 	Vector<Invoke*, char> invoke_stack;
 };
 
@@ -219,7 +246,7 @@ class EventHelper<EventTypeList<>> : public EventBase
 public:
 
 	template<typename F, typename... Extra>
-	EventConnectionId connect(F(*f)(Extra... extra), Extra... extra)
+	EventConnectionId connectUnsafe(F(*f)(Extra... extra), Extra... extra)
 	{
 		return this->append(MakeCallback(f, extra ...));
 	}
@@ -234,6 +261,12 @@ public:
 	EventConnectionId connect(EventConnections &c, F(*f)(Extra... extra), Extra... extra)
 	{
 		return this->add(c, MakeCallback(f, extra ...));
+	}
+
+	template <typename Class, typename F, typename ...Extra>
+	EventConnectionId connectUnsafe(Class *object, F(Class::*f)(Extra... extra), Extra... extra)
+	{
+		return this->add_unsafe(*object, MakeCallback(object, f, extra...));
 	}
 
 	template <typename Class, typename F, typename ...Extra>
@@ -256,7 +289,7 @@ public:
 
 	template <typename L, typename std::enable_if<std::is_class<L>::value, bool>::type=false>
 	typename std::enable_if<LambdaTraits<L>::arity == 0, EventConnectionId>::type
-	connect(const L &l)
+	connectUnsafe(const L &l)
 	{
 		return this->append(MakeCallback(l));
 	}
@@ -302,10 +335,11 @@ class EventHelper<EventTypeList<Args...>> : public EventHelper<typename RemoveLa
 public:
 
 	using EventHelper<typename RemoveLast<Args...>::T>::connect;
+	using EventHelper<typename RemoveLast<Args...>::T>::connectUnsafe;
 	using EventHelper<typename RemoveLast<Args...>::T>::disconnect;
 
 	template <typename F, typename... Extra>
-	EventConnectionId connect(F(*f)(Args... args, Extra... extra), Extra... extra)
+	EventConnectionId connectUnsafe(F(*f)(Args... args, Extra... extra), Extra... extra)
 	{
 		return this->append(MakeCallback(f, extra ...));
 	}
@@ -320,6 +354,12 @@ public:
 	EventConnectionId connect(EventConnections &c, F(*f)(Args... args, Extra... extra), Extra... extra)
 	{
 		return this->add(c, MakeCallback(f, extra ...));
+	}
+
+	template <typename Class, typename F, typename ...Extra>
+	EventConnectionId connectUnsafe(Class *object, F(Class::*f)(Args... args, Extra... extra), Extra... extra)
+	{
+		return this->add_unsafe(*object, MakeCallback(object, f, extra...));
 	}
 
 	template <typename Class, typename F, typename ...Extra>
@@ -346,7 +386,7 @@ public:
 		typename std::enable_if<std::is_class<L>::value && !std::is_base_of<EventConnection, L>::value && !std::is_base_of<EventConnections, L>::value, bool>::type = false
 	>
 	typename std::enable_if<LambdaTraits<L>::arity == sizeof...(Args) && std::is_same<typename LambdaTraits<L>::args, std::tuple<Args...>>::value, EventConnectionId>::type
-	connect(const L &l, LambdaHelper<Args...> a = LambdaHelper<Args...>{})
+	connectUnsafe(const L &l, LambdaHelper<Args...> a = LambdaHelper<Args...>{})
 	{
 		UNIGINE_UNUSED(a)
 		return this->append(MakeCallback(l));

@@ -24,7 +24,7 @@ namespace Unigine
 class UNIGINE_API Visualizer
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
 	enum MODE
 	{

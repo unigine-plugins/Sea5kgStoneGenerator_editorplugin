@@ -33,11 +33,22 @@ public:
 	{
 		CLOCKS_PER_SECOND = 1'000'000,
 	};
+	UNIGINE_INLINE static double microsecondsToNanoseconds(long long microseconds) { return (double)microseconds / (1'000 * CLOCKS_PER_SECOND); }
+	UNIGINE_INLINE static double microsecondsToMilliseconds(long long microseconds) { return (double)(microseconds * 1'000) / CLOCKS_PER_SECOND; }
 	UNIGINE_INLINE static double microsecondsToSeconds(long long microseconds) { return (double)microseconds / CLOCKS_PER_SECOND; }
-	UNIGINE_INLINE static double microsecondsToMilliseconds(long long microseconds) { return (double)(microseconds * 1000) / CLOCKS_PER_SECOND; }
-	UNIGINE_INLINE static double secondsToMilliseconds(double seconds) { return seconds * 1000; }
-	UNIGINE_INLINE static double millisecondsToSeconds(double milliseconds) { return milliseconds / 1000; }
-	UNIGINE_INLINE static int64_t secondsToNanoseconds(double seconds) { return int64_t(seconds * 1'000'000'000); }
+
+	UNIGINE_INLINE static double millisecondsToNanoseconds(double milliseconds) { return milliseconds * 1'000'000.0; }
+	UNIGINE_INLINE static double millisecondsToMicroseconds(double milliseconds) { return milliseconds * 1'000.0; }
+	UNIGINE_INLINE static double millisecondsToSeconds(double milliseconds) { return milliseconds / 1'000.0; }
+
+	UNIGINE_INLINE static double secondsToNanoseconds(double seconds) { return seconds * 1'000'000'000.0; }
+	UNIGINE_INLINE static double secondsToMicroseconds(double seconds) { return seconds * 1'000'000.0; }
+	UNIGINE_INLINE static double secondsToMilliseconds(double seconds) { return seconds * 1'000.0; }
+
+	UNIGINE_INLINE static double hertzToNanoseconds(double hertz) { return 1'000'000'000.0 / hertz; }
+	UNIGINE_INLINE static double hertzToMicroseconds(double hertz) { return 1'000'000.0 / hertz; }
+	UNIGINE_INLINE static double hertzToMilliseconds(double hertz) { return 1'000.0 / hertz; }
+	UNIGINE_INLINE static double hertzToSeconds(double hertz) { return 1.0 / hertz; }
 
 	/**
 	 * Returns CPU clocks counter.

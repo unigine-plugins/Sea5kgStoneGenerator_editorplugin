@@ -27,7 +27,7 @@ namespace Unigine
 class UNIGINE_API AsyncQueue
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	static int loadFile(const char *name, int group = 0, float weight = 0.0f);
 	static int removeFile(int id);
 	static int forceFile(int id);

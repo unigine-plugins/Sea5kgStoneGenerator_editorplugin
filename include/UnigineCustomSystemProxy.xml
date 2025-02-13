@@ -727,6 +727,106 @@
 			<param name="excludes"> The windows to be excluded from the intersection detection. </param> 
 			<returns>The handle of the window the intersection with which is detected.</returns>
 		</member>
+		<member name="M:Unigine.CustomSystemProxy.isJoystickForceFeedbackEffectSupported(int32_t,int)">
+			<summary>
+			Returns a value indicating whether the specified type of force-feedback effect is supported by the joystick with the given ID.
+			</summary> 
+			<param name="joy_id"> Joystick ID. </param>
+			<param name="effect"> Type of a force-feedback effect. </param> 
+			<returns>true if the specified type of force-feedback effect is supported by the joystick with the given ID; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.CustomSystemProxy.playJoystickForceFeedbackEffectConstant(int32_t,float,float)">
+			<summary>
+			Applies the constant force-feedback effect with the specified parameters to the joystick with the given ID. Force is applied at a constant level for the duration of the effect.
+			</summary> 
+			<param name="joy_id"> Joystick ID. </param>
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param>
+			<param name="magnitude"> Modifier of force-feedback effect envelope (angular X direction). </param> 
+		</member>
+		<member name="M:Unigine.CustomSystemProxy.playJoystickForceFeedbackEffectRamp(int32_t,float,float,unsignedlong)">
+			<summary>
+			Applies the ramp force-feedback effect with the specified parameters to the joystick with the given ID. Force is applied gradually by being increased or decreased over the duration of the effect.
+			</summary> 
+			<param name="joy_id"> Joystick ID. </param>
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param>
+			<param name="magnitude"> Modifier of force-feedback effect (angular X direction): startMagnitude = magnitude, endMagnitude = -magnitude. </param>
+			<param name="duration_us"> Force-feedback effect duration, in microseconds. </param> 
+		</member>
+		<member name="M:Unigine.CustomSystemProxy.playJoystickForceFeedbackEffectSineWave(int32_t,float,float)">
+			<summary>
+			Applies the sine-wave force-feedback effect with the specified parameters to the joystick with the given ID. Force is applied in a sine-wave pattern.
+			</summary> 
+			<param name="joy_id"> Joystick ID. </param>
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param>
+			<param name="frequency"> Frequency of the force-feedback period, in hertz. </param> 
+		</member>
+		<member name="M:Unigine.CustomSystemProxy.playJoystickForceFeedbackEffectSquareWave(int32_t,float,float)">
+			<summary>
+			Applies the square-wave force-feedback effect with the specified parameters to the joystick with the given ID. Force is applied in a square-wave pattern.
+			</summary> 
+			<param name="joy_id"> Joystick ID. </param>
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param>
+			<param name="frequency"> Frequency of the force-feedback period, in hertz. </param> 
+		</member>
+		<member name="M:Unigine.CustomSystemProxy.playJoystickForceFeedbackEffectTriangleWave(int32_t,float,float)">
+			<summary>
+			Applies the triangle-wave force-feedback effect with the specified parameters to the joystick with the given ID. Force is applied in a triangle-wave pattern.
+			</summary> 
+			<param name="joy_id"> Joystick ID. </param>
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param>
+			<param name="frequency"> Frequency of the force-feedback period, in hertz. </param> 
+		</member>
+		<member name="M:Unigine.CustomSystemProxy.playJoystickForceFeedbackEffectSawtoothUpWave(int32_t,float,float)">
+			<summary>
+			Applies the upward-sawtooth-wave force-feedback effect with the specified parameters to the joystick with the given ID. Force is applied in a upward-sawtooth-wave pattern.
+			</summary> 
+			<param name="joy_id"> Joystick ID. </param>
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param>
+			<param name="frequency"> Frequency of the force-feedback period, in hertz. </param> 
+		</member>
+		<member name="M:Unigine.CustomSystemProxy.playJoystickForceFeedbackEffectSawtoothDownWave(int32_t,float,float)">
+			<summary>
+			Applies the downward-sawtooth-wave force-feedback effect with the specified parameters to the joystick with the given ID. Force is applied in a downward-sawtooth-wave pattern.
+			</summary> 
+			<param name="joy_id"> Joystick ID. </param>
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param>
+			<param name="frequency"> Frequency of the force-feedback period, in hertz. </param> 
+		</member>
+		<member name="M:Unigine.CustomSystemProxy.playJoystickForceFeedbackEffectSpring(int32_t,float)">
+			<summary>
+			Applies the spring force-feedback effect with the specified parameters to the joystick with the given ID. Force is applied in opposition to a set state.
+			</summary> 
+			<param name="joy_id"> Joystick ID. </param>
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param> 
+		</member>
+		<member name="M:Unigine.CustomSystemProxy.playJoystickForceFeedbackEffectFriction(int32_t,float)">
+			<summary>
+			Applies the friction force-feedback effect with the specified parameters to the joystick with the given ID. Force is applied to mimic friction.
+			</summary> 
+			<param name="joy_id"> Joystick ID. </param>
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param> 
+		</member>
+		<member name="M:Unigine.CustomSystemProxy.playJoystickForceFeedbackEffectDamper(int32_t,float)">
+			<summary>
+			Applies the damper force-feedback effect with the specified parameters to the joystick with the given ID. Force is applied to mimic a damper effect.
+			</summary> 
+			<param name="joy_id"> Joystick ID. </param>
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param> 
+		</member>
+		<member name="M:Unigine.CustomSystemProxy.playJoystickForceFeedbackEffectInertia(int32_t,float)">
+			<summary>
+			Applies the inertia force-feedback effect with the specified parameters to the joystick with the given ID. Force is applied to mimic an inertia effect.
+			</summary> 
+			<param name="joy_id"> Joystick ID. </param>
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param> 
+		</member>
+		<member name="M:Unigine.CustomSystemProxy.stopJoystickForceFeedbackEffect(int32_t,int)">
+			<summary>
+			Stops application of the specified type of force-feedback effect to the joystick with the given ID.
+			</summary> 
+			<param name="joy_id"> Joystick ID. </param>
+			<param name="effect"> Type of a force-feedback effect. </param> 
+		</member>
 		<member name="F:Unigine.CustomSystemProxy.SYSTEM_PROXY_WINDOWS">
 			<summary>
 			CustomSystemProxy can create windows.

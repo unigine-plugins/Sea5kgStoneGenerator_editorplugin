@@ -51,6 +51,7 @@ namespace Math
 // Orthonormal basis
 //////////////////////////////////////////////////////////////////////////
 
+/// <summary>Creates an ortho transformation. Output tangent and binormal vectors are put to corresponding return vectors.</summary>
 UNIGINE_INLINE void orthoBasis(const vec3 &v, vec3 &tangent, vec3 &binormal)
 {
 	if (abs(v.z) > 0.7f)
@@ -75,6 +76,7 @@ UNIGINE_INLINE void orthoBasis(const vec3 &v, vec3 &tangent, vec3 &binormal)
 		binormal.z = length2 * ilength;
 	}
 }
+/// <summary>Creates an ortho transformation. Output tangent and binormal vectors are put to corresponding return vectors.</summary>
 UNIGINE_INLINE void orthoBasis(const dvec3 &v, dvec3 &tangent, dvec3 &binormal)
 {
 	if (abs(v.z) > 0.7)
@@ -100,6 +102,7 @@ UNIGINE_INLINE void orthoBasis(const dvec3 &v, dvec3 &tangent, dvec3 &binormal)
 	}
 }
 
+/// <summary>Creates an ortho transformation. The transformation is put to the argument matrix.</summary>
 UNIGINE_INLINE void orthoTransform(const vec3 &v, mat4 &transform)
 {
 	if (Math::abs(v.z) > 0.7f)
@@ -139,6 +142,7 @@ UNIGINE_INLINE void orthoTransform(const vec3 &v, mat4 &transform)
 
 	transform = rotate(v, 90.0f) * transform;
 }
+/// <summary>Creates an ortho transformation. The transformation is put to the argument matrix.</summary>
 UNIGINE_INLINE void orthoTransform(const dvec3 &v, dmat4 &transform)
 {
 	if (Math::abs(v.z) > 0.7)
@@ -174,6 +178,7 @@ UNIGINE_INLINE void orthoTransform(const dvec3 &v, dmat4 &transform)
 	transform = rotate(v, 90.0) * transform;
 }
 
+/// <summary>Creates the ortho triangle tangent space basis.</summary>
 UNIGINE_INLINE quat orthoTangent(const vec4 &t, const vec3 &n)
 {
 	vec3 normal(n);
@@ -202,6 +207,7 @@ UNIGINE_INLINE quat orthoTangent(const vec4 &t, const vec3 &n)
 		basis = -basis;
 	return basis;
 }
+/// <summary>Creates the ortho triangle tangent space basis.</summary>
 UNIGINE_INLINE quat orthoTangent(const vec3 &t, const vec3 &b, const vec3 &n)
 {
 	vec3 normal(n);
@@ -235,6 +241,7 @@ UNIGINE_INLINE quat orthoTangent(const vec3 &t, const vec3 &b, const vec3 &n)
 // Triangle parameters
 //////////////////////////////////////////////////////////////////////////
 
+/// <summary>Returns the triangle area.</summary>
 UNIGINE_INLINE float triangleArea(const vec3 &v0, const vec3 &v1, const vec3 &v2)
 {
 	float a = length(v1 - v2);
@@ -243,6 +250,7 @@ UNIGINE_INLINE float triangleArea(const vec3 &v0, const vec3 &v1, const vec3 &v2
 	float s = (a + b + c) * 0.5f;
 	return fsqrt(s * (s - a) * (s - b) * (s - c));
 }
+/// <summary>Returns the triangle area.</summary>
 UNIGINE_INLINE double triangleArea(const dvec3 &v0, const dvec3 &v1, const dvec3 &v2)
 {
 	double a = length(v1 - v2);
@@ -252,6 +260,7 @@ UNIGINE_INLINE double triangleArea(const dvec3 &v0, const dvec3 &v1, const dvec3
 	return dsqrt(s * (s - a) * (s - b) * (s - c));
 }
 
+/// <summary>Returns the triangle normal vector.</summary>
 UNIGINE_INLINE vec3 triangleNormal(const vec3 &v0, const vec3 &v1, const vec3 &v2)
 {
 	vec3 v10, v20, normal;
@@ -259,6 +268,7 @@ UNIGINE_INLINE vec3 triangleNormal(const vec3 &v0, const vec3 &v1, const vec3 &v
 	normal.normalize();
 	return normal;
 }
+/// <summary>Returns the triangle normal vector.</summary>
 UNIGINE_INLINE dvec3 triangleNormal(const dvec3 &v0, const dvec3 &v1, const dvec3 &v2)
 {
 	dvec3 v10, v20, normal;
@@ -267,6 +277,7 @@ UNIGINE_INLINE dvec3 triangleNormal(const dvec3 &v0, const dvec3 &v1, const dvec
 	return normal;
 }
 
+/// <summary>Returns the triangle plane.</summary>
 UNIGINE_INLINE vec4 trianglePlane(const vec3 &v0, const vec3 &v1, const vec3 &v2)
 {
 	vec3 v10, v20, normal;
@@ -274,6 +285,7 @@ UNIGINE_INLINE vec4 trianglePlane(const vec3 &v0, const vec3 &v1, const vec3 &v2
 	normal.normalize();
 	return vec4(normal, -dot(normal, v0));
 }
+/// <summary>Returns the triangle plane.</summary>
 UNIGINE_INLINE dvec4 trianglePlane(const dvec3 &v0, const dvec3 &v1, const dvec3 &v2)
 {
 	dvec3 v10, v20, normal;
@@ -282,6 +294,7 @@ UNIGINE_INLINE dvec4 trianglePlane(const dvec3 &v0, const dvec3 &v1, const dvec3
 	return dvec4(normal, -dot(normal, v0));
 }
 
+/// <summary>Returns the triangle tangent space.</summary>
 UNIGINE_INLINE vec4 triangleTangent(const vec3 &v0, const vec3 &v1, const vec3 &v2)
 {
 	vec3 tangent, binormal;
@@ -289,6 +302,14 @@ UNIGINE_INLINE vec4 triangleTangent(const vec3 &v0, const vec3 &v1, const vec3 &
 	orthoBasis(normal, tangent, binormal);
 	return vec4(tangent, 1.0f);
 }
+/// <summary>Returns the triangle tangent space.</summary>
+/// <param name="v0">The first triangle vertex.</param>
+/// <param name="v1">The second triangle vertex.</param>
+/// <param name="v2">The third triangle vertex.</param>
+/// <param name="t0">Tangent vector of the first triangle vertex.</param>
+/// <param name="t1">Tangent vector of the second triangle vertex.</param>
+/// <param name="t2">Tangent vector of the third triangle vertex.</param>
+/// <param name="normal">Normal.</param>
 UNIGINE_INLINE vec4 triangleTangent(const vec3 &v0, const vec3 &v1, const vec3 &v2, const vec2 &t0, const vec2 &t1, const vec2 &t2, const vec3 &normal)
 {
 	vec3 v10, v20;
@@ -335,6 +356,13 @@ UNIGINE_INLINE vec4 triangleTangent(const vec3 &v0, const vec3 &v1, const vec3 &
 
 	return vec4(tangent, sign);
 }
+/// <summary>Returns the triangle tangent space.</summary>
+/// <param name="v0">The first triangle vertex.</param>
+/// <param name="v1">The second triangle vertex.</param>
+/// <param name="v2">The third triangle vertex.</param>
+/// <param name="t0">Tangent vector of the first triangle vertex.</param>
+/// <param name="t1">Tangent vector of the second triangle vertex.</param>
+/// <param name="t2">Tangent vector of the third triangle vertex.</param>
 UNIGINE_INLINE vec4 triangleTangent(const vec3 &v0, const vec3 &v1, const vec3 &v2, const vec2 &t0, const vec2 &t1, const vec2 &t2)
 {
 	return triangleTangent(v0, v1, v2, t0, t1, t2, triangleNormal(v0, v1, v2));
@@ -393,18 +421,22 @@ UNIGINE_INLINE dvec4 polygon_plane(const dvec3 *vertex, Type *indices, int num_i
 }
 }
 
+/// <summary>Returns the polygon plane.</summary>
 UNIGINE_INLINE vec4 polygonPlane(const vec3 *vertex, const int *indices, int num_indices)
 {
 	return polygon_plane(vertex, indices, num_indices);
 }
+/// <summary>Returns the polygon plane.</summary>
 UNIGINE_INLINE dvec4 polygonPlane(const dvec3 *vertex, const int *indices, int num_indices)
 {
 	return polygon_plane(vertex, indices, num_indices);
 }
+/// <summary>Returns the polygon plane.</summary>
 UNIGINE_INLINE vec4 polygonPlane(const vec3 *vertex, const unsigned short *indices, int num_indices)
 {
 	return polygon_plane(vertex, indices, num_indices);
 }
+/// <summary>Returns the polygon plane.</summary>
 UNIGINE_INLINE dvec4 polygonPlane(const dvec3 *vertex, const unsigned short *indices, int num_indices)
 {
 	return polygon_plane(vertex, indices, num_indices);
@@ -414,6 +446,7 @@ UNIGINE_INLINE dvec4 polygonPlane(const dvec3 *vertex, const unsigned short *ind
 // Point tringle intersections
 //////////////////////////////////////////////////////////////////////////
 
+/// <summary>Checks if the point is inside the triangle formed by the specified vertices.</summary>
 UNIGINE_INLINE bool pointTriangleInside(const vec3 &point, const vec3 &v0, const vec3 &v1, const vec3 &v2)
 {
 	vec3 axis, normal;
@@ -448,6 +481,7 @@ UNIGINE_INLINE bool pointTriangleInside(const vec3 &point, const vec3 &v0, const
 	}
 	return 0;
 }
+/// <summary>Checks if the point is inside the triangle formed by the specified vertices.</summary>
 UNIGINE_INLINE bool pointTriangleInside(const dvec3 &point, const dvec3 &v0, const dvec3 &v1, const dvec3 &v2)
 {
 	dvec3 axis, normal;
@@ -483,6 +517,7 @@ UNIGINE_INLINE bool pointTriangleInside(const dvec3 &point, const dvec3 &v0, con
 	return 0;
 }
 
+/// <summary>Checks if the point is inside the triangle formed by the specified vertices.</summary>
 UNIGINE_INLINE bool pointTriangleInside(const vec3 &point, const vec3 &v0, const vec3 &v1, const vec3 &v2, const vec3 &normal)
 {
 	vec3 axis;
@@ -516,6 +551,7 @@ UNIGINE_INLINE bool pointTriangleInside(const vec3 &point, const vec3 &v0, const
 	}
 	return 0;
 }
+/// <summary>Checks if the point is inside the triangle formed by the specified vertices.</summary>
 UNIGINE_INLINE bool pointTriangleInside(const dvec3 &point, const dvec3 &v0, const dvec3 &v1, const dvec3 &v2, const dvec3 &normal)
 {
 	dvec3 axis;
@@ -550,6 +586,7 @@ UNIGINE_INLINE bool pointTriangleInside(const dvec3 &point, const dvec3 &v0, con
 	return 0;
 }
 
+/// <summary>Returns the closest distance from the point to the triangle formed by the specified vertices and plane.</summary>
 UNIGINE_INLINE float pointTriangleDistance(const vec3 &point, const vec3 &v0, const vec3 &v1, const vec3 &v2, const vec4 &plane)
 {
 	vec3 v10, v20, pv0;
@@ -593,6 +630,7 @@ UNIGINE_INLINE float pointTriangleDistance(const vec3 &point, const vec3 &v0, co
 	k2 = length2(sub(pv0, point, mad(pv0, v21, k2, v1)));
 	return fsqrt(min(k0, min(k1, k2)));
 }
+/// <summary>Returns the closest distance from the point to the triangle formed by the specified vertices and plane.</summary>
 UNIGINE_INLINE double pointTriangleDistance(const dvec3 &point, const dvec3 &v0, const dvec3 &v1, const dvec3 &v2, const dvec4 &plane)
 {
 	dvec3 v10, v20, pv0;
@@ -637,6 +675,7 @@ UNIGINE_INLINE double pointTriangleDistance(const dvec3 &point, const dvec3 &v0,
 	return dsqrt(min(k0, min(k1, k2)));
 }
 
+/// <summary>Calculates barycentric coordinates of the triangle formed by the specified vertices. The returned coordinates are stored in the a and b arguments.</summary>
 UNIGINE_INLINE void pointTriangleCoordinates(const vec2 &point, const vec2 &v0, const vec2 &v1, const vec2 &v2, float &a, float &b)
 {
 	vec2 v20, v10, v0p;
@@ -656,6 +695,7 @@ UNIGINE_INLINE void pointTriangleCoordinates(const vec2 &point, const vec2 &v0, 
 	a = abs(v20.x * v0p.y - v20.y * v0p.x) * iarea;
 	b = abs(v10.x * v0p.y - v10.y * v0p.x) * iarea;
 }
+/// <summary>Calculates barycentric coordinates of the triangle formed by the specified vertices. The returned coordinates are stored in the a and b arguments.</summary>
 UNIGINE_INLINE void pointTriangleCoordinates(const vec3 &point, const vec3 &v0, const vec3 &v1, const vec3 &v2, float &a, float &b)
 {
 	vec3 v, v20, v10, v0p;
@@ -675,6 +715,7 @@ UNIGINE_INLINE void pointTriangleCoordinates(const vec3 &point, const vec3 &v0, 
 	a = length(cross(v, v20, v0p)) * iarea;
 	b = length(cross(v, v10, v0p)) * iarea;
 }
+/// <summary>Calculates barycentric coordinates of the triangle formed by the specified vertices. The returned coordinates are stored in the a and b arguments.</summary>
 UNIGINE_INLINE void pointTriangleCoordinates(const dvec3 &point, const dvec3 &v0, const dvec3 &v1, const dvec3 &v2, double &a, double &b)
 {
 	dvec3 v, v20, v10, v0p;
@@ -744,18 +785,22 @@ UNIGINE_INLINE bool point_polygon_inside(const dvec3 &point, const dvec3 *vertex
 }
 }
 
+/// <summary>Checks if the point is inside the polygon.</summary>
 UNIGINE_INLINE bool pointPolygonInside(const vec3 &point, const vec3 *vertex, const int *indices, int num_indices, const vec3 &normal)
 {
 	return point_polygon_inside(point, vertex, indices, num_indices, normal);
 }
+/// <summary>Checks if the point is inside the polygon.</summary>
 UNIGINE_INLINE bool pointPolygonInside(const dvec3 &point, const dvec3 *vertex, const int *indices, int num_indices, const dvec3 &normal)
 {
 	return point_polygon_inside(point, vertex, indices, num_indices, normal);
 }
+/// <summary>Checks if the point is inside the polygon.</summary>
 UNIGINE_INLINE bool pointPolygonInside(const vec3 &point, const vec3 *vertex, const unsigned short *indices, int num_indices, const vec3 &normal)
 {
 	return point_polygon_inside(point, vertex, indices, num_indices, normal);
 }
+/// <summary>Checks if the point is inside the polygon.</summary>
 UNIGINE_INLINE bool pointPolygonInside(const dvec3 &point, const dvec3 *vertex, const unsigned short *indices, int num_indices, const dvec3 &normal)
 {
 	return point_polygon_inside(point, vertex, indices, num_indices, normal);
@@ -838,18 +883,22 @@ UNIGINE_INLINE double point_polygon_distance(const dvec3 &point, const dvec3 *ve
 }
 }
 
+/// <summary>Returns the distance from the point to the polygon.</summary>
 UNIGINE_INLINE float pointPolygonDistance(const vec3 &point, const vec3 *vertex, const int *indices, int num_indices, const vec4 &plane)
 {
 	return point_polygon_distance(point, vertex, indices, num_indices, plane);
 }
+/// <summary>Returns the distance from the point to the polygon.</summary>
 UNIGINE_INLINE double pointPolygonDistance(const dvec3 &point, const dvec3 *vertex, const int *indices, int num_indices, const dvec4 &plane)
 {
 	return point_polygon_distance(point, vertex, indices, num_indices, plane);
 }
+/// <summary>Returns the distance from the point to the polygon.</summary>
 UNIGINE_INLINE float pointPolygonDistance(const vec3 &point, const vec3 *vertex, const unsigned short *indices, int num_indices, const vec4 &plane)
 {
 	return point_polygon_distance(point, vertex, indices, num_indices, plane);
 }
+/// <summary>Returns the distance from the point to the polygon.</summary>
 UNIGINE_INLINE double pointPolygonDistance(const dvec3 &point, const dvec3 *vertex, const unsigned short *indices, int num_indices, const dvec4 &plane)
 {
 	return point_polygon_distance(point, vertex, indices, num_indices, plane);
@@ -860,6 +909,11 @@ UNIGINE_INLINE double pointPolygonDistance(const dvec3 &point, const dvec3 *vert
 // Bounding box intersections
 //////////////////////////////////////////////////////////////////////////
 
+/// <summary>Checks if a ray intersects a bounding box. More performance-consuming than irayBoundBoxIntersection() due to more division operations.</summary>
+/// <param name="point">Starting point of the ray.</param>
+/// <param name="direction">Direction of the ray.</param>
+/// <param name="min">Min coordinates of the axis-aligned bounding box.</param>
+/// <param name="max">Max coordinates of the axis-aligned bounding box.</param>
 UNIGINE_INLINE bool rayBoundBoxIntersection(const vec3 &point, const vec3 &direction, const vec3 &min, const vec3 &max)
 {
 	vec3 idirection;
@@ -907,6 +961,11 @@ UNIGINE_INLINE bool rayBoundBoxIntersection(const vec3 &point, const vec3 &direc
 	float tmax = Math::min(Math::min(mx.x, mx.y), mx.z);
 	return tmax >= 0 && tmin <= tmax;
 }
+/// <summary>Checks if a ray intersects a bounding box. More performance-consuming than irayBoundBoxIntersection() due to more division operations.</summary>
+/// <param name="point">Starting point of the ray.</param>
+/// <param name="direction">Direction of the ray.</param>
+/// <param name="min">Min coordinates of the axis-aligned bounding box.</param>
+/// <param name="max">Max coordinates of the axis-aligned bounding box.</param>
 UNIGINE_INLINE bool rayBoundBoxIntersection(const dvec3 &point, const dvec3 &direction, const dvec3 &min, const dvec3 &max)
 {
 	dvec3 idirection;
@@ -955,6 +1014,11 @@ UNIGINE_INLINE bool rayBoundBoxIntersection(const dvec3 &point, const dvec3 &dir
 	return tmax >= 0 && tmin <= tmax;
 }
 
+/// <summary>Checks if a ray intersects a bounding box. Less performance-consuming than rayBoundBoxIntersection() as it uses the inverse of the ray direction.</summary>
+/// <param name="point">Starting point of the ray.</param>
+/// <param name="idirection">Inverse direction of the ray.</param>
+/// <param name="min">Min coordinates of the axis-aligned bounding box.</param>
+/// <param name="max">Max coordinates of the axis-aligned bounding box.</param>
 UNIGINE_INLINE bool irayBoundBoxIntersection(const vec3 &point, const vec3 &idirection, const vec3 &min, const vec3 &max)
 {
 	vec3 t0;
@@ -972,6 +1036,11 @@ UNIGINE_INLINE bool irayBoundBoxIntersection(const vec3 &point, const vec3 &idir
 	float tmax = Math::min(Math::min(mx.x, mx.y), mx.z);
 	return tmax >= 0 && tmin <= tmax;
 }
+/// <summary>Checks if a ray intersects a bounding box. Less performance-consuming than rayBoundBoxIntersection() as it uses the inverse of the ray direction.</summary>
+/// <param name="point">Starting point of the ray.</param>
+/// <param name="idirection">Inverse direction of the ray.</param>
+/// <param name="min">Min coordinates of the axis-aligned bounding box.</param>
+/// <param name="max">Max coordinates of the axis-aligned bounding box.</param>
 UNIGINE_INLINE bool irayBoundBoxIntersection(const dvec3 &point, const dvec3 &idirection, const dvec3 &min, const dvec3 &max)
 {
 	dvec3 t0;
@@ -990,6 +1059,12 @@ UNIGINE_INLINE bool irayBoundBoxIntersection(const dvec3 &point, const dvec3 &id
 	return tmax >= 0 && tmin <= tmax;
 }
 
+/// <summary>Checks if the ray intersects the triangle.</summary>
+/// <param name="point">Starting point of the ray.</param>
+/// <param name="direction">Direction of the ray.</param>
+/// <param name="v0">The first vertex of the triangle.</param>
+/// <param name="v1">The second vertex of the triangle.</param>
+/// <param name="v2">The third vertex of the triangle.</param>
 UNIGINE_INLINE bool rayTriangleIntersection(const vec3 &point, const vec3 &direction, const vec3 &v0, const vec3 &v1, const vec3 &v2)
 {
 	vec3 sxyz;
@@ -1062,6 +1137,12 @@ UNIGINE_INLINE bool rayTriangleIntersection(const vec3 &point, const vec3 &direc
 #undef WATERTIGHT
 }
 
+/// <summary>Checks if the ray intersects the triangle.</summary>
+/// <param name="point">Starting point of the ray.</param>
+/// <param name="direction">Direction of the ray.</param>
+/// <param name="v0">The first vertex of the triangle.</param>
+/// <param name="v1">The second vertex of the triangle.</param>
+/// <param name="v2">The third vertex of the triangle.</param>
 UNIGINE_INLINE bool rayTriangleIntersection(const dvec3 &point, const dvec3 &direction, const dvec3 &v0, const dvec3 &v1, const dvec3 &v2)
 {
 #define WATERTIGHT(KX,KY,KZ)\
@@ -1113,22 +1194,45 @@ UNIGINE_INLINE bool rayTriangleIntersection(const dvec3 &point, const dvec3 &dir
 // Plane intersections
 //////////////////////////////////////////////////////////////////////////
 
+/// <summary>Checks if there is an intersection between the line and the plane.</summary>
+/// <param name="p0">Start point of the line.</param>
+/// <param name="p1">End point of the line.</param>
+/// <param name="plane">Plane.</param>
 UNIGINE_INLINE bool linePlaneIntersection(const vec3 &p0, const vec3 &p1, const vec4 &plane)
 {
 	return abs(dot(p1 - p0, plane.xyz)) >= Consts::EPS;
 }
+/// <summary>Checks if there is an intersection between the line and the plane.</summary>
+/// <param name="p0">Start point of the line.</param>
+/// <param name="p1">End point of the line.</param>
+/// <param name="plane">Plane.</param>
 UNIGINE_INLINE bool linePlaneIntersection(const dvec3 &p0, const dvec3 &p1, const dvec4 &plane)
 {
 	return abs(dot(p1 - p0, plane.xyz)) >= Consts::EPS;
 }
+/// <summary>Checks if there is an intersection between the line and the plane.</summary>
+/// <param name="p0">Start point of the line.</param>
+/// <param name="p1">End point of the line.</param>
+/// <param name="plane_point">Point of the plane.</param>
+/// <param name="plane_normal">Normal to the plane.</param>
 UNIGINE_INLINE bool linePlaneIntersection(const vec3 &p0, const vec3 &p1, const vec3 &plane_point, const vec3 &plane_normal)
 {
 	return linePlaneIntersection(p0, p1, vec4(plane_normal, -dot(plane_point, plane_normal)));
 }
+/// <summary>Checks if there is an intersection between the line and the plane.</summary>
+/// <param name="p0">Start point of the line.</param>
+/// <param name="p1">End point of the line.</param>
+/// <param name="plane_point">Point of the plane.</param>
+/// <param name="plane_normal">Normal to the plane.</param>
 UNIGINE_INLINE bool linePlaneIntersection(const dvec3 &p0, const dvec3 &p1, const dvec3 &plane_point, const dvec3 &plane_normal)
 {
 	return linePlaneIntersection(p0, p1, dvec4(plane_normal, -dot(plane_point, plane_normal)));
 }
+/// <summary>Checks if there is an intersection between the line and the plane. If the function returns true, the intersection point is put in the return vector.</summary>
+/// <param name="p0">Start point of the line.</param>
+/// <param name="p1">End point of the line.</param>
+/// <param name="plane">Plane.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE bool linePlaneIntersection(const vec3 &p0, const vec3 &p1, const vec4 &plane, vec3 &ret)
 {
 	vec3 d = p1 - p0;
@@ -1144,6 +1248,11 @@ UNIGINE_INLINE bool linePlaneIntersection(const vec3 &p0, const vec3 &p1, const 
 	ret = p0 + d * t;
 	return true;
 }
+/// <summary>Checks if there is an intersection between the line and the plane. If the function returns true, the intersection point is put in the return vector.</summary>
+/// <param name="p0">Start point of the line.</param>
+/// <param name="p1">End point of the line.</param>
+/// <param name="plane">Plane.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE bool linePlaneIntersection(const dvec3 &p0, const dvec3 &p1, const dvec4 &plane, dvec3 &ret)
 {
 	dvec3 d = p1 - p0;
@@ -1159,15 +1268,31 @@ UNIGINE_INLINE bool linePlaneIntersection(const dvec3 &p0, const dvec3 &p1, cons
 	ret = p0 + d * t;
 	return true;
 }
+/// <summary>Checks if there is an intersection between the line and the plane. If the function returns true, the intersection point is put in the return vector.</summary>
+/// <param name="p0">Start point of the line.</param>
+/// <param name="p1">End point of the line.</param>
+/// <param name="plane_point">Point of the plane.</param>
+/// <param name="plane_normal">Normal to the plane.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE bool linePlaneIntersection(const vec3 &p0, const vec3 &p1, const vec3 &plane_point, const vec3 &plane_normal, vec3 &ret)
 {
 	return linePlaneIntersection(p0, p1, vec4(plane_normal, -dot(plane_point, plane_normal)), ret);
 }
+/// <summary>Checks if there is an intersection between the line and the plane. If the function returns true, the intersection point is put in the return vector.</summary>
+/// <param name="p0">Start point of the line.</param>
+/// <param name="p1">End point of the line.</param>
+/// <param name="plane_point">Point of the plane.</param>
+/// <param name="plane_normal">Normal to the plane.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE bool linePlaneIntersection(const dvec3 &p0, const dvec3 &p1, const dvec3 &plane_point, const dvec3 &plane_normal, dvec3 &ret)
 {
 	return linePlaneIntersection(p0, p1, dvec4(plane_normal, -dot(plane_point, plane_normal)), ret);
 }
 
+/// <summary>Checks if the ray intersects the plane.</summary>
+/// <param name="point">Starting point of the ray.</param>
+/// <param name="direction">Direction of the ray.</param>
+/// <param name="plane">Plane.</param>
 UNIGINE_INLINE bool rayPlaneIntersection(const vec3 &point, const vec3 &direction, const vec4 &plane)
 {
 	float r = dot(direction, plane.xyz);
@@ -1176,6 +1301,10 @@ UNIGINE_INLINE bool rayPlaneIntersection(const vec3 &point, const vec3 &directio
 	float t = -(plane.w + dot(point, plane.xyz)) / r;
 	return t >= 0.0f;
 }
+/// <summary>Checks if the ray intersects the plane.</summary>
+/// <param name="point">Starting point of the ray.</param>
+/// <param name="direction">Direction of the ray.</param>
+/// <param name="plane">Plane.</param>
 UNIGINE_INLINE bool rayPlaneIntersection(const dvec3 &point, const dvec3 &direction, const dvec4 &plane)
 {
 	double r = dot(direction, plane.xyz);
@@ -1184,14 +1313,29 @@ UNIGINE_INLINE bool rayPlaneIntersection(const dvec3 &point, const dvec3 &direct
 	double t = -(plane.w + dot(point, plane.xyz)) / r;
 	return t >= 0.0;
 }
+/// <summary>Checks if the ray intersects the plane.</summary>
+/// <param name="point">Starting point of the ray.</param>
+/// <param name="direction">Direction of the ray.</param>
+/// <param name="plane_point">Point of the plane.</param>
+/// <param name="plane_normal">Normal to the plane.</param>
 UNIGINE_INLINE bool rayPlaneIntersection(const vec3 &point, const vec3 &direction, const vec3 &plane_point, const vec3 &plane_normal)
 {
 	return rayPlaneIntersection(point, direction, vec4(plane_normal, -dot(plane_point, plane_normal)));
 }
+/// <summary>Checks if the ray intersects the plane.</summary>
+/// <param name="point">Starting point of the ray.</param>
+/// <param name="direction">Direction of the ray.</param>
+/// <param name="plane_point">Point of the plane.</param>
+/// <param name="plane_normal">Normal to the plane.</param>
 UNIGINE_INLINE bool rayPlaneIntersection(const dvec3 &point, const dvec3 &direction, const dvec3 &plane_point, const dvec3 &plane_normal)
 {
 	return rayPlaneIntersection(point, direction, dvec4(plane_normal, -dot(plane_point, plane_normal)));
 }
+/// <summary>Checks if the ray intersects the plane. If the function returns true, the intersection point is put in the return vector.</summary>
+/// <param name="point">Starting point of the ray.</param>
+/// <param name="direction">Direction of the ray.</param>
+/// <param name="plane">Plane.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE bool rayPlaneIntersection(const vec3 &point, const vec3 &direction, const vec4 &plane, vec3 &ret)
 {
 	float r = dot(direction, plane.xyz);
@@ -1206,6 +1350,11 @@ UNIGINE_INLINE bool rayPlaneIntersection(const vec3 &point, const vec3 &directio
 	return true;
 }
 
+/// <summary>Checks if the ray intersects the plane. If the function returns true, the intersection point is put in the return vector.</summary>
+/// <param name="point">Starting point of the ray.</param>
+/// <param name="direction">Direction of the ray.</param>
+/// <param name="plane">Plane.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE bool rayPlaneIntersection(const dvec3 &point, const dvec3 &direction, const dvec4 &plane, dvec3 &ret)
 {
 	double r = dot(direction, plane.xyz);
@@ -1219,15 +1368,31 @@ UNIGINE_INLINE bool rayPlaneIntersection(const dvec3 &point, const dvec3 &direct
 	ret = point + direction * t;
 	return true;
 }
+/// <summary>Checks if the ray intersects the plane. If the function returns true, the intersection point is put in the return vector.</summary>
+/// <param name="point">Starting point of the ray.</param>
+/// <param name="direction">Direction of the ray.</param>
+/// <param name="plane_point">Point of the plane.</param>
+/// <param name="plane_normal">Normal to the plane.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE bool rayPlaneIntersection(const vec3 &point, const vec3 &direction, const vec3 &plane_point, const vec3 &plane_normal, vec3 &ret)
 {
 	return rayPlaneIntersection(point, direction, vec4(plane_normal, -dot(plane_point, plane_normal)), ret);
 }
+/// <summary>Checks if the ray intersects the plane. If the function returns true, the intersection point is put in the return vector.</summary>
+/// <param name="point">Starting point of the ray.</param>
+/// <param name="direction">Direction of the ray.</param>
+/// <param name="plane_point">Point of the plane.</param>
+/// <param name="plane_normal">Normal to the plane.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE bool rayPlaneIntersection(const dvec3 &point, const dvec3 &direction, const dvec3 &plane_point, const dvec3 &plane_normal, dvec3 &ret)
 {
 	return rayPlaneIntersection(point, direction, dvec4(plane_normal, -dot(plane_point, plane_normal)), ret);
 }
 
+/// <summary>Checks if the line segment intersects the plane.</summary>
+/// <param name="p0">Start point of the line segment.</param>
+/// <param name="p1">End point of the line segment.</param>
+/// <param name="plane">Plane.</param>
 UNIGINE_INLINE bool segmentPlaneIntersection(const vec3 &p0, const vec3 &p1, const vec4 &plane)
 {
 	float r = dot(p1 - p0, plane.xyz);
@@ -1236,6 +1401,10 @@ UNIGINE_INLINE bool segmentPlaneIntersection(const vec3 &p0, const vec3 &p1, con
 	float t = -(plane.w + dot(p0, plane.xyz)) / r;
 	return t >= 0.0f && t <= 1.0f;
 }
+/// <summary>Checks if the line segment intersects the plane.</summary>
+/// <param name="p0">Start point of the line segment.</param>
+/// <param name="p1">End point of the line segment.</param>
+/// <param name="plane">Plane.</param>
 UNIGINE_INLINE bool segmentPlaneIntersection(const dvec3 &p0, const dvec3 &p1, const dvec4 &plane)
 {
 	double r = dot(p1 - p0, plane.xyz);
@@ -1244,16 +1413,31 @@ UNIGINE_INLINE bool segmentPlaneIntersection(const dvec3 &p0, const dvec3 &p1, c
 	double t = -(plane.w + dot(p0, plane.xyz)) / r;
 	return t >= 0.0 && t <= 1.0;
 }
+/// <summary>Checks if the line segment intersects the plane.</summary>
+/// <param name="p0">Start point of the line segment.</param>
+/// <param name="p1">End point of the line segment.</param>
+/// <param name="plane_point">Point of the plane.</param>
+/// <param name="plane_normal">Normal to the plane.</param>
 UNIGINE_INLINE bool segmentPlaneIntersection(const vec3 &p0, const vec3 &p1, const vec3 &plane_point, const vec3 &plane_normal)
 {
 	vec4 plane(plane_normal, -dot(plane_point, plane_normal));
 	return segmentPlaneIntersection(p0, p1, plane);
 }
+/// <summary>Checks if the line segment intersects the plane.</summary>
+/// <param name="p0">Start point of the line segment.</param>
+/// <param name="p1">End point of the line segment.</param>
+/// <param name="plane_point">Point of the plane.</param>
+/// <param name="plane_normal">Normal to the plane.</param>
 UNIGINE_INLINE bool segmentPlaneIntersection(const dvec3 &p0, const dvec3 &p1, const dvec3 &plane_point, const dvec3 &plane_normal)
 {
 	dvec4 plane(plane_normal, -dot(plane_point, plane_normal));
 	return segmentPlaneIntersection(p0, p1, plane);
 }
+/// <summary>Checks if the line segment intersects the plane. If the function returns true, the intersection point is put in the return vector.</summary>
+/// <param name="p0">Start point of the line segment.</param>
+/// <param name="p1">End point of the line segment.</param>
+/// <param name="plane">Plane.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE bool segmentPlaneIntersection(const vec3 &p0, const vec3 &p1, const vec4 &plane, vec3 &ret)
 {
 	vec3 d = p1 - p0;
@@ -1269,6 +1453,11 @@ UNIGINE_INLINE bool segmentPlaneIntersection(const vec3 &p0, const vec3 &p1, con
 	ret = p0 + d * t;
 	return true;
 }
+/// <summary>Checks if the line segment intersects the plane. If the function returns true, the intersection point is put in the return vector.</summary>
+/// <param name="p0">Start point of the line segment.</param>
+/// <param name="p1">End point of the line segment.</param>
+/// <param name="plane">Plane.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE bool segmentPlaneIntersection(const dvec3 &p0, const dvec3 &p1, const dvec4 &plane, dvec3 &ret)
 {
 	dvec3 d = p1 - p0;
@@ -1284,10 +1473,22 @@ UNIGINE_INLINE bool segmentPlaneIntersection(const dvec3 &p0, const dvec3 &p1, c
 	ret = p0 + d * t;
 	return true;
 }
+/// <summary>Checks if the line segment intersects the plane. If the function returns true, the intersection point is put in the return vector.</summary>
+/// <param name="p0">Start point of the line segment.</param>
+/// <param name="p1">End point of the line segment.</param>
+/// <param name="plane_point">Point of the plane.</param>
+/// <param name="plane_normal">Normal to the plane.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE bool segmentPlaneIntersection(const vec3 &p0, const vec3 &p1, const vec3 &plane_point, const vec3 &plane_normal, vec3 &ret)
 {
 	return segmentPlaneIntersection(p0, p1, vec4(plane_normal, -dot(plane_point, plane_normal)), ret);
 }
+/// <summary>Checks if the line segment intersects the plane. If the function returns true, the intersection point is put in the return vector.</summary>
+/// <param name="p0">Start point of the line segment.</param>
+/// <param name="p1">End point of the line segment.</param>
+/// <param name="plane_point">Point of the plane.</param>
+/// <param name="plane_normal">Normal to the plane.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE bool segmentPlaneIntersection(const dvec3 &p0, const dvec3 &p1, const dvec3 &plane_point, const dvec3 &plane_normal, dvec3 &ret)
 {
 	return segmentPlaneIntersection(p0, p1, dvec4(plane_normal, -dot(plane_point, plane_normal)), ret);
@@ -1298,6 +1499,11 @@ UNIGINE_INLINE bool segmentPlaneIntersection(const dvec3 &p0, const dvec3 &p1, c
 // Closest points
 //////////////////////////////////////////////////////////////////////////
 
+/// <summary>Scans the specified line segment and searches for the point closest to the reference point. The found point is put in the return vector.</summary>
+/// <param name="point">Reference point.</param>
+/// <param name="p0">Line start point.</param>
+/// <param name="p1">Line end point.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE void getClosestPointOnLine(const vec3 &point, const vec3 &p0, const vec3 &p1, vec3 &ret)
 {
 	vec3 direction;
@@ -1312,6 +1518,11 @@ UNIGINE_INLINE void getClosestPointOnLine(const vec3 &point, const vec3 &p0, con
 	float k = dot(direction, sub(v0, point, p0)) * rcp(d);
 	mad(ret, direction, saturate(k), p0);
 }
+/// <summary>Scans the specified line segment and searches for the point closest to the reference point. The found point is put in the return vector.</summary>
+/// <param name="point">Reference point.</param>
+/// <param name="p0">Line start point.</param>
+/// <param name="p1">Line end point.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE void getClosestPointOnLine(const dvec3 &point, const dvec3 &p0, const dvec3 &p1, dvec3 &ret)
 {
 	dvec3 direction;
@@ -1327,6 +1538,12 @@ UNIGINE_INLINE void getClosestPointOnLine(const dvec3 &point, const dvec3 &p0, c
 	mad(ret, direction, saturate(k), p0);
 }
 
+/// <summary>Scans the specified triangle and searches for the point closest to the reference point. The found point is put in the return vector.</summary>
+/// <param name="point">Reference point.</param>
+/// <param name="v0">The first vertex of the triangle.</param>
+/// <param name="v1">The second vertex of the triangle.</param>
+/// <param name="v2">The third vertex of the triangle.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE bool getClosestPointOnTriangle(const vec3 &point, const vec3 &v0, const vec3 &v1, const vec3 &v2, vec3 &ret)
 {
 	vec3 axis, normal;
@@ -1382,6 +1599,12 @@ UNIGINE_INLINE bool getClosestPointOnTriangle(const vec3 &point, const vec3 &v0,
 
 	return false;
 }
+/// <summary>Scans the specified triangle and searches for the point closest to the reference point. The found point is put in the return vector.</summary>
+/// <param name="point">Reference point.</param>
+/// <param name="v0">The first vertex of the triangle.</param>
+/// <param name="v1">The second vertex of the triangle.</param>
+/// <param name="v2">The third vertex of the triangle.</param>
+/// <param name="ret">Return vector.</param>
 UNIGINE_INLINE bool getClosestPointOnTriangle(const dvec3 &point, const dvec3 &v0, const dvec3 &v1, const dvec3 &v2, dvec3 &ret)
 {
 	dvec3 axis, normal;
@@ -1438,6 +1661,13 @@ UNIGINE_INLINE bool getClosestPointOnTriangle(const dvec3 &point, const dvec3 &v
 	return false;
 }
 
+/// <summary>Scans the two specified lines and searches for the pair of closest points. The closest points of the first and the second lines are put in the respective return vector.</summary>
+/// <param name="p00">Start point of the first line.</param>
+/// <param name="p01">End point of the first line.</param>
+/// <param name="p10">Start point of the second line.</param>
+/// <param name="p11">End point of the second line.</param>
+/// <param name="ret_0">First return vector.</param>
+/// <param name="ret_1">Second return vector.</param>
 UNIGINE_INLINE bool getClosestPointsOnLines(const vec3 &p00, const vec3 &p01, const vec3 &p10, const vec3 &p11, vec3 &ret_0, vec3 &ret_1)
 {
 	if (p00 == p01)
@@ -1573,6 +1803,13 @@ UNIGINE_INLINE bool getClosestPointsOnLines(const vec3 &p00, const vec3 &p01, co
 	mad(ret_1, v1, saturate((d00 * d21 - d10 * d20) * idet), p10);
 	return true;
 }
+/// <summary>Scans the two specified lines and searches for the pair of closest points. The closest points of the first and the second lines are put in the respective return vector.</summary>
+/// <param name="p00">Start point of the first line.</param>
+/// <param name="p01">End point of the first line.</param>
+/// <param name="p10">Start point of the second line.</param>
+/// <param name="p11">End point of the second line.</param>
+/// <param name="ret_0">First return vector.</param>
+/// <param name="ret_1">Second return vector.</param>
 UNIGINE_INLINE bool getClosestPointsOnLines(const dvec3 &p00, const dvec3 &p01, const dvec3 &p10, const dvec3 &p11, dvec3 &ret_0, dvec3 &ret_1)
 {
 	if (p00 == p01)
@@ -1709,10 +1946,16 @@ UNIGINE_INLINE bool getClosestPointsOnLines(const dvec3 &p00, const dvec3 &p01, 
 	return true;
 }
 
+/// <summary>Calculates the projection of a vector onto a given plane.</summary>
+/// <param name="v">Input vector.</param>
+/// <param name="plane_normal">Normal to the plane.</param>
 UNIGINE_INLINE vec3 projectOntoPlane(const vec3 &v, const vec3 &plane_normal)
 {
 	return v - plane_normal * dot(v, plane_normal);
 }
+/// <summary>Calculates the projection of a vector onto a given plane.</summary>
+/// <param name="v">Input vector.</param>
+/// <param name="plane_normal">Normal to the plane.</param>
 UNIGINE_INLINE dvec3 projectOntoPlane(const dvec3 &v, const dvec3 &plane_normal)
 {
 	return v - plane_normal * dot(v, plane_normal);
@@ -1724,6 +1967,13 @@ UNIGINE_INLINE dvec3 projectOntoPlane(const dvec3 &v, const dvec3 &plane_normal)
 //////////////////////////////////////////////////////////////////////////
 
 template <class Vertex, class Shader>
+/// <summary>Positions the given triangle within the given screen coordinates, rasterizes it and applies the specified shader to each pixel.</summary>
+/// <param name="vertex">Pointer to vertex structure.</param>
+/// <param name="x0">The X coordinate of the top left corner of screen space.</param>
+/// <param name="y0">The Y coordinate of the top left corner of screen space.</param>
+/// <param name="x1">The X coordinate of the bottom right corner of screen space.</param>
+/// <param name="y1">The Y coordinate of the bottom right corner of screen space.</param>
+/// <param name="shader">Shader.</param>
 UNIGINE_INLINE void triangleRasterize(const Vertex *vertex, int x0, int y0, int x1, int y1, Shader &shader)
 {
 	const Vertex *v0 = vertex + 0;

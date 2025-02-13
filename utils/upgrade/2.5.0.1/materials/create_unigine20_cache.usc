@@ -1,0 +1,447 @@
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
+
+#include <utils.h>
+#include <log.h>
+#include <materials/model.h>
+
+/* Quick'n'dirty core material libraries diff tool */
+
+string core_ignores[] = (
+	"unigine_mesh_lut.mat": 0,
+	"unigine_mesh_paint.mat": 0,
+	"unigine_mesh_tessellation.mat": 0,
+	"unigine_mesh_tessellation_paint.mat": 0,
+	"unigine_mesh_triplanar.mat": 0,
+	"unigine_mesh_overlap.mat": 0,
+	"unigine_mesh_layer.mat": 0,
+	"unigine_mesh_noise.mat": 0,
+	"unigine_mesh_shadow.mat": 0,
+	"unigine_mesh_wire.mat": 0,
+);
+
+string removed_options[0] = (
+	"group",
+	"downsize",
+	"glow_mask",
+	"parallax_mask",
+	"occlusion_mask",
+	"post_deferred",
+	"post_refraction",
+	"cast_translucent",
+	"receive_translucent",
+);
+
+/*
+ */
+namespace CodeGenerator {
+	
+	int tabs = 0;
+	
+	void shift() { tabs++; }
+	void unshift() { tabs--; }
+	
+	void writeLine() {
+		writeLine("");
+	}
+	
+	void writeLine(string line) {
+		forloop(int i = 0; tabs) {
+			line = "\t" + line;
+		}
+		line += "\n";
+		log.message(line);
+	}
+	
+	void minorSeparator() {
+		CodeGenerator::writeLine("/*");
+		CodeGenerator::writeLine(" */");
+	}
+	
+	void startNamespace(string name) {
+		CodeGenerator::writeLine(format("namespace %s {",name));
+		CodeGenerator::shift();
+	}
+	
+	void closeNamespace(string name) {
+		CodeGenerator::unshift();
+		CodeGenerator::writeLine(format("} /* namespace %s */",name));
+	}
+	
+} /* namespace CodeGenerator  */
+
+/*
+ */
+void main() {
+	
+	// reading arguments
+	if(getNumArgs() < 3) {
+		log.message("Usage: %s <Unigine 2.0-RC materials path> <Unigine 2.0 materials path>...\n",getArg(0));
+		return;
+	}
+	
+	string core_path_20RC = getDirPath(getArg(1));
+	string core_path_20 = getDirPath(getArg(2));
+	
+	// parsing material libraries
+	string mat_files_20RC[0] = ();
+	if(!getFilesWithExt(mat_files_20RC,core_path_20RC,".mat")) {
+		return;
+	}
+	
+	string mat_files_20[0] = ();
+	if(!getFilesWithExt(mat_files_20,core_path_20,".mat")) {
+		return;
+	}
+	
+	Library libraries_20RC[] = (:);
+	Library libraries_20[] = (:);
+	
+	foreach(string f; mat_files_20RC) {
+		
+		Library lib = Library::load(f);
+		if(lib == NULL) {
+			Log::error("failed to load library %s",f);
+			return;
+		}
+		
+		libraries_20RC.append(basename(f),lib);
+	}
+	
+	foreach(string f; mat_files_20) {
+		
+		if(core_ignores.check(basename(f))) {
+			continue;
+		}
+		
+		Library lib = Library::load(f);
+		if(lib == NULL) {
+			Log::error("failed to load library %s",f);
+			return;
+		}
+		
+		libraries_20.append(basename(f),lib);
+	}
+	
+	// creating cache
+	string removed_libraries[0] = ();
+	
+	Material materials_20RC[] = (:);
+	Material materials_20[] = (:);
+	
+	foreachkey(string lib_name; libraries_20RC) {
+		
+		Library lib_20RC = libraries_20RC[lib_name];
+		materials_20RC.merge(lib_20RC.materials);
+		
+		if(!libraries_20.check(lib_name)) {
+			removed_libraries.append(lib_name);
+			continue;
+		}
+		
+		Library lib_20 = libraries_20[lib_name];
+		materials_20.merge(lib_20.materials);
+	}
+	
+	string materials[0] = ();
+	
+	foreach(Material material; materials_20) {
+		
+		if(!material.isHidden() && material.getName() != "mesh_legacy" && material.getParent() != "mesh_legacy") {
+			materials.append(material.getName());
+		}
+	}
+	
+	string removed_materials[] = ( "mesh_pbr_base": "mesh_base", );
+	
+	string states[0] = ();
+	string textures[0] = ();
+	string parameters[0] = ();
+	
+	string removed_states[0] = ();
+	string removed_textures[0] = ();
+	string removed_parameters[0] = ();
+	
+	foreachkey(string material_name; materials_20RC) {
+		
+		Material material_20RC = materials_20RC[material_name];
+		if(material_20RC.isHidden()) {
+			continue;
+		}
+		
+		if(!materials_20.check(material_name)) {
+			removed_materials.append(material_name,get_material_replacement(material_name));
+			continue;
+		}
+		
+		Material material_20 = materials_20[material_name];
+		
+		if(material_20.getParent() == "mesh_legacy") {
+			removed_materials.append(material_name,get_material_replacement(material_name));
+			continue;
+		}
+		
+		// states
+		string states_20RC[] = (:);
+		get_all_states(states_20RC,materials_20RC,material_20RC);
+		
+		string states_20[] = (:);
+		get_all_states(states_20,materials_20,material_20);
+		
+		foreachkey(string state_name; states_20) {
+			states.append(material_name + "@" + state_name);
+		}
+		
+		foreachkey(string state_name; states_20RC) {
+			if(!states_20.check(state_name)) {
+				removed_states.append(material_name + "@" + state_name);
+			}
+		}
+		
+		// textures
+		string textures_20RC[] = (:);
+		get_all_textures(textures_20RC,materials_20RC,material_20RC);
+		
+		string textures_20[] = (:);
+		get_all_textures(textures_20,materials_20,material_20);
+		
+		foreachkey(string texture_name; textures_20) {
+			textures.append(material_name + "@" + texture_name);
+		}
+		
+		foreachkey(string texture_name; textures_20RC) {
+			if(!textures_20.check(texture_name)) {
+				removed_textures.append(material_name + "@" + texture_name);
+			}
+		}
+		
+		// parameters
+		string parameters_20RC[] = (:);
+		get_all_parameters(parameters_20RC,materials_20RC,material_20RC);
+		
+		string parameters_20[] = (:);
+		get_all_parameters(parameters_20,materials_20,material_20);
+		
+		foreachkey(string parameter_name; parameters_20) {
+			parameters.append(material_name + "@" + parameter_name);
+		}
+		
+		foreachkey(string parameter_name; parameters_20RC) {
+			if(!parameters_20.check(parameter_name)) {
+				removed_parameters.append(material_name + "@" + parameter_name);
+			}
+		}
+	}
+	
+	// dumping code
+	CodeGenerator::writeLine("/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/");
+	CodeGenerator::writeLine();
+	
+	CodeGenerator::minorSeparator();
+	CodeGenerator::startNamespace("Unigine20");
+	
+	CodeGenerator::writeLine();
+	CodeGenerator::minorSeparator();
+	CodeGenerator::writeLine("/*int libraries[] = (");
+	CodeGenerator::shift();
+	foreachkey(string lib; libraries_20) {
+		CodeGenerator::writeLine(format("\"%s\": 1,",lib));
+	}
+	CodeGenerator::unshift();
+	CodeGenerator::writeLine(");*/");
+	
+	CodeGenerator::writeLine();
+	CodeGenerator::minorSeparator();
+	CodeGenerator::writeLine("int materials[] = (");
+	CodeGenerator::shift();
+	foreach(string mat; materials) {
+		CodeGenerator::writeLine(format("\"%s\": 1,",mat));
+	}
+	CodeGenerator::unshift();
+	CodeGenerator::writeLine(");");
+	
+	CodeGenerator::writeLine();
+	CodeGenerator::minorSeparator();
+	CodeGenerator::writeLine("int states[] = (");
+	CodeGenerator::shift();
+	foreach(string state; states) {
+		CodeGenerator::writeLine(format("\"%s\": 1,",state));
+	}
+	CodeGenerator::unshift();
+	CodeGenerator::writeLine(");");
+	
+	CodeGenerator::writeLine();
+	CodeGenerator::minorSeparator();
+	CodeGenerator::writeLine("int textures[] = (");
+	CodeGenerator::shift();
+	foreach(string texture; textures) {
+		CodeGenerator::writeLine(format("\"%s\": 1,",texture));
+	}
+	CodeGenerator::unshift();
+	CodeGenerator::writeLine(");");
+	
+	CodeGenerator::writeLine();
+	CodeGenerator::minorSeparator();
+	CodeGenerator::writeLine("int parameters[] = (");
+	CodeGenerator::shift();
+	foreach(string param; parameters) {
+		CodeGenerator::writeLine(format("\"%s\": 1,",param));
+	}
+	CodeGenerator::unshift();
+	CodeGenerator::writeLine(");");
+	
+	CodeGenerator::writeLine();
+	CodeGenerator::minorSeparator();
+	CodeGenerator::writeLine("/*int removed_libraries[] = (");
+	CodeGenerator::shift();
+	foreach(string lib; removed_libraries) {
+		CodeGenerator::writeLine(format("\"%s\": 1,",lib));
+	}
+	CodeGenerator::unshift();
+	CodeGenerator::writeLine(");*/");
+	
+	CodeGenerator::writeLine();
+	CodeGenerator::minorSeparator();
+	CodeGenerator::writeLine("int removed_materials[] = (");
+	CodeGenerator::shift();
+	foreachkey(string mat; removed_materials) {
+		CodeGenerator::writeLine(format("\"%s\": \"%s\",",mat,removed_materials[mat]));
+	}
+	CodeGenerator::unshift();
+	CodeGenerator::writeLine(");");
+	
+	CodeGenerator::writeLine();
+	CodeGenerator::minorSeparator();
+	CodeGenerator::writeLine("int removed_options[] = (");
+	CodeGenerator::shift();
+	foreach(string opt; removed_options) {
+		CodeGenerator::writeLine(format("\"%s\": 1,",opt));
+	}
+	CodeGenerator::unshift();
+	CodeGenerator::writeLine(");");
+	
+	CodeGenerator::writeLine();
+	CodeGenerator::minorSeparator();
+	CodeGenerator::writeLine("/*int removed_states[] = (");
+	CodeGenerator::shift();
+	foreach(string state; removed_states) {
+		CodeGenerator::writeLine(format("\"%s\": 1,",state));
+	}
+	CodeGenerator::unshift();
+	CodeGenerator::writeLine(");*/");
+	
+	CodeGenerator::writeLine();
+	CodeGenerator::minorSeparator();
+	CodeGenerator::writeLine("/*int removed_textures[] = (");
+	CodeGenerator::shift();
+	foreach(string texture; removed_textures) {
+		CodeGenerator::writeLine(format("\"%s\": 1,",texture));
+	}
+	CodeGenerator::unshift();
+	CodeGenerator::writeLine(");*/");
+	
+	CodeGenerator::writeLine();
+	CodeGenerator::minorSeparator();
+	CodeGenerator::writeLine("/*int removed_parameters[] = (");
+	CodeGenerator::shift();
+	foreach(string param; removed_parameters) {
+		CodeGenerator::writeLine(format("\"%s\": 1,",param));
+	}
+	CodeGenerator::unshift();
+	CodeGenerator::writeLine(");*/");
+	
+	CodeGenerator::writeLine();
+	CodeGenerator::closeNamespace("Unigine20");
+	CodeGenerator::writeLine();
+}
+
+void get_all_states(string states[],Material materials[],Material material) {
+	
+	states.clear();
+	
+	do {
+		
+		foreachkey(string state_name; material.states) {
+			states.append(state_name);
+		}
+		
+		if(material.getParent() != "") {
+			material = materials[material.getParent()];
+		} else {
+			material = NULL;
+		}
+		
+	} while(material != NULL);
+}
+
+void get_all_textures(string textures[],Material materials[],Material material) {
+	
+	textures.clear();
+	
+	do {
+		
+		foreachkey(string texture_name; material.textures) {
+			textures.append(texture_name);
+		}
+		
+		if(material.getParent() != "") {
+			material = materials[material.getParent()];
+		} else {
+			material = NULL;
+		}
+		
+	} while(material != NULL);
+}
+
+void get_all_parameters(string parameters[],Material materials[],Material material) {
+	
+	parameters.clear();
+	
+	do {
+		
+		foreachkey(string parameter_name; material.parameters) {
+			parameters.append(parameter_name);
+		}
+		
+		if(material.getParent() != "") {
+			material = materials[material.getParent()];
+		} else {
+			material = NULL;
+		}
+		
+	} while(material != NULL);
+}
+
+string get_material_replacement(string mat) {
+	
+	if(mat == "billboard_base") {
+		return "billboards_base";
+	} else if(startsWith(mat,"mesh_")) {
+		return "mesh_base";
+	} else if(startsWith(mat,"decal_")) {
+		return "decal_base";
+	} else {
+		return "";
+	}
+}

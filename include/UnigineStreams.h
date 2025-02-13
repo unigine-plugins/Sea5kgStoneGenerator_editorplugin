@@ -200,8 +200,8 @@ class UNIGINE_API File : public Stream
 public:
 	static bool convertible(Stream *obj) { return obj && obj->getType() == Stream::FILE; }
 	static Ptr<File> create();
-	static Ptr<File> create(const char *name, const char *mode);
-	bool open(const char *name, const char *mode) const;
+	static Ptr<File> create(const char *name, const char *mode, bool use_cache = true);
+	bool open(const char *name, const char *mode, bool use_cache = true) const;
 	bool close() const;
 	const char *getName() const;
 	size_t getSize() const;
@@ -212,6 +212,7 @@ public:
 	int seekCur(size_t offset) const;
 	size_t tell() const;
 	int flush() const;
+	int truncate();
 	size_t readFile(void *ptr, size_t size, size_t nmemb) const;
 	size_t writeFile(void *ptr, size_t size, size_t nmemb) const;
 };
@@ -289,6 +290,7 @@ public:
 	bool listenMulticastGroup();
 	bool accept(const Ptr<Socket> &socket);
 	bool connect();
+	bool connect(size_t timeout_ms);
 	bool broadcast();
 	bool block();
 	bool nonblock();

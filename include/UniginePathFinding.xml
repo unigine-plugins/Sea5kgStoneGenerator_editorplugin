@@ -140,7 +140,7 @@
 			<summary>
 			Sets a new path for the mesh used as a base for the navigation mesh and forces loading of the mesh with the new path for the current navigation mesh.
 			</summary> 
-			<param name="path"> Path to the .mesh-file to be set. </param>
+			<param name="path"> Path to the *.mesh-file to be set. </param>
 			<param name="force_load"> Force flag.If 1 is specified, the mesh with the new path will be loaded immediately.If 0 is specified, only the mesh path will be updated. </param> 
 			<returns>true if:The current mesh path coincides the new path.The mesh with the new path has been loaded successfully.The force flag is set to 0. In other cases,false.</returns>
 		</member>
@@ -148,13 +148,13 @@
 			<summary>
 			Returns the path to the .mesh-file containing a base mesh for the navigation mesh.
 			</summary>  
-			<returns>Path to the .mesh-file.</returns>
+			<returns>Path to the *.mesh-file.</returns>
 		</member>
 		<member name="M:Unigine.NavigationMesh.loadMesh(char)">
 			<summary>
 			Loads a mesh, on which the navigation mesh is based, from the file. This function doesn't change the mesh name.
 			</summary> 
-			<param name="path"> A relative path to the *.mesh file. </param> 
+			<param name="path"> A relative path to the *.mesh-file. </param> 
 			<returns>1 if the mesh is loaded successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.NavigationMesh.saveMesh(char)">

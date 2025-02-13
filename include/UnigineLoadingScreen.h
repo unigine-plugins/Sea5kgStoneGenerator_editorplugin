@@ -25,7 +25,7 @@ namespace Unigine
 class UNIGINE_API LoadingScreen
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	static void setEnabled(bool enabled);
 	static bool isEnabled();
 	static void setThreshold(int threshold);

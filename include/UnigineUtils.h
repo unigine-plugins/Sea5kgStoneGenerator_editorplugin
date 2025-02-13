@@ -17,6 +17,7 @@
 #include "UnigineMesh.h"
 #include "UnigineImage.h"
 #include "UnigineString.h"
+#include "UnigineGUID.h"
 
 namespace Unigine
 {
@@ -29,8 +30,8 @@ namespace Utils
 	UNIGINE_API String date(const char *format);
 	UNIGINE_API String date(const char *format, long long time);
 
-	UNIGINE_API int makeNodeCurved(NodePtr node);
-	UNIGINE_API int makeNodeFlat(NodePtr node);
+	UNIGINE_API int makeNodeCurved(const NodePtr &node);
+	UNIGINE_API int makeNodeFlat(const NodePtr &node);
 }
 
 } // namespace

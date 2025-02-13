@@ -150,17 +150,19 @@
 		</member>
 		<member name="M:Unigine.Object.setEnabled(bool,int)">
 			<summary>
-			Enables or disables a given surface.
+			Enables or disables a surface with the specified number. The disabled surface is not rendered, does not take part in collision detection, and does not cast shadows.
+			
 			</summary> 
-			<param name="enabled"> 1 to enable the surface, 0 to disable it. </param>
+			<param name="enabled"> true to enable the surface, false to disable it. </param>
 			<param name="surface"> Surface number. </param> 
 		</member>
 		<member name="M:Unigine.Object.isEnabled(int) const">
 			<summary>
 			Returns a value indicating if a given surface is enabled.
+			
 			</summary> 
 			<param name="surface"> Surface number. </param> 
-			<returns>Positive number if the surface is enabled; otherwise, 0. </returns>
+			<returns>true if the surface is enabled; otherwise, false. </returns>
 		</member>
 		<member name="M:Unigine.Object.isEnabled const">
 			<summary>
@@ -879,26 +881,26 @@
 			<param name="surface"> Target surface number. </param> 
 			<returns>Surface lighting mode, one of the following:SURFACE_LIGHTING_MODE_STATICSURFACE_LIGHTING_MODE_DYNAMICSURFACE_LIGHTING_MODE_ADVANCED</returns>
 		</member>
-		<member name="M:Unigine.Object.setMaterialPath(char,int)">
+		<member name="M:Unigine.Object.setMaterialFilePath(char,int)">
 			<summary>
-			Sets the material by path to a given surface.
+			Sets the material by file path to a given surface.
 			</summary> 
-			<param name="path"> Material path. </param>
+			<param name="path"> Material file path. </param>
 			<param name="surface"> Target surface number. </param> 
 		</member>
-		<member name="M:Unigine.Object.setMaterialPath(char,char)">
+		<member name="M:Unigine.Object.setMaterialFilePath(char,char)">
 			<summary>
-			Sets the material by path to given surfaces.
+			Sets the material by file path to given surfaces.
 			</summary> 
-			<param name="path"> Material path. </param>
+			<param name="path"> Material file path. </param>
 			<param name="pattern"> Pattern (string with a regular expression), against which surface names will be matched. </param> 
 		</member>
-		<member name="M:Unigine.Object.getMaterialPath(int) const">
+		<member name="M:Unigine.Object.getMaterialFilePath(int) const">
 			<summary>
-			Returns the path of the material assigned to a given surface.
+			Returns the file path for the material assigned to a given surface.
 			</summary> 
 			<param name="surface"> Target surface number. </param> 
-			<returns>Material path.</returns>
+			<returns>Material file path.</returns>
 		</member>
 		<member name="M:Unigine.Object.setMaterialGUID(Unigine.UGUID,int)">
 			<summary>
@@ -994,16 +996,6 @@
 		<member name="F:Unigine.Object.SURFACE_LIGHTING_MODE_ADVANCED">
 			<summary>
 			Enables manual adjustment of all lighting-related settings.
-		</summary>
-		</member>
-		<member name="F:Unigine.Object.STREAMING_OBJECT_MESH_ON_DEMAND">
-			<summary>
-			Mesh streaming mode to load mesh to RAM/VRAM on demand.
-		</summary>
-		</member>
-		<member name="F:Unigine.Object.STREAMING_OBJECT_MESH_BY_PRESENCE">
-			<summary>
-			Mesh streaming mode to load mesh to and hold in RAM/VRAM by its presence. The mesh remains loaded while it exists. This mode can be set for a single mesh participating in collisions and intersections to avoid incorrect physical behavior of objects in the scene.
 		</summary>
 		</member>
 		<member name="M:Unigine.ObjectBillboards.#ctor">
@@ -2717,7 +2709,7 @@
 			<summary>
 			An ObjectGuiMesh constructor. The Gui Mesh will be created on the basis of the mesh loaded from the specified path.
 			</summary> 
-			<param name="mesh_path"> Path to the source .mesh-file used as a base for the object </param> 
+			<param name="mesh_path"> Path to the source .mesh-file used for the object </param> 
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.#ctor">
 			<summary>
@@ -2750,7 +2742,7 @@
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.getMeshPath const">
 			<summary>
-			Returns the path to the source .mesh-file currently used as a base for the Gui Mesh object.
+			Returns the path to the source .mesh-file currently used for the Gui Mesh object.
 			</summary>  
 			<returns>Path to the source .mesh-file.</returns>
 		</member>
@@ -2824,35 +2816,53 @@
 			</summary>  
 			<returns>ObjectMeshStatic type identifier.</returns>
 		</member>
-		<member name="M:Unigine.ObjectGuiMesh.getMeshInfo">
+		<member name="M:Unigine.ObjectGuiMesh.getMeshCurrentRAM">
 			<summary>
-			Returns the base mesh that stores data on mesh bounds, surfaces, their number, names, and bounds, but doesn't contain any geometry.				It's highly recommended NOT to edit the returned mesh.
+			Returns the current source mesh used for the object and loaded to memory (RAM).
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A current source mesh used for the object.</returns>
 		</member>
-		<member name="M:Unigine.ObjectGuiMesh.getMeshForce">
+		<member name="M:Unigine.ObjectGuiMesh.getMeshCurrentVRAM">
 			<summary>
-			Returns the base mesh used for the object. The returned static mesh won't be loaded to VRAM.				It's highly recommended NOT to edit the returned mesh.
+			Returns the current render mesh used for the object and loaded to video memory (VRAM).
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A current render mesh used for the object.</returns>
 		</member>
-		<member name="M:Unigine.ObjectGuiMesh.getMeshAsync">
+		<member name="M:Unigine.ObjectGuiMesh.getMeshForceRAM">
 			<summary>
-			Returns the base mesh used for the object asynchronously. This function can be called if the mesh hasn't been loaded yet.				It's highly recommended NOT to edit the returned mesh.
+			Returns the source mesh used for the object and loads it to memory (RAM) immediately.
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A source mesh used for the object.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.getMeshForceVRAM">
 			<summary>
-			Returns the base mesh used for the object and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			Returns the render mesh used for the object and loads it to video memory (VRAM) immediately. At that, the static mesh will also be loaded to memory (RAM).					Loading to VRAM must be performed in the main thread only.
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A render mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.getMeshAsyncRAM">
+			<summary>
+			Returns the source mesh used for the object and loads it to memory (RAM) asynchronously.
+			</summary>  
+			<returns>A source mesh used for the object.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.getMeshAsyncVRAM">
 			<summary>
-			Returns the base mesh used for the object asynchronously and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			Returns the render mesh used for the object and loads it to video memory (VRAM) asynchronously. At that, the static mesh will also be loaded to memory (RAM).					Loading to VRAM must be performed in the main thread only.
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A render mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.getMeshProceduralRAM">
+			<summary>
+			Returns the procedural source mesh used for the object and loads it to memory (RAM) using the specific streaming mode for procedural meshes. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode — they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
+			</summary>  
+			<returns>A procedural source mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectGuiMesh.getMeshProceduralVRAM">
+			<summary>
+			Returns the procedural render mesh used for the object and loads it to video memory (VRAM) using the specific streaming mode for procedural meshes. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode — they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
+			</summary>  
+			<returns>A procedural render mesh used for the object.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.loadAsyncVRAM">
 			<summary>
@@ -2894,64 +2904,40 @@
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.applyMeshProcedural(Unigine.Ptr{Unigine.Mesh})">
 			<summary>
-			Sets the specified mesh as the base mesh for the object. The object must be in the procedural mesh mode.					The mesh should contain a single surface. In case if the mesh contains several surfaces, only the one with the 0 index will be used. Thus, the area of the decal will differ from the initial mesh.
+			Sets the specified mesh as the source mesh for the object. The object must be in the procedural mesh mode.					The mesh should contain a single surface. In case if the mesh contains several surfaces, only the one with the 0 index will be used. Thus, the area of the decal will differ from the initial mesh.
 			
 			</summary> 
 			<param name="mesh"> Mesh to be applied. </param> 
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.setMeshProceduralMode(bool)">
 			<summary>
-			Sets a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			Sets a value indicating if the source mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
 			</summary> 
-			<param name="meshproceduralmode"> true to switch the base mesh used for the object to procedural mode; otherwise, false - normal mode (the base mesh is streamed from a source file). </param> 
+			<param name="meshproceduralmode"> true to switch the source mesh used for the object to procedural mode; otherwise, false - normal mode (the source mesh is streamed from a source file). </param> 
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.isMeshProceduralMode const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			Returns a value indicating if the source mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
 			</summary>  
-			<returns>true if the base mesh used for the object is procedural; otherwise, false - normal mode (the base mesh is streamed from a source file).</returns>
+			<returns>true if the source mesh used for the object is procedural; otherwise, false - normal mode (the source mesh is streamed from a source file).</returns>
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.isMeshNull const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is null (does not exist, unassigned, not loaded, etc.).
+			Returns a value indicating if the source mesh used for the object is null (does not exist, unassigned, not loaded, etc.).
 			</summary>  
-			<returns>true if the base mesh used for the object is null; otherwise, false.</returns>
+			<returns>true if the source mesh used for the object is null; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.isMeshLoadedRAM const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is loaded to memory (RAM).
+			Returns a value indicating if the source mesh used for the object is loaded to memory (RAM).
 			</summary>  
-			<returns>true if the base mesh used for the object is loaded to RAM; otherwise, false.</returns>
+			<returns>true if the source mesh used for the object is loaded to RAM; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectGuiMesh.isMeshLoadedVRAM const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is loaded to video memory (VRAM).
+			Returns a value indicating if the source mesh used for the object is loaded to video memory (VRAM).
 			</summary>  
-			<returns>true if the base mesh used for the object is loaded to VRAM; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectGuiMesh.setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH)">
-			<summary>
-			Sets the streaming mode for loading the mesh to memory (RAM).
-			</summary> 
-			<param name="meshstreamingmoderam"> Mesh streaming mode. </param> 
-		</member>
-		<member name="M:Unigine.ObjectGuiMesh.getMeshStreamingModeRAM const">
-			<summary>
-			Returns the current streaming mode for loading the mesh to memory (RAM).
-			</summary>  
-			<returns>Mesh streaming mode.</returns>
-		</member>
-		<member name="M:Unigine.ObjectGuiMesh.setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH)">
-			<summary>
-			Sets the streaming mode for loading the mesh to video memory (VRAM).
-			</summary> 
-			<param name="meshstreamingmodevram"> Mesh streaming mode. </param> 
-		</member>
-		<member name="M:Unigine.ObjectGuiMesh.getMeshStreamingModeVRAM const">
-			<summary>
-			Returns the current streaming mode for loading the mesh to video memory (VRAM).
-			</summary>  
-			<returns>Mesh streaming mode.</returns>
+			<returns>true if the source mesh used for the object is loaded to VRAM; otherwise, false.</returns>
 		</member>
 		<member name="F:Unigine.ObjectGuiMesh.MOUSE_STANDARD">
 			<summary>
@@ -3349,17 +3335,17 @@
 			</summary>  
 			<returns>Cloned detail.</returns>
 		</member>
-		<member name="M:Unigine.TerrainDetail.setMaterialPath(char)">
+		<member name="M:Unigine.TerrainDetail.setMaterialFilePath(char)">
 			<summary>
 			Sets the detail material by a given path.
 			</summary> 
-			<param name="path"> Material path. </param> 
+			<param name="path"> Material file path. </param> 
 		</member>
-		<member name="M:Unigine.TerrainDetail.getMaterialPath const">
+		<member name="M:Unigine.TerrainDetail.getMaterialFilePath const">
 			<summary>
 			Returns the path of the assigned detail material.
 			</summary>  
-			<returns>Material path.</returns>
+			<returns>Material file path.</returns>
 		</member>
 		<member name="M:Unigine.TerrainDetail.setMaterialGUID(Unigine.UGUID)">
 			<summary>
@@ -4330,54 +4316,6 @@
 			The LandscapeMapFileCreator constructor.
 			</summary>  
 		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.setResolution(Unigine.Math.ivec2)">
-			<summary>
-			Sets a new landscape map resolution.
-			</summary> 
-			<param name="resolution"> Two-component vector (X, Y) representing new landscape map resolution along X and Y axes to be set, in pixels. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.getResolution const">
-			<summary>
-			Returns the current landscape map resolution.
-			</summary>  
-			<returns>Two-component vector (X, Y) representing current landscape map resolution along X and Y axes, in pixels.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.setGrid(Unigine.Math.ivec2)">
-			<summary>
-			Sets a new grid size for the landscape map.
-			</summary> 
-			<param name="grid"> Two-component vector (X, Y) representing number of tiles of the landscape map along X and Y axes. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.getGrid const">
-			<summary>
-			Returns the current grid size for the landscape map.
-			</summary>  
-			<returns>Two-component vector (X, Y) representing number of tiles of the landscape map along X and Y axes.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.getProgress const">
-			<summary>
-			Returns the current landscape map file creation progress.
-			</summary>  
-			<returns>Current landscape map file creation progress (percentage).</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.getTimeSeconds const">
-			<summary>
-			Returns the landscape map file creation time. You can use this method to get total file generation time when processing an End callback.
-			</summary>  
-			<returns>Landscape map file creation time, in seconds.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.setPath(char)">
-			<summary>
-			Sets a new path to the .lmap file to be generated.
-			</summary> 
-			<param name="path"> New path to the .lmap file to be generated. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCreator.getPath const">
-			<summary>
-			Returns a path to the .lmap file to be generated.
-			</summary>  
-			<returns>Path to the .lmap file to be generated.</returns>
-		</member>
 		<member name="M:Unigine.LandscapeMapFileCreator.setDownscaleFilter(Landscape::TYPE_FILE_DATA,Image::FILTER)">
 			<summary>
 			Sets a new filtering type to be used for image downscaling performed for LODs of the specified file data type.
@@ -4405,24 +4343,6 @@
 			Constructor.
 			</summary>  
 		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.isCompressing const">
-			<summary>
-			Returns the value indicating if the compression is in progress.
-			</summary>  
-			<returns>true if the compression is running; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.isDecompressing const">
-			<summary>
-			Returns the value indicating if the decompression is in progress.
-			</summary>  
-			<returns>true if the decompression is running; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.getProgress const">
-			<summary>
-			Returns the current landscape map file compression progress.
-			</summary>  
-			<returns>Current landscape map file compression progress (percentage).</returns>
-		</member>
 		<member name="M:Unigine.LandscapeMapFileCompression.compress(bool)">
 			<summary>
 			Starts the landscape map file compression process.
@@ -4441,42 +4361,6 @@
 			<summary>
 			Stops the landscape map file compression/decompression process.
 			</summary>  
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.setHeightCompressor(Landscape::COMPRESSOR_TYPE)">
-			<summary>
-			Sets the type of the compressor used for height data compression.
-			</summary> 
-			<param name="compressor"> Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib </param> 
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.getHeightCompressor const">
-			<summary>
-			Returns the current type of the compressor used for height data compression.
-			</summary>  
-			<returns>Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.setAlbedoCompressor(Landscape::COMPRESSOR_TYPE)">
-			<summary>
-			Sets the type of the compressor used for albedo data compression.
-			</summary> 
-			<param name="compressor"> Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib </param> 
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.getAlbedoCompressor const">
-			<summary>
-			Returns the current type of the compressor used for albedo data compression.
-			</summary>  
-			<returns>Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.setOpacityHeightCompressor(Landscape::COMPRESSOR_TYPE)">
-			<summary>
-			Sets the type of the compressor used for compression of the opacity height data.
-			</summary> 
-			<param name="compressor"> Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib </param> 
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.getOpacityHeightCompressor const">
-			<summary>
-			Returns the current type of the compressor used for compression of the opacity height data.
-			</summary>  
-			<returns>Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib</returns>
 		</member>
 		<member name="M:Unigine.LandscapeMapFileCompression.setMaskCompressor(int,Landscape::COMPRESSOR_TYPE)">
 			<summary>
@@ -4512,30 +4396,6 @@
 			<param name="mask"> Mask number. </param> 
 			<returns>Compressor type:0 – None1 – Our Method2 – LZ43 – Zlib</returns>
 		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.setEnabledAlbedoTextureCompression(bool)">
-			<summary>
-			Sets the albedo texture compression enabled or disabled.
-			</summary> 
-			<param name="compression"> true to enable albedo texture compression; otherwise, false. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.isEnabledAlbedoTextureCompression const">
-			<summary>
-			Returns the value indicating if the albedo texture compression is enabled.
-			</summary>  
-			<returns>true if the albedo texture compression is enabled; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.setEnabledOpacityHeightTextureCompression(bool)">
-			<summary>
-			Sets the compression of the opacity height texture enabled or disabled.
-			</summary> 
-			<param name="compression"> true to enable compression of the opacity height texture; otherwise, false. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.isEnabledOpacityHeightTextureCompression const">
-			<summary>
-			Returns the value indicating if the compression of the opacity height texture is enabled.
-			</summary>  
-			<returns>true if the compression of the opacity height texture is enabled; otherwise, false.</returns>
-		</member>
 		<member name="M:Unigine.LandscapeMapFileCompression.setEnabledMaskTextureCompression(int,bool)">
 			<summary>
 			Enables or disables compression of the specified mask texture.
@@ -4563,24 +4423,6 @@
 			</summary> 
 			<param name="mask"> Mask number. </param> 
 			<returns>true if the mask opacity texture compression is enabled; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.getGUID const">
-			<summary>
-			Returns a GUID of the .lmap file containing landscape map data.
-			</summary>  
-			<returns>GUID of the .lmap file.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.setCacheDirectory(char)">
-			<summary>
-			Sets a path to the directory that is used to store the cache. By default the cache is located in the same place where the UnigineEditor's cache is (you can find it in the UnigineEditor Settings tab). If there is not enough memory, you can use another disk. A full copy of the current terrain will be temporarily stored in the cache directory, so you should take this into account when estimating the cache size. SSD is recommended for fast data copying.
-			</summary> 
-			<param name="directory"> The path to the directory that stores the cache. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeMapFileCompression.getCacheDirectory const">
-			<summary>
-			Returns the current path to the directory that is used to store the cache.
-			</summary>  
-			<returns>The path to the directory that stores the cache.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeMapFileSettings.#ctor">
 			<summary>
@@ -4845,90 +4687,12 @@
 			The LandscapeFetch constructor.
 			</summary>  
 		</member>
-		<member name="M:Unigine.LandscapeFetch.getPosition const">
-			<summary>
-			Returns the coordinates of the fetch/intersection point.
-			</summary>  
-			<returns>Fetch/intersection point coordinates as a three-component vector.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.getHeight const">
-			<summary>
-			Returns the height value at the point.
-			</summary>  
-			<returns>Height value at the point.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.getNormal const">
-			<summary>
-			Returns normal vector coordinates at the point.					To get valid normal information via this method, engage normal data for the fetch/intersection request.
-			</summary>  
-			<returns>Normal vector coordinates at the point.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.getAlbedo const">
-			<summary>
-			Returns albedo color information at the point.					To get valid albedo color information via this method, engage albedo data for the fetch/intersection request.
-			</summary>  
-			<returns>Albedo color at the point as a 4 component vector (R, G, B, A).</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.isIntersection const">
-			<summary>
-			Returns a value indicating if an intersection was detected.
-			</summary>  
-			<returns>true if an intersection was detected; otherwise, false.</returns>
-		</member>
 		<member name="M:Unigine.LandscapeFetch.getMask(int) const">
 			<summary>
 			Returns information stored for the point in the detail mask with the specified number.					To get valid detail mask information via this method, engage mask data for the fetch/intersection request.
 			</summary> 
 			<param name="num"> Number of the detail mask in the [0; 19] range. </param> 
 			<returns>Value for the point stored in the detail mask with the specified number.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.setUses(int)">
-			<summary>
-			Sets multiple flags engaging/disengaging certain data types for the fetch/intersection request.
-			</summary> 
-			<param name="uses"> Combination of data engagement flags to be set. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeFetch.getUses const">
-			<summary>
-			Returns the current state of flags engaging/disengaging certain data types for the fetch/intersection request.
-			</summary>  
-			<returns>Current combination of data engagement flags.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.setUsesHeight(bool)">
-			<summary>
-			Sets a value indicating if heights data is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point). This option is enabled by default.
-			</summary> 
-			<param name="height"> true to engage height data in the fetch/intersection request, false - to disengage. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeFetch.isUsesHeight const">
-			<summary>
-			Returns a value indicating if heights data is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point). This option is enabled by default.
-			</summary>  
-			<returns>true if heights data is engaged in the fetch/intersection request; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.setUsesNormal(bool)">
-			<summary>
-			Sets a value indicating if normals data is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).					Enable this option to get normal						 information for the point.
-			</summary> 
-			<param name="normal"> true to engage normals data in the fetch/intersection request, false - to disengage. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeFetch.isUsesNormal const">
-			<summary>
-			Returns a value indicating if normals data is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).					Enable this option to get normal						 information for the point.
-			</summary>  
-			<returns>true if normals data is engaged in the fetch/intersection request; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.setUsesAlbedo(bool)">
-			<summary>
-			Sets a value indicating if albedo data is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).					Enable this option to get albedo information for the point.
-			</summary> 
-			<param name="albedo"> true to engage albedo data in the fetch/intersection request, false - to disengage. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeFetch.isUsesAlbedo const">
-			<summary>
-			Returns a value indicating if albedo data is engaged in the fetch/intersection request. When the data type is engaged, you can obtain it via the corresponding get() method. Disengaging unnecessary data when performing requests saves some performance (e.g., you can engage albedo data only if you need only color information at a certain point).					Enable this option to get albedo information for the point.
-			</summary>  
-			<returns>true if albedo data is engaged in the fetch/intersection request; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeFetch.setUsesMask(int,bool)">
 			<summary>
@@ -4943,66 +4707,6 @@
 			</summary> 
 			<param name="num"> Detail mask number in the [0; 19] range. </param> 
 			<returns>true if data of the specified detail mask is engaged in the fetch/intersection request; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.setHolesEnabled(bool)">
-			<summary>
-			Sets a value indicating if checking for terrain holes in the fetch/intersection request is enabled. This option is enabled by default. When disabled terrain holes created using decals are ignored.
-			</summary> 
-			<param name="enabled"> true to enable checking for terrain holes in the fetch/intersection request, false - to disable it. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeFetch.isHolesEnabled const">
-			<summary>
-			Returns a value indicating if checking for terrain holes in the fetch/intersection request is enabled. This option is enabled by default. When disabled terrain holes created using decals are ignored.
-			</summary>  
-			<returns>true if checking for terrain holes in the fetch/intersection request is enabled; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.setIntersectionPrecision(float)">
-			<summary>
-			Sets a new precision value to be used for intersection detection requested by intersectionForce() and intersectionAsync() methods.
-			</summary> 
-			<param name="precision"> Precision for intersection detection as a fraction of maximum precision in the [0; 1] range. The default value is 0.5f. Maximum precision is determined by the Engine on the basis of the data of your Landscape Terrain. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeFetch.getIntersectionPrecision const">
-			<summary>
-			Returns the current precision value used for intersection detection requested by intersectionForce() and intersectionAsync() methods.
-			</summary>  
-			<returns>Precision for intersection detection as a fraction of maximum precision in the [0; 1] range. The default value is 0.5f. Maximum precision is determined by the Engine on the basis of the data of your Landscape Terrain.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.setIntersectionPositionBegin(Unigine.Math.Vec3)">
-			<summary>
-			Sets the coordinates of the starting point for intersection detection.
-			</summary> 
-			<param name="begin"> Three-component vector specifying starting point coordinates along X, Y, and Z axes. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeFetch.getIntersectionPositionBegin const">
-			<summary>
-			Returns the coordinates of the starting point for intersection detection.
-			</summary>  
-			<returns>Three-component vector specifying starting point coordinates along X, Y, and Z axes.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.setIntersectionPositionEnd(Unigine.Math.Vec3)">
-			<summary>
-			Sets the coordinates of the end point for intersection detection.
-			</summary> 
-			<param name="end"> Three-component vector specifying end point coordinates along X, Y, and Z axes. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeFetch.getIntersectionPositionEnd const">
-			<summary>
-			Returns the coordinates of the end point for intersection detection.
-			</summary>  
-			<returns>Three-component vector specifying end point coordinates along X, Y, and Z axes.</returns>
-		</member>
-		<member name="M:Unigine.LandscapeFetch.setFetchPosition(Unigine.Math.Vec2)">
-			<summary>
-			Sets a point for which terrain data is to be fetched.
-			</summary> 
-			<param name="position"> Two-component vector specifying point coordinates along X and Y axes. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeFetch.getFetchPosition const">
-			<summary>
-			Returns the current point for which terrain data is to be fetched.
-			</summary>  
-			<returns>Two-component vector specifying point coordinates along X and Y axes.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeFetch.fetchForce">
 			<summary>
@@ -5094,12 +4798,6 @@
 			Waits for completion of the specified fetch operations. As the operations are completed you can obtain necessary data via get*() methods.
 			</summary> 
 			<param name="fetches"> List of fetch requests to be completed. </param> 
-		</member>
-		<member name="M:Unigine.LandscapeFetch.isAsyncCompleted const">
-			<summary>
-			Returns a value indicating if async operation is completed. As the operation is completed you can obtain necessary data via get*() methods.
-			</summary>  
-			<returns>true if async operation is completed; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.LandscapeImages.#ctor(Unigine.Math.ivec2)">
 			<summary>
@@ -5249,28 +4947,34 @@
 			<summary>
 			ObjectMeshStatic constructor. Creates a Static Mesh object with mesh loaded from the specified file.
 			</summary> 
-			<param name="path"> Path to the base .mesh-file. </param> 
+			<param name="path"> Path to the source .mesh-file. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.#ctor">
 			<summary>
 			ObjectMeshStatic constructor. Creates an empty Static Mesh object.
 			</summary>  
 		</member>
+		<member name="M:Unigine.ObjectMeshStatic.type">
+			<summary>
+			Returns the type of the object.
+			</summary>  
+			<returns>Object Mesh Static type identifier.</returns>
+		</member>
 		<member name="M:Unigine.ObjectMeshStatic.setMeshPath(char)">
 			<summary>
-			Sets the new path to the base mesh. Does not update mesh immediately using the new path. If the mesh is in the procedural mode, it will be reset.
+			Sets the new path to the source mesh. Does not update mesh immediately using the new path. If the mesh is in the procedural mode, it will be reset.
 			</summary> 
-			<param name="path"> Path to the base .mesh-file. </param> 
+			<param name="path"> Path to the source .mesh-file. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.getMeshPath const">
 			<summary>
-			Returns the path to the current base mesh file.
+			Returns the path to the current source mesh file.
 			</summary>  
-			<returns>Path to the base .mesh-file.</returns>
+			<returns>Path to the source .mesh-file.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.applyMeshProcedural(Unigine.Ptr{Unigine.Mesh})">
 			<summary>
-			Sets the specified mesh as the base mesh for the object. The object must be in the procedural mesh mode.
+			Sets the specified mesh as the source mesh for the object. The object must be in the procedural mesh mode.
 			
 			</summary> 
 			<param name="mesh"> Mesh to be applied. </param> 
@@ -5345,19 +5049,19 @@
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Current lightmap baking quality preset for the surface with the specified number. One of the LIGHTMAP_QUALITY values.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setLightmapTexturePath(char,int)">
+		<member name="M:Unigine.ObjectMeshStatic.setLightmapTextureFilePath(char,int)">
 			<summary>
-			Sets a new path to the baked lightmap texture to be used for the surface with the specified number. You can use this method to specify a lightmap texture generated in a third-party software.
+			Sets a new path to the baked lightmap texture file to be used for the surface with the specified number. You can use this method to specify a lightmap texture generated in a third-party software.
 			</summary> 
-			<param name="path"> Path to the baked lightmap texture to be used for the surface with the specified number. </param>
+			<param name="path"> Path to the baked lightmap texture file to be used for the surface with the specified number. </param>
 			<param name="surface"> Mesh surface number. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getLightmapTexturePath(int) const">
+		<member name="M:Unigine.ObjectMeshStatic.getLightmapTextureFilePath(int) const">
 			<summary>
-			Returns the path to the baked lightmap texture currently used for the surface with the specified number.
+			Returns the path to the baked lightmap texture file currently used for the surface with the specified number.
 			</summary> 
 			<param name="surface"> Mesh surface number. </param> 
-			<returns>Path to the baked lightmap texture currently used for the surface with the specified number.</returns>
+			<returns>Path to the baked lightmap texture file currently used for the surface with the specified number.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.setSurfaceCustomTextureEnabled(bool,int)">
 			<summary>
@@ -5429,39 +5133,57 @@
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Texture used as a custom texture for the specified surface.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getMeshInfo">
+		<member name="M:Unigine.ObjectMeshStatic.getMeshCurrentRAM">
 			<summary>
-			Returns the base mesh that stores data on mesh bounds, surfaces, their number, names, and bounds, but doesn't contain any geometry.				It's highly recommended NOT to edit the returned mesh.
+			Returns the current source mesh used for the object and loaded to memory (RAM).
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A current source mesh used for the object.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getMeshForce">
+		<member name="M:Unigine.ObjectMeshStatic.getMeshCurrentVRAM">
 			<summary>
-			Returns the base mesh used for the object. The returned static mesh won't be loaded to VRAM.				It's highly recommended NOT to edit the returned mesh.
+			Returns the current source mesh used for the object and loaded to video memory (VRAM).
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A current render mesh used for the object.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getMeshAsync">
+		<member name="M:Unigine.ObjectMeshStatic.getMeshForceRAM">
 			<summary>
-			Returns the base mesh used for the object asynchronously. This function can be called if the mesh hasn't been loaded yet.				It's highly recommended NOT to edit the returned mesh.
+			Returns the source mesh used for the object and loads it to memory (RAM) immediately.
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A source mesh used for the object.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.getMeshForceVRAM">
 			<summary>
-			Returns the base mesh used for the object and loads it to video memory (VRAM) immediately. At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			Returns the render mesh used for the object and loads it to video memory (VRAM) immediately. At that, the static mesh will also be loaded to memory (RAM).					Loading to VRAM must be performed in the main thread only.
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A render mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.getMeshAsyncRAM">
+			<summary>
+			Returns the source mesh used for the object and loads it to memory (RAM) asynchronously.
+			</summary>  
+			<returns>A source mesh used for the object.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.getMeshAsyncVRAM">
 			<summary>
-			Returns the base mesh used for the object asynchronously and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			Returns the render mesh used for the object and loads it to video memory (VRAM) asynchronously. At that, the static mesh will also be loaded to memory (RAM).					Loading to VRAM must be performed in the main thread only.
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A render mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.getMeshProceduralRAM">
+			<summary>
+			Returns the procedural source mesh used for the object and loads it to memory (RAM) using the specific streaming mode for procedural meshes. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode — they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
+			</summary>  
+			<returns>A procedural source mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshStatic.getMeshProceduralVRAM">
+			<summary>
+			Returns the procedural render mesh used for the object and loads it to video memory (VRAM) using the specific streaming mode for procedural meshes. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode — they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
+			</summary>  
+			<returns>A procedural render mesh used for the object.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.loadAsyncVRAM">
 			<summary>
-			Asynchronously loads the mesh to video memory (VRAM) if the async streaming mode for meshes is enabled. Otherwise, the forced loading is performed. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to video memory before they are used).				Loading to VRAM must be performed in the main thread only.
+			Asynchronously loads the mesh to video memory (VRAM) if the async streaming mode for meshes is enabled. Otherwise, the forced loading is performed. This method is recommended for implementing your own prefetch system (i.e. asynchronous pre-loading of meshes to video memory before they are used).					Loading to VRAM must be performed in the main thread only.
 			</summary>  
 			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to VRAM, true will be returned.</returns>
 		</member>
@@ -5473,7 +5195,7 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.loadForceVRAM">
 			<summary>
-			Performs force-loading of the mesh to video memory (VRAM) immediately.				Loading to VRAM must be performed in the main thread only.
+			Performs force-loading of the mesh to video memory (VRAM) immediately.					Loading to VRAM must be performed in the main thread only.
 			</summary>  
 			<returns>true if the mesh is loaded successfully, otherwise false. If the mesh is already loaded to VRAM, true will be returned.</returns>
 		</member>
@@ -5499,57 +5221,33 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.setMeshProceduralMode(bool)">
 			<summary>
-			Sets a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			Sets a value indicating if the source mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
 			</summary> 
-			<param name="meshproceduralmode"> true to switch the base mesh used for the object to procedural mode; otherwise, false - normal mode (the base mesh is streamed from a source file). </param> 
+			<param name="meshproceduralmode"> true to switch the source mesh used for the object to procedural mode; otherwise, false - normal mode (the source mesh is streamed from a source file). </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.isMeshProceduralMode const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			Returns a value indicating if the source mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
 			</summary>  
-			<returns>true if the base mesh used for the object is procedural; otherwise, false - normal mode (the base mesh is streamed from a source file).</returns>
+			<returns>true if the source mesh used for the object is procedural; otherwise, false - normal mode (the source mesh is streamed from a source file).</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.isMeshNull const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is null (does not exist, unassigned, not loaded, etc.).
+			Returns a value indicating if the source mesh used for the object is null (does not exist, unassigned, not loaded, etc.).
 			</summary>  
-			<returns>true if the base mesh used for the object is null; otherwise, false.</returns>
+			<returns>true if the source mesh used for the object is null; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.isMeshLoadedRAM const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is loaded to memory (RAM).
+			Returns a value indicating if the source mesh used for the object is loaded to memory (RAM).
 			</summary>  
-			<returns>true if the base mesh used for the object is loaded to RAM; otherwise, false.</returns>
+			<returns>true if the source mesh used for the object is loaded to RAM; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshStatic.isMeshLoadedVRAM const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is loaded to video memory (VRAM).
+			Returns a value indicating if the source mesh used for the object is loaded to video memory (VRAM).
 			</summary>  
-			<returns>true if the base mesh used for the object is loaded to VRAM; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH)">
-			<summary>
-			Sets the streaming mode for loading the mesh to memory (RAM).
-			</summary> 
-			<param name="meshstreamingmoderam"> Mesh streaming mode. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getMeshStreamingModeRAM const">
-			<summary>
-			Returns the current streaming mode for loading the mesh to memory (RAM).
-			</summary>  
-			<returns>Mesh streaming mode.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH)">
-			<summary>
-			Sets the streaming mode for loading the base mesh used for the object to video memory (VRAM).
-			</summary> 
-			<param name="meshstreamingmodevram"> Mesh streaming mode. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshStatic.getMeshStreamingModeVRAM const">
-			<summary>
-			Returns the current streaming mode for loading the mesh to video memory (VRAM).
-			</summary>  
-			<returns>Mesh streaming mode.</returns>
+			<returns>true if the source mesh used for the object is loaded to VRAM; otherwise, false.</returns>
 		</member>
 		<member name="F:Unigine.ObjectMeshStatic.LIGHTMAP_QUALITY_ULTRA">
 			<summary>
@@ -5608,9 +5306,9 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.#ctor(char)">
 			<summary>
-			ObjectMeshCluster constructor. Creates a mesh cluster with a base mesh loaded from the specified file.
+			ObjectMeshCluster constructor. Creates a mesh cluster with a source mesh loaded from the specified file.
 			</summary> 
-			<param name="path"> Path to the base mesh file. </param> 
+			<param name="path"> Path to the source mesh file. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.#ctor">
 			<summary>
@@ -5637,7 +5335,7 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.getMeshPath const">
 			<summary>
-			Returns the path to the source .mesh-file of the base mesh handled by Mesh Cluster.
+			Returns the path to the source .mesh-file of the mesh handled by Mesh Cluster.
 			</summary>  
 			<returns>Path to the source .mesh-file.</returns>
 		</member>
@@ -5710,7 +5408,7 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.applyMeshProcedural(Unigine.Ptr{Unigine.Mesh})">
 			<summary>
-			Sets the specified mesh as the base mesh for the object. The object must be in the procedural mesh mode.
+			Sets the specified mesh as the source mesh for the object. The object must be in the procedural mesh mode.
 			
 			</summary> 
 			<param name="mesh"> Mesh to be applied. </param> 
@@ -5791,35 +5489,53 @@
 			<param name="instances"> Vector containing instance indices. </param> 
 			<returns>true, if there is at least one instance inside the bounding sphere; or false.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshCluster.getMeshInfo">
+		<member name="M:Unigine.ObjectMeshCluster.getMeshCurrentRAM">
 			<summary>
-			Returns the base mesh that stores data on mesh bounds, surfaces, their number, names, and bounds, but doesn't contain any geometry.				It's highly recommended NOT to edit the returned mesh.
+			Returns the current source mesh used for the object and loaded to memory (RAM).
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A current source mesh used for the object.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshCluster.getMeshForce">
+		<member name="M:Unigine.ObjectMeshCluster.getMeshCurrentVRAM">
 			<summary>
-			Returns the base mesh used for the object. The returned static mesh won't be loaded to VRAM.				It's highly recommended NOT to edit the returned mesh.
+			Returns the current render mesh used for the object and loaded to video memory (VRAM).
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A current render mesh used for the object.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshCluster.getMeshAsync">
+		<member name="M:Unigine.ObjectMeshCluster.getMeshForceRAM">
 			<summary>
-			Returns the base mesh used for the object asynchronously. This function can be called if the mesh hasn't been loaded yet.				It's highly recommended NOT to edit the returned mesh.
+			Returns the source mesh used for the object and loads it to memory (RAM) immediately.
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A source mesh used for the object.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.getMeshForceVRAM">
 			<summary>
-			Returns the base mesh used for the object and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			Returns the render mesh used for the object and loads it to video memory (VRAM) immediately. At that, the static mesh will also be loaded to memory (RAM).					Loading to VRAM must be performed in the main thread only.
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A render mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.getMeshAsyncRAM">
+			<summary>
+			Returns the source mesh used for the object and loads it to memory (RAM) asynchronously.
+			</summary>  
+			<returns>A source mesh used for the object.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.getMeshAsyncVRAM">
 			<summary>
-			Returns the base mesh used for the object asynchronously and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			Returns the render mesh used for the object and loads it to video memory (VRAM) asynchronously. At that, the static mesh will also be loaded to memory (RAM).					Loading to VRAM must be performed in the main thread only.
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A render mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.getMeshProceduralRAM">
+			<summary>
+			Returns the procedural source mesh used for the object and loads it to memory (RAM) using the specific streaming mode for procedural meshes. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode — they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
+			</summary>  
+			<returns>A procedural source mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshCluster.getMeshProceduralVRAM">
+			<summary>
+			Returns the procedural render mesh used for the object and loads it to video memory (VRAM) using the specific streaming mode for procedural meshes. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode — they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
+			</summary>  
+			<returns>A procedural render mesh used for the object.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.loadAsyncVRAM">
 			<summary>
@@ -5861,63 +5577,39 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.setMeshProceduralMode(bool)">
 			<summary>
-			Sets a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			Sets a value indicating if the source mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
 			</summary> 
-			<param name="meshproceduralmode"> true to switch the base mesh used for the object to procedural mode; otherwise, false - normal mode (the base mesh is streamed from a source file). </param> 
+			<param name="meshproceduralmode"> true to switch the source mesh used for the object to procedural mode; otherwise, false - normal mode (the source mesh is streamed from a source file). </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.isMeshProceduralMode const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			Returns a value indicating if the source mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
 			</summary>  
-			<returns>true if the base mesh used for the object is procedural; otherwise, false - normal mode (the base mesh is streamed from a source file).</returns>
+			<returns>true if the source mesh used for the object is procedural; otherwise, false - normal mode (the source mesh is streamed from a source file).</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.isMeshNull const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is null (does not exist, unassigned, not loaded, etc.).
+			Returns a value indicating if the source mesh used for the object is null (does not exist, unassigned, not loaded, etc.).
 			</summary>  
-			<returns>true if the base mesh used for the object is null; otherwise, false.</returns>
+			<returns>true if the source mesh used for the object is null; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.isMeshLoadedRAM const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is loaded to memory (RAM).
+			Returns a value indicating if the source mesh used for the object is loaded to memory (RAM).
 			</summary>  
-			<returns>true if the base mesh used for the object is loaded to RAM; otherwise, false.</returns>
+			<returns>true if the source mesh used for the object is loaded to RAM; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshCluster.isMeshLoadedVRAM const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is loaded to video memory (VRAM).
+			Returns a value indicating if the source mesh used for the object is loaded to video memory (VRAM).
 			</summary>  
-			<returns>true if the base mesh used for the object is loaded to VRAM; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshCluster.setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH)">
-			<summary>
-			Sets the streaming mode for loading the mesh to memory (RAM).
-			</summary> 
-			<param name="meshstreamingmoderam"> Mesh streaming mode. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshCluster.getMeshStreamingModeRAM const">
-			<summary>
-			Returns the current streaming mode for loading the mesh to memory (RAM).
-			</summary>  
-			<returns>Mesh streaming mode.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshCluster.setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH)">
-			<summary>
-			Sets the streaming mode for loading the mesh to video memory (VRAM).
-			</summary> 
-			<param name="meshstreamingmodevram"> Mesh streaming mode. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshCluster.getMeshStreamingModeVRAM const">
-			<summary>
-			Returns the current streaming mode for loading the mesh to video memory (VRAM).
-			</summary>  
-			<returns>Mesh streaming mode.</returns>
+			<returns>true if the source mesh used for the object is loaded to VRAM; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.#ctor(char)">
 			<summary>
-			ObjectMeshClutter constructor. Creates a clutter using the path to the base mesh provided.
+			ObjectMeshClutter constructor. Creates a clutter using the path to the source mesh provided.
 			</summary> 
-			<param name="path"> Path to the base mesh file. </param> 
+			<param name="path"> Path to the source mesh file. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.#ctor">
 			<summary>
@@ -6175,7 +5867,7 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.getMeshPath const">
 			<summary>
-			Returns the path to the source .mesh-file of the base mesh scattered by mesh clutter.
+			Returns the path to the source .mesh-file of the mesh scattered by mesh clutter.
 			</summary>  
 			<returns>Path to the source .mesh-file.</returns>
 		</member>
@@ -6309,7 +6001,7 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.applyMeshProcedural(Unigine.Ptr{Unigine.Mesh})">
 			<summary>
-			Sets the specified mesh as the base mesh for the object. The object must be in the procedural mesh mode.
+			Sets the specified mesh as the source mesh for the object. The object must be in the procedural mesh mode.
 			
 			</summary> 
 			<param name="mesh"> Mesh to be applied. </param> 
@@ -6411,35 +6103,53 @@
 			</summary>  
 			<returns>0 if clutter objects are rendered outside the areas determined by the cutout intersection mask; 1 if inside.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshClutter.getMeshInfo">
+		<member name="M:Unigine.ObjectMeshClutter.getMeshCurrentRAM">
 			<summary>
-			Returns the base mesh that stores data on mesh bounds, surfaces, their number, names, and bounds, but doesn't contain any geometry.				It's highly recommended NOT to edit the returned mesh.
+			Returns the current source mesh used for the object and loaded to memory (RAM).
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A current source mesh used for the object.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshClutter.getMeshForce">
+		<member name="M:Unigine.ObjectMeshClutter.getMeshCurrentVRAM">
 			<summary>
-			Returns the base mesh used for the object. The returned static mesh won't be loaded to VRAM.				It's highly recommended NOT to edit the returned mesh.
+			Returns the current render mesh used for the object and loaded to video memory (VRAM).
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A current render mesh used for the object.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshClutter.getMeshAsync">
+		<member name="M:Unigine.ObjectMeshClutter.getMeshForceRAM">
 			<summary>
-			Returns the base mesh used for the object asynchronously. This function can be called if the mesh hasn't been loaded yet.				It's highly recommended NOT to edit the returned mesh.
+			Returns the source mesh used for the object and loads it to memory (RAM) immediately.
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A source mesh used for the object.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.getMeshForceVRAM">
 			<summary>
-			Returns the base mesh used for the object and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			Returns the render mesh used for the object and loads it to video memory (VRAM) immediately. At that, the static mesh will also be loaded to memory (RAM).					Loading to VRAM must be performed in the main thread only.
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A render mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.getMeshAsyncRAM">
+			<summary>
+			Returns the source mesh used for the object and loads it to memory (RAM) asynchronously.
+			</summary>  
+			<returns>A source mesh used for the object.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.getMeshAsyncVRAM">
 			<summary>
-			Returns the base mesh used for the object asynchronously and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			Returns the render mesh used for the object and loads it to video memory (VRAM) asynchronously. At that, the static mesh will also be loaded to memory (RAM).					Loading to VRAM must be performed in the main thread only.
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A render mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.getMeshProceduralRAM">
+			<summary>
+			Returns the procedural source mesh used for the object and loads it to memory (RAM) using the specific streaming mode for procedural meshes. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode — they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
+			</summary>  
+			<returns>A procedural source mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshClutter.getMeshProceduralVRAM">
+			<summary>
+			Returns the procedural render mesh used for the object and loads it to video memory (VRAM) using the specific streaming mode for procedural meshes. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode — they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
+			</summary>  
+			<returns>A procedural render mesh used for the object.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.loadAsyncVRAM">
 			<summary>
@@ -6481,85 +6191,61 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.setMeshProceduralMode(bool)">
 			<summary>
-			Sets a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			Sets a value indicating if the source mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
 			</summary> 
-			<param name="meshproceduralmode"> true to switch the base mesh used for the object to procedural mode; otherwise, false - normal mode (the base mesh is streamed from a source file). </param> 
+			<param name="meshproceduralmode"> true to switch the source mesh used for the object to procedural mode; otherwise, false - normal mode (the source mesh is streamed from a source file). </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.isMeshProceduralMode const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			Returns a value indicating if the source mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
 			</summary>  
-			<returns>true if the base mesh used for the object is procedural; otherwise, false - normal mode (the base mesh is streamed from a source file).</returns>
+			<returns>true if the source mesh used for the object is procedural; otherwise, false - normal mode (the source mesh is streamed from a source file).</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.isMeshNull const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is null (does not exist, unassigned, not loaded, etc.).
+			Returns a value indicating if the source mesh used for the object is null (does not exist, unassigned, not loaded, etc.).
 			</summary>  
-			<returns>true if the base mesh used for the object is null; otherwise, false.</returns>
+			<returns>true if the source mesh used for the object is null; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.isMeshLoadedRAM const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is loaded to memory (RAM).
+			Returns a value indicating if the source mesh used for the object is loaded to memory (RAM).
 			</summary>  
-			<returns>true if the base mesh used for the object is loaded to RAM; otherwise, false.</returns>
+			<returns>true if the source mesh used for the object is loaded to RAM; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshClutter.isMeshLoadedVRAM const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is loaded to video memory (VRAM).
+			Returns a value indicating if the source mesh used for the object is loaded to video memory (VRAM).
 			</summary>  
-			<returns>true if the base mesh used for the object is loaded to VRAM; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshClutter.setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH)">
-			<summary>
-			Sets the streaming mode for loading the mesh to memory (RAM).
-			</summary> 
-			<param name="meshstreamingmoderam"> Mesh streaming mode. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshClutter.getMeshStreamingModeRAM const">
-			<summary>
-			Returns the current streaming mode for loading the mesh to memory (RAM).
-			</summary>  
-			<returns>Mesh streaming mode.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshClutter.setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH)">
-			<summary>
-			Sets the streaming mode for loading the mesh to video memory (VRAM).
-			</summary> 
-			<param name="meshstreamingmodevram"> Mesh streaming mode. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshClutter.getMeshStreamingModeVRAM const">
-			<summary>
-			Returns the current streaming mode for loading the mesh to video memory (VRAM).
-			</summary>  
-			<returns>Mesh streaming mode.</returns>
+			<returns>true if the source mesh used for the object is loaded to VRAM; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshDynamic.ObjectMeshDynamic(Unigine.Ptr{Unigine.Mesh},int)">
 			<summary>
-			ObjectMeshDynamic constructor.
+			ObjectMeshDynamic constructor.											The USAGE_IMMUTABLE_VERTEX flag cannot be used together with USAGE_DYNAMIC_VERTEX flag.						The USAGE_IMMUTABLE_INDICES flag cannot be used together with USAGE_DYNAMIC_INDICES flag.						USAGE_MISC_SHARED can be used only together with USAGE_IMMUTABLE_ALL.
 			</summary> 
 			<param name="mesh"> Mesh smart pointer. </param>
-			<param name="flags"> Dynamic flag: one of the DYNAMIC_* or IMMUTABLE_*. </param> 
+			<param name="flags"> Dynamic flag: one of the USAGE_DYNAMIC_* or USAGE_IMMUTABLE_*. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshDynamic.#ctor(int)">
 			<summary>
-			ObjectMeshDynamic constructor.
+			ObjectMeshDynamic constructor.											The USAGE_IMMUTABLE_VERTEX flag cannot be used together with USAGE_DYNAMIC_VERTEX flag.						The USAGE_IMMUTABLE_INDICES flag cannot be used together with USAGE_DYNAMIC_INDICES flag.						USAGE_MISC_SHARED can be used only together with USAGE_IMMUTABLE_ALL.
 			</summary> 
-			<param name="flags"> Dynamic flag: one of the DYNAMIC_* or IMMUTABLE_*. </param> 
+			<param name="flags"> Dynamic flag: one of the USAGE_DYNAMIC_* or USAGE_IMMUTABLE_*. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshDynamic.#ctor(char,int)">
 			<summary>
-			ObjectMeshDynamic constructor.
+			ObjectMeshDynamic constructor.											The USAGE_IMMUTABLE_VERTEX flag cannot be used together with USAGE_DYNAMIC_VERTEX flag.						The USAGE_IMMUTABLE_INDICES flag cannot be used together with USAGE_DYNAMIC_INDICES flag.						USAGE_MISC_SHARED can be used only together with USAGE_IMMUTABLE_ALL.
 			</summary> 
 			<param name="path"> Path to the mesh file. </param>
-			<param name="flags"> Dynamic flag: one of the DYNAMIC_* or IMMUTABLE_*. </param> 
+			<param name="flags"> Dynamic flag: one of the USAGE_DYNAMIC_* or USAGE_IMMUTABLE_*. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.setBoundBox(Unigine.BoundBox)">
+		<member name="M:Unigine.ObjectMeshDynamic.setBoundBox(Unigine.Math.BoundBox)">
 			<summary>
 			Sets a bounding box of a specified size for a given dynamic mesh surface.
 			</summary> 
 			<param name="bb"> Bounding box. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.setBoundBox(Unigine.BoundBox,int)">
+		<member name="M:Unigine.ObjectMeshDynamic.setBoundBox(Unigine.Math.BoundBox,int)">
 			<summary>
 			Sets a bounding box of a specified size for a given dynamic mesh surface.
 			</summary> 
@@ -6613,48 +6299,12 @@
 			<param name="mesh"> Mesh smart pointer. </param> 
 			<returns>1 if the mesh is copied successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.setMeshName(char)">
-			<summary>
-			Sets the mesh name.
-			</summary> 
-			<param name="name"> Mesh name. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.getMeshName const">
-			<summary>
-			Gets the mesh name.
-			</summary>  
-			<returns>Mesh name.</returns>
-		</member>
 		<member name="M:Unigine.ObjectMeshDynamic.getNormal(int) const">
 			<summary>
 			Returns the normal vector coordinates of a given vertex.
 			</summary> 
 			<param name="num"> Vertex number in range from 0 to the total number of mesh vertices. </param> 
 			<returns>Normal vector.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.setNumIndices(int)">
-			<summary>
-			Sets the number of vertex indices.
-			</summary> 
-			<param name="indices"> Number of indices. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.getNumIndices const">
-			<summary>
-			Returns the number of vertex indices.
-			</summary>  
-			<returns>Number of indices.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.setNumVertex(int)">
-			<summary>
-			Sets the number of mesh vertices.
-			</summary> 
-			<param name="vertex"> Number of mesh vertices. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.getNumVertex const">
-			<summary>
-			Returns the number of mesh vertices.
-			</summary>  
-			<returns>Number of mesh vertices.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshDynamic.setSurfaceBegin(int,int)">
 			<summary>
@@ -6934,94 +6584,22 @@
 			</summary>  
 			<returns>true if the tangents are updated successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.setFPSVisibleCamera(int)">
-			<summary>
-			Sets the update rate value when the object is rendered to the viewport. The default value is infinity.					This method is effective when the object has BODY_ROPE, BODY_CLOTH, or BODY_WATER assigned.
-			</summary> 
-			<param name="camera"> Update rate value when the object is rendered. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.getFPSVisibleCamera const">
-			<summary>
-			Returns the update rate value when the object is rendered to the viewport.					This method is effective when the object has BODY_ROPE, BODY_CLOTH, or BODY_WATER assigned.
-			</summary>  
-			<returns>Update rate value when the object is rendered.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.setFPSVisibleShadow(int)">
-			<summary>
-			Sets the update rate value when only object shadows are rendered. The default value is 30 fps.					This method is effective when the object has BODY_ROPE, BODY_CLOTH, or BODY_WATER assigned.
-			</summary> 
-			<param name="shadow"> Update rate value when only object shadows are rendered. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.getFPSVisibleShadow const">
-			<summary>
-			Returns the update rate value when only object shadows are rendered.					This method is effective when the object has BODY_ROPE, BODY_CLOTH, or BODY_WATER assigned.
-			</summary>  
-			<returns>Update rate value when only object shadows are rendered.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.setFPSInvisible(int)">
-			<summary>
-			Sets the update rate value when the object is not rendered at all. The default value is 0 fps.					This method is effective when the object has BODY_ROPE, BODY_CLOTH, or BODY_WATER assigned.
-			</summary> 
-			<param name="invisible"> Update rate value when the object is not rendered at all. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.getFPSInvisible const">
-			<summary>
-			Returns the update rate value when the object is not rendered at all.					This method is effective when the object has BODY_ROPE, BODY_CLOTH, or BODY_WATER assigned.
-			</summary>  
-			<returns>Update rate value when the object is not rendered at all.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.setUpdateDistanceLimit(float)">
-			<summary>
-			Sets the distance from the camera within which the object should be updated. The default value is infinity.					This method is effective when the object has BODY_ROPE, BODY_CLOTH, or BODY_WATER assigned.
-			</summary> 
-			<param name="limit"> Distance from the camera within which the object should be updated. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.getUpdateDistanceLimit const">
-			<summary>
-			Returns the distance from the camera within which the object should be updated.					This method is effective when the object has BODY_ROPE, BODY_CLOTH, or BODY_WATER assigned.
-			</summary>  
-			<returns>Distance from the camera within which the object should be updated.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshDynamic.isUniqueMesh const">
-			<summary>
-			Returns a value indicating if the mesh used by the object is unique (different from the one shared by other Dynamic Mesh objects in the world by default).
-			</summary>  
-			<returns>true if the object uses a unique mesh; otherwise, false.</returns>
-		</member>
 		<member name="M:Unigine.ObjectMeshDynamic.putUniqueMesh">
 			<summary>
 			Makes the mesh used by the object unique (different from the one shared by other Dynamic Mesh objects in the world by default).
 			</summary>  
 		</member>
-		<member name="F:Unigine.ObjectMeshDynamic.DYNAMIC_ALL">
+		<member name="M:Unigine.ObjectMeshDynamic.getExternalMemoryVertexBuffer const">
 			<summary>
-			A flag indicating both dynamic indices and vertices.
-		</summary>
+			Returns the pointer to the vertex buffer of the resource in video memory. If the USAGE_MISC_SHARED flag is not enabled for the resource, this method returns nullptr.
+			</summary>  
+			<returns>The pointer to the vertex buffer of the resource in video memory. If the USAGE_MISC_SHARED flag is not enabled for the resource, this method returns nullptr.</returns>
 		</member>
-		<member name="F:Unigine.ObjectMeshDynamic.DYNAMIC_INDICES">
+		<member name="M:Unigine.ObjectMeshDynamic.getExternalMemoryIndexBuffer const">
 			<summary>
-			A flag indicating dynamic indices.
-		</summary>
-		</member>
-		<member name="F:Unigine.ObjectMeshDynamic.DYNAMIC_VERTEX">
-			<summary>
-			A flag indicating dynamic vertices.
-		</summary>
-		</member>
-		<member name="F:Unigine.ObjectMeshDynamic.IMMUTABLE_ALL">
-			<summary>
-			A flag indicating both immutable indices and vertices.
-		</summary>
-		</member>
-		<member name="F:Unigine.ObjectMeshDynamic.IMMUTABLE_INDICES">
-			<summary>
-			A flag indicating immutable indices.
-		</summary>
-		</member>
-		<member name="F:Unigine.ObjectMeshDynamic.IMMUTABLE_VERTEX">
-			<summary>
-			A flag indicating immutable vertices.
-		</summary>
+			Returns the pointer to the index buffer of the resource in video memory. If the USAGE_MISC_SHARED flag is not enabled for the resource, this method returns nullptr.
+			</summary>  
+			<returns>The pointer to the index buffer of the resource in video memory. If the USAGE_MISC_SHARED flag is not enabled for the resource, this method returns nullptr.</returns>
 		</member>
 		<member name="F:Unigine.ObjectMeshDynamic.MODE_LINES">
 			<summary>
@@ -7073,83 +6651,55 @@
 			Unsigned short type to store vertices.
 		</summary>
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.#ctor(Unigine.Ptr{Unigine.Mesh})">
+		<member name="F:Unigine.ObjectMeshDynamic.USAGE_MISC_SHARED">
+			<summary>
+			Data is accessible by an external graphics API (applicable for DX12 and Vulkan only).
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.USAGE_DYNAMIC_ALL">
+			<summary>
+			A flag indicating both dynamic indices and vertices.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.USAGE_DYNAMIC_INDICES">
+			<summary>
+			A flag indicating dynamic indices.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.USAGE_DYNAMIC_VERTEX">
+			<summary>
+			A flag indicating dynamic vertices.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.USAGE_IMMUTABLE_ALL">
+			<summary>
+			A flag indicating both immutable indices and vertices.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.USAGE_IMMUTABLE_INDICES">
+			<summary>
+			A flag indicating immutable indices.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshDynamic.USAGE_IMMUTABLE_VERTEX">
+			<summary>
+			A flag indicating immutable vertices.
+		</summary>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.#ctor(char)">
 			<summary>
 			ObjectMeshSkinned constructor.
 			</summary> 
-			<param name="mesh"> Pointer to Mesh. </param> 
+			<param name="path"> Path to the skinned mesh file. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.ObjectMeshSkinned(char,bool)">
+		<member name="M:Unigine.ObjectMeshSkinned.#ctor">
 			<summary>
 			ObjectMeshSkinned constructor.
-			</summary> 
-			<param name="path"> Path to the skinned mesh file. </param>
-			<param name="unique"> When you create several objects out of a single .mesh file, the instance of the mesh geometry is created. If you then change the source geometry, its instances will be changed as well. To avoid this, set the unique flag to true (1), so a copy of the mesh geometry will be created and changes won't be applied. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setAnimation(int,int)">
-			<summary>
-			Sets the animation identifier for the given animation layer.
-			</summary> 
-			<param name="layer"> Layer number. </param>
-			<param name="v"> The variable of one of the following types:string name - The animation layer name.int animation - The animation identifier. </param>
-			<param name="animation"> Animation identifier. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setAnimation(int,char)">
-			<summary>
-			Sets the path to animation for the given animation layer.
-			</summary> 
-			<param name="layer"> Layer number. </param>
-			<param name="path"> Path to animation file. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getAnimation(int) const">
-			<summary>
-			Returns the animation identifier from the given animation layer.
-			</summary> 
-			<param name="layer"> Layer number. </param> 
-			<returns>Animation identifier.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getAnimationID(int) const">
-			<summary>
-			Returns the identifier of the animation at the specified position.
-			</summary> 
-			<param name="num"> Animation number. </param> 
-			<returns>Animation identifier.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getAnimationPath(int) const">
-			<summary>
-			Returns the path to a file containing the specified animation.
-			</summary> 
-			<param name="animation"> Animation identifier. </param> 
-			<returns>Path to a file containing the specified animation.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setAnimName(char)">
-			<summary>
-			Sets a new path to the animation. Does not update animation immediately using the new path, unlike the setAnimNameForce() method.
-			</summary> 
-			<param name="name"> Path to the animation. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setAnimNameForce(char)">
-			<summary>
-			Sets the new path to the animation and forces setting this animation for the first animation layer.
-			</summary> 
-			<param name="name"> Path to the animation file. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getAnimName const">
-			<summary>
-			Returns the path to the current animation.
 			</summary>  
-			<returns>Path to animation.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getBoneBindTransform(int) const">
-			<summary>
-			Returns the bind pose bone transformation matrix. Bone transformations are relative.
-			</summary> 
-			<param name="bone"> Bone number. </param> 
-			<returns>Bind pose bone transformation matrix.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getBoneChild(int,int) const">
 			<summary>
-			Returns the number of a child of a given bone.
+			Returns the number of a child of the given bone.
 			</summary> 
 			<param name="bone"> Bone number. </param>
 			<param name="child"> Child number. </param> 
@@ -7178,14 +6728,14 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.setBoneTransform(int,Unigine.Math.mat4)">
 			<summary>
-			Sets a transformation matrix for a given bone (without considering node transformations).					Bones can be scaled only uniformly.
+			Sets a transformation matrix for the given bone (without considering node transformations).					Bones can be scaled only uniformly.
 			</summary> 
 			<param name="bone"> Bone number. </param>
 			<param name="transform"> Transformation matrix. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getBoneTransform(int) const">
 			<summary>
-			Returns a transformation matrix of a given bone relatively to the parent object (not considering transformations of the Mesh Skinned node itself).
+			Returns a transformation matrix of the given bone relatively to the parent object (not considering transformations of the Mesh Skinned node itself).
 			</summary> 
 			<param name="bone"> Bone number. </param> 
 			<returns>Transformation matrix.</returns>
@@ -7198,14 +6748,6 @@
 			<param name="transforms"> Transformation matrices. </param>
 			<param name="num_bones"> Number of bones. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setCIndex(int,int,int)">
-			<summary>
-			Sets the new coordinate index for the given vertex of the given surface.
-			</summary> 
-			<param name="num"> Vertex number in the range from 0 to the total number of coordinate indices for the given surface.To get the total number of coordinate indices for the given surface, use the getNumCIndices() method. </param>
-			<param name="index"> Coordinate index to be set in the range from 0 to the total number of coordinate vertices for the given surface.To get the total number of coordinate vertices for the given surface, use the getNumCVertex() method. </param>
-			<param name="surface"> Mesh surface number. </param> 
-		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getCIndex(int,int) const">
 			<summary>
 			Returns the coordinate index for the given vertex of the given surface.
@@ -7213,14 +6755,6 @@
 			<param name="num"> Vertex number in the range from 0 to the total number of coordinate indices for the given surface.To get the total number of coordinate indices for the given surface, use the getNumCIndices() method. </param>
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Coordinate index.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setColor(int,Unigine.Math.vec4,int)">
-			<summary>
-			Sets the color for the given triangle vertex of the given surface.
-			</summary> 
-			<param name="num"> Triangle vertex number in the range from 0 to the total number of vertex color entries of the given surface.To get the total number of vertex color entries for the surface, call the getNumColors() method. </param>
-			<param name="color"> Vertex color to be set. </param>
-			<param name="surface"> Mesh surface number. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getColor(int,int) const">
 			<summary>
@@ -7230,63 +6764,6 @@
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Vertex color.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setControlled(bool)">
-			<summary>
-			Sets a value indicating if the animation should be controlled by a parent ObjectMeshSkinned (useful for attaching clothes to a character body).
-			</summary> 
-			<param name="controlled"> Controlled flag: true if the animation is controlled by a parent ObjectMeshSkinned; otherwise - false. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.isControlled const">
-			<summary>
-			Returns a value indicating if the animation is controlled by a parent ObjectMeshSkinned.
-			</summary>  
-			<returns>true if the animation is controlled by a parent ObjectMeshSkinned; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setFrame(int,float,int,int)">
-			<summary>
-			Sets a frame for the given animation layer.
-			</summary> 
-			<param name="layer"> Animation layer number. </param>
-			<param name="frame"> Frame number in the "from-to" interval. If the float argument is passed, animation is interpolated between nearby frames. 0 means the from frame. For larger values, a residue of a modulo (from-to) is calculated. If a negative value is provided, interpolation will be done from the current frame to the from frame. </param>
-			<param name="from"> Start frame. -1 means the first frame of the animation. </param>
-			<param name="to"> End frame. -1 means the last frame of the animation. </param> 
-			<returns>The number of the frame.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getFrame(int) const">
-			<summary>
-			Returns the frame number passed as the time argument on the last setFrame() call.
-			</summary> 
-			<param name="layer"> Animation layer number. </param> 
-			<returns>Frame number.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getFrameFrom(int) const">
-			<summary>
-			Returns the start frame passed as the from argument on the last setFrame() call.
-			</summary> 
-			<param name="layer"> Animation layer number. </param> 
-			<returns>Start frame.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getFrameTo(int) const">
-			<summary>
-			Returns the end frame passed as the to argument on the last setFrame() call.
-			</summary> 
-			<param name="layer"> Animation layer number. </param> 
-			<returns>End frame.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getBoneBindITransform(int) const">
-			<summary>
-			Returns the inverse bone transformation matrix of the bind pose in the world-space.					To get the bind pose transformation matrix in the world-space, use the inverse(getBoneITransform()).
-			</summary> 
-			<param name="bone"> Bone number. </param> 
-			<returns>Inverse bind pose transformation matrix.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getBoneITransform(int) const">
-			<summary>
-			Returns an inverse transformation matrix for a given bone relatively to the parent object.
-			</summary> 
-			<param name="bone"> Bone number. </param> 
-			<returns>Inverse transformation matrix.</returns>
-		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.setLayer(int,bool,float)">
 			<summary>
 			Enables or disables the given animation layer and sets the value of the weight parameter.
@@ -7294,38 +6771,6 @@
 			<param name="layer"> Animation layer number. </param>
 			<param name="enabled"> Enable flag. true to enable the layer, false to disable it. </param>
 			<param name="weight"> Animation layer weight. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setBoneLayerTransform(int,int,Unigine.Math.mat4)">
-			<summary>
-			Sets a transformation matrix for a given bone. The difference from the setBoneTransform() function is that this method takes into account only the transformation in the specified animation layer (no blending is performed).					The bone can be scaled only uniformly.
-			</summary> 
-			<param name="layer"> Animation layer number. </param>
-			<param name="bone"> Bone number. </param>
-			<param name="transform"> Bone transformation matrix. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getBoneLayerTransform(int,int) const">
-			<summary>
-			Returns a transformation matrix of a given bone relatively to the parent object.					The difference from getBoneTransform() is that this method takes into account only the transformation in the animation layer (no blending is done).
-			</summary> 
-			<param name="layer"> Animation layer number. </param>
-			<param name="bone"> Bone number. </param> 
-			<returns>Bone transformation matrix.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.isBoneLayerTransform(int,int) const">
-			<summary>
-			Returns a value indicating if the bone transformation is applied only to the animation layer (no blending is performed).
-			</summary> 
-			<param name="layer"> Animation layer number. </param>
-			<param name="bone"> Bone number. </param> 
-			<returns>true if the bone transformation is applied only to the animation layer; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setBoneLayerTransformEnabled(int,int,bool)">
-			<summary>
-			Enables or disables a layer transformation for a given bone.
-			</summary> 
-			<param name="layer"> Animation layer number. </param>
-			<param name="bone"> Bone number. </param>
-			<param name="enabled"> Enabled flag: true to enable layer transformation, false to disable it. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.setLayerEnabled(int,bool)">
 			<summary>
@@ -7355,49 +6800,12 @@
 			<param name="layer"> Animation layer number. </param> 
 			<returns>Weight of the animation layer.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setLoop(bool)">
-			<summary>
-			Sets a value indicating if the animation should be looped.
-			</summary> 
-			<param name="loop"> true is to play the animation in a loop, false is to play it only once.  </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.isLoop const">
-			<summary>
-			Returns a value indicating if the animation is looped.
-			</summary>  
-			<returns>true if the animation is looped; otherwise - false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setMesh(Unigine.Ptr{Unigine.Mesh})">
-			<summary>
-			Copies the source mesh into the current mesh.
-			</summary> 
-			<param name="mesh"> The source mesh to be copied. </param> 
-			<returns>1 if the mesh is copied successfully; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getMesh(Unigine.Ptr{Unigine.Mesh}) const">
 			<summary>
 			Copies the current mesh into the source mesh.
 			</summary> 
 			<param name="mesh"> Source mesh. </param> 
 			<returns>1 if the mesh is copied successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setMeshName(char)">
-			<summary>
-			Sets the path to the mesh. Does not update mesh immediately using the new path, unlike the setMeshNameForce() method
-			</summary> 
-			<param name="name"> Path to the mesh. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setMeshNameForce(char)">
-			<summary>
-			Sets the new path to the mesh and forces mesh creation using the new path. The new mesh is created from the specified path immediately with the unique flag set to 0.
-			</summary> 
-			<param name="path"> Path to the mesh file. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getMeshName const">
-			<summary>
-			Returns the path to the mesh.
-			</summary>  
-			<returns>Path to the mesh.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getMeshSurface(Unigine.Ptr{Unigine.Mesh},int,int) const">
 			<summary>
@@ -7417,38 +6825,12 @@
 			<param name="target"> Surface target number. The default value is 0. </param> 
 			<returns>Vertex normal.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getNumAnimationBones(int) const">
-			<summary>
-			Returns the number of animation bones.
-			</summary> 
-			<param name="animation"> Animation number. </param> 
-			<returns>Number of animation bones.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getNumAnimationFrames(int) const">
-			<summary>
-			Returns the number of animation frames.
-			</summary> 
-			<param name="animation"> Animation number. </param> 
-			<returns>Number of animation frames.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getNumAnimations const">
-			<summary>
-			Returns the total number of all loaded animations.
-			</summary>  
-			<returns>Number of loaded animations.</returns>
-		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getNumBoneChildren(int) const">
 			<summary>
 			Returns the number of children for the specified bone.
 			</summary> 
 			<param name="bone"> Bone number. </param> 
 			<returns>Number of child bones.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getNumBones const">
-			<summary>
-			Returns the number of all bones taking part in animation.
-			</summary>  
-			<returns>Number of bones of the skinned mesh.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getNumCIndices(int) const">
 			<summary>
@@ -7464,25 +6846,6 @@
 			<param name="surface"> Surface number. </param> 
 			<returns>Number of vertex color entries.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getNumFrames(int) const">
-			<summary>
-			Returns the number of animation frames for a given layer.
-			</summary> 
-			<param name="layer"> Animation layer number. </param> 
-			<returns>Number of animation frames.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setNumLayers(int)">
-			<summary>
-			Sets the number of animation layers for blending. For example, when two layers are blended, bone transformations in between the layers are interpolated, and vertex positions can be calculated using the interpolated results. For more details, see the article on Skinned Mesh.
-			</summary> 
-			<param name="layers"> Number of animation layers (must be greater than 0). </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getNumLayers const">
-			<summary>
-			Returns the number of animation layers set for blending. For more details, see the article on Skinned Mesh.
-			</summary>  
-			<returns>Number of animation layers.</returns>
-		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getNumSurfaceTargets(int) const">
 			<summary>
 			Returns the number of surface morph targets for the given mesh surface.
@@ -7497,40 +6860,12 @@
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Number of surface tangent vectors.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setNumTargets(int,int)">
-			<summary>
-			Sets the number of animation morph targets for the given mesh surface.
-			</summary> 
-			<param name="num"> Number of animation morph targets. </param>
-			<param name="surface"> Mesh surface number. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getNumTargets(int) const">
-			<summary>
-			Returns the total number of morph targets of the given mesh surface.
-			</summary> 
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>Number of animation morph targets.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setNumTexCoords0(int,int)">
-			<summary>
-			Sets the number of the first UV map texture coordinates for the given mesh surface.					First UV map texture coordinates are specified for triangle vertices.
-			</summary> 
-			<param name="num"> Number of the first UV map texture coordinates to be set. </param>
-			<param name="surface"> Mesh surface number. </param> 
-		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getNumTexCoords0(int) const">
 			<summary>
 			Returns the number of the first UV map texture coordinates for the given mesh surface.					First UV map texture coordinates are specified for triangle vertices.
 			</summary> 
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Number of the first UV map texture coordinates.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setNumTexCoords1(int,int)">
-			<summary>
-			Sets the number of the second UV map texture coordinates for the given mesh surface.					Second UV map texture coordinates are specified for triangle vertices.
-			</summary> 
-			<param name="num"> Number of the second UV map texture coordinates to be set. </param>
-			<param name="surface"> Mesh surface number. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getNumTexCoords1(int) const">
 			<summary>
@@ -7552,30 +6887,6 @@
 			</summary> 
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Number of the surface vertices.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.isFlushed const">
-			<summary>
-			Returns a value indicating if vertex data of the mesh was flushed (create/upload operation) to video memory.
-			</summary>  
-			<returns>true if vertex data of the mesh was flushed (create/upload operation) to video memory; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.isPlaying const">
-			<summary>
-			Returns playback status.
-			</summary>  
-			<returns>true if animation is playing; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setQuaternion(bool)">
-			<summary>
-			Enables or disables the dual-quaternion skinning mode. The dual-quaternion model is an accurate, computationally efficient, robust, and flexible method of representing rigid transforms and it is used in skeletal animation. See a Wikipedia article on dual quaternions and a beginners guide to dual-quaternions for more information.
-			</summary> 
-			<param name="quaternion"> true to enable dual-quaternion skinning mode, false to disable it. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.isQuaternion const">
-			<summary>
-			Returns the value indicating if the dual-quaternion skinning mode is used. The dual-quaternion model is an accurate, computationally efficient, robust, and flexible method of representing rigid transforms and it is used in skeletal animation. See a Wikipedia article on dual quaternions and a beginners guide to dual-quaternions for more information.
-			</summary>  
-			<returns>true if dual-quaternion skinning mode is used; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getSkinnedNormal(int,int,int) const">
 			<summary>
@@ -7603,24 +6914,6 @@
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Vertex coordinates.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setSpeed(float)">
-			<summary>
-			Updates a multiplier value for the animation playback time.
-			</summary> 
-			<param name="speed"> Playback speed multiplier value. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getSpeed const">
-			<summary>
-			Returns a multiplier for animation playback time.
-			</summary>  
-			<returns>Playback speed multiplier value.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.isStopped const">
-			<summary>
-			Returns stop status.
-			</summary>  
-			<returns>true if animation is stopped; otherwise, false.</returns>
-		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.isNeedUpdate const">
 			<summary>
 			Returns a value indicating if the ObjectMeshSkinned needs to be updated (e.g. after adding new animations).
@@ -7635,23 +6928,6 @@
 			<param name="target"> Morph target number. </param> 
 			<returns>Morph target name.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setSurfaceTransform(Unigine.Math.mat4,int,int)">
-			<summary>
-			Transforms the given mesh surface target.
-			</summary> 
-			<param name="transform"> Transformation matrix. </param>
-			<param name="surface"> Mesh surface number. </param>
-			<param name="target"> Morph target number. The default value is -1 (the transformation will be applied to all morph targets). </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setTangent(int,Unigine.Math.quat,int,int)">
-			<summary>
-			Sets the new tangent for the given triangle vertex of the given surface target.
-			</summary> 
-			<param name="num"> Triangle vertex number in the range from 0 to the total number of vertex tangent entries of the given surface.To get the total number of vertex tangent entries for the surface, call the getNumTangents() method. </param>
-			<param name="tangent"> Tangent to be set. </param>
-			<param name="surface"> Mesh surface number. </param>
-			<param name="target"> Surface target number. The default value is 0. </param> 
-		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getTangent(int,int,int) const">
 			<summary>
 			Returns the tangent for the given triangle vertex of the given surface target.
@@ -7661,73 +6937,6 @@
 			<param name="target"> Surface target number. The default value is 0. </param> 
 			<returns>Vertex tangent.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setTarget(int,bool,int,float,int)">
-			<summary>
-			Enables or disables a given morph target and sets all its parameters.
-			</summary> 
-			<param name="target"> Morph target number. </param>
-			<param name="enabled"> Enable flag: true to enable the morph target; false to disable it. </param>
-			<param name="index"> Target index. </param>
-			<param name="weight"> Target weight. </param>
-			<param name="surface"> Surface number. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setTargetEnabled(int,bool,int)">
-			<summary>
-			Enables or disables a given morph target.
-			</summary> 
-			<param name="target"> Morph target number. </param>
-			<param name="enabled"> true to enable the morph target, false to disable it. </param>
-			<param name="surface"> Surface number. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.isTargetEnabled(int,int) const">
-			<summary>
-			Returns a value indicating if the given morph target of the given surface is enabled.
-			</summary> 
-			<param name="target"> Morph target number. </param>
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>1 if the given morph target of the given surface is enabled; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setTargetIndex(int,int,int)">
-			<summary>
-			Sets an index for the given morph target.
-			</summary> 
-			<param name="target"> Morph target number. </param>
-			<param name="index"> Morph target index. </param>
-			<param name="surface"> Mesh surface number. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getTargetIndex(int,int) const">
-			<summary>
-			Returns the index of the morph target.
-			Returns the index of the given morph target.
-			</summary> 
-			<param name="target"> Morph target number. </param>
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>Index of the given morph target.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setTargetWeight(int,float,int)">
-			<summary>
-			Sets a weight for the given animation target.
-			</summary> 
-			<param name="target"> Morph target number. </param>
-			<param name="weight"> Morph target weight. </param>
-			<param name="surface"> Mesh surface number. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getTargetWeight(int,int) const">
-			<summary>
-			Returns the weight of the given morph target.
-			</summary> 
-			<param name="target"> Morph target number. </param>
-			<param name="surface"> Mesh surface number. </param> 
-			<returns>Morph target weight.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setTexCoord0(int,Unigine.Math.vec2,int)">
-			<summary>
-			Sets first UV map texture coordinates for the given triangle vertex of the given surface.
-			</summary> 
-			<param name="num"> Triangle vertex number in the range from 0 to the total number of first UV map texture coordinate entries of the given surface.To get the total number of first UV map texture coordinate entries for the surface, call the getNumTexCoords0() method. </param>
-			<param name="texcoord"> First UV map texture coordinates to be set. </param>
-			<param name="surface"> Mesh surface number. </param> 
-		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getTexCoord0(int,int) const">
 			<summary>
 			Returns first UV map texture coordinates for the given triangle vertex of the given surface.
@@ -7735,14 +6944,6 @@
 			<param name="num"> Triangle vertex number in the range from 0 to the total number of first UV map texture coordinate entries of the given surface.To get the total number of first UV map texture coordinate entries for the surface, call the getNumTexCoords0() method. </param>
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>First UV map texture coordinates.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setTexCoord1(int,Unigine.Math.vec2,int)">
-			<summary>
-			Sets second UV map texture coordinates for the given triangle vertex of the given surface.
-			</summary> 
-			<param name="num"> Triangle vertex number in the range from 0 to the total number of second UV map texture coordinate entries of the given surface.To get the total number of second UV map texture coordinate entries for the surface, call the getNumTexCoords1() method. </param>
-			<param name="texcoord"> Second UV map texture coordinates to be set. </param>
-			<param name="surface"> Mesh surface number. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getTexCoord1(int,int) const">
 			<summary>
@@ -7752,26 +6953,6 @@
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Second UV map texture coordinates.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setTime(float)">
-			<summary>
-			Sets the animation time, in animation frames. The time count starts from the zero frame. If the time is set to be between frames, animation is blended. If the time is set outside the animation frame range, the animation is looped.					The setTime() function corresponds to The Play and Stop options in the editor. In all other cases use setFrame() to set the animation.
-			</summary> 
-			<param name="time"> Animation time. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getTime const">
-			<summary>
-			Returns the current animation time, in animation frames. The time count starts from the zero frame.
-			</summary>  
-			<returns>Animation time.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setTIndex(int,int,int)">
-			<summary>
-			Sets the new triangle index for the given vertex of the given surface.
-			</summary> 
-			<param name="num"> Vertex number in the range from 0 to the total number of triangle indices for the given surface.To get the total number of triangle indices, use the getNumTIndices() method. </param>
-			<param name="index"> Triangle index to be set in the range from 0 to the total number of triangle vertices for the given surface.To get the total number of triangle vertices for the given surface, use the getNumTVertex() method. </param>
-			<param name="surface"> Mesh surface number. </param> 
-		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getTIndex(int,int) const">
 			<summary>
 			Returns the triangle index for the given surface by using the index number.
@@ -7779,15 +6960,6 @@
 			<param name="num"> Vertex number in the range from 0 to the total number of triangle indices for the given surface.To get the total number of triangle indices for the given surface, use the getNumTIndices() method. </param>
 			<param name="surface"> Mesh surface number. </param> 
 			<returns>Triangle index.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setVertex(int,Unigine.Math.vec3,int,int)">
-			<summary>
-			Sets the coordinates of the given coordinate vertex of the given surface target.
-			</summary> 
-			<param name="num"> Coordinate vertex number in the range from 0 to the total number of coordinate vertices for the given surface.To get the total number of coordinate vertices for the given surface, use the getNumCVertex() method. </param>
-			<param name="vertex"> Vertex coordinates to be set. </param>
-			<param name="surface"> Mesh surface number. </param>
-			<param name="target"> Surface target number. The default value is 0. </param> 
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.getVertex(int,int,int) const">
 			<summary>
@@ -7819,109 +6991,11 @@
 			<param name="bone"> Bone number. </param> 
 			<returns>Transformation matrix in the world space.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.addAnimation(Unigine.Ptr{Unigine.Mesh},char)">
-			<summary>
-			Adds animation from the specified mesh.
-			</summary> 
-			<param name="mesh"> Mesh containing the animation to be added. </param>
-			<param name="path"> The parameter is a virtual unique path defining the animation. After loading the animation clip, its internal representation will be identified by the path when using findAnimation, setAnimation, etc. The default 0 value implies that the names of the animation clips will be used.As the given mesh isn't associated with a file and, therefore, doesn't have path data, the path must be represented by an arbitrary unique string. You can generate a new string and use it as the virtual path for the animation. </param> 
-			<returns>Index of the added animation or -1 if an error has occurred.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.addAnimation(char)">
-			<summary>
-			Loads additional animation from the specified external file.
-			</summary> 
-			<param name="path"> Path to the animation file. The path can be represented by either a path to the file or its GUID, which is the recommended approach. After loading the animation, its internal representation is identified by the path when using findAnimation, setAnimation, etc. When you import your model with animations from an FBX container, the following path to your *.anim files should be used: &amp;lt;path_to_your_fbx_file&amp;gt;/&amp;lt;file.fbx&amp;gt;/&amp;lt;your_anim_file.anim&amp;gt;For example: object-&amp;gt;addAnimation("models/soldier/soldier.fbx/run.anim"); </param> 
-			<returns>Index of the added animation or -1 if an error has occurred.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.addRetargetedAnimation(char,Unigine.Ptr{BonesRetargeting})">
-			<summary>
-			Loads additional animation from the specified external file applying the specified bones retargeting settings.
-			</summary> 
-			<param name="path"> Path to the animation file. The path can be represented by either a path to the file or its GUID, which is the recommended approach. After loading the animation, its internal representation is identified by the path when using findAnimation, setAnimation, etc. When you import your model with animations from an FBX container, the following path to your *.anim files should be used: &amp;lt;path_to_your_fbx_file&amp;gt;/&amp;lt;file.fbx&amp;gt;/&amp;lt;your_anim_file.anim&amp;gt;For example: object-&amp;gt;addAnimation("models/soldier/soldier.fbx/run.anim"); </param>
-			<param name="bones_retargeting"> Instance of the BonesRetargeting class describing retargeting of bones from the skeleton of the specified source mesh to the skeleton of the calling object. </param> 
-			<returns>Index of the added animation or -1 if an error has occurred.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.addRetargetedAnimation(Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{BonesRetargeting},char)">
-			<summary>
-			Adds animation from the specified mesh applying the specified bones retargeting settings.
-			</summary> 
-			<param name="mesh"> Source mesh containing the animation to be added. </param>
-			<param name="bones_retargeting"> Instance of the BonesRetargeting class describing retargeting of bones from the skeleton of the specified source mesh to the skeleton of the calling object. </param>
-			<param name="path"> The parameter is a virtual unique path defining the animation. After loading the animation clip, its internal representation will be identified by the path when using findAnimation, setAnimation, etc. The default 0 value implies that the names of the animation clips will be used.As the given mesh isn't associated with a file and, therefore, doesn't have path data, the path must be represented by an arbitrary unique string. You can generate a new string and use it as the virtual path for the animation. </param> 
-			<returns>Index of the added animation or -1 if an error has occurred.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.addEmptySurface(char,int,int)">
-			<summary>
-			Appends a new empty surface to the current mesh.
-			</summary> 
-			<param name="name"> Name of the new surface. </param>
-			<param name="num_vertex"> Number of vertices of the new surface. </param>
-			<param name="num_indices"> Number of indices of the new surface. </param> 
-			<returns>Number of the new added surface.</returns>
-		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.addLayer">
 			<summary>
 			Appends a new animation layer to the current mesh.
 			</summary>  
 			<returns>Number of the new added animation layer.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.addMeshSurface(char,Unigine.Ptr{ObjectMeshSkinned},int,int)">
-			<summary>
-			Appends a new mesh surface to the current mesh.
-			</summary> 
-			<param name="v0"> Argument of one of the following types:string name - Name of the new surface.int dest_surface - Number of the surface to append geometry to. </param>
-			<param name="v1"> Argument of one of the following types:Mesh mesh - Source mesh to copy the surface from.ObjectMeshSkinned mesh - Source mesh to copy the surface from. </param>
-			<param name="name"> Name of the new surface of the current mesh. </param>
-			<param name="mesh"> Mesh pointer to copy a surface from. </param>
-			<param name="surface"> Number of mesh surface to copy. </param>
-			<param name="target"> Number of mesh target to copy. The default value is -1 (all morph targets will be copied). </param> 
-			<returns>Number of the added mesh surface.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.addMeshSurface(int,Unigine.Ptr{ObjectMeshSkinned},int,int)">
-			<summary>
-			Merges the specified surface from the source ObjectMeshSkinned with the specified destination surface of the mesh.
-			</summary> 
-			<param name="dest_surface"> Number of the destination surface, with which a surface from the source ObjectMeshSkinned is to be merged. </param>
-			<param name="mesh"> Source ObjectMeshSkinned to copy a surface from. </param>
-			<param name="surface"> Number of the source mesh surface to copy. </param>
-			<param name="target"> Number of mesh target to merge. The default value is -1 (all morph targets will be merged). </param> 
-			<returns>Number of the destination mesh surface.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.addMeshSurface(char,Unigine.Ptr{Unigine.Mesh},int,int)">
-			<summary>
-			Appends a new mesh surface to the current mesh by copying the specified surface from the source mesh.
-			</summary> 
-			<param name="name"> Name of the new surface of the current mesh. </param>
-			<param name="mesh"> Source mesh to copy a surface from. </param>
-			<param name="surface"> Number of the source mesh surface to copy. </param>
-			<param name="target"> Number of mesh target to copy. The default value is -1 (all morph targets will be copied). </param> 
-			<returns>Number of the added mesh surface.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.addSurfaceTarget(int,char)">
-			<summary>
-			Appends a new morph target to the given mesh surface.
-			</summary> 
-			<param name="surface"> Number of the surface, to which the morph target will be appended. </param>
-			<param name="name"> Name of the new morph target. </param> 
-			<returns>Number of the new added morph target.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.addSurfaceTarget(int,Unigine.Ptr{ObjectMeshSkinned},int,int)">
-			<summary>
-			Appends a new morph target to the given mesh surface by copying it from the specified surface of the source ObjectMeshSkinned.
-			</summary> 
-			<param name="dest_surface"> Number of the surface, to which the morph target will be appended. </param>
-			<param name="src_mesh"> Source ObjectMeshSkinned to copy the morph target from. </param>
-			<param name="src_surface"> Number of the surface of the source ObjectMeshSkinned to copy the morph target from. </param>
-			<param name="src_target"> Number of the morph target to copy. The default value is -1 (all morph targets will be copied). </param> 
-			<returns>Number of the new added morph target.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.addTarget(int)">
-			<summary>
-			Appends a new empty morph target to the given mesh surface.
-			</summary> 
-			<param name="surface"> Number of the surface, to which the morph target will be appended. </param> 
-			<returns>number of the new added morph target.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.clearLayer(int)">
 			<summary>
@@ -7936,21 +7010,6 @@
 			<param name="dest"> Number of the destination layer in the range from 0 to the total number of animation layers.To get the total number of animation layers, use the getNumLayers() method. </param>
 			<param name="src"> Number of the source layer in range from 0 to the total number of animation layers.To get the total number of animation layers, use the getNumLayers() method. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.createMesh(char,bool)">
-			<summary>
-			Creates a skinned mesh.
-			</summary> 
-			<param name="path"> Path to the mesh file. </param>
-			<param name="unique"> Dynamic flag:false (0) - If the mesh vertices are changed in run-time, meshes loaded from the same file will be also changed.true (1) - If the mesh vertices are changed in run-time, meshes loaded from the same file won't be changed </param> 
-			<returns>1 if the mesh is created successfully; otherwise - 0.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.findAnimation(char) const">
-			<summary>
-			Searches for an animation using the given path.
-			</summary> 
-			<param name="path"> Path to animation file.Use the path specified on animation loading. </param> 
-			<returns>Animation number, if found; otherwise, -1.</returns>
-		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.findBone(char) const">
 			<summary>
 			Searches for a bone with a given name.
@@ -7958,18 +7017,13 @@
 			<param name="name"> Bone name. </param> 
 			<returns>Bone number if found; otherwise, -1.</returns>
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.findSurfaceTarget(char,int) const">
+		<member name="M:Unigine.ObjectMeshSkinned.findSurfaceTarget(int,char) const">
 			<summary>
 			Searches for a surface morph target with a given name.
 			</summary> 
-			<param name="name"> Name of the morph target. </param>
-			<param name="surface"> Mesh surface number. </param> 
+			<param name="surface"> Mesh surface number. </param>
+			<param name="name"> Name of the morph target. </param> 
 			<returns>Number of the morph target, if exists; otherwise, -1.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.flushMesh">
-			<summary>
-			Flushes mesh geometry to the video memory.
-			</summary>  
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.importLayer(int)">
 			<summary>
@@ -7993,21 +7047,6 @@
 			<param name="layer1"> Number of the second source layer in range from 0 to the total number of animation layers.To get the total number of animation layers, use the getNumLayers() method. </param>
 			<param name="weight"> Interpolation weight. </param> 
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.loadMesh(char)">
-			<summary>
-			Loads a new mesh instead of the current mesh from the .mesh file. This function doesn't change the mesh name.
-			</summary> 
-			<param name="path"> The path to the .mesh file. </param> 
-			<returns>1 if the mesh is loaded successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.mergeMeshSurface(int,Unigine.Ptr{ObjectMeshSkinned},int)">
-			<summary>
-			Merges the specified surface from the source ObjectMeshSkinned with the specified destination surface of the mesh.
-			</summary> 
-			<param name="dest_surface"> Number of the destination surface, with which a surface from the source ObjectMeshSkinned is to be merged. </param>
-			<param name="src_mesh"> Source ObjectMeshSkinned to copy a surface from. </param>
-			<param name="src_surface"> Number of source mesh surface to merge. </param> 
-		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.mulLayer(int,int,int,float)">
 			<summary>
 			Copies multiplied bone transformations from two source layers to the destination layer.
@@ -8022,31 +7061,11 @@
 			Continues playback of the animation, if it was paused, or starts playback if it was stopped.
 			</summary>  
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.removeAnimation(int)">
-			<summary>
-			Removes the given animation.
-			</summary> 
-			<param name="animation"> Animation number. </param> 
-		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.removeLayer(int)">
 			<summary>
 			Removes an animation layer.
 			</summary> 
 			<param name="layer"> Layer number in the range from 0 to the total number of animation layers.To get the total number of animation layers, use the getNumLayers() method. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.removeTarget(int,int)">
-			<summary>
-			Removes the given morph target.
-			</summary> 
-			<param name="target"> Target number in the range from 0 to the total number of morph targets.To get the total number of morph targets for a given surface, use the getNumTargets() method. </param>
-			<param name="surface"> Mesh surface number. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.saveMesh(char)">
-			<summary>
-			Saves the mesh to .mesh or .anim format.
-			</summary> 
-			<param name="path"> Path to the file including the file name and extension — *.mesh or *.anim. </param> 
-			<returns>1 if the mesh is saved successfully; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.stop">
 			<summary>
@@ -8058,60 +7077,6 @@
 			Returns the type of the node.
 			</summary>  
 			<returns>Node type identifier.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.updateSurfaceBounds(int)">
-			<summary>
-			Updates mesh surface bounds. This method is to be called to recalculate bounds after changing a mesh surface (e.g. modifying positions of coordinate vertices).
-			</summary> 
-			<param name="surface"> Number of the surface to recalculate bound for. The default value is -1 (all surfaces). </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setFPSVisibleCamera(int)">
-			<summary>
-			Sets the update rate value when the object is rendered to the viewport. The default value is set to infinity.
-			</summary> 
-			<param name="camera"> Update rate value when the object is rendered. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getFPSVisibleCamera const">
-			<summary>
-			Returns the update rate value when the object is rendered to the viewport.
-			</summary>  
-			<returns>Update rate value when the object is rendered.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setFPSVisibleShadow(int)">
-			<summary>
-			Sets the update rate value when only object shadows are rendered. The default value is set to 30 fps.
-			</summary> 
-			<param name="shadow"> Update rate value when only object shadows are rendered. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getFPSVisibleShadow const">
-			<summary>
-			Returns the update rate value when only object shadows are rendered.
-			</summary>  
-			<returns>Update rate value when only object shadows are rendered.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setFPSInvisible(int)">
-			<summary>
-			Sets the update rate value when the object is not rendered at all. The default value is 0 fps.
-			</summary> 
-			<param name="invisible"> Update rate value when the object is not rendered at all. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getFPSInvisible const">
-			<summary>
-			Returns the update rate value when the object is not rendered at all.
-			</summary>  
-			<returns>Update rate value when the object is not rendered at all.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setUpdateDistanceLimit(float)">
-			<summary>
-			Sets the distance from the camera within which the object should be updated. The default value is 200 units.
-			</summary> 
-			<param name="limit"> Distance from the camera within which the object should be updated. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getUpdateDistanceLimit const">
-			<summary>
-			Returns the distance from the camera within which the object should be updated.
-			</summary>  
-			<returns>Distance from the camera within which the object should be updated.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.updateSkinned">
 			<summary>
@@ -8243,34 +7208,6 @@
 			Clears the list of the bones for which the basis vectors are to be visualized.
 			</summary>  
 		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setVisualizeAllBones(bool)">
-			<summary>
-			Sets a value indicating if visualization for bones and their basis vectors is enabled. The visualizer can be used for debugging purposes showing positions of bones and their basis vectors for multiple meshes simultaneously.
-			</summary> 
-			<param name="bones"> true to enable visualization of bones and their basis vectors; false — to disable it. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.isVisualizeAllBones const">
-			<summary>
-			Returns a value indicating if visualization for bones and their basis vectors is enabled. The visualizer can be used for debugging purposes showing positions of bones and their basis vectors for multiple meshes simultaneously.
-			</summary>  
-			<returns>true if visualization for bones and their basis vectors is enabled; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setBoneFrameUses(int,int,ObjectMeshSkinned::FRAME_USES)">
-			<summary>
-			Sets the value indicating which components of the frame are to be used to animate the specified bone of the given animation layer.
-			</summary> 
-			<param name="layer"> Animation layer number. </param>
-			<param name="bone"> Number of the bone, in the range from 0 to the total number of bones. </param>
-			<param name="uses"> Value indicating frame components to be used. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getBoneFrameUses(int,int) const">
-			<summary>
-			Returns the value indicating which components of the frame are to be used to animate the specified bone of the given animation layer.
-			</summary> 
-			<param name="layer"> Animation layer number. </param>
-			<param name="bone"> Number of the bone, in the range from 0 to the total number of bones. </param> 
-			<returns>Value indicating frame components to be used.</returns>
-		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.addVisualizeIKChain(int)">
 			<summary>
 			Adds an IK chain with the specified ID to the list of chains for which the basis vectors are to be visualized.
@@ -8299,19 +7236,6 @@
 			Removes the IK chain with the specified ID.
 			</summary> 
 			<param name="chain_id"> IK chain ID. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getNumIKChains const">
-			<summary>
-			Returns the number of IK chains of the skinned mesh.
-			</summary>  
-			<returns>Number of IK chains.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.getIKChain(int) const">
-			<summary>
-			Returns the ID of the IK chain by its number.
-			</summary> 
-			<param name="num"> IK chain number. </param> 
-			<returns>IK chain ID.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.setIKChainEnabled(bool,int)">
 			<summary>
@@ -8398,20 +7322,6 @@
 			</summary> 
 			<param name="chain_id"> IK chain ID. </param> 
 			<returns>World coordinates of the target position of the IK chain with the specified ID.</returns>
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.setIKChainUsePoleVector(bool,int)">
-			<summary>
-			Sets a value indicating if the pole vector is to be used to define the direction of rotation for the joints of the IK chain with the specified ID as they attempt to reach the target.
-			</summary> 
-			<param name="use"> true to use the pole vector for the IK chain with the specified ID; false - not to use. </param>
-			<param name="chain_id"> IK chain ID. </param> 
-		</member>
-		<member name="M:Unigine.ObjectMeshSkinned.isIKChainUsePoleVector(int) const">
-			<summary>
-			Returns a value indicating if the pole vector is to be used to define the direction of rotation for the joints of the IK chain with the specified ID as they attempt to reach the target.
-			</summary> 
-			<param name="chain_id"> IK chain ID. </param> 
-			<returns>true if the pole vector is to be used for the IK chain with the specified ID; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSkinned.setIKChainPolePosition(Unigine.Math.Vec3,int)">
 			<summary>
@@ -8515,7 +7425,735 @@
 			<summary>
 			Copies all bone transformations from the specified source skinned mesh.
 			</summary> 
-			<param name="mesh"> Source skinned mesh from which bone transforms are to be copied. </param> 
+			<param name="src"> Source skinned mesh from which bone transforms are to be copied. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setMeshProceduralMode(bool)">
+			<summary>
+			Sets the procedural mesh usage mode for the object. With the procedural mode enabled, the mesh is created in runtime and passed to ObjectMeshSkinned.
+			</summary> 
+			<param name="mode"> true to enable the procedural mode for the mesh, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.applyMeshProcedural(Unigine.Ptr{Unigine.Mesh})">
+			<summary>
+			Copies all information from the specified mesh into the procedural mesh inside the object.
+			</summary> 
+			<param name="mesh"> Source mesh. </param> 
+			<returns>true if the information from the mesh is successfully copied into the procedural mesh, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setSurfaceTargetEnabled(int,int,bool)">
+			<summary>
+			Toggles the use of the morph target for the specified surface.
+			</summary> 
+			<param name="surface"> Number of the surface, to which the morph target is to be appended. </param>
+			<param name="target"> Number of the morph target to be used. </param>
+			<param name="enabled"> true to enable the use of the morph target for the surface, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.isSurfaceTargetEnabled(int,int) const">
+			<summary>
+			Returns the value indicating if the use of the morph target for the specified surface is enabled.
+			</summary> 
+			<param name="surface"> Number of the surface, to which the morph target is appended. </param>
+			<param name="target"> Number of the morph target. </param> 
+			<returns>trueif the use of the morph target for the surface is enabled, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setSurfaceTargetWeight(int,int,float)">
+			<summary>
+			Sets the weight of the morph target, i.e. the intensity of it affecting the surface vertices.
+			</summary> 
+			<param name="surface"> Number of the surface, to which the morph target is appended. </param>
+			<param name="target"> Number of the morph target. </param>
+			<param name="weight"> Weight of the morph target. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getSurfaceTargetWeight(int,int) const">
+			<summary>
+			Returns the weight of the morph target, i.e. the intensity of it affecting the surface vertices.
+			</summary> 
+			<param name="surface"> Number of the surface, to which the morph target is appended. </param>
+			<param name="target"> Number of the morph target. </param> 
+			<returns>Weight of the morph target.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLayerBoneTransformEnabled(int,int,bool)">
+			<summary>
+			Enables or disables a layer transformation for the given bone.
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="bone"> Bone number. </param>
+			<param name="enabled"> Enabled flag: true to enable layer transformation, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLayerBoneTransform(int,int,Unigine.Math.mat4)">
+			<summary>
+			Sets a transformation matrix for the given bone. The difference from the setBoneTransform() function is that this method takes into account only the transformation in the specified animation layer (no blending is performed).					The bone can be scaled only uniformly.
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="bone"> Bone number. </param>
+			<param name="transform"> Bone transformation matrix. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLayerBoneTransform(int,int) const">
+			<summary>
+			Returns a transformation matrix of the given bone relatively to the parent object.					The difference from getBoneTransform() is that this method takes into account only the transformation in the animation layer (no blending is done).
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="bone"> Bone number. </param> 
+			<returns>Bone transformation matrix.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.isLayerBoneTransform(int,int) const">
+			<summary>
+			Returns a value indicating if the bone transformation is applied only to the animation layer (no blending is performed).
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="bone"> Bone number. </param> 
+			<returns>true if the bone transformation is applied only to the animation layer; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLayerBonePosition(int,int,Unigine.Math.vec3)">
+			<summary>
+			Sets the position for the given bone.
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="bone"> Bone number. </param>
+			<param name="position"> Bone position. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLayerBonePosition(int,int) const">
+			<summary>
+			Returns the position for the given bone.
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="bone"> Bone number. </param> 
+			<returns>Bone position.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLayerBoneRotation(int,int,Unigine.Math.quat)">
+			<summary>
+			Sets the rotation for the given bone.
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="bone"> Bone number. </param>
+			<param name="rotation"> Bone rotation. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLayerBoneRotation(int,int) const">
+			<summary>
+			Returns the rotation for the given bone.
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="bone"> Bone number. </param> 
+			<returns>Bone rotation.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLayerBoneScale(int,int,Unigine.Math.vec3)">
+			<summary>
+			Sets the scale for the given bone.
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="bone"> Bone number. </param>
+			<param name="scale"> Bone scale. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLayerBoneScale(int,int) const">
+			<summary>
+			Returns the scale for the given bone.
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="bone"> Bone number. </param> 
+			<returns>Bone scale.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLayerFrameUsesEnabled(int,bool)">
+			<summary>
+			Toggles the use of animation masks for bones in the specified layer.
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="enabled"> true to enable the use of animation masks for bones in the specified layer, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.isLayerFrameUsesEnabled(int) const">
+			<summary>
+			Returns the value indicating if the use of animation masks for bones in the specified layer is enabled.
+			</summary> 
+			<param name="layer"> Animation layer number. </param> 
+			<returns>true if the use of animation masks for bones in the specified layer is enabled, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLayerBoneFrameUses(int,int,ObjectMeshSkinned::ANIM_FRAME_USES)">
+			<summary>
+			Sets the value indicating which components of the frame are to be used to animate the specified bone of the given animation layer.
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="bone"> Number of the bone, in the range from 0 to the total number of bones. </param>
+			<param name="uses"> Value indicating frame components to be used. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLayerBoneFrameUses(int,int) const">
+			<summary>
+			Returns the value indicating which components of the frame are to be used to animate the specified bone of the given animation layer.
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="bone"> Number of the bone, in the range from 0 to the total number of bones. </param> 
+			<returns>Value indicating frame components to be used.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLayerNumFrames(int) const">
+			<summary>
+			Returns the number of animation frames for a given layer.
+			</summary> 
+			<param name="layer"> Animation layer number. </param> 
+			<returns>Number of animation frames.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLayerFrame(int,float,int,int)">
+			<summary>
+			Sets a frame for the given animation layer.
+			</summary> 
+			<param name="layer"> Animation layer number. </param>
+			<param name="frame"> Frame number in the "from-to" interval. If the float argument is passed, animation is interpolated between nearby frames. 0 means the from frame. For larger values, a residue of a modulo (from-to) is calculated. If a negative value is provided, interpolation will be done from the current frame to the from frame. </param>
+			<param name="from"> Start frame. -1 means the first frame of the animation. </param>
+			<param name="to"> End frame. -1 means the last frame of the animation. </param> 
+			<returns>The number of the frame.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLayerFrame(int) const">
+			<summary>
+			Returns the frame number passed as the time argument on the last setLayerFrame() call.
+			</summary> 
+			<param name="layer"> Animation layer number. </param> 
+			<returns>Frame number.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLayerFrameFrom(int) const">
+			<summary>
+			Returns the start frame passed as the from argument on the last setLayerFrame() call.
+			</summary> 
+			<param name="layer"> Animation layer number. </param> 
+			<returns>Start frame.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLayerFrameTo(int) const">
+			<summary>
+			Returns the end frame passed as the to argument on the last setLayerFrame() call.
+			</summary> 
+			<param name="layer"> Animation layer number. </param> 
+			<returns>End frame.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setRetargeting(Unigine.Ptr{BonesRetargeting},char,char)">
+			<summary>
+			Applies the animation of a source mesh to the bones of the target mesh using bones retargeting.
+			</summary> 
+			<param name="bones_retargeting"> Instance of the BonesRetargeting class that describes how animation of source mesh bones is retargeted in order to be applied to the bones of the target mesh. </param>
+			<param name="anim_path"> Path to the animation file. The path can be represented by either a path to the file or its GUID, which is the recommended approach. After loading the animation, its internal representation is identified by the path when using setLayerAnimationFilePath , etc. When you import your model with animations from an FBX container, the following path to your *.anim files should be used: &amp;lt;path_to_your_fbx_file&amp;gt;/&amp;lt;file.fbx&amp;gt;/&amp;lt;your_anim_file.anim&amp;gt;For example: object-&amp;gt;setLayerAnimationFilePath(0,"models/soldier/soldier.fbx/run.anim"); </param>
+			<param name="mesh_path"> Path to the target mesh file, to which animation is to be applied. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.removeRetargeting(char,char)">
+			<summary>
+			Disables the application of the retargeted animation to the bones of the target mesh.
+			</summary> 
+			<param name="anim_path"> Path to the animation file. The path can be represented by either a path to the file or its GUID, which is the recommended approach. After loading the animation, its internal representation is identified by the path when using setLayerAnimationFilePath , etc. When you import your model with animations from an FBX container, the following path to your *.anim files should be used: &amp;lt;path_to_your_fbx_file&amp;gt;/&amp;lt;file.fbx&amp;gt;/&amp;lt;your_anim_file.anim&amp;gt;For example: object-&amp;gt;setLayerAnimationFilePath(0,"models/soldier/soldier.fbx/run.anim"); </param>
+			<param name="mesh_path"> Path to the target mesh file, to which animation is applied. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getRetargeting(char,char)">
+			<summary>
+			Returns the bones retargeting of the specified animation applied to the specified mesh.
+			</summary> 
+			<param name="anim_path"> Path to the animation file. The path can be represented by either a path to the file or its GUID, which is the recommended approach. After loading the animation, its internal representation is identified by the path when using setLayerAnimationFilePath , etc. When you import your model with animations from an FBX container, the following path to your *.anim files should be used: &amp;lt;path_to_your_fbx_file&amp;gt;/&amp;lt;file.fbx&amp;gt;/&amp;lt;your_anim_file.anim&amp;gt;For example: object-&amp;gt;setLayerAnimationFilePath(0,"models/soldier/soldier.fbx/run.anim"); </param>
+			<param name="mesh_path"> Path to the target mesh file, to which animation is applied. </param> 
+			<returns>Instance of the BonesRetargeting class that describes how animation of source mesh bones is retargeted in order to be applied to the bones of the target mesh if it is applied, otherwise nullptr.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.isRetargeting(char,char)">
+			<summary>
+			Returns the value indicating if there is bones retargeting between the specified animation and the target mesh.
+			</summary> 
+			<param name="anim_path"> Path to the animation file. The path can be represented by either a path to the file or its GUID, which is the recommended approach. After loading the animation, its internal representation is identified by the path when using setLayerAnimationFilePath , etc. When you import your model with animations from an FBX container, the following path to your *.anim files should be used: &amp;lt;path_to_your_fbx_file&amp;gt;/&amp;lt;file.fbx&amp;gt;/&amp;lt;your_anim_file.anim&amp;gt;For example: object-&amp;gt;setLayerAnimationFilePath(0,"models/soldier/soldier.fbx/run.anim"); </param>
+			<param name="mesh_path"> Path to the target mesh file, to which animation is applied. </param> 
+			<returns>true if there is bones retargeting between the specified animation and the target mesh, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getAnimationResourceID(char) const">
+			<summary>
+			Returns the unique animation ID using the path to it. This method also loads the animation if it hasn't been loaded yet.
+			</summary> 
+			<param name="path"> Path to the animation file. The path can be represented by either a path to the file or its GUID, which is the recommended approach. After loading the animation, its internal representation is identified by the path when using setLayerAnimationFilePath , etc. When you import your model with animations from an FBX container, the following path to your *.anim files should be used: &amp;lt;path_to_your_fbx_file&amp;gt;/&amp;lt;file.fbx&amp;gt;/&amp;lt;your_anim_file.anim&amp;gt;For example: object-&amp;gt;setLayerAnimationFilePath(0,"models/soldier/soldier.fbx/run.anim"); </param> 
+			<returns>The unique animation ID.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLayerAnimationFilePath(int,char)">
+			<summary>
+			Sets the path to animation for the given animation layer.
+			</summary> 
+			<param name="layer"> Layer number. </param>
+			<param name="path"> Path to the animation file.When you import your model with animations from an FBX container, the following path to your *.anim files should be used: &amp;lt;path_to_your_fbx_file&amp;gt;/&amp;lt;file.fbx&amp;gt;/&amp;lt;your_anim_file.anim&amp;gt;For example: object-&amp;gt;setLayerAnimationFilePath(0,"models/soldier/soldier.fbx/run.anim"); </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLayerAnimationFilePath(int) const">
+			<summary>
+			Returns the path to animation for the given animation layer.
+			</summary> 
+			<param name="layer"> Layer number. </param> 
+			<returns>Path to the animation file.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLayerAnimationResourceID(int,longlong) const">
+			<summary>
+			Sets the animation for the layer using the unique animation ID.
+			</summary> 
+			<param name="layer"> Layer number. </param>
+			<param name="resource_id"> The unique animation ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLayerAnimationResourceID(int) const">
+			<summary>
+			Returns the unique ID of the animation used for the layer.
+			</summary> 
+			<param name="layer"> Layer number. </param> 
+			<returns>The unique animation ID.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneBindLocalTransform(int) const">
+			<summary>
+			Returns the bone transformation matrix of the bind pose relatively to the parent bone.					To get the bind pose transformation matrix in the object space, use getBoneBindObjectTransform().
+			</summary> 
+			<param name="bone"> Bone number. </param> 
+			<returns>Bind pose transformation matrix.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneBindLocalITransform(int) const">
+			<summary>
+			Returns the inverse bone transformation matrix of the bind pose relatively to the parent bone.					To get the bind pose transformation matrix in the object space, use getBoneBindObjectITransform().
+			</summary> 
+			<param name="bone"> Bone number. </param> 
+			<returns>Inverse bind pose transformation matrix.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneBindObjectTransform(int) const">
+			<summary>
+			Returns the bone transformation matrix of the bind pose in the object space.					To get the bind pose transformation matrix relatively to the parent bone, use getBoneBindLocalTransform().
+			</summary> 
+			<param name="bone"> Bone number. </param> 
+			<returns>Bind pose transformation matrix.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneBindObjectITransform(int) const">
+			<summary>
+			Returns the inverse bone transformation matrix of the bind pose in the object space.					To get the bind pose transformation matrix relatively to the parent bone, use getBoneBindLocalITransform().
+			</summary> 
+			<param name="bone"> Bone number. </param> 
+			<returns>Inverse bind pose transformation matrix.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneSkiningTransform(int) const">
+			<summary>
+			Returns the bone matrix based on which the bone affects the connected vertices, the result of the following multiplication: getBoneTransform(bone) * getBoneBindObjectITransform(bone).
+			</summary> 
+			<param name="bone"> Bone number. </param> 
+			<returns>Bone transformation matrix.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.addVisualizeLookAtChain(int)">
+			<summary>
+			Adds the specified LookAtChain to visualization.
+			</summary> 
+			<param name="chain_id"> LookAtChain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.removeVisualizeLookAtChain(int)">
+			<summary>
+			Removes the specified LookAtChain from visualization.
+			</summary> 
+			<param name="chain_id"> LookAtChain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.clearVisualizeLookAtChain">
+			<summary>
+			Removes all LookAtChains from visualization.
+			</summary>  
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.addVisualizeConstraint(int)">
+			<summary>
+			Adds the specified bone constraint to visualization.
+			</summary> 
+			<param name="constraint_index"> Bone constraint index. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.removeVisualizeConstraint(int)">
+			<summary>
+			Removes the specified bone constraint from visualization.
+			</summary> 
+			<param name="constraint_index"> Bone constraint index. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.clearVisualizeConstraint">
+			<summary>
+			Removes all bone constraints from visualization.
+			</summary>  
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.addLookAtChain">
+			<summary>
+			Adds a new LookAtChain and returns its ID.
+			</summary>  
+			<returns>LookAtChain ID.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.removeLookAtChain(int)">
+			<summary>
+			Deletes the specified LookAtChain by its ID.
+			</summary> 
+			<param name="chain_id"> LookAtChain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getNumLookAtChains const">
+			<summary>
+			Returns the total number of LookAtChains.
+			</summary>  
+			<returns>Total number of LookAtChains.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLookAtChainID(int) const">
+			<summary>
+			Returns the ID of LookAtChain by its index.
+			</summary> 
+			<param name="num"> Index of LookAtChain. </param> 
+			<returns>LookAtChain ID.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLookAtChainEnabled(bool,int)">
+			<summary>
+			Toggles the use of LookAtChain.
+			</summary> 
+			<param name="enabled"> true to enable LookAtChain, false to disable it. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.isLookAtChainEnabled(int) const">
+			<summary>
+			Checks if LookAtChain is enabled.
+			</summary> 
+			<param name="chain_id"> LookAtChain ID. </param> 
+			<returns>true if LookAtChain is enabled, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLookAtChainConstraint(ObjectMeshSkinned::CHAIN_CONSTRAINT,int)">
+			<summary>
+			Configures the type of bone constraint for the solver of the specified chain.
+			</summary> 
+			<param name="constraint"> The type of bone constraint for the solver. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLookAtChainConstraint(int) const">
+			<summary>
+			Returns the type of bone constraint for the solver of the specified chain.
+			</summary> 
+			<param name="chain_id"> LookAtChain ID. </param> 
+			<returns>The type of bone constraint for the solver.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLookAtChainWeight(float,int)">
+			<summary>
+			Sets the weight of LookAtChain, which affects the extent of the bone rotation to the target.
+			</summary> 
+			<param name="weight"> Weight of the chain. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLookAtChainWeight(int) const">
+			<summary>
+			Returns the weight of LookAtChain, which affects the extent of the bone rotation to the target.
+			</summary> 
+			<param name="chain_id"> LookAtChain ID. </param> 
+			<returns>Weight of the chain.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.addLookAtChainBone(int,int)">
+			<summary>
+			Adds the bone to LookAtChain and returns its index.
+			</summary> 
+			<param name="bone"> The bone to be added to the chain. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+			<returns>Bone index.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.addLookAtChainBone(char,int)">
+			<summary>
+			Adds the bone to LookAtChain and returns its index.
+			</summary> 
+			<param name="bone_name"> The name of the bone to be added to the chain. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+			<returns>Bone index.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLookAtChainNumBones(int) const">
+			<summary>
+			Returns the total number of bones in LookAtChain.
+			</summary> 
+			<param name="chain_id"> LookAtChain ID. </param> 
+			<returns>The total number of bones in LookAtChain.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.removeLookAtChainBone(int,int)">
+			<summary>
+			Removes the bone from LookAtChain by its index.
+			</summary> 
+			<param name="bone_num"> The index of the bone to be removed from the chain. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLookAtChainBone(int,int) const">
+			<summary>
+			Returns the bone from LookAtChain by its index.
+			</summary> 
+			<param name="bone_num"> The index of the bone in the chain. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLookAtChainBoneWeight(float,int,int)">
+			<summary>
+			Set the additional local weight of the bone.
+			</summary> 
+			<param name="weight"> The weight of the bone in the chain. </param>
+			<param name="bone_num"> The index of the bone in the chain. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLookAtChainBoneWeight(int,int) const">
+			<summary>
+			Returns the additional local weight of the bone.
+			</summary> 
+			<param name="bone_num"> The index of the bone in the chain. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+			<returns>The weight of the bone in the chain.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLookAtChainBoneUp(Unigine.Math.Vec3,int,int)">
+			<summary>
+			Sets the UP axis for the bone.
+			</summary> 
+			<param name="up"> The UP vector for the bone. </param>
+			<param name="bone_num"> The index of the bone in the chain. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLookAtChainBoneUp(int,int) const">
+			<summary>
+			Returns the UP axis for the bone.
+			</summary> 
+			<param name="bone_num"> The index of the bone in the chain. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+			<returns>The UP vector for the bone.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLookAtChainBoneAxis(Unigine.Math.Vec3,int,int)">
+			<summary>
+			Sets the axis that is directed at the target of LookAtChain.
+			</summary> 
+			<param name="axis"> The axis that is directed at the target. </param>
+			<param name="bone_num"> The index of the bone in the chain. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLookAtChainBoneAxis(int,int) const">
+			<summary>
+			Returns the axis that is directed at the target of LookAtChain.
+			</summary> 
+			<param name="bone_num"> The index of the bone in the chain. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+			<returns>The axis that is directed at the target.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLookAtChainTargetPosition(Unigine.Math.Vec3,int)">
+			<summary>
+			Sets the position for the rotation in the object space.
+			</summary> 
+			<param name="position"> The position for the rotation in the object space. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLookAtChainTargetPosition(int) const">
+			<summary>
+			Returns the position for the rotation in the object space.
+			</summary> 
+			<param name="chain_id"> LookAtChain ID. </param> 
+			<returns>The position for the rotation in the object space.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLookAtChainTargetWorldPosition(Unigine.Math.Vec3,int)">
+			<summary>
+			Sets the position for the rotation in the world space.
+			</summary> 
+			<param name="position"> The position for the rotation in the world space. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLookAtChainTargetWorldPosition(int) const">
+			<summary>
+			Returns the position for the rotation in the world space.
+			</summary> 
+			<param name="chain_id"> LookAtChain ID. </param> 
+			<returns>The position for the rotation in the world space.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLookAtChainPolePosition(Unigine.Math.Vec3,int)">
+			<summary>
+			Sets the position of the pole vector in the object space.
+			</summary> 
+			<param name="position"> The position of the pole vector in the object space. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLookAtChainPolePosition(int) const">
+			<summary>
+			Returns the position of the pole vector in the object space.
+			</summary> 
+			<param name="chain_id"> LookAtChain ID. </param> 
+			<returns>The position of the pole vector in the object space.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setLookAtChainPoleWorldPosition(Unigine.Math.Vec3,int)">
+			<summary>
+			Sets the position of the pole vector in the world space.
+			</summary> 
+			<param name="position"> The position of the pole vector in the world space. </param>
+			<param name="chain_id"> LookAtChain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getLookAtChainPoleWorldPosition(int) const">
+			<summary>
+			Returns the position of the pole vector in the world space.
+			</summary> 
+			<param name="chain_id"> LookAtChain ID. </param> 
+			<returns>The position of the pole vector in the world space.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getIKChainID(int) const">
+			<summary>
+			Returns the IKChain ID by its index.
+			</summary> 
+			<param name="num"> IKChain index. </param> 
+			<returns>IKChain ID.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setIKChainConstraint(ObjectMeshSkinned::CHAIN_CONSTRAINT,int)">
+			<summary>
+			Configures the type of bone constraint for the solver of the specified chain.
+			</summary> 
+			<param name="constraint"> The type of bone constraint for the solver. </param>
+			<param name="chain_id"> IK chain ID. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getIKChainConstraint(int) const">
+			<summary>
+			Returns the type of bone constraint for the solver of the specified chain.
+			</summary> 
+			<param name="chain_id"> IK chain ID. </param> 
+			<returns>The type of bone constraint for the solver.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.addIKChainBone(char,int)">
+			<summary>
+			Adds the bone to IKChain and returns its index.
+			</summary> 
+			<param name="bone_name"> The bone name. </param>
+			<param name="chain_id"> IKChain ID. </param> 
+			<returns>Bone index.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.addBoneConstraint(int)">
+			<summary>
+			Adds the rotation constraint to the specified bone.
+			</summary> 
+			<param name="bone"> The bone index in the mesh. </param> 
+			<returns>The constraint index.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.addBoneConstraint(char)">
+			<summary>
+			Adds the rotation constraint to the specified bone.
+			</summary> 
+			<param name="bone_name"> The bone name. </param> 
+			<returns>The constraint index.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.removeBoneConstraint(int)">
+			<summary>
+			Removes the specified bone rotation constraint.
+			</summary> 
+			<param name="constraint_num"> The constraint index. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.findBoneConstraint(int) const">
+			<summary>
+			Returns the rotation constraint index for the specified bone.
+			</summary> 
+			<param name="bone"> The bone index in the mesh. </param> 
+			<returns>The constraint index.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.findBoneConstraint(char) const">
+			<summary>
+			Returns the rotation constraint index for the specified bone.
+			</summary> 
+			<param name="bone_name"> The bone name. </param> 
+			<returns>The constraint index.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setBoneConstraintEnabled(bool,int)">
+			<summary>
+			Enables the use of the rotation constraint for the bone.
+			</summary> 
+			<param name="enabled"> true to enable the use of the rotation constraint for the bone, false to disable it. </param>
+			<param name="constraint_num"> The constraint index. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.isBoneConstraintEnabled(int) const">
+			<summary>
+			Returns the value indicating if the use of the rotation constraint for the bone is enabled.
+			</summary> 
+			<param name="constraint_num"> The constraint index. </param> 
+			<returns>true if the use of the rotation constraint for the bone is enabled, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneConstraintBoneIndex(int) const">
+			<summary>
+			Returns the index of the bone for which the rotation constraint is set.
+			</summary> 
+			<param name="constraint_num"> The constraint index. </param> 
+			<returns>The bone index in the mesh.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setBoneConstraintYawAxis(Unigine.Math.vec3,int)">
+			<summary>
+			Sets the yaw axis for the bone rotation constraint.
+			</summary> 
+			<param name="axis"> The yaw axis. </param>
+			<param name="constraint_num"> The constraint index. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneConstraintYawAxis(int) const">
+			<summary>
+			Returns the yaw axis for the bone rotation constraint.
+			</summary> 
+			<param name="constraint_num"> The constraint index. </param> 
+			<returns>The yaw axis.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setBoneConstraintPitchAxis(Unigine.Math.vec3,int)">
+			<summary>
+			Sets the pitch axis for the bone rotation constraint.
+			</summary> 
+			<param name="axis"> The pitch axis. </param>
+			<param name="constraint_num"> The constraint index. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneConstraintPitchAxis(int) const">
+			<summary>
+			Returns the pitch axis for the bone rotation constraint.
+			</summary> 
+			<param name="constraint_num"> The constraint index. </param> 
+			<returns>The pitch axis.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setBoneConstraintRollAxis(Unigine.Math.vec3,int)">
+			<summary>
+			Sets the roll axis for the bone rotation constraint.
+			</summary> 
+			<param name="axis"> The roll axis. </param>
+			<param name="constraint_num"> The constraint index. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneConstraintRollAxis(int) const">
+			<summary>
+			Returns the roll axis for the bone rotation constraint.
+			</summary> 
+			<param name="constraint_num"> The constraint index. </param> 
+			<returns>The roll axis.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setBoneConstraintYawAngles(float,float,int)">
+			<summary>
+			Sets the minimum and maximum angles restricting the bone rotation along the yaw axis.
+			</summary> 
+			<param name="min_angle"> The minimum rotation angle. </param>
+			<param name="max_angle"> The maximum rotation angle. </param>
+			<param name="constraint_num"> The constraint index. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneConstraintYawMinAngle(int) const">
+			<summary>
+			Returns the minimum angle restricting the bone rotation along the yaw axis.
+			</summary> 
+			<param name="constraint_num"> The constraint index. </param> 
+			<returns>The minimum rotation angle.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneConstraintYawMaxAngle(int) const">
+			<summary>
+			Returns the maximum angle restricting the bone rotation along the yaw axis.
+			</summary> 
+			<param name="constraint_num"> The constraint index. </param> 
+			<returns>The maximum rotation angle.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setBoneConstraintPitchAngles(float,float,int)">
+			<summary>
+			Sets the minimum and maximum angles restricting the bone rotation along the pitch axis.
+			</summary> 
+			<param name="min_angle"> The minimum rotation angle. </param>
+			<param name="max_angle"> The maximum rotation angle. </param>
+			<param name="constraint_num"> The constraint index. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneConstraintPitchMinAngle(int) const">
+			<summary>
+			Returns the minimum angle restricting the bone rotation along the pitch axis.
+			</summary> 
+			<param name="constraint_num"> The constraint index. </param> 
+			<returns>The minimum rotation angle.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneConstraintPitchMaxAngle(int) const">
+			<summary>
+			Returns the maximum angle restricting the bone rotation along the pitch axis.
+			</summary> 
+			<param name="constraint_num"> The constraint index. </param> 
+			<returns>The maximum rotation angle.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.setBoneConstraintRollAngles(float,float,int)">
+			<summary>
+			Sets the minimum and maximum angles restricting the bone rotation along the roll axis.
+			</summary> 
+			<param name="min_angle"> The minimum rotation angle. </param>
+			<param name="max_angle"> The maximum rotation angle. </param>
+			<param name="constraint_num"> The constraint index. </param> 
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneConstraintRollMinAngle(int) const">
+			<summary>
+			Returns the minimum angle restricting the bone rotation along the roll axis.
+			</summary> 
+			<param name="constraint_num"> The constraint index. </param> 
+			<returns>The minimum rotation angle.</returns>
+		</member>
+		<member name="M:Unigine.ObjectMeshSkinned.getBoneConstraintRollMaxAngle(int) const">
+			<summary>
+			Returns the maximum angle restricting the bone rotation along the roll axis.
+			</summary> 
+			<param name="constraint_num"> The constraint index. </param> 
+			<returns>The maximum rotation angle.</returns>
 		</member>
 		<member name="F:Unigine.ObjectMeshSkinned.BONE_SPACE_LOCAL">
 			<summary>
@@ -8552,44 +8190,74 @@
 			Replace bone's transformation with the transformation of the bind node.
 		</summary>
 		</member>
-		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_NONE">
+		<member name="F:Unigine.ObjectMeshSkinned.ANIM_FRAME_USES_NONE">
 			<summary>
 			No frame components are to be used.
 		</summary>
 		</member>
-		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_POSITION">
+		<member name="F:Unigine.ObjectMeshSkinned.ANIM_FRAME_USES_POSITION">
 			<summary>
 			Only position is to be used.
 		</summary>
 		</member>
-		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_ROTATION">
+		<member name="F:Unigine.ObjectMeshSkinned.ANIM_FRAME_USES_ROTATION">
 			<summary>
 			Only rotation is to be used.
 		</summary>
 		</member>
-		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_SCALE">
+		<member name="F:Unigine.ObjectMeshSkinned.ANIM_FRAME_USES_SCALE">
 			<summary>
 			Only scale is to be used.
 		</summary>
 		</member>
-		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_ALL">
+		<member name="F:Unigine.ObjectMeshSkinned.ANIM_FRAME_USES_ALL">
 			<summary>
 			All frame components are to be used.
 		</summary>
 		</member>
-		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_POSITION_AND_ROTATION">
+		<member name="F:Unigine.ObjectMeshSkinned.ANIM_FRAME_USES_POSITION_AND_ROTATION">
 			<summary>
 			Only position and rotation are to be used.
 		</summary>
 		</member>
-		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_POSITION_AND_SCALE">
+		<member name="F:Unigine.ObjectMeshSkinned.ANIM_FRAME_USES_POSITION_AND_SCALE">
 			<summary>
 			Only position and scale are to be used.
 		</summary>
 		</member>
-		<member name="F:Unigine.ObjectMeshSkinned.FRAME_USES_ROTATION_AND_SCALE">
+		<member name="F:Unigine.ObjectMeshSkinned.ANIM_FRAME_USES_ROTATION_AND_SCALE">
 			<summary>
 			Only rotation and scale are to be used.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshSkinned.CHAIN_CONSTRAINT_BONE_ROTATIONS">
+			<summary>
+			At every solver application step, bone rotation constraints are applied to the chain if they have been previously configured.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshSkinned.CHAIN_CONSTRAINT_POLE_VECTOR">
+			<summary>
+			The specified pole vector is applied for the IK/LookAt chain. For the IK chain, the pole vector defines the bend plane. For the LookAt chain, the pole vector defines the plane of the UP axis. This constraint is applied after applying the solver.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshSkinned.CHAIN_CONSTRAINT_NONE">
+			<summary>
+			No constraints applied to the IK/LookAt chain. The chain transforms are kept as is after applying the solver.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshSkinned.INTERPOLATION_ACCURACY_HIGH">
+			<summary>
+			The slerp function is used for rotations.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshSkinned.INTERPOLATION_ACCURACY_MEDIUM">
+			<summary>
+			Linear interpolation with quaternion normalization (nlerp) is applied to rotation, but the interpolation coefficient is adjusted to be approximated to the uniform angular rotation rate.
+		</summary>
+		</member>
+		<member name="F:Unigine.ObjectMeshSkinned.INTERPOLATION_ACCURACY_LOW">
+			<summary>
+			Linear interpolation with quaternion normalization (nlerp) is applied.
 		</summary>
 		</member>
 		<member name="M:Unigine.BonesRetargeting.#ctor">
@@ -8599,18 +8267,10 @@
 		</member>
 		<member name="M:Unigine.BonesRetargeting.#ctor(char,char)">
 			<summary>
-			Constructor. Creates an instance of the class with default parameters and loads the specified source and target meshes.
+			Constructor. Creates an instance of the class with default parameters and loads the information on the bones of the specified source and target meshes.
 			</summary> 
 			<param name="src_mesh_path"> Path to the source *.mesh file. </param>
 			<param name="dst_mesh_path"> Path to the target *.mesh file. </param> 
-		</member>
-		<member name="M:Unigine.BonesRetargeting.loadMeshes(char,char)">
-			<summary>
-			Loads source and target meshes from the specified locations.
-			</summary> 
-			<param name="src_mesh_path"> Path to the source *.mesh file. </param>
-			<param name="dst_mesh_path"> Path to the target *.mesh file. </param> 
-			<returns>true if source and target meshes were successfully loaded from the specified files; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.BonesRetargeting.setNameMapping(char,char)">
 			<summary>
@@ -8655,7 +8315,7 @@
 		</member>
 		<member name="M:Unigine.BonesRetargeting.getBoneProportion(char) const">
 			<summary>
-			Returns the calculated proportion value for the source bone with the specified name.
+			Returns the calculated proportion value for the source bone with the specified name. If the custom proportion has been set for the bone, its value will be returned.
 			</summary> 
 			<param name="src_name"> Name of the source bone. </param> 
 			<returns>Proportion value for the bone.</returns>
@@ -8672,6 +8332,14 @@
 			Returns the current custom proportion value for the source bone with the specified name.
 			</summary> 
 			<param name="src_name"> Name of the source bone. </param> 
+			<returns>The custom proportion value for the bone.</returns>
+		</member>
+		<member name="M:Unigine.BonesRetargeting.isBoneCustomProportion(char) const">
+			<summary>
+			Checks if the custom proportion is set for the specified bone.
+			</summary> 
+			<param name="src_name"> Name of the source bone. </param> 
+			<returns>true if the bone proportion is custom, otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.BonesRetargeting.removeBoneCustomProportion(char)">
 			<summary>
@@ -8695,15 +8363,39 @@
 		</member>
 		<member name="M:Unigine.BonesRetargeting.save(char) const">
 			<summary>
-			Saves the current bones retargeting settings to a .bones_retargeting file according to the specified path. This file can then be used for an ObjectMeshSkinned via the  method.
+			Saves the current bones retargeting settings to a .bones_retargeting file according to the specified path. Such files can be uploaded to a created BonesRetargeting object, which may further be registered for an ObjectMeshSkinned and used via the  method.
 			</summary> 
 			<param name="path"> Path to a file to which bones retargeting settings are to be saved (.bones_retargeting extension). </param> 
 		</member>
 		<member name="M:Unigine.BonesRetargeting.load(char)">
 			<summary>
-			Loads bones retargeting settings from a .bones_retargeting file according to the specified path. Such files can be used for an ObjectMeshSkinned via the  method.
+			Loads bones retargeting settings from a .bones_retargeting file according to the specified path. Such files can be uploaded to a created BonesRetargeting object, which may further be registered for an ObjectMeshSkinned and used via the  method.
 			</summary> 
 			<param name="path"> Path to a file containing bones retargeting settings to be loaded (.bones_retargeting extension). </param> 
+		</member>
+		<member name="M:Unigine.BonesRetargeting.loadBones(char,char)">
+			<summary>
+			Loads the bone information from the source and the target meshes.
+			</summary> 
+			<param name="src_mesh_path"> Path to the mesh file with the source bone settings. </param>
+			<param name="dst_mesh_path"> Path to the mesh file with the target bone settings. </param> 
+			<returns>true if the bone settings are loaded successfully, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.BonesRetargeting.loadBonesFromMeshes(Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{Unigine.Mesh})">
+			<summary>
+			Loads the bone information from the source and the target meshes. Unlike the loadBones() method, this method uses loaded meshes, therefore it would be impossible to obtain mesh GUIDs via the getSrcMeshFileGUID() and getDstMeshFileGUID() methods.
+			</summary> 
+			<param name="src_mesh"> The mesh with the source bone settings. </param>
+			<param name="dst_mesh"> The mesh with the target bone settings. </param> 
+			<returns>true if the bone settings are loaded successfully, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.BonesRetargeting.loadBonesFromObjects(Unigine.Ptr{ObjectMeshSkinned},Unigine.Ptr{ObjectMeshSkinned})">
+			<summary>
+			Loads the bone information from the source and the target MeshSkinned objects. MeshSkinned objects GUIDs will be possible to obtain unless the Procedural flag is enabled.
+			</summary> 
+			<param name="src_obj"> The MeshSkinned object with the source bone settings. </param>
+			<param name="dst_obj"> The MeshSkinned object with the target bone settings. </param> 
+			<returns>true if the bone settings are loaded successfully, otherwise false.</returns>
 		</member>
 		<member name="F:Unigine.BonesRetargeting.MODE_ANIMATION">
 			<summary>
@@ -8712,7 +8404,7 @@
 		</member>
 		<member name="F:Unigine.BonesRetargeting.MODE_BIND">
 			<summary>
-			Bone position is taken from the T-pose of the target skeleton.
+			Bone position is taken from the bind-pose of the target skeleton.
 		</summary>
 		</member>
 		<member name="F:Unigine.BonesRetargeting.MODE_PROPORTION">
@@ -8728,9 +8420,9 @@
 		</member>
 		<member name="M:Unigine.ObjectMeshSplineCluster.getMeshPath const">
 			<summary>
-			Returns the path to the current base mesh file for the object.
+			Returns the path to the current source mesh file for the object.
 			</summary>  
-			<returns>Path to the base mesh file.</returns>
+			<returns>Path to the source mesh file.</returns>
 		</member>
 		<member name="M:Unigine.ObjectMeshSplineCluster.getNumMeshes const">
 			<summary>
@@ -9054,18 +8746,6 @@
 			Returns the current spread value of particle lifetime duration.
 			</summary>  
 			<returns>The spread value in seconds.</returns>
-		</member>
-		<member name="M:Unigine.ObjectParticles.setLinearDamping(float)">
-			<summary>
-			Sets a linear damping of particles.
-			</summary> 
-			<param name="damping"> a new linear damping. If a negative value is provided, 0 will be used instead. </param> 
-		</member>
-		<member name="M:Unigine.ObjectParticles.getLinearDamping const">
-			<summary>
-			Returns the current linear damping of particles.
-			</summary>  
-			<returns>The current linear damping.</returns>
 		</member>
 		<member name="M:Unigine.ObjectParticles.setMaxWarmingTime(float)">
 			<summary>
@@ -9540,6 +9220,12 @@
 			Returns the modifier used to control how the gravity force that affects particles changes over time.
 			</summary>  
 			<returns>Modifier, that controls gravity of particles.</returns>
+		</member>
+		<member name="M:Unigine.ObjectParticles.getLinearDampingOverTimeModifier const">
+			<summary>
+			Returns the modifier used to control how the linear damping of particles changes over time.
+			</summary>  
+			<returns>Modifier, that controls linear damping of particles.</returns>
 		</member>
 		<member name="M:Unigine.ObjectParticles.setTextureAtlasSize(Unigine.Math.ivec2)">
 			<summary>
@@ -10981,144 +10667,6 @@
 			<param name="font_name"> The path to the TTF font relatively to the data directory. </param>
 			<param name="text"> The text (can be either plain or rich). </param> 
 		</member>
-		<member name="M:Unigine.ObjectText.setDepthTest(int)">
-			<summary>
-			Sets a value indicating if depth test should be used for the text object.
-			</summary> 
-			<param name="test"> 1 to use depth test; otherwise, 0. </param> 
-		</member>
-		<member name="M:Unigine.ObjectText.getDepthTest const">
-			<summary>
-			Returns a value indicating if the text object uses depth test.
-			</summary>  
-			<returns>1 if the object uses depth test; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.ObjectText.setFontHSpacing(int)">
-			<summary>
-			Sets the horizontal spacing between letters (kerning value). This parameter influences the text's physical size.
-			</summary> 
-			<param name="hspacing"> The horizontal spacing value. </param> 
-		</member>
-		<member name="M:Unigine.ObjectText.getFontHSpacing const">
-			<summary>
-			Returns the horizontal spacing between letters (kerning value).
-			</summary>  
-			<returns>The horizontal spacing, in dots.</returns>
-		</member>
-		<member name="M:Unigine.ObjectText.setFontName(char)">
-			<summary>
-			Sets the path to the TTF font.					Names of font files for bold, italic and bold italic fonts must have the b, i and bi postfixes correspondingly. For example: myfontb.ttf, myfontbi.ttf.
-			</summary> 
-			<param name="name"> The path to the TTF font relatively to the data directory. </param> 
-		</member>
-		<member name="M:Unigine.ObjectText.getFontName const">
-			<summary>
-			Returns the path to the TTF font specified in the node.					Names of font files for bold, italic and bold italic fonts must have the b, i and bi postfixes correspondingly. For example: myfontb.ttf, myfontbi.ttf.
-			</summary>  
-			<returns>The path to the font relatively to the data directory, if specified; otherwise — the empty string.</returns>
-		</member>
-		<member name="M:Unigine.ObjectText.setFontOutline(int)">
-			<summary>
-			Sets the outline for the text. The outline looks like the dark shadow in the right lower corner of the text and is displaced by one dot.
-			</summary> 
-			<param name="outline"> 1 — to enable the outline; 0 — to disable. </param> 
-		</member>
-		<member name="M:Unigine.ObjectText.getFontOutline const">
-			<summary>
-			Returns the flag indicating if the text outline is enabled.
-			</summary>  
-			<returns>1 — the outline is enabled; 0 — disabled.</returns>
-		</member>
-		<member name="M:Unigine.ObjectText.setFontResolution(int)">
-			<summary>
-			Sets the resolution of the texture into which the text will be rendered. The lower the value, the less detailed will be the text, the less video memory will be required for the texture. It doesn't influence the text's physical size.
-			</summary> 
-			<param name="resolution"> The font resolution. </param> 
-		</member>
-		<member name="M:Unigine.ObjectText.getFontResolution const">
-			<summary>
-			Returns the text resolution value.
-			</summary>  
-			<returns>The text resolution value.</returns>
-		</member>
-		<member name="M:Unigine.ObjectText.setFontRich(int)">
-			<summary>
-			Sets the flag indicating if the rich text is enabled. When enabled, the following tags can be used for text formatting:											&lt;b&gt;text&lt;/b&gt; specifies a bold text.						&lt;i&gt;text&lt;/i&gt; specifies an italic text.						&lt;br&gt;text&lt;br/&gt; inserts a single line break.						&lt;left&gt;text&lt;/left&gt; left-aligns the text.						&lt;right&gt;text&lt;/right&gt; right-aligns the text.						&lt;center&gt;text&lt;/center&gt; center-aligns the text.						&lt;p align=left|right|center|justify&gt;text&lt;/p&gt; specifies the alignment of the text within a paragraph:															left - left-aligns the text								right - right-aligns the text								center - center-aligns the text								justify - stretches the lines so that each line has equal width (like in newspapers and magazines)														Text alignment requires text wrapping to be enabled: the value of the Wrap Width parameter must be greater than 0.												&lt;font size=12 color=magenta face=verdana&gt; text&lt;/font&gt; specifies the font face, font size, and color of text.						&lt;sub&gt; text&lt;/sub&gt; defines subscript text. Subscript text appears half a character below the normal line, and is sometimes rendered in a smaller font.						&lt;sup&gt; text&lt;/sup&gt; defines superscript text. Superscript text appears half a character above the normal line, and is sometimes rendered in a smaller font.										&lt;image/&gt; and &lt;table/&gt; tags are not available.
-			</summary> 
-			<param name="rich"> 1 — to enable the rich text; 0 — to disable. </param> 
-		</member>
-		<member name="M:Unigine.ObjectText.getFontRich const">
-			<summary>
-			Returns the value indicating if the rich text is enabled. When enabled, tags can be used for text formatting.
-			</summary>  
-			<returns>1 — the rich text is enabled; 0 — disabled.</returns>
-		</member>
-		<member name="M:Unigine.ObjectText.setFontSize(int)">
-			<summary>
-			Sets the size of the text font. The more dots, the higher the size of the font. To match dots with a 3D space, there is a set value: 288 dots per unit. For example, if you have the Arial font with the size of 20, the physical height of the letter can be calculated as 20/288=0.0694 units.
-			</summary> 
-			<param name="size"> The size of the text, in dots. </param> 
-		</member>
-		<member name="M:Unigine.ObjectText.getFontSize const">
-			<summary>
-			Returns the text font size.
-			</summary>  
-			<returns>The text font size, in dots.</returns>
-		</member>
-		<member name="M:Unigine.ObjectText.setFontVSpacing(int)">
-			<summary>
-			Sets the vertical spacing between letters (kerning value). This parameter influences the text's physical size.
-			</summary> 
-			<param name="vspacing"> The vertical spacing value. </param> 
-		</member>
-		<member name="M:Unigine.ObjectText.getFontVSpacing const">
-			<summary>
-			Returns the vertical spacing between letters (kerning value).
-			</summary>  
-			<returns>The vertical spacing, in dots.</returns>
-		</member>
-		<member name="M:Unigine.ObjectText.setText(char)">
-			<summary>
-			Sets the text for the node. Can be either a plain or rich text.
-			</summary> 
-			<param name="text"> The text. </param> 
-		</member>
-		<member name="M:Unigine.ObjectText.getText const">
-			<summary>
-			Returns the text set in the node.
-			</summary>  
-			<returns>The text.</returns>
-		</member>
-		<member name="M:Unigine.ObjectText.setTextColor(Unigine.Math.vec4)">
-			<summary>
-			Sets the color of the text.
-			</summary> 
-			<param name="color"> The color of the text in the RGBA range. </param> 
-		</member>
-		<member name="M:Unigine.ObjectText.getTextColor const">
-			<summary>
-			Returns the color of the text.
-			</summary>  
-			<returns>The text color in the RGBA range.</returns>
-		</member>
-		<member name="M:Unigine.ObjectText.setTextWrapWidth(float)">
-			<summary>
-			Sets text wrap width in units. The text will wrap if its physical size will be greater than the set value. If 0 is set, text wrapping is disabled.
-			</summary> 
-			<param name="width"> Wrap width in units. </param> 
-		</member>
-		<member name="M:Unigine.ObjectText.getTextWrapWidth const">
-			<summary>
-			Returns the current text wrap width in units.
-			</summary>  
-			<returns>Wrap width in units.</returns>
-		</member>
-		<member name="M:Unigine.ObjectText.type">
-			<summary>
-			Returns the type of the object.
-			</summary>  
-			<returns>Object Text type identifier.</returns>
-		</member>
 		<member name="M:Unigine.ObjectVolumeBox.#ctor(Unigine.Math.vec3)">
 			<summary>
 			Constructor. Creates a new volume box object with given dimensions.
@@ -11362,7 +10910,7 @@
 		</member>
 		<member name="M:Unigine.ObjectWaterMesh.setMeshPath(char,int)">
 			<summary>
-			Sets a new path to the .mesh fileto be used as the base mesh for the object and forces loading of the mesh.
+			Sets a new path to the .mesh file to be used for the object and forces loading of the mesh.
 			</summary> 
 			<param name="path"> New path to the .mesh file to be set. </param>
 			<param name="force_load"> Force flag.If 1 is specified, the mesh with the new name will be loaded immediately from the file specified as the first argument for this function.If 0 is specified, only the mesh name will be updated. </param> 
@@ -11370,7 +10918,7 @@
 		</member>
 		<member name="M:Unigine.ObjectWaterMesh.getMeshPath">
 			<summary>
-			Returns the path to the .mesh file currently used as the base mesh for the object.
+			Returns the path to the .mesh file currently used for the object.
 			</summary>  
 			<returns>Path to the .mesh file.</returns>
 		</member>

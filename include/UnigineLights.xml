@@ -4,330 +4,6 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.Light.setMode(Light::MODE)">
-			<summary>
-			Sets rendering mode for the light source. This option determines whether the light is to be rendered as a dynamic or static one.
-			</summary> 
-			<param name="mode"> Light mode, one of the MODE_* variables. </param> 
-		</member>
-		<member name="M:Unigine.Light.getMode const">
-			<summary>
-			Returns the current rendering mode for the light source. This option determines whether the light is to be rendered as a dynamic or static one.
-			</summary>  
-			<returns>Light mode, one of the MODE_* variables.</returns>
-		</member>
-		<member name="M:Unigine.Light.setAttenuationPower(float)">
-			<summary>
-			Updates the attenuation power of the light. This parameter determines how fast the intensity decreases up to the attenuation distance set for the light source. If the attenuation equals to zero or is close to it, the edge between illuminated and non-illuminated areas will be sharp.
-			</summary> 
-			<param name="power"> Light attenuation power. </param> 
-		</member>
-		<member name="M:Unigine.Light.getAttenuationPower const">
-			<summary>
-			Returns the attenuation power of the light. This parameter determines how fast the intensity decreases up to the attenuation distance set for the light source. If the attenuation equals to zero or is close to it, the edge between illuminated and non-illuminated areas will be sharp. The default is 1.
-			</summary>  
-			<returns>Light attenuation power.</returns>
-		</member>
-		<member name="M:Unigine.Light.setColor(Unigine.Math.vec4)">
-			<summary>
-			Updates the color of the light source. The method takes effect only when the Classic color mode is set.
-			</summary> 
-			<param name="color"> New color in the RGBA format. </param> 
-		</member>
-		<member name="M:Unigine.Light.getColor const">
-			<summary>
-			Returns the color of the light source. The default is opaque white, (1, 1, 1, 1). The method takes effect only when the Classic color mode is set.
-			</summary>  
-			<returns>Color of the light source in the RGBA format.</returns>
-		</member>
-		<member name="M:Unigine.Light.getShadowTexture const">
-			<summary>
-			Returns the current depth texture (shadow map) of the light source.
-			</summary>  
-			<returns>Current depth texture (shadow map) of the light source.</returns>
-		</member>
-		<member name="M:Unigine.Light.getShadowColorTexture const">
-			<summary>
-			Returns the current shadow texture of the light source used to render translucent shadows: G-channel stores depth values, R-channel - transparency values.
-			</summary>  
-			<returns>Current shadow texture of the light source.</returns>
-		</member>
-		<member name="M:Unigine.Light.setFadeDistance(float)">
-			<summary>
-			Updates a distance, at which the light gradually disappears. This parameter enables to render the light with decreasing radiance after the Visible distance is past.
-			</summary> 
-			<param name="distance"> Distance in units. </param> 
-		</member>
-		<member name="M:Unigine.Light.getFadeDistance const">
-			<summary>
-			Returns the current distance, at which the light source gradually disappears. This parameter enables to render the light with decreasing radiance after the Visible distance is past.
-			</summary>  
-			<returns>Distance in units.</returns>
-		</member>
-		<member name="M:Unigine.Light.setIntensity(float)">
-			<summary>
-			Updates the multiplier for the light color used to control color intensity. The higher the value, the brighter the light is.											The minimum value of 1 corresponds to the least saturated light color.						The maximum value of 100 equals the most bright and intense color.
-			</summary> 
-			<param name="intensity"> New color multiplier. </param> 
-		</member>
-		<member name="M:Unigine.Light.getIntensity const">
-			<summary>
-			Returns the multiplier of the light color used to control color intensity. The higher the value, the brighter the light is.
-			</summary>  
-			<returns>Light color multiplier.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowMask(int)">
-			<summary>
-			Updates the light mask for the light source.					For the shadow from an object's surface to be rendered for the light source, this mask must match the following ones (one bit, at least):													Shadow mask of the surface of the object																						Shadow mask of the material assigned to this surface
-			</summary> 
-			<param name="mask"> Integer, each bit of which is used to set a mask. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowMask const">
-			<summary>
-			Returns the current light mask for the light source.					For the shadow from an object's surface to be rendered for the light source, this mask must match the following ones (one bit, at least):													Shadow mask of the surface of the object																						Shadow mask of the material assigned to this surface
-			</summary>  
-			<returns>Integer, each bit of which is used to set a mask.</returns>
-		</member>
-		<member name="M:Unigine.Light.setRenderOnTransparent(bool)">
-			<summary>
-			Enables or disables rendering of the light from the source on transparent objects.
-			</summary> 
-			<param name="transparent"> true to render the light from the source on transparent objects, false not to render. </param> 
-		</member>
-		<member name="M:Unigine.Light.isRenderOnTransparent const">
-			<summary>
-			Returns a value indicating if the light from the source is rendered on transparent objects.
-			</summary>  
-			<returns>true if the light from the source is rendered on transparent objects; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Light.setRenderOnWater(bool)">
-			<summary>
-			Enables or disables rendering of the light from the source on water objects.
-			</summary> 
-			<param name="water"> true to render the light from the source on water objects, false not to render. </param> 
-		</member>
-		<member name="M:Unigine.Light.isRenderOnWater const">
-			<summary>
-			Returns a value indicating if the light from the source is rendered on water objects.
-			</summary>  
-			<returns>true if the light from the source is rendered on water objects; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadow(bool)">
-			<summary>
-			Updates a value indicating if the light casts shadows from surfaces with the Cast Shadow material.
-			</summary> 
-			<param name="shadow"> true to cast shadows, false not to cast. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadow const">
-			<summary>
-			Returns a value indicating if the light source casts shadows from surfaces with the Cast Shadow material.
-			</summary>  
-			<returns>true if the light source casts shadows; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowBias(float)">
-			<summary>
-			Updates the constant offset of depth values in a shadow map.											If the shadow acne appears, the bias value should be increased. This procedure eliminates the self-shadowing effect, as the points will appear closer to light source when compared to the map depth value.						If the bias value is set too high, the shadow will look detached from the object casting it (see the 3rd picture below).
-			</summary> 
-			<param name="bias"> New constant depth offset. If a negative value is provided, 0 will be used instead.  </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowBias const">
-			<summary>
-			Returns the constant offset of depth values in a shadow map.											If the shadow acne appears, the bias value should be increased. This procedure eliminates the self-shadowing effect, as the points will appear closer to light source when compared to the map depth value.						If the bias value is set too high, the shadow will look detached from the object casting it (see the 3rd picture below).
-			</summary>  
-			<returns>Constant depth offset.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowDistance(float)">
-			<summary>
-			Updates a distance, at which shadow from the light source starts fading out to nonexistence.
-			</summary> 
-			<param name="distance"> Distance in units. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowDistance const">
-			<summary>
-			Returns the current distance, at which shadow from the light source starts fading out to nonexistence.
-			</summary>  
-			<returns>Distance in units.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowNormalBias(float)">
-			<summary>
-			Updates the shadow bias that is achieved by shifting the surface on which the shadow falls. The surface is shifted along normals stored in the normal map. Depending on the normal map of the surface, the shadow may differ for the same values of the normal bias.
-			</summary> 
-			<param name="bias"> New normal bias. If a negative value is provided, 0 will be used instead. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowNormalBias const">
-			<summary>
-			Returns the shadow bias that is achieved by shifting the surface on which the shadow falls. The surface is shifted along normals stored in the normal map. Depending on the normal map of the surface, the shadow may differ for the same values of the normal bias.
-			</summary>  
-			<returns>The normal bias.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowResolution(Light::SHADOW_RESOLUTION)">
-			<summary>
-			Updates the size of the shadow map created for the light source.											The higher the resolution, the smoother and true to life the result is.						The lower the resolution, the more blocky and jagged the shadows outline appears.
-			</summary> 
-			<param name="resolution"> an appropriate SHADOW_RESOLUTION_VALUE_ variable.  </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowResolution const">
-			<summary>
-			Returns the size of the shadow map created for the light source.
-			</summary>  
-			<returns>Shadow map size, one of the SHADOW_RESOLUTION_VALUE_ variables.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpace(bool)">
-			<summary>
-			Enables or disables screen-space shadows for the light source. When this option is enabled, penumbras from the light source are calculated using the ray tracing algorithm.
-			</summary> 
-			<param name="space"> true to enable screen-space shadows for the light source, false to disable. The default value is false. </param> 
-		</member>
-		<member name="M:Unigine.Light.isShadowScreenSpace const">
-			<summary>
-			Returns a value indicating if screen-space shadows for the light source are enabled. When this option is enabled, penumbras from the light source are calculated using the ray tracing algorithm.
-			</summary>  
-			<returns>true if screen-space shadows for the light source are enabled; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceNoiseRay(float)">
-			<summary>
-			Sets the intensity of the ray noise used to calculate screen-space shadows for the light source. This parameter is used to reduce the banding effect.
-			</summary> 
-			<param name="ray"> Ray noise intensity. The default value is 0.5. The higher is the value, the less pronounced is the banding effect. However, this option significantly affects performance.Screen-space shadows must be enabled, see the setShadowScreenSpace() method. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceNoiseRay const">
-			<summary>
-			Returns the current intensity of the ray noise used to calculate screen-space shadows for the light source.
-			</summary>  
-			<returns>Ray noise intensity.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceNoiseStep(float)">
-			<summary>
-			Sets the intensity of the step noise used to calculate screen-space shadows for the light source. This parameter is used to reduce the banding effect.
-			</summary> 
-			<param name="step"> Step noise intensity. The default value is 0.5. The higher is the value, the less pronounced is the banding effect. However, this option significantly affects performance.Screen-space shadows must be enabled, see the setShadowScreenSpace() method. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceNoiseStep const">
-			<summary>
-			Returns the current intensity of the step noise used to calculate screen-space shadows for the light source.
-			</summary>  
-			<returns>Step noise intensity.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceNumRays(int)">
-			<summary>
-			Sets the number of rays used to calculate screen-space shadows for the light source.
-			</summary> 
-			<param name="rays"> Number of rays. The default value is 8. The higher is the value, the better is the quality of shadows. However, this option significantly affects performance.Screen-space shadows must be enabled, see the setShadowScreenSpace() method. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceNumRays const">
-			<summary>
-			Returns the current number of rays used to calculate screen-space shadows for the light source.
-			</summary>  
-			<returns>Number of rays.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceNumSteps(int)">
-			<summary>
-			Sets the number of steps used to calculate screen-space shadows for the light source.
-			</summary> 
-			<param name="steps"> Number of steps. The default value is 8. The higher is the value, the better is the quality of shadows. However, this option significantly affects performance.Screen-space shadows must be enabled, see the setShadowScreenSpace() method. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceNumSteps const">
-			<summary>
-			Returns the current number of steps used to calculate screen-space shadows for the light source.
-			</summary>  
-			<returns>Number of steps.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceSoftness(float)">
-			<summary>
-			Returns the softness value of the screen-space shadows for the light source.
-			</summary> 
-			<param name="softness"> Screen-space shadows softness. The default value is 0.4. The higher is the value, the softer are the shadows.Screen-space shadows must be enabled, see the setShadowScreenSpace() method. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceSoftness const">
-			<summary>
-			Returns the current softness value of the screen-space shadows for the light source.
-			</summary>  
-			<returns>Screen-space shadows softness.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceStepSizeNear(float)">
-			<summary>
-			Sets the size of the step used to calculate screen-space shadows for the light source (close distance range). This parameter can be used to adjust calculation of shadows for specific sizes of objects. You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary> 
-			<param name="val"> Screen-space step size for close distance range. The default value is 0.5.Screen-space shadows must be enabled, see the setShadowScreenSpace() method. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceStepSizeNear const">
-			<summary>
-			Returns the current size of the step used to calculate screen-space shadows for the light source (close distance range). This parameter can be used to adjust calculation of shadows for specific sizes of objects. You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary>  
-			<returns>Screen-space step size for close distance range. The default value is 0.5.Screen-space shadows must be enabled, see the setShadowScreenSpace() method.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceStepSizeFar(float)">
-			<summary>
-			Sets the current size of the step used to calculate screen-space shadows for the light source (long distance range). This parameter can be used to adjust calculation of shadows for specific sizes of objects. You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary> 
-			<param name="val"> Screen-space step size for long distance range. The default value is 0.5.Screen-space shadows must be enabled, see the setShadowScreenSpace() method. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceStepSizeFar const">
-			<summary>
-			Returns the current size of the step used to calculate screen-space shadows for the light source (long distance range). This parameter can be used to adjust calculation of shadows for specific sizes of objects. You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary>  
-			<returns>Screen-space step size for long distance range. The default value is 0.5.Screen-space shadows must be enabled, see the setShadowScreenSpace() method.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceThresholdNear(float)">
-			<summary>
-			Sets the threshold value used to calculate screen-space shadows for the light source (close distance range). This parameter is used to adjust the look of screen-space shadows. You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary> 
-			<param name="val"> Screen-space shadows threshold for close distance range. The default value is 1.0.Screen-space shadows must be enabled, see the setShadowScreenSpace() method. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceThresholdNear const">
-			<summary>
-			Returns the current threshold value used to calculate screen-space shadows for the light source (close distance range). You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary>  
-			<returns>Screen-space shadows threshold for close distance range.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceThresholdFar(float)">
-			<summary>
-			Sets the threshold value used to calculate screen-space shadows for the light source (long distance range). This parameter is used to adjust the look of screen-space shadows.You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary> 
-			<param name="val"> Screen-space shadows threshold for long distance range. The default value is 1.0.Screen-space shadows must be enabled, see the setShadowScreenSpace() method. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceThresholdFar const">
-			<summary>
-			Returns the current threshold value used to calculate screen-space shadows for the light source (long distance range). You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary>  
-			<returns>Screen-space shadows threshold for long distance range.</returns>
-		</member>
-		<member name="M:Unigine.Light.setViewportMask(int)">
-			<summary>
-			Updates a bit mask for rendering into the viewport. The light is rendered, if its mask matches the player's one.
-			</summary> 
-			<param name="mask"> Integer, each bit of which is used to set a mask. </param> 
-		</member>
-		<member name="M:Unigine.Light.getViewportMask const">
-			<summary>
-			Returns the current bit mask for rendering into the viewport. The light is rendered, if its mask matches the player's one.
-			</summary>  
-			<returns>Integer, each bit of which is used to set a mask.</returns>
-		</member>
-		<member name="M:Unigine.Light.setVisibleDistance(float)">
-			<summary>
-			Updates a distance, at which the light source starts fading. If the distance is set to infinity, the source is always rendered.
-			</summary> 
-			<param name="distance"> Distance in units. </param> 
-		</member>
-		<member name="M:Unigine.Light.getVisibleDistance const">
-			<summary>
-			Returns the current distance, at which the light source starts fading. If the distance is set to infinity, the source is always rendered.
-			</summary>  
-			<returns>Distance in units.</returns>
-		</member>
-		<member name="M:Unigine.Light.setLensFlaresEnabled(bool)">
-			<summary>
-			Enables or disables the per-light lens flare effect for the light source.																		This feature is available only for: Omni Lights, Projected Lights and World Lights.							The maximum number of per-light lens flares that can be rendered is 32.
-			</summary> 
-			<param name="enabled"> 1 to enable the per-light lens flare effect for the light source, 0 to disable. The default value is 0. </param> 
-		</member>
-		<member name="M:Unigine.Light.isLensFlaresEnabled const">
-			<summary>
-			Returns a value indicating if the per-light lens flare effect is enabled for the light source.					This feature is available only for: Omni Lights, Projected Lights and World Lights.
-			</summary>  
-			<returns>1 if the per-light lens flare effect for the light source is enabled; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Light.allocateLensFlares(int)">
 			<summary>
 			Allocate a buffer for a given number of lens flares to be created. With this function, memory can be allocated once rather than in chunks, making the creation faster.					The lens flare effect must be enabled for the light source. This feature is available only for: Omni Lights, Projected Lights and World Lights.
@@ -358,136 +34,10 @@
 			</summary> 
 			<param name="num"> Number of lens flare to be removed. </param> 
 		</member>
-		<member name="M:Unigine.Light.getNumLensFlares const">
-			<summary>
-			Returns the total number of lens flares used for the per-light lens flare effect.					The lens flare effect must be enabled for the light source. This feature is available only for: Omni Lights, Projected Lights and World Lights.
-			</summary>  
-			<returns>Number of lens flares used for the per-light lens flare effect.</returns>
-		</member>
 		<member name="M:Unigine.Light.clearLensFlares">
 			<summary>
 			Clears the list of lens flares used for the per-light lens flare effect.					The lens flare effect must be enabled for the light source. This feature is available only for: Omni Lights, Projected Lights and World Lights.
 			</summary>  
-		</member>
-		<member name="M:Unigine.Light.setLensFlaresIntensity(float)">
-			<summary>
-			Sets the intensity of per-light lens flares.					The lens flare effect must be enabled for the light source. This feature is available only for: Omni Lights, Projected Lights and World Lights.
-			</summary> 
-			<param name="intensity"> Intensity of per-light lens flares.Higher values make the effect more pronounced. </param> 
-		</member>
-		<member name="M:Unigine.Light.getLensFlaresIntensity const">
-			<summary>
-			Returns the current intensity of per-light lens flares.					The lens flare effect must be enabled for the light source. This feature is available only for: Omni Lights, Projected Lights and World Lights.
-			</summary>  
-			<returns>Intensity of per-light lens flares.Higher values make the effect more pronounced.</returns>
-		</member>
-		<member name="M:Unigine.Light.setLensFlaresUseLightColor(bool)">
-			<summary>
-			Enables or disables light color modulation for per-light lens flares. When enabled, the lens flares will have the same color as the light source.					The lens flare effect must be enabled for the light source. This feature is available only for: Omni Lights, Projected Lights and World Lights.
-			</summary> 
-			<param name="color"> 1 to enable light color modulation for the per-light lens flare effect, 0 to disable. The default value is 0. </param> 
-		</member>
-		<member name="M:Unigine.Light.isLensFlaresUseLightColor const">
-			<summary>
-			Returns a value indicating if light color modulation is enabled for per-light lens flares. When enabled, the lens flares will have the same color as the light source.					The lens flare effect must be enabled for the light source. This feature is available only for: Omni Lights, Projected Lights and World Lights.
-			</summary>  
-			<returns>1 if light color modulation for per-light lens flares is enabled; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Light.setLensFlaresOcclusionFade(float)">
-			<summary>
-			Sets the lens flare occlusion fade value for the cases when the light source becomes occluded by an object.					The lens flare effect must be enabled for the light source. This feature is available only for: Omni Lights, Projected Lights and World Lights.
-			</summary> 
-			<param name="fade"> Lens flare occlusion fade value in the range [0.0f; 1.0f]. By the value of 0.0f, lens flares disappear abruptly, as the light source becomes occluded by an object. If 1.0f is set, lens flares will fade out gradually. </param> 
-		</member>
-		<member name="M:Unigine.Light.getLensFlaresOcclusionFade const">
-			<summary>
-			Returns the current lens flare occlusion fade value for the cases when the light source becomes occluded by an object.					The lens flare effect must be enabled for the light source. This feature is available only for: Omni Lights, Projected Lights and World Lights.
-			</summary>  
-			<returns>Current lens flare occlusion fade value in the range [0.0f; 1.0f]. By the value of 0.0f, lens flares disappear abruptly, as the light source becomes occluded by an object. If 1.0f is set, lens flares will fade out gradually.</returns>
-		</member>
-		<member name="M:Unigine.Light.setLensFlaresOcclusionFadeBorder(float)">
-			<summary>
-			Sets the lens flare occlusion fade value for the cases when the light source becomes occluded by the edges of the screen.					The lens flare effect must be enabled for the light source. This feature is available only for: Omni Lights, Projected Lights and World Lights.
-			</summary> 
-			<param name="border"> Lens flare occlusion fade value in the range [0.0f; 1.0f]. By the value of 0.0f, lens flares disappear abruptly, as the light source becomes occluded by an object. If 1.0f is set, lens flares will fade out gradually. </param> 
-		</member>
-		<member name="M:Unigine.Light.getLensFlaresOcclusionFadeBorder const">
-			<summary>
-			Returns the current lens flare occlusion fade value for the cases when the light source becomes occluded by the edges of the screen.					The lens flare effect must be enabled for the light source. This feature is available only for: Omni Lights, Projected Lights and World Lights.
-			</summary>  
-			<returns>Current lens flare occlusion fade value in the range [0.0f; 1.0f]. By the value of 0.0f, lens flares disappear abruptly, as the light source becomes occluded by the edges of the screen. If 1.0f is set, lens flares will fade out gradually.</returns>
-		</member>
-		<member name="M:Unigine.Light.setLensFlaresWorldPositionOffset(Unigine.Math.vec3)">
-			<summary>
-			Sets the offset from the world position of the light source for the per-light lens flares. Offset is not available for World Lights.					The lens flare effect must be enabled for the light source. This feature is available only for: Omni Lights, Projected Lights and World Lights.
-			</summary> 
-			<param name="offset"> Vector representing the offset of lens flares from the light source world position. </param> 
-		</member>
-		<member name="M:Unigine.Light.getLensFlaresWorldPositionOffset const">
-			<summary>
-			Returns the current offset from the world position of the light source for the per-light lens flares. Offset is not available for World Lights.					The lens flare effect must be enabled for the light source. This feature is available only for: Omni Lights, Projected Lights and World Lights.
-			</summary>  
-			<returns>Vector representing the current offset of lens flares from the light source world position.</returns>
-		</member>
-		<member name="M:Unigine.Light.setLensFlaresTextureName(char)">
-			<summary>
-			Sets the name of the texture to be used for the per-light lens flare effect. This texture stores images for all lens flares used to render lens flares.					The lens flare effect must be enabled for the light source. This feature is available only for: Omni Lights, Projected Lights and World Lights.
-			</summary> 
-			<param name="name"> Texture name. </param> 
-		</member>
-		<member name="M:Unigine.Light.getLensFlaresTextureName const">
-			<summary>
-			Returns the name of the texture currently used for the per-light lens flare effect. This texture stores images for all lens flares used to render lens flares.					The lens flare effect must be enabled for the light source. This feature is available only for: Omni Lights, Projected Lights and World Lights.
-			</summary>  
-			<returns>Texture name.</returns>
-		</member>
-		<member name="M:Unigine.Light.setLux(float)">
-			<summary>
-			Sets an intensity of a light color (as perceived by the human eye) in lux. In UNIGINE, all light sources have the intensity of 1 by default, which is equal to 100000 lux.
-			</summary> 
-			<param name="lux"> Light color intensity, lux. </param> 
-		</member>
-		<member name="M:Unigine.Light.getLux const">
-			<summary>
-			Returns the intensity of the light color (as perceived by the human eye) in lux. In UNIGINE, all light sources have the intensity of 1 by default, which is equal to 100000 lux.
-			</summary>  
-			<returns>Light color intensity, lux.</returns>
-		</member>
-		<member name="M:Unigine.Light.setColorTemperature(float)">
-			<summary>
-			Sets a light source temperature used for light color calculation.
-			</summary> 
-			<param name="temperature"> Light source temperature in range [0;40000]. </param> 
-		</member>
-		<member name="M:Unigine.Light.getColorTemperature const">
-			<summary>
-			Returns the light source temperature used for light color calculation.
-			</summary>  
-			<returns>Light source temperature [0;40000].</returns>
-		</member>
-		<member name="M:Unigine.Light.setColorFilter(Unigine.Math.vec4)">
-			<summary>
-			Sets a color multiplier for the light source color (calculated using the color temperature value). This can be used to imitate colored glass. The method takes effect only when the Temperature color mode is set.
-			</summary> 
-			<param name="filter"> Color. </param> 
-		</member>
-		<member name="M:Unigine.Light.getColorFilter const">
-			<summary>
-			Returns the color multiplier for the light source color (calculated using the color temperature value). This is used to imitate colored glass. The method takes effect only when the Temperature color mode is set.
-			</summary>  
-			<returns>Color.</returns>
-		</member>
-		<member name="M:Unigine.Light.setColorMode(Light::COLOR_MODE)">
-			<summary>
-			Sets color calculation mode for the light source. Light source color can be defined by the color value (classic mode) or by the color temperature and color filter values (physically based mode).
-			</summary> 
-			<param name="mode"> Color calculation mode, one of the following values:COLOR_MODE_CLASSIC - classic modeCOLOR_MODE_TEMPERATURE - physically based mode </param> 
-		</member>
-		<member name="M:Unigine.Light.getColorMode const">
-			<summary>
-			Returns the current color calculation mode of the light source. Light source color can be defined by the color value (classic mode) or by the color temperature and color filter values (physically based mode).
-			</summary>  
-			<returns>Current color calculation mode, one of the following values:COLOR_MODE_CLASSIC - classic modeCOLOR_MODE_TEMPERATURE - physically based mode</returns>
 		</member>
 		<member name="M:Unigine.Light.calculateFinalColor const">
 			<summary>
@@ -522,192 +72,6 @@
 			</summary> 
 			<param name="stream"> Stream smart pointer. </param> 
 			<returns>true if the state of the per-light lens flare effect is restored successfully; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Light.setBakedDepthTexturePath(char)">
-			<summary>
-			Sets a path to a baked depth texture, which stores a shadow map generated for the light source, when its mode is set to MODE_STATIC. EnvironmentProbes use this texture for cutting out reflections for occluded areas, where they should not be visible.
-			</summary> 
-			<param name="path"> Path to a baked depth texture to be used. </param> 
-		</member>
-		<member name="M:Unigine.Light.getBakedDepthTexturePath const">
-			<summary>
-			Returns a path to a baked depth texture, which is used for storing the shadow map created from the light source set to the static light mode. This texture is baked automatically via the Editor or using bake() or bakeAll() methods.
-			</summary>  
-			<returns>Path to a baked depth texture to be used.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowMode(Light::SHADOW_MODE)">
-			<summary>
-			Sets shadow mode for the light source in static mode. This shadow mode should be aligned with the shadow mode of the object surface in order to make this surface cast a shadow from the light source.
-			</summary> 
-			<param name="mode"> Shadow mode of the light in static mode, one of the SHADOW_MODE_* variables. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowMode const">
-			<summary>
-			Returns shadow mode for the light source in static mode. This shadow mode should be aligned with the shadow mode of the object surface in order to make this surface cast a shadow from the light source.
-			</summary>  
-			<returns>Shadow mode of the light source in static mode, one of the SHADOW_MODE_* variables.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowColorTextureMode(Light::SHADOW_COLOR_MODE)">
-			<summary>
-			Sets the type of texture used to define light distribution.					This feature is available only for Omni Lights and Projected Lights. See description of the modes in the corresponding articles forOmni Lights and Projected Lights.
-			</summary> 
-			<param name="mode"> One of the following modes:SHADOW_COLOR_MODE_IES - Light distibution is defined by the IES profile.SHADOW_COLOR_MODE_SIMPLE - An arbitrary 2D texture is projected onto the scene. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowColorTextureMode const">
-			<summary>
-			Returns the current type of texture used to define light distribution.					This feature is available only for Omni Lights and Projected Lights. See description of the modes in the corresponding articles forOmni Lights and Projected Lights.
-			</summary>  
-			<returns>Current mode.</returns>
-		</member>
-		<member name="M:Unigine.Light.setDynamicDepthTexture(Unigine.Ptr{Unigine.Texture})">
-			<summary>
-			Sets the dynamic depth texture for the light source. This texture is available for the following types of light sources:											Dynamic lights.						Static lights with mixed shadow mode enabled, that use a mixture of dynamic and baked depth textures.
-			</summary> 
-			<param name="texture"> Depth texture to be used for the light source. </param> 
-		</member>
-		<member name="M:Unigine.Light.getDynamicDepthTexture const">
-			<summary>
-			Returns the current dynamic depth texture for the light source. This texture is available for the following types of light sources:											Dynamic lights.						Static lights with mixed shadow mode enabled, that use a mixture of dynamic and baked depth textures.
-			</summary>  
-			<returns>Current dynamic depth texture of the light source.</returns>
-		</member>
-		<member name="M:Unigine.Light.getBakedDepthTexture const">
-			<summary>
-			Returns the depth texture baked for the light source. This texture is available for Static light sources only.					Static lights with mixed shadow mode enabled use a mixture of dynamic and baked depth textures.
-			</summary>  
-			<returns>Baked depth texture for the light source.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowFilterMode(Light::SHADOW_FILTER)">
-			<summary>
-			Sets the filtering mode to be used to reduce the stair-step effect for soft shadows making the edges smoother.
-			</summary> 
-			<param name="mode"> Filtering mode to be used for shadows rendering, one of the SHADOW_FILTER_* variables. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowFilterMode const">
-			<summary>
-			Returns the current filtering mode used to reduce the stair-step effect for soft shadows making the edges smoother.
-			</summary>  
-			<returns>Current filtering mode used, one of SHADOW_FILTER_* values.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowFilter(float)">
-			<summary>
-			Sets filtering intensity for the selected mode.					This value is ignored when filtering mode is set to disabled.
-			</summary> 
-			<param name="filter"> Filtering intensity for the selected mode. The higher the value the less noticeable the stair-step effect at the edges of shadows will be. The default value is 1.0f. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowFilter const">
-			<summary>
-			Returns the current filtering intensity for the selected mode.
-			</summary>  
-			<returns>Filtering intensity for the selected mode. The higher the value the less noticeable the stair-step effect at the edges of shadows will be. The default value is 1.0f.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowPenumbraMode(Light::SHADOW_PENUMBRA)">
-			<summary>
-			Sets the global quality mode to be used for rendering penumbra from the light source. This mode enables simulation of real-world shadows by keeping sharp contact shadows closer to the base and softening the farther the shadow stretches away. Higher values produce softer shadows. The default value is SHADOW_PENUMBRA_GLOBAL.
-			</summary> 
-			<param name="mode"> Quality mode used for penumbra rendering, one of the SHADOW_PENUMBRA_* variables. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowPenumbraMode const">
-			<summary>
-			Returns the current global quality mode used for rendering penumbra from the light source. This mode enables simulation of real-world shadows by keeping sharp contact shadows closer to the base and softening the farther the shadow stretches away. Higher values produce softer shadows. The default value is SHADOW_PENUMBRA_GLOBAL.
-			</summary>  
-			<returns>Current quality mode used for penumbra rendering, one of the SHADOW_PENUMBRA_* variables.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowPenumbra(float)">
-			<summary>
-			Sets intensity of penumbra for the selected mode.					This value is ignored when penumbra rendering mode is set to disabled.
-			</summary> 
-			<param name="penumbra"> Intensity of penumbra for the selected mode:Low values correspond to sharper shadow edges.Higher values increase penumbra size.The default value is0.0f.  </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowPenumbra const">
-			<summary>
-			Returns the current intensity of penumbra for the selected mode.
-			</summary>  
-			<returns>Current intensity of penumbra for the selected mode:Low values correspond to sharper shadow edges.Higher values increase penumbra size.The default value is0.0f. </returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceStepSizeFarDistance(float)">
-			<summary>
-			Sets the distance from the camera after which the Far Step Size shall be used for screen-space shadows calculation. You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary> 
-			<param name="distance"> Distance from the camera (in units) after which the Far Step Size shall be used for screen-space shadows calculation. For the space between Near Step Size Distance and Far Step Size Distance, the step size value is interpolated from Near Step Size to Far Step Size. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceStepSizeFarDistance const">
-			<summary>
-			Returns the current distance from the camera after which the Far Step Size is used for screen-space shadows calculation. You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary>  
-			<returns>Distance from the camera (in units) after which the Far Step Size shall be used for screen-space shadows calculation. For the space between Near Step Size Distance and Far Step Size Distance, the step size value is interpolated from Near Step Size to Far Step Size.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceStepSizeNearDistance(float)">
-			<summary>
-			Sets the distance from the camera up to which the Near Step Size shall be used for screen-space shadows calculation. You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary> 
-			<param name="distance"> Distance from the camera (in units) up to which the Near Step Size shall be used for screen-space shadows calculation. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceStepSizeNearDistance const">
-			<summary>
-			Returns the current distance from the camera up to which the Near Step Size is used for screen-space shadows calculation. You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary>  
-			<returns>Distance from the camera (in units) up to which the Near Step Size is used for screen-space shadows calculation.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceThresholdNearDistance(float)">
-			<summary>
-			Sets the current distance from the camera up to which the Near Threshold shall be used for screen-space shadows calculation. You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary> 
-			<param name="distance"> Distance from the camera (in units) up to which the Near Threshold shall be used for screen-space shadows calculation. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceThresholdNearDistance const">
-			<summary>
-			Returns the current distance from the camera up to which the Near Threshold is used for screen-space shadows calculation. You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary>  
-			<returns>Distance from the camera (in units) up to which the Near Threshold is used for screen-space shadows calculation.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceThresholdFarDistance(float)">
-			<summary>
-			Sets the distance from the camera after which the Far Threshold shall be used for screen-space shadows calculation. You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary> 
-			<param name="distance"> Distance from the camera (in units) after which the Far Threshold shall be used for screen-space shadows calculation. For the space between Near Threshold Distance and Far Threshold Distance, the threshold value is interpolated from Near Threshold to Far Threshold. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceThresholdFarDistance const">
-			<summary>
-			Sets the distance from the camera after which the Far Threshold is used for screen-space shadows calculation. You can set different Step Size and Threshold values for objects located near the camera and far away from it. Thus, full-scale shadows will be rendered for large objects located far away, while within the close distance range only shadows cast by small objects will be rendered. This feature is especially useful for locations where details are required for both short and long-distance ranges.
-			</summary>  
-			<returns>Distance from the camera (in units) after which the Far Threshold is used for screen-space shadows calculation. For the space between Near Threshold Distance and Far Threshold Distance, the threshold value is interpolated from Near Threshold to Far Threshold.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceTranslucentDepth(float)">
-			<summary>
-			Sets the Translucent Depth value for Screen-Space Shadows indicating how much the light passes through screen-space shadows on translucent materials (with Translucence option enabled).
-			</summary> 
-			<param name="depth"> New Translucent Depth value to be set for Screen-Space Shadows: The higher the value the deeper the light penetrates translucent objects shifting the shadow. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceTranslucentDepth const">
-			<summary>
-			Returns the current Translucent Depth value for Screen-Space Shadows indicating how much the light passes through screen-space shadows on translucent materials (with Translucence option enabled).
-			</summary>  
-			<returns>Current Translucent Depth value set for Screen-Space Shadows: The higher the value the deeper the light penetrates translucent objects shifting the shadow.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceTranslucentDepthPerspectiveCompensation(float)">
-			<summary>
-			Sets a new Perspective Compensation value for Screen-Space Shadows, that defines whether the Translucent Depth parameter depends on the distance from the camera to the surface or not. This effect is used to make tree crowns located far from the camera more translucent than the grass nearby.
-			</summary> 
-			<param name="compensation"> New Perspective Compensation value to be set for the Translucent Depth parameter of Screen-Space Shadows: 0 - the Translucent Depth value does not depend on the distance from the camera to the surface.1 - the Translucent Depth value linearly depends on the distance from the camera to the surface. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceTranslucentDepthPerspectiveCompensation const">
-			<summary>
-			Returns the current Perspective Compensation value for Screen-Space Shadows, that defines whether the Translucent Depth parameter depends on the distance from the camera to the surface or not. This effect is used to make tree crowns located far from the camera more translucent than the grass nearby.
-			</summary>  
-			<returns>Current Perspective Compensation value set for the Translucent Depth parameter of Screen-Space Shadows: 0 - the Translucent Depth value does not depend on the distance from the camera to the surface.1 - the Translucent Depth value linearly depends on the distance from the camera to the surface.</returns>
-		</member>
-		<member name="M:Unigine.Light.setShadowScreenSpaceTranslucentViewBias(float)">
-			<summary>
-			Sets a new View Bias value for Screen-Space Shadows, that controls an effect of fuzziness for vegetation (e.g. simulating leaves of saintpaulia or providing a sponge-like look for tree crowns).
-			</summary> 
-			<param name="bias"> New View Bias value to be set for Screen-Space Shadows: By the value of 0 the effect is disabledthe value of 1 corresponds to the maximum effect. </param> 
-		</member>
-		<member name="M:Unigine.Light.getShadowScreenSpaceTranslucentViewBias const">
-			<summary>
-			Returns the current Translucent View Bias value for Screen-Space Shadows, that controls an effect of fuzziness for vegetation (e.g. simulating leaves of saintpaulia or providing a sponge-like look for tree crowns).
-			</summary>  
-			<returns>Current Translucent View Bias value for Screen-Space Shadows: By the value of 0 the effect is disabledthe value of 1 corresponds to the maximum effect.</returns>
 		</member>
 		<member name="F:Unigine.Light.SHAPE_DEFAULT">
 			<summary>
@@ -1074,17 +438,17 @@
 			</summary>  
 			<returns>Box size along X, Y, and Z axes.</returns>
 		</member>
-		<member name="M:Unigine.LightEnvironmentProbe.setTexturePath(char)">
+		<member name="M:Unigine.LightEnvironmentProbe.setTextureFilePath(char)">
 			<summary>
-			Sets a path to a cube texture.
+			Sets a path to a cube texture file.
 			</summary> 
-			<param name="path"> Path to a cube texture. </param> 
+			<param name="path"> Path to a cube texturefile . </param> 
 		</member>
-		<member name="M:Unigine.LightEnvironmentProbe.getTexturePath const">
+		<member name="M:Unigine.LightEnvironmentProbe.getTextureFilePath const">
 			<summary>
-			Returns the path to the reflection cube texture used for the environment probe.
+			Returns the path to the reflection cube texture file used for the environment probe.
 			</summary>  
-			<returns>Path to the cube texture.</returns>
+			<returns>Path to the cube texture file.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setLocalSpace(bool)">
 			<summary>
@@ -1430,15 +794,15 @@
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffuseInformationLostRaysMultiplier(float)">
 			<summary>
-			Sets the multiplier for the number of rays (Num Rays) for the indirect diffuse in the areas where the ghosting effect usually occurs. Increasing this value reduces the ghosting, but the more ghosting cases are, the more it affects performance.
+			Sets the multiplier for the number of rays for the indirect diffuse in the areas where the ghosting effect usually occurs. Increasing this value reduces the ghosting, but the more ghosting cases are, the more it affects performance.
 			</summary> 
-			<param name="multiplier"> The multiplier for the number of rays (Num Rays) for the indirect diffuse in the areas where the ghosting effect usually occurs. </param> 
+			<param name="multiplier"> The multiplier for the number of rays for the indirect diffuse in the areas where the ghosting effect usually occurs. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingDiffuseInformationLostRaysMultiplier const">
 			<summary>
-			Returns the current multiplier for the number of rays (Num Rays) for the indirect diffuse in the areas where the ghosting effect usually occurs. Increasing this value reduces the ghosting, but the more ghosting cases are, the more it affects performance.
+			Returns the current multiplier for the number of rays for the indirect diffuse in the areas where the ghosting effect usually occurs. Increasing this value reduces the ghosting, but the more ghosting cases are, the more it affects performance.
 			</summary>  
-			<returns>The multiplier for the number of rays (Num Rays) for the indirect diffuse in the areas where the ghosting effect usually occurs.</returns>
+			<returns>The multiplier for the number of rays for the indirect diffuse in the areas where the ghosting effect usually occurs.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffuseTranslucenceAnisotropy(float)">
 			<summary>
@@ -1490,15 +854,15 @@
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularNumStepsRoughnessThreshold(float)">
 			<summary>
-			Sets the roughness value at which the number of steps (SpecularNumSteps) equals to 1. This is required for optimization, as calculating matte reflections as correctly as possible may be unnecessary.
+			Sets the roughness value at which the number of steps equals to 1. This is required for optimization, as calculating matte reflections as correctly as possible may be unnecessary.
 			</summary> 
-			<param name="threshold"> The roughness value at which the number of steps (SpecularNumSteps) equals to 1. </param> 
+			<param name="threshold"> The roughness value at which the number of steps equals to 1. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingSpecularNumStepsRoughnessThreshold const">
 			<summary>
-			Returns the current roughness value at which the number of steps (SpecularNumSteps) equals to 1. This is required for optimization, as calculating matte reflections as correctly as possible may be unnecessary.
+			Returns the current roughness value at which the number of steps equals to 1. This is required for optimization, as calculating matte reflections as correctly as possible may be unnecessary.
 			</summary>  
-			<returns>The roughness value at which the number of steps (SpecularNumSteps) equals to 1.</returns>
+			<returns>The roughness value at which the number of steps equals to 1.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularThreshold(float)">
 			<summary>
@@ -1538,15 +902,15 @@
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularInformationLostRaysMultiplier(float)">
 			<summary>
-			Sets the multiplier for the number of rays (Num Rays) for the indirect specular in the areas where the ghosting effect usually occurs. Increasing this value reduces the ghosting, but the more ghosting cases are, the more it affects performance.
+			Sets the multiplier for the number of rays for the indirect specular in the areas where the ghosting effect usually occurs. Increasing this value reduces the ghosting, but the more ghosting cases are, the more it affects performance.
 			</summary> 
-			<param name="multiplier"> The multiplier for the number of rays (Num Rays) for the indirect specular in the areas where the ghosting effect usually occurs. </param> 
+			<param name="multiplier"> The multiplier for the number of rays for the indirect specular in the areas where the ghosting effect usually occurs. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingSpecularInformationLostRaysMultiplier const">
 			<summary>
-			Returns the current multiplier for the number of rays (Num Rays) for the indirect specular in the areas where the ghosting effect usually occurs. Increasing this value reduces the ghosting, but the more ghosting cases are, the more it affects performance.
+			Returns the current multiplier for the number of rays for the indirect specular in the areas where the ghosting effect usually occurs. Increasing this value reduces the ghosting, but the more ghosting cases are, the more it affects performance.
 			</summary>  
-			<returns>The multiplier for the number of rays (Num Rays) for the indirect specular in the areas where the ghosting effect usually occurs.</returns>
+			<returns>The multiplier for the number of rays for the indirect specular in the areas where the ghosting effect usually occurs.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularReplaceWithDiffuseRoughnessThreshold(float)">
 			<summary>
@@ -1574,107 +938,195 @@
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingLastStepMode(LightEnvironmentProbe::LAST_STEP_MODE)">
 			<summary>
-			</summary>  
+			Sets the cubemap to be used for the last raymarching step. The following modes are available:											Environment Probe — the cubemap used for the last step is the same as for all previous steps.						Only Sky — the cubemap contains the sky and clouds only. This option is designed to fix the incorrect parallax that may occur in reflections due to the infinite length of the last step.
+			</summary> 
+			<param name="mode"> The cubemap for the last step. One of the LAST_STEP_MODE values. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingLastStepMode const">
 			<summary>
+			Returns the cubemap used for the last raymarching step. The following modes are available:											Environment Probe — the cubemap used for the last step is the same as for all previous steps.						Only Sky — the cubemap contains the sky and clouds only. This option is designed to fix the incorrect parallax that may occur in reflections due to the infinite length of the last step.
 			</summary>  
+			<returns>The cubemap for the last step. One of the LAST_STEP_MODE values.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingAmbientOcclusionIntensity(float)">
 			<summary>
-			</summary>  
+			Sets the ambient occlusion intensity. Keep in mind that ambient occlusion doesn't exist in the real world, this is a method to imitate shadows between objects. For photorealistic visualization, we recommend keeping this value equal to 0.
+			</summary> 
+			<param name="intensity"> Ambient occlusion intensity. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingAmbientOcclusionIntensity const">
 			<summary>
+			Returns the ambient occlusion intensity. Keep in mind that ambient occlusion doesn't exist in the real world, this is a method to imitate shadows between objects. For photorealistic visualization, we recommend keeping this value equal to 0.
 			</summary>  
+			<returns>Ambient occlusion intensity.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingAmbientOcclusionRadius(float)">
 			<summary>
-			</summary>  
+			Sets the radius of sample pixels used in the Ambient Occlusion effect, controlling the extent of the darkened area.
+			</summary> 
+			<param name="radius"> Ambient occlusion radius. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingAmbientOcclusionRadius const">
 			<summary>
+			Returns the radius of sample pixels used in the Ambient Occlusion effect, controlling the extent of the darkened area.
 			</summary>  
+			<returns>Ambient occlusion radius.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffuseThresholdBinarySearch(float)">
 			<summary>
-			</summary>  
+			Sets the threshold value used for the intersection detection that defines the depth of the ray penetration under the surface. Higher values may cause more false intersections, but make the process of intersection detection easier.
+			</summary> 
+			<param name="search"> Threshold value. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingDiffuseThresholdBinarySearch const">
 			<summary>
+			Returns the threshold value used for the intersection detection that defines the depth of the ray penetration under the surface. Higher values may cause more false intersections, but make the process of intersection detection easier.
 			</summary>  
+			<returns>Threshold value.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffuseReconstructionSamples(int)">
 			<summary>
-			</summary>  
+			Sets the number of iterations required for a more accurate detection of the ray-surface intersection for the indirect diffuse. Higher values define the intersection more precisely, however significantly affect performance.
+			</summary> 
+			<param name="samples"> Number of iterations for the intersection detection. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingDiffuseReconstructionSamples const">
 			<summary>
+			Retuns the number of iterations required for a more accurate detection of the screen-space ray-surface intersection for the indirect diffuse. Higher values define the intersection more precisely, however significantly affect performance.
 			</summary>  
+			<returns>Number of iterations for the intersection detection.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffusePerspectiveCompensation(float)">
 			<summary>
-			</summary>  
+			Sets the perspective compensation for the raymarching step size. 0 means that the raymarching step size is bound to the World Space, and 1 means that it is bound to the Screen Space. As a result, at the value of 1, the ray length at the distance from the camera will be more than at a closer distance, which makes sense for large objects, but the details on small objects in the distance may will be lost.
+			</summary> 
+			<param name="compensation"> Compensation value. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingDiffusePerspectiveCompensation const">
 			<summary>
+			Returns the perspective compensation for the raymarching step size. 0 means that the raymarching step size is bound to the World Space, and 1 means that it is bound to the Screen Space. As a result, at the value of 1, the ray length at the distance from the camera will be more than at a closer distance, which makes sense for large objects, but the details on small objects in the distance may will be lost.
 			</summary>  
+			<returns>Compensation value.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingDiffuseNonLinearStepSize(float)">
 			<summary>
-			</summary>  
+			Sets the raymarching step size adjustment value. The value of 0 means that the step size is the same for each step, and at the value of 1 each subsequent raymarching step is twice wider than the previous one.
+			</summary> 
+			<param name="size"> Step size. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingDiffuseNonLinearStepSize const">
 			<summary>
+			Returns the raymarching step size adjustment value. The value of 0 means that the step size is the same for each step, and at the value of 1 each subsequent raymarching step is twice wider than the previous one.
 			</summary>  
+			<returns>Step size.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularThresholdBinarySearch(float)">
 			<summary>
-			</summary>  
+			Sets the threshold value used for the intersection detection that defines the depth of the ray penetration under the surface. Higher values may cause more false intersections, but make the process of intersection detection easier.
+			</summary> 
+			<param name="search"> Threshold for the intersection detection. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingSpecularThresholdBinarySearch const">
 			<summary>
+			Returns the threshold value used for the intersection detection that defines the depth of the ray penetration under the surface. Higher values may cause more false intersections, but make the process of intersection detection easier.
 			</summary>  
+			<returns>Threshold for the intersection detection.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularReconstructionSamples(int)">
 			<summary>
-			</summary>  
+			Sets the number of iterations required for a more accurate detection of the ray-surface intersection for the indirect specular. Higher values define the intersection more precisely, however significantly affect performance.
+			</summary> 
+			<param name="samples"> Number of iterations for the intersection detection. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingSpecularReconstructionSamples const">
 			<summary>
+			Returns the number of iterations required for a more accurate detection of the ray-surface intersection for the indirect specular. Higher values define the intersection more precisely, however significantly affect performance.
 			</summary>  
+			<returns>Number of iterations for the intersection detection.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularPerspectiveCompensation(float)">
 			<summary>
-			</summary>  
+			Sets the perspective compensation for the raymarching step size. 0 means that the raymarching step size is bound to the World Space, and 1 means that it is bound to the Screen Space. As a result, at the value of 1, the ray length at the distance from the camera will be more than at a closer distance, which makes sense for large objects, but the details on small objects in the distance may will be lost.
+			</summary> 
+			<param name="compensation"> Compensation value. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingSpecularPerspectiveCompensation const">
 			<summary>
+			Returns the perspective compensation for the raymarching step size. 0 means that the raymarching step size is bound to the World Space, and 1 means that it is bound to the Screen Space. As a result, at the value of 1, the ray length at the distance from the camera will be more than at a closer distance, which makes sense for large objects, but the details on small objects in the distance may will be lost.
 			</summary>  
+			<returns>Compensation value.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSpecularNonLinearStepSize(float)">
 			<summary>
-			</summary>  
+			Sets the raymarching step size adjustment value. The value of 0 means that the step size is the same for each step, and at the value of 1 each subsequent raymarching step is twice wider than the previous one.
+			</summary> 
+			<param name="size"> Step size. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingSpecularNonLinearStepSize const">
 			<summary>
+			Returns the raymarching step size adjustment value. The value of 0 means that the step size is the same for each step, and at the value of 1 each subsequent raymarching step is twice wider than the previous one.
 			</summary>  
+			<returns>Step size.</returns>
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setRaymarchingSecondaryBounceProjectionMode(LightEnvironmentProbe::SECONDARY_BOUNCE_PROJECTION_MODE)">
+			<summary>
+			Sets the secondary bounce projection mode.
+			</summary> 
+			<param name="mode"> Secondary bounce projection mode. One of the SECONDARY_BOUNCE_PROJECTION_MODE values. </param> 
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.getRaymarchingSecondaryBounceProjectionMode const">
+			<summary>
+			Returns the secondary bounce projection mode.
+			</summary>  
+			<returns>Secondary bounce projection mode. One of the SECONDARY_BOUNCE_PROJECTION_MODE values.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setGrabEnvironmentAmbientIntensity(float)">
 			<summary>
-			</summary>  
+			Sets the intensity of the environment ambient lighting.
+			</summary> 
+			<param name="intensity"> Intensity of the environment ambient lighting. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getGrabEnvironmentAmbientIntensity const">
 			<summary>
+			Returns the intensity of the environment ambient lighting.
 			</summary>  
+			<returns>Intensity of the environment ambient lighting.</returns>
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.setGrabEnvironmentReflectionIntensity(float)">
 			<summary>
-			</summary>  
+			Sets the intensity of the environment reflection.
+			</summary> 
+			<param name="intensity"> Intensity of the environment reflection. </param> 
 		</member>
 		<member name="M:Unigine.LightEnvironmentProbe.getGrabEnvironmentReflectionIntensity const">
 			<summary>
+			Returns the intensity of the environment reflection.
 			</summary>  
+			<returns>Intensity of the environment reflection.</returns>
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setSrgbModified(bool)">
+			<summary>
+								Sets the value indicating if the baked cubemap or realtime calculation is converted to sRGB color space and modified to a lower dynamic range. Applying this option makes transition between the neighboring probe pixels smoother, which visually improves low-resolution probes or probes containing bright or constant pixels. Enabing or disabling this option requires rebaking of the static cubemap, otherwise lighting will be visually incorrect. If a static Environment Probe reuses a cubemap that has been baked with this option enabled, it should be enabled for this probe as well.					This option may be combined with  to achieve a better gradient between pixels.
+			</summary> 
+			<param name="modified"> true to conversion to sRGB and a lower dynamic range for cubemap or realtime calculation, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.isSrgbModified const">
+			<summary>
+								Returns the value indicating if the baked cubemap or realtime calculation is converted to sRGB color space and modified to a lower dynamic range. Applying this option makes transition between the neighboring probe pixels smoother, which visually improves low-resolution probes or probes containing bright or constant pixels. Enabing or disabling this option requires rebaking of the static cubemap, otherwise lighting will be visually incorrect. If a static Environment Probe reuses a cubemap that has been baked with this option enabled, it should be enabled for this probe as well.					This option may be combined with  to achieve a better gradient between pixels.
+			</summary>  
+			<returns>true if conversion to sRGB and a lower dynamic range for cubemap or realtime calculation is enabled, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.setReflectionCubicFiltering(bool)">
+			<summary>
+								Sets the value indicating if bicubic interpolation for the Enviropment Probe cubemap is enabled instead of the standard bilinear interpolation. This effect is only applicable to reflected lighting and calculated if a pixel has a low Roughness value. Modifications are applied only to the first mip of the cubemap. The effect visually represents slight blurring of neighboring pixels. However, this is not antialiasing and might affect the visual quality of high-resolution probes.					This option may be combined with  to achieve a better gradient between pixels.																		Enabling this option affects performance, thus it is recommended to enable it only for Environment Probes affecting a big number of reflective/mirror pixels, especially if it is a realtime low-resolution Probe.							For this option to have an effect on a transparent sufrace, the Reflection Cubic Filtering state should be enabled for the material (for non-transparent materials the option is applied automatically).							The option does not affect Impostors.
+			</summary> 
+			<param name="filtering"> true to enable bicubic interpolation for Enviropment Probe, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.LightEnvironmentProbe.isReflectionCubicFiltering const">
+			<summary>
+								Returns the value indicating if bicubic interpolation for the Enviropment Probe cubemap is enabled instead of the standard bilinear interpolation. This effect is only applicable to reflected lighting and calculated if a pixel has a low Roughness value. Modifications are applied only to the first mip of the cubemap. The effect visually represents slight blurring of neighboring pixels. However, this is not antialiasing and might affect the visual quality of high-resolution probes.					This option may be combined with  to achieve a better gradient between pixels.																		Enabling this option affects performance, thus it is recommended to enable it only for Environment Probes affecting a big number of reflective/mirror pixels, especially if it is a realtime low-resolution Probe.							For this option to have an effect on a transparent sufrace, the Reflection Cubic Filtering state should be enabled for the material (for non-transparent materials the option is applied automatically).							The option does not affect Impostors.
+			</summary>  
+			<returns>true if bicubic interpolation is enabled for Enviropment Probe, otherwise false.</returns>
 		</member>
 		<member name="F:Unigine.LightEnvironmentProbe.GRAB_DYNAMIC_FACES_PER_FRAME_MODE_1">
 			<summary>
@@ -1801,6 +1253,26 @@
 			The raymarching mode used to calculate reflections from the surrounding surfaces.
 		</summary>
 		</member>
+		<member name="F:Unigine.LightEnvironmentProbe.LAST_STEP_MODE_ENVIRONMENT_PROBE">
+			<summary>
+			The cubemap used for the last step is the same as for all previous steps.
+		</summary>
+		</member>
+		<member name="F:Unigine.LightEnvironmentProbe.LAST_STEP_MODE_ONLY_SKY">
+			<summary>
+			The cubemap contains the sky and clouds only.
+		</summary>
+		</member>
+		<member name="F:Unigine.LightEnvironmentProbe.SECONDARY_BOUNCE_PROJECTION_MODE_SPHERE">
+			<summary>
+			Sphere projection.
+		</summary>
+		</member>
+		<member name="F:Unigine.LightEnvironmentProbe.SECONDARY_BOUNCE_PROJECTION_MODE_RAYMARCHING">
+			<summary>
+			Raymarching.
+		</summary>
+		</member>
 		<member name="M:Unigine.LightVoxelProbe.#ctor">
 			<summary>
 			Constructor. Creates a new voxel probe with default parameters.
@@ -1854,17 +1326,17 @@
 			</summary>  
 			<returns>The bake viewport mask (integer, each bit of which is used to represent a mask).</returns>
 		</member>
-		<member name="M:Unigine.LightVoxelProbe.setTexturePath(char)">
+		<member name="M:Unigine.LightVoxelProbe.setTextureFilePath(char)">
 			<summary>
-			Sets a path to a light texture.
+			Sets a path to a light texture file.
 			</summary> 
-			<param name="path"> Path to a light texture. </param> 
+			<param name="path"> Path to a light texture file. </param> 
 		</member>
-		<member name="M:Unigine.LightVoxelProbe.getTexturePath const">
+		<member name="M:Unigine.LightVoxelProbe.getTextureFilePath const">
 			<summary>
-			Returns the path to the lighting texture used for the voxel probe.
+			Returns the path to the lighting texture path used for the voxel probe.
 			</summary>  
-			<returns>Path to the texture.</returns>
+			<returns>Path to the texture file.</returns>
 		</member>
 		<member name="M:Unigine.LightVoxelProbe.setBoxSize(Unigine.Math.vec3)">
 			<summary>
@@ -2176,19 +1648,19 @@
 			The lowest sampling quality and number of rays simulated but the highest iterativity.
 		</summary>
 		</member>
-		<member name="F:Unigine.LightVoxelProbe.BLEND_MULTIPLICATIVE">
+		<member name="F:Unigine.LightVoxelProbe.BLEND_ALPHA_BLEND">
 			<summary>
-			The multiplicative mode of light blending.
+			The alpha blend mode of light blending.
 		</summary>
 		</member>
 		<member name="F:Unigine.LightVoxelProbe.BLEND_ADDITIVE">
 			<summary>
-			The additive mode of light blending.
+			The additive mode of light blending. This option offers more flexibility in lighting control. you can use it to blend lighting of several voxel probes together and control them separately (e.g. make a separate voxel probe for an indoor emissive light source and blend it with another voxel probe with lighting baked from the sky, having the ability to enable and disable them separately).					Voxel probes with additive blending enabled cannot be used to add lighting details (e.g. creating a small high-detail voxel probe inside a large low-detail one). Such probes do not replace each other, as they are blended instead.
 		</summary>
 		</member>
-		<member name="F:Unigine.LightVoxelProbe.BLEND_ALPHA_BLEND">
+		<member name="F:Unigine.LightVoxelProbe.BLEND_MULTIPLICATIVE">
 			<summary>
-			The alpha blend mode of light blending.
+			The multiplicative mode of light blending.
 		</summary>
 		</member>
 		<member name="M:Unigine.LightPlanarProbe.#ctor">
@@ -2464,31 +1936,7 @@
 			<param name="attenuation_distance"> Attenuation distance </param>
 			<param name="name"> Name of the source. </param> 
 		</member>
-		<member name="M:Unigine.LightOmni.setAttenuationDistance(float)">
-			<summary>
-			Updates the distance from the light source shape, at which the light source doesn't illuminate anything.
-			</summary> 
-			<param name="distance"> Distance from the light source shape, at which the light source doesn't illuminate anything. </param> 
-		</member>
-		<member name="M:Unigine.LightOmni.getAttenuationDistance">
-			<summary>
-			Returns the distance from the light source shape, at which the light source doesn't illuminate anything.
-			</summary>  
-			<returns>Distance from the light source shape, at which the light source doesn't illuminate anything.</returns>
-		</member>
-		<member name="M:Unigine.LightOmni.setTexture(Unigine.Ptr{Unigine.Texture})">
-			<summary>
-			Sets the light image texture smart pointer.
-			</summary> 
-			<param name="texture"> Texture smart pointer. </param> 
-		</member>
-		<member name="M:Unigine.LightOmni.getTexture">
-			<summary>
-			Gets a light image texture smart pointer.
-			</summary>  
-			<returns>Returns image texture smart pointer.</returns>
-		</member>
-		<member name="M:Unigine.LightOmni.setTextureImage(Unigine.Ptr{Unigine.Image},int)">
+		<member name="M:Unigine.LightOmni.setTextureImage(Unigine.Ptr{Unigine.Image},bool)">
 			<summary>
 			Sets a given Image instance as the light image texture. If you need to set a texture of all the lights in the scene, set dynamic flag to 1.
 			</summary> 
@@ -2496,24 +1944,12 @@
 			<param name="dynamic"> Dynamic texture flag.If set to 0, changing a texture of the light instance will also affect all the lights in the scene.If set to 1, an image will be successfully set only for the current light instance. </param> 
 			<returns>Returns 1 if the texture is set successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.LightOmni.getTextureImage(Unigine.Ptr{Unigine.Image})">
+		<member name="M:Unigine.LightOmni.getTextureImage(Unigine.Ptr{Unigine.Image}) const">
 			<summary>
 			Reads the light image texture into an Image instance.
 			</summary> 
 			<param name="image"> Image, into which the texture is read. </param> 
 			<returns>Returns 1 if the texture is read successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.LightOmni.setTexturePath(char)">
-			<summary>
-			Updates the cube map texture used with this light source.
-			</summary> 
-			<param name="path"> Name (path) of the new cube map texture. </param> 
-		</member>
-		<member name="M:Unigine.LightOmni.getTexturePath">
-			<summary>
-			Returns the name (path) of the cubemap texture used with this light source.
-			</summary>  
-			<returns>Name of the cubemap texture.</returns>
 		</member>
 		<member name="M:Unigine.LightOmni.setShadowSideEnabled(int,int)">
 			<summary>
@@ -2522,78 +1958,18 @@
 			<param name="side"> Number of the side of the omni light source for which shadows are to be enabled or disabled. One of the following values:0 - positive X1 - negative X2 - positive Y3 - negative Y4 - positive Z5 - negative Z </param>
 			<param name="enable"> 1 to enable shadows for the specified side of the omni light source, 0 - to disable. </param> 
 		</member>
-		<member name="M:Unigine.LightOmni.isShadowSideEnabled(int)">
+		<member name="M:Unigine.LightOmni.isShadowSideEnabled(int) const">
 			<summary>
 			Returns a value indicating if shadows are to be cast for the specified side of the omni light source. By default the light source casts shadows in all directions.
 			</summary> 
 			<param name="side"> Number of the side of the omni light source for which shadows are to be enabled or disabled. One of the following values:0 - positive X1 - negative X2 - positive Y3 - negative Y4 - positive Z5 - negative Z </param> 
 			<returns>1 if shadows are to be cast for the specified side of the omni light source; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.LightOmni.setShapeHeight(float)">
-			<summary>
-			Updates the height of the rectangular light source.
-			</summary> 
-			<param name="height"> Height of the light source shape. </param> 
-		</member>
-		<member name="M:Unigine.LightOmni.getShapeHeight">
-			<summary>
-			Returns the height of the rectangular light source.
-			</summary>  
-			<returns>Height of the light source shape.</returns>
-		</member>
-		<member name="M:Unigine.LightOmni.setShapeLength(float)">
-			<summary>
-			Updates the length of the capsule-shaped or rectangular light source.
-			</summary> 
-			<param name="length"> Length of the light source shape. </param> 
-		</member>
-		<member name="M:Unigine.LightOmni.getShapeLength">
-			<summary>
-			Returns a length of the capsule-shaped or rectangular light source.
-			</summary>  
-			<returns>Length of the light source shape.</returns>
-		</member>
-		<member name="M:Unigine.LightOmni.setShapeRadius(float)">
-			<summary>
-			Updates the radius of the spherical, capsule-shaped or rectangular light source.					In case of the rectangular shape, the corner radius is set.
-			</summary> 
-			<param name="radius"> Radius of the light source shape. </param> 
-		</member>
-		<member name="M:Unigine.LightOmni.getShapeRadius">
-			<summary>
-			Returns a radius of the spherical, capsule-shaped or rectangular light source.					In case of the rectangular shape, the corner radius will be returned.
-			</summary>  
-			<returns>Radius of the light source shape.</returns>
-		</member>
-		<member name="M:Unigine.LightOmni.setShapeType(int)">
-			<summary>
-			Updates the shape of the light source.					A light source of the rectangular shape produces the light and the speck in a form of a rounded rectangle.
-			</summary> 
-			<param name="type"> Shape of the light source (one of the SHAPE_* variables). </param> 
-		</member>
-		<member name="M:Unigine.LightOmni.getShapeType">
-			<summary>
-			Returns the shape of the light source.					A light source of the rectangular shape produces the light and the speck in a form of a rounded rectangle.
-			</summary>  
-			<returns>Shape of the light source (one of the SHAPE_* variables).</returns>
-		</member>
-		<member name="M:Unigine.LightOmni.getSize const">
-			<summary>
-			Returns the size of the area illuminated by the light source. Depending on the shape type, the size varies:											If the light is point-shaped, each component of the vector will be equal to the attenuation distance: 						If the light is spherical, each component of the vector will be equal to the attenuation distance + sphere radius: 						If the light is capsule-shaped, the 1st component of the vector will be equal to attenuation distance + capsule length: 						If the light is rectangular, the 2nd component of the vector will be equal to attenuation distance + rectangle height:
-			</summary>  
-			<returns>A size of the illuminated area.</returns>
-		</member>
 		<member name="M:Unigine.LightOmni.type">
 			<summary>
 			Returns the type of the node.
 			</summary>  
 			<returns>Light type identifier.</returns>
-		</member>
-		<member name="M:Unigine.LightOmni.getShadowDepthRange const">
-			<summary>
-			Returns shadow depth range for the light source.
-			</summary>  
-			<returns>The shadow depth range for the light source as a two-component vector (min, max).</returns>
 		</member>
 		<member name="M:Unigine.LightProj.#ctor(Unigine.Math.vec4,float,float,char)">
 			<summary>
@@ -2604,43 +1980,7 @@
 			<param name="fov"> Field of view of the new light source. </param>
 			<param name="name"> Path to a texture of the new light source. </param> 
 		</member>
-		<member name="M:Unigine.LightProj.setAttenuationDistance(float)">
-			<summary>
-			Updates the distance from the light source shape, at which the light source doesn't illuminate anything.
-			</summary> 
-			<param name="distance"> Distance from the light source shape, at which the light source doesn't illuminate anything. </param> 
-		</member>
-		<member name="M:Unigine.LightProj.getAttenuationDistance">
-			<summary>
-			Returns the distance from the light source shape, at which the light source doesn't illuminate anything.
-			</summary>  
-			<returns>Distance from the light source shape, at which the light source doesn't illuminate anything.</returns>
-		</member>
-		<member name="M:Unigine.LightProj.setFov(float)">
-			<summary>
-			Updates the current field of view of the projected light source. Remember that large fields of view may lead to shadow distortions.
-			</summary> 
-			<param name="fov"> New field of view in degrees. This value will be saturated in range [1; 180]. </param> 
-		</member>
-		<member name="M:Unigine.LightProj.getFov">
-			<summary>
-			Returns the current field of view of the projected light source.
-			</summary>  
-			<returns>Field of view in degrees.</returns>
-		</member>
-		<member name="M:Unigine.LightProj.setTexture(Unigine.Ptr{Unigine.Texture})">
-			<summary>
-			Sets the light image texture smart pointer.
-			</summary> 
-			<param name="texture"> Texture smart pointer. </param> 
-		</member>
-		<member name="M:Unigine.LightProj.getTexture">
-			<summary>
-			Gets a light image texture smart pointer.
-			</summary>  
-			<returns>Returns image texture smart pointer.</returns>
-		</member>
-		<member name="M:Unigine.LightProj.setTextureImage(Unigine.Ptr{Unigine.Image},int)">
+		<member name="M:Unigine.LightProj.setTextureImage(Unigine.Ptr{Unigine.Image},bool)">
 			<summary>
 			Sets a given Image instance as the light image texture. If you need to set a texture of all the lights in the scene, set dynamic flag to 1.
 			</summary> 
@@ -2648,126 +1988,18 @@
 			<param name="dynamic"> Dynamic texture flag.If set to 0, changing a texture of the light instance will also affect all the lights in the scene.If set to 1, an image will be successfully set only for the current light instance. </param> 
 			<returns>Returns 1 if the texture is set successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.LightProj.getTextureImage(Unigine.Ptr{Unigine.Image})">
+		<member name="M:Unigine.LightProj.getTextureImage(Unigine.Ptr{Unigine.Image}) const">
 			<summary>
 			Reads the light image texture into an Image instance.
 			</summary> 
 			<param name="image"> Image, into which the texture is read. </param> 
 			<returns>Returns 1 if the texture is read successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.LightProj.setTexturePath(char)">
-			<summary>
-			Updates the texture used with this light source.
-			</summary> 
-			<param name="path"> Name (path) of the new texture. </param> 
-		</member>
-		<member name="M:Unigine.LightProj.getTexturePath">
-			<summary>
-			Returns the name (path) of the texture used with this light source.
-			</summary>  
-			<returns>Name of the texture.</returns>
-		</member>
-		<member name="M:Unigine.LightProj.setPenumbra(float)">
-			<summary>
-			Sets light attenuation intensity in the penumbra cast from an object by this light source..
-			</summary> 
-			<param name="penumbra"> Intensity of the shadow. </param> 
-		</member>
-		<member name="M:Unigine.LightProj.getPenumbra">
-			<summary>
-			Returns the current light attenuation intensity in the penumbra cast from an object by this light source.
-			</summary>  
-			<returns>Intensity of the shadow.</returns>
-		</member>
-		<member name="M:Unigine.LightProj.getProjection const">
-			<summary>
-			Returns the projection matrix used with this light source.
-			</summary>  
-			<returns>Projection matrix.</returns>
-		</member>
-		<member name="M:Unigine.LightProj.setShapeHeight(float)">
-			<summary>
-			Updates the height of the rectangular light source.
-			</summary> 
-			<param name="height"> Height of the light source shape. </param> 
-		</member>
-		<member name="M:Unigine.LightProj.getShapeHeight">
-			<summary>
-			Returns the height of the rectangular light source.
-			</summary>  
-			<returns>Height of the light source shape.</returns>
-		</member>
-		<member name="M:Unigine.LightProj.setShapeLength(float)">
-			<summary>
-			Updates the length of the capsule-shaped or rectangular light source.
-			</summary> 
-			<param name="length"> Length of the light source shape. </param> 
-		</member>
-		<member name="M:Unigine.LightProj.getShapeLength">
-			<summary>
-			Returns a length of the capsule-shaped or rectangular light source.
-			</summary>  
-			<returns>Length of the light source shape.</returns>
-		</member>
-		<member name="M:Unigine.LightProj.setShapeRadius(float)">
-			<summary>
-			Updates the radius of the spherical, capsule-shaped or rectangular light source.					In case of the rectangular shape, the corner radius is set.
-			</summary> 
-			<param name="radius"> Radius of the light source shape. </param> 
-		</member>
-		<member name="M:Unigine.LightProj.getShapeRadius">
-			<summary>
-			Returns a radius of the spherical, capsule-shaped or rectangular light source.					In case of the rectangular shape, the corner radius will be returned.
-			</summary>  
-			<returns>Radius of the light source shape.</returns>
-		</member>
-		<member name="M:Unigine.LightProj.setShapeType(int)">
-			<summary>
-			Updates the shape of the light source.					A light source of the rectangular shape produces the light and the speck in a form of a rounded rectangle.
-			</summary> 
-			<param name="type"> Shape of the light source (one of the SHAPE_* variables). </param> 
-		</member>
-		<member name="M:Unigine.LightProj.getShapeType">
-			<summary>
-			Returns the shape of the light source.					A light source of the rectangular shape produces the light and the speck in a form of a rounded rectangle.
-			</summary>  
-			<returns>Shape of the light source (one of the SHAPE_* variables).</returns>
-		</member>
-		<member name="M:Unigine.LightProj.setZNear(float)">
-			<summary>
-			Updates the distance to the near clipping plane of the projected light source.
-			</summary> 
-			<param name="znear"> New distance to the near clipping plane in units. If a negative value is provided, 0 will be used instead. The default value is 0.1. </param> 
-		</member>
-		<member name="M:Unigine.LightProj.getZNear">
-			<summary>
-			Returns the distance to the near clipping plane of the projected light source. The default value is 0.1.
-			</summary>  
-			<returns>Distance to the near clipping plane in units.</returns>
-		</member>
 		<member name="M:Unigine.LightProj.type">
 			<summary>
 			Returns the type of the node.
 			</summary>  
 			<returns>Light type identifier.</returns>
-		</member>
-		<member name="M:Unigine.LightProj.setIESRelativeToFov(bool)">
-			<summary>
-			Sets a value indicating if IES texture is scaled to fit within the light source's Field of View. Works only when light's distibution is defined by an IES profile (color texture parameter is set to IES), a lighting industry standard of describing how the light is cast based on real-world measured light fixtures.
-			</summary> 
-			<param name="fov"> true - to enable scaling of IES texture to fit within the light source's Field of View; false - to disable. </param> 
-		</member>
-		<member name="M:Unigine.LightProj.isIESRelativeToFov const">
-			<summary>
-			Returns a value indicating if IES texture is scaled to fit within the light source's Field of View. Works only when light's distibution is defined by an IES profile (color texture parameter is set to IES), a lighting industry standard of describing how the light is cast based on real-world measured light fixtures.
-			</summary>  
-			<returns>true if IES texture is scaled to fit within the light source's Field of View; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.LightProj.getShadowDepthRange const">
-			<summary>
-			Returns shadow depth range for the light source.
-			</summary>  
-			<returns>Shadow depth range for the light source as a two-component vector (min, max).</returns>
 		</member>
 		<member name="M:Unigine.LightWorld.#ctor(Unigine.Math.vec4)">
 			<summary>
@@ -2902,7 +2134,7 @@
 			Returns the model-view matrix for the specified shadow cascade.
 			</summary> 
 			<param name="num"> Shadow cascade number in the [0;num_cascades-1] range. </param> 
-			<returns>Shadow cascade model-view matrix matrix.</returns>
+			<returns>Shadow cascade model-view matrix.</returns>
 		</member>
 		<member name="M:Unigine.LightWorld.getRenderShadowCascadeProjection(int) const">
 			<summary>
@@ -2920,13 +2152,13 @@
 		</member>
 		<member name="M:Unigine.LightWorld.setOneCascadePerFrame(bool)">
 			<summary>
-			Sets the value indicating if the One Cascade Per Frame mode is enabled. This mode distributes the update of shadow cascades across multiple rendering frames: shadows from static geometry are rendered into only one cascade per frame.
+			Sets the value indicating if the One Cascade Per Frame mode is enabled. This mode distributes the update of shadow cascades across multiple rendering frames: shadows from static geometry are rendered into only one cascade per frame.					Shadows cast by transparent surfaces cannot be baked. To make such shadows visible when any light-baking mode is enabled, configure the transparent surfaces: toggle the dynamic lighting mode for them.
 			</summary> 
 			<param name="frame"> true to enable the One Cascade Per Frame mode, false to disable it. </param> 
 		</member>
 		<member name="M:Unigine.LightWorld.isOneCascadePerFrame const">
 			<summary>
-			Returns the value indicating if the One Cascade Per Frame mode is enabled. This mode distributes the update of shadow cascades across multiple rendering frames: shadows from static geometry are rendered into only one cascade per frame.
+			Returns the value indicating if the One Cascade Per Frame mode is enabled. This mode distributes the update of shadow cascades across multiple rendering frames: shadows from static geometry are rendered into only one cascade per frame.					Shadows cast by transparent surfaces cannot be baked. To make such shadows visible when any light-baking mode is enabled, configure the transparent surfaces: toggle the dynamic lighting mode for them.
 			</summary>  
 			<returns>true if the One Cascade Per Frame mode is enabled, otherwise false.</returns>
 		</member>

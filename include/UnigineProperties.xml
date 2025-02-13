@@ -113,7 +113,7 @@
 		</member>
 		<member name="M:Unigine.Property.load">
 			<summary>
-			Loads the property from the file specified by the setPath() function. This function can be used to load properties created during application execution or stored outside the data directory.
+			Loads the property from the file specified by the setFilePath() function. This function can be used to load properties created during application execution or stored outside the data directory.
 			</summary>  
 			<returns>true if the property data is loaded successfully; otherwise, false.</returns>
 		</member>
@@ -167,7 +167,7 @@
 		</member>
 		<member name="M:Unigine.Property.save">
 			<summary>
-			Saves the property data to the file specified by the setPath() function. This method is not available for manual and internal properties.
+			Saves the property data to the file specified by the setFilePath() function. This method is not available for manual and internal properties.
 			</summary>  
 			<returns>true if the property data is saved successfully; otherwise, false.</returns>
 		</member>
@@ -455,36 +455,6 @@
 			Patricles Field bit mask.
 		</summary>
 		</member>
-		<member name="M:Unigine.PropertyParameter.getID const">
-			<summary>
-			Returns the ID of the property parameter.
-			</summary>  
-			<returns>ID of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getProperty const">
-			<summary>
-			Returns the property, that owns the parameter.
-			</summary>  
-			<returns>Smart pointer to a property owning the parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getPropertyGUID const">
-			<summary>
-			Returns the GUID of the property that owns the parameter.
-			</summary>  
-			<returns>GUID of the property that owns the parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getParent const">
-			<summary>
-			Returns the parent property parameter, if it exists.
-			</summary>  
-			<returns>Parent property parameter, if it exists,; otherwise, nullptr.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getNumChildren const">
-			<summary>
-			Returns the total number of children of the property parameter.
-			</summary>  
-			<returns>Total number of children of the property parameter.</returns>
-		</member>
 		<member name="M:Unigine.PropertyParameter.isChild(Unigine.Ptr{PropertyParameter}) const">
 			<summary>
 			Returns a value indicating if the specified property parameter is a child of this property parameter.
@@ -519,67 +489,6 @@
 			</summary> 
 			<param name="parameter"> Child property parameter for which an index is to be found. </param> 
 			<returns>Index of the child property parameter in the range from 0 to the total number of children of this property parameter, if such a child exists; otherwise, -1.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isExist const">
-			<summary>
-			Returns a value indicating if the property parameter is an existing one.
-			</summary>  
-			<returns>true if the property parameter is an existing one; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isHidden const">
-			<summary>
-			Returns a value indicating if the property parameter is hidden.
-			</summary>  
-			<returns>true if the property parameter is hidden; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isInherited const">
-			<summary>
-			Returns a value indicating if the property parameter is inherited from a parent.
-			</summary>  
-			<returns>true if the property parameter is inherited from a parent; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isOverridden const">
-			<summary>
-			Returns a value indicating if the property parameter is overridden.
-			</summary>  
-			<returns>true if the property parameter is overridden; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getType const">
-			<summary>
-			Returns the type identifier of the property parameter.
-			You can get the name of the parameter type using the Property::parameterNameByType() method:
-			</summary>  
-			<returns>One of the PARAMETER_* pre-defined variables; if an error occurs, -1 will be returned.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getName const">
-			<summary>
-			Returns the name of the property parameter.
-			</summary>  
-			<returns>Property parameter name.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getTitle const">
-			<summary>
-			Returns the title of the property parameter. This title is displayed in the UnigineEditor's UI.
-			</summary>  
-			<returns>Property parameter title.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getTooltip const">
-			<summary>
-			Returns the tooltip for the property parameter. This title is displayed in the UnigineEditor's UI.
-			</summary>  
-			<returns>Property parameter tooltip.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getGroup const">
-			<summary>
-			Returns the name of the group to which the property parameter belongs.
-			</summary>  
-			<returns>name of the group to which the property parameter belongs.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getFilter const">
-			<summary>
-			Returns the filter string associated with the property parameter. This string specifies a filter for file, material or property parameter values thet will be used in the UnigineEditor. For example, you can specify ".xml|.node|.txt" to filter certain types of assets, or specify a base material to filter out materials, that cannot be used in a particular case (e.g. to avoid an attempt of assigning a post material to a mesh).					This attribute is available only for file, material and property parameter types.
-			</summary>  
-			<returns>String specifying a filter for file, material or property parameter values.</returns>
 		</member>
 		<member name="M:Unigine.PropertyParameter.setValue(int)">
 			<summary>
@@ -701,167 +610,11 @@
 			Resets an overridden value of the property parameter.					Resetting a value of the property parameter affects all its children.
 			</summary>  
 		</member>
-		<member name="M:Unigine.PropertyParameter.getValueInt const">
-			<summary>
-			Returns the current value of the property parameter as an integer.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueFloat const">
-			<summary>
-			Returns the current value of the property parameter as a float.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueDouble const">
-			<summary>
-			Returns the current value of the property parameter as a double.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueString const">
-			<summary>
-			Returns the current value of the property parameter as a string.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueVec2 const">
-			<summary>
-			Returns the current value of the property parameter as a two-component vec2 vector.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueVec3 const">
-			<summary>
-			Returns the current value of the property parameter as a three-component vec3 vector.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueVec4 const">
-			<summary>
-			Returns the current value of the property parameter as a four-component vec4 vector.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueDVec2 const">
-			<summary>
-			Returns the current value of the property parameter as a two-component dvec2 vector.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueDVec3 const">
-			<summary>
-			Returns the current value of the property parameter as a three-component dvec3 vector.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueDVec4 const">
-			<summary>
-			Returns the current value of the property parameter as a four-component dvec4 vector.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueIVec2 const">
-			<summary>
-			Returns the current value of the property parameter as a two-component ivec2 vector.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueIVec3 const">
-			<summary>
-			Returns the current value of the property parameter as a three-component ivec3 vector.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueIVec4 const">
-			<summary>
-			Returns the current value of the property parameter as a four-component ivec4 vector.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueGUID const">
-			<summary>
-			Returns the current value of the property parameter as a UGUID.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueNode const">
-			<summary>
-			Returns the current value of the property parameter as a Node.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueProperty const">
-			<summary>
-			Returns the current value of the property parameter as a Property.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueMaterial const">
-			<summary>
-			Returns the current value of the property parameter as a Material.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
 		<member name="M:Unigine.PropertyParameter.getValue const">
 			<summary>
 			Returns the current value of the property parameter as a Variable.
 			</summary>  
 			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueInt(int)">
-			<summary>
-			Sets the value of the property parameter using the integer value specified.
-			</summary> 
-			<param name="val"> Integer value to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.getIntMinValue const">
-			<summary>
-			Returns the minimum integer value of the property parameter.
-			</summary>  
-			<returns>Minimum integer value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getIntMaxValue const">
-			<summary>
-			Returns the maximum integer value of the property parameter.
-			</summary>  
-			<returns>Maximum integer value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueFloat(float)">
-			<summary>
-			Sets the value of the property parameter using the float value specified.
-			</summary> 
-			<param name="val"> Float value to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.getFloatMinValue const">
-			<summary>
-			Returns the minimum float value of the property parameter.
-			</summary>  
-			<returns>Minimum float value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getFloatMaxValue const">
-			<summary>
-			Returns the maximum float value of the property parameter.
-			</summary>  
-			<returns>Maximum float value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueDouble(double)">
-			<summary>
-			Sets the value of the property parameter using the double value specified.
-			</summary> 
-			<param name="val"> Double value to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.getDoubleMinValue const">
-			<summary>
-			Returns the minimum double value of the property parameter.
-			</summary>  
-			<returns>Minimum double value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getDoubleMaxValue const">
-			<summary>
-			Returns the maximum double value of the property parameter.
-			</summary>  
-			<returns>Maximum double value of the property parameter.</returns>
 		</member>
 		<member name="M:Unigine.PropertyParameter.hasSliderMinValue const">
 			<summary>
@@ -874,68 +627,6 @@
 			Returns a value indicating if the slider parameter has the maximum value specified. The slider parameter is a parameter of one of the following types: PARAMETER_INT, PARAMETER_FLOAT, PARAMETER_DOUBLE.
 			</summary>  
 			<returns>true if the slider parameter has the maximum value specified; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getSliderLog10 const">
-			<summary>
-			Returns a value indicating if the slider parameter uses a logarithmic scale (with the base ten). The slider parameter is a parameter of one of the following types: PARAMETER_INT, PARAMETER_FLOAT, PARAMETER_DOUBLE.
-			</summary>  
-			<returns>1 if the property parameter uses a logarithmic scale; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getSliderMinExpand const">
-			<summary>
-			Returns a value indicating if the minimum value of the slider parameter can be decreased. Slider parameter is a parameter of one of the following types: PARAMETER_INT, PARAMETER_FLOAT, PARAMETER_DOUBLE.
-			</summary>  
-			<returns>1 if the minimum value can be changed; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getSliderMaxExpand const">
-			<summary>
-			Returns a value indicating if the maximum value of the slider parameter can be decreased. Slider parameter is a parameter of one of the following types: PARAMETER_INT, PARAMETER_FLOAT, PARAMETER_DOUBLE.
-			</summary>  
-			<returns>1 if the maximum value can be changed; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueToggle(bool)">
-			<summary>
-			Sets the value of the toggle parameter. If the PARAMETER_TOGGLE variable isn't set for the parameter, or the property is not editable, the value won't be updated.
-			</summary> 
-			<param name="toggle"> New value of the toggle parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueToggle const">
-			<summary>
-			Returns the current value of the toggle parameter. If the PARAMETER_TOGGLE variable isn't set for the parameter, the function will return 0.
-			</summary>  
-			<returns>Value of the toggle parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueSwitch(int)">
-			<summary>
-			Sets the value of the switch parameter. If the PARAMETER_SWITCH variable isn't set for the parameter, or the property is not editable, the value won't be updated.
-			</summary> 
-			<param name="val"> New value of the switch parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueSwitch const">
-			<summary>
-			Returns the current value of the switch parameter. If the PARAMETER_SWITCH variable isn't set for the parameter, the function will return 0.
-			</summary>  
-			<returns>Value of the switch parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getSwitchNumItems const">
-			<summary>
-			Returns the number of items of the switch parameter. If the PARAMETER_SWITCH variable isn't set for the parameter, the function will return 0.
-			</summary>  
-			<returns>Number of items of the switch parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.setSwitchItem(int)">
-			<summary>
-			Sets the item with the specified number as a value of the switch parameter.					Suppose we have a property switch parameter declared as follows:					Spaces in the items attribute declaration are taken into account. Thus, items="red=-1, green" shall produce 2 items: "red" and " green".					After loading we'll have switch items with the following values: red = -1, green = 0, blue = 5, yellow = 6.
-			
-			</summary> 
-			<param name="item"> Number of the item of the switch parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.getSwitchItem const">
-			<summary>
-			Returns the number of the currently selected item of the switch parameter.					Suppose we have a property switch parameter declared as follows:					Spaces in the items attribute declaration are taken into account. Thus, items="red=-1, green" shall produce 2 items: "red" and " green"					After loading we'll have switch items with the following values: red = -1, green = 0, blue = 5, yellow = 6.
-			
-			</summary>  
-			<returns>Number of the currently selected item of the switch parameter.</returns>
 		</member>
 		<member name="M:Unigine.PropertyParameter.getSwitchItemName(int) const">
 			<summary>
@@ -950,96 +641,6 @@
 			</summary> 
 			<param name="item"> Number of the item of the switch parameter. </param> 
 			<returns>Value of the item of the switch parameter with the specified number.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueString(char)">
-			<summary>
-			Sets the value of the property parameter using the string specified.
-			</summary> 
-			<param name="value"> String to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueColor(Unigine.Math.vec4)">
-			<summary>
-			Sets the value of the property parameter using the four-component vec4 color vector (R, G, B, A) specified.
-			</summary> 
-			<param name="color"> Four-component color vector (R, G, B, A) to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueColor const">
-			<summary>
-			Returns the current value of the property parameter as a four-component vec4 color vector (R, G, B, A).
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueVec2(Unigine.Math.vec2)">
-			<summary>
-			Sets the value of the property parameter using the two-component vec2 vector specified.
-			</summary> 
-			<param name="vec2"> Two-component float vector to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueVec3(Unigine.Math.vec3)">
-			<summary>
-			Sets the value of the property parameter using the three-component vec3 vector specified.
-			</summary> 
-			<param name="vec3"> Three-component float vector to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueVec4(Unigine.Math.vec4)">
-			<summary>
-			Sets the value of the property parameter using the four-component vec4 vector specified.
-			</summary> 
-			<param name="vec4"> Four-component float vector to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueDVec2(Unigine.Math.dvec2)">
-			<summary>
-			Sets the value of the property parameter using the two-component dvec2 vector specified.
-			</summary> 
-			<param name="dvec2"> Two-component double vector to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueDVec3(Unigine.Math.dvec3)">
-			<summary>
-			Sets the value of the property parameter using the three-component dvec3 vector specified.
-			</summary> 
-			<param name="dvec3"> Three-component double vector to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueDVec4(Unigine.Math.dvec4)">
-			<summary>
-			Sets the value of the property parameter using the four-component dvec4 vector specified.
-			</summary> 
-			<param name="dvec4"> Four-component double vector to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueIVec2(Unigine.Math.ivec2)">
-			<summary>
-			Sets the value of the property parameter using the two-component ivec2 vector specified.
-			</summary> 
-			<param name="ivec2"> Two-component integer vector to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueIVec3(Unigine.Math.ivec3)">
-			<summary>
-			Sets the value of the property parameter using the three-component ivec3 vector specified.
-			</summary> 
-			<param name="ivec3"> Three-component integer vector to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueIVec4(Unigine.Math.ivec4)">
-			<summary>
-			Sets the value of the property parameter using the four-component ivec4 vector specified.
-			</summary> 
-			<param name="ivec4"> Four-component integer vector to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueMask(int)">
-			<summary>
-			Sets the value of the mask parameter. If the PARAMETER_MASK variable isn't set for the parameter, or the property is not editable, the value won't be updated.
-			</summary> 
-			<param name="mask"> Mask to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueMask const">
-			<summary>
-			Returns the current value of the property parameter as an integer mask.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueFile(char)">
-			<summary>
-								Sets the value of the file parameter. If the property is not editable, the value won't be updated.					The value stored in the file parameter (this value will be returned by the getValueFile() method) depends on the flags set for the parameter:
-			</summary> 
-			<param name="file"> Value for the file parameter to be set. </param> 
 		</member>
 		<member name="M:Unigine.PropertyParameter.getValueFile(bool) const">
 			<summary>
@@ -1078,78 +679,6 @@
 			</summary>  
 			<returns>true if a file corresponding to the property parameter exists; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.PropertyParameter.setValueProperty(Unigine.Ptr{Unigine.Property})">
-			<summary>
-			Sets the value of the property parameter using the Property specified.
-			</summary> 
-			<param name="property"> Value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueMaterial(Unigine.Ptr{Unigine.Material})">
-			<summary>
-			Sets the value of the property parameter using the Material specified.
-			</summary> 
-			<param name="material"> Value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueNode(Unigine.Ptr{Unigine.Node})">
-			<summary>
-			Sets the value of the property parameter using the Node specified.
-			</summary> 
-			<param name="node"> Value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueNodeID(int)">
-			<summary>
-			Sets the value of the property parameter using the Node ID specified.
-			</summary> 
-			<param name="valuenodeid"> Value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueNodeID const">
-			<summary>
-			Returns the current value of the property parameter as a Node ID.
-			</summary>  
-			<returns>Value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.setArraySize(int)">
-			<summary>
-			Sets a new size of the array parameter.
-			</summary> 
-			<param name="size"> New array size to be set (number of elements). </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.getArraySize const">
-			<summary>
-			Returns the current size of the array parameter.
-			</summary>  
-			<returns>Current array size (number of elements).</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getArrayType const">
-			<summary>
-			Returns the type of elements of the array parameter.
-			</summary>  
-			<returns>Type of array elements, one of the PARAMETER_* variables.This method does not return PARAMETER_ARRAY for an array parameter, it returns the type of array elements instead (e.g. PARAMETER_FLOAT, PARAMETER_STRUCT, etc.)</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getArrayTypeName const">
-			<summary>
-			Returns the type name of elements of the array parameter.
-			</summary>  
-			<returns>Type name of of elements of the array parameter (Float, Node, Material, etc.).</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getArrayDim const">
-			<summary>
-			Returns the dimension of the array parameter.					Multi-dimensional arrays are represented as arrays of arrays, thus, the return value of this method will decrease with each level down the hierarchy.
-			</summary>  
-			<returns>Dimension of the array parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getMaskType const">
-			<summary>
-			Returns the type of elements of the mask parameter.
-			</summary>  
-			<returns>Type of the mask parameter, one of the PARAMETER_MASK_* variables.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getStructName const">
-			<summary>
-			Returns the name of the structure, that defines the type of the struct parameter.
-			</summary>  
-			<returns>Name of the structure, that defines the type of the struct parameter.</returns>
-		</member>
 		<member name="M:Unigine.PropertyParameter.saveState(Unigine.Ptr{Unigine.Stream}) const">
 			<summary>
 			Saves data of the property parameter into a binary stream.					Example using saveState() and restoreState() methods:
@@ -1164,150 +693,6 @@
 			<param name="stream"> Stream in which the saved property parameter data is stored. </param>
 			<param name="restore_mode"> Restore mode. One of the Property::RESTORE_MODE_* values. The default value is Property::RESTORE_MODE_REPLACE. </param> 
 			<returns>true if the property parameter data is restored successfully; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isInt const">
-			<summary>
-			Returns a value indicating if the current property parameter is an integer.
-			</summary>  
-			<returns>true if the property parameter is an integer; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isFloat const">
-			<summary>
-			Returns a value indicating if the current property parameter is a float.
-			</summary>  
-			<returns>true if the property parameter is a float; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isDouble const">
-			<summary>
-			Returns a value indicating if the current property parameter is a double.
-			</summary>  
-			<returns>true if the property parameter is a double; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isToggle const">
-			<summary>
-			Returns a value indicating if the current property parameter is a toggle.
-			</summary>  
-			<returns>true if the property parameter is a toggle; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isSwitch const">
-			<summary>
-			Returns a value indicating if the current property parameter is a switch.
-			</summary>  
-			<returns>true if the property parameter is a switch; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isString const">
-			<summary>
-			Returns a value indicating if the current property parameter is a string.
-			</summary>  
-			<returns>true if the property parameter is a string; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isColor const">
-			<summary>
-			Returns a value indicating if the current property parameter is a color.
-			</summary>  
-			<returns>true if the property parameter is a color; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isVec2 const">
-			<summary>
-			Returns a value indicating if the current property parameter is a vector of 2 float components.
-			</summary>  
-			<returns>true if the property parameter is a vector of 2 float components; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isVec3 const">
-			<summary>
-			Returns a value indicating if the current property parameter is a vector of 3 float components.
-			</summary>  
-			<returns>true if the property parameter is a vector of 3 float components; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isVec4 const">
-			<summary>
-			Returns a value indicating if the current property parameter is a vector of 4 float components.
-			</summary>  
-			<returns>true if the property parameter is a vector of 4 float components; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isDVec2 const">
-			<summary>
-			Returns a value indicating if the current property parameter is a vector of 2 double components.
-			</summary>  
-			<returns>true if the property parameter is a vector of 2 double components; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isDVec3 const">
-			<summary>
-			Returns a value indicating if the current property parameter is a vector of 3 double components.
-			</summary>  
-			<returns>true if the property parameter is a vector of 3 double components; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isDVec4 const">
-			<summary>
-			Returns a value indicating if the current property parameter is a vector of 4 double components.
-			</summary>  
-			<returns>true if the property parameter is a vector of 4 double components; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isIVec2 const">
-			<summary>
-			Returns a value indicating if the current property parameter is a vector of 2 integer components.
-			</summary>  
-			<returns>true if the property parameter is a vector of 2 integer components; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isIVec3 const">
-			<summary>
-			Returns a value indicating if the current property parameter is a vector of 3 integer components.
-			</summary>  
-			<returns>true if the property parameter is a vector of 3 integer components; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isIVec4 const">
-			<summary>
-			Returns a value indicating if the current property parameter is a vector of 4 integer components.
-			</summary>  
-			<returns>true if the property parameter is a vector of 4 integer components; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isMask const">
-			<summary>
-			Returns a value indicating if the current property parameter is a mask.
-			</summary>  
-			<returns>true if the property parameter is a mask; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isFile const">
-			<summary>
-			Returns a value indicating if the current property parameter is a file.
-			</summary>  
-			<returns>true if the property parameter is a file; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isProperty const">
-			<summary>
-			Returns a value indicating if the current property parameter is a property.
-			</summary>  
-			<returns>true if the property parameter is a property; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isMaterial const">
-			<summary>
-			Returns a value indicating if the current property parameter is a material.
-			</summary>  
-			<returns>true if the property parameter is a material; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isNode const">
-			<summary>
-			Returns a value indicating if the current property parameter is a node.
-			</summary>  
-			<returns>true if the property parameter is a node; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isArray const">
-			<summary>
-			Returns a value indicating if the current property parameter is an array.
-			</summary>  
-			<returns>true if the property parameter is an array; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isStruct const">
-			<summary>
-			Returns a value indicating if the current property parameter is a structure.
-			</summary>  
-			<returns>true if the property parameter is a structure; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueGUID(Unigine.UGUID)">
-			<summary>
-			Sets the UGUID variable as a property parameter value.
-			</summary> 
-			<param name="valueguid"> UGUID type value </param> 
 		</member>
 		<member name="M:Unigine.PropertyParameter.isValuePropertyInternal const">
 			<summary>
@@ -1338,35 +723,6 @@
 			Checks if the indicated GUID fits the current property parameter filter.
 			</summary>  
 			<returns>true, if the GUID fits the filter; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.isCurve2d const">
-			<summary>
-			Returns a value indicating if the current property parameter is a 2D curve.
-			</summary>  
-			<returns>true if the property parameter is a 2D curve; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.setValueCurve2d(Unigine.Ptr{Curve2d})">
-			<summary>
-			Sets the value of the property parameter using the Curve2d value specified.
-			</summary> 
-			<param name="curve2d"> Curve2d value to be set as the value of the property parameter. </param> 
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueCurve2d const">
-			<summary>
-			Returns the current Curve2d  value of the property parameter.
-			</summary>  
-			<returns>Current Curve2d value of the property parameter.</returns>
-		</member>
-		<member name="M:Unigine.PropertyParameter.getValueCurve2dOverride const">
-			<summary>
-			Returns a new Curve2d instance for the data stored in the specified property parameter overriding the default one. This method enables you to set individual curves, adjusting the value of the resulting property.					Modifications made to the curve shall not propagate to the parent and sibling properties.
-			</summary>  
-		</member>
-		<member name="M:Unigine.Properties.getNumProperties const">
-			<summary>
-			Returns the total number of properties loaded for the current project.
-			</summary>  
-			<returns>Total number of properties loaded.</returns>
 		</member>
 		<member name="M:Unigine.Properties.getProperty(int) const">
 			<summary>

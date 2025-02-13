@@ -13,6 +13,9 @@
 // DO NOT EDIT DIRECTLY. This is an auto-generated file. Your changes will be lost.
 
 #pragma once
+
+#include <UnigineBase.h>
+
 namespace Unigine
 {
 class UNIGINE_API AnimParams
@@ -35,6 +38,8 @@ public:
 		PARAM_ANIMATION_PLAYBACK__LOOP, // animation_playback.loop Bool
 		PARAM_ANIMATION_PLAYBACK__SPEED, // animation_playback.speed Float
 		PARAM_ANIMATION_PLAYBACK__TIME, // animation_playback.time Float
+		PARAM_ANIMATION_PLAYBACK__TIME_FROM, // animation_playback.time_from Float
+		PARAM_ANIMATION_PLAYBACK__TIME_TO, // animation_playback.time_to Float
 
 		// Body
 		PARAM_BODY__ENABLED, // body.enabled Bool
@@ -66,8 +71,8 @@ public:
 		PARAM_BODY_FRACTURE__FROZEN_LINEAR_VELOCITY, // body_fracture.frozen_linear_velocity Float
 		PARAM_BODY_FRACTURE__LINEAR_DAMPING, // body_fracture.linear_damping Float
 		PARAM_BODY_FRACTURE__MASS, // body_fracture.mass Float
+		PARAM_BODY_FRACTURE__MATERIAL_FILE_PATH, // body_fracture.material_file_path String
 		PARAM_BODY_FRACTURE__MATERIAL_GUID, // body_fracture.material_guid UGUID
-		PARAM_BODY_FRACTURE__MATERIAL_PATH, // body_fracture.material_path String
 		PARAM_BODY_FRACTURE__MAX_ANGULAR_VELOCITY, // body_fracture.max_angular_velocity Float
 		PARAM_BODY_FRACTURE__MAX_LINEAR_VELOCITY, // body_fracture.max_linear_velocity Float
 		PARAM_BODY_FRACTURE__PHYSICS_INTERSECTION_MASK, // body_fracture.physics_intersection_mask Int
@@ -140,13 +145,13 @@ public:
 		PARAM_BODY_RIGID__SHAPE_BASED, // body_rigid.shape_based Bool
 
 		// BodyWater
-		PARAM_BODY_WATER__ABSORPTION, // body_water.absorption Int
+		PARAM_BODY_WATER__ABSORPTION, // body_water.absorption Bool
 		PARAM_BODY_WATER__ANGULAR_DAMPING, // body_water.angular_damping Float
 		PARAM_BODY_WATER__DENSITY, // body_water.density Float
 		PARAM_BODY_WATER__DEPTH, // body_water.depth Float
 		PARAM_BODY_WATER__DISTANCE, // body_water.distance Float
 		PARAM_BODY_WATER__INTERACTION_FORCE, // body_water.interaction_force Float
-		PARAM_BODY_WATER__INTERSECTION, // body_water.intersection Int
+		PARAM_BODY_WATER__INTERSECTION, // body_water.intersection Bool
 		PARAM_BODY_WATER__LINEAR_DAMPING, // body_water.linear_damping Float
 		PARAM_BODY_WATER__LIQUIDITY, // body_water.liquidity Float
 
@@ -252,9 +257,10 @@ public:
 		PARAM_CONTROLS_APP__STATE_MOUSE_BUTTON_INDEXED, // controls_app.state_mouse_button_indexed Int
 
 		// Decal
+		PARAM_DECAL__CAST_BAKED_GLOBAL_ILLUMINATION, // decal.cast_baked_global_illumination Bool
 		PARAM_DECAL__INTERSECTION_MASK, // decal.intersection_mask Int
+		PARAM_DECAL__MATERIAL_FILE_PATH, // decal.material_file_path String
 		PARAM_DECAL__MATERIAL_GUID, // decal.material_guid UGUID
-		PARAM_DECAL__MATERIAL_PATH, // decal.material_path String
 		PARAM_DECAL__MAX_FADE_DISTANCE, // decal.max_fade_distance Float
 		PARAM_DECAL__MAX_VISIBLE_DISTANCE, // decal.max_visible_distance Float
 		PARAM_DECAL__MIN_FADE_DISTANCE, // decal.min_fade_distance Float
@@ -314,11 +320,13 @@ public:
 
 		// EngineWindowGroup
 		PARAM_ENGINE_WINDOW_GROUP__AUTO_DELETE_MODE, // engine_window_group.auto_delete_mode Int
+		PARAM_ENGINE_WINDOW_GROUP__CURRENT_TAB, // engine_window_group.current_tab Int
 		PARAM_ENGINE_WINDOW_GROUP__FIXED, // engine_window_group.fixed Bool
 		PARAM_ENGINE_WINDOW_GROUP__SEPARATOR_POSITION_INDEXED, // engine_window_group.separator_position_indexed Int
 		PARAM_ENGINE_WINDOW_GROUP__SEPARATOR_VALUE_INDEXED, // engine_window_group.separator_value_indexed Float
 
 		// EngineWindowViewport
+		PARAM_ENGINE_WINDOW_VIEWPORT__ASPECT_CORRECTION, // engine_window_viewport.aspect_correction Bool
 		PARAM_ENGINE_WINDOW_VIEWPORT__CONSOLE_USAGE, // engine_window_viewport.console_usage Bool
 		PARAM_ENGINE_WINDOW_VIEWPORT__MAIN, // engine_window_viewport.main Bool
 		PARAM_ENGINE_WINDOW_VIEWPORT__MOUSE_GRAB, // engine_window_viewport.mouse_grab Bool
@@ -721,7 +729,7 @@ public:
 
 		// Light
 		PARAM_LIGHT__ATTENUATION_POWER, // light.attenuation_power Float
-		PARAM_LIGHT__BAKED_DEPTH_TEXTURE_PATH, // light.baked_depth_texture_path String
+		PARAM_LIGHT__BAKED_DEPTH_TEXTURE_FILE_PATH, // light.baked_depth_texture_file_path String
 		PARAM_LIGHT__COLOR, // light.color FVec4
 		PARAM_LIGHT__COLOR_FILTER, // light.color_filter FVec4
 		PARAM_LIGHT__COLOR_FILTER_W, // light.color_filter_w Float
@@ -754,6 +762,7 @@ public:
 		PARAM_LIGHT__SHADOW_BIAS, // light.shadow_bias Float
 		PARAM_LIGHT__SHADOW_COLOR_TEXTURE_MODE, // light.shadow_color_texture_mode Int
 		PARAM_LIGHT__SHADOW_DISTANCE, // light.shadow_distance Float
+		PARAM_LIGHT__SHADOW_FADE_DISTANCE, // light.shadow_fade_distance Float
 		PARAM_LIGHT__SHADOW_FILTER, // light.shadow_filter Float
 		PARAM_LIGHT__SHADOW_FILTER_MODE, // light.shadow_filter_mode Int
 		PARAM_LIGHT__SHADOW_MASK, // light.shadow_mask Int
@@ -836,6 +845,7 @@ public:
 		PARAM_LIGHT_ENVIRONMENT_PROBE__RAYMARCHING_DIFFUSE_TRANSLUCENCE_ANISOTROPY, // light_environment_probe.raymarching_diffuse_translucence_anisotropy Float
 		PARAM_LIGHT_ENVIRONMENT_PROBE__RAYMARCHING_LAST_STEP_MODE, // light_environment_probe.raymarching_last_step_mode Int
 		PARAM_LIGHT_ENVIRONMENT_PROBE__RAYMARCHING_NOISE_FRAMES_NUMBER, // light_environment_probe.raymarching_noise_frames_number Int
+		PARAM_LIGHT_ENVIRONMENT_PROBE__RAYMARCHING_SECONDARY_BOUNCE_PROJECTION_MODE, // light_environment_probe.raymarching_secondary_bounce_projection_mode Int
 		PARAM_LIGHT_ENVIRONMENT_PROBE__RAYMARCHING_SPECULAR_BRDF, // light_environment_probe.raymarching_specular_brdf Int
 		PARAM_LIGHT_ENVIRONMENT_PROBE__RAYMARCHING_SPECULAR_INFORMATION_LOST_RAYS_MULTIPLIER, // light_environment_probe.raymarching_specular_information_lost_rays_multiplier Float
 		PARAM_LIGHT_ENVIRONMENT_PROBE__RAYMARCHING_SPECULAR_MIP_OFFSET, // light_environment_probe.raymarching_specular_mip_offset Float
@@ -850,10 +860,12 @@ public:
 		PARAM_LIGHT_ENVIRONMENT_PROBE__RAYMARCHING_SPECULAR_THRESHOLD, // light_environment_probe.raymarching_specular_threshold Float
 		PARAM_LIGHT_ENVIRONMENT_PROBE__RAYMARCHING_SPECULAR_THRESHOLD_BINARY_SEARCH, // light_environment_probe.raymarching_specular_threshold_binary_search Float
 		PARAM_LIGHT_ENVIRONMENT_PROBE__RAYMARCHING_SPECULAR_THRESHOLD_OCCLUSION, // light_environment_probe.raymarching_specular_threshold_occlusion Float
+		PARAM_LIGHT_ENVIRONMENT_PROBE__REFLECTION_CUBIC_FILTERING, // light_environment_probe.reflection_cubic_filtering Bool
 		PARAM_LIGHT_ENVIRONMENT_PROBE__SKY_CUTOUT, // light_environment_probe.sky_cutout Bool
 		PARAM_LIGHT_ENVIRONMENT_PROBE__SPECULAR_ENABLED, // light_environment_probe.specular_enabled Bool
 		PARAM_LIGHT_ENVIRONMENT_PROBE__SPHERE_REFLECTION_PARALLAX, // light_environment_probe.sphere_reflection_parallax Float
-		PARAM_LIGHT_ENVIRONMENT_PROBE__TEXTURE_PATH, // light_environment_probe.texture_path String
+		PARAM_LIGHT_ENVIRONMENT_PROBE__SRGB_MODIFIED, // light_environment_probe.srgb_modified Bool
+		PARAM_LIGHT_ENVIRONMENT_PROBE__TEXTURE_FILE_PATH, // light_environment_probe.texture_file_path String
 
 		// LightLensFlare
 		PARAM_LIGHT_LENS_FLARE__COLOR, // light_lens_flare.color FVec4
@@ -876,11 +888,14 @@ public:
 
 		// LightOmni
 		PARAM_LIGHT_OMNI__ATTENUATION_DISTANCE, // light_omni.attenuation_distance Float
+		PARAM_LIGHT_OMNI__NEAR_ATTENUATION_DISTANCE, // light_omni.near_attenuation_distance Float
+		PARAM_LIGHT_OMNI__NEAR_ATTENUATION_GRADIENT_LENGTH, // light_omni.near_attenuation_gradient_length Float
+		PARAM_LIGHT_OMNI__SHADOW_NEAR_CLIPPING_DISTANCE, // light_omni.shadow_near_clipping_distance Float
 		PARAM_LIGHT_OMNI__SHAPE_HEIGHT, // light_omni.shape_height Float
 		PARAM_LIGHT_OMNI__SHAPE_LENGTH, // light_omni.shape_length Float
 		PARAM_LIGHT_OMNI__SHAPE_RADIUS, // light_omni.shape_radius Float
 		PARAM_LIGHT_OMNI__SHAPE_TYPE, // light_omni.shape_type Int
-		PARAM_LIGHT_OMNI__TEXTURE_PATH, // light_omni.texture_path String
+		PARAM_LIGHT_OMNI__TEXTURE_FILE_PATH, // light_omni.texture_file_path String
 
 		// LightPlanarProbe
 		PARAM_LIGHT_PLANAR_PROBE__ATTENUATION_DISTANCE, // light_planar_probe.attenuation_distance FVec3
@@ -911,13 +926,15 @@ public:
 		PARAM_LIGHT_PROJ__ATTENUATION_DISTANCE, // light_proj.attenuation_distance Float
 		PARAM_LIGHT_PROJ__FOV, // light_proj.fov Float
 		PARAM_LIGHT_PROJ__IES_RELATIVE_TO_FOV, // light_proj.ies_relative_to_fov Bool
+		PARAM_LIGHT_PROJ__NEAR_ATTENUATION_DISTANCE, // light_proj.near_attenuation_distance Float
+		PARAM_LIGHT_PROJ__NEAR_ATTENUATION_GRADIENT_LENGTH, // light_proj.near_attenuation_gradient_length Float
 		PARAM_LIGHT_PROJ__PENUMBRA, // light_proj.penumbra Float
+		PARAM_LIGHT_PROJ__SHADOW_NEAR_CLIPPING_DISTANCE, // light_proj.shadow_near_clipping_distance Float
 		PARAM_LIGHT_PROJ__SHAPE_HEIGHT, // light_proj.shape_height Float
 		PARAM_LIGHT_PROJ__SHAPE_LENGTH, // light_proj.shape_length Float
 		PARAM_LIGHT_PROJ__SHAPE_RADIUS, // light_proj.shape_radius Float
 		PARAM_LIGHT_PROJ__SHAPE_TYPE, // light_proj.shape_type Int
-		PARAM_LIGHT_PROJ__TEXTURE_PATH, // light_proj.texture_path String
-		PARAM_LIGHT_PROJ__Z_NEAR, // light_proj.z_near Float
+		PARAM_LIGHT_PROJ__TEXTURE_FILE_PATH, // light_proj.texture_file_path String
 
 		// LightVoxelProbe
 		PARAM_LIGHT_VOXEL_PROBE__AMBIENT_BIAS, // light_voxel_probe.ambient_bias Float
@@ -949,7 +966,7 @@ public:
 		PARAM_LIGHT_VOXEL_PROBE__REFLECTION_ENABLED, // light_voxel_probe.reflection_enabled Bool
 		PARAM_LIGHT_VOXEL_PROBE__REFLECTION_VISIBILITY_ROUGHNESS_MAX, // light_voxel_probe.reflection_visibility_roughness_max Float
 		PARAM_LIGHT_VOXEL_PROBE__REFLECTION_VISIBILITY_ROUGHNESS_MIN, // light_voxel_probe.reflection_visibility_roughness_min Float
-		PARAM_LIGHT_VOXEL_PROBE__TEXTURE_PATH, // light_voxel_probe.texture_path String
+		PARAM_LIGHT_VOXEL_PROBE__TEXTURE_FILE_PATH, // light_voxel_probe.texture_file_path String
 		PARAM_LIGHT_VOXEL_PROBE__USE_SKY_COLOR, // light_voxel_probe.use_sky_color Bool
 		PARAM_LIGHT_VOXEL_PROBE__VOXEL_SIZE, // light_voxel_probe.voxel_size Float
 
@@ -989,7 +1006,6 @@ public:
 		PARAM_MATERIAL__BLEND_SRC_FUNC, // material.blend_src_func Int
 		PARAM_MATERIAL__CAST_SHADOW, // material.cast_shadow Bool
 		PARAM_MATERIAL__CAST_WORLD_SHADOW, // material.cast_world_shadow Bool
-		PARAM_MATERIAL__DEPTH_MASK, // material.depth_mask Int
 		PARAM_MATERIAL__DEPTH_TEST, // material.depth_test Bool
 		PARAM_MATERIAL__OPTION_INDEXED, // material.option_indexed Int
 		PARAM_MATERIAL__ORDER, // material.order Int
@@ -1052,6 +1068,7 @@ public:
 		PARAM_MATERIAL__TEXTURE_PATH_INDEXED, // material.texture_path_indexed String
 		PARAM_MATERIAL__TEXTURE_PATH_NAMED, // material.texture_path_named String
 		PARAM_MATERIAL__TEXTURE_SAMPLER_FLAGS_INDEXED, // material.texture_sampler_flags_indexed Int
+		PARAM_MATERIAL__TEXTURE_STREAMING_DENSITY_MULTIPLIER_INDEXED, // material.texture_streaming_density_multiplier_indexed Float
 		PARAM_MATERIAL__TRANSPARENT, // material.transparent Int
 		PARAM_MATERIAL__TWO_SIDED, // material.two_sided Bool
 		PARAM_MATERIAL__VIEWPORT_MASK, // material.viewport_mask Int
@@ -1115,6 +1132,8 @@ public:
 		PARAM_NODE_ANIMATION_PLAYBACK__RESTART_ON_ENABLE, // node_animation_playback.restart_on_enable Bool
 		PARAM_NODE_ANIMATION_PLAYBACK__SPEED, // node_animation_playback.speed Float
 		PARAM_NODE_ANIMATION_PLAYBACK__TIME, // node_animation_playback.time Float
+		PARAM_NODE_ANIMATION_PLAYBACK__TIME_FROM, // node_animation_playback.time_from Float
+		PARAM_NODE_ANIMATION_PLAYBACK__TIME_TO, // node_animation_playback.time_to Float
 		PARAM_NODE_ANIMATION_PLAYBACK__TRACK_FILE_GUID, // node_animation_playback.track_file_guid UGUID
 		PARAM_NODE_ANIMATION_PLAYBACK__TRACK_PATH, // node_animation_playback.track_path String
 
@@ -1189,20 +1208,20 @@ public:
 		// ObjectGrass
 		PARAM_OBJECT_GRASS__ANGLE, // object_grass.angle Float
 		PARAM_OBJECT_GRASS__CUTOUT_INTERSECTION_MASK, // object_grass.cutout_intersection_mask Int
-		PARAM_OBJECT_GRASS__CUTOUT_INVERSE, // object_grass.cutout_inverse Int
+		PARAM_OBJECT_GRASS__CUTOUT_INVERSE, // object_grass.cutout_inverse Bool
 		PARAM_OBJECT_GRASS__DENSITY, // object_grass.density Float
 		PARAM_OBJECT_GRASS__FIELD_MASK, // object_grass.field_mask Int
-		PARAM_OBJECT_GRASS__INTERSECTION, // object_grass.intersection Int
+		PARAM_OBJECT_GRASS__INTERSECTION, // object_grass.intersection Bool
 		PARAM_OBJECT_GRASS__INTERSECTION_MASK, // object_grass.intersection_mask Int
 		PARAM_OBJECT_GRASS__MASK_FLIP_X, // object_grass.mask_flip_x Int
 		PARAM_OBJECT_GRASS__MASK_FLIP_Y, // object_grass.mask_flip_y Int
 		PARAM_OBJECT_GRASS__MASK_IMAGE_NAME, // object_grass.mask_image_name String
-		PARAM_OBJECT_GRASS__MASK_INVERSE, // object_grass.mask_inverse Int
+		PARAM_OBJECT_GRASS__MASK_INVERSE, // object_grass.mask_inverse Bool
 		PARAM_OBJECT_GRASS__MASK_MAX_VALUE, // object_grass.mask_max_value Int
 		PARAM_OBJECT_GRASS__MASK_MESH_NAME, // object_grass.mask_mesh_name String
 		PARAM_OBJECT_GRASS__MASK_MIN_VALUE, // object_grass.mask_min_value Int
 		PARAM_OBJECT_GRASS__NUM_TEXTURES, // object_grass.num_textures Int
-		PARAM_OBJECT_GRASS__ORIENTATION, // object_grass.orientation Int
+		PARAM_OBJECT_GRASS__ORIENTATION, // object_grass.orientation Bool
 		PARAM_OBJECT_GRASS__PROBABILITY, // object_grass.probability FVec4
 		PARAM_OBJECT_GRASS__PROBABILITY_W, // object_grass.probability_w Float
 		PARAM_OBJECT_GRASS__PROBABILITY_X, // object_grass.probability_x Float
@@ -1218,9 +1237,9 @@ public:
 		PARAM_OBJECT_GRASS__TERRAIN_MASKS_X, // object_grass.terrain_masks_x Int
 		PARAM_OBJECT_GRASS__TERRAIN_MASKS_Y, // object_grass.terrain_masks_y Int
 		PARAM_OBJECT_GRASS__TERRAIN_MASKS_Z, // object_grass.terrain_masks_z Int
-		PARAM_OBJECT_GRASS__THINNING, // object_grass.thinning Int
+		PARAM_OBJECT_GRASS__THINNING, // object_grass.thinning Bool
 		PARAM_OBJECT_GRASS__THRESHOLD, // object_grass.threshold Float
-		PARAM_OBJECT_GRASS__VARIATION, // object_grass.variation Int
+		PARAM_OBJECT_GRASS__VARIATION, // object_grass.variation Bool
 
 		// ObjectGui
 		PARAM_OBJECT_GUI__BACKGROUND, // object_gui.background Bool
@@ -1236,8 +1255,6 @@ public:
 		PARAM_OBJECT_GUI_MESH__CONTROL_DISTANCE, // object_gui_mesh.control_distance Float
 		PARAM_OBJECT_GUI_MESH__MESH_PATH, // object_gui_mesh.mesh_path String
 		PARAM_OBJECT_GUI_MESH__MESH_PROCEDURAL_MODE, // object_gui_mesh.mesh_procedural_mode Bool
-		PARAM_OBJECT_GUI_MESH__MESH_STREAMING_MODE_RAM, // object_gui_mesh.mesh_streaming_mode_ram Int
-		PARAM_OBJECT_GUI_MESH__MESH_STREAMING_MODE_VRAM, // object_gui_mesh.mesh_streaming_mode_vram Int
 		PARAM_OBJECT_GUI_MESH__MOUSE_MODE, // object_gui_mesh.mouse_mode Int
 		PARAM_OBJECT_GUI_MESH__MOUSE_SHOW, // object_gui_mesh.mouse_show Bool
 
@@ -1249,8 +1266,6 @@ public:
 		PARAM_OBJECT_MESH_CLUSTER__FADE_DISTANCE, // object_mesh_cluster.fade_distance Float
 		PARAM_OBJECT_MESH_CLUSTER__MESH_PATH, // object_mesh_cluster.mesh_path String
 		PARAM_OBJECT_MESH_CLUSTER__MESH_PROCEDURAL_MODE, // object_mesh_cluster.mesh_procedural_mode Bool
-		PARAM_OBJECT_MESH_CLUSTER__MESH_STREAMING_MODE_RAM, // object_mesh_cluster.mesh_streaming_mode_ram Int
-		PARAM_OBJECT_MESH_CLUSTER__MESH_STREAMING_MODE_VRAM, // object_mesh_cluster.mesh_streaming_mode_vram Int
 		PARAM_OBJECT_MESH_CLUSTER__VISIBLE_DISTANCE, // object_mesh_cluster.visible_distance Float
 
 		// ObjectMeshClutter
@@ -1271,8 +1286,6 @@ public:
 		PARAM_OBJECT_MESH_CLUTTER__MASK_MIN_VALUE, // object_mesh_clutter.mask_min_value Int
 		PARAM_OBJECT_MESH_CLUTTER__MESH_PATH, // object_mesh_clutter.mesh_path String
 		PARAM_OBJECT_MESH_CLUTTER__MESH_PROCEDURAL_MODE, // object_mesh_clutter.mesh_procedural_mode Bool
-		PARAM_OBJECT_MESH_CLUTTER__MESH_STREAMING_MODE_RAM, // object_mesh_clutter.mesh_streaming_mode_ram Int
-		PARAM_OBJECT_MESH_CLUTTER__MESH_STREAMING_MODE_VRAM, // object_mesh_clutter.mesh_streaming_mode_vram Int
 		PARAM_OBJECT_MESH_CLUTTER__ORIENTATION, // object_mesh_clutter.orientation Bool
 		PARAM_OBJECT_MESH_CLUTTER__SEED, // object_mesh_clutter.seed Int
 		PARAM_OBJECT_MESH_CLUTTER__SIZE_X, // object_mesh_clutter.size_x Float
@@ -1310,8 +1323,7 @@ public:
 		PARAM_OBJECT_MESH_DYNAMIC__VERTEX_Z_INDEXED, // object_mesh_dynamic.vertex_z_indexed Float
 
 		// ObjectMeshSkinned
-		PARAM_OBJECT_MESH_SKINNED__ANIM_NAME, // object_mesh_skinned.anim_name String
-		PARAM_OBJECT_MESH_SKINNED__ANIM_NAME_FORCE, // object_mesh_skinned.anim_name_force String
+		PARAM_OBJECT_MESH_SKINNED__ANIM_PATH, // object_mesh_skinned.anim_path String
 		PARAM_OBJECT_MESH_SKINNED__BIND_BONE_SPACE_INDEXED, // object_mesh_skinned.bind_bone_space_indexed Int
 		PARAM_OBJECT_MESH_SKINNED__BIND_MODE_INDEXED, // object_mesh_skinned.bind_mode_indexed Int
 		PARAM_OBJECT_MESH_SKINNED__BIND_NODE_INDEXED, // object_mesh_skinned.bind_node_indexed Node
@@ -1323,13 +1335,13 @@ public:
 		PARAM_OBJECT_MESH_SKINNED__FPS_VISIBLE_CAMERA, // object_mesh_skinned.fps_visible_camera Int
 		PARAM_OBJECT_MESH_SKINNED__FPS_VISIBLE_SHADOW, // object_mesh_skinned.fps_visible_shadow Int
 		PARAM_OBJECT_MESH_SKINNED__IK_CHAIN_NUM_ITERATIONS_INDEXED, // object_mesh_skinned.ik_chain_num_iterations_indexed Int
+		PARAM_OBJECT_MESH_SKINNED__INTERPOLATION_ACCURACY, // object_mesh_skinned.interpolation_accuracy Int
+		PARAM_OBJECT_MESH_SKINNED__LAYER_ANIMATION_FILE_PATH_INDEXED, // object_mesh_skinned.layer_animation_file_path_indexed String
 		PARAM_OBJECT_MESH_SKINNED__LAYER_WEIGHT_INDEXED, // object_mesh_skinned.layer_weight_indexed Float
 		PARAM_OBJECT_MESH_SKINNED__LOOP, // object_mesh_skinned.loop Bool
-		PARAM_OBJECT_MESH_SKINNED__MESH_NAME, // object_mesh_skinned.mesh_name String
+		PARAM_OBJECT_MESH_SKINNED__MESH_PATH, // object_mesh_skinned.mesh_path String
+		PARAM_OBJECT_MESH_SKINNED__MESH_PROCEDURAL_MODE, // object_mesh_skinned.mesh_procedural_mode Bool
 		PARAM_OBJECT_MESH_SKINNED__NUM_LAYERS, // object_mesh_skinned.num_layers Int
-		PARAM_OBJECT_MESH_SKINNED__NUM_TARGETS_INDEXED, // object_mesh_skinned.num_targets_indexed Int
-		PARAM_OBJECT_MESH_SKINNED__NUM_TEX_COORDS0_INDEXED, // object_mesh_skinned.num_tex_coords0_indexed Int
-		PARAM_OBJECT_MESH_SKINNED__NUM_TEX_COORDS1_INDEXED, // object_mesh_skinned.num_tex_coords1_indexed Int
 		PARAM_OBJECT_MESH_SKINNED__PLAYING, // object_mesh_skinned.playing Bool
 		PARAM_OBJECT_MESH_SKINNED__QUATERNION, // object_mesh_skinned.quaternion Bool
 		PARAM_OBJECT_MESH_SKINNED__SPEED, // object_mesh_skinned.speed Float
@@ -1341,8 +1353,6 @@ public:
 		PARAM_OBJECT_MESH_STATIC__LIGHTMAP_SOURCE_SURFACE_INDEXED, // object_mesh_static.lightmap_source_surface_indexed Int
 		PARAM_OBJECT_MESH_STATIC__MESH_PATH, // object_mesh_static.mesh_path String
 		PARAM_OBJECT_MESH_STATIC__MESH_PROCEDURAL_MODE, // object_mesh_static.mesh_procedural_mode Bool
-		PARAM_OBJECT_MESH_STATIC__MESH_STREAMING_MODE_RAM, // object_mesh_static.mesh_streaming_mode_ram Int
-		PARAM_OBJECT_MESH_STATIC__MESH_STREAMING_MODE_VRAM, // object_mesh_static.mesh_streaming_mode_vram Int
 		PARAM_OBJECT_MESH_STATIC__SURFACE_CUSTOM_TEXTURE_SOURCE_SURFACE_INDEXED, // object_mesh_static.surface_custom_texture_source_surface_indexed Int
 
 		// ObjectParticles
@@ -1376,7 +1386,6 @@ public:
 		PARAM_OBJECT_PARTICLES__FPS_VISIBLE_SHADOW, // object_particles.fps_visible_shadow Int
 		PARAM_OBJECT_PARTICLES__LIFE_MEAN, // object_particles.life_mean Float
 		PARAM_OBJECT_PARTICLES__LIFE_SPREAD, // object_particles.life_spread Float
-		PARAM_OBJECT_PARTICLES__LINEAR_DAMPING, // object_particles.linear_damping Float
 		PARAM_OBJECT_PARTICLES__MAX_WARMING_TIME, // object_particles.max_warming_time Float
 		PARAM_OBJECT_PARTICLES__NUMBER_PER_SPAWN, // object_particles.number_per_spawn Int
 		PARAM_OBJECT_PARTICLES__PARTICLES_FIELD_MASK, // object_particles.particles_field_mask Int
@@ -1439,6 +1448,10 @@ public:
 		PARAM_OBJECT_PARTICLES__VELOCITY_OVER_TIME_MODIFIER__CONSTANT_MAX, // object_particles.velocity_over_time_modifier.constant_max Float
 		PARAM_OBJECT_PARTICLES__VELOCITY_OVER_TIME_MODIFIER__CONSTANT_MIN, // object_particles.velocity_over_time_modifier.constant_min Float
 		PARAM_OBJECT_PARTICLES__VELOCITY_OVER_TIME_MODIFIER__CURVE_SCALE, // object_particles.velocity_over_time_modifier.curve_scale Float
+		PARAM_OBJECT_PARTICLES__LINEAR_DAMPING_OVER_TIME_MODIFIER__CONSTANT, // object_particles.linear_damping_over_time_modifier.constant Float
+		PARAM_OBJECT_PARTICLES__LINEAR_DAMPING_OVER_TIME_MODIFIER__CONSTANT_MAX, // object_particles.linear_damping_over_time_modifier.constant_max Float
+		PARAM_OBJECT_PARTICLES__LINEAR_DAMPING_OVER_TIME_MODIFIER__CONSTANT_MIN, // object_particles.linear_damping_over_time_modifier.constant_min Float
+		PARAM_OBJECT_PARTICLES__LINEAR_DAMPING_OVER_TIME_MODIFIER__CURVE_SCALE, // object_particles.linear_damping_over_time_modifier.curve_scale Float
 		PARAM_OBJECT_PARTICLES__DIRECTION_OVER_TIME_MODIFIER__CONSTANT, // object_particles.direction_over_time_modifier.constant FVec3
 		PARAM_OBJECT_PARTICLES__DIRECTION_OVER_TIME_MODIFIER__CONSTANT_MAX, // object_particles.direction_over_time_modifier.constant_max FVec3
 		PARAM_OBJECT_PARTICLES__DIRECTION_OVER_TIME_MODIFIER__CONSTANT_MAX_X, // object_particles.direction_over_time_modifier.constant_max_x Float
@@ -1974,8 +1987,8 @@ public:
 
 		// Property
 		PARAM_PROPERTY__FILE_GUID, // property.file_guid UGUID
+		PARAM_PROPERTY__FILE_PATH, // property.file_path String
 		PARAM_PROPERTY__NAME, // property.name String
-		PARAM_PROPERTY__PATH, // property.path String
 
 		// PropertyParameter
 		PARAM_PROPERTY_PARAMETER__ARRAY_SIZE, // property_parameter.array_size Int
@@ -2170,6 +2183,7 @@ public:
 		PARAM_RENDER__DENOISE_COLOR_CLAMPING_BLUR_INTENSITY, // render.denoise_color_clamping_blur_intensity Float
 		PARAM_RENDER__DENOISE_COLOR_CLAMPING_BLUR_INTENSITY_AO, // render.denoise_color_clamping_blur_intensity_ao Float
 		PARAM_RENDER__DENOISE_COLOR_CLAMPING_BLUR_RADIUS, // render.denoise_color_clamping_blur_radius Float
+		PARAM_RENDER__DENOISE_COLOR_CLAMPING_BLUR_RESOLUTION, // render.denoise_color_clamping_blur_resolution Int
 		PARAM_RENDER__DENOISE_DENOISE_MASK_BIAS, // render.denoise_denoise_mask_bias Float
 		PARAM_RENDER__DENOISE_DENOISE_MASK_DENOISE_THRESHOLD, // render.denoise_denoise_mask_denoise_threshold Float
 		PARAM_RENDER__DENOISE_DENOISE_MASK_FRAME_COUNT, // render.denoise_denoise_mask_frame_count Float
@@ -2182,6 +2196,8 @@ public:
 		PARAM_RENDER__DENOISE_NUM_BLUR_ITERATIONS, // render.denoise_num_blur_iterations Int
 		PARAM_RENDER__DENOISE_PRESET, // render.denoise_preset Int
 		PARAM_RENDER__DENOISE_RADIUS, // render.denoise_radius Int
+		PARAM_RENDER__DENOISE_WRONG_VELOCITY_FIX_BY_DEPTH_ENABLED, // render.denoise_wrong_velocity_fix_by_depth_enabled Bool
+		PARAM_RENDER__DENOISE_WRONG_VELOCITY_FIX_BY_DEPTH_THRESHOLD, // render.denoise_wrong_velocity_fix_by_depth_threshold Float
 		PARAM_RENDER__DEPTH_PRE_PASS, // render.depth_pre_pass Bool
 		PARAM_RENDER__DIRECT_LIGHTING_INTERLEAVED, // render.direct_lighting_interleaved Bool
 		PARAM_RENDER__DIRECT_LIGHTING_INTERLEAVED_CATMULL_RESAMPLING, // render.direct_lighting_interleaved_catmull_resampling Bool
@@ -2200,6 +2216,8 @@ public:
 		PARAM_RENDER__ENVIRONMENT_HAZE_GRADIENT, // render.environment_haze_gradient Int
 		PARAM_RENDER__ENVIRONMENT_HAZE_MODE, // render.environment_haze_mode Int
 		PARAM_RENDER__ENVIRONMENT_HAZE_SCREEN_SPACE_GLOBAL_ILLUMINATION, // render.environment_haze_screen_space_global_illumination Bool
+		PARAM_RENDER__ENVIRONMENT_HAZE_SCREEN_SPACE_GLOBAL_ILLUMINATION_DISTANCE_MAX, // render.environment_haze_screen_space_global_illumination_distance_max Float
+		PARAM_RENDER__ENVIRONMENT_HAZE_SCREEN_SPACE_GLOBAL_ILLUMINATION_DISTANCE_MIN, // render.environment_haze_screen_space_global_illumination_distance_min Float
 		PARAM_RENDER__ENVIRONMENT_HAZE_TEMPORAL_FILTER, // render.environment_haze_temporal_filter Bool
 		PARAM_RENDER__ENVIRONMENT_HEMISPHERE, // render.environment_hemisphere Bool
 		PARAM_RENDER__EXPOSURE, // render.exposure Float
@@ -2207,6 +2225,7 @@ public:
 		PARAM_RENDER__EXPOSURE_MAX_LUMINANCE, // render.exposure_max_luminance Float
 		PARAM_RENDER__EXPOSURE_MIN_LUMINANCE, // render.exposure_min_luminance Float
 		PARAM_RENDER__EXPOSURE_MODE, // render.exposure_mode Int
+		PARAM_RENDER__FSR_AUTO_REACTIVE_ENABLED, // render.fsr_auto_reactive_enabled Bool
 		PARAM_RENDER__FSR_AUTO_REACTIVE_MAX, // render.fsr_auto_reactive_max Float
 		PARAM_RENDER__FSR_AUTO_REACTIVE_SCALE, // render.fsr_auto_reactive_scale Float
 		PARAM_RENDER__FSR_AUTO_TC_SCALE, // render.fsr_auto_tc_scale Float
@@ -2252,6 +2271,11 @@ public:
 		PARAM_RENDER__INDIRECT_DIFFUSE_TEMPORAL_FILTERING_FRAME_COUNT_MIN, // render.indirect_diffuse_temporal_filtering_frame_count_min Float
 		PARAM_RENDER__INDIRECT_DIFFUSE_TEMPORAL_FILTERING_FRAMES_CLAMPING_VELOCITY_THRESHOLD, // render.indirect_diffuse_temporal_filtering_frames_clamping_velocity_threshold Float
 		PARAM_RENDER__INDIRECT_LIGHTING_INTERLEAVED, // render.indirect_lighting_interleaved Bool
+		PARAM_RENDER__INDIRECT_LIGHTING_INTERLEAVED_CATMULL_RESAMPLING, // render.indirect_lighting_interleaved_catmull_resampling Bool
+		PARAM_RENDER__INDIRECT_LIGHTING_INTERLEAVED_COLOR_CLAMPING, // render.indirect_lighting_interleaved_color_clamping Int
+		PARAM_RENDER__INDIRECT_LIGHTING_INTERLEAVED_COLOR_CLAMPING_INTENSITY, // render.indirect_lighting_interleaved_color_clamping_intensity Float
+		PARAM_RENDER__INDIRECT_LIGHTING_INTERLEAVED_COLOR_CLAMPING_VELOCITY_THRESHOLD, // render.indirect_lighting_interleaved_color_clamping_velocity_threshold Float
+		PARAM_RENDER__INDIRECT_LIGHTING_INTERLEAVED_SAMPLES, // render.indirect_lighting_interleaved_samples Int
 		PARAM_RENDER__INDIRECT_SPECULAR_DENOISE_ENABLED, // render.indirect_specular_denoise_enabled Bool
 		PARAM_RENDER__INDIRECT_SPECULAR_DENOISE_MASK_ENABLED, // render.indirect_specular_denoise_mask_enabled Bool
 		PARAM_RENDER__INDIRECT_SPECULAR_DENOISE_THRESHOLD, // render.indirect_specular_denoise_threshold Float
@@ -2342,14 +2366,22 @@ public:
 		PARAM_RENDER__LIGHTS_MAX_PER_BATCH, // render.lights_max_per_batch Int
 		PARAM_RENDER__LIGHTS_TILE_GRID_SIZE, // render.lights_tile_grid_size Int
 		PARAM_RENDER__LOCAL_TONEMAPPER, // render.local_tonemapper Bool
+		PARAM_RENDER__LOCAL_TONEMAPPER_BLUR_RESOLUTION, // render.local_tonemapper_blur_resolution Int
+		PARAM_RENDER__LOCAL_TONEMAPPER_BLUR_UPSCALE, // render.local_tonemapper_blur_upscale Bool
+		PARAM_RENDER__LOCAL_TONEMAPPER_BLUR_UPSCALE_KERNEL_SIZE, // render.local_tonemapper_blur_upscale_kernel_size Int
+		PARAM_RENDER__LOCAL_TONEMAPPER_COLOR_DIFFERENCE_ENABLED, // render.local_tonemapper_color_difference_enabled Bool
+		PARAM_RENDER__LOCAL_TONEMAPPER_COLOR_DIFFERENCE_THRESHOLD, // render.local_tonemapper_color_difference_threshold Float
+		PARAM_RENDER__LOCAL_TONEMAPPER_DEBUG, // render.local_tonemapper_debug Bool
+		PARAM_RENDER__LOCAL_TONEMAPPER_DEPTH_DIFFERENCE_ENABLED, // render.local_tonemapper_depth_difference_enabled Bool
 		PARAM_RENDER__LOCAL_TONEMAPPER_DEPTH_THRESHOLD, // render.local_tonemapper_depth_threshold Float
 		PARAM_RENDER__LOCAL_TONEMAPPER_EFFECT_ON_DARK_AREAS, // render.local_tonemapper_effect_on_dark_areas Float
+		PARAM_RENDER__LOCAL_TONEMAPPER_EFFECT_ON_DARK_AREAS_GAMMA, // render.local_tonemapper_effect_on_dark_areas_gamma Float
 		PARAM_RENDER__LOCAL_TONEMAPPER_LUMA_BLURRED_INTENSITY, // render.local_tonemapper_luma_blurred_intensity Float
 		PARAM_RENDER__LOCAL_TONEMAPPER_NUM_BLUR_ITERATIONS, // render.local_tonemapper_num_blur_iterations Int
 		PARAM_RENDER__LOCAL_TONEMAPPER_TARGET_MIDDLE_GRAY, // render.local_tonemapper_target_middle_gray Float
 		PARAM_RENDER__LOCAL_TONEMAPPER_TONEMAPPING_INTENSITY, // render.local_tonemapper_tonemapping_intensity Float
+		PARAM_RENDER__MATERIALS_QUALITY, // render.materials_quality Int
 		PARAM_RENDER__MAX_FPS, // render.max_fps Int
-		PARAM_RENDER__MAX_NUM_ACTIVE_TARGETS, // render.max_num_active_targets Int
 		PARAM_RENDER__METERING_MASK_ENABLED, // render.metering_mask_enabled Bool
 		PARAM_RENDER__METERING_MASK_TEXTURE_PATH, // render.metering_mask_texture_path String
 		PARAM_RENDER__MOTION_BLUR, // render.motion_blur Bool
@@ -2363,6 +2395,7 @@ public:
 		PARAM_RENDER__MOTION_BLUR_VELOCITY_BLUR_RADIUS, // render.motion_blur_velocity_blur_radius Float
 		PARAM_RENDER__MOTION_BLUR_VELOCITY_BLUR_SAMPLES, // render.motion_blur_velocity_blur_samples Int
 		PARAM_RENDER__MOTION_BLUR_VELOCITY_SCALE, // render.motion_blur_velocity_scale Float
+		PARAM_RENDER__MULTITHREADED, // render.multithreaded Bool
 		PARAM_RENDER__NOISE, // render.noise Bool
 		PARAM_RENDER__NOISE_INTENSITY, // render.noise_intensity Float
 		PARAM_RENDER__OBJECT_DISTANCE, // render.object_distance Float
@@ -2459,7 +2492,6 @@ public:
 		PARAM_RENDER__SSR_STEP_SIZE, // render.ssr_step_size Float
 		PARAM_RENDER__SSRTGI_FAST_TRACING, // render.ssrtgi_fast_tracing Bool
 		PARAM_RENDER__SSRTGI_INCREASED_ACCURACY, // render.ssrtgi_increased_accuracy Bool
-		PARAM_RENDER__SSRTGI_NOISE_STEP, // render.ssrtgi_noise_step Float
 		PARAM_RENDER__SSRTGI_NUM_RAYS, // render.ssrtgi_num_rays Int
 		PARAM_RENDER__SSRTGI_NUM_STEPS, // render.ssrtgi_num_steps Int
 		PARAM_RENDER__SSRTGI_PRESET, // render.ssrtgi_preset Int
@@ -2492,6 +2524,7 @@ public:
 		PARAM_RENDER__SSSSS_QUALITY, // render.sssss_quality Int
 		PARAM_RENDER__SSSSS_RADIUS, // render.sssss_radius Float
 		PARAM_RENDER__SSSSS_RESOLUTION, // render.sssss_resolution Int
+		PARAM_RENDER__SSSSSTAA, // render.ssssstaa Bool
 		PARAM_RENDER__SSSSSTAA_ANTIALIASING_IN_MOTION, // render.ssssstaa_antialiasing_in_motion Bool
 		PARAM_RENDER__SSSSSTAA_CATMULL_RESAMPLING, // render.ssssstaa_catmull_resampling Bool
 		PARAM_RENDER__SSSSSTAA_FIX_FLICKER, // render.ssssstaa_fix_flicker Bool
@@ -2588,6 +2621,7 @@ public:
 		PARAM_RENDER__SHOW_SURFACE_CUSTOM_TEXTURE_NOT_USED, // render.show_surface_custom_texture_not_used Bool
 		PARAM_RENDER__SHOW_TEXTURE_RESOLUTION, // render.show_texture_resolution Int
 		PARAM_RENDER__SHOW_TEXTURE_RESOLUTION_BLEND, // render.show_texture_resolution_blend Float
+		PARAM_RENDER__SHOW_TEXTURE_RESOLUTION_STREAMING_ACCOUNTING_MODE, // render.show_texture_resolution_streaming_accounting_mode Int
 		PARAM_RENDER__SHOW_TEXTURE_RESOLUTION_UV_MODE, // render.show_texture_resolution_uv_mode Int
 		PARAM_RENDER__SHOW_TEXTURES, // render.show_textures Int
 		PARAM_RENDER__SHOW_TEXTURES_NUMBER, // render.show_textures_number Int
@@ -2619,27 +2653,27 @@ public:
 		PARAM_RENDER__STEREO_HIDDEN_AREA_TRANSFORM_Z, // render.stereo_hidden_area_transform_z Float
 		PARAM_RENDER__STEREO_OFFSET, // render.stereo_offset Float
 		PARAM_RENDER__STEREO_RADIUS, // render.stereo_radius Float
-		PARAM_RENDER__STREAMING_BUDGET_DESTROY_MESHES, // render.streaming_budget_destroy_meshes Float
-		PARAM_RENDER__STREAMING_BUDGET_DESTROY_TEXTURES, // render.streaming_budget_destroy_textures Float
-		PARAM_RENDER__STREAMING_BUDGET_LOADING, // render.streaming_budget_loading Float
-		PARAM_RENDER__STREAMING_MAX_THREADS, // render.streaming_max_threads Int
-		PARAM_RENDER__STREAMING_MESHES_LIFE_TIME_RAM, // render.streaming_meshes_life_time_ram Int
-		PARAM_RENDER__STREAMING_MESHES_LIFE_TIME_VRAM, // render.streaming_meshes_life_time_vram Int
-		PARAM_RENDER__STREAMING_MESHES_LIMIT_RAM, // render.streaming_meshes_limit_ram Int
-		PARAM_RENDER__STREAMING_MESHES_LIMIT_VRAM, // render.streaming_meshes_limit_vram Int
+		PARAM_RENDER__STREAMING_ANIMATIONS_LIFE_TIME, // render.streaming_animations_life_time Int
+		PARAM_RENDER__STREAMING_FREE_SPACE_RAM, // render.streaming_free_space_ram Int
+		PARAM_RENDER__STREAMING_FREE_SPACE_VRAM, // render.streaming_free_space_vram Int
 		PARAM_RENDER__STREAMING_MESHES_MODE_RAM, // render.streaming_meshes_mode_ram Int
 		PARAM_RENDER__STREAMING_MESHES_MODE_VRAM, // render.streaming_meshes_mode_vram Int
 		PARAM_RENDER__STREAMING_MESHES_PREFETCH_COLLISION, // render.streaming_meshes_prefetch_collision Int
 		PARAM_RENDER__STREAMING_MESHES_PREFETCH_INTERSECTION, // render.streaming_meshes_prefetch_intersection Int
 		PARAM_RENDER__STREAMING_MESHES_PREFETCH_RADIUS, // render.streaming_meshes_prefetch_radius Float
 		PARAM_RENDER__STREAMING_PARTICLES_MEMORY_LIMIT, // render.streaming_particles_memory_limit Int
-		PARAM_RENDER__STREAMING_TEXTURES_LIFE_TIME, // render.streaming_textures_life_time Int
-		PARAM_RENDER__STREAMING_TEXTURES_MEMORY_LIMIT, // render.streaming_textures_memory_limit Int
+		PARAM_RENDER__STREAMING_TEXTURES_MIPMAPS, // render.streaming_textures_mipmaps Bool
+		PARAM_RENDER__STREAMING_TEXTURES_MIPMAPS_DENSITY, // render.streaming_textures_mipmaps_density Float
 		PARAM_RENDER__STREAMING_TEXTURES_MODE, // render.streaming_textures_mode Int
+		PARAM_RENDER__STREAMING_USAGE_LIMIT_RAM, // render.streaming_usage_limit_ram Int
+		PARAM_RENDER__STREAMING_USAGE_LIMIT_VRAM, // render.streaming_usage_limit_vram Int
+		PARAM_RENDER__STREAMING_VRAM_BUDGET, // render.streaming_vram_budget Int
+		PARAM_RENDER__STREAMING_VRAM_OVERCOMMIT, // render.streaming_vram_overcommit Bool
 		PARAM_RENDER__SUPERSAMPLING, // render.supersampling Float
 		PARAM_RENDER__TAA, // render.taa Bool
 		PARAM_RENDER__TAA_ANTIALIASING_IN_MOTION, // render.taa_antialiasing_in_motion Bool
 		PARAM_RENDER__TAA_CATMULL_RESAMPLING, // render.taa_catmull_resampling Bool
+		PARAM_RENDER__TAA_CATMULL_RESAMPLING_SHARPNESS, // render.taa_catmull_resampling_sharpness Float
 		PARAM_RENDER__TAA_DIAGONAL_NEIGHBORS, // render.taa_diagonal_neighbors Bool
 		PARAM_RENDER__TAA_EDGES_FRAME_COUNT_MULTIPLIER, // render.taa_edges_frame_count_multiplier Float
 		PARAM_RENDER__TAA_FIX_FLICKER, // render.taa_fix_flicker Bool
@@ -2647,6 +2681,8 @@ public:
 		PARAM_RENDER__TAA_FRAMES_BY_COLOR, // render.taa_frames_by_color Bool
 		PARAM_RENDER__TAA_FRAMES_BY_VELOCITY, // render.taa_frames_by_velocity Bool
 		PARAM_RENDER__TAA_FRAMES_VELOCITY_THRESHOLD, // render.taa_frames_velocity_threshold Float
+		PARAM_RENDER__TAA_INFORMATION_LOST_DEPTH_THRESHOLD, // render.taa_information_lost_depth_threshold Float
+		PARAM_RENDER__TAA_INFORMATION_LOST_FRAME_COUNT, // render.taa_information_lost_frame_count Float
 		PARAM_RENDER__TAA_MAX_FRAMES_BY_VELOCITY, // render.taa_max_frames_by_velocity Float
 		PARAM_RENDER__TAA_MIN_FRAMES_BY_VELOCITY, // render.taa_min_frames_by_velocity Float
 		PARAM_RENDER__TAA_PIXEL_OFFSET, // render.taa_pixel_offset Float
@@ -2858,6 +2894,7 @@ public:
 		PARAM_RENDERER__OBLIQUE_FRUSTUM_PLANE_Z, // renderer.oblique_frustum_plane_z Scalar
 		PARAM_RENDERER__OLD_MODELVIEW, // renderer.old_modelview Mat4
 		PARAM_RENDERER__USE_TAA_OFFSET, // renderer.use_taa_offset Bool
+		PARAM_RENDERER__VR, // renderer.vr Bool
 
 		// Shape
 		PARAM_SHAPE__COLLISION_MASK, // shape.collision_mask Int
@@ -3171,6 +3208,9 @@ public:
 		PARAM_WIDGET_EDIT_LINE__SELECTION_COLOR_X, // widget_edit_line.selection_color_x Float
 		PARAM_WIDGET_EDIT_LINE__SELECTION_COLOR_Y, // widget_edit_line.selection_color_y Float
 		PARAM_WIDGET_EDIT_LINE__SELECTION_COLOR_Z, // widget_edit_line.selection_color_z Float
+		PARAM_WIDGET_EDIT_LINE__STYLE_TEXTURE_BACKGROUND, // widget_edit_line.style_texture_background String
+		PARAM_WIDGET_EDIT_LINE__STYLE_TEXTURE_BORDER, // widget_edit_line.style_texture_border String
+		PARAM_WIDGET_EDIT_LINE__STYLE_TEXTURE_SELECTION, // widget_edit_line.style_texture_selection String
 		PARAM_WIDGET_EDIT_LINE__TEXT, // widget_edit_line.text String
 		PARAM_WIDGET_EDIT_LINE__VALIDATOR, // widget_edit_line.validator Int
 
@@ -3182,6 +3222,7 @@ public:
 		PARAM_WIDGET_EDIT_TEXT__BACKGROUND_COLOR_Y, // widget_edit_text.background_color_y Float
 		PARAM_WIDGET_EDIT_TEXT__BACKGROUND_COLOR_Z, // widget_edit_text.background_color_z Float
 		PARAM_WIDGET_EDIT_TEXT__EDITABLE, // widget_edit_text.editable Bool
+		PARAM_WIDGET_EDIT_TEXT__LINE_TEXT_INDEXED, // widget_edit_text.line_text_indexed String
 		PARAM_WIDGET_EDIT_TEXT__NUMBER_COLOR, // widget_edit_text.number_color FVec4
 		PARAM_WIDGET_EDIT_TEXT__NUMBER_COLOR_W, // widget_edit_text.number_color_w Float
 		PARAM_WIDGET_EDIT_TEXT__NUMBER_COLOR_X, // widget_edit_text.number_color_x Float
@@ -3192,6 +3233,8 @@ public:
 		PARAM_WIDGET_EDIT_TEXT__SELECTION_COLOR_X, // widget_edit_text.selection_color_x Float
 		PARAM_WIDGET_EDIT_TEXT__SELECTION_COLOR_Y, // widget_edit_text.selection_color_y Float
 		PARAM_WIDGET_EDIT_TEXT__SELECTION_COLOR_Z, // widget_edit_text.selection_color_z Float
+		PARAM_WIDGET_EDIT_TEXT__STYLE_TEXTURE_BACKGROUND, // widget_edit_text.style_texture_background String
+		PARAM_WIDGET_EDIT_TEXT__STYLE_TEXTURE_SELECTION, // widget_edit_text.style_texture_selection String
 		PARAM_WIDGET_EDIT_TEXT__TEXT, // widget_edit_text.text String
 		PARAM_WIDGET_EDIT_TEXT__TOKEN_COLOR_NAMED, // widget_edit_text.token_color_named FVec4
 		PARAM_WIDGET_EDIT_TEXT__TOKEN_COLOR_W_NAMED, // widget_edit_text.token_color_w_named Float
@@ -3569,6 +3612,7 @@ public:
 		PARAM_WIDGET_WINDOW__TITLEABLE, // widget_window.titleable Bool
 
 		// World
+		PARAM_WORLD__ASYNC_LOAD_NODE_REFERENCES, // world.async_load_node_references Bool
 		PARAM_WORLD__AUTO_RELOAD_NODE_REFERENCES, // world.auto_reload_node_references Bool
 		PARAM_WORLD__BUDGET, // world.budget Float
 		PARAM_WORLD__DATA_NAMED, // world.data_named String

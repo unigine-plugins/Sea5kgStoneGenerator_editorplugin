@@ -26,7 +26,7 @@
 			Creates a package with a given name.
 			</summary> 
 			<param name="name"> Package name. </param> 
-			<returns>1 if a package was created successfully; otherwise, 0.</returns>
+			<returns>true if a package was created successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.PackageUng.getCompressionType const">
 			<summary>
@@ -58,32 +58,32 @@
 			Loads a package with a given name.
 			</summary> 
 			<param name="name"> Package name. </param> 
-			<returns>1 if a package was loaded successfully; otherwise, 0.</returns>
+			<returns>true if a package was loaded successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.PackageUng.readFile(unsignedchar,int)">
+		<member name="M:Unigine.PackageUng.readFile(byte[],unsignedchar,size_t)">
 			<summary>
 			Reads the contents of the currently selected file and puts it into the data array.					This operation is performed for a currently selected file. To select a file use selectFile().
 			</summary> 
 			<param name="data"> Data array. </param>
 			<param name="size"> File size, in bytes. </param> 
-			<returns>1 if a file was read successfully; otherwise, 0.</returns>
+			<returns>true if a file was read successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.PackageUng.selectFile(char,int)">
+		<member name="M:Unigine.PackageUng.selectFile(char,size_t)">
 			<summary>
 			Selects a file with a given name as a current one and puts its size to size.
 			</summary> 
 			<param name="name"> File name. </param>
 			<param name="size"> Integer variable to store the size of the selected file. </param> 
-			<returns>1 if a file was selected successfully; otherwise, 0.</returns>
+			<returns>true if a file was selected successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.PackageUng.writeFile(char,unsignedchar,int)">
+		<member name="M:Unigine.PackageUng.writeFile(char,unsignedchar,size_t)">
 			<summary>
 			Writes data to a file with a given name.
 			</summary> 
 			<param name="name"> File name. </param>
 			<param name="data"> Data to be written. </param>
 			<param name="size"> Size of the data to be written, in bytes. </param> 
-			<returns>1 if the data was successfully written to a file; otherwise, 0.</returns>
+			<returns>true if the data was successfully written to a file; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.PackageUng.containsFile(char) const">
 			<summary>
@@ -112,6 +112,10 @@
 			</summary> 
 			<param name="name"> File name. </param> 
 			<returns>File ID. A number between 0 and the total number of files in the package, or -1, if the file doesn't exist.</returns>
+		</member>
+		<member name="M:Unigine.PackageUng.getFileSize(int) const">
+			<summary>
+			</summary>  
 		</member>
 		<member name="F:Unigine.PackageUng.COMPRESSION_NONE">
 			<summary>

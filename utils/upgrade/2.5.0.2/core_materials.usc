@@ -1,0 +1,77 @@
+#!/usr/bin/env usc
+
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
+
+/*
+ */
+#include <utils.h>
+#include <log.h>
+#include <material.h>
+
+/*
+ */
+void main() {
+	
+	string paths[0];
+	
+	for(int i = 1; i < getNumArgs(); i++)
+		paths.append(getDirPath(getArg(i)));
+	
+	if(paths.size() == 0)
+		paths.append("./");
+	
+	Material materials[0];
+	
+	//
+	foreach(string path; paths) {
+		
+		string files[0] = ();
+		if(!findFilesByExt(files,path,".mat|.basemat"))
+			continue;
+		
+		foreach(string file; files)
+			materials.append(Material::load(file));
+	}
+	
+	Xml base_mat_xml = new Xml();
+	Xml override_mat_xml = new Xml();
+	
+	foreach(Material material; materials) {
+		if(material.isBaseMaterial()) {
+			Xml xml = base_mat_xml.addChild("base_material");
+			
+			xml.setArg("name",material.getName());
+			
+			foreachkey(string name; material.states)
+				xml.addChild("state", format("name=\"%s\"",name));
+			
+			foreachkey(string name; material.textures)
+				xml.addChild("texture", format("name=\"%s\"",name));
+			
+			foreachkey(string name; material.parameters)
+				xml.addChild("parameter", format("name=\"%s\"",name));
+		} else {
+			Xml xml = override_mat_xml.addChild("material");
+			xml.setArg("name",material.getName());
+			if(material.getParentName() != "")
+				xml.setArg("parent", material.getParentName());
+			else
+				xml.setArg("parent", material.getBaseMaterial());
+			xml.setArg("base_material", material.getBaseMaterial());
+		}
+	}
+	
+	base_mat_xml.save("core_base_materials.xml");
+	override_mat_xml.save("core_override_materials.xml");
+}

@@ -77,30 +77,35 @@ static_assert(sizeof(quat) == 4 * sizeof(float), "struct size must remain unchan
 //////////////////////////////////////////////////////////////////////////
 // vec2
 //////////////////////////////////////////////////////////////////////////
+/// <summary>Constructor. Initializes the vector using a given three-component vec3 source vector: x=v.x, y=v.y.</summary>
 UNIGINE_INLINE vec2::vec2(const vec3 &v)
 	: x(v.x)
 	, y(v.y)
 {
 	UNIGINE_ASSERT_ALIGNED8(this);
 }
+/// <summary>Constructor. Initializes the vector using a given four-component vec4 source vector: x=v.x, y=v.y.</summary>
 UNIGINE_INLINE vec2::vec2(const vec4 &v)
 	: x(v.x)
 	, y(v.y)
 {
 	UNIGINE_ASSERT_ALIGNED8(this);
 }
+/// <summary>Constructor. Initializes the vector using a given dvec2 source vector.</summary>
 UNIGINE_INLINE vec2::vec2(const dvec2 &v)
 	: x(toFloat(v.x))
 	, y(toFloat(v.y))
 {
 	UNIGINE_ASSERT_ALIGNED8(this);
 }
+/// <summary>Constructor. Initializes the vector using a given ivec2 source vector.</summary>
 UNIGINE_INLINE vec2::vec2(const ivec2 &v)
 	: x(toFloat(v.x))
 	, y(toFloat(v.y))
 {
 	UNIGINE_ASSERT_ALIGNED8(this);
 }
+/// <summary>Constructor. Initializes the vector using a given hvec2 source vector.</summary>
 UNIGINE_INLINE vec2::vec2(const hvec2 &v)
 	: x(toFloat(v.x))
 	, y(toFloat(v.y))
@@ -108,13 +113,17 @@ UNIGINE_INLINE vec2::vec2(const hvec2 &v)
 	UNIGINE_ASSERT_ALIGNED8(this);
 }
 
+/// <summary>Performs componentwise division of vectors.</summary>
 UNIGINE_INLINE vec2 operator/(const vec2 &v0, const ivec2 &v1) { return vec2(v0.x / v1.x, v0.y / v1.y); }
+/// <summary>Returns the result of division of the vector by the value of the specified arguments.</summary>
 UNIGINE_INLINE vec2 &vec2::operator/=(const ivec2 &val) { x /= val.x; y /= val.y; return *this; }
 
+/// <summary>Returns a vector containing the largest integral values each being less than or equal to the corresponding vector component.</summary>
 UNIGINE_INLINE ivec2 vec2::floor() const
 {
 	return ivec2(toInt(Math::floor(x)), toInt(Math::floor(y)));
 }
+/// <summary>Returns a vector containing the smallest integral values each being greater than or equal to the corresponding vector component.</summary>
 UNIGINE_INLINE ivec2 vec2::ceil() const
 {
 	return ivec2(toInt(Math::ceil(x)), toInt(Math::ceil(y)));
@@ -123,6 +132,7 @@ UNIGINE_INLINE ivec2 vec2::ceil() const
 //////////////////////////////////////////////////////////////////////////
 // vec3
 //////////////////////////////////////////////////////////////////////////
+/// <summary>Constructor. Initializes the vector using a given four-component vec4 source vector: x=v.x, y=v.y, z=v.z.</summary>
 UNIGINE_INLINE vec3::vec3(const vec4 &v)
 {
 	UNIGINE_ASSERT_ALIGNED16(this);
@@ -135,6 +145,7 @@ UNIGINE_INLINE vec3::vec3(const vec4 &v)
 		w = 0.0f;
 	#endif
 }
+/// <summary>Constructor. Initializes the vector using a given hvec3 source vector.</summary>
 UNIGINE_INLINE vec3::vec3(const hvec3 &v)
 	: x(toFloat(v.x))
 	, y(toFloat(v.y))
@@ -143,6 +154,7 @@ UNIGINE_INLINE vec3::vec3(const hvec3 &v)
 {
 	UNIGINE_ASSERT_ALIGNED16(this);
 }
+/// <summary>Constructor. Initializes the vector using a given dvec3 source vector.</summary>
 UNIGINE_INLINE vec3::vec3(const dvec3 &v)
 	: x(toFloat(v.x))
 	, y(toFloat(v.y))
@@ -168,6 +180,7 @@ UNIGINE_INLINE vec3::vec3(const dvec3 &v)
 	}
 #endif
 
+/// <summary>Sets the vector using a vec4 source vector: x=v.x, y=v.y, z=v.z.</summary>
 UNIGINE_INLINE void vec3::set(const vec4 &v)
 {
 	#ifdef USE_SSE
@@ -183,6 +196,7 @@ UNIGINE_INLINE void vec3::set(const vec4 &v)
 //////////////////////////////////////////////////////////////////////////
 // vec4
 //////////////////////////////////////////////////////////////////////////
+/// <summary>Constructor. Initializes the vector using a given dvec4 source vector.</summary>
 UNIGINE_INLINE vec4::vec4(const dvec4 &v)
 	: x(toFloat(v.x))
 	, y(toFloat(v.y))
@@ -191,6 +205,7 @@ UNIGINE_INLINE vec4::vec4(const dvec4 &v)
 {
 	UNIGINE_ASSERT_ALIGNED16(this);
 }
+/// <summary>Constructor. Initializes the vector using given two dvec2 source vectors.</summary>
 UNIGINE_INLINE vec4::vec4(const dvec2 &v0, const dvec2 & v1)
 	: x(toFloat(v0.x))
 	, y(toFloat(v0.y))
@@ -199,6 +214,7 @@ UNIGINE_INLINE vec4::vec4(const dvec2 &v0, const dvec2 & v1)
 {
 	UNIGINE_ASSERT_ALIGNED16(this);
 }
+/// <summary>Constructor. Initializes the vector using a given hvec4 source vector.</summary>
 UNIGINE_INLINE vec4::vec4(const hvec4 &v)
 	: x(toFloat(v.x))
 	, y(toFloat(v.y))
@@ -207,6 +223,7 @@ UNIGINE_INLINE vec4::vec4(const hvec4 &v)
 {
 	UNIGINE_ASSERT_ALIGNED16(this);
 }
+/// <summary>Constructor. Initializes the vector using a given svec4 source vector.</summary>
 UNIGINE_INLINE vec4::vec4(const svec4 &v)
 	: x(toFloat(v.x))
 	, y(toFloat(v.y))
@@ -215,6 +232,7 @@ UNIGINE_INLINE vec4::vec4(const svec4 &v)
 {
 	UNIGINE_ASSERT_ALIGNED16(this);
 }
+/// <summary>Constructor. Initializes the vector using a given bvec4 source vector.</summary>
 UNIGINE_INLINE vec4::vec4(const bvec4 &v)
 	: x(toFloat(v.x))
 	, y(toFloat(v.y))
@@ -239,6 +257,7 @@ UNIGINE_INLINE vec4::vec4(const bvec4 &v)
 	{}
 #endif
 
+/// <summary>Sets the vector using a quaternion.</summary>
 UNIGINE_INLINE void vec4::set(const quat &q)
 {
 	#ifdef USE_SSE
@@ -251,6 +270,7 @@ UNIGINE_INLINE void vec4::set(const quat &q)
 	#endif
 }
 
+/// <summary>Converts a color string in the Web format (RRGGBB / #RRGGBB or RRGGBBAA / #RRGGBBAA) into its vec4 equivalent.</summary>
 UNIGINE_INLINE vec4 vec4::parseColor(const char *str)
 {
 	int length = (int)strlen(str);
@@ -271,24 +291,28 @@ UNIGINE_INLINE vec4 vec4::parseColor(const char *str)
 //////////////////////////////////////////////////////////////////////////
 // dvec2
 //////////////////////////////////////////////////////////////////////////
+/// <summary>Constructor. Initializes the vector using a given three-component vec3 vector: x=v.x, y=v.y.</summary>
 UNIGINE_INLINE dvec2::dvec2(const dvec3 &v)
 	: x(v.x)
 	, y(v.y)
 {
 	UNIGINE_ASSERT_ALIGNED16(this);
 }
+/// <summary>Constructor. Initializes the vector using a given four-component vec4 source vector: x=v.x, y=v.y.</summary>
 UNIGINE_INLINE dvec2::dvec2(const dvec4 &v)
 	: x(v.x)
 	, y(v.y)
 {
 	UNIGINE_ASSERT_ALIGNED16(this);
 }
+/// <summary>Constructor. Initializes the vector using a given ivec2 source vector.</summary>
 UNIGINE_INLINE dvec2::dvec2(const ivec2 &v)
 	: x(toDouble(v.x))
 	, y(toDouble(v.y))
 {
 	UNIGINE_ASSERT_ALIGNED16(this);
 }
+/// <summary>Constructor. Initializes the vector using a given hvec2 source vector.</summary>
 UNIGINE_INLINE dvec2::dvec2(const hvec2 &v)
 	: x(toDouble(v.x))
 	, y(toDouble(v.y))
@@ -296,10 +320,12 @@ UNIGINE_INLINE dvec2::dvec2(const hvec2 &v)
 	UNIGINE_ASSERT_ALIGNED16(this);
 }
 
+/// <summary>Returns a vector containing the largest integral values each being less than or equal to the corresponding vector component.</summary>
 UNIGINE_INLINE ivec2 dvec2::floor() const
 {
 	return ivec2(toInt(Math::floor(x)), toInt(Math::floor(y)));
 }
+/// <summary>Returns a vector containing the smallest integral values each being greater than or equal to the corresponding vector component.</summary>
 UNIGINE_INLINE ivec2 dvec2::ceil() const
 {
 	return ivec2(toInt(Math::ceil(x)), toInt(Math::ceil(y)));
@@ -308,6 +334,7 @@ UNIGINE_INLINE ivec2 dvec2::ceil() const
 //////////////////////////////////////////////////////////////////////////
 // dvec3
 //////////////////////////////////////////////////////////////////////////
+/// <summary>Constructor. Initializes the vector using a given four-component dvec4 source vector: x=v.x, y=v.y, z=v.z.</summary>
 UNIGINE_INLINE dvec3::dvec3(const dvec4 &v): x(v.x), y(v.y), z(v.z), align(0) {}
 UNIGINE_INLINE dvec3::dvec3(const hvec3 &v)
 	: x(toDouble(v.x))
@@ -317,6 +344,7 @@ UNIGINE_INLINE dvec3::dvec3(const hvec3 &v)
 {
 	UNIGINE_ASSERT_ALIGNED16(this);
 }
+/// <summary>Constructor. Initializes the vector using a given ivec3 source vector.</summary>
 UNIGINE_INLINE dvec3::dvec3(const ivec3 &v)
 	: x(toDouble(v.x))
 	, y(toDouble(v.y))
@@ -329,6 +357,7 @@ UNIGINE_INLINE dvec3::dvec3(const ivec3 &v)
 //////////////////////////////////////////////////////////////////////////
 // dvec4
 //////////////////////////////////////////////////////////////////////////
+/// <summary>Constructor. Initializes the vector using a given hvec4 source vector.</summary>
 UNIGINE_INLINE dvec4::dvec4(const hvec4 &v)
 	: x(toDouble(v.x))
 	, y(toDouble(v.y))
@@ -337,6 +366,7 @@ UNIGINE_INLINE dvec4::dvec4(const hvec4 &v)
 {
 	UNIGINE_ASSERT_ALIGNED16(this);
 }
+/// <summary>Constructor. Initializes the vector using a given ivec4 source vector.</summary>
 UNIGINE_INLINE dvec4::dvec4(const ivec4 &v)
 	: x(toDouble(v.x))
 	, y(toDouble(v.y))
@@ -345,6 +375,7 @@ UNIGINE_INLINE dvec4::dvec4(const ivec4 &v)
 {
 	UNIGINE_ASSERT_ALIGNED16(this);
 }
+/// <summary>Constructor. Initializes the vector using a given svec4 source vector.</summary>
 UNIGINE_INLINE dvec4::dvec4(const svec4 &v)
 	: x(toDouble(v.x))
 	, y(toDouble(v.y))
@@ -353,6 +384,7 @@ UNIGINE_INLINE dvec4::dvec4(const svec4 &v)
 {
 	UNIGINE_ASSERT_ALIGNED16(this);
 }
+/// <summary>Constructor. Initializes the vector using a given bvec4 source vector.</summary>
 UNIGINE_INLINE dvec4::dvec4(const bvec4 &v)
 	: x(toDouble(v.x))
 	, y(toDouble(v.y))
@@ -365,6 +397,7 @@ UNIGINE_INLINE dvec4::dvec4(const bvec4 &v)
 //////////////////////////////////////////////////////////////////////////
 // ivec3
 //////////////////////////////////////////////////////////////////////////
+/// <summary>Constructor. Initializes the vector using a given ivec4 source vector.</summary>
 UNIGINE_INLINE ivec3::ivec3(const ivec4 &v)
 	: x(v.x)
 	, y(v.y)
@@ -377,6 +410,7 @@ UNIGINE_INLINE ivec3::ivec3(const ivec4 &v)
 //////////////////////////////////////////////////////////////////////////
 // ivec4
 //////////////////////////////////////////////////////////////////////////
+/// <summary>Constructor. Initializes the vector using a given svec4 source vector.</summary>
 UNIGINE_INLINE ivec4::ivec4(const svec4 &v)
 	: x(v.x)
 	, y(v.y)
@@ -385,6 +419,7 @@ UNIGINE_INLINE ivec4::ivec4(const svec4 &v)
 {
 	UNIGINE_ASSERT_ALIGNED16(this);
 }
+/// <summary>Constructor. Initializes the vector using a given bvec4 source vector.</summary>
 UNIGINE_INLINE ivec4::ivec4(const bvec4 & v)
 	: x(v.x)
 	, y(v.y)
@@ -397,6 +432,7 @@ UNIGINE_INLINE ivec4::ivec4(const bvec4 & v)
 //////////////////////////////////////////////////////////////////////////
 // mat2
 //////////////////////////////////////////////////////////////////////////
+/// <summary>Sets the matrix using a given mat3 source matrix (3x3). Values m00, m01, m10, m11 from the source matrix are used.</summary>
 UNIGINE_INLINE void mat2::set(const mat3 &m)
 {
 	m00 = m.m00;
@@ -404,6 +440,7 @@ UNIGINE_INLINE void mat2::set(const mat3 &m)
 	m10 = m.m10;
 	m11 = m.m11;
 }
+/// <summary>Sets the matrix using a given mat4 source matrix (4x4). Values m00, m01, m10, m11 from the source matrix are used.</summary>
 UNIGINE_INLINE void mat2::set(const mat4 &m)
 {
 	m00 = m.m00;
@@ -411,6 +448,7 @@ UNIGINE_INLINE void mat2::set(const mat4 &m)
 	m10 = m.m10;
 	m11 = m.m11;
 }
+/// <summary>Sets the matrix using a given dmat4 source matrix (3x4). Values m00, m01, m10, m11 from the source matrix are used.</summary>
 UNIGINE_INLINE void mat2::set(const dmat4 &m)
 {
 	m00 = toFloat(m.m00);
@@ -422,6 +460,7 @@ UNIGINE_INLINE void mat2::set(const dmat4 &m)
 //////////////////////////////////////////////////////////////////////////
 // mat3
 //////////////////////////////////////////////////////////////////////////
+/// <summary>Sets the matrix using a given mat4 source matrix (4x4). The matrix elements are set equal to corresponding elements of the source matrix.</summary>
 UNIGINE_INLINE void mat3::set(const mat4 &m)
 {
 	#ifdef USE_SSE
@@ -440,6 +479,7 @@ UNIGINE_INLINE void mat3::set(const mat4 &m)
 		m22 = m.m22;
 	#endif
 }
+/// <summary>Sets the matrix using a given dmat4 source matrix (3x4). The matrix elements are set equal to corresponding elements of the source matrix.</summary>
 UNIGINE_INLINE void mat3::set(const dmat4 &m)
 {
 	m00 = toFloat(m.m00);
@@ -452,10 +492,12 @@ UNIGINE_INLINE void mat3::set(const dmat4 &m)
 	m21 = toFloat(m.m21);
 	m22 = toFloat(m.m22);
 }
+/// <summary>Sets the matrix using a given source quaternion.</summary>
 UNIGINE_INLINE void mat3::set(const quat &q)
 {
 	*this = q.getMat3();
 }
+/// <summary>Returns the quaternion of the matrix values.</summary>
 UNIGINE_INLINE quat mat3::getQuat() const
 {
 	quat ret;
@@ -499,6 +541,7 @@ UNIGINE_INLINE quat mat3::getQuat() const
 //////////////////////////////////////////////////////////////////////////
 // mat4
 //////////////////////////////////////////////////////////////////////////
+/// <summary>Sets new matrix values using a given dmat4 source matrix (3x4). The matrix elements are filled using corresponding elements of the source matrix.</summary>
 UNIGINE_INLINE void mat4::set(const dmat4 &m)
 {
 	m00 = toFloat(m.m00);
@@ -518,6 +561,7 @@ UNIGINE_INLINE void mat4::set(const dmat4 &m)
 	m32 = 0.0f;
 	m33 = 1.0f;
 }
+/// <summary>Sets new matrix values using a given source quaternion.</summary>
 UNIGINE_INLINE void mat4::set(const quat &q)
 {
 	mat3 m = q.getMat3();
@@ -538,6 +582,7 @@ UNIGINE_INLINE void mat4::set(const quat &q)
 	m32 = 0.0f;
 	m33 = 1.0f;
 }
+/// <summary>Sets new matrix values using a given quaternion for rotation and scale values and a vec3 vector for translation values.</summary>
 UNIGINE_INLINE void mat4::set(const quat &q, const vec3 &v)
 {
 	mat3 m = q.getMat3();
@@ -558,6 +603,7 @@ UNIGINE_INLINE void mat4::set(const quat &q, const vec3 &v)
 	m32 = 0.0f;
 	m33 = 1.0f;
 }
+/// <summary>Returns the quaternion, representing the rotation part of the matrix.</summary>
 UNIGINE_INLINE quat mat4::getRotate() const
 {
 	mat3 rotate;
@@ -565,31 +611,38 @@ UNIGINE_INLINE quat mat4::getRotate() const
 	return rotate.getQuat();
 }
 
+/// <summary>Composes a rotation matrix from the corresponding Euler angles. The Euler angles are specified in the axis rotation sequence - XYZ (in UNIGINE: x - pitch, y - roll, z - yaw). It is an order of the rings in the three-axis gimbal set: X axis used as the outer ring (independent ring), while Z axis as the inner one (its rotation depends on other 2 rings).</summary>
 UNIGINE_INLINE mat4 composeRotationXYZ(const vec3 &r)
 {
 	return mat4(quat(r.x, r.y, r.z));
 }
+/// <summary>Composes a rotation matrix from the corresponding Euler angles. The Euler angles are specified in the axis rotation sequence - XZY (in UNIGINE: x - pitch, z - yaw, y - roll). It is an order of the rings in the three-axis gimbal set: X axis used as the outer ring (independent ring), while Y axis as the inner one (its rotation depends on other 2 rings).</summary>
 UNIGINE_INLINE mat4 composeRotationXZY(const vec3 &r)
 {
 	return mat4(quat(1.0f, 0.0f, 0.0f, r.x) * quat(0.0f, 0.0f, 1.0f, r.z) * quat(0.0f, 1.0f, 0.0f, r.y));
 }
+/// <summary>Composes a rotation matrix from the corresponding Euler angles. The Euler angles are specified in the axis rotation sequence - YXZ (in UNIGINE: y - roll, x - pitch, z - yaw). It is an order of the rings in the three-axis gimbal set: Y axis used as the outer ring (independent ring), while Z axis as the inner one (its rotation depends on other 2 rings).</summary>
 UNIGINE_INLINE mat4 composeRotationYXZ(const vec3 &r)
 {
 	return mat4(quat(0.0f, 1.0f, 0.0f, r.y) * (quat(1.0f, 0.0f, 0.0f, r.x) * quat(0.0f, 0.0f, 1.0f, r.z)));
 }
+/// <summary>Composes a rotation matrix from the corresponding Euler angles. The Euler angles are specified in the axis rotation sequence - YZX (in UNIGINE: y - roll, z - yaw, x - pitch). It is an order of the rings in the three-axis gimbal set: Y axis used as the outer ring (independent ring), while X axis as the inner one (its rotation depends on other 2 rings).</summary>
 UNIGINE_INLINE mat4 composeRotationYZX(const vec3 &r)
 {
 	return mat4(quat(0.0f, 1.0f, 0.0f, r.y) * (quat(0.0f, 0.0f, 1.0f, r.z) * quat(1.0f, 0.0f, 0.0f, r.x)));
 }
+/// <summary>Composes a rotation matrix from the corresponding Euler angles. The Euler angles are specified in the axis rotation sequence - ZXY (in UNIGINE: z - yaw, x - pitch, y - roll). It is an order of the rings in the three-axis gimbal set: Z axis used as the outer ring (independent ring), while Y axis as the inner one (its rotation depends on other 2 rings).</summary>
 UNIGINE_INLINE mat4 composeRotationZXY(const vec3 &r)
 {
 	return mat4(quat(0.0f, 0.0f, 1.0f, r.z) * (quat(1.0f, 0.0f, 0.0f, r.x) * quat(0.0f, 1.0f, 0.0f, r.y)));
 }
+/// <summary>Composes a rotation matrix from the corresponding Euler angles. The Euler angles are specified in the axis rotation sequence - ZYX (in UNIGINE: z - yaw, y - roll, x - pitch). It is an order of the rings in the three-axis gimbal set: Z axis used as the outer ring (independent ring), while X axis as the inner one (its rotation depends on other 2 rings). </summary>
 UNIGINE_INLINE mat4 composeRotationZYX(const vec3 &r)
 {
 	return mat4(quat(0.0f, 0.0f, 1.0f, r.z) * (quat(0.0f, 1.0f, 0.0f, r.y) * quat(1.0f, 0.0f, 0.0f, r.x)));
 }
 
+/// <summary>Decomposes a given transformation matrix into a dual quaternion (representing both translation and rotation) and a scale vector. The dual-quaternion model is an accurate, computationally efficient, robust, and flexible method of representing rigid transforms and it is used in skeletal animation.</summary>
 UNIGINE_INLINE void decomposeTransform(const mat4 &m, quat &q0, quat &q1, vec3 &scale)
 {
 	mat3 rotate, rotation = mat3(m);
@@ -603,6 +656,7 @@ UNIGINE_INLINE void decomposeTransform(const mat4 &m, quat &q0, quat &q1, vec3 &
 	scale.y = rotate.m01 * rotation.m01 + rotate.m11 * rotation.m11 + rotate.m21 * rotation.m21;
 	scale.z = rotate.m02 * rotation.m02 + rotate.m12 * rotation.m12 + rotate.m22 * rotation.m22;
 }
+/// <summary>Decomposes a given transformation matrix into translation, rotation and scale components.</summary>
 UNIGINE_INLINE void decomposeTransform(const mat4 &m, vec3 &position, quat &rot, vec3 &scale)
 {
 	mat3 rotate, rotation = mat3(m);
@@ -615,6 +669,7 @@ UNIGINE_INLINE void decomposeTransform(const mat4 &m, vec3 &position, quat &rot,
 	scale.y = rotate.m01 * rotation.m01 + rotate.m11 * rotation.m11 + rotate.m21 * rotation.m21;
 	scale.z = rotate.m02 * rotation.m02 + rotate.m12 * rotation.m12 + rotate.m22 * rotation.m22;
 }
+/// <summary>Decomposes a given transformation matrix into a vector representing translation and uniform scale and a quaternion representing rotation.</summary>
 UNIGINE_INLINE void decomposeTransform(const mat4 &m, vec4 &position, quat &rot)
 {
 	mat3 rotate, rotation = mat3(m);
@@ -629,6 +684,7 @@ UNIGINE_INLINE void decomposeTransform(const mat4 &m, vec4 &position, quat &rot)
 	rot = rotate.getQuat();
 }
 
+/// <summary>Returns the transformation matrix for the specified position, rotation and scale.</summary>
 UNIGINE_INLINE mat4 &composeTransform(mat4 &ret, const quat &q0, const quat &q1, const vec3 &scale)
 {
 	float ilength = Math::rcp(dot(q0, q1)) * 2.0f;
@@ -667,6 +723,7 @@ UNIGINE_INLINE mat4 &composeTransform(mat4 &ret, const quat &q0, const quat &q1,
 	ret.m33 = 1.0f;
 	return ret;
 }
+/// <summary>Returns the transformation matrix for the specified position, rotation and scale.</summary>
 UNIGINE_INLINE mat4 &composeTransform(mat4 &ret, const vec3 &position, const quat &rot, const vec3 &scale)
 {
 	float sx = scale.x;
@@ -702,6 +759,7 @@ UNIGINE_INLINE mat4 &composeTransform(mat4 &ret, const vec3 &position, const qua
 	ret.m33 = 1.0f;
 	return ret;
 }
+/// <summary>Returns the transformation matrix for the specified position and rotation.</summary>
 UNIGINE_INLINE mat4 &composeTransform(mat4 &ret, const vec4 &position, const quat &rot)
 {
 	float x2 = (rot.x + rot.x) * position.w;
@@ -735,6 +793,7 @@ UNIGINE_INLINE mat4 &composeTransform(mat4 &ret, const vec4 &position, const qua
 	return ret;
 }
 
+/// <summary>Resets the transformation scale by replacing the scale component of the transformation matrix with a vec3_one (vector filled with ones). The original scale is stored in the vector argument.</summary>
 UNIGINE_INLINE mat4 &removeScale(mat4 &ret, vec3 &scale)
 {
 	vec3 pos;
@@ -744,6 +803,7 @@ UNIGINE_INLINE mat4 &removeScale(mat4 &ret, vec3 &scale)
 	return ret;
 }
 
+/// <summary>Resets the transformation scale by replacing the scale component of the transformation matrix with a vec3_one (vector filled with ones).</summary>
 UNIGINE_INLINE mat4 &removeScale(mat4 &ret)
 {
 	vec3 scale;
@@ -751,6 +811,7 @@ UNIGINE_INLINE mat4 &removeScale(mat4 &ret)
 	return ret;
 }
 
+/// <summary>Returns the interpolated matrix according to the following formula: m0 + (m 1 - m 0) * k .</summary>
 UNIGINE_INLINE mat4 &lerp(mat4 &ret, const mat4 &m0, const mat4 &m1, float k)
 {
 	vec3 positions[3];
@@ -767,6 +828,7 @@ UNIGINE_INLINE mat4 &lerp(mat4 &ret, const mat4 &m0, const mat4 &m1, float k)
 //////////////////////////////////////////////////////////////////////////
 // dmat4
 //////////////////////////////////////////////////////////////////////////
+/// <summary>Sets new matrix values using a given source quaternion.</summary>
 UNIGINE_INLINE void dmat4::set(const quat &q)
 {
 	mat3 m = q.getMat3();
@@ -783,6 +845,7 @@ UNIGINE_INLINE void dmat4::set(const quat &q)
 	m22 = m.m22;
 	m23 = 0.0;
 }
+/// <summary>Sets new matrix values using a given quaternion and a dvec3 vector.</summary>
 UNIGINE_INLINE void dmat4::set(const quat &q, const dvec3 &v)
 {
 	mat3 m = q.getMat3();
@@ -799,6 +862,7 @@ UNIGINE_INLINE void dmat4::set(const quat &q, const dvec3 &v)
 	m22 = m.m22;
 	m23 = v.z;
 }
+/// <summary>Returns the quaternion, representing the rotation part of the matrix.</summary>
 UNIGINE_INLINE quat dmat4::getRotate() const
 {
 	mat3 rotate;
@@ -806,6 +870,7 @@ UNIGINE_INLINE quat dmat4::getRotate() const
 	return rotate.getQuat();
 }
 
+/// <summary>Resets the transformation scale by replacing the scale component of the transformation matrix with a vec3_one (vector filled with ones). The original scale is stored in the vector argument.</summary>
 UNIGINE_INLINE dmat4 &removeScale(dmat4 &ret, vec3 &scale)
 {
 	dvec3 pos;
@@ -815,6 +880,7 @@ UNIGINE_INLINE dmat4 &removeScale(dmat4 &ret, vec3 &scale)
 	return ret;
 }
 
+/// <summary>Resets the transformation scale by replacing the scale component of the transformation matrix with a vec3_one (vector filled with ones).</summary>
 UNIGINE_INLINE dmat4 &removeScale(dmat4 &ret)
 {
 	vec3 scale;
@@ -822,6 +888,7 @@ UNIGINE_INLINE dmat4 &removeScale(dmat4 &ret)
 	return ret;
 }
 
+/// <summary>Returns the interpolated matrix according to the following formula: m0 + (m 1 - m 0) * k .</summary>
 UNIGINE_INLINE dmat4 &lerp(dmat4 &ret, const dmat4 &m0, const dmat4 &m1, double k)
 {
 	dvec3 positions[3];
@@ -835,6 +902,7 @@ UNIGINE_INLINE dmat4 &lerp(dmat4 &ret, const dmat4 &m0, const dmat4 &m1, double 
 	return composeTransform(ret, positions[2], rotations[2], scales[2]);
 }
 
+/// <summary>Decomposes a given transformation matrix into translation, rotation and scale components.</summary>
 UNIGINE_INLINE void decomposeTransform(const dmat4 &m, dvec3 &position, quat &rot, vec3 &scale)
 {
 	mat3 rotate, rotation = mat3(m);
@@ -847,6 +915,7 @@ UNIGINE_INLINE void decomposeTransform(const dmat4 &m, dvec3 &position, quat &ro
 	scale.y = rotate.m01 * rotation.m01 + rotate.m11 * rotation.m11 + rotate.m21 * rotation.m21;
 	scale.z = rotate.m02 * rotation.m02 + rotate.m12 * rotation.m12 + rotate.m22 * rotation.m22;
 }
+/// <summary>Returns the transformation matrix for the specified position, rotation and scale.</summary>
 UNIGINE_INLINE dmat4 &composeTransform(dmat4 &ret, const dvec3 &position, const quat &rot, const vec3 &scale)
 {
 	float sx = scale.x;
@@ -881,7 +950,7 @@ UNIGINE_INLINE dmat4 &composeTransform(dmat4 &ret, const dvec3 &position, const 
 
 
 //////////////////////////////////////////////////////////////////////////
-// Constatns
+// Constants
 //////////////////////////////////////////////////////////////////////////
 constexpr Vec2 Vec2_zero(0.0f, ConstexprTag{});
 constexpr Vec2 Vec2_one(1.0f, ConstexprTag{});
@@ -924,6 +993,10 @@ constexpr Vec4 Vec4_inf(Consts::INF, ConstexprTag{});
 //////////////////////////////////////////////////////////////////////////
 // Utils
 //////////////////////////////////////////////////////////////////////////
+/// <summary>Rotates the source quaternion towards the target quaternion by an angular step of max_angle (note, that the rotation will not overshoot).</summary>
+/// <param name="source">Source quaternion.</param>
+/// <param name="target">Target quaternion.</param>
+/// <param name="max_angle">Angular step, in degrees. If a negative value is specified, 0 will be used instead.</param>
 UNIGINE_INLINE quat rotateTowards(const quat &source, const quat &target, float max_angle)
 {
 	if (max_angle <= 0.0f)
@@ -934,6 +1007,10 @@ UNIGINE_INLINE quat rotateTowards(const quat &source, const quat &target, float 
 		return target;
 	return slerp(source, target, max_angle / angle);
 }
+/// <summary>Rotates the source vector towards the target vector by an angular step of max_angle (note, that the rotation will not overshoot).</summary>
+/// <param name="source">Source vector.</param>
+/// <param name="target">Target vector.</param>
+/// <param name="max_angle">Angular step, in degrees. If a negative value is specified, 0 will be used instead.</param>
 UNIGINE_INLINE vec3 rotateTowards(const vec3 &source, const vec3 &target, float max_angle)
 {
 	if (compare(max_angle, 0.0f))
@@ -957,6 +1034,7 @@ UNIGINE_INLINE vec3 rotateTowards(const vec3 &source, const vec3 &target, float 
 	return quat(n, max_angle) * source;
 }
 
+/// <summary>Returns the rotation quaternion for the specified "forward" and "up" directions.</summary>
 UNIGINE_INLINE quat rotationFromDir(const vec3 &forward, const vec3 &up)
 {
 	vec3 x, y, z;
@@ -967,11 +1045,38 @@ UNIGINE_INLINE quat rotationFromDir(const vec3 &forward, const vec3 &up)
 	mat3 rotation{x, y, z};
 	return rotation.getQuat();
 }
+/// <summary>Returns the rotation quaternion for the specified "forward" direction (the default "up" vector is used).</summary>
 UNIGINE_INLINE quat rotationFromDir(const vec3 &forward)
 {
 	return rotationFromDir(forward, vec3_up);
 }
 
+/// <summary>Returns the rotation quaternion for the specified source and target directions.</summary>
+UNIGINE_INLINE quat rotationFromTo(const vec3 &from_dir, const vec3 &to_dir)
+{
+	float d = dot(from_dir, to_dir);
+	if (compare(d, 1.0f))
+		return quat_identity;
+
+	if (compare(d, -1.0f))
+	{
+		vec3 axis = cross(from_dir, vec3_forward);
+		if (compare(axis.length2(), 0.0f))
+			axis = cross(from_dir, vec3_right);
+		return quat(axis, 180.0f);
+	}
+
+	quat ret;
+	vec3 axis = cross(from_dir, to_dir);
+	ret.x = axis.x;
+	ret.y = axis.y;
+	ret.z = axis.z;
+	ret.w = 1.0f + d;
+	ret.normalize();
+	return ret;
+}
+
+/// <summary>Returns a blue noise value for the given pixel coordinates.</summary>
 UNIGINE_INLINE vec4 blueNoise(int x, int y)
 {
 	static constexpr vec4 blue_noise_16x16[] =
@@ -1019,6 +1124,10 @@ UNIGINE_INLINE vec4 blueNoise(int x, int y)
 	return frac(noise + vec4(itof(coord.x * 64 + coord.y) * Consts::GOLDEN_RATIO));
 }
 
+/// <summary>Returns a generated set of points with X and Y coordinates in the [-1; 1] range that describe a circle with uniform distribution of samples inside. This method is suitable for getting uniform distribution of coordinates for a circle. For example you can use it is a loop to generate UV coordinates offset for making the uniform circular blur effect. You can use the current loop iteration index as the i argument and the maximum number of iterations — as count.</summary>
+/// <param name="i">Index of the current point for the disk.</param>
+/// <param name="count">Number of points.</param>
+/// <param name="noise">Normalized noise.</param>
 UNIGINE_INLINE vec2 vogelDisk(const unsigned int i, const unsigned int count, float noise)
 {
 	const float r = sqrtf(float(i) + 0.5f) / sqrtf(float(count));
@@ -1028,6 +1137,9 @@ UNIGINE_INLINE vec2 vogelDisk(const unsigned int i, const unsigned int count, fl
 	sincos(theta, ret.x, ret.y);
 	return ret * r;
 }
+/// <summary>Returns a generated set of points with X and Y coordinates in the [-1; 1] range that describe a circle with uniform distribution of samples inside. This method is suitable for getting uniform distribution of coordinates for a circle. For example you can use it is a loop to generate UV coordinates offset for making the uniform circular blur effect. You can use the current loop iteration index as the i argument and the maximum number of iterations — as count.</summary>
+/// <param name="i">Index of the current point for the disk.</param>
+/// <param name="count">Number of points.</param>
 UNIGINE_INLINE vec2 vogelDisk(const unsigned int i, const unsigned int count)
 {
 	vec2 ret = vec2_zero;
@@ -1037,11 +1149,12 @@ UNIGINE_INLINE vec2 vogelDisk(const unsigned int i, const unsigned int count)
 
 UNIGINE_INLINE mat4 hardwareProjection(const mat4 &projection)
 {
-	static const mat4 offset = translate(0.0f, 0.0f, 0.5f) * scale(1.0f, 1.0f, 0.5f);
 	mat4 ret;
+	const mat4 offset = translate(0.0f, 0.0f, 0.5f) * scale(1.0f, 1.0f, 0.5f);
 	return mul(ret, offset, projection);
 }
 
+/// <summary>Returns the value with the reversed order of the bits.</summary>
 UNIGINE_INLINE unsigned int reverseBits(unsigned int value)
 {
 	unsigned int retval = 0;
@@ -1161,42 +1274,6 @@ UNIGINE_INLINE unsigned int reverseBits(unsigned int value)
 	#define UNIGINE_ASSERT_MATH(VALUE) unigine_assert_math(VALUE)
 #endif
 
-UNIGINE_INLINE Unigine::Math::vec2 unigine_align_math(const Unigine::Math::vec2 &v) { Unigine::Math::vec2 ret; memcpy(&ret, &v, sizeof(Unigine::Math::vec2)); return ret; }
-UNIGINE_INLINE Unigine::Math::vec3 unigine_align_math(const Unigine::Math::vec3 &v) { Unigine::Math::vec3 ret; memcpy(&ret, &v, sizeof(Unigine::Math::vec3)); return ret; }
-UNIGINE_INLINE Unigine::Math::vec4 unigine_align_math(const Unigine::Math::vec4 &v) { Unigine::Math::vec4 ret; memcpy(&ret, &v, sizeof(Unigine::Math::vec4)); return ret; }
-UNIGINE_INLINE Unigine::Math::dvec2 unigine_align_math(const Unigine::Math::dvec2 &v) { Unigine::Math::dvec2 ret; memcpy(&ret, &v, sizeof(Unigine::Math::dvec2)); return ret; }
-UNIGINE_INLINE Unigine::Math::dvec3 unigine_align_math(const Unigine::Math::dvec3 &v) { Unigine::Math::dvec3 ret; memcpy(&ret, &v, sizeof(Unigine::Math::dvec3)); return ret; }
-UNIGINE_INLINE Unigine::Math::dvec4 unigine_align_math(const Unigine::Math::dvec4 &v) { Unigine::Math::dvec4 ret; memcpy(&ret, &v, sizeof(Unigine::Math::dvec4)); return ret; }
-UNIGINE_INLINE Unigine::Math::ivec2 unigine_align_math(const Unigine::Math::ivec2 &v) { Unigine::Math::ivec2 ret; memcpy(&ret, &v, sizeof(Unigine::Math::ivec2)); return ret; }
-UNIGINE_INLINE Unigine::Math::ivec3 unigine_align_math(const Unigine::Math::ivec3 &v) { Unigine::Math::ivec3 ret; memcpy(&ret, &v, sizeof(Unigine::Math::ivec3)); return ret; }
-UNIGINE_INLINE Unigine::Math::ivec4 unigine_align_math(const Unigine::Math::ivec4 &v) { Unigine::Math::ivec4 ret; memcpy(&ret, &v, sizeof(Unigine::Math::ivec4)); return ret; }
-UNIGINE_INLINE Unigine::Math::quat unigine_align_math(const Unigine::Math::quat &v) { Unigine::Math::quat ret; memcpy(&ret, &v, sizeof(Unigine::Math::quat)); return ret; }
-UNIGINE_INLINE Unigine::Math::mat2 unigine_align_math(const Unigine::Math::mat2 &v) { Unigine::Math::mat2 ret; memcpy(&ret, &v, sizeof(Unigine::Math::mat2)); return ret; }
-UNIGINE_INLINE Unigine::Math::mat3 unigine_align_math(const Unigine::Math::mat3 &v) { Unigine::Math::mat3 ret; memcpy(&ret, &v, sizeof(Unigine::Math::mat3)); return ret; }
-UNIGINE_INLINE Unigine::Math::mat4 unigine_align_math(const Unigine::Math::mat4 &v) { Unigine::Math::mat4 ret; memcpy(&ret, &v, sizeof(Unigine::Math::mat4)); return ret; }
-UNIGINE_INLINE Unigine::Math::dmat4 unigine_align_math(const Unigine::Math::dmat4 &v) { Unigine::Math::dmat4 ret; memcpy(&ret, &v, sizeof(Unigine::Math::dmat4)); return ret; }
-UNIGINE_INLINE Unigine::Math::BoundSphere unigine_align_math(const Unigine::Math::BoundSphere &v) { Unigine::Math::BoundSphere ret; memcpy(&ret, &v, sizeof(Unigine::Math::BoundSphere)); return ret; }
-UNIGINE_INLINE Unigine::Math::BoundBox unigine_align_math(const Unigine::Math::BoundBox &v) { Unigine::Math::BoundBox ret; memcpy(&ret, &v, sizeof(Unigine::Math::BoundBox)); return ret; }
-UNIGINE_INLINE Unigine::Math::BoundFrustum unigine_align_math(const Unigine::Math::BoundFrustum &v) { Unigine::Math::BoundFrustum ret; memcpy(&ret, &v, sizeof(Unigine::Math::BoundFrustum)); return ret; }
-
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::vec2 &ret, const Unigine::Math::vec2 &v) { memcpy(&ret, &v, sizeof(Unigine::Math::vec2)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::vec3 &ret, const Unigine::Math::vec3 &v) { memcpy(&ret, &v, sizeof(Unigine::Math::vec3)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::vec4 &ret, const Unigine::Math::vec4 &v) { memcpy(&ret, &v, sizeof(Unigine::Math::vec4)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::dvec2 &ret, const Unigine::Math::dvec2 &v) { memcpy(&ret, &v, sizeof(Unigine::Math::dvec2)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::dvec3 &ret, const Unigine::Math::dvec3 &v) { memcpy(&ret, &v, sizeof(Unigine::Math::dvec3)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::dvec4 &ret, const Unigine::Math::dvec4 &v) { memcpy(&ret, &v, sizeof(Unigine::Math::dvec4)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::ivec2 &ret, const Unigine::Math::ivec2 &v) { memcpy(&ret, &v, sizeof(Unigine::Math::ivec2)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::ivec3 &ret, const Unigine::Math::ivec3 &v) { memcpy(&ret, &v, sizeof(Unigine::Math::ivec3)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::ivec4 &ret, const Unigine::Math::ivec4 &v) { memcpy(&ret, &v, sizeof(Unigine::Math::ivec4)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::quat &ret, const Unigine::Math::quat &v) { memcpy(&ret, &v, sizeof(Unigine::Math::quat)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::mat2 &ret, const Unigine::Math::mat2 &v) { memcpy(&ret, &v, sizeof(Unigine::Math::mat2)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::mat3 &ret, const Unigine::Math::mat3 &v) { memcpy(&ret, &v, sizeof(Unigine::Math::mat3)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::mat4 &ret, const Unigine::Math::mat4 &v) { memcpy(&ret, &v, sizeof(Unigine::Math::mat4)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::dmat4 &ret, const Unigine::Math::dmat4 &v) { memcpy(&ret, &v, sizeof(Unigine::Math::dmat4)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::BoundSphere &ret, const Unigine::Math::BoundSphere &v) { memcpy(&ret, &v, sizeof(Unigine::Math::BoundSphere)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::BoundBox &ret, const Unigine::Math::BoundBox &v) { memcpy(&ret, &v, sizeof(Unigine::Math::BoundBox)); }
-UNIGINE_INLINE void unigine_copy_math(Unigine::Math::BoundFrustum &ret, const Unigine::Math::BoundFrustum &v) { memcpy(&ret, &v, sizeof(Unigine::Math::BoundFrustum)); }
-
 namespace Unigine
 {
 template<typename Type>
@@ -1227,42 +1304,4 @@ struct Hasher<Math::dvec4> { using HashType = unsigned int; UNIGINE_INLINE stati
 
 template<>
 struct Hasher<Math::dmat4> { using HashType = unsigned int; UNIGINE_INLINE static HashType create(const Math::dmat4 &v) { return v.hash(); } };
-}
-
-#if defined(USE_DOUBLE) || defined(UNIGINE_DOUBLE)
-	UNIGINE_INLINE Unigine::Math::WorldBoundSphere unigine_align_math(const Unigine::Math::WorldBoundSphere &v) { Unigine::Math::WorldBoundSphere ret; memcpy(&ret, &v, sizeof(Unigine::Math::WorldBoundSphere)); return ret; }
-	UNIGINE_INLINE Unigine::Math::WorldBoundBox unigine_align_math(const Unigine::Math::WorldBoundBox &v) { Unigine::Math::WorldBoundBox ret; memcpy(&ret, &v, sizeof(Unigine::Math::WorldBoundBox)); return ret; }
-	UNIGINE_INLINE Unigine::Math::WorldBoundFrustum unigine_align_math(const Unigine::Math::WorldBoundFrustum &v) { Unigine::Math::WorldBoundFrustum ret; memcpy(&ret, &v, sizeof(Unigine::Math::WorldBoundFrustum)); return ret; }
-
-	UNIGINE_INLINE void unigine_copy_math(Unigine::Math::WorldBoundSphere &ret, const Unigine::Math::WorldBoundSphere &v) { memcpy(&ret, &v, sizeof(Unigine::Math::WorldBoundSphere)); }
-	UNIGINE_INLINE void unigine_copy_math(Unigine::Math::WorldBoundBox &ret, const Unigine::Math::WorldBoundBox &v) { memcpy(&ret, &v, sizeof(Unigine::Math::WorldBoundBox)); }
-	UNIGINE_INLINE void unigine_copy_math(Unigine::Math::WorldBoundFrustum &ret, const Unigine::Math::WorldBoundFrustum &v) { memcpy(&ret, &v, sizeof(Unigine::Math::WorldBoundFrustum)); }
-#endif
-
-namespace Unigine
-{
-namespace Math
-{
-
-template<typename T>
-struct MarshalInOut
-{
-	T value;
-	T *ptr;
-
-	MarshalInOut(T *v)
-	{
-		ptr = v;
-		unigine_copy_math(value, *v);
-	}
-
-	~MarshalInOut()
-	{
-		unigine_copy_math(*ptr, value);
-	}
-
-	UNIGINE_INLINE T &get() { return value; }
-};
-
-}
 }

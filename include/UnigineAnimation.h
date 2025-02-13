@@ -261,7 +261,7 @@ public:
 	static bool convertible(AnimationCurve *obj) { return obj && obj->getType() == AnimationCurve::ANIMATION_CURVE_STRING; }
 	static Ptr<AnimationCurveString> create();
 	void copy(const Ptr<AnimationCurveString> &curve);
-	const char *getDefaultKeyValue() const;
+	String getDefaultKeyValue() const;
 	int addKey(float time, const char *value);
 	void removeKey(int index);
 	int moveKey(int index, float new_time);
@@ -272,8 +272,8 @@ public:
 	float getMinTime() const;
 	float getMaxTime() const;
 	void clear();
-	const char *getValueByTime(float time);
-	const char *getValueByNormalizedTime(float time);
+	String getValueByTime(float time);
+	String getValueByNormalizedTime(float time);
 	void save(const Ptr<Blob> &blob) const;
 	void load(const Ptr<Blob> &blob);
 };
@@ -533,9 +533,9 @@ public:
 	static Ptr<AnimationModifierString> create(const char *param, int param_index);
 	static Ptr<AnimationModifierString> create(const char *param, const char *param_name);
 	void copy(const Ptr<AnimationModifierString> &modifier);
-	const char *getDefaultValue() const;
-	const char *getValueByTime(float time);
-	const char *getValueByNormalizedTime(float normalized_time);
+	String getDefaultValue() const;
+	String getValueByTime(float time);
+	String getValueByNormalizedTime(float normalized_time);
 	void addValue(float time, const char *value);
 	void setCurve(const Ptr<AnimationCurveString> &curve);
 	Ptr<AnimationCurveString> getCurve() const;
@@ -1246,12 +1246,16 @@ public:
 	bool isPlaying() const;
 	bool isStopped() const;
 	float getDuration() const;
-	void setTime(float time);
+	void setTime(float time, float from = -1.0f, float to = -1.0f);
 	float getTime() const;
 	void setSpeed(float speed);
 	float getSpeed() const;
 	void setLoop(bool loop);
 	bool isLoop() const;
+	void setTimeFrom(float from);
+	float getTimeFrom() const;
+	void setTimeTo(float to);
+	float getTimeTo() const;
 	void setTrack(const Ptr<AnimationTrack> &track);
 	Ptr<AnimationTrack> getTrack() const;
 	int addLayer();
@@ -1286,7 +1290,7 @@ typedef Ptr<AnimationPlayback> AnimationPlaybackPtr;
 class UNIGINE_API Animations
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
 	enum RESULT
 	{

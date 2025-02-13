@@ -29,8 +29,10 @@ public:
 	virtual Package *clone() = 0;
 	virtual int getNumFiles() = 0;
 	virtual const char *getFileName(int num) = 0;
-	virtual int selectFile(const char *name, int &size) = 0;
-	virtual int readFile(unsigned char *data, int size) = 0;
+	virtual bool selectFile(const char *name, size_t &size) = 0;
+	virtual bool readFile(unsigned char *data, size_t size) = 0;
+	virtual int findFile(const char *name) const = 0;
+	virtual size_t getFileSize(int num) const = 0;
 };
 
 
@@ -68,7 +70,9 @@ struct FilePath
 class UNIGINE_API FileSystem
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
+	static constexpr auto GUID_PREFIX = "guid://";
+	static constexpr size_t GUID_PREFIX_SIZE = constexpr_strlen(GUID_PREFIX);
 	static Ptr<FileSystemMount> getMount(const char *path);
 	static Ptr<FileSystemMount> getMount(const UGUID &guid);
 	static void getMounts(Vector<Ptr<FileSystemMount>> &container);
@@ -149,6 +153,8 @@ public:
 	static void addModifier(const char *name);
 	static void removeModifier(const char *name);
 	static void clearModifiers();
+	static String guidToPath(const UGUID &guid);
+	static UGUID pathToGuid(const char *path);
 	static Event<const UGUID &, const char *> &getEventFileAdded();
 	static Event<const UGUID &, const char *> &getEventFileRemoved();
 	static Event<const UGUID &, const char *> &getEventFileChanged();
@@ -163,7 +169,7 @@ public:
 class UNIGINE_API FileSystemAssets
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	static UGUID addRuntime(const UGUID &asset_guid, const char *alias, int primary = 0);
 	static UGUID addRuntime(const char *asset_path, const char *alias, int primary = 0);
 	static bool addRuntime(const UGUID &asset_guid, const char *alias, const UGUID &runtime_guid, int primary = 0);

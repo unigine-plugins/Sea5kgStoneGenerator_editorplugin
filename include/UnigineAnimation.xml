@@ -1443,18 +1443,6 @@
 			</summary> 
 			<param name="modifier"> Source animation modifier. </param> 
 		</member>
-		<member name="M:Unigine.AnimationModifierBones.setNumBones(int)">
-			<summary>
-			Sets the number of bones to be affected by the animation modifier.
-			</summary> 
-			<param name="bones"> The number of bones to be affected by the animation modifier. </param> 
-		</member>
-		<member name="M:Unigine.AnimationModifierBones.getNumBones const">
-			<summary>
-			Returns the number of bones affected by the animation modifier.
-			</summary>  
-			<returns>The number of bones affected by the animation modifier.</returns>
-		</member>
 		<member name="M:Unigine.AnimationModifierBones.getValueByTime(float,Unigine.Vector{Unigine.Math.mat4,int,Unigine.VectorAllocator})">
 			<summary>
 			Returns the number of bones affected by the animation modifier and saves the transformation values of the modifier at the specified time.
@@ -3576,6 +3564,20 @@
 			</summary> 
 			<param name="layer_index"> Layer index. </param> 
 			<returns>Duration of the layer, in seconds.</returns>
+		</member>
+		<member name="M:Unigine.AnimationPlayback.setTime(float,float,float)">
+			<summary>
+			Sets the current playback time, and optional from and to limits.
+			</summary> 
+			<param name="time"> Current playback time to be set, in seconds. </param>
+			<param name="from"> Start time to be set, in seconds. </param>
+			<param name="to"> End time to be set, in seconds. </param> 
+		</member>
+		<member name="M:Unigine.AnimationPlayback.getTime const">
+			<summary>
+			Returns the current playback time, in seconds.
+			</summary>  
+			<returns>Current playback time, in seconds.</returns>
 		</member>
 		<member name="M:Unigine.AnimationTrack.#ctor">
 			<summary>

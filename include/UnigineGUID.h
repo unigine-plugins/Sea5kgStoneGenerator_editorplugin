@@ -24,9 +24,13 @@ namespace Unigine
 class UNIGINE_API UGUID
 {
 public:
-	static constexpr size_t VALUE_SIZE = 24;
 	static const UGUID empty;
-	static constexpr size_t HASH_SIZE = 40;
+
+	static constexpr size_t NUM_VALUE_INT = 5;
+	static constexpr size_t VALUE_SIZE = NUM_VALUE_INT * sizeof(int);
+	static constexpr size_t HASH_SIZE = VALUE_SIZE * 2;
+
+	using GUIDString = StringStack<HASH_SIZE + 1>;
 
 	UNIGINE_INLINE UGUID() { clear(); }
 	UNIGINE_INLINE explicit UGUID(const char *str)
@@ -34,45 +38,43 @@ public:
 		clear();
 		setString(str);
 	}
+	UNIGINE_INLINE explicit UGUID(const String &str) : UGUID(str.get()) {}
 	UNIGINE_INLINE explicit UGUID(unsigned char(&value_)[VALUE_SIZE])
 	{
 		memcpy(value, value_, VALUE_SIZE);
-		update_data();
 	}
-	UNIGINE_INLINE explicit UGUID(unsigned int(&value_)[6])
+	UNIGINE_INLINE explicit UGUID(unsigned int(&value_)[NUM_VALUE_INT])
 	{
-		memcpy(value_int, value_, VALUE_SIZE);
-		update_data();
+		memcpy(value_int, value_, sizeof(value_int));
 	}
 
 	UNIGINE_INLINE UGUID(const UGUID &g)
 	{
-		memcpy(value_long, g.value_long, sizeof(value_long));
-		memcpy(str, g.str, sizeof(str));
+		memcpy(value_int, g.value_int, sizeof(value_int));
 	}
 	UNIGINE_INLINE UGUID &operator=(const UGUID &g)
 	{
-		memcpy(value_long, g.value_long, sizeof(value_long));
-		memcpy(str, g.str, sizeof(str));
+		memcpy(value_int, g.value_int, sizeof(value_int));
 		return *this;
 	}
-	UNIGINE_INLINE UGUID &operator=(const char *str_)
+	UNIGINE_INLINE UGUID &operator=(const char *str)
 	{
-		setString(str_);
+		setString(str);
+		return *this;
+	}
+	UNIGINE_INLINE UGUID &operator=(const String &str)
+	{
+		setString(str.get());
 		return *this;
 	}
 
 	UNIGINE_INLINE bool operator==(const UGUID &g) const
 	{
-		return	value_long[0] == g.value_long[0] &&
-				value_long[1] == g.value_long[1] &&
-				value_long[2] == g.value_long[2];
+		return memcmp(value_int, g.value_int, sizeof(value_int)) == 0;
 	}
 	UNIGINE_INLINE bool operator!=(const UGUID &g) const
 	{
-		return	value_long[0] != g.value_long[0] ||
-				value_long[1] != g.value_long[1] ||
-				value_long[2] != g.value_long[2];
+		return memcmp(value_int, g.value_int, sizeof(value_int)) != 0;
 	}
 	UNIGINE_INLINE bool operator<=(const UGUID &g) const
 	{
@@ -84,135 +86,74 @@ public:
 	}
 	UNIGINE_INLINE bool operator<(const UGUID &g) const
 	{
-		if (value_long[0] > g.value_long[0])  return 0;
-		if (value_long[0] < g.value_long[0])  return 1;
-
-		if (value_long[1] > g.value_long[1])  return 0;
-		if (value_long[1] < g.value_long[1])  return 1;
-
-		if (value_long[2] > g.value_long[2])  return 0;
-		if (value_long[2] < g.value_long[2])  return 1;
-
-		return 0;
+		return memcmp(value_int, g.value_int, sizeof(value_int)) < 0;
 	}
 	UNIGINE_INLINE bool operator>(const UGUID &g) const
 	{
-		if (value_long[0] < g.value_long[0]) return 0;
-		if (value_long[0] > g.value_long[0]) return 1;
-
-		if (value_long[1] < g.value_long[1]) return 0;
-		if (value_long[1] > g.value_long[1]) return 1;
-		
-		if (value_long[2] < g.value_long[2]) return 0;
-		if (value_long[2] > g.value_long[2]) return 1;
-
-		return 0;
+		return memcmp(value_int, g.value_int, sizeof(value_int)) > 0;
 	}
 
 	void generate();
-	UNIGINE_INLINE void generate(const char *str_)
+	UNIGINE_INLINE void generate(const char *str)
 	{
-		Checksum::SHA1(value_int, str_, (int)(sizeof(char) * strlen(str_)));
-		update_data();
+		Checksum::SHA1(value_int, str, static_cast<int>(strlen(str)));
 	}
 	UNIGINE_INLINE void generate(int &seed_)
 	{
-		for (int i = 0; i < 5; ++i)
+		for (size_t i = 0; i < NUM_VALUE_INT; ++i)
 			value_int[i] = seed_ = (unsigned int)((unsigned long long)seed_ * 1664525 + 1013904223); // Numerical Recipes: The Art of Scientific Computing
-		update_data();
 	}
 	UNIGINE_INLINE void generate(const void *data, int size)
 	{
 		Checksum::SHA1(value_int, data, size);
-		update_data();
-	}
-
-	UNIGINE_INLINE const char *getFileSystemString() const { return str; }
-	void setFileSystemString(const char *str_)
-	{
-		if (!str_ || !*str_)
-		{
-			clear();
-			return;
-		}
-
-		int str_size = static_cast<int>(strlen(str_));
-		if (str_size != (PREFIX_SIZE + HASH_SIZE))
-		{
-			clear();
-			return;
-		}
-
-		if (!String::startsWith(str_, PREFIX, 1, str_size, int(PREFIX_SIZE)))
-		{
-			clear();
-			return;
-		}
-
-		read_string(str_ + PREFIX_SIZE);
 	}
 
 	UNIGINE_INLINE const unsigned char *getValue() const { return value; }
-	UNIGINE_INLINE const char *getString() const { return str + PREFIX_SIZE; }
-	void setString(const char *str_)
+	GUIDString makeString() const
 	{
-		if (!str_ || !*str_ || strlen(str_) != HASH_SIZE)
+		GUIDString ret;
+		if (isEmpty())
+			return ret;
+
+		ret.resize(HASH_SIZE);
+		write_string(ret.getRaw());
+		return ret;
+	}
+	void setString(const char *str)
+	{
+		if (!str || !*str || strlen(str) != HASH_SIZE)
 		{
 			clear();
 			return;
 		}
 
-		read_string(str_);
+		read_string(str);
 	}
 
 	UNIGINE_INLINE void clear()
 	{
-		memset(str, 0, sizeof(str));
-		memset(value_long, 0, sizeof(value_long));
-		memcpy(str, PREFIX, PREFIX_SIZE);
+		memset(value_int, 0, sizeof(value_int));
 	}
-	UNIGINE_INLINE bool isEmpty() const { return getString()[0] == 0; }
+	UNIGINE_INLINE bool isEmpty() const { return memcmp(UGUID::empty.value_int, value_int, sizeof(value_int)) == 0; }
 	UNIGINE_INLINE bool isValid() const { return !isEmpty(); }
-
-	UNIGINE_INLINE const char *get() const { return str; }
-	UNIGINE_INLINE char &get(int index)
-	{
-		assert(index < 48 && index >= 0 && "UGUID::get(): bad index");
-		return str[index];
-	}
-	UNIGINE_INLINE char get(int index) const
-	{
-		assert(index < 48 && index >= 0 && "UGUID::get(): bad index");
-		return str[index];
-	}
-	UNIGINE_INLINE char &operator[](int index) { return get(index); }
-	UNIGINE_INLINE char operator[](int index) const { return get(index); }
 
 	UNIGINE_INLINE unsigned int hash() const
 	{
 		return (((value_int[0] ^ value_int[1]) << 5) ^ value_int[2] ^ value_int[3] ^ value_int[4]);
 	}
-	UNIGINE_INLINE unsigned long long hashLong() const
-	{
-		return Math::hashMixer(value_long[0], Math::hashMixer(value_long[1], value_long[2]));
-	}
 
 private:
-	static constexpr auto PREFIX = "guid://";
-	static constexpr size_t PREFIX_SIZE = constexpr_strlen(PREFIX);
-	static constexpr size_t NUM_VALUE_INT = 5;
 
-	UNIGINE_INLINE char *get_str_data() { return str + PREFIX_SIZE; }
-	void read_string(const char *str_)
+	void read_string(const char *str)
 	{
 		int index = 0;
-		while (*str_)
+		while (*str)
 		{
 			unsigned int &value = value_int[index++];
 			int value_size = 8;
 			while (value_size--)
 			{
-				char c = *str_++;
+				char c = *str++;
 				if (c >= '0' && c <= '9')
 					value = (value << 4) + (c - '0');
 				else if (c >= 'a' && c <= 'f')
@@ -221,31 +162,24 @@ private:
 					value = (value << 4) + (c - 'A' + 10);
 			}
 		}
-		update_data();
 	}
-	void update_data()
+	void write_string(char *dst) const
 	{
-		// clear last byte for alignment
-		value_int[5] = 0;
+		const unsigned int radix = 16;
+		const char *digits = "0123456789abcdef";
 
-		// update str
+		char *p = dst + HASH_SIZE;
+		*p = '\0';
+
+		int size = NUM_VALUE_INT;
+		while (size--)
 		{
-			const unsigned int radix = 16;
-			const char *digits = "0123456789abcdef";
-
-			char *p = get_str_data() + HASH_SIZE;
-			*p = '\0';
-
-			int size = NUM_VALUE_INT;
-			while (size--)
+			unsigned int value = value_int[size];
+			int value_size = 8;
+			while (value_size--)
 			{
-				unsigned int value = value_int[size];
-				int value_size = 8;
-				while (value_size--)
-				{
-					*--p = digits[value & (radix - 1)];
-					value /= radix;
-				}
+				*--p = digits[value & (radix - 1)];
+				value /= radix;
 			}
 		}
 	}
@@ -253,11 +187,11 @@ private:
 	union
 	{
 		unsigned char value[VALUE_SIZE];
-		unsigned int value_int[6];
-		unsigned long long value_long[3];
+		unsigned int value_int[NUM_VALUE_INT];
 	};
-	char str[48];
 };
+
+static_assert(sizeof(UGUID) == 20, "UGUID size is changed");
 
 template<typename Type>
 struct Hasher;

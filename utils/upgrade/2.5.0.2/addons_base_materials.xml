@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<>
+	<base_material name="sim_light_base">
+		<state name="volume"/>
+		<texture name="emission"/>
+		<parameter name="base_transform"/>
+		<parameter name="emission_color"/>
+		<parameter name="emission_scale"/>
+		<parameter name="volume_scale"/>
+	</base_material>
+</>

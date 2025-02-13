@@ -46,8 +46,6 @@ struct BoundFrustum;
 	struct WorldBoundFrustum;
 #endif
 
-constexpr float BOUNDS_EPSILON = 1e-4f;
-
 //////////////////////////////////////////////////////////////////////////
 // BoundSphere
 //////////////////////////////////////////////////////////////////////////
@@ -66,33 +64,43 @@ struct alignas(16) BoundSphere
 		};
 	};
 
+	/// <summary>Constructor. Initialization by the coordinates of the center and radius of the bounding sphere.</summary>
 	UNIGINE_INLINE constexpr BoundSphere(float x, float y, float z, float radius, ConstexprTag): x(x), y(y), z(z), radius(radius) {}
 
+	/// <summary>Constructor. Creates an empty bounding sphere.</summary>
 	UNIGINE_INLINE BoundSphere()
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		clear();
 	}
+	/// <summary>Constructor. Initialization by the center and radius of the bounding sphere.</summary>
 	UNIGINE_INLINE BoundSphere(const vec3 &center, float radius)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(center, radius);
 	}
+	/// <summary>Constructor. Initialization by the vector of points.</summary>
+	/// <param name="points">Vector of points.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
+	/// <param name="optimal">Flag defining if the optimal sphere should be used. If false, the sphere will be expanded for including all the given points.</param>
 	UNIGINE_INLINE BoundSphere(const vec3 *points, int num_points, bool optimal)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(points, num_points, optimal);
 	}
+	/// <summary>Initialization by the bounding sphere.</summary>
 	UNIGINE_INLINE BoundSphere(const BoundSphere &bs)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bs);
 	}
+	/// <summary>Constructor. Initialization by the bounding sphere and setting the given transformation matrix to the new bounding sphere.</summary>
 	UNIGINE_INLINE BoundSphere(const BoundSphere &bs, const mat4 &transform)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bs, transform);
 	}
+	/// <summary>Constructor. Initialization by the bounding box.</summary>
 	UNIGINE_INLINE explicit BoundSphere(const BoundBox &bb)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
@@ -107,17 +115,26 @@ struct alignas(16) BoundSphere
 		UNIGINE_INLINE void set(const WorldBoundSphere &bs);
 	#endif
 
+	/// <summary>Assignment operator for the bounding sphere.</summary>
 	UNIGINE_INLINE BoundSphere &operator=(const BoundSphere &bs)
 	{
 		set(bs);
 		return *this;
 	}
 
+	/// <summary>Clears the bounding sphere.</summary>
 	UNIGINE_INLINE void clear() { x = 0.0f; y = 0.0f; z = 0.0f; radius = -1.0f; }
+	/// <summary>Sets the specified coordinates for the center of the bounding sphere.</summary>
 	UNIGINE_INLINE void setCenter(const vec3 &center) { x = center.x, y = center.y, z = center.z; }
 
+	/// <summary>Sets the bounding sphere by its center and radius.</summary>
 	UNIGINE_INLINE void set(const vec3 &center_, float radius_) { setCenter(center_);  radius = radius_; }
+	/// <summary>Sets the bounding sphere by the specified coordinates of the center and radius.</summary>
 	UNIGINE_INLINE void set(float x_, float y_, float z_, float radius_) { x = x_, y = y_, z = z_;  radius = radius_; }
+	/// <summary>Set the bounding sphere by a vector of points.</summary>
+	/// <param name="points">Vector of points.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
+	/// <param name="optimal">Flag defining if the optimal sphere should be used. If false, the sphere will be expanded for including all the given points.</param>
 	UNIGINE_INLINE void set(const vec3 *points, int num_points, bool optimal)
 	{
 		clear();
@@ -146,18 +163,23 @@ struct alignas(16) BoundSphere
 			expand(points, num_points);
 		}
 	}
+	/// <summary>Sets the bounding sphere by the bounding sphere.</summary>
 	UNIGINE_INLINE void set(const BoundSphere &bs) { data = bs.data; }
+	/// <summary>Sets the bounding sphere by a bounding sphere with a transformation matrix taken into account.</summary>
 	UNIGINE_INLINE void set(const BoundSphere &bs, const mat4 &transform)
 	{
 		data = bs.data;
 		setTransform(transform);
 	}
+	/// <summary>Sets the bounding sphere by the bounding box.</summary>
 	UNIGINE_INLINE void set(const BoundBox &bb);
 
 	// parameters
-	UNIGINE_INLINE bool isValid() const { return radius > 0.0f; }
+	/// <summary>Checks if the bounding sphere radius has a positive value.</summary>
+	UNIGINE_INLINE bool isValid() const { return radius >= 0.0f; }
 
 	// transformation
+	/// <summary>Sets the given transformation matrix to bounding sphere.</summary>
 	UNIGINE_INLINE void setTransform(const mat4 &transform)
 	{
 		float r = radius;
@@ -190,14 +212,19 @@ struct alignas(16) BoundSphere
 			radius = r * scale;
 		#endif
 	}
+	/// <summary>Sets the given transformation matrix to bounding sphere.</summary>
 	UNIGINE_INLINE void setTransform(const dmat4 &transform) { setTransform(mat4(transform)); }
 
 	// compare
+	/// <summary>Compares the bounding sphere with the given one. The degree of precision is equal to 1.0e-6f.</summary>
 	UNIGINE_INLINE int compare(const BoundSphere &bs) const { return Math::compare(data, bs.data); }
+	/// <summary>Compares the bounding sphere with the given one according to the degree of precision equal to 1.0e-6f.</summary>
 	UNIGINE_INLINE int operator==(const BoundSphere &bs) const { return compare(bs); }
+	/// <summary>Bounding spheres not equal comparison operator.</summary>
 	UNIGINE_INLINE int operator!=(const BoundSphere &bs) const { return !compare(bs); }
 
 	// expand
+	/// <summary>Expands the current bounding sphere to include the given point.</summary>
 	UNIGINE_INLINE void expand(const vec3 &point)
 	{
 		if (isValid())
@@ -211,9 +238,12 @@ struct alignas(16) BoundSphere
 			}
 		} else
 		{
-			set(point, BOUNDS_EPSILON);
+			set(point, 0.0f);
 		}
 	}
+	/// <summary>Expands the current bounding sphere to include all points in the vector.</summary>
+	/// <param name="points">Vector of points.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE void expand(const vec3 *points, int num_points)
 	{
 		if (isValid())
@@ -245,6 +275,7 @@ struct alignas(16) BoundSphere
 			set((p_min + p_max) * 0.5f, radius);
 		}
 	}
+	/// <summary>Expands the current bounding sphere to include the given bounding sphere.</summary>
 	UNIGINE_INLINE void expand(const BoundSphere &bs)
 	{
 		if (bs.isValid())
@@ -276,9 +307,11 @@ struct alignas(16) BoundSphere
 			}
 		}
 	}
+	/// <summary>Expands the current bounding sphere to include the given bounding box.</summary>
 	UNIGINE_INLINE void expand(const BoundBox &bb);
 
 	// radius expand
+	/// <summary>Expands the radius of the bounding sphere to include the given point.</summary>
 	UNIGINE_INLINE void expandRadius(const vec3 &point)
 	{
 		if (isValid())
@@ -288,9 +321,12 @@ struct alignas(16) BoundSphere
 				radius = r;
 		} else
 		{
-			set(point, BOUNDS_EPSILON);
+			set(point, 0.0f);
 		}
 	}
+	/// <summary>Expands the radius of the bounding sphere to include all points in the vector.</summary>
+	/// <param name="points">Vector of points.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE void expandRadius(const vec3 *points, int num_points)
 	{
 		if (isValid())
@@ -317,6 +353,7 @@ struct alignas(16) BoundSphere
 			set(center, radius);
 		}
 	}
+	/// <summary>Expands the radius of the bounding sphere by using the radius of the given bounding sphere.</summary>
 	UNIGINE_INLINE void expandRadius(const BoundSphere &bs)
 	{
 		if (!bs.isValid())
@@ -332,37 +369,44 @@ struct alignas(16) BoundSphere
 			data = bs.data;
 		}
 	}
+	/// <summary>Expands the radius of the bounding sphere by using the max and min points of the given bounding box.</summary>
 	UNIGINE_INLINE void expandRadius(const BoundBox &bb);
 
 	// inside points
+	/// <summary>Checks if the given point is inside the current bounding sphere.</summary>
 	UNIGINE_INLINE bool inside(const vec3 &point) const
 	{
 		return isValid() && insideValid(point);
 	}
+	/// <summary>Checks if the sphere set by the arguments is inside the bounding sphere.</summary>
 	UNIGINE_INLINE bool inside(const vec3 &point, float radius) const
 	{
 		return isValid() && insideValid(point, radius);
 	}
+	/// <summary>Checks if the box is set by the arguments inside the bounding sphere.</summary>
 	UNIGINE_INLINE bool inside(const vec3 &minimum, const vec3 &maximum) const
 	{
 		return isValid() && insideValid(minimum, maximum);
 	}
 
+	/// <summary>Checks if the given point is inside the current bounding sphere. The method doesn't check if the bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool insideValid(const vec3 &point) const
 	{
 		return length2(center - point) <= radius * radius;
 	}
+	/// <summary>Checks if the sphere set by the arguments is inside the bounding sphere. The method doesn't check if the bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool insideValid(const vec3 &point, float radius_) const
 	{
 		return length2(center - point) <= pow2(radius_ + radius);
 	}
+	/// <summary>Checks if the box set by the arguments is inside the bounding sphere. The method doesn't check if the bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool insideValid(const vec3 &minimum, const vec3 &maximum) const
 	{
 		#ifdef USE_SSE
 			__m128 r = _MM_SWIZZLE(data.vec, W, W, W, W);
 			__m128 direction = _mm_sub_ps(_mm_min_ps(_mm_max_ps(center.vec, minimum.vec), maximum.vec), center.vec);
-			direction = _mm_sub_ps(_mm_dot33_ps(direction, direction), _mm_mul_ss(r, r));
-			return ((_mm_movemask_ps(direction) & 0x01) != 0);
+			direction = _mm_sub_ss(_mm_mul_ss(r, r), _mm_dot33_ps(direction, direction));
+			return ((_mm_movemask_ps(direction) & 0x01) == 0);
 		#else
 			vec3 direction;
 			if (minimum.x > center.x)
@@ -383,71 +427,85 @@ struct alignas(16) BoundSphere
 				direction.z = maximum.z - center.z;
 			else
 				direction.z = 0.0f;
-			return (direction.length2() < center.w * center.w);
+			return (direction.length2() <= radius * radius);
 		#endif
 	}
 
 	// inside bounds
+	/// <summary>Checks if the specified bounding sphere is inside the bounding sphere.</summary>
 	UNIGINE_INLINE bool inside(const BoundSphere &bs) const
 	{
 		return isValid() && bs.isValid() && insideValid(bs.center, bs.radius);
 	}
+	/// <summary>Checks if the bounding box is inside the bounding sphere.</summary>
 	UNIGINE_INLINE bool inside(const BoundBox &bb) const;
 
+	/// <summary>Checks if the specified bounding sphere is inside the bounding sphere. The method doesn't check if the bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool insideValid(const BoundSphere &bs) const
 	{
 		return insideValid(bs.center, bs.radius);
 	}
 	UNIGINE_INLINE bool insideValid(const BoundBox &bb) const;
 
+	/// <summary>Checks if the whole specified bounding sphere is completely inside the current bounding sphere.</summary>
 	UNIGINE_INLINE bool insideAll(const BoundSphere &bs) const
 	{
 		return isValid() && bs.isValid() && insideAllValid(bs);
 	}
+	/// <summary>Checks if the whole specified bounding box is completely inside the current bounding sphere.</summary>
 	UNIGINE_INLINE bool insideAll(const BoundBox &bb) const;
 
+	/// <summary>Checks if the whole specified bounding sphere is completely inside the current bounding sphere. The method doesn't check if the bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool insideAllValid(const BoundSphere &bs) const
 	{
 		float r = radius - bs.radius;
-		if (r > 0.0f)
+		if (r >= 0.0f)
 			return length2(center - bs.center) <= r * r;
 		return false;
 	}
+	/// <summary>Checks if the whole specified bounding box is completely inside the current bounding sphere. The method doesn't check if the bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool insideAllValid(const BoundBox &bb) const;
 
 	// intersections
+	/// <summary>Checks for an intersection of a ray with the current bounding sphere.</summary>
 	UNIGINE_INLINE bool rayIntersection(const vec3 &point, const vec3 &direction) const
 	{
 		return isValid() && rayIntersectionValid(point, direction);
 	}
+	/// <summary>Checks for an intersection of a line with the current bounding sphere.</summary>
 	UNIGINE_INLINE bool getIntersection(const vec3 &p0, const vec3 &p1) const
 	{
 		return isValid() && getIntersectionValid(p0, p1);
 	}
 
+	/// <summary>Checks for an intersection of a ray with the current bounding sphere. This method doesn't check if the current bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool rayIntersectionValid(const vec3 &point, const vec3 &direction) const
 	{
 		float k = saturate(dot(direction, center - point) / length2(direction));
 		return length2(center - point - direction * k) <= radius * radius;
 	}
+	/// <summary>Checks for an intersection of a line with the current bounding sphere. This method doesn't check if the current bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool getIntersectionValid(const vec3 &p0, const vec3 &p1) const
 	{
 		return rayIntersectionValid(p0, p1 - p0);
 	}
 
 	// distance
+	/// <summary>Returns the distance from the origin of coordinates to the closest point of the current bounding sphere.</summary>
 	UNIGINE_INLINE float distance() const
 	{
 		if (isValid())
 			return distanceValid();
 		return Consts::INF;
 	}
+	/// <summary>Returns the distance from the given point to the closest point of the current bounding sphere.</summary>
 	UNIGINE_INLINE float distance(const vec3 &point) const
 	{
 		if (isValid())
 			return distanceValid(point);
 		return Consts::INF;
 	}
+	/// <summary>Returns the distance from the origin of coordinates to the closest point of the current bounding sphere. This method doesn't check if the current bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE float distanceValid() const
 	{
 		#ifdef USE_SSE
@@ -458,6 +516,7 @@ struct alignas(16) BoundSphere
 			return sqrtFast(center.length2()) - radius;
 		#endif
 	}
+	/// <summary>Returns the distance from the given point to the closest point of the current bounding sphere. This method doesn't check if the current bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE float distanceValid(const vec3 &point) const
 	{
 		#ifdef USE_SSE
@@ -466,10 +525,14 @@ struct alignas(16) BoundSphere
 			_mm_store_ss(&distance, _mm_rcp_ss(_mm_rsqrt_ss(_mm_dp_ps(direction, direction, 0x7f))));
 			return distance - radius;
 		#else
-			return (center - camera).lengthFast() - radius;
+			return (center - point).lengthFast() - radius;
 		#endif
 	}
-	
+
+	/// <summary>Checks if the bounding sphere is within the camera visibility distance.</summary>
+	/// <param name="camera">Coordinates of the camera position.</param>
+	/// <param name="min_distance">Minimum visibility distance, in meters.</param>
+	/// <param name="max_distance">Maximum visibility distance, in meters.</param>
 	UNIGINE_INLINE bool isCameraVisible(const vec3 &camera, float min_distance, float max_distance) const
 	{
 		#ifdef USE_SSE
@@ -487,12 +550,14 @@ struct alignas(16) BoundSphere
 
 constexpr BoundSphere BoundSphere_inf(0.0f, 0.0f, 0.0f, Consts::INF, ConstexprTag{});
 
+/// <summary>Returns the bounding sphere with the specified transformation matrix applied.</summary>
 UNIGINE_INLINE BoundSphere operator*(const mat4 &m, const BoundSphere &bs)
 {
 	BoundSphere ret = bs;
 	ret.setTransform(m);
 	return ret;
 }
+/// <summary>Returns the bounding sphere with the specified transformation matrix applied.</summary>
 UNIGINE_INLINE BoundSphere operator*(const dmat4 &m, const BoundSphere &bs)
 {
 	BoundSphere ret = bs;
@@ -508,34 +573,43 @@ struct alignas(16) BoundBox
 	vec3 minimum{vec3_inf};
 	vec3 maximum{-vec3_inf};
 
+	/// <summary>Constructor. Initialization by minimum and maximum coordinates of the bounding box specified as float values.</summary>
 	UNIGINE_INLINE constexpr BoundBox(float x_min, float y_min, float z_min, float x_max, float y_max, float z_max, ConstexprTag)
 		: minimum(x_min, y_min, z_min, ConstexprTag{})
 		, maximum(x_max, y_max, z_max, ConstexprTag{}) {}
 
+	/// <summary>Constructor. Creates an empty bounding box.</summary>
 	UNIGINE_INLINE BoundBox()
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
+	/// <summary>Constructor. Initialization by minimum and maximum coordinates of the bounding box.</summary>
 	UNIGINE_INLINE BoundBox(const vec3 &minimum, const vec3 &maximum)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(minimum, maximum);
 	}
+	/// <summary>Constructor. Initialization by the vector of points.</summary>
+	/// <param name="points">Vector of points.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE BoundBox(const vec3 *points, int num_points)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(points, num_points);
 	}
+	/// <summary>Constructor. Initialization by the bounding box.</summary>
 	UNIGINE_INLINE BoundBox(const BoundBox &bb)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bb);
 	}
+	/// <summary>Constructor. Initialization by the bounding box with the transformation matrix taken into account.</summary>
 	UNIGINE_INLINE BoundBox(const BoundBox &bb, const mat4 &transform)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bb, transform);
 	}
+	/// <summary>Constructor. Initialization by the bounding sphere.</summary>
 	UNIGINE_INLINE explicit BoundBox(const BoundSphere &bs)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
@@ -550,34 +624,43 @@ struct alignas(16) BoundBox
 		UNIGINE_INLINE void set(const WorldBoundBox &bb);
 	#endif
 
+	/// <summary>Assignment operator for the bounding box.</summary>
 	UNIGINE_INLINE BoundBox &operator=(const BoundBox &bb) { set(bb); return *this; }
 
+	/// <summary>Clears the bounding box.</summary>
 	UNIGINE_INLINE void clear()
 	{
 		minimum = vec3_inf;
 		maximum = -vec3_inf;
 	}
 
+	/// <summary>Sets the bounding box by its minimum and maximum coordinates.</summary>
 	UNIGINE_INLINE void set(const vec3 &min_, const vec3 &max_)
 	{
 		minimum = min_;
 		maximum = max_;
 	}
+	/// <summary>Sets the bounding box by the coordinates of points in space to be enclosed by it.</summary>
+	/// <param name="points">Vector of points to be enclosed by the bounding box.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE void set(const vec3 *points, int num_points)
 	{
 		clear();
 		expand(points, num_points);
 	}
+	/// <summary>Sets the bounding box by the bounding sphere.</summary>
 	UNIGINE_INLINE void set(const BoundSphere &bs)
 	{
 		clear();
 		expand(bs);
 	}
+	/// <summary>Sets the bounding box equal to the specified source bounding box.</summary>
 	UNIGINE_INLINE void set(const BoundBox &bb)
 	{
 		minimum = bb.minimum;
 		maximum = bb.maximum;
 	}
+	/// <summary>Sets the bounding box by the given bounding box with the given transformation matrix taken into account.</summary>
 	UNIGINE_INLINE void set(const BoundBox &bb, const mat4 &transform)
 	{
 		minimum = bb.minimum;
@@ -586,9 +669,15 @@ struct alignas(16) BoundBox
 	}
 
 	// parameters
+	/// <summary>Checks if the bounding box minimum and maximum coordinates are valid.</summary>
 	UNIGINE_INLINE bool isValid() const { return minimum.x <= maximum.x; }
+	/// <summary>Returns the center point of the current bounding box.</summary>
 	UNIGINE_INLINE vec3 getCenter() const { return (minimum + maximum) * 0.5f; }
+	/// <summary>Returns the size of the bounding box along the axes.</summary>
 	UNIGINE_INLINE vec3 getSize() const { return maximum - minimum; }
+	/// <summary>Puts the vertices of the current bounding box into the given vector.</summary>
+	/// <param name="points">Vector to store the result.</param>
+	/// <param name="num_points">Number of points, must be equal to 8.</param>
 	UNIGINE_INLINE void getPoints(vec3 *points, int num_points) const
 	{
 		UNIGINE_UNUSED(num_points);
@@ -602,6 +691,9 @@ struct alignas(16) BoundBox
 		points[6].set(minimum.x, maximum.y, maximum.z);
 		points[7].set(maximum);
 	}
+	/// <summary>Puts the planes created based on the vertices of the current bounding box into the given vector.</summary>
+	/// <param name="planes">Vector to store the result.</param>
+	/// <param name="num_planes">Number of planes, must be equal to 6.</param>
 	UNIGINE_INLINE void getPlanes(vec4 *planes, int num_planes) const
 	{
 		UNIGINE_UNUSED(num_planes);
@@ -615,6 +707,7 @@ struct alignas(16) BoundBox
 	}
 
 	// transformation
+	/// <summary>Sets the given transformation matrix to the bounding box.</summary>
 	UNIGINE_INLINE void setTransform(const mat4 &transform)
 	{
 		#ifdef USE_SSE
@@ -645,10 +738,12 @@ struct alignas(16) BoundBox
 			maximum = center + vec3(x, y, z);
 		#endif
 	}
+	/// <summary>Sets the given transformation matrix to the bounding box.</summary>
 	UNIGINE_INLINE void setTransform(const dmat4 &transform)
 	{
 		setTransform(mat4(transform));
 	}
+	/// <summary>Sets the transformation matrix of the current bounding box to include the given bounding sphere with the given transformation matrix taken into account.</summary>
 	UNIGINE_INLINE void setTransform(const BoundSphere &bs, const mat4 &transform)
 	{
 		setTransform(transform);
@@ -675,29 +770,34 @@ struct alignas(16) BoundBox
 			minimum = _mm_max_ps(minimum.vec, _mm_sub_ps(center, radius));
 			maximum = _mm_min_ps(maximum.vec, _mm_add_ps(center, radius));
 		#else
-			vec3 center = transform * bs.getCenter();
+			vec3 center = transform * bs.center;
 			float x = transform.m00 * transform.m00 + transform.m10 * transform.m10 + transform.m20 * transform.m20;
 			float y = transform.m01 * transform.m01 + transform.m11 * transform.m11 + transform.m21 * transform.m21;
 			float z = transform.m02 * transform.m02 + transform.m12 * transform.m12 + transform.m22 * transform.m22;
-			float radius = sqrtFast(maximum(maximum(x, y), z)) * bs.radius;
-			minimum = maximum(minimum, center - vec3(radius));
-			maximum = minimum(maximum, center + vec3(radius));
+			float radius = sqrtFast(max(max(x, y), z)) * bs.radius;
+			minimum = max(minimum, center - vec3(radius));
+			maximum = min(maximum, center + vec3(radius));
 		#endif
 	}
+	/// <summary>Sets the transformation matrix of the current bounding box to include the given bounding sphere with the given transformation matrix taken into account.</summary>
 	UNIGINE_INLINE void setTransform(const BoundSphere &bs, const dmat4 &transform)
 	{
 		setTransform(bs, mat4(transform));
 	}
 
 	// compare
+	/// <summary>Compares the current bounding box with the given one.</summary>
 	UNIGINE_INLINE int compare(const BoundBox &bb) const
 	{
 		return Math::compare(minimum, bb.minimum) && Math::compare(maximum, bb.maximum);
 	}
+	/// <summary>Compares the current bounding box with the given one.</summary>
 	UNIGINE_INLINE int operator==(const BoundBox &bb) const { return compare(bb); }
+	/// <summary>Bounding boxes not equal comparison operator.</summary>
 	UNIGINE_INLINE int operator!=(const BoundBox &bb) const { return !compare(bb); }
 
 	// expand
+	/// <summary>Expands the current bounding box to enclose the given point.</summary>
 	UNIGINE_INLINE void expand(const vec3 &point)
 	{
 		if (isValid())
@@ -711,10 +811,13 @@ struct alignas(16) BoundBox
 			#endif
 		} else
 		{
-			minimum = point - BOUNDS_EPSILON;
-			maximum = point + BOUNDS_EPSILON;
+			minimum = point;
+			maximum = point;
 		}
 	}
+	/// <summary>Expands the current bounding box to enclose all given points.</summary>
+	/// <param name="points">Vector of points to be enclosed by the bounding box.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE void expand(const vec3 *points, int num_points)
 	{
 		if (isValid())
@@ -733,6 +836,7 @@ struct alignas(16) BoundBox
 			Simd::minMaxVec3(minimum, maximum, points, sizeof(vec3), num_points);
 		}
 	}
+	/// <summary>Expands the current bounding box to enclose the given bounding sphere.</summary>
 	UNIGINE_INLINE void expand(const BoundSphere &bs)
 	{
 		if (!bs.isValid())
@@ -754,6 +858,7 @@ struct alignas(16) BoundBox
 			add(maximum, center, r);
 		}
 	}
+	/// <summary>Expands the current bounding box to enclose the given bounding box.</summary>
 	UNIGINE_INLINE void expand(const BoundBox &bb)
 	{
 		if (!bb.isValid())
@@ -764,8 +869,8 @@ struct alignas(16) BoundBox
 				minimum = _mm_min_ps(minimum.vec, bb.minimum.vec);
 				maximum = _mm_max_ps(maximum.vec, bb.maximum.vec);
 			#else
-				minimum = minimum(minimum, bb.minimum);
-				maximum = maximum(maximum, bb.maximum);
+				minimum = min(minimum, bb.minimum);
+				maximum = max(maximum, bb.maximum);
 			#endif
 		} else
 		{
@@ -775,19 +880,23 @@ struct alignas(16) BoundBox
 	}
 
 	// inside points
+	/// <summary>Checks if the given point is inside the bounding box.</summary>
 	UNIGINE_INLINE bool inside(const vec3 &point) const
 	{
 		return isValid() && insideValid(point);
 	}
+	/// <summary>Checks if the sphere defined by the given center point and radius is inside the current bounding box.</summary>
 	UNIGINE_INLINE bool inside(const vec3 &point, float radius) const
 	{
 		return isValid() && insideValid(point, radius);
 	}
+	/// <summary>Checks if the box with the given coordinates is inside the current bounding box.</summary>
 	UNIGINE_INLINE bool inside(const vec3 &minimum_, const vec3 &maximum_) const
 	{
 		return isValid() && insideValid(minimum_, maximum_);
 	}
 
+	/// <summary>Checks if the given point is inside the bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 	UNIGINE_INLINE bool insideValid(const vec3 &point) const
 	{
 		#ifdef USE_SSE
@@ -801,13 +910,14 @@ struct alignas(16) BoundBox
 			return true;
 		#endif
 	}
+	/// <summary>Checks if the sphere set by the arguments is inside the bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 	UNIGINE_INLINE bool insideValid(const vec3 &point, float radius) const
 	{
 		#ifdef USE_SSE
 			__m128 r = vec3(radius).vec;
 			__m128 direction = _mm_sub_ps(_mm_min_ps(_mm_max_ps(point.vec, minimum.vec), maximum.vec), point.vec);
-			direction = _mm_sub_ps(_mm_dot33_ps(direction, direction), _mm_mul_ss(r, r));
-			return ((_mm_movemask_ps(direction) & 0x01) != 0);
+			direction = _mm_sub_ss(_mm_mul_ss(r, r), _mm_dot33_ps(direction, direction));
+			return ((_mm_movemask_ps(direction) & 0x01) == 0);
 		#else
 			vec3 direction;
 			if (minimum.x > point.x)
@@ -828,9 +938,10 @@ struct alignas(16) BoundBox
 				direction.z = maximum.z - point.z;
 			else
 				direction.z = 0.0f;
-			return (direction.length2() < radius * radius);
+			return (direction.length2() <= radius * radius);
 		#endif
 	}
+	/// <summary>Checks if the box set by the arguments is inside the bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 	UNIGINE_INLINE bool insideValid(const vec3 &min_, const vec3 &max_) const
 	{
 		#ifdef USE_SSE
@@ -845,6 +956,9 @@ struct alignas(16) BoundBox
 			return true;
 		#endif
 	}
+	/// <summary>Checks if any of the given points is inside the bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
+	/// <param name="points">Vector of points to be checked.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE bool insideValid(const vec3 *points, int num_points) const
 	{
 		for (int i = 0; i < num_points; i++)
@@ -856,60 +970,67 @@ struct alignas(16) BoundBox
 	}
 
 	// inside bounds
+	/// <summary>Checks if the specified bounding sphere is inside the current bounding box.</summary>
 	UNIGINE_INLINE bool inside(const BoundSphere &bs) const
 	{
 		return isValid() && insideValid(bs.center, bs.radius);
 	}
+	/// <summary>Checks if the specified bounding box is inside the current bounding box.</summary>
 	UNIGINE_INLINE bool inside(const BoundBox &bb) const
 	{
 		return isValid() && bb.isValid() && insideValid(bb.minimum, bb.maximum);
 	}
 
+	/// <summary>Checks if the bounding sphere is inside the bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 	UNIGINE_INLINE bool insideValid(const BoundSphere &bs) const
 	{
 		#ifdef USE_SSE
 			__m128 radius = _MM_SWIZZLE(bs.center.vec, W, W, W, W);
 			__m128 direction = _mm_sub_ps(_mm_min_ps(_mm_max_ps(bs.center.vec, minimum.vec), maximum.vec), bs.center.vec);
-			direction = _mm_sub_ps(_mm_dot33_ps(direction, direction), _mm_mul_ss(radius, radius));
-			return ((_mm_movemask_ps(direction) & 0x01) != 0);
+			direction = _mm_sub_ps(_mm_mul_ss(radius, radius), _mm_dot33_ps(direction, direction));
+			return ((_mm_movemask_ps(direction) & 0x01) == 0);
 		#else
 			vec3 direction;
 			float radius = bs.radius;
-			if (minimum.x > center.x)
-				direction.x = minimum.x - center.x;
-			else if (maximum.x < center.x)
-				direction.x = maximum.x - center.x;
+			if (minimum.x > bs.center.x)
+				direction.x = minimum.x - bs.center.x;
+			else if (maximum.x < bs.center.x)
+				direction.x = maximum.x - bs.center.x;
 			else
 				direction.x = 0.0f;
-			if (minimum.y > center.y)
-				direction.y = minimum.y - center.y;
-			else if (maximum.y < center.y)
-				direction.y = maximum.y - center.y;
+			if (minimum.y > bs.center.y)
+				direction.y = minimum.y - bs.center.y;
+			else if (maximum.y < bs.center.y)
+				direction.y = maximum.y - bs.center.y;
 			else
 				direction.y = 0.0f;
-			if (minimum.z > center.z)
-				direction.z = minimum.z - center.z;
-			else if (maximum.z < center.z)
-				direction.z = maximum.z - center.z;
+			if (minimum.z > bs.center.z)
+				direction.z = minimum.z - bs.center.z;
+			else if (maximum.z < bs.center.z)
+				direction.z = maximum.z - bs.center.z;
 			else
 				direction.z = 0.0f;
-			return (direction.length2() < radius * radius);
+			return (direction.length2() <= radius * radius);
 		#endif
 	}
+	/// <summary>Checks if the bounding box is inside the bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 	UNIGINE_INLINE bool insideValid(const BoundBox &bb) const
 	{
 		return insideValid(bb.minimum, bb.maximum);
 	}
 
+	/// <summary>Checks if the given bounding sphere is completely inside the current bounding box.</summary>
 	UNIGINE_INLINE bool insideAll(const BoundSphere &bs) const
 	{
 		return isValid() && bs.isValid() && insideAllValid(bs);
 	}
+	/// <summary>Checks if the whole given bounding box is inside the current bounding box.</summary>
 	UNIGINE_INLINE bool insideAll(const BoundBox &bb) const
 	{
 		return isValid() && bb.isValid() && insideAllValid(bb);
 	}
 
+	/// <summary>Checks if the whole given bounding sphere is inside the current bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 	UNIGINE_INLINE bool insideAllValid(const BoundSphere &bs) const
 	{
 		#ifdef USE_SSE
@@ -918,13 +1039,14 @@ struct alignas(16) BoundBox
 			__m128 res_1 = _mm_cmplt_ps(maximum.vec, _mm_add_ps(bs.center.vec, radius));
 			return ((_mm_movemask_ps(_mm_or_ps(res_0, res_1)) & 0x07) == 0);
 		#else
-			if (minimum.x > center.x - bs.radius || maximum.x < center.x + bs.radius) return false;
-			if (minimum.y > center.y - bs.radius || maximum.y < center.y + bs.radius) return false;
-			if (minimum.z > center.z - rbs.adius || maximum.z < center.z + bs.radius) return false;
+			if (minimum.x > bs.center.x - bs.radius || maximum.x < bs.center.x + bs.radius) return false;
+			if (minimum.y > bs.center.y - bs.radius || maximum.y < bs.center.y + bs.radius) return false;
+			if (minimum.z > bs.center.z - bs.radius || maximum.z < bs.center.z + bs.radius) return false;
 
 			return true;
 		#endif
 	}
+	/// <summary>Checks if the whole given bounding box is inside the current bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 	UNIGINE_INLINE bool insideAllValid(const BoundBox &bb) const
 	{
 		#ifdef USE_SSE
@@ -939,6 +1061,9 @@ struct alignas(16) BoundBox
 			return true;
 		#endif
 	}
+	/// <summary>Checks if all specified points are inside the current bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
+	/// <param name="points">Vector of points to be checked.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE bool insideAllValid(const vec3 *points, int num_points) const
 	{
 		for (int i = 0; i < num_points; i++)
@@ -950,6 +1075,9 @@ struct alignas(16) BoundBox
 	}
 
 	// inside cube
+	/// <summary>Checks if a face of the bounding box is inside the cube represented by minimum and maximum coordinates of the bounding box.</summary>
+	/// <param name="face">The face index from 0 to 5.</param>
+	/// <param name="offset">Offset.</param>
 	UNIGINE_INLINE bool insideCube(int face, const vec3 &offset) const
 	{
 		if (!isValid())
@@ -971,39 +1099,47 @@ struct alignas(16) BoundBox
 	}
 
 	// intersections
+	/// <summary>Checks for an intersection between a ray and the current bounding box.</summary>
 	UNIGINE_INLINE bool rayIntersection(const vec3 &point, const vec3 &direction) const
 	{
 		return isValid() && rayIntersectionValid(point, direction);
 	}
+	/// <summary>Checks for an intersection between a ray and the current bounding box. This function uses the inverse direction of the ray, which increases performance.</summary>
 	UNIGINE_INLINE bool irayIntersection(const vec3 &point, const vec3 &idirection) const
 	{
 		return isValid() && irayIntersectionValid(point, idirection);
 	}
+	/// <summary>Checks for an intersection between a line and the current bounding box.</summary>
 	UNIGINE_INLINE bool getIntersection(const vec3 &p0, const vec3 &p1) const
 	{
 		return isValid() && getIntersectionValid(p0, p1);
 	}
 
+	/// <summary>Checks for an intersection between a ray and the current bounding box. This function doesn't check if the minimum and maximum coordinates of the bounding box are valid.</summary>
 	UNIGINE_INLINE bool rayIntersectionValid(const vec3 &point, const vec3 &direction) const
 	{
 		return rayBoundBoxIntersection(point, direction, minimum, maximum);
 	}
+	/// <summary>Checks for an intersection between a ray and the current bounding box using the inverse direction of the ray, which increases performance. This function doesn't check if the minimum and maximum coordinates of the bounding box are valid.</summary>
 	UNIGINE_INLINE bool irayIntersectionValid(const vec3 &point, const vec3 &idirection) const
 	{
 		return irayBoundBoxIntersection(point, idirection, minimum, maximum);
 	}
+	/// <summary>Checks for an intersection between a line and the current bounding box. This function doesn't check if the minimum and maximum coordinates of the bounding box are valid.</summary>
 	UNIGINE_INLINE bool getIntersectionValid(const vec3 &p0, const vec3 &p1) const
 	{
 		return rayBoundBoxIntersection(p0, p1 - p0, minimum, maximum);
 	}
 
 	// distance
+	/// <summary>Returns the distance from the origin of coordinates to the closest vertex of the bounding box. If the minimum and maximum coordinates of the bounding box are invalid, returns INF.</summary>
 	UNIGINE_INLINE float distance() const
 	{
 		if (isValid())
 			return distanceValid();
 		return Consts::INF;
 	}
+	/// <summary>Returns the distance from the given point to the closest vertex of the bounding box. If the minimum and maximum coordinates of the bounding box are invalid, returns INF.</summary>
 	UNIGINE_INLINE float distance(const vec3 &point) const
 	{
 		if (isValid())
@@ -1011,6 +1147,7 @@ struct alignas(16) BoundBox
 		return Consts::INF;
 	}
 
+	/// <summary>Returns the distance from the origin of coordinates to the closest vertex of the bounding box. This function doesn't check if the minimum and maximum coordinates of the bounding box are valid.</summary>
 	UNIGINE_INLINE float distanceValid() const
 	{
 		#ifdef USE_SSE
@@ -1042,6 +1179,7 @@ struct alignas(16) BoundBox
 			return sqrtFast(direction.length2());
 		#endif
 	}
+	/// <summary>Returns the distance from the given point to the closest vertex of the bounding box. This function doesn't check if the minimum and maximum coordinates of the bounding box are valid.</summary>
 	UNIGINE_INLINE float distanceValid(const vec3 &point) const
 	{
 		#ifdef USE_SSE
@@ -1073,35 +1211,16 @@ struct alignas(16) BoundBox
 			return sqrtFast(direction.length2());
 		#endif
 	}
-
-	UNIGINE_INLINE bool isCameraVisible(const vec3 &camera, float min_distance, float max_distance) const
-	{
-		float distance_min;
-		float distance_max;
-
-		#ifdef USE_SSE
-			{
-				__m128 direction = _mm_sub_ps(_mm_min_ps(_mm_max_ps(camera.vec, minimum.vec), maximum.vec), camera.vec);
-				direction = _mm_rcp_ss(_mm_rsqrt_ss(_mm_dot33_ps(direction, direction)));
-				_mm_store_ss(&distance_min, direction);
-			}
-			{
-				__m128 direction = _mm_sub_ps(_mm_min_ps(_mm_max_ps(camera.vec, minimum.vec), maximum.vec), camera.vec);
-				direction = _mm_rcp_ss(_mm_rsqrt_ss(_mm_dot33_ps(direction, direction)));
-				_mm_store_ss(&distance_max, direction);
-			}
-		#endif
-
-		return (distance_min <= max_distance) && (distance_max >= min_distance);
-	}
 };
 
+/// <summary>Returns the bounding box with the specified transformation matrix applied.</summary>
 UNIGINE_INLINE BoundBox operator*(const mat4 &m, const BoundBox &bb)
 {
 	BoundBox ret = bb;
 	ret.setTransform(m);
 	return ret;
 }
+/// <summary>Returns the bounding box with the specified transformation matrix applied.</summary>
 UNIGINE_INLINE BoundBox operator*(const dmat4 &m, const BoundBox &bb)
 {
 	BoundBox ret = bb;
@@ -1109,11 +1228,13 @@ UNIGINE_INLINE BoundBox operator*(const dmat4 &m, const BoundBox &bb)
 	return ret;
 }
 
+/// <summary>Sets the bounding sphere equal to the specified source bounding box.</summary>
 UNIGINE_INLINE void BoundSphere::set(const BoundBox &bb)
 {
 	clear();
 	expand(bb);
 }
+/// <summary>Expands the current bounding sphere to enclose the given bounding box.</summary>
 UNIGINE_INLINE void BoundSphere::expand(const BoundBox &bb)
 {
 	if (!bb.isValid())
@@ -1135,6 +1256,7 @@ UNIGINE_INLINE void BoundSphere::expand(const BoundBox &bb)
 		set(center, length(bb.maximum - center));
 	}
 }
+/// <summary>Expands the radius of the bounding sphere to include the given bounding box.</summary>
 UNIGINE_INLINE void BoundSphere::expandRadius(const BoundBox &bb)
 {
 	if (!bb.isValid())
@@ -1156,18 +1278,22 @@ UNIGINE_INLINE void BoundSphere::expandRadius(const BoundBox &bb)
 		set(center, length(bb.maximum - center));
 	}
 }
+/// <summary>Checks if the specified bounding box is inside the current bounding sphere.</summary>
 UNIGINE_INLINE bool BoundSphere::inside(const BoundBox &bb) const
 {
 	return isValid() && bb.isValid() && insideValid(bb.minimum, bb.maximum);
 }
+/// <summary>Checks if the whole specified bounding box is inside the current bounding sphere.</summary>
 UNIGINE_INLINE bool BoundSphere::insideAll(const BoundBox &bb) const
 {
 	return isValid() && bb.isValid() && insideAllValid(bb);
 }
+/// <summary>Checks if the specified bounding box is inside the current bounding sphere. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 UNIGINE_INLINE bool BoundSphere::insideValid(const BoundBox &bb) const
 {
 	return insideValid(bb.minimum, bb.maximum);
 }
+/// <summary>Checks if the whole specified bounding box is inside the current bounding sphere. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 UNIGINE_INLINE bool BoundSphere::insideAllValid(const BoundBox &bb) const
 {
 	return insideValid(bb.minimum)
@@ -1192,20 +1318,24 @@ struct alignas(16) BoundFrustum
 	vec3 points[8];		// bounding points
 	vec4 planes[6];		// aos clipping planes
 
+	/// <summary>Constructor. Creates an empty bounding frustum.</summary>
 	UNIGINE_INLINE BoundFrustum()
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
+	/// <summary>Initialization of the bounding frustum by the projection and modelview matrices.</summary>
 	UNIGINE_INLINE BoundFrustum(const mat4 &projection, const mat4 &modelview)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(projection, modelview);
 	}
+	/// <summary>Initialization of the bounding frustum by the bounding frustum.</summary>
 	UNIGINE_INLINE BoundFrustum(const BoundFrustum &bf)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bf);
 	}
+	/// <summary>Initialization of the bounding frustum by the bounding frustum and transformation matrix.</summary>
 	UNIGINE_INLINE BoundFrustum(const BoundFrustum &bf, const mat4 &itransform)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
@@ -1220,12 +1350,14 @@ struct alignas(16) BoundFrustum
 		UNIGINE_INLINE void set(const WorldBoundFrustum &bf);
 	#endif
 
+	/// <summary>Assignment operator.</summary>
 	UNIGINE_INLINE BoundFrustum &operator=(const BoundFrustum &bf)
 	{
 		set(bf);
 		return *this;
 	}
 
+	/// <summary>Clears the bounding frustum.</summary>
 	UNIGINE_INLINE void clear()
 	{
 		// camera
@@ -1241,10 +1373,12 @@ struct alignas(16) BoundFrustum
 			points[i] = vec3_zero;
 	}
 
+	/// <summary>Sets the bounding frustum by the specified projection and modelview matrices.</summary>
 	UNIGINE_INLINE void set(const mat4 &projection, const mat4 &modelview)
 	{
 		set(projection * modelview);
 	}
+	/// <summary>Sets the bounding frustum by the specified projection matrix.</summary>
 	UNIGINE_INLINE void set(const mat4 &proj)
 	{
 		mat4 iproj = inverse(proj);
@@ -1279,6 +1413,7 @@ struct alignas(16) BoundFrustum
 
 		update_bounds();
 	}
+	/// <summary>Sets the bounding frustum by the bounding frustum.</summary>
 	UNIGINE_INLINE void set(const BoundFrustum &bf)
 	{
 		camera = bf.camera;
@@ -1290,6 +1425,7 @@ struct alignas(16) BoundFrustum
 		for (int i = 0; i < 8; i++)
 			points[i] = bf.points[i];
 	}
+	/// <summary>Sets the bounding frustum by the bounding frustum and inverse transformation matrix.</summary>
 	UNIGINE_INLINE void set(const BoundFrustum &bf, const mat4 &itransform)
 	{
 		set(bf);
@@ -1297,9 +1433,11 @@ struct alignas(16) BoundFrustum
 	}
 
 	// parameters
+	/// <summary>Checks if the bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool isValid() const { return bound_box.isValid(); }
 
 	// transformation
+	/// <summary>Sets the current transformation matrix by an inverse transformation matrix.</summary>
 	UNIGINE_INLINE void setITransform(const mat4 &itransform)
 	{
 		mat4 transform = inverse(itransform);
@@ -1317,10 +1455,12 @@ struct alignas(16) BoundFrustum
 
 		update_bounds();
 	}
+	/// <summary>Sets the current transformation matrix by an inverse transformation matrix.</summary>
 	UNIGINE_INLINE void setITransform(const dmat4 &itransform)
 	{
 		setITransform(mat4(itransform));
 	}
+	/// <summary>Sets the current transformation matrix by the specified source transformation matrix.</summary>
 	UNIGINE_INLINE void setTransform(const mat4 &transform)
 	{
 		camera = transform * camera;
@@ -1338,12 +1478,14 @@ struct alignas(16) BoundFrustum
 
 		update_bounds();
 	}
+	/// <summary>Sets the current transformation matrix by the specified source transformation matrix.</summary>
 	UNIGINE_INLINE void setTransform(const dmat4 &transform)
 	{
 		setTransform(mat4(transform));
 	}
 
 	// compare
+	/// <summary>Compares the current bounding frustum with the given one.</summary>
 	UNIGINE_INLINE int compare(const BoundFrustum &bf) const
 	{
 		if (camera != bf.camera) return false;
@@ -1359,10 +1501,13 @@ struct alignas(16) BoundFrustum
 
 		return true;
 	}
+	/// <summary>Bounding frustum equal comparison operator.</summary>
 	UNIGINE_INLINE int operator==(const BoundFrustum &bf) const { return compare(bf); }
+	/// <summary>Bounding frustum not equal comparison operator.</summary>
 	UNIGINE_INLINE int operator!=(const BoundFrustum &bf) const { return !compare(bf); }
 
 	// inside points
+	/// <summary>Checks if the point is inside the bounding frustum.</summary>
 	UNIGINE_INLINE bool inside(const vec3 &point) const
 	{
 		return bound_box.insideValid(point)
@@ -1373,6 +1518,7 @@ struct alignas(16) BoundFrustum
 			&& (dot(planes[4], point) > 0.0f)
 			&& (dot(planes[5], point) > 0.0f);
 	}
+	/// <summary>Checks if the sphere set by the arguments is inside the bounding frustum.</summary>
 	UNIGINE_INLINE bool inside(const vec3 &point, float radius) const
 	{
 		return bound_box.insideValid(point, radius)
@@ -1383,6 +1529,7 @@ struct alignas(16) BoundFrustum
 			&& (dot(planes[4], point) > -radius)
 			&& (dot(planes[5], point) > -radius);
 	}
+	/// <summary>Checks if the box set by the arguments is inside the bounding frustum.</summary>
 	UNIGINE_INLINE bool inside(const vec3 &minimum, const vec3 &maximum) const
 	{
 		return bound_box.insideValid(minimum, maximum)
@@ -1393,6 +1540,9 @@ struct alignas(16) BoundFrustum
 			&& inside_plane(planes[4], minimum, maximum)
 			&& inside_plane(planes[5], minimum, maximum);
 	}
+	/// <summary>Checks if a set of points is inside the bounding frustum.</summary>
+	/// <param name="points">Vector of points.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE bool inside(const vec3 *points_, int num_points) const
 	{
 		return bound_box.insideValid(points_, num_points)
@@ -1404,6 +1554,7 @@ struct alignas(16) BoundFrustum
 			&& inside_plane(planes[5], points_, num_points);
 	}
 
+	/// <summary>Performs a fast check if the point is inside the bounding frustum.</summary>
 	UNIGINE_INLINE bool insideFast(const vec3 &point) const
 	{
 		return bound_box.insideValid(point)
@@ -1412,6 +1563,7 @@ struct alignas(16) BoundFrustum
 			&& (dot(planes[2], point) > 0.0)
 			&& (dot(planes[3], point) > 0.0);
 	}
+	/// <summary>Performs a fast check if the sphere set by the arguments is inside the bounding frustum.</summary>
 	UNIGINE_INLINE bool insideFast(const vec3 &point, float radius) const
 	{
 		return bound_box.insideValid(point, radius)
@@ -1420,6 +1572,7 @@ struct alignas(16) BoundFrustum
 			&& (dot(planes[2], point) > -radius)
 			&& (dot(planes[3], point) > -radius);
 	}
+	/// <summary>Performs a fast check if the box set by the arguments is inside the bounding frustum.</summary>
 	UNIGINE_INLINE bool insideFast(const vec3 &minimum, const vec3 &maximum) const
 	{
 		return bound_box.insideValid(minimum, maximum)
@@ -1428,6 +1581,9 @@ struct alignas(16) BoundFrustum
 			&& inside_plane(planes[2], minimum, maximum)
 			&& inside_plane(planes[3], minimum, maximum);
 	}
+	/// <summary>Performs a fast check if the set of points is inside the bounding frustum.</summary>
+	/// <param name="points">Vector of points to be checked.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE bool insideFast(const vec3 *points_, int num_points) const
 	{
 		return bound_box.insideValid(points_, num_points)
@@ -1438,12 +1594,18 @@ struct alignas(16) BoundFrustum
 	}
 
 	// inside bounds
+	/// <summary>Checks if the specified bounding sphere is inside the current bounding frustum.</summary>
 	UNIGINE_INLINE bool inside(const BoundSphere &bs) const { return bs.isValid() ? insideValid(bs) : false; }
+	/// <summary>Checks if the specified bounding box is inside the current bounding frustum.</summary>
 	UNIGINE_INLINE bool inside(const BoundBox &bb) const { return bb.isValid() ? insideValid(bb) : false; }
+	/// <summary>Checks if the specified bounding frustum is inside the current bounding frustum.</summary>
 	UNIGINE_INLINE bool inside(const BoundFrustum &bf) const { return bf.isValid() ? insideValid(bf) : false; }
 
+	/// <summary>Checks if the bounding sphere is inside the bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideValid(const BoundSphere &bs) const { return inside(bs.center, bs.radius); }
+	/// <summary>Checks if the bounding box is inside the bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideValid(const BoundBox &bb) const { return inside(bb.minimum, bb.maximum); }
+	/// <summary>Checks if the specified bounding frustum is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideValid(const BoundFrustum &bf) const
 	{
 		return bound_box.insideValid(bf.bound_box)
@@ -1455,8 +1617,11 @@ struct alignas(16) BoundFrustum
 			&& inside_plane(planes[5], bf.points, 8);
 	}
 
+	/// <summary>Performs a fast check if the bounding sphere is inside the bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideValidFast(const BoundSphere &bs) const { return insideFast(bs.center, bs.radius); }
+	/// <summary>Performs a fast check if the bounding box is inside the bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideValidFast(const BoundBox &bb) const { return insideFast(bb.minimum, bb.maximum); }
+	/// <summary>Performs a fast check if the specified bounding frustum is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideValidFast(const BoundFrustum &bf) const
 	{
 		return bound_box.insideValid(bf.bound_box)
@@ -1467,11 +1632,16 @@ struct alignas(16) BoundFrustum
 	}
 
 	// inside all bounds
+	/// <summary>Checks if the whole specified bounding sphere is inside the current bounding frustum.</summary>
 	UNIGINE_INLINE bool insideAll(const BoundSphere &bs) const { return bs.isValid() ? insideAllValid(bs) : false; }
+	/// <summary>Checks if the whole specified bounding box is inside the current bounding frustum.</summary>
 	UNIGINE_INLINE bool insideAll(const BoundBox &bb) const { return bb.isValid() ? insideAllValid(bb) : false; }
+	/// <summary>Checks if the whole specified bounding frustum is inside the current bounding frustum.</summary>
 	UNIGINE_INLINE bool insideAll(const BoundFrustum &bf) const { return bf.isValid() ? insideAllValid(bf) : false; }
 
+	/// <summary>Checks if the whole specified bounding sphere is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideAllValid(const BoundSphere &bs) const { return inside(bs.center, -bs.radius); }
+	/// <summary>Checks if the whole specified bounding box is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideAllValid(const BoundBox &bb) const
 	{
 		return bound_box.insideAllValid(bb)
@@ -1484,6 +1654,7 @@ struct alignas(16) BoundFrustum
 			&& inside(vec3(bb.maximum.x, bb.minimum.y, bb.maximum.z))
 			&& inside(vec3(bb.minimum.x, bb.maximum.y, bb.maximum.z));
 	}
+	/// <summary>Checks if the whole specified bounding frustum is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideAllValid(const BoundFrustum &bf) const
 	{
 		return bound_box.insideValid(bf.bound_box)
@@ -1497,7 +1668,9 @@ struct alignas(16) BoundFrustum
 			&& inside(bf.points[7]);
 	}
 
+	/// <summary>Performs a fast check if the whole specified bounding sphere is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideAllValidFast(const BoundSphere &bs) const { return insideFast(bs.center, -bs.radius); }
+	/// <summary>Performs a fast check if the whole specified bounding box is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideAllValidFast(const BoundBox &bb) const
 	{
 		return bound_box.insideAllValid(bb)
@@ -1510,6 +1683,7 @@ struct alignas(16) BoundFrustum
 			&& insideFast(vec3(bb.maximum.x, bb.minimum.y, bb.maximum.z))
 			&& insideFast(vec3(bb.minimum.x, bb.maximum.y, bb.maximum.z));
 	}
+	/// <summary>Performs a fast check if the whole specified bounding frustum is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideAllValidFast(const BoundFrustum &bf) const
 	{
 		return bound_box.insideValid(bf.bound_box)
@@ -1524,19 +1698,29 @@ struct alignas(16) BoundFrustum
 	}
 
 	// inside planes bounds
+	/// <summary>Checks if the specified bounding sphere is inside the volume defined by the planes of the current bounding frustum.</summary>
 	UNIGINE_INLINE bool insidePlanes(const BoundSphere &bs) const { return bs.isValid() ? insidePlanesValid(bs) : false; }
+	/// <summary>Checks if the specified bounding box is inside the volume defined by the planes of the current bounding frustum.</summary>
 	UNIGINE_INLINE bool insidePlanes(const BoundBox &bb) const { return bb.isValid() ? insidePlanesValid(bb) : false; }
+	/// <summary>Checks if the specified bounding frustum is inside the volume defined by the planes of the current bounding frustum.</summary>
 	UNIGINE_INLINE bool insidePlanes(const BoundFrustum &bf) const { return bf.isValid() ? insidePlanesValid(bf) : false; }
 
+	/// <summary>Checks if the specified bounding sphere is inside the volume defined by the planes of the current bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insidePlanesValid(const BoundSphere &bs) const { return inside(bs.center, bs.radius); }
+	/// <summary>Checks if the specified bounding box is inside the volume defined by the planes of the current bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insidePlanesValid(const BoundBox &bb) const { return inside(bb.minimum, bb.maximum); }
+	/// <summary>Checks if the specified bounding frustum is inside the volume defined by the planes of the current bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insidePlanesValid(const BoundFrustum &bf) const { return inside(bf.points, 8); }
 
+	/// <summary>Performs a fast check if the specified bounding sphere is inside the volume defined by the planes of the current bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insidePlanesValidFast(const BoundSphere &bs) const { return insideFast(bs.center, bs.radius); }
+	/// <summary>Performs a fast check if the specified bounding box is inside the volume defined by the planes of the current bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insidePlanesValidFast(const BoundBox &bb) const { return insideFast(bb.minimum, bb.maximum); }
+	/// <summary>Performs a fast check if the specified bounding frustum is inside the volume defined by the planes of the current bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insidePlanesValidFast(const BoundFrustum &bf) const { return insideFast(bf.points, 8); }
 
 	// inside shadow
+	/// <summary>Checks if the given bounding sphere is inside the shadow of the current bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideShadowValid(const BoundSphere &object, const vec3 &direction) const
 	{
 		// object is inside the bound frustum
@@ -1558,6 +1742,7 @@ struct alignas(16) BoundFrustum
 
 		return false;
 	}
+	/// <summary>Checks if the given bounding sphere is inside the shadow of the current bounding frustum and outside the bounding sphere of a light source. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideShadowValid(const BoundSphere &object, const BoundSphere &light, const vec3 &offset) const
 	{
 		// object is outside the light bounds
@@ -1625,12 +1810,14 @@ private:
 	}
 };
 
+/// <summary>Returns the bounding frustum with the specified transformation matrix applied.</summary>
 UNIGINE_INLINE BoundFrustum operator*(const mat4 &m, const BoundFrustum &bb)
 {
 	BoundFrustum ret = bb;
 	ret.setTransform(m);
 	return ret;
 }
+/// <summary>Returns the bounding frustum with the specified transformation matrix applied.</summary>
 UNIGINE_INLINE BoundFrustum operator*(const dmat4 &m, const BoundFrustum &bb)
 {
 	BoundFrustum ret = bb;
@@ -1659,60 +1846,81 @@ struct alignas(16) WorldBoundSphere
 		};
 	};
 
+	/// <summary>Constructor. Initialization by the coordinates of the center and radius of the bounding sphere.</summary>
 	UNIGINE_INLINE constexpr WorldBoundSphere(double x, double y, double z, double radius, ConstexprTag): x(x), y(y), z(z), radius(radius) {}
 
+	/// <summary>Constructor. Creates an empty bounding sphere.</summary>
 	UNIGINE_INLINE WorldBoundSphere()
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		clear();
 	}
+	/// <summary>Constructor. Initialization by the center and radius of the bounding sphere.</summary>
 	UNIGINE_INLINE WorldBoundSphere(const dvec3 &center, double radius)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(center, radius);
 	}
+	/// <summary>Constructor. Initialization by the vector of points.</summary>
+	/// <param name="points">Vector of points.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
+	/// <param name="optimal">Flag defining if the optimal sphere should be used. If false, the sphere will be expanded for including all the given points.</param>
 	UNIGINE_INLINE WorldBoundSphere(const dvec3 *points, int num_points, bool optimal)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(points, num_points, optimal);
 	}
+	/// <summary>Initialization by the bounding sphere.</summary>
 	UNIGINE_INLINE WorldBoundSphere(const WorldBoundSphere &bs)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bs);
 	}
+	/// <summary>Constructor. Initialization by the bounding sphere and setting the given transformation matrix to the new bounding sphere.</summary>
 	UNIGINE_INLINE WorldBoundSphere(const WorldBoundSphere &bs, const dmat4 &transform)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bs, transform);
 	}
+	/// <summary>Initialization by the bounding sphere.</summary>
 	UNIGINE_INLINE WorldBoundSphere(const BoundSphere &bs)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bs);
 	}
+	/// <summary>Constructor. Initialization by the bounding sphere and setting the given transformation matrix to the new bounding sphere.</summary>
 	UNIGINE_INLINE WorldBoundSphere(const BoundSphere &bs, const dmat4 &transform)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bs, transform);
 	}
+	/// <summary>Constructor. Initialization by the bounding box.</summary>
 	UNIGINE_INLINE explicit WorldBoundSphere(const WorldBoundBox &bb)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bb);
 	}
 
+	/// <summary>Assignment operator for the bounding sphere.</summary>
 	UNIGINE_INLINE WorldBoundSphere &operator=(const WorldBoundSphere &bs)
 	{
 		set(bs);
 		return *this;
 	}
 
+	/// <summary>Clears the bounding sphere.</summary>
 	UNIGINE_INLINE void clear() { x = 0.0; y = 0.0; z = 0.0; radius = -1.0; }
+	/// <summary>Sets the specified coordinates for the center of the bounding sphere.</summary>
 	UNIGINE_INLINE void setCenter(const dvec3 &center) { x = center.x, y = center.y, z = center.z; }
 
+	/// <summary>Sets the bounding sphere by its center and radius.</summary>
 	UNIGINE_INLINE void set(const dvec3 &center_, double radius_) { setCenter(center_);  radius = radius_; }
+	/// <summary>Sets the bounding sphere by the specified coordinates of the center and radius.</summary>
 	UNIGINE_INLINE void set(double x_, double y_, double z_, double radius_) { x = x_, y = y_, z = z_;  radius = radius_; }
+	/// <summary>Set the bounding sphere by a vector of points.</summary>
+	/// <param name="points">Vector of points.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
+	/// <param name="optimal">Flag defining if the optimal sphere should be used. If false, the sphere will be expanded for including all the given points.</param>
 	UNIGINE_INLINE void set(const dvec3 *points, int num_points, bool optimal)
 	{
 		clear();
@@ -1741,24 +1949,31 @@ struct alignas(16) WorldBoundSphere
 			expand(points, num_points);
 		}
 	}
+	/// <summary>Sets the bounding sphere by the bounding sphere.</summary>
 	UNIGINE_INLINE void set(const WorldBoundSphere &bs) { data = bs.data; }
+	/// <summary>Sets the bounding sphere by a bounding sphere with a transformation matrix taken into account.</summary>
 	UNIGINE_INLINE void set(const WorldBoundSphere &bs, const dmat4 &transform)
 	{
 		data = bs.data;
 		setTransform(transform);
 	}
+	/// <summary>Sets the bounding sphere by the bounding sphere.</summary>
 	UNIGINE_INLINE void set(const BoundSphere &bs) { data = dvec4(bs.data); }
+	/// <summary>Sets the bounding sphere by a bounding sphere with a transformation matrix taken into account.</summary>
 	UNIGINE_INLINE void set(const BoundSphere &bs, const dmat4 &transform)
 	{
 		set(bs);
 		setTransform(transform);
 	}
+	/// <summary>Sets the bounding sphere by the bounding box.</summary>
 	UNIGINE_INLINE void set(const WorldBoundBox &bb);
 
 	// parameters
-	UNIGINE_INLINE bool isValid() const { return radius > 0.0f; }
+	/// <summary>Checks if the bounding sphere radius has a positive value.</summary>
+	UNIGINE_INLINE bool isValid() const { return radius >= 0.0f; }
 
 	// transformation
+	/// <summary>Sets the given transformation matrix to bounding sphere.</summary>
 	UNIGINE_INLINE void setTransform(const dmat4 &transform)
 	{
 		double r = radius;
@@ -1771,11 +1986,15 @@ struct alignas(16) WorldBoundSphere
 	}
 
 	// equals
+	/// <summary>Compares the bounding sphere with the given one. The degree of precision is equal to 1.0e-6f.</summary>
 	UNIGINE_INLINE int compare(const WorldBoundSphere &bs) const { return Math::compare(data, bs.data); }
+	/// <summary>Compares the bounding sphere with the given one according to the degree of precision equal to 1.0e-6f.</summary>
 	UNIGINE_INLINE int operator==(const WorldBoundSphere &bs) const { return compare(bs); }
+	/// <summary>Bounding spheres not equal comparison operator.</summary>
 	UNIGINE_INLINE int operator!=(const WorldBoundSphere &bs) const { return !compare(bs); }
 
 	// expand
+	/// <summary>Expands the current bounding sphere to include the given point.</summary>
 	UNIGINE_INLINE void expand(const dvec3 &point)
 	{
 		if (isValid())
@@ -1789,9 +2008,12 @@ struct alignas(16) WorldBoundSphere
 			}
 		} else
 		{
-			set(point, BOUNDS_EPSILON);
+			set(point, 0.0);
 		}
 	}
+	/// <summary>Expands the current bounding sphere to include all points in the vector.</summary>
+	/// <param name="points">Vector of points.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE void expand(const dvec3 *points, int num_points)
 	{
 		if (isValid())
@@ -1823,6 +2045,7 @@ struct alignas(16) WorldBoundSphere
 			set((minimum + maximum) * 0.5, radius);
 		}
 	}
+	/// <summary>Expands the current bounding sphere to include the given bounding sphere.</summary>
 	UNIGINE_INLINE void expand(const WorldBoundSphere &bs)
 	{
 		if (bs.isValid())
@@ -1854,9 +2077,11 @@ struct alignas(16) WorldBoundSphere
 			}
 		}
 	}
+	/// <summary>Expands the current bounding sphere to include the given bounding box.</summary>
 	UNIGINE_INLINE void expand(const WorldBoundBox &bb);
 
 	// radius expand
+	/// <summary>Expands the radius of the bounding sphere to include the given point.</summary>
 	UNIGINE_INLINE void expandRadius(const dvec3 &point)
 	{
 		if (isValid())
@@ -1866,9 +2091,12 @@ struct alignas(16) WorldBoundSphere
 				radius = r;
 		} else
 		{
-			set(point, BOUNDS_EPSILON);
+			set(point, 0.0);
 		}
 	}
+	/// <summary>Expands the radius of the bounding sphere to include all points in the vector.</summary>
+	/// <param name="points">Vector of points.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE void expandRadius(const dvec3 *points, int num_points)
 	{
 		if (isValid())
@@ -1895,6 +2123,7 @@ struct alignas(16) WorldBoundSphere
 			set(center, radius);
 		}
 	}
+	/// <summary>Expands the radius of the bounding sphere by using the radius of the given bounding sphere.</summary>
 	UNIGINE_INLINE void expandRadius(const WorldBoundSphere &bs)
 	{
 		if (!bs.isValid())
@@ -1910,30 +2139,37 @@ struct alignas(16) WorldBoundSphere
 			data = bs.data;
 		}
 	}
+	/// <summary>Expands the radius of the bounding sphere by using the max and min points of the given bounding box.</summary>
 	UNIGINE_INLINE void expandRadius(const WorldBoundBox &bb);
 
 	// inside points
+	/// <summary>Checks if the given point is inside the current bounding sphere.</summary>
 	UNIGINE_INLINE bool inside(const dvec3 &point) const
 	{
 		return isValid() && insideValid(point);
 	}
+	/// <summary>Checks if the sphere set by the arguments is inside the bounding sphere.</summary>
 	UNIGINE_INLINE bool inside(const dvec3 &point, double radius) const
 	{
 		return isValid() && insideValid(point, radius);
 	}
+	/// <summary>Checks if the box is set by the arguments inside the bounding sphere.</summary>
 	UNIGINE_INLINE bool inside(const dvec3 &minimum, const dvec3 &maximum) const
 	{
 		return isValid() && insideValid(minimum, maximum);
 	}
 
+	/// <summary>Checks if the given point is inside the current bounding sphere. The method doesn't check if the bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool insideValid(const dvec3 &point) const
 	{
 		return length2(center - point) <= radius * radius;
 	}
+	/// <summary>Checks if the sphere set by the arguments is inside the bounding sphere. The method doesn't check if the bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool insideValid(const dvec3 &point, double radius_) const
 	{
 		return length2(center - point) <= pow2(radius_ + radius);
 	}
+	/// <summary>Checks if the box set by the arguments is inside the bounding sphere. The method doesn't check if the bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool insideValid(const dvec3 &minimum, const dvec3 &maximum) const
 	{
 		dvec3 direction;
@@ -1958,79 +2194,99 @@ struct alignas(16) WorldBoundSphere
 		else
 			direction.z = 0.0;
 
-		return direction.length2() < radius * radius;
+		return direction.length2() <= radius * radius;
 	}
 
 	// inside bounds
+	/// <summary>Checks if the specified bounding sphere is inside the bounding sphere.</summary>
 	UNIGINE_INLINE bool inside(const WorldBoundSphere &bs) const
 	{
 		return isValid() && bs.isValid() && insideValid(bs.center, bs.radius);
 	}
+	/// <summary>Checks if the bounding box is inside the bounding sphere.</summary>
 	UNIGINE_INLINE bool inside(const WorldBoundBox &bb) const;
 
+	/// <summary>Checks if the specified bounding sphere is inside the bounding sphere. The method doesn't check if the bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool insideValid(const WorldBoundSphere &bs) const
 	{
 		return insideValid(bs.center, bs.radius);
 	}
+	/// <summary>Checks if the bounding box is inside the bounding sphere. The method doesn't check if the bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool insideValid(const WorldBoundBox &bb) const;
 
+	/// <summary>Checks if the whole specified bounding sphere is completely inside the current bounding sphere.</summary>
 	UNIGINE_INLINE bool insideAll(const WorldBoundSphere &bs) const
 	{
 		return isValid() && bs.isValid() && insideAllValid(bs);
 	}
+	/// <summary>Checks if the whole specified bounding box is completely inside the current bounding sphere.</summary>
 	UNIGINE_INLINE bool insideAll(const WorldBoundBox &bb) const;
 
+	/// <summary>Checks if the whole specified bounding sphere is completely inside the current bounding sphere. The method doesn't check if the bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool insideAllValid(const WorldBoundSphere &bs) const
 	{
 		double r = radius - bs.radius;
-		if (r > 0.0)
+		if (r >= 0.0)
 			return length2(center - bs.center) <= r * r;
 		return false;
 	}
+	/// <summary>Checks if the whole specified bounding box is completely inside the current bounding sphere. The method doesn't check if the bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool insideAllValid(const WorldBoundBox &bb) const;
 
 	// intersections
+	/// <summary>Checks for an intersection of a ray with the current bounding sphere.</summary>
 	UNIGINE_INLINE bool rayIntersection(const dvec3 &point, const dvec3 &direction) const
 	{
 		return isValid() && rayIntersectionValid(point, direction);
 	}
+	/// <summary>Checks for an intersection of a line with the current bounding sphere.</summary>
 	UNIGINE_INLINE bool getIntersection(const dvec3 &p0, const dvec3 &p1) const
 	{
 		return isValid() && getIntersectionValid(p0, p1);
 	}
 
+	/// <summary>Checks for an intersection of a ray with the current bounding sphere. This method doesn't check if the current bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool rayIntersectionValid(const dvec3 &point, const dvec3 &direction) const
 	{
 		double k = saturate(dot(direction, center - point) / length2(direction));
 		return length2(center - point - direction * k) <= radius * radius;
 	}
+	/// <summary>Checks for an intersection of a line with the current bounding sphere. This method doesn't check if the current bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE bool getIntersectionValid(const dvec3 &p0, const dvec3 &p1) const
 	{
 		return rayIntersectionValid(p0, p1 - p0);
 	}
 
 	// distance
+	/// <summary>Returns the distance from the origin of coordinates to the closest point of the current bounding sphere.</summary>
 	UNIGINE_INLINE double distance() const
 	{
 		if (isValid())
 			return distanceValid();
 		return Consts::INF;
 	}
+	/// <summary>Returns the distance from the given point to the closest point of the current bounding sphere.</summary>
 	UNIGINE_INLINE double distance(const dvec3 &point) const
 	{
 		if (isValid())
 			return distanceValid(point);
 		return Consts::INF;
 	}
+	/// <summary>Returns the distance from the origin of coordinates to the closest point of the current bounding sphere. This method doesn't check if the current bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE double distanceValid() const
 	{
 		return center.length() - radius;
 	}
+	/// <summary>Returns the distance from the given point to the closest point of the current bounding sphere. This method doesn't check if the current bounding sphere is valid (has a positive radius).</summary>
 	UNIGINE_INLINE double distanceValid(const dvec3 &camera) const
 	{
 		return length(center - camera) - radius;
 	}
-	
+
+	/// <summary>Checks if the bounding sphere is within the camera visibility distance.</summary>
+	/// <param name="camera">Coordinates of the camera position.</param>
+	/// <param name="min_distance">Minimum visibility distance, in meters.</param>
+	/// <param name="max_distance">Maximum visibility distance, in meters.</param>
 	UNIGINE_INLINE bool isCameraVisible(const dvec3 &camera, double min_distance, double max_distance) const
 	{
 		double distance = length(center - camera);
@@ -2041,6 +2297,7 @@ struct alignas(16) WorldBoundSphere
 
 constexpr WorldBoundSphere WorldBoundSphere_inf(0.0, 0.0, 0.0, Consts::INF, ConstexprTag{});
 
+/// <summary>Returns the bounding sphere with the specified transformation matrix applied.</summary>
 UNIGINE_INLINE WorldBoundSphere operator*(const dmat4 &m, const WorldBoundSphere &bs)
 {
 	WorldBoundSphere ret = bs;
@@ -2056,87 +2313,109 @@ struct alignas(16) WorldBoundBox
 	dvec3 minimum{dvec3_inf};
 	dvec3 maximum{-dvec3_inf};
 
+	/// <summary>Constructor. Initialization by minimum and maximum coordinates of the bounding box specified as float values.</summary>
 	UNIGINE_INLINE constexpr WorldBoundBox(double x_min, double y_min, double z_min, double x_max, double y_max, double z_max, ConstexprTag)
 		: minimum(x_min, y_min, z_min, ConstexprTag{})
 		, maximum(x_max, y_max, z_max, ConstexprTag{}) {}
 
+	/// <summary>Constructor. Creates an empty bounding box.</summary>
 	UNIGINE_INLINE WorldBoundBox()
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
+	/// <summary>Constructor. Initialization by minimum and maximum coordinates of the bounding box.</summary>
 	UNIGINE_INLINE WorldBoundBox(const dvec3 &minimum, const dvec3 &maximum)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(minimum, maximum);
 	}
+	/// <summary>Constructor. Initialization by the vector of points.</summary>
+	/// <param name="points">Vector of points.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE WorldBoundBox(const dvec3 *points, int num_points)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(points, num_points);
 	}
+	/// <summary>Constructor. Initialization by the bounding box.</summary>
 	UNIGINE_INLINE WorldBoundBox(const WorldBoundBox &bb)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bb);
 	}
+	/// <summary>Constructor. Initialization by the bounding box with the transformation matrix taken into account.</summary>
 	UNIGINE_INLINE WorldBoundBox(const WorldBoundBox &bb, const dmat4 &transform)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bb, transform);
 	}
+	/// <summary>Constructor. Initialization by the bounding box with the transformation matrix taken into account.</summary>
 	UNIGINE_INLINE WorldBoundBox(const BoundBox &bb, const dmat4 &transform)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bb, transform);
 	}
+	/// <summary>Constructor. Initialization by the bounding box.</summary>
 	UNIGINE_INLINE WorldBoundBox(const BoundBox &bb)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bb);
 	}
+	/// <summary>Constructor. Initialization by the bounding sphere.</summary>
 	UNIGINE_INLINE explicit WorldBoundBox(const WorldBoundSphere &bs)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bs);
 	}
 
+	/// <summary>Assignment operator for the bounding box.</summary>
 	UNIGINE_INLINE WorldBoundBox &operator=(const WorldBoundBox &bb) { set(bb); return *this; }
 
+	/// <summary>Clears the bounding box.</summary>
 	UNIGINE_INLINE void clear()
 	{
 		minimum = dvec3_inf;
 		maximum = -dvec3_inf;
 	}
 
+	/// <summary>Sets the bounding box by its minimum and maximum coordinates.</summary>
 	UNIGINE_INLINE void set(const dvec3 &min_, const dvec3 &max_)
 	{
 		minimum = min_;
 		maximum = max_;
 	}
+	/// <summary>Sets the bounding box by the coordinates of points in space to be enclosed by it.</summary>
+	/// <param name="points">Vector of points to be enclosed by the bounding box.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE void set(const dvec3 *points, int num_points)
 	{
 		Simd::minMaxVec3(minimum, maximum, points, sizeof(dvec3), num_points);
 	}
+	/// <summary>Sets the bounding box by the bounding sphere.</summary>
 	UNIGINE_INLINE void set(const WorldBoundSphere &bs)
 	{
 		clear();
 		expand(bs);
 	}
+	/// <summary>Sets the bounding box equal to the specified source bounding box.</summary>
 	UNIGINE_INLINE void set(const WorldBoundBox &bb)
 	{
 		minimum = bb.minimum;
 		maximum = bb.maximum;
 	}
+	/// <summary>Sets the bounding box by the given bounding box with the given transformation matrix taken into account.</summary>
 	UNIGINE_INLINE void set(const WorldBoundBox &bb, const dmat4 &transform)
 	{
 		set(bb);
 		setTransform(transform);
 	}
+	/// <summary>Sets the bounding box equal to the specified source bounding box.</summary>
 	UNIGINE_INLINE void set(const BoundBox &bb)
 	{
 		minimum = dvec3(bb.minimum);
 		maximum = dvec3(bb.maximum);
 	}
+	/// <summary>Sets the bounding box by the given bounding box with the given transformation matrix taken into account.</summary>
 	UNIGINE_INLINE void set(const BoundBox &bb, const dmat4 &transform)
 	{
 		set(bb);
@@ -2144,9 +2423,15 @@ struct alignas(16) WorldBoundBox
 	}
 
 	// parameters
+	/// <summary>Checks if the bounding box minimum and maximum coordinates are valid.</summary>
 	UNIGINE_INLINE bool isValid() const { return minimum.x <= maximum.x; }
+	/// <summary>Returns the center point of the current bounding box.</summary>
 	UNIGINE_INLINE dvec3 getCenter() const { return (minimum + maximum) * 0.5f; }
+	/// <summary>Returns the size of the bounding box along the axes.</summary>
 	UNIGINE_INLINE dvec3 getSize() const { return maximum - minimum; }
+	/// <summary>Puts the vertices of the current bounding box into the given vector.</summary>
+	/// <param name="points">Vector to store the result.</param>
+	/// <param name="num_points">Number of points, must be equal to 8.</param>
 	UNIGINE_INLINE void getPoints(dvec3 *points, int num_points) const
 	{
 		assert(num_points == 8 && "WorldBoundBox::getPoints(): bad points number");
@@ -2159,6 +2444,9 @@ struct alignas(16) WorldBoundBox
 		points[6].set(minimum.x, maximum.y, maximum.z);
 		points[7].set(maximum);
 	}
+	/// <summary>Puts the planes created based on the vertices of the current bounding box into the given vector.</summary>
+	/// <param name="planes">Vector to store the result.</param>
+	/// <param name="num_planes">Number of planes, must be equal to 6.</param>
 	UNIGINE_INLINE void getPlanes(dvec4 *planes, int num_planes) const
 	{
 		assert(num_planes == 6 && "WorldBoundBox::getPlanes(): bad planes number");
@@ -2171,6 +2459,7 @@ struct alignas(16) WorldBoundBox
 	}
 
 	// transformation
+	/// <summary>Sets the given transformation matrix to the bounding box.</summary>
 	UNIGINE_INLINE void setTransform(const dmat4 &transform)
 	{
 		dvec3 center = (minimum + maximum) * 0.5f;
@@ -2182,6 +2471,7 @@ struct alignas(16) WorldBoundBox
 		minimum = center - dvec3(x, y, z);
 		maximum = center + dvec3(x, y, z);
 	}
+	/// <summary>Sets the transformation matrix of the current bounding box to include the given bounding sphere with the given transformation matrix taken into account.</summary>
 	UNIGINE_INLINE void setTransform(const WorldBoundSphere &bs, const dmat4 &transform)
 	{
 		setTransform(transform);
@@ -2195,14 +2485,18 @@ struct alignas(16) WorldBoundBox
 	}
 
 	// compare
+	/// <summary>Compares the current bounding box with the given one.</summary>
 	UNIGINE_INLINE int compare(const WorldBoundBox &bb) const
 	{
 		return Math::compare(minimum, bb.minimum) && Math::compare(maximum, bb.maximum);
 	}
+	/// <summary>Compares the current bounding box with the given one.</summary>
 	UNIGINE_INLINE int operator==(const WorldBoundBox &bb) const { return compare(bb); }
+	/// <summary>Bounding boxes not equal comparison operator.</summary>
 	UNIGINE_INLINE int operator!=(const WorldBoundBox &bb) const { return !compare(bb); }
 
 	// expand
+	/// <summary>Expands the current bounding box to enclose the given point.</summary>
 	UNIGINE_INLINE void expand(const dvec3 &point)
 	{
 		if (isValid())
@@ -2211,10 +2505,13 @@ struct alignas(16) WorldBoundBox
 			maximum = max(maximum, point);
 		} else
 		{
-			minimum = point - BOUNDS_EPSILON;
-			maximum = point + BOUNDS_EPSILON;
+			minimum = point;
+			maximum = point;
 		}
 	}
+	/// <summary>Expands the current bounding box to enclose all given points.</summary>
+	/// <param name="points">Vector of points to be enclosed by the bounding box.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE void expand(const dvec3 *points, int num_points)
 	{
 		if (isValid())
@@ -2228,6 +2525,7 @@ struct alignas(16) WorldBoundBox
 			Simd::minMaxVec3(minimum, maximum, points, sizeof(dvec3), num_points);
 		}
 	}
+	/// <summary>Expands the current bounding box to enclose the given bounding sphere.</summary>
 	UNIGINE_INLINE void expand(const WorldBoundSphere &bs)
 	{
 		if (!bs.isValid())
@@ -2244,6 +2542,7 @@ struct alignas(16) WorldBoundBox
 			add(maximum, center, r);
 		}
 	}
+	/// <summary>Expands the current bounding box to enclose the given bounding box.</summary>
 	UNIGINE_INLINE void expand(const WorldBoundBox &bb)
 	{
 		if (!bb.isValid())
@@ -2260,19 +2559,23 @@ struct alignas(16) WorldBoundBox
 	}
 
 	// inside points
+	/// <summary>Checks if the given point is inside the bounding box.</summary>
 	UNIGINE_INLINE bool inside(const dvec3 &point) const
 	{
 		return isValid() && insideValid(point);
 	}
+	/// <summary>Checks if the sphere defined by the given center point and radius is inside the current bounding box.</summary>
 	UNIGINE_INLINE bool inside(const dvec3 &point, double radius) const
 	{
 		return isValid() && insideValid(point, radius);
 	}
+	/// <summary>Checks if the box with the given coordinates is inside the current bounding box.</summary>
 	UNIGINE_INLINE bool inside(const dvec3 &minimum, const dvec3 &maximum) const
 	{
 		return isValid() && insideValid(minimum, maximum);
 	}
 
+	/// <summary>Checks if the given point is inside the bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 	UNIGINE_INLINE bool insideValid(const dvec3 &point) const
 	{
 		if (minimum.x > point.x || maximum.x < point.x) return false;
@@ -2280,6 +2583,7 @@ struct alignas(16) WorldBoundBox
 		if (minimum.z > point.z || maximum.z < point.z) return false;
 		return true;
 	}
+	/// <summary>Checks if the sphere set by the arguments is inside the bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 	UNIGINE_INLINE bool insideValid(const dvec3 &point, double radius) const
 	{
 		dvec3 direction;
@@ -2304,8 +2608,9 @@ struct alignas(16) WorldBoundBox
 		else
 			direction.z = 0.0;
 
-		return direction.length2() < radius * radius;
+		return direction.length2() <= radius * radius;
 	}
+	/// <summary>Checks if the box set by the arguments is inside the bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 	UNIGINE_INLINE bool insideValid(const dvec3 &min_, const dvec3 &max_) const
 	{
 		if (minimum.x > max_.x || maximum.x < min_.x) return false;
@@ -2313,6 +2618,9 @@ struct alignas(16) WorldBoundBox
 		if (minimum.z > max_.z || maximum.z < min_.z) return false;
 		return true;
 	}
+	/// <summary>Checks if any of the given points is inside the bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
+	/// <param name="points">Vector of points to be checked.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE bool insideValid(const dvec3 *points, int num_points) const
 	{
 		for (int i = 0; i < num_points; i++)
@@ -2324,15 +2632,18 @@ struct alignas(16) WorldBoundBox
 	}
 
 	// inside bounds
+	/// <summary>Checks if the specified bounding sphere is inside the current bounding box.</summary>
 	UNIGINE_INLINE bool inside(const WorldBoundSphere &bs) const
 	{
 		return isValid() && insideValid(bs.center, bs.radius);
 	}
+	/// <summary>Checks if the specified bounding box is inside the current bounding box.</summary>
 	UNIGINE_INLINE bool inside(const WorldBoundBox &bb) const
 	{
 		return isValid() && bb.isValid() && insideValid(bb.minimum, bb.maximum);
 	}
 
+	/// <summary>Checks if the bounding sphere is inside the bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 	UNIGINE_INLINE bool insideValid(const WorldBoundSphere &bs) const
 	{
 		dvec3 direction;
@@ -2360,20 +2671,24 @@ struct alignas(16) WorldBoundBox
 
 		return direction.length2() < radius * radius;
 	}
+	/// <summary>Checks if the bounding box is inside the bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 	UNIGINE_INLINE bool insideValid(const WorldBoundBox &bb) const
 	{
 		return insideValid(bb.minimum, bb.maximum);
 	}
 
+	/// <summary>Checks if the given bounding sphere is completely inside the current bounding box.</summary>
 	UNIGINE_INLINE bool insideAll(const WorldBoundSphere &bs) const
 	{
 		return isValid() && bs.isValid() && insideAllValid(bs);
 	}
+	/// <summary>Checks if the whole given bounding box is inside the current bounding box.</summary>
 	UNIGINE_INLINE bool insideAll(const WorldBoundBox &bb) const
 	{
 		return isValid() && bb.isValid() && insideAllValid(bb);
 	}
 
+	/// <summary>Checks if the whole given bounding sphere is inside the current bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 	UNIGINE_INLINE bool insideAllValid(const WorldBoundSphere &bs) const
 	{
 		if (minimum.x > bs.center.x - bs.radius || maximum.x < bs.center.x + bs.radius) return false;
@@ -2382,6 +2697,7 @@ struct alignas(16) WorldBoundBox
 
 		return true;
 	}
+	/// <summary>Checks if the whole given bounding box is inside the current bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 	UNIGINE_INLINE bool insideAllValid(const WorldBoundBox &bb) const
 	{
 		if (minimum.x > bb.minimum.x || maximum.x < bb.maximum.x) return false;
@@ -2389,6 +2705,9 @@ struct alignas(16) WorldBoundBox
 		if (minimum.z > bb.minimum.z || maximum.z < bb.maximum.z) return false;
 		return true;
 	}
+	/// <summary>Checks if all specified points are inside the current bounding box. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
+	/// <param name="points">Vector of points to be checked.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE bool insideAllValid(const dvec3 *points, int num_points) const
 	{
 		for (int i = 0; i < num_points; i++)
@@ -2400,6 +2719,9 @@ struct alignas(16) WorldBoundBox
 	}
 
 	// inside cube
+	/// <summary>Checks if a face of the bounding box is inside the cube represented by minimum and maximum coordinates of the bounding box.</summary>
+	/// <param name="face">The face index from 0 to 5.</param>
+	/// <param name="offset">Offset.</param>
 	UNIGINE_INLINE bool insideCube(int face, const dvec3 &offset) const
 	{
 		if (!isValid())
@@ -2422,39 +2744,47 @@ struct alignas(16) WorldBoundBox
 	}
 
 	// intersections
+	/// <summary>Checks for an intersection between a ray and the current bounding box.</summary>
 	UNIGINE_INLINE bool rayIntersection(const dvec3 &point, const dvec3 &direction) const
 	{
 		return isValid() && rayIntersectionValid(point, direction);
 	}
+	/// <summary>Checks for an intersection between a ray and the current bounding box. This function uses the inverse direction of the ray, which increases performance.</summary>
 	UNIGINE_INLINE bool irayIntersection(const dvec3 &point, const dvec3 &idirection) const
 	{
 		return isValid() && irayIntersectionValid(point, idirection);
 	}
+	/// <summary>Checks for an intersection between a line and the current bounding box.</summary>
 	UNIGINE_INLINE bool getIntersection(const dvec3 &p0, const dvec3 &p1) const
 	{
 		return isValid() && getIntersectionValid(p0, p1);
 	}
 
+	/// <summary>Checks for an intersection between a ray and the current bounding box. This function doesn't check if the minimum and maximum coordinates of the bounding box are valid.</summary>
 	UNIGINE_INLINE bool rayIntersectionValid(const dvec3 &point, const dvec3 &direction) const
 	{
 		return rayBoundBoxIntersection(point, direction, minimum, maximum);
 	}
+	/// <summary>Checks for an intersection between a ray and the current bounding box using the inverse direction of the ray, which increases performance. This function doesn't check if the minimum and maximum coordinates of the bounding box are valid.</summary>
 	UNIGINE_INLINE bool irayIntersectionValid(const dvec3 &point, const dvec3 &idirection) const
 	{
 		return irayBoundBoxIntersection(point, idirection, minimum, maximum);
 	}
+	/// <summary>Checks for an intersection between a line and the current bounding box. This function doesn't check if the minimum and maximum coordinates of the bounding box are valid.</summary>
 	UNIGINE_INLINE bool getIntersectionValid(const dvec3 &p0, const dvec3 &p1) const
 	{
 		return rayBoundBoxIntersection(p0, p1 - p0, minimum, maximum);
 	}
 
 	// distance
+	/// <summary>Returns the distance from the origin of coordinates to the closest vertex of the bounding box. If the minimum and maximum coordinates of the bounding box are invalid, returns INF.</summary>
 	UNIGINE_INLINE double distance() const
 	{
 		if (isValid())
 			return distanceValid();
 		return Consts::INF;
 	}
+	/// <summary>Returns the distance from the given point to the closest vertex of the bounding box. If the minimum and maximum coordinates of the bounding box are invalid, returns INF.</summary>
 	UNIGINE_INLINE double distance(const dvec3 &point) const
 	{
 		if (isValid())
@@ -2462,6 +2792,7 @@ struct alignas(16) WorldBoundBox
 		return Consts::INF;
 	}
 
+	/// <summary>Returns the distance from the origin of coordinates to the closest vertex of the bounding box. This function doesn't check if the minimum and maximum coordinates of the bounding box are valid.</summary>
 	UNIGINE_INLINE double distanceValid() const
 	{
 		dvec3 direction;
@@ -2489,6 +2820,7 @@ struct alignas(16) WorldBoundBox
 
 		return sqrt(direction.length2());
 	}
+	/// <summary>Returns the distance from the given point to the closest vertex of the bounding box. This function doesn't check if the minimum and maximum coordinates of the bounding box are valid.</summary>
 	UNIGINE_INLINE double distanceValid(const dvec3 &point) const
 	{
 		dvec3 direction;
@@ -2519,6 +2851,7 @@ struct alignas(16) WorldBoundBox
 
 constexpr WorldBoundBox WorldBoundBox_inf(-Consts::INF, -Consts::INF, -Consts::INF, Consts::INF, Consts::INF, Consts::INF, ConstexprTag{});
 
+/// <summary>Returns the bounding box with the specified transformation matrix applied.</summary>
 UNIGINE_INLINE WorldBoundBox operator*(const dmat4 &m, const WorldBoundBox &bb)
 {
 	WorldBoundBox ret = bb;
@@ -2526,6 +2859,7 @@ UNIGINE_INLINE WorldBoundBox operator*(const dmat4 &m, const WorldBoundBox &bb)
 	return ret;
 }
 
+/// <summary>Sets the bounding sphere equal to the specified source bounding box.</summary>
 UNIGINE_INLINE void WorldBoundSphere::set(const WorldBoundBox &bb)
 {
 	clear();
@@ -2535,6 +2869,7 @@ UNIGINE_INLINE void WorldBoundSphere::set(const WorldBoundBox &bb)
 		set(center, length(bb.maximum - center));
 	}
 }
+/// <summary>Expands the current bounding sphere to enclose the given bounding box.</summary>
 UNIGINE_INLINE void WorldBoundSphere::expand(const WorldBoundBox &bb)
 {
 	if (!bb.isValid())
@@ -2556,6 +2891,7 @@ UNIGINE_INLINE void WorldBoundSphere::expand(const WorldBoundBox &bb)
 		set(center, length(bb.maximum - center));
 	}
 }
+/// <summary>Expands the radius of the bounding sphere to include the given bounding box.</summary>
 UNIGINE_INLINE void WorldBoundSphere::expandRadius(const WorldBoundBox &bb)
 {
 	if (!bb.isValid())
@@ -2578,18 +2914,22 @@ UNIGINE_INLINE void WorldBoundSphere::expandRadius(const WorldBoundBox &bb)
 	}
 }
 
+/// <summary>Checks if the specified bounding box is inside the current bounding sphere.</summary>
 UNIGINE_INLINE bool WorldBoundSphere::inside(const WorldBoundBox &bb) const
 {
 	return isValid() && bb.isValid() && insideValid(bb.minimum, bb.maximum);
 }
+/// <summary>Checks if the whole specified bounding box is inside the current bounding sphere.</summary>
 UNIGINE_INLINE bool WorldBoundSphere::insideAll(const WorldBoundBox &bb) const
 {
 	return isValid() && bb.isValid() && insideAllValid(bb);
 }
+/// <summary>Checks if the specified bounding box is inside the current bounding sphere. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 UNIGINE_INLINE bool WorldBoundSphere::insideValid(const WorldBoundBox &bb) const
 {
 	return insideValid(bb.minimum, bb.maximum);
 }
+/// <summary>Checks if the whole specified bounding box is inside the current bounding sphere. The method doesn't check if the minimum and maximum coordinates of the current bounding box are valid.</summary>
 UNIGINE_INLINE bool WorldBoundSphere::insideAllValid(const WorldBoundBox &bb) const
 {
 	return insideValid(bb.minimum) && insideValid(bb.maximum)
@@ -2611,42 +2951,50 @@ struct alignas(16) WorldBoundFrustum
 	dvec3 points[8];		// bounding points
 	dvec4 planes[6];		// aos clipping planes
 
+	/// <summary>Constructor. Creates an empty bounding frustum.</summary>
 	UNIGINE_INLINE WorldBoundFrustum()
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
+	/// <summary>Initialization of the bounding frustum by the projection and modelview matrices.</summary>
 	UNIGINE_INLINE WorldBoundFrustum(const mat4 &projection, const dmat4 &modelview)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(projection, modelview);
 	}
+	/// <summary>Initialization of the bounding frustum by the bounding frustum.</summary>
 	UNIGINE_INLINE WorldBoundFrustum(const WorldBoundFrustum &bf)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bf);
 	}
+	/// <summary>Initialization of the bounding frustum by the bounding frustum.</summary>
 	UNIGINE_INLINE WorldBoundFrustum(const BoundFrustum &bf)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bf);
 	}
+	/// <summary>Initialization of the bounding frustum by the bounding frustum and transformation matrix.</summary>
 	UNIGINE_INLINE WorldBoundFrustum(const WorldBoundFrustum &bf, const dmat4 &itransform)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bf, itransform);
 	}
+	/// <summary>Initialization of the bounding frustum by the bounding frustum and transformation matrix.</summary>
 	UNIGINE_INLINE WorldBoundFrustum(const BoundFrustum &bf, const dmat4 &itransform)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(bf, itransform);
 	}
 
+	/// <summary>Assignment operator.</summary>
 	UNIGINE_INLINE WorldBoundFrustum &operator=(const WorldBoundFrustum &bf)
 	{
 		set(bf);
 		return *this;
 	}
 
+	/// <summary>Clears the bounding frustum.</summary>
 	UNIGINE_INLINE void clear()
 	{
 		// camera
@@ -2663,6 +3011,7 @@ struct alignas(16) WorldBoundFrustum
 	}
 
 
+	/// <summary>Sets the bounding frustum by the specified projection and modelview matrices.</summary>
 	UNIGINE_INLINE void set(const mat4 &projection, const dmat4 &modelview)
 	{
 		dvec3 offset = inverse(modelview).getColumn(3).xyz;
@@ -2708,6 +3057,7 @@ struct alignas(16) WorldBoundFrustum
 		update_bounds();
 	}
 
+	/// <summary>Sets the bounding frustum by the bounding frustum.</summary>
 	UNIGINE_INLINE void set(const WorldBoundFrustum &bf)
 	{
 		camera = bf.camera;
@@ -2719,6 +3069,7 @@ struct alignas(16) WorldBoundFrustum
 		for (int i = 0; i < 8; i++)
 			points[i] = bf.points[i];
 	}
+	/// <summary>Sets the bounding frustum by the bounding frustum and inverse transformation matrix.</summary>
 	UNIGINE_INLINE void set(const WorldBoundFrustum &bf, const dmat4 &itransform)
 	{
 		set(bf);
@@ -2735,6 +3086,7 @@ struct alignas(16) WorldBoundFrustum
 		for (int i = 0; i < 8; i++)
 			points[i] = dvec3(bf.points[i]);
 	}
+	/// <summary>Sets the bounding frustum by the bounding frustum and inverse transformation matrix.</summary>
 	UNIGINE_INLINE void set(const BoundFrustum &bf, const dmat4 &itransform)
 	{
 		set(bf);
@@ -2742,9 +3094,11 @@ struct alignas(16) WorldBoundFrustum
 	}
 
 	// parameters
+	/// <summary>Checks if the bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool isValid() const { return bound_box.isValid(); }
 
 	// transformation
+	/// <summary>Sets the current transformation matrix by an inverse transformation matrix.</summary>
 	UNIGINE_INLINE void setITransform(const dmat4 &itransform)
 	{
 		dmat4 transform = inverse(itransform);
@@ -2762,6 +3116,7 @@ struct alignas(16) WorldBoundFrustum
 
 		update_bounds();
 	}
+	/// <summary>Sets the current transformation matrix by the specified source transformation matrix.</summary>
 	UNIGINE_INLINE void setTransform(const dmat4 &transform)
 	{
 		camera = transform * camera;
@@ -2781,6 +3136,7 @@ struct alignas(16) WorldBoundFrustum
 	}
 
 	// compare
+	/// <summary>Compares the current bounding frustum with the given one.</summary>
 	UNIGINE_INLINE int compare(const WorldBoundFrustum &bf) const
 	{
 		if (camera != bf.camera) return false;
@@ -2796,10 +3152,13 @@ struct alignas(16) WorldBoundFrustum
 
 		return true;
 	}
+	/// <summary>Bounding frustum equal comparison operator.</summary>
 	UNIGINE_INLINE int operator==(const WorldBoundFrustum &bf) const { return compare(bf); }
+	/// <summary>Bounding frustum not equal comparison operator.</summary>
 	UNIGINE_INLINE int operator!=(const WorldBoundFrustum &bf) const { return !compare(bf); }
 
 	// inside points
+	/// <summary>Checks if the point is inside the bounding frustum.</summary>
 	UNIGINE_INLINE bool inside(const dvec3 &point) const
 	{
 		return bound_box.insideValid(point)
@@ -2810,6 +3169,7 @@ struct alignas(16) WorldBoundFrustum
 			&& (dot(planes[4], point) > 0.0)
 			&& (dot(planes[5], point) > 0.0);
 	}
+	/// <summary>Checks if the sphere set by the arguments is inside the bounding frustum.</summary>
 	UNIGINE_INLINE bool inside(const dvec3 &point, double radius) const
 	{
 		return bound_box.insideValid(point, radius)
@@ -2820,6 +3180,7 @@ struct alignas(16) WorldBoundFrustum
 			&& (dot(planes[4], point) > -radius)
 			&& (dot(planes[5], point) > -radius);
 	}
+	/// <summary>Checks if the box set by the arguments is inside the bounding frustum.</summary>
 	UNIGINE_INLINE bool inside(const dvec3 &minimum, const dvec3 &maximum) const
 	{
 		return bound_box.insideValid(minimum, maximum)
@@ -2830,6 +3191,9 @@ struct alignas(16) WorldBoundFrustum
 			&& inside_plane(planes[4], minimum, maximum)
 			&& inside_plane(planes[5], minimum, maximum);
 	}
+	/// <summary>Checks if a set of points is inside the bounding frustum.</summary>
+	/// <param name="points">Vector of points.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE bool inside(const dvec3 *points, int num_points) const
 	{
 		return bound_box.insideValid(points, num_points)
@@ -2841,6 +3205,7 @@ struct alignas(16) WorldBoundFrustum
 			&& inside_plane(planes[5], points, num_points);
 	}
 
+	/// <summary>Performs a fast check if the point is inside the bounding frustum.</summary>
 	UNIGINE_INLINE bool insideFast(const dvec3 &point) const
 	{
 		return bound_box.inside(point)
@@ -2849,6 +3214,7 @@ struct alignas(16) WorldBoundFrustum
 			&& (dot(planes[2], point) > 0.0)
 			&& (dot(planes[3], point) > 0.0);
 	}
+	/// <summary>Performs a fast check if the sphere set by the arguments is inside the bounding frustum.</summary>
 	UNIGINE_INLINE bool insideFast(const dvec3 &point, double radius) const
 	{
 		return bound_box.inside(point, radius)
@@ -2857,6 +3223,7 @@ struct alignas(16) WorldBoundFrustum
 			&& (dot(planes[2], point) > -radius)
 			&& (dot(planes[3], point) > -radius);
 	}
+	/// <summary>Performs a fast check if the box set by the arguments is inside the bounding frustum.</summary>
 	UNIGINE_INLINE bool insideFast(const dvec3 &minimum, const dvec3 &maximum) const
 	{
 		return bound_box.insideValid(minimum, maximum)
@@ -2865,6 +3232,9 @@ struct alignas(16) WorldBoundFrustum
 			&& inside_plane(planes[2], minimum, maximum)
 			&& inside_plane(planes[3], minimum, maximum);
 	}
+	/// <summary>Performs a fast check if the set of points is inside the bounding frustum.</summary>
+	/// <param name="points">Vector of points to be checked.</param>
+	/// <param name="num_points">Number of points in the vector.</param>
 	UNIGINE_INLINE bool insideFast(const dvec3 *points, int num_points) const
 	{
 		return bound_box.insideValid(points, num_points)
@@ -2875,12 +3245,18 @@ struct alignas(16) WorldBoundFrustum
 	}
 
 	// inside bounds
+	/// <summary>Checks if the specified bounding sphere is inside the current bounding frustum.</summary>
 	UNIGINE_INLINE bool inside(const WorldBoundSphere &bs) const { return bs.isValid() ? insideValid(bs) : false; }
+	/// <summary>Checks if the specified bounding box is inside the current bounding frustum.</summary>
 	UNIGINE_INLINE bool inside(const WorldBoundBox &bb) const { return bb.isValid() ? insideValid(bb) : false; }
+	/// <summary>Checks if the specified bounding frustum is inside the current bounding frustum.</summary>
 	UNIGINE_INLINE bool inside(const WorldBoundFrustum &bf) const { return bf.isValid() ? insideValid(bf) : false; }
 
+	/// <summary>Checks if the bounding sphere is inside the bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideValid(const WorldBoundSphere &bs) const { return inside(bs.center, bs.radius); }
+	/// <summary>Checks if the bounding box is inside the bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideValid(const WorldBoundBox &bb) const { return inside(bb.minimum, bb.maximum); }
+	/// <summary>Checks if the specified bounding frustum is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideValid(const WorldBoundFrustum &bf) const
 	{
 		return bound_box.insideValid(bf.bound_box)
@@ -2892,8 +3268,11 @@ struct alignas(16) WorldBoundFrustum
 			&& inside_plane(planes[5], bf.points, 8);
 	}
 
+	/// <summary>Performs a fast check if the bounding sphere is inside the bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideValidFast(const WorldBoundSphere &bs) const { return insideFast(bs.center, bs.radius); }
+	/// <summary>Performs a fast check if the bounding box is inside the bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideValidFast(const WorldBoundBox &bb) const { return insideFast(bb.minimum, bb.maximum); }
+	/// <summary>Performs a fast check if the specified bounding frustum is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideValidFast(const WorldBoundFrustum &bf) const
 	{
 		return bound_box.insideValid(bf.bound_box)
@@ -2904,11 +3283,16 @@ struct alignas(16) WorldBoundFrustum
 	}
 
 	// inside all bounds
+	/// <summary>Checks if the whole specified bounding sphere is inside the current bounding frustum.</summary>
 	UNIGINE_INLINE bool insideAll(const WorldBoundSphere &bs) const { return bs.isValid() ? insideAllValid(bs) : false; }
+	/// <summary>Checks if the whole specified bounding box is inside the current bounding frustum.</summary>
 	UNIGINE_INLINE bool insideAll(const WorldBoundBox &bb) const { return bb.isValid() ? insideAllValid(bb) : false; }
+	/// <summary>Checks if the whole specified bounding frustum is inside the current bounding frustum.</summary>
 	UNIGINE_INLINE bool insideAll(const WorldBoundFrustum &bf) const { return bf.isValid() ? insideAllValid(bf) : false; }
 
+	/// <summary>Checks if the whole specified bounding sphere is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideAllValid(const WorldBoundSphere &bs) const { return inside(bs.center, -bs.radius); }
+	/// <summary>Checks if the whole specified bounding box is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideAllValid(const WorldBoundBox &bb) const
 	{
 		return bound_box.insideAllValid(bb)
@@ -2921,6 +3305,7 @@ struct alignas(16) WorldBoundFrustum
 			&& inside(dvec3(bb.maximum.x, bb.minimum.y, bb.maximum.z))
 			&& inside(dvec3(bb.minimum.x, bb.maximum.y, bb.maximum.z));
 	}
+	/// <summary>Checks if the whole specified bounding frustum is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideAllValid(const WorldBoundFrustum &bf) const
 	{
 		return bound_box.insideValid(bf.bound_box)
@@ -2934,7 +3319,9 @@ struct alignas(16) WorldBoundFrustum
 			&& inside(bf.points[7]);
 	}
 
+	/// <summary>Performs a fast check if the whole specified bounding sphere is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideAllValidFast(const WorldBoundSphere &bs) const { return insideFast(bs.center, -bs.radius); }
+	/// <summary>Performs a fast check if the whole specified bounding box is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideAllValidFast(const WorldBoundBox &bb) const
 	{
 		return bound_box.insideAllValid(bb)
@@ -2947,6 +3334,7 @@ struct alignas(16) WorldBoundFrustum
 			&& insideFast(dvec3(bb.maximum.x, bb.minimum.y, bb.maximum.z))
 			&& insideFast(dvec3(bb.minimum.x, bb.maximum.y, bb.maximum.z));
 	}
+	/// <summary>Performs a fast check if the whole specified bounding frustum is inside the current bounding frustum. The method doesn't check if current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideAllValidFast(const WorldBoundFrustum &bf) const
 	{
 		return bound_box.insideValid(bf.bound_box)
@@ -2961,19 +3349,29 @@ struct alignas(16) WorldBoundFrustum
 	}
 
 	// inside planes bounds
+	/// <summary>Checks if the specified bounding sphere is inside the volume defined by the planes of the current bounding frustum.</summary>
 	UNIGINE_INLINE bool insidePlanes(const WorldBoundSphere &bs) const { return bs.isValid() ? insidePlanesValid(bs) : false; }
+	/// <summary>Checks if the specified bounding box is inside the volume defined by the planes of the current bounding frustum.</summary>
 	UNIGINE_INLINE bool insidePlanes(const WorldBoundBox &bb) const { return bb.isValid() ? insidePlanesValid(bb) : false; }
+	/// <summary>Checks if the specified bounding frustum is inside the volume defined by the planes of the current bounding frustum.</summary>
 	UNIGINE_INLINE bool insidePlanes(const WorldBoundFrustum &bf) const { return bf.isValid() ? insidePlanesValid(bf) : false; }
 
+	/// <summary>Checks if the specified bounding sphere is inside the volume defined by the planes of the current bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insidePlanesValid(const WorldBoundSphere &bs) const { return inside(bs.center, bs.radius); }
+	/// <summary>Checks if the specified bounding box is inside the volume defined by the planes of the current bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insidePlanesValid(const WorldBoundBox &bb) const { return inside(bb.minimum, bb.maximum); }
+	/// <summary>Checks if the specified bounding frustum is inside the volume defined by the planes of the current bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insidePlanesValid(const WorldBoundFrustum &bf) const { return inside(bf.points, 8); }
 
+	/// <summary>Performs a fast check if the specified bounding sphere is inside the volume defined by the planes of the current bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insidePlanesValidFast(const WorldBoundSphere &bs) const { return insideFast(bs.center, bs.radius); }
+	/// <summary>Performs a fast check if the specified bounding box is inside the volume defined by the planes of the current bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insidePlanesValidFast(const WorldBoundBox &bb) const { return insideFast(bb.minimum, bb.maximum); }
+	/// <summary>Performs a fast check if the specified bounding frustum is inside the volume defined by the planes of the current bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insidePlanesValidFast(const WorldBoundFrustum &bf) const { return insideFast(bf.points, 8); }
 
 	// inside shadow
+	/// <summary>Checks if the given bounding sphere is inside the shadow of the current bounding frustum. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideShadowValid(const WorldBoundSphere &object, const dvec3 &direction) const
 	{
 		// object is inside the bound frustum
@@ -2995,6 +3393,7 @@ struct alignas(16) WorldBoundFrustum
 
 		return false;
 	}
+	/// <summary>Checks if the given bounding sphere is inside the shadow of the current bounding frustum and outside the bounding sphere of a light source. The method doesn't check if the current bounding frustum is valid.</summary>
 	UNIGINE_INLINE bool insideShadowValid(const WorldBoundSphere &object, const WorldBoundSphere &light, const dvec3 &offset) const
 	{
 		// object is outside the light bounds
@@ -3057,6 +3456,7 @@ private:
 	}
 };
 
+/// <summary>Returns the bounding frustum with the specified transformation matrix applied.</summary>
 UNIGINE_INLINE WorldBoundFrustum operator*(const dmat4 &m, const WorldBoundFrustum &bb)
 {
 	WorldBoundFrustum ret = bb;
@@ -3064,15 +3464,18 @@ UNIGINE_INLINE WorldBoundFrustum operator*(const dmat4 &m, const WorldBoundFrust
 	return ret;
 }
 
+/// <summary>Sets the bounding sphere equal to the specified source bounding sphere.</summary>
 UNIGINE_INLINE void BoundSphere::set(const WorldBoundSphere &bs)
 {
 	data = vec4(bs.data);
 }
+/// <summary>Sets the bounding box equal to the specified source bounding box.</summary>
 UNIGINE_INLINE void BoundBox::set(const WorldBoundBox &bb)
 {
 	maximum = vec3(bb.maximum);
 	minimum = vec3(bb.minimum);
 }
+/// <summary>Sets the bounding frustum equal to the specified source bounding frustum.</summary>
 UNIGINE_INLINE void BoundFrustum::set(const WorldBoundFrustum &bf)
 {
 	camera = vec3(bf.camera);

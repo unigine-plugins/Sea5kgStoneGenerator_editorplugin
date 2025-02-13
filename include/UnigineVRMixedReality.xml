@@ -109,6 +109,17 @@
 			<param name="marker_id"> Marker object ID. </param> 
 			<returns>Marker object.</returns>
 		</member>
+		<member name="M:Unigine.VRMixedReality.cameraConfigLock const">
+			<summary>
+			Returns the value indicating whether the attempt to lock the camera config is successful.
+			</summary>  
+			<returns>true if the camera config is locked successfully or it was already locked; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.VRMixedReality.cameraConfigUnlock const">
+			<summary>
+			Unlocks the previously locked camera config.
+			</summary>  
+		</member>
 		<member name="F:Unigine.VRMixedReality.BLEND_MASKING_MODE_BEGIN">
 			<summary>
 			The first element to be used for iteration.

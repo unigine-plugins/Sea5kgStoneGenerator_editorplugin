@@ -4,36 +4,6 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.Editor.isLoaded">
-			<summary>
-			Returns a value indicating if the editor is already loaded.
-			</summary>  
-			<returns>1 if the editor is loaded; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Editor.setEnabled(bool)">
-			<summary>
-			Enable or disable the editor.
-			</summary> 
-			<param name="enabled"> 1 to enable the editor, 0 to disable it. </param> 
-		</member>
-		<member name="M:Unigine.Editor.isEnabled">
-			<summary>
-			Returns a value of the Enabled parameter. The Enabled parameter controls all internal additional engine processing (for example, reloading of textures when their recording time is changed and so on). For example, the Enabled parameter can be set to 0 when using Syncker in order to increase engine performance (as Syncker operates inside the editor environment and can reduce engine performance).
-			</summary>  
-			<returns>1 if the Enabled parameter is set; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Editor.setData(char)">
-			<summary>
-			Sets user data associated with the world. In the *.world file, the data is set in the data tag.
-			</summary> 
-			<param name="data"> New user data. </param> 
-		</member>
-		<member name="M:Unigine.Editor.getData">
-			<summary>
-			Returns user string data associated with the world. This string is written directly into the data tag of the *.world file.
-			</summary>  
-			<returns>User string data.</returns>
-		</member>
 		<member name="M:Unigine.Editor.load(char)">
 			<summary>
 			Loads the editor from the specified script.
@@ -56,18 +26,6 @@
 			</summary>  
 			<returns>1 if the editor should be reloaded; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Editor.setPlayer(Unigine.Ptr{Player})">
-			<summary>
-			Sets the current player to be used in the Editor mode.					Editor player is handled differently than in-game players. Parameters set directly for the player are ignored; instead, Editor player uses Camera parameters set via the interface. (See Editor scripts in data/core/editor folder for implementation.)
-			</summary> 
-			<param name="player"> Editor player to set. </param> 
-		</member>
-		<member name="M:Unigine.Editor.getPlayer">
-			<summary>
-			Returns the current player used in the editor.
-			</summary>  
-			<returns>Current editor player.</returns>
-		</member>
 		<member name="M:Unigine.Editor.addEditorPlayer(Unigine.Ptr{Player})">
 			<summary>
 			Adds another editor player.
@@ -80,7 +38,7 @@
 			</summary> 
 			<param name="player"> Pointer to Player. </param> 
 		</member>
-		<member name="M:Unigine.Editor.isEditorPlayer(Unigine.Ptr{Player})">
+		<member name="M:Unigine.Editor.isEditorPlayer(Unigine.Ptr{Player}) const">
 			<summary>
 			Returns a value indicating if the given player is an Editor player.
 			</summary> 

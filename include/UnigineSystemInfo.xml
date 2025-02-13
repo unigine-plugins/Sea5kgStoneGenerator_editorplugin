@@ -14,13 +14,7 @@
 			<summary>
 			Returns information on the Engine version.
 			</summary>  
-			<returns>Information on the Engine version, date.</returns>
-		</member>
-		<member name="M:Unigine.SystemInfo.getSystemInfo">
-			<summary>
-			Returns operating system information.
-			</summary>  
-			<returns>Operating system information.</returns>
+			<returns>Information on the Engine version.</returns>
 		</member>
 		<member name="M:Unigine.SystemInfo.getCPUInfo">
 			<summary>
@@ -28,23 +22,11 @@
 			</summary>  
 			<returns>CPU information.</returns>
 		</member>
-		<member name="M:Unigine.SystemInfo.getSystemMemory">
-			<summary>
-			Returns the current system memory amount.
-			</summary>  
-			<returns>Current system memory amount, in Mbytes.</returns>
-		</member>
 		<member name="M:Unigine.SystemInfo.getCPUFrequency">
 			<summary>
 			Returns the current CPU frequency.
 			</summary>  
 			<returns>Current CPU frequency, in MHz.</returns>
-		</member>
-		<member name="M:Unigine.SystemInfo.getCPUCount">
-			<summary>
-			Returns the number of available CPUs.
-			</summary>  
-			<returns>Number of available CPUs.</returns>
 		</member>
 		<member name="M:Unigine.SystemInfo.getCPUThreads">
 			<summary>
@@ -118,13 +100,6 @@
 			</summary>  
 			<returns>Number of available GPUs.</returns>
 		</member>
-		<member name="M:Unigine.SystemInfo.getGPUInfo(int)">
-			<summary>
-			Returns information on the video adapter with the specified number (video card, driver versions).
-			</summary> 
-			<param name="video_adapter_num"> Number of the video adapter. </param> 
-			<returns>Information on the video adapter.</returns>
-		</member>
 		<member name="M:Unigine.SystemInfo.getGPUMemory(int)">
 			<summary>
 			Returns the video memory size for the video adapter with the specified number.
@@ -139,56 +114,227 @@
 			<param name="video_adapter_num"> Number of the graphics adapter (GPU) in the list of detected ones. </param> 
 			<returns>GPU ID for the video adapter with the specified number.</returns>
 		</member>
-		<member name="M:Unigine.SystemInfo.getGPUName(char)">
+		<member name="M:Unigine.SystemInfo.getOSInfo">
 			<summary>
-			Returns the type of the GPU win the specified name.
-			</summary> 
-			<param name="str"> GPU name (e.g. GeForce GTX 770). </param> 
-			<returns>GPU type identifier, one of the GPU_* values.</returns>
+			Returns the operating system information: its name, edition, and build.
+			</summary>  
+			<returns>Operating system information.</returns>
 		</member>
-		<member name="M:Unigine.SystemInfo.getGPUName(int)">
+		<member name="M:Unigine.SystemInfo.getEngineInfo">
 			<summary>
-			Returns the GPU type for the video adapter with the specified number in the list of detected ones.
-			</summary> 
-			<param name="video_adapter_num"> Number of the graphics adapter (GPU) in the list of detected ones. </param> 
-			<returns>GPU type identifier, one of the GPU_* values.</returns>
+			Returns the complete information on the engine: version number, release/debug, revision, date.
+			</summary>  
+			<returns>Complete engine information.</returns>
 		</member>
-		<member name="F:Unigine.SystemInfo.GPU_UNKNOWN">
+		<member name="M:Unigine.SystemInfo.getMemoryFree">
 			<summary>
-			Graphics processing unit (GPU) of an unknowm vendor.
+			Returns the total amount of unused memory, in Mbytes.
+			</summary>  
+			<returns>The total amount of unused memory.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.getMemoryFreeCommitted">
+			<summary>
+			Returns the amount of unused committed memory, in Mbytes.
+			</summary>  
+			<returns>The amount of unused committed memory.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.getMemoryTotal">
+			<summary>
+			Returns the total amount of memory, in Mbytes.
+			</summary>  
+			<returns>The total amount of memory.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.getMemoryTotalCommitted">
+			<summary>
+			Returns the total amount of committed memory, in Mbytes.
+			</summary>  
+			<returns>The total amount of committed memory.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.getMemoryUsage">
+			<summary>
+			Returns the total amount of memory in use, in Mbytes.
+			</summary>  
+			<returns>The total amount of used memory.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.getMemoryUsageCommitted">
+			<summary>
+			Returns the amount of the committed memory currently in use, in Mbytes.
+			</summary>  
+			<returns>The amount of the committed memory currently in use, in Mbytes.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.getCPUCores">
+			<summary>
+			Returns the number of CPU cores.
+			</summary>  
+			<returns>The number of CPU cores.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.logInfo">
+			<summary>
+			Returns the infromation on the Engine, OS, CPU and GPU.
+			</summary>  
+		</member>
+		<member name="M:Unigine.SystemInfo.getGPUActive">
+			<summary>
+			Returns the index of the active GPU.
+			</summary>  
+			<returns>The index of the active GPU.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.findGPUByLuid(unsignedlonglong)">
+			<summary>
+			Returns the GPU index by its locally unique identifier.
+			</summary> 
+			<param name="luid"> The locally unique identifier of the GPU. </param> 
+			<returns>The GPU index, or -1 if no GPU is found.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.findGPUByDeviceID(unsignedint)">
+			<summary>
+			Returns the GPU index by the device identifier.
+			</summary> 
+			<param name="device_id"> The GPU device ID. </param> 
+			<returns>The GPU index, or -1 if no GPU is found.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.getGPUType(int)">
+			<summary>
+			Returns the GPU type by the video adapter index.
+			</summary> 
+			<param name="video_adapter_num"> The video adapter index. </param> 
+			<returns>The GPU type.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.getGPUVendor(int)">
+			<summary>
+			Returns the GPU vendor name by the video adapter index.
+			</summary> 
+			<param name="video_adapter_num"> The video adapter index. </param> 
+			<returns>The GPU vendor name.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.getGPUDeviceID(int)">
+			<summary>
+			Returns the GPU device ID by the video adapter index.
+			</summary> 
+			<param name="video_adapter_num"> The video adapter index. </param> 
+			<returns>The GPU device ID.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.getGPULuid(int)">
+			<summary>
+			Returns the GPU locally unique identifier by the video adapter index.
+			</summary> 
+			<param name="video_adapter_num"> The video adapter index. </param> 
+			<returns>The locally unique identifier of the GPU.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.getGPUDescription(int)">
+			<summary>
+			Returns the graphics card model by the video adapter index.
+			</summary> 
+			<param name="video_adapter_num"> The video adapter index. </param> 
+			<returns>The GPU model.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.getGPUVendorName(int)">
+			<summary>
+			Returns the graphics card vendor name by the video adapter index.
+			</summary> 
+			<param name="video_adapter_num"> The video adapter index. </param> 
+			<returns>The GPU vendor name.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.getGPUDriver(int)">
+			<summary>
+			Returns the graphics card driver version by the video adapter index.
+			</summary> 
+			<param name="video_adapter_num"> The video adapter index. </param> 
+			<returns>The GPU driver version.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.getGPUMemoryFree">
+			<summary>
+			Returns the amount of unused GPU memory, in Mbytes.
+			</summary>  
+			<returns>The amount of unused GPU memory, in Mbytes.</returns>
+		</member>
+		<member name="M:Unigine.SystemInfo.getPlatformType">
+			<summary>
+			Returns the platform type.
+			</summary>  
+			<returns>The platform type.</returns>
+		</member>
+		<member name="F:Unigine.SystemInfo.PLATFORM_TYPE_WINDOWS">
+			<summary>
+			Windows platform.
 		</summary>
 		</member>
-		<member name="F:Unigine.SystemInfo.GPU_AMD">
+		<member name="F:Unigine.SystemInfo.PLATFORM_TYPE_LINUX">
+			<summary>
+			Linux platform.
+		</summary>
+		</member>
+		<member name="F:Unigine.SystemInfo.PLATFORM_TYPE_XBOX_SERIES_S">
+			<summary>
+			Microsoft Xbox Series S platform.
+		</summary>
+		</member>
+		<member name="F:Unigine.SystemInfo.PLATFORM_TYPE_XBOX_SERIES_X">
+			<summary>
+			Microsoft Xbox Series X platform.
+		</summary>
+		</member>
+		<member name="F:Unigine.SystemInfo.PLATFORM_TYPE_PS5">
+			<summary>
+			PlayStation 5 (PS5) platform.
+		</summary>
+		</member>
+		<member name="F:Unigine.SystemInfo.GPU_TYPE_DISCRETE">
+			<summary>
+			Discrete graphics processing unit (GPU).
+		</summary>
+		</member>
+		<member name="F:Unigine.SystemInfo.GPU_TYPE_INTEGRATED">
+			<summary>
+			Integrated graphics processing unit (GPU).
+		</summary>
+		</member>
+		<member name="F:Unigine.SystemInfo.GPU_TYPE_OTHER">
+			<summary>
+			Other type of graphics processing unit (GPU).
+		</summary>
+		</member>
+		<member name="F:Unigine.SystemInfo.GPU_TYPE_UNSUPPORTED">
+			<summary>
+			Unsupported type of graphics processing unit (GPU).
+		</summary>
+		</member>
+		<member name="F:Unigine.SystemInfo.GPU_VENDOR_UNKNOWN">
+			<summary>
+			Graphics processing unit (GPU) of an unknown vendor.
+		</summary>
+		</member>
+		<member name="F:Unigine.SystemInfo.GPU_VENDOR_AMD">
 			<summary>
 			Graphics processing unit (GPU) developed by AMD.
 		</summary>
 		</member>
-		<member name="F:Unigine.SystemInfo.GPU_NVIDIA">
+		<member name="F:Unigine.SystemInfo.GPU_VENDOR_NVIDIA">
 			<summary>
 			Graphics processing unit (GPU) developed by NVIDIA.
 		</summary>
 		</member>
-		<member name="F:Unigine.SystemInfo.GPU_INTEL">
+		<member name="F:Unigine.SystemInfo.GPU_VENDOR_INTEL">
 			<summary>
 			Graphics processing unit (GPU) developed by Intel.
 		</summary>
 		</member>
-		<member name="F:Unigine.SystemInfo.GPU_ARM">
+		<member name="F:Unigine.SystemInfo.GPU_VENDOR_ARM">
 			<summary>
 			Graphics processing unit (GPU) developed by ARM (Advanced RISC Machines) Holdings.
 		</summary>
 		</member>
-		<member name="F:Unigine.SystemInfo.GPU_APPLE">
+		<member name="F:Unigine.SystemInfo.GPU_VENDOR_APPLE">
 			<summary>
 			Graphics processing unit (GPU) developed by Apple Inc.
 		</summary>
 		</member>
-		<member name="F:Unigine.SystemInfo.GPU_IMGTEC">
+		<member name="F:Unigine.SystemInfo.GPU_VENDOR_IMGTEC">
 			<summary>
 			Graphics processing unit (GPU) developed by Imagination Technologies Group plc.
 		</summary>
 		</member>
-		<member name="F:Unigine.SystemInfo.GPU_QUALCOMM">
+		<member name="F:Unigine.SystemInfo.GPU_VENDOR_QUALCOMM">
 			<summary>
 			Graphics processing unit (GPU) developed by Qualcomm.
 		</summary>

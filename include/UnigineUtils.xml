@@ -40,14 +40,14 @@
 			<param name="name"> Path to the mesh. </param> 
 			<returns>Pointer to the node corresponding to the loaded mesh; 0 if the mesh cannot be loaded.</returns>
 		</member>
-		<member name="M:Unigine.Utils.makeNodeCurved(NodePtr)">
+		<member name="M:Unigine.Utils.makeNodeCurved(Unigine.Ptr{Unigine.Node})">
 			<summary>
 			Curves a given node using its geodetic pivot.					The node must be a child of a geodetic pivot node.
 			</summary> 
 			<param name="node"> Pointer to the node to be made curved. </param> 
 			<returns>1 if the node was curved successfully; othervise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Utils.makeNodeFlat(NodePtr)">
+		<member name="M:Unigine.Utils.makeNodeFlat(Unigine.Ptr{Unigine.Node})">
 			<summary>
 			Flattens a given node using its geodetic pivot.					The node must be a child of a geodetic pivot node.
 			</summary> 

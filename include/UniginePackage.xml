@@ -44,5 +44,16 @@
 			Virtual destructor.
 			</summary>  
 		</member>
+		<member name="M:Unigine.Package.findFile(char) const">
+			<summary>
+			Returns the file ID in the package by its name.
+			</summary> 
+			<param name="name"> File name. </param> 
+			<returns>File ID. A number between 0 and the total number of files in the package, or -1, if the file doesn't exist.</returns>
+		</member>
+		<member name="M:Unigine.Package.getFileSize(int) const">
+			<summary>
+			</summary>  
+		</member>
 	</members>
 </doc>

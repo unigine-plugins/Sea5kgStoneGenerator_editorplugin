@@ -35,7 +35,7 @@ class MountPointParameters;
 class UNIGINE_EDITOR_API AssetManager
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	// assets
 	/// <summary> Returns asset GUID for the specified asset path. This GUID can be used in calls to <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a>. Additional information for a given GUID can be obtained via the <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a> class.</summary>
 	/// <param name='asset_path'> Path to the asset to retrieve a GUID for.</param>
@@ -127,27 +127,43 @@ public:
 	/// <summary> Saves to the vector specified as the argument the list of paths for all assets in the root project directory (including all subdirectories). </summary>
 	/// <param name='asset_paths'>The vector to store paths for all assets in the root project directory (including all subdirectories).</param>
 	static void getAssetPaths(Unigine::Vector<Unigine::String> &asset_paths);
-	/// <summary> Returns the list of GUIDs for all assets in the specified directory (including all subdirectories). Thess GUIDs can be used in calls to <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a>. Additional information for a given GUID can be obtained via the <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a> class. </summary>
+	/// <summary> Returns the list of GUIDs for all assets in the specified directory (subdirectories are not included). These GUIDs can be used in calls to <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a>. Additional information for a given GUID can be obtained via the <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a> class. </summary>
 	/// <param name='directory_path'>Directory path for which all asset GUIDs are to be retrieved.</param>
-	/// <returns>The list of GUIDs for all assets in the specified directory (including all subdirectories).</returns>
+	/// <returns>The list of GUIDs for all assets in the specified directory (subdirectories are not included).</returns>
 	static Unigine::Vector<Unigine::UGUID> getAssetGUIDsForDirectory(const char *directory_path);
-	/// <summary> Saves to the vector specified as the argument the list of GUIDs for all assets in the specified directory (including all subdirectories). Thess GUIDs can be used in calls to <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a>. Additional information for a given GUID can be obtained via the <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a> class. </summary>
+	/// <summary> Saves to the vector specified as the argument the list of GUIDs for all assets in the specified directory (subdirectories are not included). These GUIDs can be used in calls to <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a>. Additional information for a given GUID can be obtained via the <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a> class. </summary>
 	/// <param name='directory_path'>Directory path for which all asset GUIDs are to be retrieved.</param>
-	/// <param name='asset_guids'>The vector to store GUIDs for all assets in the specified directory (including all subdirectories).</param>
+	/// <param name='asset_guids'>The vector to store GUIDs for all assets in the specified directory (subdirectories are not included).</param>
 	static void getAssetGUIDsForDirectory(const char *directory_path, Unigine::Vector<Unigine::UGUID> &asset_guids);
-	/// <summary> Returns the list of paths for all assets in the specified directory (including all subdirectories). </summary>
+	/// <summary> Returns the list of GUIDs for all assets in the specified directory (including all subdirectories recursively). These GUIDs can be used in calls to <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a>. Additional information for a given GUID can be obtained via the <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a> class. </summary>
+	/// <param name='directory_path'>Directory path for which all asset GUIDs are to be retrieved.</param>
+	/// <returns>The list of GUIDs for all assets in the specified directory (including all subdirectories recursively).</returns>
+	static Unigine::Vector<Unigine::UGUID> getAssetGUIDsForDirectoryRecursive(const char *directory_path);
+	/// <summary> Saves to the vector specified as the argument the list of GUIDs for all assets in the specified directory (including all subdirectories recursively). These GUIDs can be used in calls to <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a>. Additional information for a given GUID can be obtained via the <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a> class. </summary>
+	/// <param name='directory_path'>Directory path for which all asset GUIDs are to be retrieved.</param>
+	/// <param name='asset_guids'>The vector to store GUIDs for all assets in the specified directory (including all subdirectories recursively).</param>
+	static void getAssetGUIDsForDirectoryRecursive(const char *directory_path, Unigine::Vector<Unigine::UGUID> &asset_guids);
+	/// <summary> Returns the list of paths for all assets in the specified directory (subdirectories are not included). </summary>
 	/// <param name='directory_path'>Directory path for which all asset paths are to be retrieved.</param>
-	/// <returns>The list of paths for all assets in the specified directory (including all subdirectories).</returns>
+	/// <returns>The list of paths for all assets in the specified directory (subdirectories are not included).</returns>
 	static Unigine::Vector<Unigine::String> getAssetPathsForDirectory(const char *directory_path);
-	/// <summary> Saves to the vector specified as the argument the list of paths for all assets in the specified directory (including all subdirectories). </summary>
+	/// <summary> Saves to the vector specified as the argument the list of paths for all assets in the specified directory (subdirectories are not included). </summary>
 	/// <param name='directory_path'>Directory path for which all asset paths are to be retrieved.</param>
-	/// <param name='asset_paths'>The vector to store paths for all assets in the specified directory (including all subdirectories).</param>
+	/// <param name='asset_paths'>The vector to store paths for all assets in the specified directory (subdirectories are not included).</param>
 	static void getAssetPathsForDirectory(const char *directory_path, Unigine::Vector<Unigine::String> &asset_paths);
-	/// <summary> Returns the list of all runtime GUIDs for the specified asset path (some assets, like FBX-containers may produce multiple runtimes on importing). Thess GUIDs can be used in calls to <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a>. Additional information for a given GUID can be obtained via the <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a> class. </summary>
+	/// <summary> Returns the list of paths for all assets in the specified directory (including all subdirectories recursively). </summary>
+	/// <param name='directory_path'>Directory path for which all asset paths are to be retrieved.</param>
+	/// <returns>The list of paths for all assets in the specified directory (including all subdirectories recursively).</returns>
+	static Unigine::Vector<Unigine::String> getAssetPathsForDirectoryRecursive(const char *directory_path);
+	/// <summary> Saves to the vector specified as the argument the list of paths for all assets in the specified directory (including all subdirectories recursively). </summary>
+	/// <param name='directory_path'>Directory path for which all asset paths are to be retrieved.</param>
+	/// <param name='asset_paths'>The vector to store paths for all assets in the specified directory (including all subdirectories recursively).</param>
+	static void getAssetPathsForDirectoryRecursive(const char *directory_path, Unigine::Vector<Unigine::String> &asset_paths);
+	/// <summary> Returns the list of all runtime GUIDs for the specified asset path (some assets, like FBX-containers may produce multiple runtimes on importing). These GUIDs can be used in calls to <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a>. Additional information for a given GUID can be obtained via the <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a> class. </summary>
 	/// <param name='asset_path'>Asset path for which the list of runtime GUIDs is to be retrieved.</param>
 	/// <returns>The list of all runtime GUIDs for the specified asset path.</returns>
 	static Unigine::Vector<Unigine::UGUID> getRuntimeGUIDs(const char *asset_path);
-	/// <summary> Saves to the vector specified as the argument the list of all runtime GUIDs for the specified asset path (some assets, like FBX-containers may produce multiple runtimes on importing). Thess GUIDs can be used in calls to <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a>. Additional information for a given GUID can be obtained via the <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a> class. </summary>
+	/// <summary> Saves to the vector specified as the argument the list of all runtime GUIDs for the specified asset path (some assets, like FBX-containers may produce multiple runtimes on importing). These GUIDs can be used in calls to <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a>. Additional information for a given GUID can be obtained via the <a href='https://developer.unigine.com/en/docs/latest/api/library/filesystem/class.filesystem'>Unigine::FileSystem</a> class. </summary>
 	/// <param name='asset_path'>Asset path for which the list of runtime GUIDs is to be retrieved.</param>
 	/// <param name='runtime_guids'>The vector to store all runtime GUIDs for the specified asset path.</param>
 	static void getRuntimeGUIDs(const char *asset_path, Unigine::Vector<Unigine::UGUID> &runtime_guids);
@@ -216,14 +232,22 @@ public:
 	/// <summary> Saves to the vector specified as the argument the list of all subdirectories for the root project directory. </summary>
 	/// <param name='directory_paths'> The vector to store all subdirectories for the root project directory.</param>
 	static void getDirectoryPathsAll(Unigine::Vector<Unigine::String> &directory_paths);
-	/// <summary> Returns the list of all subdirectories for the specified directory path. </summary>
+	/// <summary> Returns the list of all subdirectories for the specified directory path (the hierarchy of subdirectories is not included). </summary>
 	/// <param name='directory_path'>Directory path.</param>
 	/// <returns> The list of all subdirectories for the specified directory path.</returns>
 	static Unigine::Vector<Unigine::String> getDirectoryPaths(const char *directory_path);
-	/// <summary> Saves to the vector specified as the argument the list of all subdirectories for the specified directory path. </summary>
+	/// <summary> Saves to the vector specified as the argument the list of all subdirectories for the specified directory path (the hierarchy of subdirectories is not included). </summary>
 	/// <param name='directory_path'>Directory path.</param>
 	/// <param name='directory_paths'> The vector to store all subdirectories for the specified directory path.</param>
 	static void getDirectoryPaths(const char *directory_path, Unigine::Vector<Unigine::String> &directory_paths);
+	/// <summary> Returns the list of all subdirectories for the specified directory path recursively (including the hierarchy of all subdirectories). </summary>
+	/// <param name='directory_path'>Directory path.</param>
+	/// <returns> The list of all subdirectories for the specified directory path.</returns>
+	static Unigine::Vector<Unigine::String> getDirectoryPathsRecursive(const char *directory_path);
+	/// <summary> Saves to the vector specified as the argument the list of all subdirectories for the specified directory path recursively (including the hierarchy of all subdirectories). </summary>
+	/// <param name='directory_path'>Directory path.</param>
+	/// <param name='directory_paths'> The vector to store all subdirectories for the specified directory path (including the hierarchy of all subdirectories recursively).</param>
+	static void getDirectoryPathsRecursive(const char *directory_path, Unigine::Vector<Unigine::String> &directory_paths);
 	// mount points
 	/// <summary> Creates a new mount point for the specified path applying the specified parameters (access mode, filters, etc.) and the corresponding <b>.umount</b> file. </summary>
 	/// <param name='directory_path'>Path to the directory to be mounted.</param>
@@ -338,7 +362,7 @@ public:
 	/// <summary> Sets access mode for the mount point.</summary>
 	/// <param name='access'> New access mode to be set (see <see cref='ACCESS'/>).</param>
 	void setAccess(MountPointParameters::ACCESS access);
-	/// <summary> Sets access mode for the mount point.</summary>
+	/// <summary> Returns access mode for the mount point.</summary>
 	MountPointParameters::ACCESS getAccess() const;
 	/// <summary> Sets the absolute path to the mounted folder/package.</summary>
 	/// <param name='path'> New absolute path to be set.</param>

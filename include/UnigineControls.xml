@@ -10,75 +10,39 @@
 			</summary> 
 			<param name="type"> Type of the controls to be created. </param> 
 		</member>
-		<member name="M:Unigine.Controls.setMouseDX(float)">
-			<summary>
-			Updates a screen position change of the mouse pointer along the X axis.
-			</summary> 
-			<param name="mousedx"> Change of the X coordinate. </param> 
-		</member>
-		<member name="M:Unigine.Controls.getMouseDX const">
-			<summary>
-			Returns a screen position change of the mouse pointer along the X axis during the previous frame.
-			</summary>  
-			<returns>Change of the X coordinate.</returns>
-		</member>
-		<member name="M:Unigine.Controls.setMouseDY(float)">
-			<summary>
-			Updates a screen position change of the mouse pointer along the Y axis.
-			</summary> 
-			<param name="mousedy"> Change of the Y coordinate. </param> 
-		</member>
-		<member name="M:Unigine.Controls.getMouseDY const">
-			<summary>
-			Returns a screen position change of the mouse pointer along the Y axis during the previous frame.
-			</summary>  
-			<returns>Change of the Y coordinate.</returns>
-		</member>
 		<member name="M:Unigine.Controls.setState(int,int)">
 			<summary>
 			Toggles the state of the given control on or off.
 			</summary> 
-			<param name="state"> Control state number to update. Possible values are in range [STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param>
+			<param name="state"> Control state number to update. Possible values are in range [STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration. </param>
 			<param name="value"> State value: positive value to "press" the control; 0 to release it. </param> 
 		</member>
 		<member name="M:Unigine.Controls.getState(int) const">
 			<summary>
 			Returns the state of a given control (pressed or unpressed).
 			</summary> 
-			<param name="state"> Control state number. Possible values are in range [STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param> 
+			<param name="state"> Control state number. Possible values are in range [STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration. </param> 
 			<returns>1 if the control is pressed; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Controls.getStateByName(char) const">
 			<summary>
 			Returns the state of a given control (pressed or unpressed) by the control state name.
 			</summary> 
-			<param name="name"> Name of the control state. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param> 
+			<param name="name"> Name of the control state. For full list of available controls see Unigine::Controls:: Enumeration. </param> 
 			<returns>1 if the control is pressed; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.Controls.getStateName(int) const">
 			<summary>
 			Returns the name of a given control state as a string.
 			</summary> 
-			<param name="state"> Control state number. Possible values are in range [STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param> 
+			<param name="state"> Control state number. Possible values are in range [STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration. </param> 
 			<returns>Name of the control state.</returns>
-		</member>
-		<member name="M:Unigine.Controls.getType const">
-			<summary>
-			Returns the type of input controls.
-			</summary>  
-			<returns>Controls type (one of CONTROLS_* variables):CONTROLS_APP = 0CONTROLS_DUMMY</returns>
-		</member>
-		<member name="M:Unigine.Controls.getTypeName const">
-			<summary>
-			Returns a type name of input controls.
-			</summary>  
-			<returns>Type name.</returns>
 		</member>
 		<member name="M:Unigine.Controls.clearState(int)">
 			<summary>
 			Returns a control state and clears it to 0 (not pressed). This function allows to handle control only once even if it is kept pressed over several frames.
 			</summary> 
-			<param name="state"> Control state number. Possible values are in range [STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param> 
+			<param name="state"> Control state number. Possible values are in range [STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration. </param> 
 			<returns>Returns the state of the given control: 1 if the control is pressed; otherwise,0.</returns>
 		</member>
 		<member name="M:Unigine.Controls.saveState(Unigine.Ptr{Unigine.Stream}) const">
@@ -270,142 +234,46 @@
 			Auxiliary state (unreserved). It can be mapped to any control state, if necessary (see the example).
 		</summary>
 		</member>
-		<member name="M:Unigine.ControlsApp.setAlwaysRun(int)">
-			<summary>
-			Sets a value indicating if the player is running by default. If the player is in this mode, the Run control will switch them to walking. The default is 0.
-			</summary> 
-			<param name="run"> Positive integer to make the player run by default; otherwise, 0.  </param> 
-		</member>
-		<member name="M:Unigine.ControlsApp.getAlwaysRun">
-			<summary>
-			Returns a value indicating if the player is running by default. If the player is in this mode, the Run control will switch them to walking.
-			</summary>  
-			<returns>1 if the player is running by default; otherwise, 0. </returns>
-		</member>
-		<member name="M:Unigine.ControlsApp.setEnabled(bool)">
-			<summary>
-			Enables or disables input handling for current application window.
-			</summary> 
-			<param name="enabled"> true to enable input handling for current application window, false to disable it. </param> 
-		</member>
-		<member name="M:Unigine.ControlsApp.isEnabled">
-			<summary>
-			Returns a value indicating if input handling for current application window is enabled.
-			</summary>  
-			<returns>true if input handling for current application window is enabled; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.ControlsApp.setMouseDX(float)">
-			<summary>
-			Updates a screen position change of the mouse pointer along the X axis.
-			</summary> 
-			<param name="mousedx"> Change of the X coordinate. </param> 
-		</member>
-		<member name="M:Unigine.ControlsApp.getMouseDX">
-			<summary>
-			Returns a screen position change of the mouse pointer along the X axis during the last frame.
-			</summary>  
-			<returns>Change of the X coordinate.</returns>
-		</member>
-		<member name="M:Unigine.ControlsApp.setMouseDY(float)">
-			<summary>
-			Updates a screen position change of the mouse pointer along the Y axis.
-			</summary> 
-			<param name="mousedy"> Change of the Y coordinate. </param> 
-		</member>
-		<member name="M:Unigine.ControlsApp.getMouseDY">
-			<summary>
-			Returns a screen position change of the mouse pointer along the Y axis during the last frame.
-			</summary>  
-			<returns>Change of the Y coordinate.</returns>
-		</member>
-		<member name="M:Unigine.ControlsApp.setMouseEnabled(bool)">
-			<summary>
-			Enables or disables the mouse input.
-			</summary> 
-			<param name="enabled"> Positive integer to enable the mouse; otherwise, 0.  </param> 
-		</member>
-		<member name="M:Unigine.ControlsApp.isMouseEnabled">
-			<summary>
-			Returns a value indicating if the mouse is enabled.
-			</summary>  
-			<returns>1 if the mouse is enabled; otherwise, 0. </returns>
-		</member>
-		<member name="M:Unigine.ControlsApp.setMouseInverse(bool)">
-			<summary>
-			Sets back-and-forth movements of the mouse (by Y-axis) to be interpreted as inverted: when the mouse is moved upward, the camera looks downwards, and when the mouse is moved downwards, the camera looks upwards. This mode is available only to control the camera.
-			</summary> 
-			<param name="inverse"> true to inverse the mouse; otherwise, false.  </param> 
-		</member>
-		<member name="M:Unigine.ControlsApp.isMouseInverse">
-			<summary>
-			Returns a value indicating if back-and-forth movements of the mouse (by Y-axis) are inverted: when the mouse is moved upward, the camera looks downwards, and when the mouse is moved downwards, the camera looks upwards. This mode is available only to control the camera.
-			</summary>  
-			<returns>true if the mouse is inverted; otherwise, false. </returns>
-		</member>
-		<member name="M:Unigine.ControlsApp.setMouseRawInput(bool)">
-			<summary>
-			Sets a value indicating which type of mouse data is used to control the camera — raw (Input::getMouseDeltaRaw()) or processed by the OS (Input::getMouseDeltaPosition()).
-			</summary> 
-			<param name="input"> true to use raw mouse data to control the camera; false to use the mouse data as processed by the OS (system acceleration, various user settings). </param> 
-		</member>
-		<member name="M:Unigine.ControlsApp.isMouseRawInput const">
-			<summary>
-			Returns a value indicating which type of mouse data is used to control the camera — raw (Input::getMouseDeltaRaw()) or processed by the OS (Input::getMouseDeltaPosition()).
-			</summary>  
-			<returns>true if raw mouse data are used to control the camera; false — the mouse data as processed by the OS (system acceleration, various user settings).</returns>
-		</member>
-		<member name="M:Unigine.ControlsApp.setMouseSensitivity(float)">
-			<summary>
-			Sets mouse sensitivity used to increase or decrease the speed of mouse movement.
-			</summary> 
-			<param name="sensitivity"> Mouse sensitivity. Higher values increase the mouse speed; lower values decrease it. </param> 
-		</member>
-		<member name="M:Unigine.ControlsApp.getMouseSensitivity">
-			<summary>
-			Returns the current mouse sensitivity used to increase or decrease the speed of mouse movement.
-			</summary>  
-			<returns>Mouse sensitivity.</returns>
-		</member>
 		<member name="M:Unigine.ControlsApp.setState(int,int)">
 			<summary>
 			Updates the state of a given control (sets the control on or off).
 			</summary> 
-			<param name="state"> Control state number to update. Possible values are in range [STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls  </param>
+			<param name="state"> Control state number. Possible values are in range [ STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param>
 			<param name="value"> State value: positive value to "press" the control; 0 to release it. </param> 
 		</member>
 		<member name="M:Unigine.ControlsApp.getState(int)">
 			<summary>
 			Returns the state of a given control.
 			</summary> 
-			<param name="state"> Control state number. Possible values are in range [STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls  </param> 
+			<param name="state"> Control state number. Possible values are in range [ STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param> 
 			<returns>State value: positive value means the control is "pressed"; 0 means the control is released.</returns>
 		</member>
-		<member name="M:Unigine.ControlsApp.setStateMouseButton(int,int)">
+		<member name="M:Unigine.ControlsApp.setStateMouseButton(int,Input::MOUSE_BUTTON)">
 			<summary>
 			Sets a mouse button that switches a given state on and off.
 			</summary> 
-			<param name="state"> State (one of CONTROLS_STATE_* variables). </param>
-			<param name="button"> Button that toggles the state (one of MOUSE_BUTTON* variables). </param> 
+			<param name="state"> Control state number. Possible values are in range [ STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param>
+			<param name="button"> Button that toggles the state, one of the preset MOUSE_BUTTON_ codes. </param> 
 		</member>
 		<member name="M:Unigine.ControlsApp.getStateMouseButton(int)">
 			<summary>
 			Returns a mouse button that switches a given state on and off.
 			</summary> 
-			<param name="state"> State (one of CONTROLS_STATE_* variables). </param> 
-			<returns>Button that toggles the state (one of MOUSE_BUTTON* variables).</returns>
+			<param name="state"> Control state number. Possible values are in range [ STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param> 
+			<returns>Button that toggles the state, one of the preset MOUSE_BUTTON_ codes.</returns>
 		</member>
-		<member name="M:Unigine.ControlsApp.isStateMouseButton(int)">
+		<member name="M:Unigine.ControlsApp.isStateMouseButton(Input::MOUSE_BUTTON)">
 			<summary>
 			Returns a value indicating if the given button assigned to the state.
 			</summary> 
-			<param name="button"> Button that toggles the state (one of MOUSE_BUTTON* variables). </param> 
+			<param name="button"> Button that toggles the state, one of the preset MOUSE_BUTTON_ codes. </param> 
 			<returns>1 if the given button is assigned; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.ControlsApp.getStateEvent(int)">
 			<summary>
 			Lets the user assign a key or a mouse button to a given state.
 			</summary> 
-			<param name="state"> State (one of the CONTROLS_STATE_* variables), to which a key or a mouse button is going to be assigned. </param> 
+			<param name="state"> Control state number. Possible values are in range [ STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param> 
 		</member>
 		<member name="M:Unigine.ControlsApp.isStateEvent">
 			<summary>
@@ -413,39 +281,39 @@
 			</summary>  
 			<returns>1 if a key or a mouse button is already assigned; otherwise, 0. </returns>
 		</member>
-		<member name="M:Unigine.ControlsApp.setStateKey(int,int)">
+		<member name="M:Unigine.ControlsApp.setStateKey(int,Input::KEY)">
 			<summary>
 			Sets a key that toggles a given state on and off.
 			</summary> 
-			<param name="state"> State (one of CONTROLS_STATE_* variables). </param>
-			<param name="key"> Key that switches the state. It is a standard ASCII key code or one of the KEY* variables. </param> 
+			<param name="state"> Control state number. Possible values are in range [ STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param>
+			<param name="key"> Key that switches the state, one of the preset KEY_ codes. </param> 
 		</member>
 		<member name="M:Unigine.ControlsApp.getStateKey(int)">
 			<summary>
 			Returns a key that toggles a given state on and off.
 			</summary> 
-			<param name="state"> State (one of CONTROLS_STATE_* variables). </param> 
-			<returns>Key that switches the state. It is a standard ASCII key code or one of the KEY* variables: KEY_ESC = 256KEY_TABKEY_BACKSPACEKEY_RETURNKEY_DELETEKEY_INSERTKEY_HOMEKEY_ENDKEY_PGUPKEY_PGDOWNKEY_LEFTKEY_RIGHTKEY_UPKEY_DOWNKEY_SHIFTKEY_CTRLKEY_ALTKEY_SCROLLKEY_CAPSKEY_NUMKEY_F1KEY_F2KEY_F3KEY_F4KEY_F5KEY_F6KEY_F7KEY_F8KEY_F9KEY_F10KEY_F11KEY_F12</returns>
+			<param name="state"> Control state number. Possible values are in range [ STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param> 
+			<returns>Key that switches the state, one of the preset KEY_ codes.</returns>
 		</member>
-		<member name="M:Unigine.ControlsApp.isStateKey(int)">
+		<member name="M:Unigine.ControlsApp.isStateKey(Input::KEY)">
 			<summary>
 			Checks if a given key already acts as an application control. This is useful to avoid collisions between application controls and hot keys.
 			</summary> 
-			<param name="key"> Key in one of the following formats:Character format (for example,'a')Standard ASCII key code (for example,97)One of KEY* variables </param> 
+			<param name="key"> Key that switches the state, one of the preset KEY_ codes. </param> 
 			<returns>1 if the key is assigned to a state; otherwise, 0. </returns>
 		</member>
 		<member name="M:Unigine.ControlsApp.getStateName(int)">
 			<summary>
 			Returns the name of the given control state.
 			</summary> 
-			<param name="state"> The control state number in range from 0 to the total number of states. </param> 
+			<param name="state"> Control state number. Possible values are in range [ STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param> 
 			<returns>Name of the given control state.</returns>
 		</member>
 		<member name="M:Unigine.ControlsApp.getStateInfo(int) const">
 			<summary>
 			Returns the information about the given control state.
 			</summary> 
-			<param name="state"> The control state number in range from 0 to the total number of states. </param> 
+			<param name="state"> Control state number. Possible values are in range [ STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param> 
 			<returns>String containing information about the given control state.</returns>
 		</member>
 		<member name="M:Unigine.ControlsApp.clearState(int)">
@@ -455,53 +323,17 @@
 			<param name="state"> Control state number. Possible values are in range [ STATE_FORWARD;NUM_STATES]. For full list of available controls see Unigine::Controls:: Enumeration at the end of the article. </param> 
 			<returns>1 if the control is pressed; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.ControlsApp.setMouseHandle(Input::MOUSE_HANDLE)">
-			<summary>
-			Sets the mouse behavior mode.
-			</summary> 
-			<param name="handle"> Mouse behavior mode, one of the MOUSE_HANDLE_* values. </param> 
-		</member>
-		<member name="M:Unigine.ControlsApp.getMouseHandle">
-			<summary>
-			Returns the mouse behavior mode.
-			</summary>  
-			<returns>Mouse behavior mode, one of the MOUSE_HANDLE_* values.</returns>
-		</member>
-		<member name="M:Unigine.ControlsApp.setPath(char)">
-			<summary>
-			Sets a new path to the controls configuration file (default: configs/default.controls). The path can be specified as an absolute path or relative to the -data_path or &lt;project_name&gt; folder if the -project_name is set.
-			</summary> 
-			<param name="path"> New path to the controls configuration file to be set. </param> 
-		</member>
-		<member name="M:Unigine.ControlsApp.getPath const">
-			<summary>
-			Returns the current path to the controls configuration file (default: configs/default.controls).
-			</summary>  
-			<returns>Current path to the controls configuration file.</returns>
-		</member>
 		<member name="M:Unigine.ControlsApp.setRemoveGrabKey(Input::KEY)">
 			<summary>
 			Sets a new key to be used to switch off the grab mode of the mouse pointer (mouse pointer is bound to the application window). See this example for more information on mouse pointer modes and customization.
 			</summary> 
-			<param name="key"> New key to be used to switch off the grab mode of the mouse pointer. </param> 
+			<param name="key"> Key to be used to switch off the grab mode of the mouse pointer, one of the preset KEY_ codes. </param> 
 		</member>
 		<member name="M:Unigine.ControlsApp.getRemoveGrabKey const">
 			<summary>
 			Returns the key currently used to switch off the grab mode of the mouse pointer (mouse pointer is bound to the application window). See this example for more information on mouse pointer modes and customization.
 			</summary>  
-			<returns>Current key used to switch off the grab mode of the mouse pointer.</returns>
-		</member>
-		<member name="M:Unigine.ControlsApp.setAutosave(bool)">
-			<summary>
-			Sets a value indicating if current controls configuration settings are automatically saved to the corresponding config file on loading, closing, and saving the world, as well as on the Engine shutdown.
-			</summary> 
-			<param name="autosave"> true to enable automatic saving of current controls configuration settings; false — to disable it. </param> 
-		</member>
-		<member name="M:Unigine.ControlsApp.isAutosave const">
-			<summary>
-			Returns a value indicating if current controls configuration settings are automatically saved to the corresponding config file on loading, closing, and saving the world, as well as on the Engine shutdown.
-			</summary>  
-			<returns>true if automatic saving of current controls configuration settings is enabled; otherwise, 0.</returns>
+			<returns>Key used to switch off the grab mode of the mouse pointer, one of the preset KEY_ codes.</returns>
 		</member>
 		<member name="M:Unigine.ControlsApp.load">
 			<summary>

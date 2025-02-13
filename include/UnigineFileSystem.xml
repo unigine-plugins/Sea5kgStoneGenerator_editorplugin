@@ -532,12 +532,6 @@
 			<param name="guid"> File GUID </param> 
 			<returns>File size in bytes.</returns>
 		</member>
-		<member name="M:Unigine.FileSystem.getNumModifiers const">
-			<summary>
-			Returns the total number of file modifiers registered in the file system.
-			</summary>  
-			<returns>Number of modifiers.</returns>
-		</member>
 		<member name="M:Unigine.FileSystem.getModifier(int) const">
 			<summary>
 			Returns the name of the given modifier.
@@ -561,6 +555,20 @@
 			<summary>
 			Unregister all modifiers in the file system.
 			</summary>  
+		</member>
+		<member name="M:Unigine.FileSystem.guidToPath(Unigine.UGUID) const">
+			<summary>
+			Returns the path to the file with the specified GUID.
+			</summary> 
+			<param name="guid"> File GUID </param> 
+			<returns>File path. It can be a relative, absolute, network, or virtual path.</returns>
+		</member>
+		<member name="M:Unigine.FileSystem.pathToGuid(char)">
+			<summary>
+			Returns the GUID of the file to which the path is specified.
+			</summary> 
+			<param name="path"> File path. It can be a relative, absolute, network, or virtual path.If you want to specify a path to an asset, you should use the asset path format (asset://). Otherwise, if you specify the regular path to the asset, it will be treated as the path to its runtime file (if any) from the .runtimes folder. </param> 
+			<returns>File GUID</returns>
 		</member>
 		<member name="M:Unigine.FileSystemAssets.isAsset(Unigine.UGUID)">
 			<summary>

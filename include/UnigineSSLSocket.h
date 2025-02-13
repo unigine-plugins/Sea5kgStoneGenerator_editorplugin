@@ -66,6 +66,7 @@ public:
 	void close();
 	bool accept(const Ptr<Socket> &socket);
 	bool connect();
+	bool connect(size_t timeout_ms);
 	SSLSocket::SSL_HANDSHAKE handshake();
 	bool isCertificateVerified() const;
 	bool load(SSLSocket::LOADER_TYPE loader_type, const char *path);

@@ -25,7 +25,7 @@ namespace Unigine
 class UNIGINE_API Materials
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	static Ptr<Material> loadMaterial(const char *path);
 	static bool isMaterialGUID(const UGUID &guid);
 	static int getNumMaterials();
@@ -43,11 +43,14 @@ public:
 	static void setPrecompileAllShaders(bool shaders);
 	static bool isPrecompileAllShaders();
 	static void reloadMaterials();
-	static void destroyShaders();
 	static void destroyTextures();
 	static void createRenderMaterials();
+	static void createShaderCache();
 	static void createShaders();
-	static void compileShaders();
+	static void createShadersFromCache();
+	static void destroyShaders();
+	static bool isShadersCompiling();
+	static void flushShadersCompiling();
 	static Event<> &getEventBeginReload();
 	static Event<> &getEventEndReload();
 };

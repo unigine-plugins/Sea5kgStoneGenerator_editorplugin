@@ -6,22 +6,10 @@
 	<members>
 		<member name="M:Unigine.MeshDynamic.create(int)">
 			<summary>
-			Creates a new dynamic mesh instance in accordance with the specified flags.
+			Creates a new dynamic mesh instance in accordance with the specified flags.											The USAGE_IMMUTABLE_VERTEX flag cannot be used together with USAGE_DYNAMIC_VERTEX flag.						The USAGE_IMMUTABLE_INDICES flag cannot be used together with USAGE_DYNAMIC_INDICES flag.						USAGE_MISC_SHARED can be used only together with USAGE_IMMUTABLE_ALL.
 			</summary> 
-			<param name="flags"> Creation flags. A combination of IMMUTABLE_*, DYNAMIC_* and FLUSH_* flags. </param> 
+			<param name="flags"> Creation flags. A combination of USAGE_IMMUTABLE_*, USAGE_DYNAMIC_* and USAGE_FLUSH_* flags. </param> 
 			<returns>MeshDynamic smart pointer.</returns>
-		</member>
-		<member name="M:Unigine.MeshDynamic.setFlags(int)">
-			<summary>
-			Sets the flags of the dynamic mesh.
-			</summary> 
-			<param name="flags"> Creation flags. A combination of IMMUTABLE_*, DYNAMIC_* and FLUSH_* flags. </param> 
-		</member>
-		<member name="M:Unigine.MeshDynamic.getFlags">
-			<summary>
-			Returns the current set of flags of the dynamic mesh.
-			</summary>  
-			<returns>Creation flags. A combination of IMMUTABLE_*, DYNAMIC_* and FLUSH_* flags.</returns>
 		</member>
 		<member name="M:Unigine.MeshDynamic.copy(Unigine.Ptr{MeshDynamic}) const">
 			<summary>
@@ -91,7 +79,7 @@
 			Renders the dynamic mesh with the specified flags and mode.
 			</summary> 
 			<param name="mode"> Rendering mode. One of the MODE values. </param>
-			<param name="flush"> Flush flag. One of the FLUSH_* variables. </param> 
+			<param name="flush"> Flush flag. One of the USAGE_FLUSH_* variables. </param> 
 			<returns>Number of triangles rendered.</returns>
 		</member>
 		<member name="M:Unigine.MeshDynamic.getSystemMemoryUsage">
@@ -112,13 +100,13 @@
 			</summary> 
 			<param name="attributes"> Array of attributes to be used for vertex format, can be up to 16 attributes for one vertex. The numeration starts from 0. Each attribute consists of:An offset of the vertex in bytes, depends on the vertex type and size.Type of the vertex: one of the TYPE_* valuesSize of the vertex: can be 1,2,3,4 for float type; 2,4 for half type; 4 for UChar typeWhen it goes to shader, 0 -attribute always comes with the size of 4, no matter what size is specified in the method. All the other attributes come with the specified sizes. </param> 
 		</member>
-		<member name="M:Unigine.MeshDynamic.getVertexSize">
+		<member name="M:Unigine.MeshDynamic.getVertexSize const">
 			<summary>
 			Returns vertex size of the dynamic mesh.
 			</summary>  
 			<returns>Vertex size.</returns>
 		</member>
-		<member name="M:Unigine.MeshDynamic.getNumAttributes">
+		<member name="M:Unigine.MeshDynamic.getNumAttributes const">
 			<summary>
 			Returns the number of vertex attributes of the dynamic mesh.
 			</summary>  
@@ -147,7 +135,7 @@
 			</summary> 
 			<param name="num"> New number of vertices. </param> 
 		</member>
-		<member name="M:Unigine.MeshDynamic.getNumVertex">
+		<member name="M:Unigine.MeshDynamic.getNumVertex const">
 			<summary>
 			Returns the total number of vertices for the dynamic mesh.
 			</summary>  
@@ -680,7 +668,7 @@
 			</summary> 
 			<param name="num"> New number of indices. </param> 
 		</member>
-		<member name="M:Unigine.MeshDynamic.getNumIndices">
+		<member name="M:Unigine.MeshDynamic.getNumIndices const">
 			<summary>
 			Returns the total number of indices for the dynamic mesh.
 			</summary>  
@@ -778,7 +766,7 @@
 			</summary> 
 			<param name="num_quads"> Number of quadrilaterals to be added. </param> 
 		</member>
-		<member name="M:Unigine.MeshDynamic.saveState(Unigine.Ptr{Unigine.Stream})">
+		<member name="M:Unigine.MeshDynamic.saveState(Unigine.Ptr{Unigine.Stream}) const">
 			<summary>
 			Saves the current state of the dynamic mesh (vertices, indices, etc.) to the specified stream.					Saving into the stream requires creating a blob to save into. To restore the saved state the restoreState() method is used:
 			</summary> 
@@ -792,50 +780,17 @@
 			<param name="stream"> Stream from which the previously saved state of the dynamic mesh is to be loaded. </param> 
 			<returns>true if a previously saved state of the dynamic mesh is restored successfully; otherwise, false.</returns>
 		</member>
-		<member name="F:Unigine.MeshDynamic.IMMUTABLE_VERTEX">
+		<member name="M:Unigine.MeshDynamic.getExternalMemoryVertexBuffer const">
 			<summary>
-			Vertex buffer will be created in GPU memory as an unmodifiable resource.
-		</summary>
+			Returns the pointer to the vertex buffer of the resource in video memory. If the USAGE_MISC_SHARED flag is not enabled for the resource, this method returns nullptr.
+			</summary>  
+			<returns>The pointer to the vertex buffer of the resource in video memory. If the USAGE_MISC_SHARED flag is not enabled for the resource, this method returns nullptr.</returns>
 		</member>
-		<member name="F:Unigine.MeshDynamic.IMMUTABLE_INDICES">
+		<member name="M:Unigine.MeshDynamic.getExternalMemoryIndexBuffer const">
 			<summary>
-			Index buffer will be created in GPU memory as an unmodifiable resource.
-		</summary>
-		</member>
-		<member name="F:Unigine.MeshDynamic.IMMUTABLE_ALL">
-			<summary>
-			Vertex and index buffers will be created in GPU memory as unmodifiable resources.
-		</summary>
-		</member>
-		<member name="F:Unigine.MeshDynamic.DYNAMIC_VERTEX">
-			<summary>
-			Vertex buffer will be created in GPU memory as a dynamic resource.
-		</summary>
-		</member>
-		<member name="F:Unigine.MeshDynamic.DYNAMIC_INDICES">
-			<summary>
-			Index buffer will be created in GPU memory as a dynamic resource.
-		</summary>
-		</member>
-		<member name="F:Unigine.MeshDynamic.DYNAMIC_ALL">
-			<summary>
-			Vertex and index buffers will be created in GPU memory as dynamic resources.
-		</summary>
-		</member>
-		<member name="F:Unigine.MeshDynamic.FLUSH_VERTEX">
-			<summary>
-			Data on updated vertices will be sent from CPU to GPU.
-		</summary>
-		</member>
-		<member name="F:Unigine.MeshDynamic.FLUSH_INDICES">
-			<summary>
-			Data on updated indices will be sent from CPU to GPU.
-		</summary>
-		</member>
-		<member name="F:Unigine.MeshDynamic.FLUSH_ALL">
-			<summary>
-			Data on updated vertices and indices will be sent from CPU to GPU.
-		</summary>
+			Returns the pointer to the index buffer of the resource in video memory. If the USAGE_MISC_SHARED flag is not enabled for the resource, this method returns nullptr.
+			</summary>  
+			<returns>The pointer to the index buffer of the resource in video memory. If the USAGE_MISC_SHARED flag is not enabled for the resource, this method returns nullptr.</returns>
 		</member>
 		<member name="F:Unigine.MeshDynamic.TYPE_HALF">
 			<summary>
@@ -890,6 +845,56 @@
 		<member name="F:Unigine.MeshDynamic.NUM_MODES">
 			<summary>
 			Number of rendering modes.
+		</summary>
+		</member>
+		<member name="F:Unigine.MeshDynamic.USAGE_MISC_SHARED">
+			<summary>
+			Data is accessible by an external graphics API (applicable for DX12 and Vulkan only).
+		</summary>
+		</member>
+		<member name="F:Unigine.MeshDynamic.USAGE_FLUSH_ALL">
+			<summary>
+			Data on updated vertices and indices will be sent from CPU to GPU.
+		</summary>
+		</member>
+		<member name="F:Unigine.MeshDynamic.USAGE_FLUSH_INDICES">
+			<summary>
+			Data on updated indices will be sent from CPU to GPU.
+		</summary>
+		</member>
+		<member name="F:Unigine.MeshDynamic.USAGE_FLUSH_VERTEX">
+			<summary>
+			Data on updated vertices will be sent from CPU to GPU.
+		</summary>
+		</member>
+		<member name="F:Unigine.MeshDynamic.USAGE_DYNAMIC_ALL">
+			<summary>
+			Vertex and index buffers will be created in GPU memory as dynamic resources.
+		</summary>
+		</member>
+		<member name="F:Unigine.MeshDynamic.USAGE_DYNAMIC_INDICES">
+			<summary>
+			Index buffer will be created in GPU memory as a dynamic resource.
+		</summary>
+		</member>
+		<member name="F:Unigine.MeshDynamic.USAGE_DYNAMIC_VERTEX">
+			<summary>
+			Vertex buffer will be created in GPU memory as a dynamic resource.
+		</summary>
+		</member>
+		<member name="F:Unigine.MeshDynamic.USAGE_IMMUTABLE_ALL">
+			<summary>
+			Vertex and index buffers will be created in GPU memory as unmodifiable resources.
+		</summary>
+		</member>
+		<member name="F:Unigine.MeshDynamic.USAGE_IMMUTABLE_INDICES">
+			<summary>
+			Index buffer will be created in GPU memory as an unmodifiable resource.
+		</summary>
+		</member>
+		<member name="F:Unigine.MeshDynamic.USAGE_IMMUTABLE_VERTEX">
+			<summary>
+			Vertex buffer will be created in GPU memory as an unmodifiable resource.
 		</summary>
 		</member>
 	</members>

@@ -34,8 +34,10 @@ namespace Math
 
 struct alignas(16) quat
 {
+	/// <summary>Constructor. Initializes the quaternion using given constant float values.</summary>
 	UNIGINE_INLINE constexpr quat(float x_, float y_, float z_, float w_, ConstexprTag): x(x_), y(y_), z(z_), w(w_) {}
 
+	/// <summary>Default constructor. Produces an identity quaternion (0.0, 0.0, 0.0, 1.0).</summary>
 	UNIGINE_INLINE quat()
 		: x(0.0f)
 		, y(0.0f)
@@ -44,52 +46,62 @@ struct alignas(16) quat
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 	}
+	/// <summary>Constructor. Initializes the quaternion using the given rotation axis component values and angle.</summary>
 	UNIGINE_INLINE quat(float x, float y, float z, float angle)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(x, y, z, angle);
 	}
+	/// <summary>Constructor. Initializes the quaternion using given angles for each axis.</summary>
 	UNIGINE_INLINE quat(float angle_x, float angle_y, float angle_z)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(angle_x, angle_y, angle_z);
 	}
+	/// <summary>Constructor. Initializes the quaternion using given rotation axis and angle.</summary>
 	UNIGINE_INLINE quat(const vec3 &axis, float angle)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(axis, angle);
 	}
+	/// <summary>Constructor. Initializes the quaternion using three given matrix columns represented by vec3 vectors.</summary>
 	UNIGINE_INLINE quat(const vec3 &col0, const vec3 &col1, const vec3 &col2)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(col0, col1, col2);
 	}
 
+	/// <summary>Constructor. Initializes the quaternion by copying a given source quaternion.</summary>
 	UNIGINE_INLINE quat(const quat &q)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(q);
 	}
+	/// <summary>Constructor. Initializes the quaternion by copying a given source quaternion.</summary>
 	UNIGINE_INLINE explicit quat(const float *q)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(q);
 	}
+	/// <summary>Constructor. Initializes the quaternion using a given four-component vec4 source vector.</summary>
 	UNIGINE_INLINE explicit quat(const vec4 &v)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(v);
 	}
+	/// <summary>Constructor. Initializes the quaternion using a given mat3 source matrix (3x3).</summary>
 	UNIGINE_INLINE explicit quat(const mat3 &m)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(m);
 	}
+	/// <summary>Constructor. Initializes the quaternion using a given mat4 source matrix (4x4).</summary>
 	UNIGINE_INLINE explicit quat(const mat4 &m)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
 		set(m);
 	}
+	/// <summary>Constructor. Initializes the quaternion using a given dmat4 source matrix (3x4).</summary>
 	UNIGINE_INLINE explicit quat(const dmat4 &m)
 	{
 		UNIGINE_ASSERT_ALIGNED16(this);
@@ -97,6 +109,7 @@ struct alignas(16) quat
 	}
 
 	#ifdef USE_SSE
+		/// <summary>Constructor. Initializes the quaternion using a given __m128 variable (128-bit). We do not recommend to use this method unless you have a clear understanding of SSE2.</summary>
 		UNIGINE_INLINE quat(const __m128 &v): vec(v)
 		{
 			UNIGINE_ASSERT_ALIGNED16(this);
@@ -110,6 +123,7 @@ struct alignas(16) quat
 		UNIGINE_INLINE void set(const quat &v) { x = v.x; y = v.y; z = v.z; w = v.w; }
 	#endif
 
+	/// <summary>Sets the quaternion using a given mat3 source matrix (3x3).</summary>
 	UNIGINE_INLINE void set(const mat3 &m)
 	{
 		quat q = m.getQuat();
@@ -118,6 +132,7 @@ struct alignas(16) quat
 		z = q.z;
 		w = q.w;
 	}
+	/// <summary>Sets the quaternion using a given mat4 source matrix (4x4).</summary>
 	UNIGINE_INLINE void set(const mat4 &m)
 	{
 		quat q = mat3(m).getQuat();
@@ -126,6 +141,7 @@ struct alignas(16) quat
 		z = q.z;
 		w = q.w;
 	}
+	/// <summary>Sets the quaternion using a given dmat4 source matrix (3x4).</summary>
 	UNIGINE_INLINE void set(const dmat4 &m)
 	{
 		quat q = mat3(m).getQuat();
@@ -134,6 +150,7 @@ struct alignas(16) quat
 		z = q.z;
 		w = q.w;
 	}
+	/// <summary>Sets the quaternion using given rotation axis and angle.</summary>
 	UNIGINE_INLINE void set(const vec3 &axis, float angle)
 	{
 		float s, c;
@@ -144,6 +161,7 @@ struct alignas(16) quat
 		z = axis.z * ilength * s;
 		w = c;
 	}
+	/// <summary>Sets the quaternion using the axis coordinates and the angle.</summary>
 	UNIGINE_INLINE void set(float axis_x, float axis_y, float axis_z, float angle)
 	{
 		float s, c;
@@ -154,6 +172,7 @@ struct alignas(16) quat
 		z = axis_z * ilength * s;
 		w = c;
 	}
+	/// <summary>Sets the quaternion using given angles for each axis.</summary>
 	UNIGINE_INLINE void set(float angle_x, float angle_y, float angle_z)
 	{
 		float sx, cx, sy, cy, sz, cz;
@@ -169,6 +188,7 @@ struct alignas(16) quat
 		z = sxsy * cz + cxcy * sz;
 		w = cxcy * cz - sxsy * sz;
 	}
+	/// <summary>Sets the quaternion using three given matrix columns represented by vec3 vectors.</summary>
 	UNIGINE_INLINE void set(const vec3 &col0, const vec3 &col1, const vec3 &col2)
 	{
 		quat q = mat3(col0, col1, col2).getQuat();
@@ -177,6 +197,7 @@ struct alignas(16) quat
 		z = q.z;
 		w = q.w;
 	}
+	/// <summary>Sets the quaternion using a given pointer to the source quaternion.</summary>
 	UNIGINE_INLINE void set(const float *q)
 	{
 		x = q[0];
@@ -185,6 +206,7 @@ struct alignas(16) quat
 		w = q[3];
 	}
 
+	/// <summary>Returns the rotation axis and angle of the quaternion and puts the values to corresponding variables: axis.x = x, axis.y = y, axis.z = z, angle = w.</summary>
 	UNIGINE_INLINE void get(vec3 &axis, float &angle) const
 	{
 		float ilength = Math::rsqrt(x * x + y * y + z * z);
@@ -195,6 +217,7 @@ struct alignas(16) quat
 		if (angle > 180.0f)
 			angle -= 360.0f;
 	}
+	/// <summary>Returns the quaternion: qq[0]=x, qq[1]=y, qq[2]=z, qq[3]=w.</summary>
 	UNIGINE_INLINE void get(float *qq) const
 	{
 		qq[0] = x;
@@ -202,26 +225,36 @@ struct alignas(16) quat
 		qq[2] = z;
 		qq[3] = w;
 	}
+	/// <summary>Returns a pointer to the quaternion.</summary>
 	UNIGINE_INLINE float *get() { return q; }
+	/// <summary>Returns a constant pointer to the quaternion.</summary>
 	UNIGINE_INLINE const float *get() const { return q; }
 
+	/// <summary>Performs type conversion to float *.</summary>
 	UNIGINE_INLINE operator float *() { return q; }
+	/// <summary>Performs type conversion to const float *.</summary>
 	UNIGINE_INLINE operator const float *() const { return q; }
+	/// <summary>Performs type conversion to void *.</summary>
 	UNIGINE_INLINE operator void *() { return q; }
+	/// <summary>Performs type conversion to const void *.</summary>
 	UNIGINE_INLINE operator const void *() const { return q; }
 
+	/// <summary>Performs array access to the quaternion item reference by using given item index.</summary>
 	UNIGINE_INLINE float &operator[](int i)
 	{
 		assert((unsigned int)i < 4 && "quat::operator[](): bad index");
 		return q[i];
 	}
+	/// <summary>Performs array access to the quaternion item by using given item index.</summary>
 	UNIGINE_INLINE float operator[](int i) const
 	{
 		assert((unsigned int)i < 4 && "quat::operator[](): bad index");
 		return q[i];
 	}
 
+	/// <summary>Performs quaternion assignment. Destination quaternion = Source quaternion.</summary>
 	UNIGINE_INLINE quat &operator=(const quat &q) { set(q); return *this; }
+	/// <summary>erforms quaternion negation. The sign of each component of the quaternion is flipped.</summary>
 	UNIGINE_INLINE quat operator-() const
 	{
 		quat ret;
@@ -232,12 +265,17 @@ struct alignas(16) quat
 		return ret;
 	}
 
+	/// <summary>Performs scalar multiplication.</summary>
 	UNIGINE_INLINE quat &operator*=(float v);
+	/// <summary>Performs quaternion multiplication.</summary>
 	UNIGINE_INLINE quat &operator*=(const quat &q);
 
+	/// <summary>Performs quaternion addition.</summary>
 	UNIGINE_INLINE quat &operator+=(const quat &q);
+	/// <summary>Performs quaternion subtraction.</summary>
 	UNIGINE_INLINE quat &operator-=(const quat &q);
 
+	/// <summary>Returns the rotation matrix for the quaternion.</summary>
 	UNIGINE_INLINE mat3 getMat3() const
 	{
 		mat3 ret;
@@ -265,6 +303,7 @@ struct alignas(16) quat
 		return ret;
 	}
 
+	/// <summary>Returns the quaternion normal vector.</summary>
 	UNIGINE_INLINE vec3 getNormal() const
 	{
 		vec3 ret;
@@ -276,6 +315,7 @@ struct alignas(16) quat
 		ret.z = 1.0f - x * x2 - y * y2;
 		return ret;
 	}
+	/// <summary>Returns the quaternion tangent vector.</summary>
 	UNIGINE_INLINE vec3 getTangent() const
 	{
 		vec3 ret;
@@ -287,6 +327,7 @@ struct alignas(16) quat
 		ret.z = z * x2 - w * y2;
 		return ret;
 	}
+	/// <summary>Returns the quaternion tangent vector and binormal orientation as a four-component vec4 vector.</summary>
 	UNIGINE_INLINE vec4 getTangent4() const
 	{
 		vec4 ret;
@@ -299,6 +340,7 @@ struct alignas(16) quat
 		ret.w = Math::sign(w);
 		return ret;
 	}
+	/// <summary>Returns the quaternion binormal vector with respect to orientation.</summary>
 	UNIGINE_INLINE vec3 getBinormal() const
 	{
 		vec3 ret;
@@ -311,8 +353,10 @@ struct alignas(16) quat
 		return ret * Math::sign(w);
 	}
 
+	/// <summary>Returns the rotation angle of the quaternion for a given rotation axis, in degrees, within the [-180, 180] range.</summary>
 	UNIGINE_INLINE float getAngle(const vec3 &axis) const;
 
+	/// <summary>Returns normalized quaternion.</summary>
 	UNIGINE_INLINE quat &normalize()
 	{
 		float ilength = Math::rsqrt(x * x + y * y + z * z + w * w);
@@ -322,6 +366,7 @@ struct alignas(16) quat
 		w *= ilength;
 		return *this;
 	}
+	/// <summary>Normalizes a quaternion, makes its magnitude equal to 1. When normalized, a quaternion keeps the same direction but its length is equal to 1. Check for the zero quaternion is performed: if the argument is a zero quaternion, then a zero quaternion is returned.</summary>
 	UNIGINE_INLINE quat &normalizeValid()
 	{
 		float length = x * x + y * y + z * z + w * w;
@@ -334,6 +379,7 @@ struct alignas(16) quat
 		w *= ilength;
 		return *this;
 	}
+	/// <summary>Returns normalized quaternion, calculated using the fast inverse square root algorithm.</summary>
 	UNIGINE_INLINE quat &normalizeFast()
 	{
 		float ilength = Math::rsqrtFast(x * x + y * y + z * z + w * w);
@@ -343,6 +389,7 @@ struct alignas(16) quat
 		w *= ilength;
 		return *this;
 	}
+	/// <summary>Returns normalized quaternion, calculated using the fast inverse square root algorithm. Check for the zero quaternion is performed: if the argument is a zero quaternion, then a zero quaternion is returned.</summary>
 	UNIGINE_INLINE quat &normalizeValidFast()
 	{
 		float length = x * x + y * y + z * z + w * w;
@@ -356,6 +403,7 @@ struct alignas(16) quat
 		return *this;
 	}
 
+	/// <summary>Returns a hash for the quaternion.</summary>
 	UNIGINE_INLINE unsigned int hash() const { return hashCombine(hashCombine(hashCombine(hashInteger(x), y), z), w); }
 
 	union
@@ -371,37 +419,48 @@ struct alignas(16) quat
 	};
 };
 
+/// <summary>Zero quaternion (0.0, 0.0, 0.0, 0.0).</summary>
 constexpr quat quat_zero(0.0f, 0.0f, 0.0f, 0.0f, ConstexprTag{});
+/// <summary>Quaternion representing no rotation (0.0, 0.0, 0.0, 1.0).</summary>
 constexpr quat quat_identity(0.0f, 0.0f, 0.0f, 1.0f, ConstexprTag{});
 
 
+/// <summary>Normalizes a quaternion, makes its magnitude equal to 1. When normalized, a quaternion keeps the same oreintation but its magnitude is equal to 1.</summary>
 UNIGINE_INLINE quat normalize(const quat &q)
 {
 	quat ret = q;
 	return ret.normalize();
 }
+/// <summary>Normalizes a quaternion, makes its magnitude equal to 1. When normalized, a quaternion keeps the same oreintation but its magnitude is equal to 1. Check for the zero vector is performed: if the argument is a zero vector, then a zero vector is returned.</summary>
 UNIGINE_INLINE quat normalizeValid(const quat &q)
 {
 	quat ret = q;
 	return ret.normalizeValid();
 }
 
+/// <summary>Returns a resulting matrix for rotation by the specified angle around the axis specified as a quaternion/vector/vector components. The resulting matrix size for this method is 3 x 3.</summary>
 UNIGINE_INLINE mat3 rotate3(const quat &q) { return q.getMat3(); }
+/// <summary>Returns a resulting matrix for rotation by the specified angle around the axis specified as a quaternion/vector/vector components.</summary>
 UNIGINE_INLINE mat4 rotate(const quat &q) { return mat4(q.getMat3()); }
 
 
+/// <summary>Compares two quaternions according to the degree of precision equal to 1.0e-6f. Returns 1 if they are equal, otherwise 0.</summary>
 UNIGINE_INLINE int compare(const quat &q0, const quat &q1)
 {
 	return (compare(q0.x, q1.x) && compare(q0.y, q1.y) && compare(q0.z, q1.z) && compare(q0.w, q1.w));
 }
+/// <summary>Compares two quaternions according to the specified degree of precision. Returns 1 if they are equal, otherwise 0.</summary>
 UNIGINE_INLINE int compare(const quat &q0, const quat &q1, float epsilon)
 {
 	return (compare(q0.x, q1.x, epsilon) && compare(q0.y, q1.y, epsilon) && compare(q0.z, q1.z, epsilon) && compare(q0.w, q1.w, epsilon));
 }
+/// <summary>Quaternion equality comparison.</summary>
 UNIGINE_INLINE int operator==(const quat &q0, const quat &q1) { return compare(q0, q1); }
+/// <summary>Quaternion non-equality comparison.</summary>
 UNIGINE_INLINE int operator!=(const quat &q0, const quat &q1) { return !compare(q0, q1); }
 
 
+/// <summary>Quaternion multiplication by the vector value.</summary>
 UNIGINE_INLINE vec3 &mul(vec3 &ret, const quat &q, const vec3 &v)
 {
 	float x2 = q.x + q.x;
@@ -424,6 +483,7 @@ UNIGINE_INLINE vec3 &mul(vec3 &ret, const quat &q, const vec3 &v)
 	ret.z = (zx2 - wy2) * x + (yz2 + wx2) * y + (1.0f - xx2 - yy2) * z;
 	return ret;
 }
+/// <summary>Vector multiplication by the quaternion.</summary>
 UNIGINE_INLINE vec3 &mul(vec3 &ret, const vec3 &v, const quat &q)
 {
 	float x2 = q.x + q.x;
@@ -446,6 +506,7 @@ UNIGINE_INLINE vec3 &mul(vec3 &ret, const vec3 &v, const quat &q)
 	ret.z = (zx2 + wy2) * x + (yz2 - wx2) * y + (1.0f - xx2 - yy2) * z;
 	return ret;
 }
+/// <summary>Quaternion multiplication by the vector value.</summary>
 UNIGINE_INLINE dvec3 &mul(dvec3 &ret, const quat &q, const dvec3 &v)
 {
 	double x2 = q.x + q.x;
@@ -468,6 +529,7 @@ UNIGINE_INLINE dvec3 &mul(dvec3 &ret, const quat &q, const dvec3 &v)
 	ret.z = (zx2 - wy2) * x + (yz2 + wx2) * y + (1.0 - xx2 - yy2) * z;
 	return ret;
 }
+/// <summary>Vector multiplication by the quaternion.</summary>
 UNIGINE_INLINE dvec3 &mul(dvec3 &ret, const dvec3 &v, const quat &q)
 {
 	double x2 = q.x + q.x;
@@ -490,6 +552,7 @@ UNIGINE_INLINE dvec3 &mul(dvec3 &ret, const dvec3 &v, const quat &q)
 	ret.z = (zx2 + wy2) * x + (yz2 - wx2) * y + (1.0 - xx2 - yy2) * z;
 	return ret;
 }
+/// <summary>Quaternion multiplication by the scalar value.</summary>
 UNIGINE_INLINE quat &mul(quat &ret, const quat &q, float v)
 {
 	ret.x = q.x * v;
@@ -498,6 +561,7 @@ UNIGINE_INLINE quat &mul(quat &ret, const quat &q, float v)
 	ret.w = q.w * v;
 	return ret;
 }
+/// <summary>Quaternion multiplication.</summary>
 UNIGINE_INLINE quat &mul(quat &ret, const quat &q0, const quat &q1)
 {
 	float x0 = q0.x;
@@ -514,45 +578,54 @@ UNIGINE_INLINE quat &mul(quat &ret, const quat &q0, const quat &q1)
 	ret.w = w0 * w1 - x0 * x1 - y0 * y1 - z0 * z1;
 	return ret;
 }
+/// <summary>Quaternion multiplication by the scalar value.</summary>
 UNIGINE_INLINE quat operator*(const quat &q, float v)
 {
 	quat ret;
 	return mul(ret, q, v);
 }
+/// <summary>Quaternion multiplication by the vector value.</summary>
 UNIGINE_INLINE vec3 operator*(const quat &q, const vec3 &v)
 {
 	vec3 ret;
 	return mul(ret, q, v);
 }
+/// <summary>Vector multiplication by the quaternion.</summary>
 UNIGINE_INLINE vec3 operator*(const vec3 &v, const quat &q)
 {
 	vec3 ret;
 	return mul(ret, v, q);
 }
+/// <summary>Quaternion multiplication by the vector value.</summary>
 UNIGINE_INLINE dvec3 operator*(const quat &q, const dvec3 &v)
 {
 	dvec3 ret;
 	return mul(ret, q, v);
 }
+/// <summary>Vector multiplication by the quaternion.</summary>
 UNIGINE_INLINE dvec3 operator*(const dvec3 &v, const quat &q)
 {
 	dvec3 ret;
 	return mul(ret, v, q);
 }
+/// <summary>Quaternion multiplication.</summary>
 UNIGINE_INLINE quat operator*(const quat &q0, const quat &q1)
 {
 	quat ret;
 	return mul(ret, q0, q1);
 }
+/// <summary>Performs scalar multiplication.</summary>
 UNIGINE_INLINE quat &quat::operator*=(float v)
 {
 	return mul(*this, *this, v);
 }
+/// <summary>Performs quaternion multiplication.</summary>
 UNIGINE_INLINE quat &quat::operator*=(const quat &q)
 {
 	return mul(*this, quat(*this), q);
 }
 
+/// <summary>Performs quaternion addition.</summary>
 UNIGINE_INLINE quat &add(quat &ret, const quat &q0, const quat &q1)
 {
 	ret.x = q0.x + q1.x;
@@ -561,16 +634,19 @@ UNIGINE_INLINE quat &add(quat &ret, const quat &q0, const quat &q1)
 	ret.w = q0.w + q1.w;
 	return ret;
 }
+/// <summary>Performs quaternion addition.</summary>
 UNIGINE_INLINE quat operator+(const quat &q0, const quat &q1)
 {
 	quat ret;
 	return add(ret, q0, q1);
 }
+/// <summary>Performs quaternion addition.</summary>
 UNIGINE_INLINE quat &quat::operator+=(const quat &q)
 {
 	return add(*this, *this, q);
 }
 
+/// <summary>Performs quaternion subtraction.</summary>
 UNIGINE_INLINE quat &sub(quat &ret, const quat &q0, const quat &q1)
 {
 	ret.x = q0.x - q1.x;
@@ -579,16 +655,19 @@ UNIGINE_INLINE quat &sub(quat &ret, const quat &q0, const quat &q1)
 	ret.w = q0.w - q1.w;
 	return ret;
 }
+/// <summary>Performs quaternion subtraction.</summary>
 UNIGINE_INLINE quat operator-(const quat &q0, const quat &q1)
 {
 	quat ret;
 	return sub(ret, q0, q1);
 }
+/// <summary>Performs quaternion subtraction.</summary>
 UNIGINE_INLINE quat &quat::operator-=(const quat &q)
 {
 	return sub(*this, *this, q);
 }
 
+/// <summary>Returns the result of multiplication of the first value by the second value and addition of the third value (a * b + c).</summary>
 UNIGINE_INLINE quat &mad(quat &ret, const quat &q0, float v, const quat &q1)
 {
 	ret.x = q0.x * v + q1.x;
@@ -598,11 +677,13 @@ UNIGINE_INLINE quat &mad(quat &ret, const quat &q0, float v, const quat &q1)
 	return ret;
 }
 
+/// <summary>Returns the dot product between two quaternions.</summary>
 UNIGINE_INLINE float dot(const quat &q0, const quat &q1)
 {
 	return q0.x * q1.x + q0.y * q1.y + q0.z * q1.z + q0.w * q1.w;
 }
 
+/// <summary>Returns the inverse of a quaternion.</summary>
 UNIGINE_INLINE quat &inverse(quat &ret, const quat &q)
 {
 	quat n = normalize(q);
@@ -612,12 +693,14 @@ UNIGINE_INLINE quat &inverse(quat &ret, const quat &q)
 	ret.w = n.w;
 	return ret;
 }
+/// <summary>Returns the inverse of a quaternion.</summary>
 UNIGINE_INLINE quat inverse(const quat &q)
 {
 	quat ret;
 	return inverse(ret, q);
 }
 
+/// <summary>Returns the conjugate of a given quaternion.</summary>
 UNIGINE_INLINE quat &conjugate(quat &ret, const quat &q)
 {
 	ret.x = -q.x;
@@ -626,12 +709,14 @@ UNIGINE_INLINE quat &conjugate(quat &ret, const quat &q)
 	ret.w = q.w;
 	return ret;
 }
+/// <summary>Returns the conjugate of a given quaternion.</summary>
 UNIGINE_INLINE quat conjugate(const quat &q)
 {
 	quat ret;
 	return conjugate(ret, q);
 }
 
+/// <summary>Spherical interpolation between two given quaternions.</summary>
 UNIGINE_INLINE quat &slerp(quat &ret, const quat &q0, const quat &q1, float k)
 {
 	if (k <= 0.0f)
@@ -663,6 +748,7 @@ UNIGINE_INLINE quat &slerp(quat &ret, const quat &q0, const quat &q1, float k)
 	}
 	return ret;
 }
+/// <summary>Spherical interpolation between two given quaternions.</summary>
 UNIGINE_INLINE quat slerp(const quat &q0, const quat &q1, float k)
 {
 	quat ret;
@@ -670,11 +756,13 @@ UNIGINE_INLINE quat slerp(const quat &q0, const quat &q1, float k)
 }
 
 
+/// <summary>Quaternion division.</summary>
 UNIGINE_INLINE quat operator/(const quat &q0, const quat &q1)
 {
 	return q0 * inverse(q1);
 }
 
+/// <summary>Returns trotation angle of the quaternion for the given rotation axis, in degrees, within the [-180, 180] range.</summary>
 UNIGINE_INLINE float quat::getAngle(const vec3 &axis) const
 {
 	vec3 v0, v1;
@@ -702,6 +790,7 @@ UNIGINE_INLINE float quat::getAngle(const vec3 &axis) const
 	return angle;
 }
 
+/// <summary>Returns the angle (in degrees) between the given first and second quaternions. The angle returned is the unsigned acute angle between the two quaternions. This means the smaller of the two possible angles is used.</summary>
 UNIGINE_INLINE float getAngle(const quat &q0, const quat &q1)
 {
 	quat d = q1 * inverse(q0);
@@ -709,6 +798,79 @@ UNIGINE_INLINE float getAngle(const quat &q0, const quat &q1)
 	if (angle > 180.0f)
 		angle = 360.0f - angle;
 	return angle;
+}
+
+/// <summary>Ensures that the returned quaternion has a non-negative scalar part (w). If it is negative, the entire quaternion is negated; otherwise, it remains unchanged.</summary>
+UNIGINE_INLINE quat &abs(quat &ret, const quat &q)
+{
+	ret = (q.w < 0.0f ? -q : q);
+	return ret;
+}
+
+/// <summary>Ensures that the returned quaternion has a non-negative scalar part (w). If it is negative, the entire quaternion is negated; otherwise, it remains unchanged.</summary>
+UNIGINE_INLINE quat abs(const quat &q)
+{
+	quat ret;
+	return abs(ret, q);
+}
+
+/// <summary>Converts a quaternion into a rotation vector in 3D space by computing the quaternion's logarithm. It extracts the axis of rotation and scales it by the angle.</summary>
+UNIGINE_INLINE vec3 &log(vec3 &ret, const quat &q)
+{
+	ret.x = q.x;
+	ret.y = q.y;
+	ret.z = q.z;
+
+	float length = fsqrt(q.x * q.x + q.y * q.y + q.z * q.z);
+	if (Consts::EPS < length)
+	{
+		// half angle and normalization
+		float k = acos(clamp(q.w, -1.0f, 1.0f)) / length;
+		mul(ret, ret, k);
+	}
+
+	return ret;
+}
+
+/// <summary>Converts a quaternion into a rotation vector in 3D space by computing the quaternion's logarithm. It extracts the axis of rotation and scales it by the angle.</summary>
+UNIGINE_INLINE vec3 log(const quat &q)
+{
+	vec3 ret;
+	return log(ret, q);
+}
+
+/// <summary>Converts a 3D rotation vector into a quaternion.</summary>
+UNIGINE_INLINE quat &exp(quat &ret, const vec3 &v)
+{
+	float half_angle = v.length();
+
+	if (half_angle < Consts::EPS)
+	{
+		ret.x = v.x;
+		ret.y = v.y;
+		ret.z = v.z;
+		ret.w = 1.0f;
+		ret.normalize();
+	} else
+	{
+		float s, c;
+		sincos(half_angle, s, c);
+		s /= half_angle;
+
+		ret.x = v.x * s;
+		ret.y = v.y * s;
+		ret.z = v.z * s;
+		ret.w = c;
+	}
+
+	return ret;
+}
+
+/// <summary>Converts a 3D rotation vector into a quaternion.</summary>
+UNIGINE_INLINE quat exp(const vec3 &v)
+{
+	quat ret;
+	return exp(ret, v);
 }
 
 }

@@ -1,0 +1,150 @@
+#!/usr/bin/env usc
+
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
+
+/*
+ */
+string renamed_files[] = (:);
+
+string migrated_files[0];
+
+/*
+ */
+void getNewFileName(string old_name) {
+	
+	foreachkey(string name; renamed_files) {
+		int prefix_len = strlen(name) - strlen(old_name);
+		if(prefix_len >= 0 && substr(name,prefix_len) == old_name) {
+			return substr(renamed_files[name],prefix_len);
+		}
+	}
+	
+	return old_name;
+}
+
+/*
+ */
+int skipFile(string path,string file) {
+	file = relname(path,file);
+	return startsWith(file,"core/") || startsWith(file,"editor/") || startsWith(file,"editor2/");
+}
+
+/*
+ */
+#include <utils.h>
+#include <log.h>
+#include <worlds_nodes.h>
+#include <materials.h>
+#include <path.h>
+#include <terrain.h>
+#include <track.h>
+#include <mesh.h>
+#include <config.h>
+
+string ENGINE_VERSION = "2.5.0.1";
+
+/*
+ */
+void main() {
+	
+	string log_file = "";
+	string paths[0];
+	
+	for(int i = 1; i < getNumArgs(); i++) {
+		if(getArg(i) == "--log") {
+			i++;
+			if(i < getNumArgs()) {
+				log_file = getArg(i);
+			}
+		} else {
+			paths.append(getAbsPath(getDirPath(getArg(i))));
+		}
+	}
+	
+	if(paths.size() == 0) {
+		paths.append(currdir() + "/");
+	}
+	
+	// check version
+	foreach(string data_path; paths) {
+		string files[0] = ();
+		if(!findFilesByExt(files,data_path,".mat|.node|.world|.cfg|.track"))
+			continue;
+		
+		foreach(string file; files) {
+			if(skipFile(data_path,file))
+				continue;
+			
+			Xml xml = new Xml();
+			if(!xml.load(file)) {
+				delete xml;
+				continue;
+			}
+			
+			if(versionLessOrEqual(ENGINE_VERSION, xml.getArg("version", "1.00"))) {
+				delete xml;
+				log.message("Skip migration to version \"%s\" \n\n",ENGINE_VERSION);
+				return;
+			}
+		}
+	}
+	
+	Log::init(log_file);
+	Log::setLevel(Log::INFO);
+	
+	Log::info("Start migration to version \"%s\" \n",ENGINE_VERSION);
+	
+	// materials upgrade
+	// MUST GO BEFORE WORLDS+NODES UPGRADE (which updates .node and .world file versions)
+	Materials::processPaths(paths);
+	
+	//
+	foreach(string path; paths) {
+		
+		// meshes upgrade
+		// MUST GO BEFORE WORLDS+NODES UPGRADE (because it renames files)
+		Mesh::processPath(path);
+		
+		// worlds and nodes upgrade
+		WorldsNodes::processPath(path);
+		
+		string files[0] = ();
+		findFiles(files,path);
+		
+		foreach(string file; files) {
+			
+			if(skipFile(path,file)) continue;
+			
+			string ext = lower(getExtension(file));
+			
+			if(ext == ".spline") {
+				Path::processFile(file);
+			}
+			
+			if(ext == ".ter") {
+				Terrain::processFile(file);
+			}
+			
+			if(ext == ".track") {
+				Track::processFile(file);
+			}
+			
+			if(ext == ".cfg") {
+				Config::processFile(file);
+			}
+		}
+	}
+	
+	Log::shutdown();
+}

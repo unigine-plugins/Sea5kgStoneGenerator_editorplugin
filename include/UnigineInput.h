@@ -46,7 +46,7 @@ int inputEventsFilterFunc(Ptr<InputEvent> &e);
 class UNIGINE_API Input
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
 	enum MOUSE_HANDLE
 	{
@@ -283,28 +283,45 @@ public:
 
 	enum VR_BUTTON
 	{
-		VR_BUTTON_SYSTEM_LEFT,
-		VR_BUTTON_SYSTEM_RIGHT,
-		VR_BUTTON_A,
-		VR_BUTTON_B,
+		VR_BUTTON_SYSTEM,
+		VR_BUTTON_START,
+		VR_BUTTON_HOME,
+		VR_BUTTON_END,
+		VR_BUTTON_SELECT,
+		VR_BUTTON_VOLUME_UP,
+		VR_BUTTON_VOLUME_DOWN,
+		VR_BUTTON_MUTE_MIC,
+		VR_BUTTON_PLAY_PAUSE,
+		VR_BUTTON_MENU,
+		VR_BUTTON_VIEW,
+		VR_BUTTON_BACK,
 		VR_BUTTON_X,
 		VR_BUTTON_Y,
-		VR_BUTTON_GRIP_LEFT,
-		VR_BUTTON_AXIS_0_LEFT,
-		VR_BUTTON_AXIS_1_LEFT,
-		VR_BUTTON_AXIS_2_LEFT,
-		VR_BUTTON_AXIS_3_LEFT,
-		VR_BUTTON_AXIS_4_LEFT,
-		VR_BUTTON_GRIP_RIGHT,
-		VR_BUTTON_AXIS_0_RIGHT,
-		VR_BUTTON_AXIS_1_RIGHT,
-		VR_BUTTON_AXIS_2_RIGHT,
-		VR_BUTTON_AXIS_3_RIGHT,
-		VR_BUTTON_AXIS_4_RIGHT,
+		VR_BUTTON_SHOULDER,
+		VR_BUTTON_GRIP,
+		VR_BUTTON_AXIS_0,
+		VR_BUTTON_AXIS_1,
+		VR_BUTTON_AXIS_2,
+		VR_BUTTON_AXIS_3,
+		VR_BUTTON_AXIS_4,
+		VR_BUTTON_AXIS_5,
+		VR_BUTTON_AXIS_6,
+		VR_BUTTON_AXIS_7,
+		VR_BUTTON_AXIS_8,
+		VR_BUTTON_AXIS_9,
+		VR_BUTTON_AXIS_10,
+		VR_BUTTON_AXIS_11,
+		VR_BUTTON_AXIS_12,
+		VR_BUTTON_AXIS_13,
+		VR_BUTTON_AXIS_14,
+		VR_BUTTON_AXIS_15,
 		VR_BUTTON_DPAD_UP,
 		VR_BUTTON_DPAD_DOWN,
 		VR_BUTTON_DPAD_LEFT,
 		VR_BUTTON_DPAD_RIGHT,
+		VR_BUTTON_DPAD_CENTER,
+		VR_BUTTON_THUMBREST,
+		VR_BUTTON_THUMB_RESTING_SURFACES,
 		VR_BUTTON_PROXIMITY_SENSOR,
 		VR_BUTTON_APPLICATION,
 		NUM_VR_BUTTONS,
@@ -321,6 +338,22 @@ public:
 		JOYSTICK_POV_DOWN_LEFT,
 		JOYSTICK_POV_LEFT,
 		JOYSTICK_POV_UP_LEFT,
+	};
+
+	enum JOYSTICK_FORCE_FEEDBACK_EFFECT
+	{
+		JOYSTICK_FORCE_FEEDBACK_CONSTANT = 0,
+		JOYSTICK_FORCE_FEEDBACK_RAMP,
+		JOYSTICK_FORCE_FEEDBACK_SINEWAVE,
+		JOYSTICK_FORCE_FEEDBACK_SQUAREWAVE,
+		JOYSTICK_FORCE_FEEDBACK_TRIANGLEWAVE,
+		JOYSTICK_FORCE_FEEDBACK_SAWTOOTHUPWAVE,
+		JOYSTICK_FORCE_FEEDBACK_SAWTOOTHDOWNWAVE,
+		JOYSTICK_FORCE_FEEDBACK_SPRING,
+		JOYSTICK_FORCE_FEEDBACK_FRICTION,
+		JOYSTICK_FORCE_FEEDBACK_DAMPER,
+		JOYSTICK_FORCE_FEEDBACK_INERTIA,
+		NUM_JOYSTICK_FORCE_FEEDBACKS,
 	};
 	static bool isModifierEnabled(Input::MODIFIER modifier);
 	static const char *getModifierName(Input::MODIFIER modifier);
@@ -418,7 +451,7 @@ public:
 	static Event<int, int> &getEventJoyButtonDown();
 	static Event<int, int> &getEventJoyButtonUp();
 	static Event<int, int> &getEventJoyAxisMotion();
-	static Event<int, Input::JOYSTICK_POV> &getEventJoyPovMotion();
+	static Event<int, int> &getEventJoyPovMotion();
 	static Event<const Ptr<InputEvent> &> &getEventImmediateInput();
 	static int getEventsBuffer(int frame, Vector<Ptr<InputEvent>> &events);
 	static void sendEvent(const Ptr<InputEvent> &e);
@@ -488,6 +521,16 @@ public:
 		INPUT_VR_BASE_STATION,
 		NUM_TYPES,
 	};
+
+	enum TRANSFORM_TYPE
+	{
+		TRANSFORM_TYPE_AIM,
+		TRANSFORM_TYPE_GRIP,
+		TRANSFORM_TYPE_MESH,
+		TRANSFORM_TYPE_PINCH,
+		TRANSFORM_TYPE_POKE,
+		NUM_TRANSFORM_TYPES,
+	};
 	bool isAvailable() const;
 	int getNumber() const;
 	const char *getName() const;
@@ -504,12 +547,14 @@ public:
 	String getManufacturerName() const;
 	unsigned long long getHardwareRevision() const;
 	unsigned long long getFirmwareVersion() const;
-	Math::Mat4 getWorldTransform() const;
-	Math::mat4 getTransform() const;
-	Math::vec3 getLinearVelocity() const;
-	Math::vec3 getAngularVelocity() const;
-	Math::vec3 getAngularAcceleration() const;
-	bool isTransformValid() const;
+	Math::Mat4 getWorldTransform(InputVRDevice::TRANSFORM_TYPE type = InputVRDevice::TRANSFORM_TYPE_AIM) const;
+	Math::mat4 getTransform(InputVRDevice::TRANSFORM_TYPE type = InputVRDevice::TRANSFORM_TYPE_AIM) const;
+	Math::vec3 getLinearVelocity(InputVRDevice::TRANSFORM_TYPE type = InputVRDevice::TRANSFORM_TYPE_AIM) const;
+	Math::vec3 getAngularVelocity(InputVRDevice::TRANSFORM_TYPE type = InputVRDevice::TRANSFORM_TYPE_AIM) const;
+	Math::vec3 getAngularAcceleration(InputVRDevice::TRANSFORM_TYPE type = InputVRDevice::TRANSFORM_TYPE_AIM) const;
+	bool isTransformValid(InputVRDevice::TRANSFORM_TYPE type = InputVRDevice::TRANSFORM_TYPE_AIM) const;
+	bool isVelocityValid(InputVRDevice::TRANSFORM_TYPE type = InputVRDevice::TRANSFORM_TYPE_AIM) const;
+	bool isTransformTypeSupported(InputVRDevice::TRANSFORM_TYPE type = InputVRDevice::TRANSFORM_TYPE_AIM) const;
 	int getNumModels() const;
 	Math::mat4 getModelTransform(int num) const;
 	Math::Mat4 getModelWorldTransform(int num) const;
@@ -565,6 +610,9 @@ public:
 	bool isTrackingPositionEnabled() const;
 	void setTrackingRotationEnabled(bool enabled);
 	bool isTrackingRotationEnabled() const;
+	Vector<float> getSupportedRefreshRates() const;
+	void setRefreshRate(float rate);
+	float getRefreshRate() const;
 	bool isButtonPressed(Input::VR_BUTTON button) const;
 	bool isButtonDown(Input::VR_BUTTON button) const;
 	bool isButtonUp(Input::VR_BUTTON button) const;
@@ -633,19 +681,37 @@ public:
 		NUM_CONTROLLER_TYPES,
 	};
 	InputVRController::CONTROLLER_TYPE getControllerType() const;
+	bool isUsingHandTracking() const;
 
 	enum AXIS_TYPE
 	{
 		AXIS_TYPE_NONE,
-		AXIS_TYPE_TRACK_PAD,
-		AXIS_TYPE_JOYSTICK,
-		AXIS_TYPE_TRIGGER,
+		AXIS_TYPE_TRACKPAD_X,
+		AXIS_TYPE_TRACKPAD_Y,
+		AXIS_TYPE_TRACKPAD_FORCE,
+		AXIS_TYPE_JOYSTICK_X,
+		AXIS_TYPE_JOYSTICK_Y,
+		AXIS_TYPE_JOYSTICK_FORCE,
+		AXIS_TYPE_GRIP_VALUE,
+		AXIS_TYPE_GRIP_FORCE,
+		AXIS_TYPE_TRIGGER_VALUE,
+		AXIS_TYPE_TRIGGER_FORCE,
+		AXIS_TYPE_TRIGGER_CURL_VALUE,
+		AXIS_TYPE_TRIGGER_CURL_FORCE,
+		AXIS_TYPE_TRIGGER_SLIDE_VALUE,
+		AXIS_TYPE_TRIGGER_SLIDE_FORCE,
+		AXIS_TYPE_PINCH_VALUE,
+		AXIS_TYPE_GRASP_VALUE,
+		AXIS_TYPE_AIM_ACTIVATE_VALUE,
 		NUM_AXIS_TYPES,
 	};
 	int getNumAxes() const;
 	InputVRController::AXIS_TYPE getAxisType(int axis) const;
 	float getAxis(int axis) const;
 	float getAxisDelta(int axis) const;
+	float getAxisByType(InputVRController::AXIS_TYPE axis_type) const;
+	int findAxisByType(InputVRController::AXIS_TYPE axis_type) const;
+	unsigned long long getSupportedButtonsMask() const;
 	bool isButtonPressed(Input::VR_BUTTON button) const;
 	bool isButtonDown(Input::VR_BUTTON button) const;
 	bool isButtonUp(Input::VR_BUTTON button) const;
@@ -656,7 +722,8 @@ public:
 	int getButtonEvents(Input::VR_BUTTON button, Vector<Ptr<InputEventVRButton>> &events);
 	Ptr<InputEventVRButtonTouch> getButtonTouchEvent(Input::VR_BUTTON button) const;
 	int getButtonTouchEvents(Input::VR_BUTTON button, Vector<Ptr<InputEventVRButtonTouch>> &events);
-	void setVibration(unsigned short duration_ms = 100);
+	void stopHaptic();
+	void applyHaptic(float amplitude = -1, double duration_ms = -1, float frequency_hz = -1);
 };
 typedef Ptr<InputVRController> InputVRControllerPtr;
 
@@ -687,6 +754,20 @@ public:
 	int getButtonEvents(int button, Vector<Ptr<InputEventJoyButton>> &events) const;
 	Ptr<InputEventJoyPovMotion> getPovEvent(int pov) const;
 	int getPovEvents(int pov, Vector<Ptr<InputEventJoyPovMotion>> &events) const;
+	bool isForceFeedbackEffectSupported(Input::JOYSTICK_FORCE_FEEDBACK_EFFECT effect) const;
+	void playForceFeedbackEffectConstant(float force, float magnitude);
+	void playForceFeedbackEffectRamp(float force, float magnitude, unsigned long long duration_us);
+	void playForceFeedbackEffectSineWave(float force, float frequency);
+	void playForceFeedbackEffectSquareWave(float force, float frequency);
+	void playForceFeedbackEffectTriangleWave(float force, float frequency);
+	void playForceFeedbackEffectSawtoothUpWave(float force, float frequency);
+	void playForceFeedbackEffectSawtoothDownWave(float force, float frequency);
+	void playForceFeedbackEffectSpring(float force);
+	void playForceFeedbackEffectFriction(float force);
+	void playForceFeedbackEffectDamper(float force);
+	void playForceFeedbackEffectInertia(float force);
+	void stopForceFeedbackEffect(Input::JOYSTICK_FORCE_FEEDBACK_EFFECT effect);
+	bool isForceFeedbackEffectPlaying(Input::JOYSTICK_FORCE_FEEDBACK_EFFECT effect) const;
 	const char *getGuid() const;
 	int getVendor() const;
 	int getProduct() const;

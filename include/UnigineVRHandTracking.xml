@@ -1,0 +1,193 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.VRBone.getChild(int)">
+			<summary>
+			Returns the child hand bone by its index.
+			</summary> 
+			<param name="i"> Child index. </param> 
+			<returns>Hand bone.</returns>
+		</member>
+		<member name="M:Unigine.VRBone.renderBasis const">
+			<summary>
+			Enables the visualizer for the basis of each hand bone. This option requires the bone visualizer to be enabled.
+			</summary>  
+		</member>
+		<member name="M:Unigine.VRBone.renderVelocity const">
+			<summary>
+			Enables the visualizer for the velocity vectors of each hand bone. This option requires the bone visualizer to be enabled.
+			</summary>  
+		</member>
+		<member name="M:Unigine.VRBone.renderVisualizer(Unigine.Math.vec4) const">
+			<summary>
+			Enables the bone visualizer. This option requires the visualizer mode to be enabled.
+			</summary> 
+			<param name="color"> Visualizer color. </param> 
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_PALM">
+			<summary>
+			Palm bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_WRIST">
+			<summary>
+			Wrist bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_THUMB_METACARPAL">
+			<summary>
+			Thumb metacarpal bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_THUMB_PROXIMAL">
+			<summary>
+			Thumb proximal bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_THUMB_DISTAL">
+			<summary>
+			Thumb distal bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_THUMB_TIP">
+			<summary>
+			Thumb tip bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_INDEX_METACARPAL">
+			<summary>
+			Index finger metacarpal bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_INDEX_PROXIMAL">
+			<summary>
+			Index finger proximal bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_INDEX_INTERMEDIATE">
+			<summary>
+			Index finger intermediate bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_INDEX_DISTAL">
+			<summary>
+			Index finger distal bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_INDEX_TIP">
+			<summary>
+			Index finger tip bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_MIDDLE_METACARPAL">
+			<summary>
+			Middle finger metacarpal bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_MIDDLE_PROXIMAL">
+			<summary>
+			Middle finger proximal bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_MIDDLE_INTERMEDIATE">
+			<summary>
+			Middle finger intermediate bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_MIDDLE_DISTAL">
+			<summary>
+			Middle finger distal bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_MIDDLE_TIP">
+			<summary>
+			Middle finger tip bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_RING_METACARPAL">
+			<summary>
+			Ring finger metacarpal bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_RING_PROXIMAL">
+			<summary>
+			Ring finger proximal bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_RING_INTERMEDIATE">
+			<summary>
+			Ring finger intermediate bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_RING_DISTAL">
+			<summary>
+			Ring finger distal bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_RING_TIP">
+			<summary>
+			Ring finger tip bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_LITTLE_METACARPAL">
+			<summary>
+			Little finger metacarpal bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_LITTLE_PROXIMAL">
+			<summary>
+			Little finger proximal bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_LITTLE_INTERMEDIATE">
+			<summary>
+			Little finger intermediate bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_LITTLE_DISTAL">
+			<summary>
+			Little finger distal bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.TYPE_LITTLE_TIP">
+			<summary>
+			Little finger tip bone.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRBone.NUM_TYPES">
+			<summary>
+			Total number of hand bones.
+		</summary>
+		</member>
+		<member name="M:Unigine.VRHand.getBone(VRBone::TYPE)">
+			<summary>
+			Returns the bone of the specified type for the current hand.
+			</summary> 
+			<param name="type"> Hand bone type, one of the VRBone::TYPE values. </param> 
+			<returns>Bone of the specified type.</returns>
+		</member>
+		<member name="M:Unigine.VRHand.renderVisualizer const">
+			<summary>
+			Renders the visualizer.
+			</summary>  
+		</member>
+		<member name="F:Unigine.VRHand.TYPE_LEFT">
+			<summary>
+			Left hand.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRHand.TYPE_RIGHT">
+			<summary>
+			Right hand.
+		</summary>
+		</member>
+		<member name="F:Unigine.VRHand.NUM_TYPES">
+			<summary>
+			Total number of hand types.
+		</summary>
+		</member>
+	</members>
+</doc>

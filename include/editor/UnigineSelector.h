@@ -18,10 +18,9 @@
 
 #include <UnigineGUID.h>
 #include <UnigineHashSet.h>
+#include <UnigineInterpreter.h>
 #include <UnigineNode.h>
 #include <UnigineVector.h>
-
-#include <QVariant>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Forward decl.
@@ -279,8 +278,8 @@ public:
 	/// </summary>
 	void resetCache();
 
-	void setUserData(const char *name, QVariant value);
-	QVariant getUserData(const char *name) const;
+	void setUserData(const char *name, Unigine::Variable value);
+	Unigine::Variable getUserData(const char *name) const;
 
 private:
 	::UnigineEditor::Internal::SelectorNodesPrivate *d;

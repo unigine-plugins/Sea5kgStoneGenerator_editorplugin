@@ -830,9 +830,13 @@ public:
 	void clearPolygonPoints(int polygon);
 	int getNumPolygonPoints(int polygon) const;
 	void removePolygonPoint(int polygon, int num);
+	int addPolygonPoint(int polygon);
 	int addPolygonPoint(int polygon, const Math::vec3 &point);
+	int addPolygonPoint(int polygon, const Math::vec3 &point, const Math::vec2 &texcoord);
+	void setPolygonPoint(int polygon, int num, const Math::vec3 &point);
 	Math::vec3 getPolygonPoint(int polygon, int num) const;
 	void setPolygonTexCoord(int polygon, const Math::vec2 &texcoord);
+	void setPolygonTexCoord(int polygon, int num, const Math::vec2 &texcoord);
 	Math::vec2 getPolygonTexCoord(int polygon, int num) const;
 	void clearPolygonIndices(int polygon);
 	int getNumPolygonIndices(int polygon) const;
@@ -1276,6 +1280,12 @@ public:
 	void clearSelectionText();
 	void setText(const char *text);
 	const char *getText() const;
+	void setStyleTextureSelection(const char *selection);
+	const char *getStyleTextureSelection() const;
+	void setStyleTextureBackground(const char *background);
+	const char *getStyleTextureBackground() const;
+	void setStyleTextureBorder(const char *border);
+	const char *getStyleTextureBorder() const;
 };
 typedef Ptr<WidgetEditLine> WidgetEditLinePtr;
 
@@ -1320,6 +1330,10 @@ public:
 	String getLineText(int line) const;
 	void setText(const char *text);
 	const char *getText() const;
+	void setStyleTextureSelection(const char *selection);
+	const char *getStyleTextureSelection() const;
+	void setStyleTextureBackground(const char *background);
+	const char *getStyleTextureBackground() const;
 };
 typedef Ptr<WidgetEditText> WidgetEditTextPtr;
 

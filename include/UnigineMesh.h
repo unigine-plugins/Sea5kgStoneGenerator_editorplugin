@@ -22,6 +22,45 @@ namespace Unigine
 {
 
 
+class UNIGINE_API MeshAnimation : public APIInterface
+{
+public:
+	static Ptr<MeshAnimation> create();
+	static Ptr<MeshAnimation> create(const char *path);
+	static Ptr<MeshAnimation> create(const Ptr<MeshAnimation> &src);
+	void assignFrom(const Ptr<MeshAnimation> &src);
+	void clear();
+	int flipYZ();
+	int info(const char *path) const;
+	int load(const char *path);
+	int save(const char *path) const;
+	int getNumBones() const;
+	int findBone(const char *name) const;
+	int addBone(const char *name = 0, int parent = -1);
+	void setBoneName(int bone, const char *name);
+	const char *getBoneName(int bone) const;
+	void setBoneParent(int bone, int parent);
+	int getBoneParent(int bone) const;
+	void setBoneTransform(int bone, const Math::mat4 &transform);
+	Math::mat4 getBoneTransform(int bone) const;
+	int setBoneTransforms(const Vector<Math::mat4> &transforms);
+	void getBoneTransforms(Vector<Math::mat4> &transforms) const;
+	int getNumAnimationBones() const;
+	short getAnimationBoneID(int num) const;
+	void setAnimationBones(const Vector<short> &bone_indices);
+	void getAnimationBones(Vector<short> &bone_indices) const;
+	int setAnimationBoneTransforms(const Vector<Math::mat4> &transforms, int frame);
+	int getAnimationBoneTransforms(Vector<Math::mat4> &transforms, int frame) const;
+	void setNumFrames(int num);
+	int getNumFrames() const;
+	void setFrame(int frame, const Vector<Math::mat4> &bones);
+	void getFrame(int frame, Vector<Math::mat4> &bones) const;
+	void setFrame(int frame, const Vector<Math::vec3> &xyz, const Vector<Math::quat> &rot, const Vector<Math::vec3> &scale);
+	void getFrame(int frame, Vector<Math::vec3> &xyz, Vector<Math::quat> &rot, Vector<Math::vec3> &scale) const;
+};
+typedef Ptr<MeshAnimation> MeshAnimationPtr;
+
+
 class UNIGINE_API Mesh : public APIInterface
 {
 public:
@@ -38,12 +77,12 @@ public:
 		LIGHTMAP_RESOLUTION_MODE_4096,
 	};
 	static Ptr<Mesh> create();
-	static Ptr<Mesh> create(const char *name);
+	static Ptr<Mesh> create(const char *path);
 	static Ptr<Mesh> create(const Ptr<Mesh> &mesh);
 	void assignFrom(const Ptr<Mesh> &mesh);
-	int info(const char *name) const;
-	int load(const char *name);
-	int save(const char *name) const;
+	int info(const char *path) const;
+	int load(const char *path);
+	int save(const char *path) const;
 	void clear();
 	int flipYZ(int surface = -1);
 	int flipTangent(int surface = -1);
@@ -64,22 +103,8 @@ public:
 	int getBoneParent(int bone) const;
 	void setBoneTransform(int bone, const Math::mat4 &transform);
 	Math::mat4 getBoneTransform(int bone) const;
-	int setBoneTransforms(const Vector<Math::mat4> &transforms, int animation = -1, int frame = 0);
-	int getBoneTransforms(Vector<Math::mat4> &transforms, int animation = -1, int frame = 0) const;
-	int getNumAnimations() const;
-	int findAnimation(const char *name) const;
-	void sortAnimations();
-	int addAnimation(const char *name = 0);
-	void setAnimationName(int animation, const char *name);
-	const char *getAnimationName(int animation) const;
-	void setAnimationBones(int animation, const Vector<short> &bones);
-	void getAnimationBones(int animation, Vector<short> &bones) const;
-	void setNumAnimationFrames(int animation, int num);
-	int getNumAnimationFrames(int animation) const;
-	void setAnimationFrame(int animation, int num, const Vector<Math::mat4> &frames);
-	void getAnimationFrame(int animation, int num, Vector<Math::mat4> &frames) const;
-	void setAnimationFrame(int animation, int num, const Vector<Math::vec3> &xyz, const Vector<Math::quat> &rot, const Vector<Math::vec3> &scale);
-	void getAnimationFrame(int animation, int num, Vector<Math::vec3> &xyz, Vector<Math::quat> &rot, Vector<Math::vec3> &scale) const;
+	int setBoneTransforms(const Vector<Math::mat4> &transforms);
+	void getBoneTransforms(Vector<Math::mat4> &transforms) const;
 	int getNumSurfaces() const;
 	int findSurface(const char *name) const;
 	void sortSurfaces();
@@ -95,7 +120,8 @@ public:
 	void setSurfaceTargetName(int surface, int target, const char *name);
 	const char *getSurfaceTargetName(int surface, int target) const;
 	int findSurfaceTarget(int surface, const char *name) const;
-	int createIntersection(int surface = -1);
+	bool hasSpatialTree(int surface) const;
+	bool createSpatialTree(int surface = -1);
 	int getIntersection(const Math::vec3 &p0, const Math::vec3 &p1, Math::vec3 *ret_point, Math::vec3 *ret_normal, int *ret_index, int surface, int target = 0);
 	int setSurfaceTransform(const Math::mat4 &transform, int surface = -1, int target = -1);
 	int addMeshSurface(const char *v, const Ptr<Mesh> &mesh, int surface, int target = -1);
@@ -146,7 +172,7 @@ public:
 	void setNormal(int num, const Math::vec3 &normal, int surface, int target = 0);
 	Math::vec3 getNormal(int num, int surface, int target = 0) const;
 	void setNumTangents(int size, int surface, int target = 0);
-	int getNumTangents(int surface, int tangent = 0) const;
+	int getNumTangents(int surface, int target = 0) const;
 	void addTangents(const Vector<Math::quat> &tangents, int surface, int target = 0);
 	void addTangent(const Math::quat &tangent, int surface, int target = 0);
 	void setTangent(int num, const Math::quat &tangent, int surface, int target = 0);
@@ -191,6 +217,7 @@ public:
 	void setBoundBox(const Math::BoundBox &bb);
 	void setBoundSphere(const Math::BoundSphere &bs, int surface);
 	void setBoundSphere(const Math::BoundSphere &bs);
+	size_t getMemoryUsage() const;
 
 	enum
 	{

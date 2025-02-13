@@ -28,8 +28,8 @@ class UNIGINE_API Decal : public Node
 public:
 	static bool convertible(Node *node) { return node && node->isDecal(); }
 
-	void setMaterialPath(const char *path);
-	const char *getMaterialPath() const;
+	void setMaterialFilePath(const char *path);
+	String getMaterialFilePath() const;
 	void setMaterialGUID(const UGUID &materialguid);
 	UGUID getMaterialGUID() const;
 	void setMaterial(const Ptr<Material> &material);
@@ -47,6 +47,8 @@ public:
 	float getMinVisibleDistance() const;
 	void setOpacity(float opacity);
 	float getOpacity() const;
+	void setCastBakedGlobalIllumination(bool illumination);
+	bool isCastBakedGlobalIllumination() const;
 	void setViewportMask(int mask);
 	int getViewportMask() const;
 	void setIntersectionMask(int mask);
@@ -67,11 +69,14 @@ public:
 
 	static Ptr<DecalMesh> create();
 	static Ptr<DecalMesh> create(const char *path);
-	Ptr<MeshStatic> getMeshInfo();
-	Ptr<MeshStatic> getMeshForce();
-	Ptr<MeshStatic> getMeshAsync();
-	Ptr<MeshStatic> getMeshForceVRAM();
-	Ptr<MeshStatic> getMeshAsyncVRAM();
+	Ptr<Mesh> getMeshCurrentRAM();
+	Ptr<Mesh> getMeshForceRAM();
+	Ptr<Mesh> getMeshAsyncRAM();
+	Ptr<Mesh> getMeshProceduralRAM();
+	Ptr<MeshRender> getMeshCurrentVRAM();
+	Ptr<MeshRender> getMeshForceVRAM();
+	Ptr<MeshRender> getMeshAsyncVRAM();
+	Ptr<MeshRender> getMeshProceduralVRAM();
 	bool loadAsyncRAM();
 	bool loadAsyncVRAM();
 	bool loadForceRAM();

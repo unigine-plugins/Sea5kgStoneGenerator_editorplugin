@@ -34,6 +34,7 @@ public:
 	UNIGINE_INLINE Noise() { setSeed((unsigned int)time(NULL)); }
 	UNIGINE_INLINE Noise(unsigned int seed_) { setSeed(seed_); }
 
+	/// <summary>Sets a new seed for the noise generator.</summary>
 	void setSeed(unsigned int seed_)
 	{
 		seed = seed_;
@@ -75,6 +76,7 @@ public:
 			gradient3[SAMPLES + i][2] = gradient3[i][2];
 		}
 	}
+	/// <summary>Returns the current seed used by the noise generator.</summary>
 	UNIGINE_INLINE unsigned int getSeed() const { return seed; }
 
 	float get1(float x) const
@@ -91,6 +93,9 @@ public:
 
 		return lerp(a, b, sx);
 	}
+	/// <summary>Returns the two-dimensional white noise.</summary>
+	/// <param name="x">Seed 1.</param>
+	/// <param name="y">Seed 2.</param>
 	float get2(float x, float y) const
 	{
 		int bx0, bx1, by0, by1;
@@ -112,6 +117,10 @@ public:
 
 		return lerp(a, b, sy);
 	}
+	/// <summary>Returns the three-dimensional (3D) white noise.</summary>
+	/// <param name="x">Seed 1.</param>
+	/// <param name="y">Seed 2.</param>
+	/// <param name="z">Seed 3.</param>
 	float get3(float x, float y, float z) const
 	{
 		int bx0, bx1, by0, by1, bz0, bz1;
@@ -142,6 +151,9 @@ public:
 		return lerp(c0, c1, sz);
 	}
 
+	/// <summary>Returns the one-dimensional turbulence noise.</summary>
+	/// <param name="x">Seed.</param>
+	/// <param name="frequency">Frequency.</param>
 	UNIGINE_INLINE float getTurbulence1(float x, int frequency) const
 	{
 		float res = 0.0f;
@@ -149,6 +161,10 @@ public:
 			res += get1(x * f) / f;
 		return res;
 	}
+	/// <summary>Returns the two-dimensional turbulence noise.</summary>
+	/// <param name="x">Seed 1.</param>
+	/// <param name="y">Seed 2.</param>
+	/// <param name="frequency">Frequency.</param>
 	UNIGINE_INLINE float getTurbulence2(float x, float y, int frequency) const
 	{
 		float res = 0.0f;
@@ -156,6 +172,11 @@ public:
 			res += get2(x * f, y * f) / f;
 		return res;
 	}
+	/// <summary>Returns the three-dimensional turbulence noise.</summary>
+	/// <param name="x">Seed 1.</param>
+	/// <param name="y">Seed 2.</param>
+	/// <param name="z">Seed 3.</param>
+	/// <param name="frequency">Frequency.</param>
 	UNIGINE_INLINE float getTurbulence3(float x, float y, float z, int frequency) const
 	{
 		float res = 0.0f;
@@ -164,6 +185,9 @@ public:
 		return res;
 	}
 
+	/// <summary>Returns the one-dimensional tileable noise.</summary>
+	/// <param name="x">Seed.</param>
+	/// <param name="width">Tile width.</param>
 	float getTileable1(float x, float width) const
 	{
 		x -= (int)(x / width) * width;
@@ -171,6 +195,11 @@ public:
 			x += width;
 		return (get1(x) * (width - x) + get1(x - width) * x) / width;
 	}
+	/// <summary>Returns the two-dimensional tileable noise.</summary>
+	/// <param name="x">Seed 1.</param>
+	/// <param name="y">Seed 2.</param>
+	/// <param name="width">Tile width.</param>
+	/// <param name="height">Tile height.</param>
 	float getTileable2(float x, float y, float width, float height) const
 	{
 		x -= (int)(x / width) * width;
@@ -184,6 +213,13 @@ public:
 				get2(x, y - height) * (width - x) * y +
 				get2(x - width, y - height) * x * y) / (width * height);
 	}
+	/// <summary>Returns the three-dimensional tileable noise.</summary>
+	/// <param name="x">Seed 1.</param>
+	/// <param name="y">Seed 2.</param>
+	/// <param name="z">Seed 3.</param>
+	/// <param name="width">Tile width.</param>
+	/// <param name="height">Tile height.</param>
+	/// <param name="depth">Tile depth.</param>
 	float getTileable3(float x, float y, float z, float width, float height, float depth) const
 	{
 		x -= (int)(x / width) * width;
@@ -205,6 +241,10 @@ public:
 				get3(x - width, y - height, z - depth) * x * y * z) / (width * height * depth);
 	}
 
+	/// <summary>Returns the one-dimensional tileable turbulence noise.</summary>
+	/// <param name="x">Seed.</param>
+	/// <param name="width">Tile width.</param>
+	/// <param name="frequency">Frequency.</param>
 	UNIGINE_INLINE float getTileableTurbulence1(float x, float width, int frequency) const
 	{
 		float res = 0.0f;
@@ -212,6 +252,12 @@ public:
 			res += getTileable1(x * f, width * f) / f;
 		return res;
 	}
+	/// <summary>Returns the two-dimensional tileable turbulence noise.</summary>
+	/// <param name="x">Seed 1.</param>
+	/// <param name="y">Seed 2.</param>
+	/// <param name="width">Tile width.</param>
+	/// <param name="height">Tile height.</param>
+	/// <param name="frequency">Frequency.</param>
 	UNIGINE_INLINE float getTileableTurbulence2(float x, float y, float width, float height, int frequency) const
 	{
 		float res = 0.0f;
@@ -219,6 +265,14 @@ public:
 			res += getTileable2(x * f, y * f, width * f, height * f) / f;
 		return res;
 	}
+	/// <summary>Returns the three-dimensional tileable turbulence noise.</summary>
+	/// <param name="x">Seed 1.</param>
+	/// <param name="y">Seed 2.</param>
+	/// <param name="z">Seed 3.</param>
+	/// <param name="width">Tile width.</param>
+	/// <param name="height">Tile height.</param>
+	/// <param name="depth">Tile depth.</param>
+	/// <param name="frequency">Frequency.</param>
 	UNIGINE_INLINE float getTileableTurbulence3(float x, float y, float z, float width, float height, float depth, int frequency) const
 	{
 		float res = 0.0f;

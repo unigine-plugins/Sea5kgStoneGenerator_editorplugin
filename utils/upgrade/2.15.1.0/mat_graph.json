@@ -1,0 +1,17 @@
+{
+	"rename":
+	{
+		"_branch": "Branch",
+	},
+	
+	"warnings":
+	{
+		"Camera Direction":							"(2.15.1.0) Camera direction has been inverted"
+		"parallaxCutoutUVTransform":				"(2.15.1.0) Node has been removed",
+		"parallaxDeltaDepth":						"(2.15.1.0) Node has been removed",
+		"parallaxShadow":							"(2.15.1.0) Node has been removed",
+		"parallaxOcclusionMapping":					"(2.15.1.0) Node has been removed. Use Parallax Occlusion Mapping subgraph.",
+		"4b24df0eb00c7dedaeb7dd30bf206e448c373f54":	"(2.15.1.0) The Blue Noise 256x256x8 TAA subgraph has been removed, you can use Blue Noise 256x256 Animated instead",
+		"834bc0cabf082906652502db28031d8e3eebc6ad":	"(2.15.1.0) Step Size now receives another input value, as the size of the step is now calculated automatically during ray marching. It is recommended to use very small values, the default value is 0.03",
+	}
+}

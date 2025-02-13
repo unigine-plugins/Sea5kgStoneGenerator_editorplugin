@@ -273,8 +273,8 @@ public:
 	bool processMesh(const Ptr<Mesh> &mesh, const Ptr<ImportMesh> &import_mesh);
 	bool processLight(const Ptr<Light> &light, const Ptr<ImportLight> &import_light);
 	bool processCamera(const Ptr<Player> &camera, const Ptr<ImportCamera> &import_camera);
-	bool processAnimation(const Ptr<Mesh> &animation, const Ptr<ImportAnimation> &import_animation);
-	bool processAnimation(const Ptr<Mesh> &animation, const Ptr<ImportMesh> &import_mesh, const Ptr<ImportAnimation> &import_animation);
+	bool processAnimation(const Ptr<MeshAnimation> &animation, const Ptr<ImportAnimation> &import_animation);
+	bool processAnimation(const Ptr<MeshAnimation> &animation, const Ptr<ImportMesh> &import_mesh, const Ptr<ImportAnimation> &import_animation);
 	bool processNode(const Ptr<Node> &node, const Ptr<ImportNode> &import_node);
 	bool processNodeChild(const Ptr<Node> &node_parent, const Ptr<ImportNode> &import_node_parent, const Ptr<Node> &node_child, const Ptr<ImportNode> &import_node_child);
 	bool processMaterial(const Ptr<Material> &material, const Ptr<ImportMaterial> &import_material);
@@ -285,8 +285,8 @@ protected:
 	virtual bool onProcessMesh(const Ptr<Mesh> &mesh, const Ptr<ImportMesh> &import_mesh);
 	virtual bool onProcessLight(const Ptr<Light> &light, const Ptr<ImportLight> &import_light);
 	virtual bool onProcessCamera(const Ptr<Player> &camera, const Ptr<ImportCamera> &import_camera);
-	virtual bool onProcessAnimation(const Ptr<Mesh> &animation, const Ptr<ImportAnimation> &import_animation);
-	virtual bool onProcessAnimation(const Ptr<Mesh> &animation, const Ptr<ImportMesh> &import_mesh, const Ptr<ImportAnimation> &import_animation);
+	virtual bool onProcessAnimation(const Ptr<MeshAnimation> &animation, const Ptr<ImportAnimation> &import_animation);
+	virtual bool onProcessAnimation(const Ptr<MeshAnimation> &animation, const Ptr<ImportMesh> &import_mesh, const Ptr<ImportAnimation> &import_animation);
 	virtual bool onProcessNode(const Ptr<Node> &node, const Ptr<ImportNode> &import_node);
 	virtual bool onProcessNodeChild(const Ptr<Node> &node_parent, const Ptr<ImportNode> &import_node_parent, const Ptr<Node> &node_child, const Ptr<ImportNode> &import_node_child);
 	virtual bool onProcessMaterial(const Ptr<Material> &material, const Ptr<ImportMaterial> &import_material);
@@ -368,11 +368,13 @@ public:
 	bool importMesh(const Ptr<ImportProcessor> &processor, const Ptr<Mesh> &mesh, const Ptr<ImportMesh> &import_mesh);
 	Ptr<Light> importLight(const Ptr<ImportProcessor> &processor, const Ptr<ImportLight> &import_light);
 	Ptr<Player> importCamera(const Ptr<ImportProcessor> &processor, const Ptr<ImportCamera> &import_camera);
-	bool importAnimation(const Ptr<ImportProcessor> &processor, const Ptr<Mesh> &animation, const Ptr<ImportAnimation> &import_animation);
-	bool importAnimation(const Ptr<ImportProcessor> &processor, const Ptr<Mesh> &animation, const Ptr<ImportMesh> &import_mesh, const Ptr<ImportAnimation> &import_animation);
+	bool importAnimation(const Ptr<ImportProcessor> &processor, const Ptr<MeshAnimation> &animation, const Ptr<ImportAnimation> &import_animation);
+	bool importAnimation(const Ptr<ImportProcessor> &processor, const Ptr<MeshAnimation> &animation, const Ptr<ImportMesh> &import_mesh, const Ptr<ImportAnimation> &import_animation);
 	Ptr<Node> importNode(const Ptr<ImportProcessor> &processor, const Ptr<ImportNode> &import_node);
 	bool importNodeChild(const Ptr<ImportProcessor> &processor, const Ptr<Node> &node_parent, const Ptr<ImportNode> &import_node_parent, const Ptr<Node> &node_child, const Ptr<ImportNode> &import_node_child);
 	bool postprocess();
+	bool checkSupportedAnimation(const Ptr<ImportMesh> &import_mesh, const Ptr<ImportAnimation> &import_animation) const;
+	bool checkDefaultAnimation(const Ptr<ImportMesh> &import_mesh, const Ptr<ImportAnimation> &import_animation) const;
 	static bool getBasis(Importer::Axis up_axis, Importer::Axis front_axis, Math::dmat4 &ret);
 protected:
 	friend class ImporterWrapper;
@@ -386,8 +388,10 @@ protected:
 	virtual bool onImportMesh(const Ptr<ImportProcessor> &processor, const Ptr<Mesh> &mesh, const Ptr<ImportMesh> &import_mesh);
 	virtual Ptr<Node> onImportNode(const Ptr<ImportProcessor> &processor, const Ptr<ImportNode> &import_node);
 	virtual bool onImportNodeChild(const Ptr<ImportProcessor> &processor, const Ptr<Node> &node_parent, const Ptr<ImportNode> &import_node_parent, const Ptr<Node> &node_child, const Ptr<ImportNode> &import_node_child);
-	virtual bool onImportAnimation(const Ptr<ImportProcessor> &processor, const Ptr<Mesh> &animation, const Ptr<ImportAnimation> &import_animation);
-	virtual bool onImportAnimation(const Ptr<ImportProcessor> &processor, const Ptr<Mesh> &animation, const Ptr<ImportMesh> &import_mesh, const Ptr<ImportAnimation> &import_animation);
+	virtual bool onImportAnimation(const Ptr<ImportProcessor> &processor, const Ptr<MeshAnimation> &animation, const Ptr<ImportAnimation> &import_animation);
+	virtual bool onImportAnimation(const Ptr<ImportProcessor> &processor, const Ptr<MeshAnimation> &animation, const Ptr<ImportMesh> &import_mesh, const Ptr<ImportAnimation> &import_animation);
+	virtual bool onCheckSupportedAnimation(const Ptr<ImportMesh> &import_mesh, const Ptr<ImportAnimation> &import_animation) const;
+	virtual bool onCheckDefaultAnimation(const Ptr<ImportMesh> &import_mesh, const Ptr<ImportAnimation> &import_animation) const;
 };
 typedef Ptr<Importer> ImporterPtr;
 
@@ -396,7 +400,7 @@ typedef Ptr<Importer> ImporterPtr;
 class UNIGINE_API Import
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	struct ImporterID
 	{
 		String vendor_name;

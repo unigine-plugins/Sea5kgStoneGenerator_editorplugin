@@ -1,0 +1,161 @@
+#!/usr/bin/env usc
+
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
+
+int skipFile(string file) {
+	return startsWith(file, "core/") || startsWith(file, ".cache_textures/") || startsWith(file, ".thumbnails/") || startsWith(file, "editor2/");
+}
+int skipFile(string path, string file) {
+	file = relname(path, file);
+	return skipFile(file);
+}
+
+string ENGINE_VERSION = "2.15.0.0";
+
+#include <utils.h>
+#include <log.h>
+#include <material.h>
+#include <property.h>
+
+#include <config.h>
+#include <worlds_nodes.h>
+#include <materials.h>
+#include <properties.h>
+#include <track.h>
+#include <projections.h>
+#include <syncker.h>
+#include <meta.h>
+#include <landscape.h>
+
+#include <process.h>
+
+string curr_data_path;
+
+void main() {
+	
+	string log_file = "";
+	string data_paths[0];
+	
+	for(int i = 1; i < getNumArgs(); i++)
+	{
+		if(getArg(i) == "--log")
+		{
+			i++;
+			if(i < getNumArgs())
+				log_file = getArg(i);
+		} else
+		{
+			data_paths.append(getAbsPath(getDirPath(getArg(i))));
+		}
+	}
+	
+	if(data_paths.size() == 0)
+		data_paths.append(currdir() + "/");
+	
+	// check version
+	foreach(string data_path; data_paths)
+	{
+		string files[0] = ();
+		if(!findFilesByExt(files, data_path, ".mat|.prop|.node|.world|.track|.render|.sound|.physics|.proj|.sync|.cfg|.boot|.controls|.user"))
+			continue;
+		
+		foreach(string file; files)
+		{
+			if(skipFile(data_path, file))
+				continue;
+			
+			Xml xml = new Xml();
+			if(!xml.load(file))
+			{
+				delete xml;
+				continue;
+			}
+			
+			if(versionLessOrEqual(ENGINE_VERSION, xml.getArg("version", "1.00")))
+			{
+				delete xml;
+				log.message("Skip migration to version \"%s\" File:\"%s\"\n", ENGINE_VERSION, file);
+				return;
+			}
+		}
+	}
+	
+	Log::init(log_file);
+	Log::setLevel(Log::INFO);
+	
+	Log::info("Start migration to version \"%s\"", ENGINE_VERSION);
+	
+	foreach(string data_path; data_paths)
+	{
+		curr_data_path = data_path;
+		
+		remove_file(data_path + "shader_d3d11.cache");
+		remove_file(data_path + "shader_d3d11_debug.cache");
+		remove_file(data_path + "shader_gl_debug.cache");
+		remove_file(data_path + "shader_gl.cache");
+		remove_file(data_path + "unigine.cache");
+		remove_file(data_path + "editor.cache");
+		
+		remove_directory(data_path + ".thumbnails");
+		remove_directory(data_path + ".cache_textures");
+		
+		{
+			log.message("Materials migration\n");
+			Materials::processPath(data_path);
+			
+			log.message("Properties migration\n");
+			Properties::processPaths(data_paths);
+			
+			log.message("Projections migration\n");
+			Projections::processPath(data_path);
+			
+			log.message("Syncker migration\n");
+			Syncker::processPath(data_path);
+			
+			log.message("Tracks migration\n");
+			Track::processPath(data_path);
+			
+			log.message("Meta migration\n");
+			Meta::processPath(data_path);
+			
+			log.message("Config migration\n");
+			Config::processPath(data_path);
+			
+			log.message("Nodes migration\n");
+			WorldsNodes::processPath(data_path, ".node");
+			
+			log.message("Worlds migration\n");
+			WorldsNodes::processPath(data_path, ".world");
+			
+			log.message("Render settings migration\n");
+			WorldsNodes::processPath(data_path, ".render");
+			
+			log.message("Sound settings migration\n");
+			WorldsNodes::processPath(data_path, ".sound");
+			
+			log.message("Physics settings migration\n");
+			WorldsNodes::processPath(data_path, ".physics");
+
+			log.message("Landscape migration\n");
+			LandscapeMapFile::processPath(data_path);
+		}
+	}
+	
+	Log::shutdown();
+}
+
+string getCurrDataPath()
+{
+	return curr_data_path;
+}

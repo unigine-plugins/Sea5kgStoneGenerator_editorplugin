@@ -11,24 +11,6 @@
 			<param name="num"> Ancestor ID. </param> 
 			<returns>Ancestor node.</returns>
 		</member>
-		<member name="M:Unigine.Node.getBodyAngularVelocity const">
-			<summary>
-			Returns the angular velocity of the node's physical body in the world space.
-			</summary>  
-			<returns>Angular velocity in the local space.</returns>
-		</member>
-		<member name="M:Unigine.Node.getBoundBox const">
-			<summary>
-			Returns the bounding box of the node.					The coordinates of the bounding box are in the node's local coordinate system. To get the bounding box in world coordinates, use the getWorldBoundBox() method.
-			</summary>  
-			<returns>Bounding box of the node.</returns>
-		</member>
-		<member name="M:Unigine.Node.getBoundSphere const">
-			<summary>
-			Returns the bounding sphere of the node.					The coordinates of the bounding sphere are in the node's local coordinate system. To get the bounding sphere in world coordinates, use the getWorldBoundSphere() method.
-			</summary>  
-			<returns>Bounding sphere of the node.</returns>
-		</member>
 		<member name="M:Unigine.Node.getChild(int) const">
 			<summary>
 			Returns a node child by its number.
@@ -57,53 +39,6 @@
 			<param name="n"> Child node. </param> 
 			<returns>Node index.</returns>
 		</member>
-		<member name="M:Unigine.Node.setImmovable(bool)">
-			<summary>
-			Sets a value indicating if the node represents an immovable (clutter) object, which means it is moved to a separate spatial tree for immovable (static) objects optimizing node management. There are several restrictions on nodes considered immovable. Any action affecting the spatial tree is prohibited and causes a warning: you cannot change the node state (enabled/disabled), surfaces, bounds, trasformation, visibility distance, as well as move the node, assign a non-dummy physical body or even disable the					Immovable flag as it also leads to rebiulding of the spatial tree.					You can disable these warnings by using the World::setMovingImmovableNodeMode())						 method, if necessary.
-			</summary> 
-			<param name="immovable"> true to mark the node as an immovable object; otherwise, false. </param> 
-		</member>
-		<member name="M:Unigine.Node.isImmovable const">
-			<summary>
-			Returns a value indicating if the node is an immovable (clutter) object, which means it is moved to a separate spatial tree for immovable (static) objects optimizing node management.
-			</summary>  
-			<returns>true if the node is a clutter object; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Node.setClutterInteractionEnabled(bool)">
-			<summary>
-			Sets a value indicating if interaction with World Clutters and Mesh Clutters is enabled for the node.					It is recommended to disable this option for better performance, when cutting node out of clutters is not necessary. Especially when the world contains a significant number of such nodes.
-			</summary>  
-		</member>
-		<member name="M:Unigine.Node.isClutterInteractionEnabled const">
-			<summary>
-			Returns a value indicating if interaction with World Clutters and Mesh Clutters is enabled for the node.					It is recommended to disable this option for better performance, when cutting node out of clutters is not necessary. Especially when the world contains a significant number of such nodes.
-			</summary>  
-			<returns>true if interaction with World Clutters and Mesh Clutters is enabled; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Node.setGrassInteractionEnabled(bool)">
-			<summary>
-			Sets a value indicating if interaction with Grass nodes is enabled for the node.					It is recommended to disable this option for better performance, when cutting node out of grass is not necessary. Especially when the world contains a significant number of such nodes.
-			</summary> 
-			<param name="enabled"> true to enable interaction with Grass nodes, false to disable it. </param> 
-		</member>
-		<member name="M:Unigine.Node.isGrassInteractionEnabled const">
-			<summary>
-			Returns a value indicating if interaction with Grass nodes is enabled for the node.					It is recommended to disable this option for better performance, when cutting node out of grass is not necessary. Especially when the world contains a significant number of such nodes.
-			</summary>  
-			<returns>true if interaction with Grass nodes is enabled; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Node.setTriggerInteractionEnabled(bool)">
-			<summary>
-			Sets a value indicating if interaction with WorldTrigger nodes is enabled for the node.					It is recommended to disable this option for better performance, when node interaction with World Triggers is not necessary. Especially when the world contains a significant number of such nodes.
-			</summary> 
-			<param name="enabled"> 1 to enable interaction with World Triggers, 0 to disable it. </param> 
-		</member>
-		<member name="M:Unigine.Node.isTriggerInteractionEnabled const">
-			<summary>
-			Returns a value indicating if interaction with WorldTrigger nodes is enabled for the node.					It is recommended to disable this option for better performance, when node interaction with World Triggers is not necessary. Especially when the world contains a significant number of such nodes.
-			</summary>  
-			<returns>true if interaction with WorldTrigger nodes is enabled; otherwise, false.</returns>
-		</member>
 		<member name="M:Unigine.Node.setData(char,char)">
 			<summary>
 			Sets user data associated with the node.											If the node was loaded from the *.node file, data is saved directly into the data tag of this file.						If the node is loaded from the *.world file, data is saved into the Node data tag of the *.world file.						If the node is loaded from the *.world file as a NodeReference, data will be saved to the NodeReference data tag of the *.world file.
@@ -118,28 +53,10 @@
 			<param name="name"> String containing a key identifying user data stored in the *.node file.The "editor_data" key is reserved for the UnigineEditor. </param> 
 			<returns>User string data. Data can be an xml formatted string.</returns>
 		</member>
-		<member name="M:Unigine.Node.isDecal const">
-			<summary>
-			Returns a value indicating if the node is a decal node (its type is DECAL_*).
-			</summary>  
-			<returns>true if the node is a decal node; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Node.setEnabled(bool)">
-			<summary>
-			Enables or disables the node.
-			</summary> 
-			<param name="enabled"> true to enable the node, false to disable it. </param> 
-		</member>
 		<member name="M:Unigine.Node.updateEnabled">
 			<summary>
 			Updates node's internal state according to the current "enabled" state.
 			</summary>  
-		</member>
-		<member name="M:Unigine.Node.isEnabled const">
-			<summary>
-			Returns a value indicating if the node and its parent nodes are enabled.
-			</summary>  
-			<returns>true if the node and its parent nodes are enabled; otherwise, false. </returns>
 		</member>
 		<member name="M:Unigine.Node.isEnabledSelf const">
 			<summary>
@@ -147,106 +64,11 @@
 			</summary>  
 			<returns>true if the node is enabled; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Node.isExtern const">
-			<summary>
-			Returns a value indicating if the node is an extern node (its type is one of the following: NODE_EXTERN, OBJECT_EXTERN, WORLD_EXTERN).
-			</summary>  
-			<returns>true if the node is an extern node; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Node.isField const">
-			<summary>
-			Returns a value indicating if the node is a field node (its type is one of the					FIELD_*).
-			</summary>  
-			<returns>true if the node is a field node; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Node.isParticlesField const">
-			<summary>
-			Returns a value indicating if the node is a particles field node (its type is one of the					PARTICLES_FIELD_*).
-			</summary>  
-			<returns>true if the node is a particles field node; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Node.isGeodetic const">
-			<summary>
-			Returns a value indicating if the node is a geodetic-related node.
-			</summary>  
-			<returns>true if the node is a geodetic-related node; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Node.getGeodeticPivot const">
-			<summary>
-			Returns a pointer to geodetic pivot of the node.
-			</summary>  
-			<returns>Geodetic pivot smart pointer, or NULL if the node is not a child of a geodetic pivot node.</returns>
-		</member>
-		<member name="M:Unigine.Node.setHandled(bool)">
-			<summary>
-			Disables or shows the node handle. This option is valid only for invisible nodes, such as light and sound sources, particle systems and world-managing nodes (WorldOccluder, triggers, expressions, etc.)
-			</summary>  
-		</member>
-		<member name="M:Unigine.Node.isHandled const">
-			<summary>
-			Returns a value indicating if the node handle is displayed. This option is valid only for invisible nodes, such as light and sound sources, particle systems and world-managing nodes (WorldOccluder, triggers, expressions, etc.)
-			</summary>  
-			<returns>true if the handle is shown; otherwise, false. </returns>
-		</member>
 		<member name="M:Unigine.Node.getHierarchy(Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator})">
 			<summary>
 			Retrieves the whole hierarchy of the node and puts it to the hierarchy buffer.
 			</summary> 
 			<param name="hierarchy"> Hierarchy buffer. </param> 
-		</member>
-		<member name="M:Unigine.Node.setID(int)">
-			<summary>
-			Sets a unique ID for the node.
-			</summary> 
-			<param name="id"> Node ID. </param> 
-		</member>
-		<member name="M:Unigine.Node.getID const">
-			<summary>
-			Returns the ID of the node.					See also engine.world.getNodeByID() function.
-			</summary>  
-			<returns>Node ID.</returns>
-		</member>
-		<member name="M:Unigine.Node.getIWorldTransform const">
-			<summary>
-			Returns the inverse transformation matrix of the node for transformations in the world coordinates.
-			</summary>  
-			<returns>Inverse transformation matrix.</returns>
-		</member>
-		<member name="M:Unigine.Node.isLight const">
-			<summary>
-			Returns a value indicating if the node is a light source (its type is LIGHT_*).
-			</summary>  
-			<returns>true if the node is a light source; otherwise, false. </returns>
-		</member>
-		<member name="M:Unigine.Node.isLandscapeLayer const">
-			<summary>
-			Returns a value indicating if the node is a landscape layer (its type is LANDSCAPE_LAYER_*).
-			</summary>  
-			<returns>true if the node is a landscape layer; otherwise, false. </returns>
-		</member>
-		<member name="M:Unigine.Node.getBodyLinearVelocity const">
-			<summary>
-			Returns the linear velocity of the node's physical body in the local space.
-			</summary>  
-			<returns>Linear velocity in the local space.</returns>
-		</member>
-		<member name="M:Unigine.Node.setName(char)">
-			<summary>
-			Sets a name for the node.
-			</summary> 
-			<param name="name"> New name of the node. </param> 
-		</member>
-		<member name="M:Unigine.Node.getName const">
-			<summary>
-			Returns the name of the node.
-			</summary>  
-			<returns>Name of the node.</returns>
-		</member>
-		<member name="M:Unigine.Node.isNavigation const">
-			<summary>
-			Returns a value indicating if a given node is a navigation node.
-			</summary>  
-			<returns>true if the given node is a navigation node; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Node.getNode(int)">
 			<summary>
@@ -268,108 +90,6 @@
 			</summary> 
 			<param name="id"> Node pointer. </param> 
 			<returns>1 if the node is valid; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Node.getNumAncestors const">
-			<summary>
-			Returns the number of ancestors of the node.
-			</summary>  
-			<returns>Number of ancestors.</returns>
-		</member>
-		<member name="M:Unigine.Node.getNumChildren const">
-			<summary>
-			Returns the number of children of the node.
-			</summary>  
-			<returns>Number of child nodes.</returns>
-		</member>
-		<member name="M:Unigine.Node.isObject const">
-			<summary>
-			Returns a value indicating if the node is an object node  (its type is OBJECT_*).
-			</summary>  
-			<returns>true if the node is an object node; otherwise, false. </returns>
-		</member>
-		<member name="M:Unigine.Node.getObjectBody const">
-			<summary>
-			Returns a physical body assigned to the node if it is an object node.
-			</summary>  
-			<returns>Body assigned to the object node; otherwise, NULL (0).</returns>
-		</member>
-		<member name="M:Unigine.Node.getObjectBodyRigid const">
-			<summary>
-			Returns a rigid body assigned to the node if it is an object node.
-			</summary>  
-			<returns>Rigid body assigned to the object node; otherwise, NULL (0).</returns>
-		</member>
-		<member name="M:Unigine.Node.isObstacle const">
-			<summary>
-			Returns a value indicating if the node is an obstacle node (its type is OBSTACLE_*).
-			</summary>  
-			<returns>true if the given node is an obstacle node; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Node.setOldWorldTransform(Unigine.Math.Mat4)">
-			<summary>
-			Sets old (previous frame) transformation matrix for the node in world coordinates.
-			</summary> 
-			<param name="transform"> Old (previous frame) transformation matrix to be set. </param> 
-		</member>
-		<member name="M:Unigine.Node.getOldWorldTransform const">
-			<summary>
-			Returns old (previous frame) transformation matrix for the node in world coordinates.
-			</summary>  
-			<returns>Old (previous frame) transformation matrix.</returns>
-		</member>
-		<member name="M:Unigine.Node.getOldWorldPosition const">
-			<summary>
-			Returns old (previous frame) position of the node in world coordinates.
-			</summary>  
-			<returns>Old (previous frame) position of the node.</returns>
-		</member>
-		<member name="M:Unigine.Node.setParent(Unigine.Ptr{Unigine.Node})">
-			<summary>
-			Sets the new parent for the node. Transformations of the current node will be done in the coordinates of the parent.
-			</summary> 
-			<param name="parent"> New parent node or NULL (0). </param> 
-		</member>
-		<member name="M:Unigine.Node.getParent const">
-			<summary>
-			Returns the parent of the node.
-			</summary>  
-			<returns>Parent node or NULL (0), if the node has no parent. </returns>
-		</member>
-		<member name="M:Unigine.Node.isPhysical const">
-			<summary>
-			Returns a value indicating if the node is a physical node (its type is PHYSICAL_*).
-			</summary>  
-			<returns>true if the node is a physical node; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Node.isPlayer const">
-			<summary>
-			Returns a value indicating if the node is a player node (its type is PLAYER_*).
-			</summary>  
-			<returns>true if the node is a player node; otherwise, false. </returns>
-		</member>
-		<member name="M:Unigine.Node.setPosition(Unigine.Math.Vec3)">
-			<summary>
-			Sets the node position.
-			</summary> 
-			<param name="pos"> Node position in the local space </param> 
-		</member>
-		<member name="M:Unigine.Node.getPosition const">
-			<summary>
-			Returns the node position.
-			</summary>  
-			<returns>Node position in the local space</returns>
-		</member>
-		<member name="M:Unigine.Node.getPossessor const">
-			<summary>
-			Returns a possessor of the node. The following nodes can be possessors:											NodeReference						WorldCluster						WorldClutter						WorldLayer										This function can only be applied to a root node inside a node reference.
-			</summary>  
-			<returns>Node posessor, if it exists; otherwise, NULL.</returns>
-		</member>
-		<member name="M:Unigine.Node.getNumProperties const">
-			<summary>
-			Returns the total number of properties associated with the node.
-			</summary>  
-			<returns>Total number of properties associated with the node.</returns>
 		</member>
 		<member name="M:Unigine.Node.addProperty(char)">
 			<summary>
@@ -537,29 +257,11 @@
 			<param name="property"> Node property to be found. </param> 
 			<returns>Node property number in the range from 0 to the total number of node properties if such a property exists; otherwise -1.</returns>
 		</member>
-		<member name="M:Unigine.Node.setQuery(bool)">
-			<summary>
-			Updates a value indicating if occlusion query is used for the node.
-			</summary> 
-			<param name="query"> true to use occlusion query, false not to use. </param> 
-		</member>
-		<member name="M:Unigine.Node.isQuery const">
-			<summary>
-			Returns a value indicating if occlusion query is used for the node. The default is false (not used).
-			</summary>  
-			<returns>true if occlusion query is used; otherwise, false.</returns>
-		</member>
 		<member name="M:Unigine.Node.hasQueryForce const">
 			<summary>
 			Returns a value indicating if the					Culled By Occlusion Queryoption is force-enabled for the node by the Engine.
 			</summary>  
 			<returns>true if theCulled By Occlusion Queryoption is force-enabled for the node by the Engine; otherwise,false.</returns>
-		</member>
-		<member name="M:Unigine.Node.getRootNode const">
-			<summary>
-			Returns the root node for the node. This method searches for the root node among all node's parents and posessors up the hierarchy. If a node does not have a parent or posessor the node itself will be returned.
-			</summary>  
-			<returns>Root node for the node.</returns>
 		</member>
 		<member name="M:Unigine.Node.setRotation(Unigine.Math.quat,bool)">
 			<summary>
@@ -589,46 +291,11 @@
 			</summary>  
 			<returns>Node rotation in the world space.</returns>
 		</member>
-		<member name="M:Unigine.Node.setScale(Unigine.Math.vec3)">
-			<summary>
-			Sets the scale of the node.					Scaling of nodes should be avoided whenever possible as it requires addidional calculations and may lead to error accumulation.
-			</summary> 
-			<param name="s"> Node scale in the local space. </param> 
-		</member>
-		<member name="M:Unigine.Node.getScale const">
-			<summary>
-			Returns the scale of the node.
-			</summary>  
-			<returns>Node scale in the local space.</returns>
-		</member>
-		<member name="M:Unigine.Node.isSound const">
-			<summary>
-			Returns a value indicating if the node is a sound node (its type is SOUND_*).
-			</summary>  
-		</member>
-		<member name="M:Unigine.Node.setTransform(Unigine.Math.Mat4)">
-			<summary>
-			Sets the transformation matrix for the node in local coordinates.
-			</summary> 
-			<param name="transform"> New transformation matrix to be set for the node (local coordinates). </param> 
-		</member>
 		<member name="M:Unigine.Node.setTransformWithoutChildren(Unigine.Math.Mat4)">
 			<summary>
 			Sets the transformation matrix for the node in local coordinates (transformations of all node's children are not affected). This method can be used to change node's transformation relative to its children.
 			</summary> 
 			<param name="transform"> New transformation matrix to be set for the node (local coordinates). </param> 
-		</member>
-		<member name="M:Unigine.Node.getTransform const">
-			<summary>
-			Returns the transformation matrix of the node in local coordinates.
-			</summary>  
-			<returns>Transformation matrix.</returns>
-		</member>
-		<member name="M:Unigine.Node.getType const">
-			<summary>
-			Returns the type of the node.
-			</summary>  
-			<returns>Node type identifier.</returns>
 		</member>
 		<member name="M:Unigine.Node.getTypeID(char)">
 			<summary>
@@ -636,12 +303,6 @@
 			</summary> 
 			<param name="type"> Node type name. </param> 
 			<returns>Node type ID, if such type exists; otherwise, -1.</returns>
-		</member>
-		<member name="M:Unigine.Node.getTypeName const">
-			<summary>
-			Returns a name of the node type.
-			</summary>  
-			<returns>Node type name.</returns>
 		</member>
 		<member name="M:Unigine.Node.getTypeName(Node::TYPE)">
 			<summary>
@@ -657,32 +318,6 @@
 			<param name="name"> Variable name. </param>
 			<param name="v"> Variable value. </param> 
 		</member>
-		<member name="M:Unigine.Node.setVariable(Unigine.Variable)">
-			<summary>
-			Sets the value of the single unnamed variable parameter of the node. If this variable does not exist it will be created with a specified value.
-			</summary> 
-			<param name="v"> Variable value. </param> 
-		</member>
-		<member name="M:Unigine.Node.setVariable(char,Unigine.Variable)">
-			<summary>
-			Sets the value of the single unnamed variable parameter of the node. If this variable does not exist it will be created with a specified value.
-			</summary> 
-			<param name="name"> Variable name. </param>
-			<param name="variable"> Variable value. </param> 
-		</member>
-		<member name="M:Unigine.Node.getVariable">
-			<summary>
-			Returns the single unnamed variable parameter of the node.
-			</summary>  
-			<returns>Variable if it exists; otherwise, variable with 0 value.</returns>
-		</member>
-		<member name="M:Unigine.Node.getVariable(char)">
-			<summary>
-			Returns the variable with a given name.
-			</summary> 
-			<param name="name"> Variable name. </param> 
-			<returns>Variable if it exists; otherwise, variable with 0 value.</returns>
-		</member>
 		<member name="M:Unigine.Node.getVariable(char) const">
 			<summary>
 			Returns the variable with a given name.
@@ -690,89 +325,17 @@
 			<param name="name"> Variable name. </param> 
 			<returns>Variable if it exists; otherwise, variable with 0 value.</returns>
 		</member>
-		<member name="M:Unigine.Node.isImmovableSupported const">
-			<summary>
-			Retuns a value indicating if the node can be moved to a separate spatial tree for immovable (static) objects optimizing node management.
-			</summary>  
-			<returns>true if the node can be immovable; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Node.isSurfacesIntersectionSupported const">
-			<summary>
-			Retuns a value indicating if intersections with node surfaces are supported.
-			</summary>  
-			<returns>true if intersections with node surfaces are supported; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Node.isSurfacesCollisionSupported const">
-			<summary>
-			Returns a value indicating if collisions with node surfaces are supported.
-			</summary>  
-			<returns>true if collisions with node surfaces are supported; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Node.isWorld const">
-			<summary>
-			Returns a value indicating if the node is a world node (its type is WORLD_*).
-			</summary>  
-			<returns>true if the node is a world node; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Node.getWorldBoundBox const">
-			<summary>
-			Returns the bounding box of the node in world's coordinate system.
-			</summary>  
-			<returns>World bounding box.</returns>
-		</member>
-		<member name="M:Unigine.Node.getWorldBoundSphere const">
-			<summary>
-			Returns the bounding sphere of the node in world's coordinate system.
-			</summary>  
-			<returns>World bounding sphere.</returns>
-		</member>
 		<member name="M:Unigine.Node.setWorldParent(Unigine.Ptr{Unigine.Node})">
 			<summary>
 			Sets the new parent of the node. Transformations of the current node will be done in the world coordinates.
 			</summary> 
 			<param name="n"> New parent node or NULL (0). </param> 
 		</member>
-		<member name="M:Unigine.Node.setWorldPosition(Unigine.Math.Vec3)">
-			<summary>
-			Sets the node position in the world coordinates.
-			</summary>  
-			<returns>Node position in the world space.</returns>
-		</member>
-		<member name="M:Unigine.Node.getWorldPosition const">
-			<summary>
-			Returns the node position in the world coordinates.
-			</summary>  
-			<returns>Node position in the world space.</returns>
-		</member>
-		<member name="M:Unigine.Node.setWorldScale(Unigine.Math.vec3)">
-			<summary>
-			Sets the node scale in the world space.					Scaling of nodes should be avoided whenever possible as it requires addidional calculations and may lead to error accumulation.
-			</summary> 
-			<param name="s"> Node scale in the world space. </param> 
-		</member>
-		<member name="M:Unigine.Node.getWorldScale const">
-			<summary>
-			Returns the node scale in the world space.
-			</summary>  
-			<returns>Node scale in the world space.</returns>
-		</member>
-		<member name="M:Unigine.Node.setWorldTransform(Unigine.Math.Mat4)">
-			<summary>
-			Sets the transformation matrix for the node in world coordinates.
-			</summary> 
-			<param name="transform"> New transformation matrix to be set for the node (world coordinates). </param> 
-		</member>
 		<member name="M:Unigine.Node.setWorldTransformWithoutChildren(Unigine.Math.Mat4)">
 			<summary>
 			Sets the transformation matrix for the node in world coordinates (transformations of all node's children are not affected). This method can be used to change node's transformation relative to its children.
 			</summary> 
 			<param name="transform"> New transformation matrix to be set for the node (world coordinates). </param> 
-		</member>
-		<member name="M:Unigine.Node.getWorldTransform const">
-			<summary>
-			Returns the transformation matrix of the node in the world coordinates.
-			</summary>  
-			<returns>Transformation matrix.</returns>
 		</member>
 		<member name="M:Unigine.Node.getBodyWorldVelocity(Unigine.Math.Vec3) const">
 			<summary>
@@ -823,9 +386,17 @@
 			<summary>
 			Searches for a node with a given name among the children of the node.
 			</summary> 
-			<param name="name"> Name of the child node. </param>
+			<param name="name"> Name of the child node to search for. </param>
 			<param name="recursive"> 1 if the search is recursive (i.e. performed for children of child nodes); otherwise, 0. </param> 
 			<returns>Child node, if it is found; otherwise, NULL.</returns>
+		</member>
+		<member name="M:Unigine.Node.findNodes(char,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},int) const">
+			<summary>
+			Searches for a node with a given name among the children of the node and puts them to the specified output nodes buffer.
+			</summary> 
+			<param name="name"> Name of the node to search for. </param>
+			<param name="nodes"> Output buffer to which all found nodes with the specified name will be put. </param>
+			<param name="recursive"> 1 if the search is recursive (i.e. performed for children of child nodes); otherwise, 0. </param> 
 		</member>
 		<member name="M:Unigine.Node.hasVariable(char)">
 			<summary>
@@ -1034,35 +605,11 @@
 			<param name="original_property"> Original node property that was cloned. </param> 
 			<returns>Clone of the specified original node property if it exists; otherwise the original node property itself.</returns>
 		</member>
-		<member name="M:Unigine.Node.setSaveToWorldEnabled(bool)">
-			<summary>
-								Sets a value indicating if saving to *.world file is enabled for the node.					The node shall be saved to a *.world file only if this option is enabled for all of its ancestors as well.
-			</summary> 
-			<param name="enabled"> true to enable saving to *.world file for the node; 0 to disable. </param> 
-		</member>
 		<member name="M:Unigine.Node.setSaveToWorldEnabledRecursive(bool)">
 			<summary>
 			Sets a value indicating if saving to *.world file is enabled for the node and all its children (if any).
 			</summary> 
 			<param name="enable"> true to enable saving to *.world file for the node and all its children (if any); 0 to disable. </param> 
-		</member>
-		<member name="M:Unigine.Node.isSaveToWorldEnabled const">
-			<summary>
-			Returns a value indicating if saving to *.world file is enabled for the node and all of its ancestors (if any).
-			</summary>  
-			<returns>true if saving to *.world file is enabled for the node and all of its ancestors (if any); otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Node.isSaveToWorldEnabledSelf const">
-			<summary>
-								Returns a value indicating if saving to *.world file is enabled for the node.					The node shall be saved to a *.world file only if this option is enabled for all of its ancestors as well (see the isSaveToWorldEnabled() method).
-			</summary>  
-			<returns>true if saving to *.world file is enabled for the node; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Node.setShowInEditorEnabled(bool)">
-			<summary>
-			Sets a value indicating if displaying in the World Hierarchy window of the UnigineEditor is enabled for the node.					The node shall be displayed in the hierarchy only if this option is enabled for all of its ancestors as well.
-			</summary> 
-			<param name="enabled"> true to enable displaying in the World Hierarchy window of the UnigineEditor for the node; 0 to disable. </param> 
 		</member>
 		<member name="M:Unigine.Node.setShowInEditorEnabledRecursive(bool)">
 			<summary>
@@ -1070,45 +617,11 @@
 			</summary> 
 			<param name="enable"> true to enable displaying in the World Hierarchy window of the UnigineEditor for the node and all its children (if any); 0 to disable. </param> 
 		</member>
-		<member name="M:Unigine.Node.isShowInEditorEnabled const">
-			<summary>
-			Returns a value indicating if displaying in the World Hierarchy window of the UnigineEditor is enabled for the node and all of its ancestors (if any).
-			</summary>  
-			<returns>true if displaying in the World Hierarchy window of the UnigineEditor is enabled for the node and all of its ancestors (if any); otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Node.isShowInEditorEnabledSelf const">
-			<summary>
-			Returns a value indicating if displaying in the World Hierarchy window of the UnigineEditor is enabled for the node.					The node shall be displayed only if this option is enabled for all of its ancestors as well (see the isShowInEditorEnabled() method).
-			</summary>  
-			<returns>true if displaying in the World Hierarchy window of the UnigineEditor is enabled for the node; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Node.getLifetime const">
-			<summary>
-			Returns the lifetime management type for the root (either parent or posessor) of the node, or for the node itself (if it is not a child and not possessed by any other node).					Lifetime of each node in the hierarchy is defined by it's root (either parent or posessor). Thus, lifetime management type set for a child node that differs from the one set for the root is ignored.
-			</summary>  
-			<returns>Lifetime management type for the root node (see the LIFETIME enum).</returns>
-		</member>
 		<member name="M:Unigine.Node.getLifetimeSelf const">
 			<summary>
 			Returns the lifetime management type set for the node itself.					Lifetime of each node in the hierarchy is defined by it's root (either parent or posessor). Setting lifetime management type for a child node different from the one set for the root has no effect.
 			</summary>  
 			<returns>Lifetime management type for the node (see the LIFETIME enum).</returns>
-		</member>
-		<member name="M:Unigine.Node.setLifetime(Node::LIFETIME)">
-			<summary>
-			</summary>  
-		</member>
-		<member name="M:Unigine.Node.getSpatialBoundBox const">
-			<summary>
-			Returns a bounding box with world coordinates that participates in physics calculations, but doesn't take children into account. This bounding box is used by the spatial tree.
-			</summary>  
-			<returns>The bounding box with world coordinates.</returns>
-		</member>
-		<member name="M:Unigine.Node.getSpatialBoundSphere const">
-			<summary>
-			Returns a bounding sphere with world coordinates that participates in physics calculations, but doesn't take children into account. This bounding sphere is used by the spatial tree.
-			</summary>  
-			<returns>The bounding sphere with world coordinates.</returns>
 		</member>
 		<member name="M:Unigine.Node.getHierarchyBoundBox(bool) const">
 			<summary>
@@ -1162,12 +675,6 @@
 			Mark node bounds in the spatial tree to be updated in the next frame (all bounds will be 100% accurate in this case unlike for the					 method). This method can be used in case you use some custom logic affecting node bounds or position, as well as to process such changes for your custom nodes (					ObjectExtern, NodeExtern) which are otherwise ignored. The changes will only be applied in the next frame, in case you need to have your changes to be taken into account right in the current frame use the					 method for 100% accurate bounds (slow), or the fast					 method which only expands node bounds if necessary.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Node.getNumWorldTriggers const">
-			<summary>
-			Returns the number of World Triggers inside which the node is located at the moment. To access any of such triggers by its number simply call the getWorldTrigger() method.
-			</summary>  
-			<returns>The number of World Triggers inside which the node is located at the moment, or 0 if the node is not currently inside any World Trigger.</returns>
-		</member>
 		<member name="M:Unigine.Node.getWorldTrigger(int)">
 			<summary>
 			Returns one of the World Triggers inside which the node is located at the moment by its number. For any node in the world, you can check whether it is currently inside any World Trigger and access any of such triggers by simply calling this method.
@@ -1184,6 +691,20 @@
 		</member>
 		<member name="M:Unigine.Node.renderBounds(bool,bool)">
 			<summary>
+			Renders the node bounds. The method is applied for checking the actual size of the CPU-rendered node bounds that may differ from the GPU-rendered mesh size, if the latter has been modified by the shader. For nodes that consist of multiple mesh instances (Clutter, Cluster) rendering of each individual mesh bound is also available.
+			</summary> 
+			<param name="render_node_bound"> true to enable rendering of the node bounds, false to disable it. </param>
+			<param name="render_instance_bound"> true to enable bound rendering for each individual mesh instance (applicable for Clutter and Cluster nodes), false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.Node.getIDFromFile const">
+			<summary>
+			Returns the node ID from the *.node or a *.world file if the node has been loaded from this file.
+			</summary>  
+			<returns>Node ID from the *.node or a *.world file. For the node created via code, -1 is returned.</returns>
+		</member>
+		<member name="M:Unigine.Node.applyReplacePaths">
+			<summary>
+			Restores the engine's ability to replace baked textures (lightmap, shadow map) inside Node References in runtime. This method is to be applied if hierarchy inside a Node Reference or a path to the baked texture has been modified thus causing rendering of an unsuitable lightmap or a shadow map.
 			</summary>  
 		</member>
 		<member name="F:Unigine.Node.ANY_TYPE">

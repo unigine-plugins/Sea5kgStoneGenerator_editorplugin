@@ -146,10 +146,12 @@ public:
 	void clearLensFlares();
 	void setVisibleDistance(float distance);
 	float getVisibleDistance() const;
-	void setShadowDistance(float distance);
-	float getShadowDistance() const;
 	void setFadeDistance(float distance);
 	float getFadeDistance() const;
+	void setShadowDistance(float distance);
+	float getShadowDistance() const;
+	void setShadowFadeDistance(float distance);
+	float getShadowFadeDistance() const;
 	void setRenderOnWater(bool water);
 	bool isRenderOnWater() const;
 	void setRenderOnTransparent(bool transparent);
@@ -192,12 +194,11 @@ public:
 	Light::SHADOW_PENUMBRA getShadowPenumbraMode() const;
 	void setShadowPenumbra(float penumbra);
 	float getShadowPenumbra() const;
-	void setDynamicDepthTexture(const Ptr<Texture> &texture);
 	Ptr<Texture> getDynamicDepthTexture() const;
-	void setBakedDepthTexturePath(const char *path);
-	const char *getBakedDepthTexturePath() const;
+	void setBakedDepthTextureFilePath(const char *path);
+	String getBakedDepthTextureFilePath() const;
 	Ptr<Texture> getBakedDepthTexture() const;
-	Ptr<Texture> getShadowColorTexture() const;
+	Ptr<Texture> getDynamicShadowColorTexture() const;
 	void setShadowColorTextureMode(Light::SHADOW_COLOR_MODE mode);
 	Light::SHADOW_COLOR_MODE getShadowColorTextureMode() const;
 	Ptr<Texture> getShadowTexture() const;
@@ -323,8 +324,8 @@ public:
 	bool isBakeVisibilityEnvironmentProbe() const;
 	void setBakeVisibilityLightmap(bool lightmap);
 	bool isBakeVisibilityLightmap() const;
-	void setTexturePath(const char *path);
-	const char *getTexturePath() const;
+	void setTextureFilePath(const char *path);
+	String getTextureFilePath() const;
 	Math::ivec3 getResolution();
 	size_t getVideoMemoryUsage();
 };
@@ -346,9 +347,15 @@ public:
 		PROJECTION_MODE_RAYMARCHING,
 	};
 
+	enum SECONDARY_BOUNCE_PROJECTION_MODE
+	{
+		SECONDARY_BOUNCE_PROJECTION_MODE_SPHERE = 0,
+		SECONDARY_BOUNCE_PROJECTION_MODE_RAYMARCHING,
+	};
+
 	enum LAST_STEP_MODE
 	{
-		LAST_STEP_MODE_ENVIRONMENT_PROBE,
+		LAST_STEP_MODE_ENVIRONMENT_PROBE = 0,
 		LAST_STEP_MODE_ONLY_SKY,
 	};
 
@@ -414,8 +421,12 @@ public:
 	bool isAdditiveBlending() const;
 	void setAttenuationDistance(const Math::vec3 &distance);
 	Math::vec3 getAttenuationDistance() const;
-	void setTexturePath(const char *path);
-	const char *getTexturePath() const;
+	void setTextureFilePath(const char *path);
+	String getTextureFilePath() const;
+	void setSrgbModified(bool modified);
+	bool isSrgbModified() const;
+	void setReflectionCubicFiltering(bool filtering);
+	bool isReflectionCubicFiltering() const;
 	void setBoxAmbientParallax(float parallax);
 	float getBoxAmbientParallax() const;
 	void setBoxGlossCorners(float corners);
@@ -426,6 +437,8 @@ public:
 	float getSphereReflectionParallax() const;
 	void setRaymarchingNoiseFramesNumber(int number);
 	int getRaymarchingNoiseFramesNumber() const;
+	void setRaymarchingSecondaryBounceProjectionMode(LightEnvironmentProbe::SECONDARY_BOUNCE_PROJECTION_MODE mode);
+	LightEnvironmentProbe::SECONDARY_BOUNCE_PROJECTION_MODE getRaymarchingSecondaryBounceProjectionMode() const;
 	void setRaymarchingLastStepMode(LightEnvironmentProbe::LAST_STEP_MODE mode);
 	LightEnvironmentProbe::LAST_STEP_MODE getRaymarchingLastStepMode() const;
 	void setRaymarchingAmbientOcclusionIntensity(float intensity);
@@ -598,6 +611,12 @@ public:
 	static Ptr<LightOmni> create(const Math::vec4 &color, float attenuation_distance, const char *name = 0);
 	void setAttenuationDistance(float distance);
 	float getAttenuationDistance() const;
+	void setNearAttenuationDistance(float distance);
+	float getNearAttenuationDistance() const;
+	void setNearAttenuationGradientLength(float length);
+	float getNearAttenuationGradientLength() const;
+	void setShadowNearClippingDistance(float distance);
+	float getShadowNearClippingDistance() const;
 	void setShapeRadius(float radius);
 	float getShapeRadius() const;
 	void setShapeLength(float length);
@@ -608,8 +627,8 @@ public:
 	Light::SHAPE getShapeType() const;
 	Math::vec3 getSize() const;
 	Math::vec2 getShadowDepthRange() const;
-	void setTexturePath(const char *path);
-	const char *getTexturePath() const;
+	void setTextureFilePath(const char *path);
+	String getTextureFilePath() const;
 	int setTextureImage(const Ptr<Image> &image, bool dynamic = false);
 	int getTextureImage(const Ptr<Image> &image) const;
 	void setTexture(const Ptr<Texture> &texture);
@@ -630,6 +649,12 @@ public:
 	static Ptr<LightProj> create(const Math::vec4 &color, float attenuation_distance, float fov, const char *name = 0);
 	void setAttenuationDistance(float distance);
 	float getAttenuationDistance() const;
+	void setNearAttenuationDistance(float distance);
+	float getNearAttenuationDistance() const;
+	void setNearAttenuationGradientLength(float length);
+	float getNearAttenuationGradientLength() const;
+	void setShadowNearClippingDistance(float distance);
+	float getShadowNearClippingDistance() const;
 	void setShapeType(Light::SHAPE type);
 	Light::SHAPE getShapeType() const;
 	void setShapeRadius(float radius);
@@ -640,16 +665,15 @@ public:
 	float getShapeHeight() const;
 	void setFov(float fov);
 	float getFov() const;
-	void setZNear(float znear);
-	float getZNear() const;
 	void setPenumbra(float penumbra);
 	float getPenumbra() const;
 	void setIESRelativeToFov(bool fov);
 	bool isIESRelativeToFov() const;
 	Math::vec2 getShadowDepthRange() const;
 	Math::mat4 getProjection() const;
-	void setTexturePath(const char *path);
-	const char *getTexturePath() const;
+	Math::mat4 getShadowProjection() const;
+	void setTextureFilePath(const char *path);
+	String getTextureFilePath() const;
 	int setTextureImage(const Ptr<Image> &image, bool dynamic = false);
 	int getTextureImage(const Ptr<Image> &image) const;
 	void setTexture(const Ptr<Texture> &texture);

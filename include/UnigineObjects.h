@@ -18,7 +18,7 @@
 #include "UnigineGui.h"
 #include "UnigineMaterial.h"
 #include "UnigineMesh.h"
-#include "UnigineMeshStatic.h"
+#include "UnigineMeshRender.h"
 #include "UnigineNode.h"
 #include "UnigineTextures.h"
 #include "UnigineTileset.h"
@@ -94,12 +94,6 @@ class UNIGINE_API Object : public Node
 public:
 	static bool convertible(Node *node) { return node && node->isObject(); }
 
-
-	enum STREAMING_OBJECT_MESH
-	{
-		STREAMING_OBJECT_MESH_ON_DEMAND = 0,
-		STREAMING_OBJECT_MESH_BY_PRESENCE,
-	};
 
 	enum SURFACE_SHADOW_MODE
 	{
@@ -185,9 +179,9 @@ public:
 	float getPhysicsFriction(int surface) const;
 	void setPhysicsRestitution(float value, int surface);
 	float getPhysicsRestitution(int surface) const;
-	void setMaterialPath(const char *path, int surface);
-	void setMaterialPath(const char *path, const char *pattern);
-	const char *getMaterialPath(int surface) const;
+	void setMaterialFilePath(const char *path, int surface);
+	void setMaterialFilePath(const char *path, const char *pattern);
+	String getMaterialFilePath(int surface) const;
 	void setMaterialGUID(const UGUID &guid, int surface);
 	void setMaterialGUID(const UGUID &guid, const char *pattern);
 	UGUID getMaterialGUID(int surface) const;
@@ -305,9 +299,9 @@ public:
 	static Ptr<ObjectDynamic> create(int flags = 0);
 	struct Attribute
 	{
-	int offset;
-	int type;
-	int size;
+		int offset;
+		int type;
+		int size;
 	};
 	void setMaterialNodeType(Node::TYPE type);
 	Node::TYPE getMaterialNodeType() const;
@@ -412,11 +406,14 @@ public:
 	};
 	static Ptr<ObjectMeshStatic> create();
 	static Ptr<ObjectMeshStatic> create(const char *path);
-	Ptr<MeshStatic> getMeshInfo();
-	Ptr<MeshStatic> getMeshForce();
-	Ptr<MeshStatic> getMeshAsync();
-	Ptr<MeshStatic> getMeshForceVRAM();
-	Ptr<MeshStatic> getMeshAsyncVRAM();
+	Ptr<Mesh> getMeshCurrentRAM();
+	Ptr<Mesh> getMeshForceRAM();
+	Ptr<Mesh> getMeshAsyncRAM();
+	Ptr<Mesh> getMeshProceduralRAM();
+	Ptr<MeshRender> getMeshCurrentVRAM();
+	Ptr<MeshRender> getMeshForceVRAM();
+	Ptr<MeshRender> getMeshAsyncVRAM();
+	Ptr<MeshRender> getMeshProceduralVRAM();
 	bool loadAsyncRAM();
 	bool loadAsyncVRAM();
 	bool loadForceRAM();
@@ -429,10 +426,6 @@ public:
 	bool isMeshNull() const;
 	bool isMeshLoadedRAM() const;
 	bool isMeshLoadedVRAM() const;
-	void setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH meshstreamingmoderam);
-	Object::STREAMING_OBJECT_MESH getMeshStreamingModeRAM() const;
-	void setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH meshstreamingmodevram);
-	Object::STREAMING_OBJECT_MESH getMeshStreamingModeVRAM() const;
 	void setMeshPath(const char *path);
 	const char *getMeshPath() const;
 	void setLightmapEnabled(bool enabled, int surface);
@@ -445,8 +438,8 @@ public:
 	ObjectMeshStatic::LIGHTMAP_MODE getLightmapMode(int surface) const;
 	void setLightmapSourceSurface(int source_surface, int surface);
 	int getLightmapSourceSurface(int surface) const;
-	void setLightmapTexturePath(const char *path, int surface);
-	const char *getLightmapTexturePath(int surface) const;
+	void setLightmapTextureFilePath(const char *path, int surface);
+	String getLightmapTextureFilePath(int surface) const;
 	void setSurfaceCustomTextureEnabled(bool enabled, int surface);
 	bool isSurfaceCustomTextureEnabled(int surface) const;
 	void setSurfaceCustomTextureMode(ObjectMeshStatic::SURFACE_CUSTOM_TEXTURE_MODE mode, int surface);
@@ -460,6 +453,9 @@ public:
 };
 typedef Ptr<ObjectMeshStatic> ObjectMeshStaticPtr;
 
+class ObjectMeshSkinned;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<float, const Ptr<ObjectMeshSkinned> &>>;
+template class UNIGINE_API EventInterfaceConnection<EventInterfaceInvoker<const Ptr<ObjectMeshSkinned> &>>;
 
 class UNIGINE_API BonesRetargeting : public APIInterface
 {
@@ -473,19 +469,22 @@ public:
 	};
 	static Ptr<BonesRetargeting> create();
 	static Ptr<BonesRetargeting> create(const char *src_mesh_path, const char *dst_mesh_path);
-	bool loadMeshes(const char *src_mesh_path, const char *dst_mesh_path);
-	bool isMeshesLoaded() const;
+	bool loadBones(const char *src_mesh_path, const char *dst_mesh_path);
+	bool loadBonesFromMeshes(const Ptr<Mesh> &src_mesh, const Ptr<Mesh> &dst_mesh);
+	bool loadBonesFromObjects(const Ptr<ObjectMeshSkinned> &src_obj, const Ptr<ObjectMeshSkinned> &dst_obj);
+	int getNumSrcBones() const;
+	const char *getSrcBoneName(int index) const;
+	int getNumDstBones() const;
+	const char *getDstBoneName(int index) const;
 	bool setNameMapping(const char *src_name, const char *dst_name);
 	void findEqualNameMapping();
-	int getNumBones() const;
-	const char *getSrcBoneName(int index) const;
-	const char *getDstBoneName(int index) const;
 	void setBoneMode(const char *src_name, BonesRetargeting::MODE mode);
 	BonesRetargeting::MODE getBoneMode(const char *src_name) const;
 	float getBoneProportion(const char *src_name) const;
 	void setBoneCustomProportion(const char *src_name, float proportion);
 	float getBoneCustomProportion(const char *src_name) const;
 	void removeBoneCustomProportion(const char *src_name);
+	bool isBoneCustomProportion(const char *src_name) const;
 	const char *getDstBoneBySrcBone(const char *src_name) const;
 	const char *getSrcBoneByDstBone(const char *dst_name) const;
 	UGUID getSrcMeshFileGUID() const;
@@ -523,32 +522,41 @@ public:
 		BONE_SPACE_LOCAL,
 	};
 
-	enum FRAME_USES
+	enum ANIM_FRAME_USES
 	{
-		FRAME_USES_NONE = 0,
-		FRAME_USES_POSITION = 1 << 0,
-		FRAME_USES_ROTATION = 1 << 1,
-		FRAME_USES_SCALE = 1 << 2,
-		FRAME_USES_ALL = FRAME_USES_POSITION | FRAME_USES_ROTATION | FRAME_USES_SCALE,
-		FRAME_USES_POSITION_AND_ROTATION = FRAME_USES_POSITION | FRAME_USES_ROTATION,
-		FRAME_USES_POSITION_AND_SCALE = FRAME_USES_POSITION | FRAME_USES_SCALE,
-		FRAME_USES_ROTATION_AND_SCALE = FRAME_USES_ROTATION | FRAME_USES_SCALE,
+		ANIM_FRAME_USES_NONE = 0,
+		ANIM_FRAME_USES_POSITION = 1 << 0,
+		ANIM_FRAME_USES_ROTATION = 1 << 1,
+		ANIM_FRAME_USES_SCALE = 1 << 2,
+		ANIM_FRAME_USES_ALL = ANIM_FRAME_USES_POSITION | ANIM_FRAME_USES_ROTATION | ANIM_FRAME_USES_SCALE,
+		ANIM_FRAME_USES_POSITION_AND_ROTATION = ANIM_FRAME_USES_POSITION | ANIM_FRAME_USES_ROTATION,
+		ANIM_FRAME_USES_POSITION_AND_SCALE = ANIM_FRAME_USES_POSITION | ANIM_FRAME_USES_SCALE,
+		ANIM_FRAME_USES_ROTATION_AND_SCALE = ANIM_FRAME_USES_ROTATION | ANIM_FRAME_USES_SCALE,
 	};
-	static Ptr<ObjectMeshSkinned> create(const Ptr<Mesh> &mesh);
-	static Ptr<ObjectMeshSkinned> create(const char *path, bool unique = false);
-	int createMesh(const char *path, bool unique = false);
-	int loadMesh(const char *path);
-	int saveMesh(const char *path);
-	int setMesh(const Ptr<Mesh> &mesh);
-	int getMesh(Ptr<Mesh> &mesh) const;
-	void flushMesh();
-	bool isFlushed() const;
-	void setMeshName(const char *name);
-	const char *getMeshName() const;
-	void setMeshNameForce(const char *path);
-	void setAnimName(const char *name);
-	const char *getAnimName() const;
-	void setAnimNameForce(const char *name);
+
+	enum INTERPOLATION_ACCURACY
+	{
+		INTERPOLATION_ACCURACY_LOW = 0,
+		INTERPOLATION_ACCURACY_MEDIUM,
+		INTERPOLATION_ACCURACY_HIGH,
+	};
+
+	enum CHAIN_CONSTRAINT
+	{
+		CHAIN_CONSTRAINT_NONE = 0,
+		CHAIN_CONSTRAINT_POLE_VECTOR,
+		CHAIN_CONSTRAINT_BONE_ROTATIONS,
+	};
+	static Ptr<ObjectMeshSkinned> create();
+	static Ptr<ObjectMeshSkinned> create(const char *path);
+	void setMeshPath(const char *path);
+	const char *getMeshPath() const;
+	bool isLoaded() const;
+	void setMeshProceduralMode(bool mode);
+	bool isMeshProceduralMode() const;
+	bool applyMeshProcedural(const Ptr<Mesh> &mesh);
+	void setAnimPath(const char *path);
+	const char *getAnimPath() const;
 	void setFPSVisibleCamera(int camera);
 	int getFPSVisibleCamera() const;
 	void setFPSVisibleShadow(int shadow);
@@ -567,58 +575,39 @@ public:
 	float getTime() const;
 	void setSpeed(float speed);
 	float getSpeed() const;
+	void setInterpolationAccuracy(ObjectMeshSkinned::INTERPOLATION_ACCURACY accuracy);
+	ObjectMeshSkinned::INTERPOLATION_ACCURACY getInterpolationAccuracy() const;
 	void play();
 	void stop();
 	bool isPlaying() const;
 	bool isStopped() const;
-	void updateSurfaceBounds(int surface = -1);
-	void setSurfaceTransform(const Math::mat4 &transform, int surface, int target = -1);
-	int addMeshSurface(const char *name, const Ptr<Mesh> &mesh, int surface, int target = -1);
-	int addMeshSurface(const char *name, const Ptr<ObjectMeshSkinned> &mesh, int surface, int target = -1);
-	int addMeshSurface(int dest_surface, const Ptr<ObjectMeshSkinned> &mesh, int surface, int target = -1);
-	int getMeshSurface(const Ptr<Mesh> &mesh, int surface, int target = -1) const;
-	int addEmptySurface(const char *name, int num_vertex, int num_indices);
-	int addSurfaceTarget(int surface, const char *name = 0);
-	int addSurfaceTarget(int dest_surface, const Ptr<ObjectMeshSkinned> &src_mesh, int src_surface, int src_target = -1);
-	void mergeMeshSurface(int dest_surface, const Ptr<ObjectMeshSkinned> &src_mesh, int src_surface);
+	bool getMesh(Ptr<Mesh> &mesh) const;
+	bool getMeshSurface(const Ptr<Mesh> &mesh, int surface, int target = -1) const;
 	int getNumVertex(int surface) const;
-	void setVertex(int num, const Math::vec3 &vertex, int surface, int target = 0);
 	Math::vec3 getVertex(int num, int surface, int target = 0) const;
 	Math::vec3 getSkinnedVertex(int num, int surface) const;
 	int getNumTangents(int surface) const;
-	void setTangent(int num, const Math::quat &tangent, int surface, int target = 0);
 	Math::quat getTangent(int num, int surface, int target = 0) const;
 	Math::vec3 getNormal(int num, int surface, int target = 0) const;
 	Math::quat getSkinnedTangent(int num, int index, int surface) const;
 	Math::vec3 getSkinnedNormal(int num, int index, int surface) const;
-	void setNumTexCoords0(int num, int surface);
 	int getNumTexCoords0(int surface) const;
-	void setTexCoord0(int num, const Math::vec2 &texcoord, int surface);
 	Math::vec2 getTexCoord0(int num, int surface) const;
-	void setNumTexCoords1(int num, int surface);
 	int getNumTexCoords1(int surface) const;
-	void setTexCoord1(int num, const Math::vec2 &texcoord, int surface);
 	Math::vec2 getTexCoord1(int num, int surface) const;
 	int getNumColors(int surface) const;
-	void setColor(int num, const Math::vec4 &color, int surface);
 	Math::vec4 getColor(int num, int surface) const;
 	int getNumCIndices(int surface) const;
-	void setCIndex(int num, int index, int surface);
 	int getCIndex(int num, int surface) const;
 	int getNumTIndices(int surface) const;
-	void setTIndex(int num, int index, int surface);
 	int getTIndex(int num, int surface) const;
-	int addTarget(int surface);
-	void removeTarget(int target, int surface);
-	void setNumTargets(int num, int surface);
-	int getNumTargets(int surface) const;
-	void setTarget(int target, bool enabled, int index, float weight, int surface);
-	void setTargetEnabled(int target, bool enabled, int surface);
-	int isTargetEnabled(int target, int surface) const;
-	void setTargetIndex(int target, int index, int surface);
-	int getTargetIndex(int target, int surface) const;
-	void setTargetWeight(int target, float weight, int surface);
-	float getTargetWeight(int target, int surface) const;
+	int getNumSurfaceTargets(int surface) const;
+	const char *getSurfaceTargetName(int surface, int target) const;
+	int findSurfaceTarget(int surface, const char *name) const;
+	void setSurfaceTargetEnabled(int surface, int target, bool enabled);
+	int isSurfaceTargetEnabled(int surface, int target) const;
+	void setSurfaceTargetWeight(int surface, int target, float weight);
+	float getSurfaceTargetWeight(int surface, int target) const;
 	int addLayer();
 	void removeLayer(int layer);
 	void setNumLayers(int layers);
@@ -634,31 +623,55 @@ public:
 	void inverseLayer(int dest, int src);
 	void lerpLayer(int dest, int layer0, int layer1, float weight);
 	void mulLayer(int dest, int layer0, int layer1, float weight = 1.0f);
+	void setLayerBoneTransformEnabled(int layer, int bone, bool enabled);
+	void setLayerBoneTransform(int layer, int bone, const Math::mat4 &transform);
+	Math::mat4 getLayerBoneTransform(int layer, int bone) const;
+	bool isLayerBoneTransform(int layer, int bone) const;
+	void setLayerBonePosition(int layer, int bone, const Math::vec3 &position);
+	Math::vec3 getLayerBonePosition(int layer, int bone) const;
+	void setLayerBoneRotation(int layer, int bone, const Math::quat &rotation);
+	Math::quat getLayerBoneRotation(int layer, int bone) const;
+	void setLayerBoneScale(int layer, int bone, const Math::vec3 &scale);
+	Math::vec3 getLayerBoneScale(int layer, int bone) const;
+	void setLayerFrameUsesEnabled(int layer, bool enabled);
+	bool isLayerFrameUsesEnabled(int layer) const;
+	void setLayerBoneFrameUses(int layer, int bone, ObjectMeshSkinned::ANIM_FRAME_USES uses);
+	ObjectMeshSkinned::ANIM_FRAME_USES getLayerBoneFrameUses(int layer, int bone) const;
+	int getLayerNumFrames(int layer) const;
+	float setLayerFrame(int layer, float frame, int from = -1, int to = -1);
+	float getLayerFrame(int layer) const;
+	int getLayerFrameFrom(int layer) const;
+	int getLayerFrameTo(int layer) const;
+	static void setRetargeting(const Ptr<BonesRetargeting> &bones_retargeting, const char *anim_path, const char *mesh_path);
+	static void removeRetargeting(const char *anim_path, const char *mesh_path);
+	static Ptr<BonesRetargeting> getRetargeting(const char *anim_path, const char *mesh_path);
+	static bool isRetargeting(const char *anim_path, const char *mesh_path);
+	long long getAnimationResourceID(const char *path) const;
+	void setLayerAnimationFilePath(int layer, const char *path);
+	String getLayerAnimationFilePath(int layer) const;
+	void setLayerAnimationResourceID(int layer, long long resource_id) const;
+	long long getLayerAnimationResourceID(int layer) const;
 	int getNumBones() const;
 	const char *getBoneName(int bone) const;
 	int findBone(const char *name) const;
 	int getBoneParent(int bone) const;
 	int getNumBoneChildren(int bone) const;
 	int getBoneChild(int bone, int child) const;
-	Math::mat4 getBoneBindTransform(int bone) const;
-	Math::mat4 getBoneBindITransform(int bone) const;
+	Math::mat4 getBoneBindLocalTransform(int bone) const;
+	Math::mat4 getBoneBindLocalITransform(int bone) const;
+	Math::mat4 getBoneBindObjectTransform(int bone) const;
+	Math::mat4 getBoneBindObjectITransform(int bone) const;
 	void setBoneTransform(int bone, const Math::mat4 &transform);
 	void setBoneTransformWithChildren(int bone, const Math::mat4 &transform);
 	void setBoneTransforms(const int *bones, const Math::mat4 *transforms, int num_bones);
 	Math::mat4 getBoneTransform(int bone) const;
-	Math::mat4 getBoneITransform(int bone) const;
+	Math::mat4 getBoneSkiningTransform(int bone) const;
 	void setBoneWorldTransform(int bone, const Math::Mat4 &transform);
 	void setBoneWorldTransformWithChildren(int bone, const Math::Mat4 &transform);
 	Math::Mat4 getBoneWorldTransform(int bone) const;
-	void setBoneLayerTransformEnabled(int layer, int bone, bool enabled);
-	void setBoneLayerTransform(int layer, int bone, const Math::mat4 &transform);
-	Math::mat4 getBoneLayerTransform(int layer, int bone) const;
-	bool isBoneLayerTransform(int layer, int bone) const;
 	Math::mat4 getBoneNotAdditionalBindLocalTransform(int bone) const;
 	Math::mat4 getBoneNotAdditionalBindObjectTransform(int bone) const;
 	Math::Mat4 getBoneNotAdditionalBindWorldTransform(int bone) const;
-	void setBoneFrameUses(int layer, int bone, ObjectMeshSkinned::FRAME_USES uses);
-	ObjectMeshSkinned::FRAME_USES getBoneFrameUses(int layer, int bone) const;
 	void setBindNode(int bone, const Ptr<Node> &node);
 	Ptr<Node> getBindNode(int bone) const;
 	void removeBindNodeByBone(int bone);
@@ -677,18 +690,56 @@ public:
 	void clearVisualizeBones();
 	void setVisualizeAllBones(bool bones);
 	bool isVisualizeAllBones() const;
+	void addVisualizeLookAtChain(int chain_id);
+	void removeVisualizeLookAtChain(int chain_id);
+	void clearVisualizeLookAtChain();
 	void addVisualizeIKChain(int chain_id);
 	void removeVisualizeIKChain(int chain_id);
 	void clearVisualizeIKChain();
+	void addVisualizeConstraint(int constraint_index);
+	void removeVisualizeConstraint(int constraint_index);
+	void clearVisualizeConstraint();
+	int addLookAtChain();
+	void removeLookAtChain(int chain_id);
+	int getNumLookAtChains() const;
+	int getLookAtChainID(int num) const;
+	void setLookAtChainEnabled(bool enabled, int chain_id);
+	bool isLookAtChainEnabled(int chain_id) const;
+	void setLookAtChainConstraint(ObjectMeshSkinned::CHAIN_CONSTRAINT constraint, int chain_id);
+	ObjectMeshSkinned::CHAIN_CONSTRAINT getLookAtChainConstraint(int chain_id) const;
+	void setLookAtChainWeight(float weight, int chain_id);
+	float getLookAtChainWeight(int chain_id) const;
+	int addLookAtChainBone(int bone, int chain_id);
+	int addLookAtChainBone(const char *bone_name, int chain_id);
+	int getLookAtChainNumBones(int chain_id) const;
+	void removeLookAtChainBone(int bone_num, int chain_id);
+	int getLookAtChainBone(int bone_num, int chain_id) const;
+	void setLookAtChainBoneWeight(float weight, int bone_num, int chain_id);
+	float getLookAtChainBoneWeight(int bone_num, int chain_id) const;
+	void setLookAtChainBoneUp(const Math::Vec3 &up, int bone_num, int chain_id);
+	Math::Vec3 getLookAtChainBoneUp(int bone_num, int chain_id) const;
+	void setLookAtChainBoneAxis(const Math::Vec3 &axis, int bone_num, int chain_id);
+	Math::Vec3 getLookAtChainBoneAxis(int bone_num, int chain_id) const;
+	void setLookAtChainTargetPosition(const Math::Vec3 &position, int chain_id);
+	Math::Vec3 getLookAtChainTargetPosition(int chain_id) const;
+	void setLookAtChainTargetWorldPosition(const Math::Vec3 &position, int chain_id);
+	Math::Vec3 getLookAtChainTargetWorldPosition(int chain_id) const;
+	void setLookAtChainPolePosition(const Math::Vec3 &position, int chain_id);
+	Math::Vec3 getLookAtChainPolePosition(int chain_id) const;
+	void setLookAtChainPoleWorldPosition(const Math::Vec3 &position, int chain_id);
+	Math::Vec3 getLookAtChainPoleWorldPosition(int chain_id) const;
 	int addIKChain();
 	void removeIKChain(int chain_id);
 	int getNumIKChains() const;
-	int getIKChain(int num) const;
+	int getIKChainID(int num) const;
 	void setIKChainEnabled(bool enabled, int chain_id);
 	bool isIKChainEnabled(int chain_id) const;
+	void setIKChainConstraint(ObjectMeshSkinned::CHAIN_CONSTRAINT constraint, int chain_id);
+	ObjectMeshSkinned::CHAIN_CONSTRAINT getIKChainConstraint(int chain_id) const;
 	void setIKChainWeight(float weight, int chain_id);
 	float getIKChainWeight(int chain_id) const;
 	int addIKChainBone(int bone, int chain_id);
+	int addIKChainBone(const char *bone_name, int chain_id);
 	int getIKChainNumBones(int chain_id) const;
 	void removeIKChainBone(int bone_num, int chain_id);
 	int getIKChainBone(int bone_num, int chain_id) const;
@@ -696,8 +747,6 @@ public:
 	Math::Vec3 getIKChainTargetPosition(int chain_id) const;
 	void setIKChainTargetWorldPosition(const Math::Vec3 &position, int chain_id);
 	Math::Vec3 getIKChainTargetWorldPosition(int chain_id) const;
-	void setIKChainUsePoleVector(bool use, int chain_id);
-	bool isIKChainUsePoleVector(int chain_id) const;
 	void setIKChainPolePosition(const Math::Vec3 &position, int chain_id);
 	Math::Vec3 getIKChainPolePosition(int chain_id) const;
 	void setIKChainPoleWorldPosition(const Math::Vec3 &position, int chain_id);
@@ -712,31 +761,57 @@ public:
 	int getIKChainNumIterations(int chain_id) const;
 	void setIKChainTolerance(float tolerance, int chain_id);
 	float getIKChainTolerance(int chain_id) const;
-	int addAnimation(const char *path);
-	int addAnimation(const Ptr<Mesh> &mesh, const char *path = 0);
-	int addRetargetedAnimation(const char *path, const Ptr<BonesRetargeting> &bones_retargeting);
-	int addRetargetedAnimation(const Ptr<Mesh> &mesh, const Ptr<BonesRetargeting> &bones_retargeting, const char *path = 0);
-	void removeAnimation(int animation);
-	int getNumAnimations() const;
-	int getAnimationID(int num) const;
-	const char *getAnimationPath(int animation) const;
-	int getNumAnimationBones(int animation) const;
-	int getNumAnimationFrames(int animation) const;
-	int findAnimation(const char *path) const;
-	int setAnimation(int layer, const char *path);
-	int setAnimation(int layer, int animation);
-	int getAnimation(int layer) const;
-	int getNumFrames(int layer) const;
-	float setFrame(int layer, float frame, int from = -1, int to = -1);
-	float getFrame(int layer) const;
-	int getFrameFrom(int layer) const;
-	int getFrameTo(int layer) const;
-	int getNumSurfaceTargets(int surface) const;
-	const char *getSurfaceTargetName(int surface, int target) const;
-	int findSurfaceTarget(const char *name, int surface) const;
+	int addBoneConstraint(int bone);
+	int addBoneConstraint(const char *bone_name);
+	void removeBoneConstraint(int constraint_num);
+	int getNumBoneConstraints() const;
+	int findBoneConstraint(int bone) const;
+	int findBoneConstraint(const char *bone_name) const;
+	void setBoneConstraintEnabled(bool enabled, int constraint_num);
+	bool isBoneConstraintEnabled(int constraint_num) const;
+	int getBoneConstraintBoneIndex(int constraint_num) const;
+	void setBoneConstraintYawAxis(const Math::vec3 &axis, int constraint_num);
+	Math::vec3 getBoneConstraintYawAxis(int constraint_num) const;
+	void setBoneConstraintPitchAxis(const Math::vec3 &axis, int constraint_num);
+	Math::vec3 getBoneConstraintPitchAxis(int constraint_num) const;
+	void setBoneConstraintRollAxis(const Math::vec3 &axis, int constraint_num);
+	Math::vec3 getBoneConstraintRollAxis(int constraint_num) const;
+	void setBoneConstraintYawAngles(float min_angle, float max_angle, int constraint_num);
+	float getBoneConstraintYawMinAngle(int constraint_num) const;
+	float getBoneConstraintYawMaxAngle(int constraint_num) const;
+	void setBoneConstraintPitchAngles(float min_angle, float max_angle, int constraint_num);
+	float getBoneConstraintPitchMinAngle(int constraint_num) const;
+	float getBoneConstraintPitchMaxAngle(int constraint_num) const;
+	void setBoneConstraintRollAngles(float min_angle, float max_angle, int constraint_num);
+	float getBoneConstraintRollMinAngle(int constraint_num) const;
+	float getBoneConstraintRollMaxAngle(int constraint_num) const;
 	void updateSkinned();
-	void copyBoneTransforms(const Ptr<ObjectMeshSkinned> &mesh);
+	void copyBoneTransforms(const Ptr<ObjectMeshSkinned> &src);
 	bool isNeedUpdate() const;
+	Event<float, const Ptr<ObjectMeshSkinned> &> &getEventUpdate();
+	Event<const Ptr<ObjectMeshSkinned> &> &getEventBeginLookAtSolvers();
+	Event<const Ptr<ObjectMeshSkinned> &> &getEventEndLookAtSolvers();
+	Event<const Ptr<ObjectMeshSkinned> &> &getEventBeginIKSolvers();
+	Event<const Ptr<ObjectMeshSkinned> &> &getEventEndIKSolvers();
+	Event<const Ptr<ObjectMeshSkinned> &> &getEventBeginBoneConstraints();
+	Event<const Ptr<ObjectMeshSkinned> &> &getEventEndBoneConstraints();
+
+private:
+
+	EventHolder<EventInterfaceInvoker<float, const Ptr<ObjectMeshSkinned> &>> event_update;
+	EventInterfaceConnection<EventInterfaceInvoker<float, const Ptr<ObjectMeshSkinned> &>> event_update_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<ObjectMeshSkinned> &>> event_begin_look_at_solvers;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<ObjectMeshSkinned> &>> event_begin_look_at_solvers_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<ObjectMeshSkinned> &>> event_end_look_at_solvers;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<ObjectMeshSkinned> &>> event_end_look_at_solvers_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<ObjectMeshSkinned> &>> event_begin_iksolvers;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<ObjectMeshSkinned> &>> event_begin_iksolvers_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<ObjectMeshSkinned> &>> event_end_iksolvers;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<ObjectMeshSkinned> &>> event_end_iksolvers_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<ObjectMeshSkinned> &>> event_begin_bone_constraints;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<ObjectMeshSkinned> &>> event_begin_bone_constraints_connection;
+	EventHolder<EventInterfaceInvoker<const Ptr<ObjectMeshSkinned> &>> event_end_bone_constraints;
+	EventInterfaceConnection<EventInterfaceInvoker<const Ptr<ObjectMeshSkinned> &>> event_end_bone_constraints_connection;
 };
 typedef Ptr<ObjectMeshSkinned> ObjectMeshSkinnedPtr;
 
@@ -859,11 +934,14 @@ public:
 
 	static Ptr<ObjectMeshCluster> create();
 	static Ptr<ObjectMeshCluster> create(const char *path);
-	Ptr<MeshStatic> getMeshInfo();
-	Ptr<MeshStatic> getMeshForce();
-	Ptr<MeshStatic> getMeshAsync();
-	Ptr<MeshStatic> getMeshForceVRAM();
-	Ptr<MeshStatic> getMeshAsyncVRAM();
+	Ptr<Mesh> getMeshCurrentRAM();
+	Ptr<Mesh> getMeshForceRAM();
+	Ptr<Mesh> getMeshAsyncRAM();
+	Ptr<Mesh> getMeshProceduralRAM();
+	Ptr<MeshRender> getMeshCurrentVRAM();
+	Ptr<MeshRender> getMeshForceVRAM();
+	Ptr<MeshRender> getMeshAsyncVRAM();
+	Ptr<MeshRender> getMeshProceduralVRAM();
 	bool loadAsyncRAM();
 	bool loadAsyncVRAM();
 	bool loadForceRAM();
@@ -876,10 +954,6 @@ public:
 	bool isMeshNull() const;
 	bool isMeshLoadedRAM() const;
 	bool isMeshLoadedVRAM() const;
-	void setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH meshstreamingmoderam);
-	Object::STREAMING_OBJECT_MESH getMeshStreamingModeRAM() const;
-	void setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH meshstreamingmodevram);
-	Object::STREAMING_OBJECT_MESH getMeshStreamingModeVRAM() const;
 	void setMeshPath(const char *path);
 	const char *getMeshPath() const;
 	void setVisibleDistance(float distance);
@@ -923,11 +997,14 @@ public:
 	using Object::setIntersectionMask;
 	static Ptr<ObjectMeshClutter> create();
 	static Ptr<ObjectMeshClutter> create(const char *path);
-	Ptr<MeshStatic> getMeshInfo();
-	Ptr<MeshStatic> getMeshForce();
-	Ptr<MeshStatic> getMeshAsync();
-	Ptr<MeshStatic> getMeshForceVRAM();
-	Ptr<MeshStatic> getMeshAsyncVRAM();
+	Ptr<Mesh> getMeshCurrentRAM();
+	Ptr<Mesh> getMeshForceRAM();
+	Ptr<Mesh> getMeshAsyncRAM();
+	Ptr<Mesh> getMeshProceduralRAM();
+	Ptr<MeshRender> getMeshCurrentVRAM();
+	Ptr<MeshRender> getMeshForceVRAM();
+	Ptr<MeshRender> getMeshAsyncVRAM();
+	Ptr<MeshRender> getMeshProceduralVRAM();
 	bool loadAsyncRAM();
 	bool loadAsyncVRAM();
 	bool loadForceRAM();
@@ -940,10 +1017,6 @@ public:
 	bool isMeshNull() const;
 	bool isMeshLoadedRAM() const;
 	bool isMeshLoadedVRAM() const;
-	void setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH meshstreamingmoderam);
-	Object::STREAMING_OBJECT_MESH getMeshStreamingModeRAM() const;
-	void setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH meshstreamingmodevram);
-	Object::STREAMING_OBJECT_MESH getMeshStreamingModeVRAM() const;
 	void setMeshPath(const char *path);
 	const char *getMeshPath() const;
 	void setCollision(bool collision);
@@ -1069,14 +1142,14 @@ public:
 	static Ptr<ObjectGrass> create();
 	void setFieldMask(int mask);
 	int getFieldMask() const;
-	void setThinning(int thinning);
-	int getThinning() const;
-	void setVariation(int variation);
-	int getVariation() const;
-	void setOrientation(int orientation);
-	int getOrientation() const;
-	void setIntersection(int intersection);
-	int getIntersection() const;
+	void setThinning(bool thinning);
+	bool getThinning() const;
+	void setVariation(bool variation);
+	bool getVariation() const;
+	void setOrientation(bool orientation);
+	bool getOrientation() const;
+	void setIntersection(bool intersection);
+	bool getIntersection() const;
 	void setIntersectionMask(int mask);
 	int getIntersectionMask() const;
 	void setNumTextures(int textures);
@@ -1139,12 +1212,12 @@ public:
 	const char *getMaskMeshName() const;
 	void setTerrainMasks(const Math::ivec4 &masks);
 	Math::ivec4 getTerrainMasks() const;
-	void setMaskInverse(int inverse);
-	int getMaskInverse() const;
+	void setMaskInverse(bool inverse);
+	bool getMaskInverse() const;
 	void setCutoutIntersectionMask(int mask);
 	int getCutoutIntersectionMask() const;
-	void setCutoutInverse(int inverse);
-	int getCutoutInverse() const;
+	void setCutoutInverse(bool inverse);
+	bool getCutoutInverse() const;
 	void invalidate();
 	void invalidate(const Math::WorldBoundBox &bounds);
 };
@@ -1186,8 +1259,8 @@ public:
 	float getMaskContrast() const;
 	void setDetailMask(const Ptr<TerrainDetailMask> &mask);
 	Ptr<TerrainDetailMask> getDetailMask() const;
-	void setMaterialPath(const char *path);
-	const char *getMaterialPath() const;
+	void setMaterialFilePath(const char *path);
+	String getMaterialFilePath() const;
 	void setMaterialGUID(const UGUID &materialguid);
 	UGUID getMaterialGUID() const;
 	void setMaterial(const Ptr<Material> &material);
@@ -1292,7 +1365,7 @@ class LandscapeLayerMap;
 class UNIGINE_API Landscape
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
 	enum TYPE_DATA
 	{
@@ -2028,8 +2101,6 @@ public:
 	int getParticlesFieldMask() const;
 	void setPhysicalMass(float mass);
 	float getPhysicalMass() const;
-	void setLinearDamping(float damping);
-	float getLinearDamping() const;
 	void setRestitution(float restitution);
 	float getRestitution() const;
 	void setRoughness(float roughness);
@@ -2082,6 +2153,7 @@ public:
 	Ptr<ParticleModifierScalar> getLengthStretchOverTimeModifier() const;
 	Ptr<ParticleModifierScalar> getLengthFlatteningOverTimeModifier() const;
 	Ptr<ParticleModifierScalar> getVelocityOverTimeModifier() const;
+	Ptr<ParticleModifierScalar> getLinearDampingOverTimeModifier() const;
 	Ptr<ParticleModifierVector> getDirectionOverTimeModifier() const;
 	Ptr<ParticleModifierVector> getPositionOverTimeModifier() const;
 	Ptr<ParticleModifierVector> getGravityOverTimeModifier() const;
@@ -2293,11 +2365,14 @@ public:
 	};
 	static Ptr<ObjectGuiMesh> create();
 	static Ptr<ObjectGuiMesh> create(const char *mesh_path, const char *name = 0);
-	Ptr<MeshStatic> getMeshInfo();
-	Ptr<MeshStatic> getMeshForce();
-	Ptr<MeshStatic> getMeshAsync();
-	Ptr<MeshStatic> getMeshForceVRAM();
-	Ptr<MeshStatic> getMeshAsyncVRAM();
+	Ptr<Mesh> getMeshCurrentRAM();
+	Ptr<Mesh> getMeshForceRAM();
+	Ptr<Mesh> getMeshAsyncRAM();
+	Ptr<Mesh> getMeshProceduralRAM();
+	Ptr<MeshRender> getMeshCurrentVRAM();
+	Ptr<MeshRender> getMeshForceVRAM();
+	Ptr<MeshRender> getMeshAsyncVRAM();
+	Ptr<MeshRender> getMeshProceduralVRAM();
 	bool loadAsyncRAM();
 	bool loadAsyncVRAM();
 	bool loadForceRAM();
@@ -2310,10 +2385,6 @@ public:
 	bool isMeshNull() const;
 	bool isMeshLoadedRAM() const;
 	bool isMeshLoadedVRAM() const;
-	void setMeshStreamingModeRAM(Object::STREAMING_OBJECT_MESH meshstreamingmoderam);
-	Object::STREAMING_OBJECT_MESH getMeshStreamingModeRAM() const;
-	void setMeshStreamingModeVRAM(Object::STREAMING_OBJECT_MESH meshstreamingmodevram);
-	Object::STREAMING_OBJECT_MESH getMeshStreamingModeVRAM() const;
 	void setMeshPath(const char *path);
 	const char *getMeshPath() const;
 	Ptr<Gui> getGui() const;
@@ -2399,6 +2470,10 @@ public:
 	Math::vec4 getTextColor() const;
 	void setTextWrapWidth(float width);
 	float getTextWrapWidth() const;
+	float getTextWidth() const;
+	float getTextHeight() const;
+	float getTextAspect() const;
+	int getTextNumLines() const;
 };
 typedef Ptr<ObjectText> ObjectTextPtr;
 

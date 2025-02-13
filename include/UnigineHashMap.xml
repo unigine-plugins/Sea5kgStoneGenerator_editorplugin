@@ -4,42 +4,30 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.HashMap.#ctor">
+		<member name="M:Unigine.HashMap.HashMap">
 			<summary>
 			Default constructor that produces an empty hash map.
 			</summary>  
 		</member>
-		<member name="M:Unigine.HashMap.#ctor(std::initializer_list{Pair{Key,Type}})">
+		<member name="M:Unigine.HashMap.HashMap(std::initializer_list{Pair{Key,Value}})">
 			<summary>
 			Constructor. Creates a hash map from given key-value pairs.
 			</summary> 
 			<param name="list"> List of pairs. </param> 
 		</member>
-		<member name="M:Unigine.HashMap.#ctor(HashMap)">
+		<member name="M:Unigine.HashMap.HashMap(HashMap)">
 			<summary>
 			Constructor. Creates a hash map by copying a source hash map.
 			</summary> 
 			<param name="o"> Hash map. </param> 
 		</member>
-		<member name="M:Unigine.HashMap.#ctor(HashMap)">
+		<member name="M:Unigine.HashMap.HashMap(HashMap)">
 			<summary>
-			Constructor. Creates a hash map by copying a source hash map.
+			Constructor. Creates a hash map by moving a source hash map into it.
 			</summary> 
 			<param name="o"> Hash map. </param> 
 		</member>
-		<member name="M:Unigine.HashMap.operator=(HashMap)">
-			<summary>
-			Assignment operator for the hash map.
-			</summary> 
-			<param name="o"> Hash map. </param> 
-		</member>
-		<member name="M:Unigine.HashMap.operator=(HashMap)">
-			<summary>
-			Assignment operator for the hash map.
-			</summary> 
-			<param name="o"> Hash map. </param> 
-		</member>
-		<member name="M:Unigine.HashMap.append(Key,Type)">
+		<member name="M:Unigine.HashMap.append(Key,Value)">
 			<summary>
 			Appends an item with a given key and value to the hash map.
 			</summary> 
@@ -47,141 +35,148 @@
 			<param name="value"> Value. </param> 
 			<returns>Item iterator.</returns>
 		</member>
-		<member name="M:Unigine.HashMap.append(Key,Type)">
+		<member name="M:Unigine.HashMap.append(Key,Value)">
 			<summary>
 			Appends an item with a given key and value to the hash map.
 			</summary> 
-			<param name="key"> Key. </param>
-			<param name="value"> Value. </param> 
+			<param name="key"> Key to be copied to the hash map. </param>
+			<param name="value"> Value to be moved to the hash map. </param> 
 			<returns>Item iterator.</returns>
 		</member>
-		<member name="M:Unigine.HashMap.append(Key,Type)">
+		<member name="M:Unigine.HashMap.append(Key,Value)">
 			<summary>
 			Appends an item with a given key and value to the hash map.
 			</summary> 
-			<param name="key"> Key. </param>
-			<param name="value"> Value. </param> 
+			<param name="key"> Key to be moved to the hash map. </param>
+			<param name="value"> Value to be copied to the hash map. </param> 
 			<returns>Item iterator.</returns>
 		</member>
-		<member name="M:Unigine.HashMap.append(Key,Type)">
+		<member name="M:Unigine.HashMap.append(Key,Value)">
 			<summary>
 			Appends an item with a given key and value to the hash map.
 			</summary> 
-			<param name="key"> Key. </param>
-			<param name="value"> Value. </param> 
+			<param name="key"> Key to be moved to the hash map. </param>
+			<param name="value"> Value to be moved to the hash map. </param> 
 			<returns>Item iterator.</returns>
-		</member>
-		<member name="M:Unigine.HashMap.append(HashMap)">
-			<summary>
-			Appends a given hash map to the current one.
-			</summary> 
-			<param name="o"> Hash map. </param> 
-		</member>
-		<member name="M:Unigine.HashMap.append(HashMap)">
-			<summary>
-			Appends a given hash map to the current one.
-			</summary> 
-			<param name="o"> Hash map. </param> 
-		</member>
-		<member name="M:Unigine.HashMap.insert(Key,Type)">
-			<summary>
-			Inserts an item with a given key and value into the hash map.
-			</summary> 
-			<param name="key"> Key. </param>
-			<param name="value"> Value. </param> 
-			<returns>Item iterator.</returns>
-		</member>
-		<member name="M:Unigine.HashMap.insert(Key,Type)">
-			<summary>
-			Inserts an item with a given key and value into the hash map.
-			</summary> 
-			<param name="key"> Key. </param>
-			<param name="value"> Value. </param> 
-			<returns>Item iterator.</returns>
-		</member>
-		<member name="M:Unigine.HashMap.insert(Key,Type)">
-			<summary>
-			Inserts an item with a given key and value into the hash map.
-			</summary> 
-			<param name="key"> Key. </param>
-			<param name="value"> Value. </param> 
-			<returns>Item iterator.</returns>
-		</member>
-		<member name="M:Unigine.HashMap.insert(Key,Type)">
-			<summary>
-			Inserts an item with a given key and value into the hash map.
-			</summary> 
-			<param name="key"> Key. </param>
-			<param name="value"> Value. </param> 
-			<returns>Item iterator.</returns>
-		</member>
-		<member name="M:Unigine.HashMap.insert(HashMap)">
-			<summary>
-			Inserts a given hash map into the current one.
-			</summary> 
-			<param name="o"> Hash map. </param> 
-		</member>
-		<member name="M:Unigine.HashMap.insert(HashMap)">
-			<summary>
-			Inserts a given hash map into the current one.
-			</summary> 
-			<param name="o"> Hash map. </param> 
 		</member>
 		<member name="M:Unigine.HashMap.append(Key)">
 			<summary>
-			Appends an item with a specified key to the hash map. The item value is default-constructed.
+			Appends an item with a given key to the hash map.
 			</summary> 
 			<param name="key"> Key. </param> 
-			<returns>Added item value.</returns>
+			<returns>Value.</returns>
 		</member>
 		<member name="M:Unigine.HashMap.append(Key)">
 			<summary>
-			Appends an item with a specified key to the hash map. The item value is default-constructed.
+			Appends an item with a given key to the hash map.
 			</summary> 
-			<param name="key"> Key. </param> 
-			<returns>Added item value.</returns>
+			<param name="key"> Key to be moved to the hash map. </param> 
+			<returns>Value.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.append(HashMap)">
+			<summary>
+			Appends items with all available keys from the argument hash to the hash map.
+			</summary> 
+			<param name="o"> Hash map to be appended. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.append(HashMap)">
+			<summary>
+			Appends items with all available keys by moving the argument hash to the hash map.
+			</summary> 
+			<param name="o"> Hash map to be appended. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.append(Vector)">
+			<summary>
+			Appends items with all available keys from the argument vector to the hash map.
+			</summary> 
+			<param name="vector"> Vector containing the key (or keys) to be appended. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.append(Vector)">
+			<summary>
+			Appends items with all available keys by moving the argument vector to the hash map.
+			</summary> 
+			<param name="vector"> Vector containing the key (or keys) to be appended. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.insert(Key,Value)">
+			<summary>
+			Inserts an item with a given key and value into the hash map.
+			</summary> 
+			<param name="key"> Key. </param>
+			<param name="value"> Value. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.insert(Key,Value)">
+			<summary>
+			Inserts an item with a given key and value into the hash map.
+			</summary> 
+			<param name="key"> Key to be copied to the hash map. </param>
+			<param name="value"> Value to be moved to the hash map. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.insert(Key,Value)">
+			<summary>
+			Inserts an item with a given key and value into the hash map.
+			</summary> 
+			<param name="key"> Key to be moved to the hash map. </param>
+			<param name="value"> Value to be copied to the hash map. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.insert(Key,Value)">
+			<summary>
+			Inserts an item with a given key and value into the hash map.
+			</summary> 
+			<param name="key"> Key to be moved to the hash map. </param>
+			<param name="value"> Value to be moved to the hash map. </param> 
+			<returns>Item iterator.</returns>
 		</member>
 		<member name="M:Unigine.HashMap.insert(Key)">
 			<summary>
-			Inserts an item with a specified key into the hash map. The item value is default-constructed.
+			Inserts an item with a given key into the hash map.
 			</summary> 
-			<param name="key"> Key. </param> 
-			<returns>Inserted item value.</returns>
+			<param name="key"> Key to be copied to the hash map. </param> 
+			<returns>Value.</returns>
 		</member>
 		<member name="M:Unigine.HashMap.insert(Key)">
 			<summary>
-			Inserts an item with a specified key into the hash map. The item value is default-constructed.
+			Inserts an item with a given key into the hash map.
+			</summary> 
+			<param name="key"> Key to be moved to the hash map. </param> 
+			<returns>Value.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.insert(HashMap)">
+			<summary>
+			Inserts items with all available keys by copying the argument hash to the hash map.
+			</summary> 
+			<param name="o"> Hash map containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.insert(HashMap)">
+			<summary>
+			Inserts items with all available keys by moving the argument hash to the hash map.
+			</summary> 
+			<param name="o"> Hash map containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.insert(Vector)">
+			<summary>
+			Inserts items with all available keys by copying the argument vector to the hash map.
+			</summary> 
+			<param name="vector"> Vector containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.insert(Vector)">
+			<summary>
+			Inserts items with all available keys by moving the argument vector to the hash map.
+			</summary> 
+			<param name="vector"> Vector containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.take(Key,Value)">
+			<summary>
+			Removes an item from the hash map by its key and returns an item value. If there is no such item, the value set as default is returned.
 			</summary> 
 			<param name="key"> Key. </param> 
-			<returns>Inserted item value.</returns>
-		</member>
-		<member name="M:Unigine.HashMap.emplace(Key,Args)">
-			<summary>
-			Inserts an item with a specified key into the hash map. The new item value is constructed in-place with the given arguments avoiding unnecessary copying.
-			</summary> 
-			<param name="key"> Key. </param>
-			<param name="args"> Arguments for an item value constructor. </param> 
-			<returns>Inserted item value.</returns>
-		</member>
-		<member name="M:Unigine.HashMap.emplace(Key,Args)">
-			<summary>
-			Inserts an item with a specified key into the hash map. The new item value is constructed in-place with the given arguments avoiding unnecessary copying.
-			</summary> 
-			<param name="key"> Key. </param>
-			<param name="args"> Arguments for an item value constructor. </param> 
-			<returns>Inserted item value.</returns>
-		</member>
-		<member name="M:Unigine.HashMap.take(Key,Type)">
-			<summary>
-			Removes an item with a specified key from the hash map and returns an item value. If there is no item with the specified key, a default value is returned.
-			</summary> 
-			<param name="key"> Key. </param>
-			<param name="value"> Default value. </param> 
 			<returns>Removed item value.</returns>
 		</member>
 		<member name="M:Unigine.HashMap.take(Key)">
 			<summary>
-			Removes an item with a specified key from the hash map and returns its value. If there is no item with the specified key, a default-constructed value is returned.
+			Removes an item from the hash map by its key and returns an item value. If there is no such item, a default-constructed value is returned.
 			</summary> 
 			<param name="key"> Key. </param> 
 			<returns>Removed item value.</returns>
@@ -200,19 +195,62 @@
 			<param name="it"> Item iterator. </param> 
 			<returns>Removed item value.</returns>
 		</member>
-		<member name="M:Unigine.HashMap.operator[](Key)">
+		<member name="M:Unigine.HashMap.contains(Key,Value) const">
 			<summary>
-			Hash map item access.
+			Checks if an item with a specified key and value exists in the hash map.
+			</summary> 
+			<param name="key"> Key. </param>
+			<param name="value"> Value. </param> 
+			<returns>true if an item exists; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.findData(Value)">
+			<summary>
+			Searches for an item with a specified value in the hash map.
+			</summary> 
+			<param name="value"> Value. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.findData(Value) const">
+			<summary>
+			Searches for an item with a specified value in the hash map.
+			</summary> 
+			<param name="value"> Value. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.removeData(Value)">
+			<summary>
+			Removes the first occurrence of the specified value from the hash map.
+			</summary> 
+			<param name="value"> Value. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.get(Key)">
+			<summary>
+			Returns a value by a specified key.
 			</summary> 
 			<param name="key"> Key. </param> 
-			<returns>Accessed item value.</returns>
+			<returns>Value.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.get(Key) const">
+			<summary>
+			Returns a value by a specified key.
+			</summary> 
+			<param name="key"> Key. </param> 
+			<returns>Value.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.get(Key,Value) const">
+			<summary>
+			Returns a value by a specified key. If there is no item with the key, the default value is returned.
+			</summary> 
+			<param name="key"> Key. </param>
+			<param name="value"> Default value. </param> 
+			<returns>Value.</returns>
 		</member>
 		<member name="M:Unigine.HashMap.operator[](Key)">
 			<summary>
-			Hash map item access.
+			Hash map item access. The value is returned if it is available by the key; if the item is unavailable, a new (Key,Value) pair is added.
 			</summary> 
 			<param name="key"> Key. </param> 
-			<returns>Accessed item value.</returns>
+			<returns>Accessed item value, if available.</returns>
 		</member>
 		<member name="M:Unigine.HashMap.operator[](Key) const">
 			<summary>
@@ -221,79 +259,34 @@
 			<param name="key"> Key. </param> 
 			<returns>Accessed item value.</returns>
 		</member>
-		<member name="M:Unigine.HashMap.get(Key)">
-			<summary>
-			Returns a value by a specified key. If there is no item with the key, inserts a new value.
-			</summary> 
-			<param name="key"> Key. </param> 
-			<returns>Value.</returns>
-		</member>
-		<member name="M:Unigine.HashMap.get(Key)">
-			<summary>
-			Returns a value by a specified key. If there is no item with the key, inserts a new value.
-			</summary> 
-			<param name="key"> Key. </param> 
-			<returns>Value.</returns>
-		</member>
-		<member name="M:Unigine.HashMap.get(T) const">
-			<summary>
-			Returns a value by a specified key.
-			</summary> 
-			<param name="key"> Key. </param> 
-			<returns>Value.</returns>
-		</member>
-		<member name="M:Unigine.HashMap.get(T,Type) const">
-			<summary>
-			Returns a value by a specified key. If there is no item with the key, the default value is returned.
-			</summary> 
-			<param name="key"> Key. </param>
-			<param name="value"> Default value. </param> 
-			<returns>Value.</returns>
-		</member>
-		<member name="M:Unigine.HashMap.contains(T,Type) const">
-			<summary>
-			Checks if an item with a specified key and value exists in the hash map.
-			</summary> 
-			<param name="key"> Key. </param>
-			<param name="value"> Value. </param> 
-			<returns>Returns 1 if an item exists; otherwise, 0 is returned.</returns>
-		</member>
-		<member name="M:Unigine.HashMap.findData(Type)">
-			<summary>
-			Searches for an item with a specified value in the hash map.
-			</summary> 
-			<param name="t"> Value. </param> 
-			<returns>Item iterator.</returns>
-		</member>
-		<member name="M:Unigine.HashMap.findData(Type) const">
-			<summary>
-			Searches for an item with a specified value in the hash map.
-			</summary> 
-			<param name="t"> Value. </param> 
-			<returns>Item iterator.</returns>
-		</member>
-		<member name="M:Unigine.HashMap.value(T) const">
+		<member name="M:Unigine.HashMap.value(Key) const">
 			<summary>
 			Returns a value with a specified key from the hash map. If there is no such key, returns a default-constructed value.
 			</summary> 
 			<param name="key"> Key. </param> 
-			<returns>Value.</returns>
+			<returns>Accessed item value.</returns>
 		</member>
-		<member name="M:Unigine.HashMap.value(T,Type) const">
+		<member name="M:Unigine.HashMap.value(Key,Value) const">
 			<summary>
-			Returns a value with a specified key from the hash map. If there is no such key, returns a default value.
+			Returns a value with a specified key from the hash map. If there is no such key, returns the specified default value.
 			</summary> 
 			<param name="key"> Key. </param>
-			<param name="def"> Default value. </param> 
-			<returns>Value.</returns>
+			<param name="value"> Default value. </param> 
+			<returns>Accessed item value.</returns>
 		</member>
-		<member name="M:Unigine.HashMap.valueRef(T,Type) const">
+		<member name="M:Unigine.HashMap.valueRef(Key) const">
 			<summary>
-			Returns a value with a specified key from the hash map. If there is no such key, returns a default value.
+			Returns a reference to the value with a specified key from the hash map. If there is no such key, returns a default-constructed valuee.
 			</summary> 
-			<param name="key"> Key. </param>
-			<param name="def"> Default value. </param> 
-			<returns>Value.</returns>
+			<param name="key"> Key. </param> 
+			<returns>Accessed item value.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.valueRef(Key,Value) const">
+			<summary>
+			Returns a reference to the value with a specified key from the hash map. If there is no such key, returns a default value.
+			</summary> 
+			<param name="value"> Default value. </param> 
+			<returns>Accessed item value.</returns>
 		</member>
 		<member name="M:Unigine.HashMap.values const">
 			<summary>
@@ -301,31 +294,745 @@
 			</summary>  
 			<returns>Vector of hash map values.</returns>
 		</member>
-		<member name="M:Unigine.HashMap.getValues(Unigine.Vector{Type,int,Unigine.VectorAllocator}) const">
+		<member name="M:Unigine.HashMap.getValues(Unigine.Vector{Value,int,Unigine.VectorAllocator}) const">
 			<summary>
 			Appends hash map values to a given vector.
 			</summary> 
 			<param name="values"> Vector of hash map values. </param> 
 		</member>
-		<member name="M:Unigine.HashMap.getPairs(Unigine.Vector{Pair{Key,Type},int,Unigine.VectorAllocator}) const">
+		<member name="M:Unigine.HashMap.operator=(HashMap)">
 			<summary>
-			Appends hash map key-value pairs to a given vector.
-			</summary> 
-			<param name="pairs"> Vector of hash map key-value pairs. </param> 
-		</member>
-		<member name="M:Unigine.HashMap.operator==(HashMap) const">
-			<summary>
-			Checks if two hash maps are equal. The hash maps are considered equal if their key-value pairs are the same.
+			Assigns the specified hash map by copying it.
 			</summary> 
 			<param name="o"> Hash map. </param> 
-			<returns>Returns 1 if hash maps are equal; otherwise, 0 is returned.</returns>
+			<returns>Hash map.</returns>
 		</member>
-		<member name="M:Unigine.HashMap.operator!=(HashMap) const">
+		<member name="M:Unigine.HashMap.operator=(HashMap)">
 			<summary>
-			Checks if two hash maps are not equal. The hash maps are considered equal if their key-value pairs are the same.
+			Assigns the specified hash map by moving it.
 			</summary> 
 			<param name="o"> Hash map. </param> 
-			<returns>Returns 1 if hash maps are not equal; otherwise, 0 is returned.</returns>
+			<returns>Hash map.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.emplaceRange(InputIt,InputIt)">
+			<summary>
+			Inserts the range of values specified by the argument iterators into the hash map.
+			</summary> 
+			<param name="first"> Iterator that identifies the beginning of the range. </param>
+			<param name="last"> Iterator that identifies the end of the range. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.contains(Key) const">
+			<summary>
+			Checks if the given key is present in the hash map.
+			</summary> 
+			<param name="k"> Key to be checked. </param> 
+			<returns>true if the hash map contains the specified key; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.find(Key) const">
+			<summary>
+			Returns the iterator of the specified key.
+			</summary> 
+			<param name="k"> Key to be checked. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.find(Key) const">
+			<summary>
+			Returns the iterator of the specified key.
+			</summary> 
+			<param name="k"> Key to be checked. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.findFast(Key) const">
+			<summary>
+			Finds an element with a specified key.
+			</summary> 
+			<param name="key"> Key to look for. </param> 
+			<returns>Pointer to the hash map item.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.keys const">
+			<summary>
+			Returns a vector containing all keys in the hash map.
+			</summary>  
+			<returns>Vector of keys.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.getKeys(Unigine.Vector{Key,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Adds keys of the hash to the specified vector.
+			</summary> 
+			<param name="keys"> Vector to store the keys. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.getKey(size_t) const">
+			<summary>
+			Returns the key by its index.
+			</summary> 
+			<param name="index"> Index number of the key in the hash map. </param> 
+			<returns>Key.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.remove(Key)">
+			<summary>
+			Removes the specified key from the hash map.
+			</summary> 
+			<param name="k"> Key to be removed. </param> 
+			<returns>true if the key is removed successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.remove(Iterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash map.
+			</summary> 
+			<param name="it"> Iterator pointing to an element to be removed. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.remove(ConstIterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash map.
+			</summary> 
+			<param name="it"> Iterator pointing to an element to be removed. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.remove(HashMap)">
+			<summary>
+			Removes the specified hash map from the current hash map.
+			</summary> 
+			<param name="o"> Hash map. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.remove(Unigine.Vector{Key,int,Unigine.VectorAllocator})">
+			<summary>
+			Removes the specified keys from the hash map.
+			</summary> 
+			<param name="v"> Vector storing the keys. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.erase(ConstIterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash map.
+			</summary> 
+			<param name="it"> Iterator pointing to the element to be removed. </param> 
+			<returns>true on success, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.erase(Iterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash map.
+			</summary> 
+			<param name="it"> Iterator pointing to the element to be removed. </param> 
+			<returns>true on success, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.erase(Key)">
+			<summary>
+			Removes an element having the specified key from the hash map.
+			</summary> 
+			<param name="k"> Key of the element to be removed. </param> 
+			<returns>true on success, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.erase(HashMap)">
+			<summary>
+			Removes the specified hash map from the current hash map.
+			</summary> 
+			<param name="o"> Hash map to be removed. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.erase(Unigine.Vector{Key,int,Unigine.VectorAllocator})">
+			<summary>
+			Removes the specified keys from the hash map.
+			</summary> 
+			<param name="v"> Vector storing the keys. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.subtract(Unigine.Vector{Key,int,Unigine.VectorAllocator})">
+			<summary>
+			Removes the specified keys from the hash map.
+			</summary> 
+			<param name="vector"> Vector storing the keys. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.subtract(HashMap)">
+			<summary>
+			Removes the specified hash map from the current hash map.
+			</summary> 
+			<param name="o"> Hash map to be removed. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.clear">
+			<summary>
+			Removes all key-value pairs from the hash map.
+			</summary>  
+		</member>
+		<member name="M:Unigine.HashMap.destroy">
+			<summary>
+			Removes all key-value pairs from the hash map and releases the memory.
+			</summary>  
+		</member>
+		<member name="M:Unigine.HashMap.reserve(size_t)">
+			<summary>
+			Reserves storage to avoid repeated reallocation.
+			</summary> 
+			<param name="size"> Hash size to be reserved. </param> 
+		</member>
+		<member name="M:Unigine.HashMap.shrink">
+			<summary>
+			Removes unused capacity.
+			</summary>  
+		</member>
+		<member name="M:Unigine.HashMap.begin const">
+			<summary>
+			Returns an iterator that points to the first element in the hash map.
+			</summary>  
+			<returns>Iterator pointing to the first element.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.end const">
+			<summary>
+			Returns an iterator that points to the location succeeding the last element in the hash map.
+			</summary>  
+			<returns>Iterator pointing to the last element.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.cbegin const">
+			<summary>
+			Returns a const iterator that points to the first element in the hash map.
+			</summary>  
+			<returns>ConstIterator pointing to the first element.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.cend const">
+			<summary>
+			Returns a const iterator that points to the location succeeding the last element in the hash map.
+			</summary>  
+			<returns>ConstIterator pointing to the last element.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.size const">
+			<summary>
+			Returns the number of key-value pairs in the hash map.
+			</summary>  
+			<returns>Number of key-value pairs in the hash map.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.space const">
+			<summary>
+			Returns the current capacity (number of elements the hash can currently contain).
+			</summary>  
+			<returns>Number of elements the hash can currently contain.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.getMemoryUsage const">
+			<summary>
+			Shows the amount of memory used by the hash map in bytes.
+			</summary>  
+			<returns>Used memory in bytes.</returns>
+		</member>
+		<member name="M:Unigine.HashMap.empty const">
+			<summary>
+			Checks if the hash map is empty.
+			</summary>  
+			<returns>true if the hash map is empty, otherwise false</returns>
+		</member>
+		<member name="M:Unigine.HashMap.swap(HashMap)">
+			<summary>
+			Swaps this hash map with the hash map specified as the argument.
+			</summary> 
+			<param name="o"> Hash map. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.BucketHashMap">
+			<summary>
+			Default constructor that produces an empty hash map.
+			</summary>  
+		</member>
+		<member name="M:Unigine.BucketHashMap.BucketHashMap(std::initializer_list{Pair{Key,Value}})">
+			<summary>
+			Constructor. Creates a hash map from given key-value pairs.
+			</summary> 
+			<param name="list"> List of pairs. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.BucketHashMap(BucketHashMap)">
+			<summary>
+			Constructor. Creates a hash map by copying a source hash map.
+			</summary> 
+			<param name="o"> Hash map. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.BucketHashMap(BucketHashMap)">
+			<summary>
+			Constructor. Creates a hash map by moving a source hash map into it.
+			</summary> 
+			<param name="o"> Hash map. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.append(Key,Value)">
+			<summary>
+			Appends an item with a given key and value to the hash map.
+			</summary> 
+			<param name="key"> Key. </param>
+			<param name="value"> Value. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.append(Key,Value)">
+			<summary>
+			Appends an item with a given key and value to the hash map.
+			</summary> 
+			<param name="key"> Key to be copied to the hash map. </param>
+			<param name="value"> Value to be moved to the hash map. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.append(Key,Value)">
+			<summary>
+			Appends an item with a given key and value to the hash map.
+			</summary> 
+			<param name="key"> Key to be moved to the hash map. </param>
+			<param name="value"> Value to be copied to the hash map. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.append(Key,Value)">
+			<summary>
+			Appends an item with a given key and value to the hash map.
+			</summary> 
+			<param name="key"> Key to be moved to the hash map. </param>
+			<param name="value"> Value to be moved to the hash map. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.append(Key)">
+			<summary>
+			Appends an item with a given key to the hash map.
+			</summary> 
+			<param name="key"> Key. </param> 
+			<returns>Value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.append(Key)">
+			<summary>
+			Appends an item with a given key to the hash map.
+			</summary> 
+			<param name="key"> Key to be moved to the hash map. </param> 
+			<returns>Value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.append(BucketHashMap)">
+			<summary>
+			Appends items with all available keys from the argument hash to the hash map.
+			</summary> 
+			<param name="o"> Hash map to be appended. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.append(BucketHashMap)">
+			<summary>
+			Appends items with all available keys by moving the argument hash to the hash map.
+			</summary> 
+			<param name="o"> Hash map to be appended. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.append(Vector)">
+			<summary>
+			Appends items with all available keys from the argument vector to the hash map.
+			</summary> 
+			<param name="vector"> Vector containing the key (or keys) to be appended. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.append(Vector)">
+			<summary>
+			Appends items with all available keys by moving the argument vector to the hash map.
+			</summary> 
+			<param name="vector"> Vector containing the key (or keys) to be appended. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.insert(Key,Value)">
+			<summary>
+			Inserts an item with a given key and value into the hash map.
+			</summary> 
+			<param name="key"> Key. </param>
+			<param name="value"> Value. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.insert(Key,Value)">
+			<summary>
+			Inserts an item with a given key and value into the hash map.
+			</summary> 
+			<param name="key"> Key to be copied to the hash map. </param>
+			<param name="value"> Value to be moved to the hash map. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.insert(Key,Value)">
+			<summary>
+			Inserts an item with a given key and value into the hash map.
+			</summary> 
+			<param name="key"> Key to be moved to the hash map. </param>
+			<param name="value"> Value to be copied to the hash map. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.insert(Key,Value)">
+			<summary>
+			Inserts an item with a given key and value into the hash map.
+			</summary> 
+			<param name="key"> Key to be moved to the hash map. </param>
+			<param name="value"> Value to be moved to the hash map. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.insert(Key)">
+			<summary>
+			Inserts an item with a given key into the hash map.
+			</summary> 
+			<param name="key"> Key to be copied to the hash map. </param> 
+			<returns>Value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.insert(Key)">
+			<summary>
+			Inserts an item with a given key into the hash map.
+			</summary> 
+			<param name="key"> Key to be moved to the hash map. </param> 
+			<returns>Value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.insert(BucketHashMap)">
+			<summary>
+			Inserts items with all available keys by copying the argument hash to the hash map.
+			</summary> 
+			<param name="o"> Hash map containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.insert(BucketHashMap)">
+			<summary>
+			Inserts items with all available keys by moving the argument hash to the hash map.
+			</summary> 
+			<param name="o"> Hash map containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.insert(Vector)">
+			<summary>
+			Inserts items with all available keys by copying the argument vector to the hash map.
+			</summary> 
+			<param name="vector"> Vector containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.insert(Vector)">
+			<summary>
+			Inserts items with all available keys by moving the argument vector to the hash map.
+			</summary> 
+			<param name="vector"> Vector containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.take(Key,Value)">
+			<summary>
+			Removes an item from the hash map by its key and returns an item value. If there is no such item, the value set as default is returned.
+			</summary> 
+			<param name="key"> Key. </param> 
+			<returns>Removed item value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.take(Key)">
+			<summary>
+			Removes an item from the hash map by its key and returns an item value. If there is no such item, a default-constructed value is returned.
+			</summary> 
+			<param name="key"> Key. </param> 
+			<returns>Removed item value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.take(Iterator)">
+			<summary>
+			Removes an item from the hash map by its iterator and returns an item value. If there is no such item, a default-constructed value is returned.
+			</summary> 
+			<param name="it"> Item iterator. </param> 
+			<returns>Removed item value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.take(ConstIterator)">
+			<summary>
+			Removes an item from the hash map by its iterator and returns an item value. If there is no such item, a default-constructed value is returned.
+			</summary> 
+			<param name="it"> Item iterator. </param> 
+			<returns>Removed item value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.contains(Key,Value) const">
+			<summary>
+			Checks if an item with a specified key and value exists in the hash map.
+			</summary> 
+			<param name="key"> Key. </param>
+			<param name="value"> Value. </param> 
+			<returns>true if an item exists; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.findData(Value)">
+			<summary>
+			Searches for an item with a specified value in the hash map.
+			</summary> 
+			<param name="value"> Value. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.findData(Value) const">
+			<summary>
+			Searches for an item with a specified value in the hash map.
+			</summary> 
+			<param name="value"> Value. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.removeData(Value)">
+			<summary>
+			Removes the first occurrence of the specified value from the hash map.
+			</summary> 
+			<param name="value"> Value. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.get(Key)">
+			<summary>
+			Returns a value by a specified key.
+			</summary> 
+			<param name="key"> Key. </param> 
+			<returns>Value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.get(Key) const">
+			<summary>
+			Returns a value by a specified key.
+			</summary> 
+			<param name="key"> Key. </param> 
+			<returns>Value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.get(Key,Value) const">
+			<summary>
+			Returns a value by a specified key. If there is no item with the key, the default value is returned.
+			</summary> 
+			<param name="key"> Key. </param>
+			<param name="value"> Default value. </param> 
+			<returns>Value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.operator[](Key)">
+			<summary>
+			Hash map item access. The value is returned if it is available by the key; if the item is unavailable, a new (Key,Value) pair is added.
+			</summary> 
+			<param name="key"> Key. </param> 
+			<returns>Accessed item value, if available.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.operator[](Key) const">
+			<summary>
+			Hash map item access.
+			</summary> 
+			<param name="key"> Key. </param> 
+			<returns>Accessed item value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.value(Key) const">
+			<summary>
+			Returns a value with a specified key from the hash map. If there is no such key, returns a default-constructed value.
+			</summary> 
+			<param name="key"> Key. </param> 
+			<returns>Accessed item value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.value(Key,Value) const">
+			<summary>
+			Returns a value with a specified key from the hash map. If there is no such key, returns the specified default value.
+			</summary> 
+			<param name="key"> Key. </param>
+			<param name="value"> Default value. </param> 
+			<returns>Accessed item value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.valueRef(Key) const">
+			<summary>
+			Returns a reference to the value with a specified key from the hash map. If there is no such key, returns a default-constructed valuee.
+			</summary> 
+			<param name="key"> Key. </param> 
+			<returns>Accessed item value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.valueRef(Key,Value) const">
+			<summary>
+			Returns a reference to the value with a specified key from the hash map. If there is no such key, returns a default value.
+			</summary> 
+			<param name="value"> Default value. </param> 
+			<returns>Accessed item value.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.values const">
+			<summary>
+			Returns a vector of all values of the hash map.
+			</summary>  
+			<returns>Vector of hash map values.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.getValues(Unigine.Vector{Value,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Appends hash map values to a given vector.
+			</summary> 
+			<param name="values"> Vector of hash map values. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.operator=(BucketHashMap)">
+			<summary>
+			Assigns the specified hash map by copying it.
+			</summary> 
+			<param name="o"> Hash map. </param> 
+			<returns>Hash map.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.operator=(BucketHashMap)">
+			<summary>
+			Assigns the specified hash map by moving it.
+			</summary> 
+			<param name="o"> Hash map. </param> 
+			<returns>Hash map.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.emplaceRange(InputIt,InputIt)">
+			<summary>
+			Inserts the range of values specified by the argument iterators into the hash map.
+			</summary> 
+			<param name="first"> Iterator that identifies the beginning of the range. </param>
+			<param name="last"> Iterator that identifies the end of the range. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.contains(Key) const">
+			<summary>
+			Checks if the given key is present in the hash map.
+			</summary> 
+			<param name="k"> Key to be checked. </param> 
+			<returns>true if the hash map contains the specified key; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.find(Key) const">
+			<summary>
+			Returns the iterator of the specified key.
+			</summary> 
+			<param name="k"> Key to be checked. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.find(Key) const">
+			<summary>
+			Returns the iterator of the specified key.
+			</summary> 
+			<param name="k"> Key to be checked. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.findFast(Key) const">
+			<summary>
+			Finds an element with a specified key.
+			</summary> 
+			<param name="key"> Key to look for. </param> 
+			<returns>Pointer to the hash map item.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.keys const">
+			<summary>
+			Returns a vector containing all keys in the hash map.
+			</summary>  
+			<returns>Vector of keys.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.getKeys(Unigine.Vector{Key,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Adds keys of the hash to the specified vector.
+			</summary> 
+			<param name="keys"> Vector to store the keys. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.getKey(size_t) const">
+			<summary>
+			Returns the key by its index.
+			</summary> 
+			<param name="index"> Index number of the key in the hash map. </param> 
+			<returns>Key.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.remove(Key)">
+			<summary>
+			Removes the specified key from the hash map.
+			</summary> 
+			<param name="k"> Key to be removed. </param> 
+			<returns>true if the key is removed successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.remove(Iterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash map.
+			</summary> 
+			<param name="it"> Iterator pointing to an element to be removed. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.remove(ConstIterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash map.
+			</summary> 
+			<param name="it"> Iterator pointing to an element to be removed. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.remove(BucketHashMap)">
+			<summary>
+			Removes the specified hash map from the current hash map.
+			</summary> 
+			<param name="o"> Hash map. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.remove(Unigine.Vector{Key,int,Unigine.VectorAllocator})">
+			<summary>
+			Removes the specified keys from the hash map.
+			</summary> 
+			<param name="v"> Vector storing the keys. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.erase(ConstIterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash map.
+			</summary> 
+			<param name="it"> Iterator pointing to the element to be removed. </param> 
+			<returns>true on success, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.erase(Iterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash map.
+			</summary> 
+			<param name="it"> Iterator pointing to the element to be removed. </param> 
+			<returns>true on success, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.erase(Key)">
+			<summary>
+			Removes an element having the specified key from the hash map.
+			</summary> 
+			<param name="k"> Key of the element to be removed. </param> 
+			<returns>true on success, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.erase(BucketHashMap)">
+			<summary>
+			Removes the specified hash map from the current hash map.
+			</summary> 
+			<param name="o"> Hash map to be removed. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.erase(Unigine.Vector{Key,int,Unigine.VectorAllocator})">
+			<summary>
+			Removes the specified keys from the hash map.
+			</summary> 
+			<param name="v"> Vector storing the keys. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.subtract(Unigine.Vector{Key,int,Unigine.VectorAllocator})">
+			<summary>
+			Removes the specified keys from the hash map.
+			</summary> 
+			<param name="vector"> Vector storing the keys. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.subtract(BucketHashMap)">
+			<summary>
+			Removes the specified hash map from the current hash map.
+			</summary> 
+			<param name="o"> Hash map to be removed. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.clear">
+			<summary>
+			Removes all key-value pairs from the hash map.
+			</summary>  
+		</member>
+		<member name="M:Unigine.BucketHashMap.destroy">
+			<summary>
+			Removes all key-value pairs from the hash map and releases the memory.
+			</summary>  
+		</member>
+		<member name="M:Unigine.BucketHashMap.reserve(size_t)">
+			<summary>
+			Reserves storage to avoid repeated reallocation.
+			</summary> 
+			<param name="size"> Hash size to be reserved. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashMap.shrink">
+			<summary>
+			Removes unused capacity.
+			</summary>  
+		</member>
+		<member name="M:Unigine.BucketHashMap.begin const">
+			<summary>
+			Returns an iterator that points to the first element in the hash map.
+			</summary>  
+			<returns>Iterator pointing to the first element.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.end const">
+			<summary>
+			Returns an iterator that points to the location succeeding the last element in the hash map.
+			</summary>  
+			<returns>Iterator pointing to the last element.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.cbegin const">
+			<summary>
+			Returns a const iterator that points to the first element in the hash map.
+			</summary>  
+			<returns>ConstIterator pointing to the first element.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.cend const">
+			<summary>
+			Returns a const iterator that points to the location succeeding the last element in the hash map.
+			</summary>  
+			<returns>ConstIterator pointing to the last element.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.size const">
+			<summary>
+			Returns the number of key-value pairs in the hash map.
+			</summary>  
+			<returns>Number of key-value pairs in the hash map.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.space const">
+			<summary>
+			Returns the current capacity (number of elements the hash can currently contain).
+			</summary>  
+			<returns>Number of elements the hash can currently contain.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.getMemoryUsage const">
+			<summary>
+			Shows the amount of memory used by the hash map in bytes.
+			</summary>  
+			<returns>Used memory in bytes.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.empty const">
+			<summary>
+			Checks if the hash map is empty.
+			</summary>  
+			<returns>true if the hash map is empty, otherwise false</returns>
+		</member>
+		<member name="M:Unigine.BucketHashMap.swap(BucketHashMap)">
+			<summary>
+			Swaps this hash map with the hash map specified as the argument.
+			</summary> 
+			<param name="o"> Hash map. </param> 
 		</member>
 	</members>
 </doc>

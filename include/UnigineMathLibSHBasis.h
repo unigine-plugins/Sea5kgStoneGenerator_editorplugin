@@ -26,6 +26,7 @@ public:
 	UNIGINE_INLINE SHBasis() {}
 	UNIGINE_INLINE ~SHBasis() {}
 
+	/// <summary>Returns the factorial of the argument.</summary>
 	UNIGINE_INLINE double factorial(int x) const
 	{
 		static const double table[16] = {1.0, 1.0, 2.0, 6.0, 24.0, 120.0, 720.0, 5040.0,
@@ -38,11 +39,20 @@ public:
 		return ret;
 	}
 
+	/// <summary>Returns the spherical harmonics coefficient using the direction.</summary>
+	/// <param name="l">Degree.</param>
+	/// <param name="m">Order.</param>
+	/// <param name="dir">Direction.</param>
 	UNIGINE_INLINE double get(int l, int m, const float *dir) const
 	{
 		double length = dsqrt(dir[0] * dir[0] + dir[1] * dir[1] + dir[2] * dir[2]);
 		return get(l, m, atan2(-dir[1], -dir[0]), acos(dir[2] / length));
 	}
+	/// <summary>Returns the spherical harmonics coefficient using spherical coordinates.</summary>
+	/// <param name="l">Degree.</param>
+	/// <param name="m">Order.</param>
+	/// <param name="phi">Phi coordinate.</param>
+	/// <param name="theta">Theta coordinate.</param>
 	UNIGINE_INLINE double get(int l, int m, double phi, double theta) const
 	{
 		const double sqrt2 = dsqrt(2.0);

@@ -76,6 +76,7 @@ private:
 
 	friend class EventBase;
 	Vector<EventConnection *> connections;
+	Vector<EventConnection *> empty_connections;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -135,7 +136,7 @@ template <class A0>
 class CallbackBase1 : public CallbackBase
 {
 public:
-	void run() override { UNIGINE_ASSERT(0 && "CallbackBase1::run(): called"); }
+	void run() override { UNIGINE_FATAL("CallbackBase1::run(): called"); }
 	virtual void run(A0 a0) = 0;
 
 private:
@@ -146,7 +147,7 @@ template <class A0, class A1>
 class CallbackBase2 : public CallbackBase
 {
 public:
-	void run() override { UNIGINE_ASSERT(0 && "CallbackBase2::run(): called"); }
+	void run() override { UNIGINE_FATAL("CallbackBase2::run(): called"); }
 	virtual void run(A0 a0, A1 a1) = 0;
 
 private:
@@ -157,7 +158,7 @@ template <class A0, class A1, class A2>
 class CallbackBase3 : public CallbackBase
 {
 public:
-	void run() override { UNIGINE_ASSERT(0 && "CallbackBase3::run(): called"); }
+	void run() override { UNIGINE_FATAL("CallbackBase3::run(): called"); }
 	virtual void run(A0 a0, A1 a1, A2 a2) = 0;
 
 private:
@@ -168,7 +169,7 @@ template <class A0, class A1, class A2, class A3>
 class CallbackBase4 : public CallbackBase
 {
 public:
-	void run() override { UNIGINE_ASSERT(0 && "CallbackBase4::run(): called"); }
+	void run() override { UNIGINE_FATAL("CallbackBase4::run(): called"); }
 	virtual void run(A0 a0, A1 a1, A2 a2, A3 a3) = 0;
 
 private:
@@ -179,7 +180,7 @@ template <class A0, class A1, class A2, class A3, class A4>
 class CallbackBase5 : public CallbackBase
 {
 public:
-	void run() override { UNIGINE_ASSERT(0 && "CallbackBase5::run(): called"); }
+	void run() override { UNIGINE_FATAL("CallbackBase5::run(): called"); }
 	virtual void run(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) = 0;
 
 private:
@@ -197,7 +198,7 @@ void CallbackBase::run(A0 a0)
 	{
 		case 0: run(); break;
 		case 1: static_cast<CallbackBase1<A0> *>(this)->run(a0); break;
-		default: UNIGINE_ASSERT(0 && "Unigine::CallbackBase::run(): wrong size");
+		default: UNIGINE_FATAL("Unigine::CallbackBase::run(): wrong size");
 	}
 }
 
@@ -212,7 +213,7 @@ void CallbackBase::run(A0 a0, A1 a1)
 		case 0: run(); break;
 		case 1: static_cast<CallbackBase1<A0> *>(this)->run(a0); break;
 		case 2: static_cast<CallbackBase2<A0, A1> *>(this)->run(a0, a1); break;
-		default: UNIGINE_ASSERT(0 && "Unigine::CallbackBase::run(): wrong size");
+		default: UNIGINE_FATAL("Unigine::CallbackBase::run(): wrong size");
 	}
 }
 
@@ -228,7 +229,7 @@ void CallbackBase::run(A0 a0, A1 a1, A2 a2)
 		case 1: static_cast<CallbackBase1<A0> *>(this)->run(a0); break;
 		case 2: static_cast<CallbackBase2<A0, A1> *>(this)->run(a0, a1); break;
 		case 3: static_cast<CallbackBase3<A0, A1, A2> *>(this)->run(a0, a1, a2); break;
-		default: UNIGINE_ASSERT(0 && "Unigine::CallbackBase::run(): wrong size");
+		default: UNIGINE_FATAL("Unigine::CallbackBase::run(): wrong size");
 	}
 }
 
@@ -245,7 +246,7 @@ void CallbackBase::run(A0 a0, A1 a1, A2 a2, A3 a3)
 		case 2: static_cast<CallbackBase2<A0, A1> *>(this)->run(a0, a1); break;
 		case 3: static_cast<CallbackBase3<A0, A1, A2> *>(this)->run(a0, a1, a2); break;
 		case 4: static_cast<CallbackBase4<A0, A1, A2, A3> *>(this)->run(a0, a1, a2, a3); break;
-		default: UNIGINE_ASSERT(0 && "Unigine::CallbackBase::run(): wrong size");
+		default: UNIGINE_FATAL("Unigine::CallbackBase::run(): wrong size");
 	}
 }
 
@@ -263,7 +264,7 @@ void CallbackBase::run(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
 		case 3: static_cast<CallbackBase3<A0, A1, A2> *>(this)->run(a0, a1, a2); break;
 		case 4: static_cast<CallbackBase4<A0, A1, A2, A3> *>(this)->run(a0, a1, a2, a3); break;
 		case 5: static_cast<CallbackBase5<A0, A1, A2, A3, A4> *>(this)->run(a0, a1, a2, a3, a4); break;
-		default: UNIGINE_ASSERT(0 && "Unigine::CallbackBase::run(): wrong size");
+		default: UNIGINE_FATAL("Unigine::CallbackBase::run(): wrong size");
 	}
 }
 

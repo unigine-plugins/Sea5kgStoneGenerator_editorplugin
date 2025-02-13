@@ -87,7 +87,7 @@ typedef Ptr<WorldIntersectionTexCoord> WorldIntersectionTexCoordPtr;
 class UNIGINE_API World
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
 	enum MOVING_IMMOVABLE_NODES_MODE
 	{
@@ -98,13 +98,13 @@ public:
 	static void setPath(const char *path);
 	static const char *getPath();
 	static void setScriptName(const char *name);
-	static const char *getScriptName();
+	static String getScriptName();
 	static void setRenderSettings(const char *settings);
-	static const char *getRenderSettings();
+	static String getRenderSettings();
 	static void setSoundSettings(const char *settings);
-	static const char *getSoundSettings();
+	static String getSoundSettings();
 	static void setPhysicsSettings(const char *settings);
-	static const char *getPhysicsSettings();
+	static String getPhysicsSettings();
 	static bool isLoaded();
 	static void setBudget(float budget);
 	static float getBudget();
@@ -118,10 +118,14 @@ public:
 	static bool isAutoReloadNodeReferences();
 	static void setUnpackNodeReferences(bool references);
 	static bool isUnpackNodeReferences();
+	static void setAsyncLoadNodeReferences(bool references);
+	static bool isAsyncLoadNodeReferences();
 	static void setMovingImmovableNodeMode(World::MOVING_IMMOVABLE_NODES_MODE mode);
 	static World::MOVING_IMMOVABLE_NODES_MODE getMovingImmovableNodeMode();
 	static void setData(const char *name, const char *data);
 	static const char *getData(const char *name);
+	static bool hasData(const char *name);
+	static void removeData(const char *name);
 	static bool loadWorld(const char *path);
 	static bool loadWorld(const char *path, bool partial_path);
 	static bool loadWorldForce(const char *path);
@@ -135,14 +139,21 @@ public:
 	static const char *getLoadWorldRequestPath();
 	static void updateSpatial();
 	static bool isNode(int id);
-	static void getNodes(Vector<Ptr<Node>> &nodes);
+	static void findNodes(CallbackBase2<Ptr<Node>, bool *> *find_node_callback);
+	static void getNodes(Vector<Ptr<Node>> &nodes, bool expand_node_reference = true, bool expand_world_clutter = true);
 	static void setNodeIdSeed(unsigned int seed);
 	static void setNodeIdRange(int from, int to);
-	static bool clearNode(const char *name);
-	static Ptr<Node> loadNode(const char *name, int cache = 1);
-	static int loadNodes(const char *name, Vector<Ptr<Node>> &nodes);
-	static bool saveNode(const char *name, const Ptr<Node> &node, int binary = 0);
-	static int saveNodes(const char *name, const Vector<Ptr<Node>> &nodes, int binary = 0);
+	static bool removeNodeFile(const char *file_path);
+	static bool removeNodeFile(const UGUID &file_guid);
+	static bool reloadNodeFile(const char *file_path);
+	static bool reloadNodeFile(const UGUID &file_guid);
+	static bool destroyCacheNode(const char *file_path);
+	static bool destroyCacheNode(const UGUID &file_guid);
+	static Ptr<Node> loadNode(const char *file_path, bool cache = true);
+	static Ptr<Node> loadNode(const UGUID &file_guid, bool cache = true);
+	static bool loadNodes(const char *file_path, Vector<Ptr<Node>> &nodes);
+	static bool saveNode(const char *file_path, const Ptr<Node> &node, bool binary = false);
+	static bool saveNodes(const char *file_path, const Vector<Ptr<Node>> &nodes, bool binary = false);
 	static Ptr<Node> getNodeByName(const char *name);
 	static void getNodesByName(const char *name, Vector<Ptr<Node>> &nodes);
 	static Ptr<Node> getNodeByType(int type);

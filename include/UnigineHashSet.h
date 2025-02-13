@@ -15,221 +15,217 @@
 
 #include <UnigineHash.h>
 
+#include <utility>
+
 namespace Unigine
 {
 
-template<typename Key, typename HashType>
+namespace Internal
+{
+template<class Key>
 struct HashSetData
 {
+	using HashType = typename Hasher<Key>::HashType;
+
+	template<class K, std::enable_if_t<!IsSame<K, HashSetData>::value, int> = 0>
+	UNIGINE_INLINE HashSetData(HashType h, K&& k)
+		: hash(h)
+		, key(std::forward<K>(k))
+	{}
+
+	UNIGINE_INLINE friend bool operator==(const HashSetData &l, const HashSetData &r) { return l.hash == r.hash && l.key == r.key; }
+	UNIGINE_INLINE friend bool operator!=(const HashSetData &l, const HashSetData &r) { return !(l == r); }
+
 	const HashType hash;
 	const Key key;
-	HashSetData(HashType h, const Key &k)
-		: hash(h)
-		, key(k)
-	{}
-	HashSetData(HashType h, Key &&k)
-		: hash(h)
-		, key(std::move(k))
-	{}
-
-	static UNIGINE_INLINE void *operator new(size_t size) { return Memory::allocate(size); }
-	static UNIGINE_INLINE void operator delete(void *ptr) { Memory::deallocate(ptr); }
-	static UNIGINE_INLINE void operator delete(void *ptr, size_t size) { Memory::deallocate(ptr,size); }
-
 };
 
-template <typename Key, typename Counter = unsigned int>
-class HashSet : public Hash<Key, HashSetData<Key, typename Hasher<Key>::HashType>, typename Hasher<Key>::HashType, Counter>
+template<typename T>
+struct FlatHashSetPolicy
 {
-public:
 
+	using Key = T;
+	using Slot = HashSetData<Key>;
+	using Element = HashSetData<Key>;
 	using HashType = typename Hasher<Key>::HashType;
-	using Parent = Hash<Key, HashSetData<Key, typename Hasher<Key>::HashType>, typename Hasher<Key>::HashType, Counter>;
-	using Iterator = typename Parent::Iterator;
-	using ConstIterator = typename Parent::ConstIterator;
 
-	// STL compatibility
-	using iterator = typename Parent::iterator;
-	using const_iterator = typename Parent::const_iterator;
+	UNIGINE_INLINE static HashType hash(const Slot &s) { return s.hash; }
+	UNIGINE_INLINE static const Key &key(const Slot &s) { return s.key; }
+
+	template<class... Args>
+	UNIGINE_INLINE static void construct(Slot &slot, HashType hash, Args &&...args)
+	{
+		new (&slot) Slot(hash, std::forward<Args>(args)...);
+	}
+
+	UNIGINE_INLINE static void construct(Slot &slot, const Slot &from) { new (&slot) Slot{from.hash, from.key}; }
+
+	UNIGINE_INLINE static void construct(Slot &slot, Slot &&from)
+	{
+		new (&slot) Slot{from.hash, std::move(const_cast<Key &>(from.key))};
+	}
+
+	UNIGINE_INLINE static void swap(Slot &s0, Slot &s1)
+	{
+		std::swap(const_cast<HashType &>(s0.hash), const_cast<HashType &>(s1.hash));
+		std::swap(const_cast<Key &>(s0.key), const_cast<Key &>(s1.key));
+	}
+
+	template<class... Args>
+	UNIGINE_INLINE static void replace(Slot &, Args &&...)
+	{}
+
+	UNIGINE_INLINE static Element &element(Slot &slot) { return slot; }
+
+	UNIGINE_INLINE static void destruct(Slot &slot) { slot.~Slot(); }
+};
+
+template<typename T>
+struct BucketHashSetPolicy
+{
+
+	using Key = T;
+	using Slot = HashSetData<Key> *;
+	using Element = HashSetData<Key>;
+	using HashType = typename Hasher<Key>::HashType;
+
+	UNIGINE_INLINE static HashType hash(const Slot &s) { return s->hash; }
+	UNIGINE_INLINE static const Key &key(const Slot &s) { return s->key; }
+
+	template<class... Args>
+	UNIGINE_INLINE static void construct(Slot &slot, HashType hash, Args &&...args)
+	{
+		slot = new (Memory::allocatePool<sizeof(Element)>()) Element{hash, std::forward<Args>(args)...};
+	}
+
+	UNIGINE_INLINE static void construct(Slot &slot, const Slot &from)
+	{
+		slot = new (Memory::allocatePool<sizeof(Element)>()) Element{from->hash, from->key};
+	}
+
+	UNIGINE_INLINE static void construct(Slot &slot, Slot &&from)
+	{
+		slot = from;
+		from = nullptr;
+	}
+
+	UNIGINE_INLINE static void swap(Slot &s0, Slot &s1)
+	{
+		Slot temp = s0;
+		s0 = s1;
+		s1 = temp;
+	}
+
+	template<class... Args>
+	UNIGINE_INLINE static void replace(Slot &, Args &&...)
+	{}
+
+	UNIGINE_INLINE static Element &element(Slot &slot) { return *slot; }
+
+	UNIGINE_INLINE static void destruct(Slot &slot)
+	{
+		if (!slot)
+			return;
+		slot->~Element();
+		Memory::deallocatePool<sizeof(Element)>(slot);
+	}
+};
+
+template<class Self, class Policy, class Counter>
+class HashSetBase : public Hash<Policy, Counter>
+{
+	using Base = Hash<Policy, Counter>;
+public:
+	using Parent = Hash<Policy, Counter>;
+	using Key = typename Policy::Key;
+	using Iterator = typename Base::Iterator;
+	using ConstIterator = typename Base::ConstIterator;
 	using value_type = Key;
 
-	HashSet() noexcept
+	using Base::Base;
+
+	using Base::append;
+	void append(const Key &key) { Parent::emplace(key); }
+	void append(Key &&key) { Parent::emplace(std::move(key)); }
+
+	using Base::insert;
+	void insert(const Key &key) { Parent::emplace(key); }
+	void insert(Key &&key) { Parent::emplace(std::move(key)); }
+
+	template<class K>
+	Self &operator+=(const K &k)
 	{
-		Parent::data = nullptr;
-		Parent::length = 0;
-		Parent::capacity = 0;
+		Parent::emplace(k);
+		return self();
+	}
+	Self &operator+=(const Self &o)
+	{
+		Parent::emplace(o);
+		return self();
+	}
+	template<class K>
+	Self &operator-=(const K &k)
+	{
+		Parent::erase(k);
+		return self();
+	}
+	Self &operator-=(const Self &o)
+	{
+		Parent::subtract(o);
+		return self();
 	}
 
-	~HashSet()
+	static Self fromKeys(const Key *keys, size_t size)
 	{
-		if (Parent::data == nullptr)
-			return;
-		for (Counter i = 0; i < Parent::capacity; ++i)
-			delete Parent::data[i];
-
-		Memory::deallocate(Parent::data);
-	}
-
-	HashSet(const HashSet &o)
-	{
-		Parent::data = nullptr;
-		Parent::length = 0;
-		Parent::capacity = 0;
-		Parent::rehash(o.capacity);
-		for (const auto &it : o)
-			Parent::do_append(it.hash, it.key);
-	}
-
-	HashSet(HashSet &&o) noexcept
-	{
-		Parent::length = o.length;
-		Parent::capacity = o.capacity;
-		Parent::data = o.data;
-
-		o.length = 0;
-		o.capacity = 0;
-		o.data = nullptr;
-	}
-
-	HashSet(std::initializer_list<Key> list)
-	{
-		Parent::data = nullptr;
-		Parent::length = 0;
-		Parent::capacity = 0;
-		for (const auto &v : list)
-			append(v);
-	}
-
-	HashSet &operator=(const HashSet &o)
-	{
-		if (this == &o)
-			return *this;
-		Parent::clear();
-		Parent::reserve(static_cast<Counter>(o.capacity * HASH_LOAD_FACTOR));
-		for (const auto &it : o)
-			Parent::do_append(it.hash, it.key);
-		return *this;
-	}
-
-	HashSet &operator=(HashSet &&o)
-	{
-		if (this == &o)
-			return *this;
-		for (Counter i = 0; i < Parent::capacity; ++i)
-			delete Parent::data[i];
-
-		Memory::deallocate(Parent::data);
-		Parent::length = o.length;
-		Parent::capacity = o.capacity;
-		Parent::data = o.data;
-
-		o.length = 0;
-		o.capacity = 0;
-		o.data = nullptr;
-		return *this;
-	}
-
-	UNIGINE_INLINE void append(const Key &key) { Parent::do_append(key); }
-	UNIGINE_INLINE void append(Key &&key) { Parent::do_append(std::move(key)); }
-
-	UNIGINE_INLINE void append(const HashSet &o)
-	{
-		if (&o == this)
-			return;
-
-		for (const auto &it : o)
-			Parent::do_append(it.hash, it.key);
-	}
-
-	UNIGINE_INLINE void append(HashSet &&o)
-	{
-		if (&o == this)
-			return;
-
-		for (const auto &it : o)
-			Parent::do_append(it.hash, std::move(it.key));
-		o.clear();
-	}
-
-	using Parent::remove;
-
-	UNIGINE_INLINE void remove(const HashSet &o)
-	{
-		if (&o == this)
-			Parent::clear();
-		else
-		{
-			for (Counter i = 0; i < o.capacity; ++i)
-			{
-				if (o.data[i] == nullptr)
-					continue;
-				Parent::do_remove(o.data[i]->hash, o.data[i]->key);
-			}
-		}
-	}
-
-	UNIGINE_INLINE void insert(const Key &key) { Parent::do_append(key); }
-	UNIGINE_INLINE void insert(Key &&key) { Parent::do_append(std::move(key)); }
-	UNIGINE_INLINE void insert(const HashSet &o) { append(o); }
-	UNIGINE_INLINE void insert(HashSet &&o) { append(std::move(o)); }
-
-	UNIGINE_INLINE void subtract(const HashSet &o) { remove(o); }
-
-	UNIGINE_INLINE bool operator==(const HashSet &o) const noexcept
-	{
-		if (&o == this)
-			return true;
-
-		if (Parent::length != o.length)
-			return false;
-
-		for (Counter i = 0; i < Parent::capacity; ++i)
-		{
-			if (Parent::data[i] == nullptr)
-				continue;
-
-			auto other_data = o.do_find(Parent::data[i]->key);
-			if (other_data == nullptr)
-				return false;
-		}
-
-		return true;
-	}
-
-	UNIGINE_INLINE bool operator!=(const HashSet &o) const noexcept { return !(*this == o); }
-
-	UNIGINE_INLINE HashSet &operator+=(const Key &key) { insert(key); return *this; }
-	UNIGINE_INLINE HashSet &operator+=(const HashSet &o) { insert(o); return *this; }
-	UNIGINE_INLINE HashSet &operator-=(const Key &key) { Parent::remove(key); return *this; }
-	UNIGINE_INLINE HashSet &operator-=(const HashSet &o) { remove(o); return *this; }
-
-	UNIGINE_INLINE static HashSet fromKeys(const Key *keys, size_t size)
-	{
-		HashSet result;
-		result.reserve(static_cast<Counter>(size));
+		Self result;
+		result.reserve(size);
 		for (size_t i = 0; i < size; ++i)
-			result.append(keys[i]);
+		{
+			result.insert(keys[i]);
+		}
 		return result;
 	}
 
-	UNIGINE_INLINE static HashSet fromKeys(const Vector<Key> &keys)
-	{
-		HashSet result;
-		result.reserve(keys.size());
-		for (size_t i = 0, count = keys.size(); i < count; ++i)
-			result.append(keys[i]);
-		return result;
-	}
+	static Self fromKeys(const Vector<Key> &keys) { return fromKeys(keys.get(), keys.size()); }
 
-	UNIGINE_INLINE static HashSet fromKeys(Vector<Key> &&keys)
+	static Self fromKeys(Vector<Key> &&keys)
 	{
-		HashSet result;
-		result.reserve(keys.size());
-		for (size_t i = 0, count = keys.size(); i < count; ++i)
-			result.append(std::move(keys[i]));
+		const auto size = keys.size();
+		Self result;
+		result.reserve(size);
+		for (auto i = 0; i < size; ++i)
+			result.insert(std::move(keys[i]));
 		keys.clear();
 		return result;
 	}
+
+private:
+	Self &self() { return static_cast<Self &>(*this); }
+};
+
+} // namespace Internal
+
+template<class Key, class Counter = unsigned int>
+class HashSet
+	: public Internal::HashSetBase<HashSet<Key, Counter>, Internal::FlatHashSetPolicy<Key>, Counter>
+{
+	using Base
+		= Internal::HashSetBase<HashSet<Key, Counter>, Internal::FlatHashSetPolicy<Key>, Counter>;
+
+public:
+	using Base::Base;
+};
+
+template<class Key, class Counter = unsigned int>
+class BucketHashSet
+	: public Internal::HashSetBase<BucketHashSet<Key, Counter>, Internal::BucketHashSetPolicy<Key>,
+		  Counter>
+{
+	using Base = Internal::HashSetBase<BucketHashSet<Key, Counter>, Internal::BucketHashSetPolicy<Key>,
+		Counter>;
+
+public:
+	using Base::Base;
 };
 
 } // namespace Unigine

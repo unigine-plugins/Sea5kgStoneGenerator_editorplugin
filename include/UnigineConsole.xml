@@ -314,24 +314,6 @@
 			Destructor.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Console.setActive(bool)">
-			<summary>
-			Opens or closes the console. By default the console is closed.
-			</summary> 
-			<param name="active"> True to make the console active (opened); otherwise, false. </param> 
-		</member>
-		<member name="M:Unigine.Console.isActive const">
-			<summary>
-			Returns a value indicating if the console is opened or closed.
-			</summary>  
-			<returns>True if the console is active (opened); otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Console.setBackgroundColor(Unigine.Math.vec4)">
-			<summary>
-			Sets a background color for the console.
-			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
-		</member>
 		<member name="M:Unigine.Console.isCommand(char) const">
 			<summary>
 			Returns a value indicating if a command with a given name exists.
@@ -352,12 +334,6 @@
 			</summary> 
 			<param name="num"> The command number. </param> 
 			<returns>The command name if it is found in the array of the existing commands; otherwise, an empty string.</returns>
-		</member>
-		<member name="M:Unigine.Console.setErrorColor(Unigine.Math.vec4)">
-			<summary>
-			Sets a color for error messages in the console.
-			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
 		</member>
 		<member name="M:Unigine.Console.setFloat(char,float)">
 			<summary>
@@ -429,48 +405,6 @@
 			<param name="name"> The variable name. </param> 
 			<returns>True if the variable value is int; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Console.setLock(int)">
-			<summary>
-			Disables or enables the console. By default the console is enabled.
-			</summary> 
-			<param name="lock"> Positive integer to disable the console; otherwise, 0. </param> 
-		</member>
-		<member name="M:Unigine.Console.getLock const">
-			<summary>
-			Checks if the console is disabled.
-			</summary>  
-			<returns>1 if the console is disabled; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Console.setMessageColor(Unigine.Math.vec4)">
-			<summary>
-			Sets a color for ordinary messages in the console.
-			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
-		</member>
-		<member name="M:Unigine.Console.getNumCommands const">
-			<summary>
-			Returns the number of all available console commands, including the custom ones.
-			</summary>  
-			<returns>The number of available console commands.</returns>
-		</member>
-		<member name="M:Unigine.Console.getNumVariables const">
-			<summary>
-			Returns the number of all available console variables.
-			</summary>  
-			<returns>The number of available console variables.</returns>
-		</member>
-		<member name="M:Unigine.Console.setPrompt(char)">
-			<summary>
-			Updates the console prompt. The default prompt is Unigine~#.
-			</summary> 
-			<param name="prompt"> New console prompt. </param> 
-		</member>
-		<member name="M:Unigine.Console.getPrompt const">
-			<summary>
-			Returns the console prompt.
-			</summary>  
-			<returns>The prompt text.</returns>
-		</member>
 		<member name="M:Unigine.Console.isPalette(char) const">
 			<summary>
 			Checks for a palette with the specified name.
@@ -527,12 +461,6 @@
 			</summary> 
 			<param name="name"> The variable name. </param> 
 			<returns>True if the variable value is string; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Console.setTextColor(Unigine.Math.vec4)">
-			<summary>
-			Sets a common font color for the console.
-			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
 		</member>
 		<member name="M:Unigine.Console.isVariable(char) const">
 			<summary>
@@ -617,12 +545,6 @@
 			</summary>  
 			<returns>True if the variable is a three component vector; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Console.setWarningColor(Unigine.Math.vec4)">
-			<summary>
-			Sets a color for warning messages in the console.
-			</summary> 
-			<param name="color"> Four-component vector specifying the color in the RGBA format. </param> 
-		</member>
 		<member name="M:Unigine.Console.addCommand(char,char,Unigine.CallbackBase)">
 			<summary>
 			Adds a custom console command bound to a given callback function.
@@ -649,129 +571,6 @@
 			Runs the specified console command.
 			</summary> 
 			<param name="command"> A console command with arguments. </param> 
-		</member>
-		<member name="M:Unigine.Console.getBackgroundColor const">
-			<summary>
-			Returns the background color for the console.
-			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
-		</member>
-		<member name="M:Unigine.Console.getMessageColor const">
-			<summary>
-			Returns the color for ordinary messages in the console.
-			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
-		</member>
-		<member name="M:Unigine.Console.getWarningColor const">
-			<summary>
-			Returns the color for warning messages in the console.
-			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
-		</member>
-		<member name="M:Unigine.Console.getErrorColor const">
-			<summary>
-			Returns the color for error messages in the console.
-			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
-		</member>
-		<member name="M:Unigine.Console.getTextColor const">
-			<summary>
-			Returns the common font color for the console.
-			</summary>  
-			<returns>Four-component vector specifying the color in the RGBA format.</returns>
-		</member>
-		<member name="M:Unigine.Console.setFontSize(int)">
-			<summary>
-			Returns the current font size used for console messages.
-			</summary> 
-			<param name="size"> New font size to be set for console messages </param> 
-		</member>
-		<member name="M:Unigine.Console.getFontSize const">
-			<summary>
-			Returns the current font size used for console messages.
-			</summary>  
-			<returns>Current font size set for console messages</returns>
-		</member>
-		<member name="M:Unigine.Console.setHeight(int)">
-			<summary>
-			Sets the height of the console.
-			</summary> 
-			<param name="height"> Height of the console as percentage of the window height. </param> 
-		</member>
-		<member name="M:Unigine.Console.getHeight const">
-			<summary>
-			Returns the console height in percentage of the window height.
-			</summary>  
-		</member>
-		<member name="M:Unigine.Console.setLimit(int)">
-			<summary>
-			Sets the maximum number of messages the console can output.
-			</summary> 
-			<param name="limit"> Maximum number of messages the console can output. </param> 
-		</member>
-		<member name="M:Unigine.Console.getLimit const">
-			<summary>
-			Returns the maximum number of messages the console can output. The default value is 16384.
-			</summary>  
-		</member>
-		<member name="M:Unigine.Console.setWrapping(bool)">
-			<summary>
-			Enables the text wrapping to the next line.
-			</summary> 
-			<param name="wrapping"> true to set the text wrapping; otherwise, false. </param> 
-		</member>
-		<member name="M:Unigine.Console.isWrapping const">
-			<summary>
-			Returns a value indicating if the text wrapping is enabled for the console.
-			</summary>  
-		</member>
-		<member name="M:Unigine.Console.setOnscreen(bool)">
-			<summary>
-			Shows or hides the onscreen overlay.
-			</summary> 
-			<param name="onscreen"> true to show the overlay; otherwise, false. </param> 
-		</member>
-		<member name="M:Unigine.Console.isOnscreen const">
-			<summary>
-			Returns a value indicating if the onscreen overlay is shown or hidden.
-			</summary>  
-			<returns>True if the overlay is shown; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Console.setOnscreenFontSize(int)">
-			<summary>
-			Sets the size for the onscreen overlay font.
-			</summary> 
-			<param name="scale"> Size for the onscreen overlay font. </param> 
-		</member>
-		<member name="M:Unigine.Console.getOnscreenFontSize const">
-			<summary>
-			Returns the size of the onscreen overlay font.
-			</summary>  
-			<returns>The size of the console font.</returns>
-		</member>
-		<member name="M:Unigine.Console.setOnscreenHeight(int)">
-			<summary>
-			Sets the height value for the onscreen overlay.
-			</summary> 
-			<param name="height"> Height of the onscreen overlay in percentage of the window height. </param> 
-		</member>
-		<member name="M:Unigine.Console.getOnscreenHeight const">
-			<summary>
-			Returns the height for the onscreen overlay.
-			</summary>  
-			<returns>The height of the onscreen overlay in percentage of the window height.</returns>
-		</member>
-		<member name="M:Unigine.Console.setOnscreenTime(float)">
-			<summary>
-			Sets the time during which the text is displayed on the screen.
-			</summary> 
-			<param name="time"> Time in seconds. </param> 
-		</member>
-		<member name="M:Unigine.Console.getOnscreenTime const">
-			<summary>
-			Returns the time during which the text is displayed on the screen.
-			</summary>  
-			<returns>The time in seconds.</returns>
 		</member>
 		<member name="M:Unigine.Console.write(char)">
 			<summary>
@@ -820,24 +619,6 @@
 			</summary> 
 			<param name="messages"> Vector to populate with messages. </param>
 			<param name="limit"> Maximum number of messages to retrieve. </param> 
-		</member>
-		<member name="M:Unigine.Console.getLastMessage const">
-			<summary>
-			Returns the last message printed to the console.
-			</summary>  
-			<returns>Last message printed to the console.</returns>
-		</member>
-		<member name="M:Unigine.Console.getLastWarning const">
-			<summary>
-			Returns the last warning message printed to the console.
-			</summary>  
-			<returns>Last warning message printed to the console.</returns>
-		</member>
-		<member name="M:Unigine.Console.getLastError const">
-			<summary>
-			Returns the last error message printed to the console.
-			</summary>  
-			<returns>Last error message printed to the console.</returns>
 		</member>
 		<member name="M:Unigine.Console.writeLine(char)">
 			<summary>

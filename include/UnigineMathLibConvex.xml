@@ -17,7 +17,7 @@
 		</member>
 		<member name="M:Unigine.Convex.operator=(Convex)">
 			<summary>
-			Sets the concave shape to be equal the given convex shape.
+			Sets the convex shape to be equal the given convex shape.
 			</summary> 
 			<param name="convex"> Convex shape. </param> 
 			<returns>Resulting convex shape.</returns>
@@ -33,7 +33,7 @@
 			</summary> 
 			<param name="v"> Vertices. </param>
 			<param name="num_vertex"> Number of vertices. </param>
-			<param name="error"> Convex generation distance error.Bigger values of the distance error increase the generation speed (values in rage [0..1]). </param> 
+			<param name="error"> Approximation error (value in range [0..1], a higher value mean fewer vertices). This value allows reducing the number of vertices of the created shape. Convex hulls with fewer vertices are processed faster. </param> 
 			<returns>true if the shape was successfully created; otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.Convex.create(Unigine.dvec3,int,float)">
@@ -42,12 +42,12 @@
 			</summary> 
 			<param name="v"> Vertices. </param>
 			<param name="num_vertex"> Number of vertices. </param>
-			<param name="error"> Error. </param> 
+			<param name="error"> Approximation error (value in range [0..1], a higher value mean fewer vertices). This value allows reducing the number of vertices of the created shape. Convex hulls with fewer vertices are processed faster. </param> 
 			<returns>true if the shape was successfully created; otherwise false.</returns>
 		</member>
 		<member name="M:Unigine.Convex.getNumVertex const">
 			<summary>
-			Returns the number of vertices this convex shape consists of.
+			Returns the number of vertices the convex shape consists of.
 			</summary>  
 			<returns>Number of vertices.</returns>
 		</member>
@@ -93,9 +93,9 @@
 		</member>
 		<member name="M:Unigine.Convex.getThreshold const">
 			<summary>
-			Returns the distance threshold.
+			Returns the merge threshold.
 			</summary>  
-			<returns>Distance threshold.</returns>
+			<returns>Merge threshold.</returns>
 		</member>
 		<member name="M:Unigine.Convex.getCenter const">
 			<summary>
@@ -118,7 +118,7 @@
 		</member>
 		<member name="M:Unigine.Convex.getBoundBox(Unigine.dvec3,Unigine.dvec3) const">
 			<summary>
-			Calculates the concave shape's bounding box (minimum and maximum vertices).
+			Calculates the convex shape's bounding box (minimum and maximum vertices).
 			</summary> 
 			<param name="min"> Minimum vertex of the shape. </param>
 			<param name="max"> Maximum vertex of the shape. </param> 

@@ -875,8 +875,8 @@ public:
 	bool isBroken() const;
 	void setSurfaceProperty(const char *property);
 	const char *getSurfaceProperty() const;
-	void setMaterialPath(const char *path);
-	const char *getMaterialPath() const;
+	void setMaterialFilePath(const char *path);
+	String getMaterialFilePath() const;
 	void setMaterialGUID(const UGUID &materialguid);
 	UGUID getMaterialGUID() const;
 	void setMaterial(const Ptr<Material> &material);
@@ -951,8 +951,8 @@ public:
 	void addParticleVelocity(const Math::vec3 &position, const Math::vec3 &velocity);
 	float getParticleHeight(const Math::vec3 &position) const;
 	Math::vec3 getParticleVelocity(const Math::vec3 &position) const;
-	void setAbsorption(int absorption);
-	int getAbsorption() const;
+	void setAbsorption(bool absorption);
+	bool getAbsorption() const;
 	void setDensity(float density);
 	float getDensity() const;
 	void setDepth(float depth);
@@ -965,8 +965,8 @@ public:
 	float getLinearDamping() const;
 	void setInteractionForce(float force);
 	float getInteractionForce() const;
-	void setIntersection(int intersection);
-	int getIntersection() const;
+	void setIntersection(bool intersection);
+	bool getIntersection() const;
 	void setLiquidity(float liquidity);
 	float getLiquidity() const;
 };
@@ -1067,7 +1067,7 @@ typedef Ptr<BodyRope> BodyRopePtr;
 class UNIGINE_API Physics
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
 	enum UPDATE_MODE
 	{

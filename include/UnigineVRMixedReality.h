@@ -63,7 +63,7 @@ typedef Ptr<VRMarkerObject> VRMarkerObjectPtr;
 class UNIGINE_API VRMixedReality
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	static void applySettings();
 	static void setChromaKeyEnabled(bool enabled);
 	static bool isChromaKeyEnabled();
@@ -196,6 +196,10 @@ public:
 	static int getCameraMaxSharpness();
 	static void setCameraSharpness(int sharpness);
 	static int getCameraSharpness();
+	static void setCameraVSTReprojectionDistance(float distance);
+	static float getCameraVSTReprojectionDistance();
+	static void setCameraVSTReprojectionMode(VRMixedReality::CAMERA_PROPERTY_MODE mode);
+	static VRMixedReality::CAMERA_PROPERTY_MODE getCameraVSTReprojectionMode();
 	static void setViewOffset(float offset);
 	static float getViewOffset();
 	static void setMarkerTrackingEnabled(bool enabled);
@@ -237,6 +241,7 @@ public:
 	static Event<> &getEventCameraPropertyUpdateISO();
 	static Event<> &getEventCameraPropertyUpdateFlickerCompensation();
 	static Event<> &getEventCameraPropertyUpdateSharpness();
+	static Event<> &getEventCameraPropertyUpdateVSTReprojection();
 };
 
 } // namespace Unigine

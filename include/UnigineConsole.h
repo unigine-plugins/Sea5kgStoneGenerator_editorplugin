@@ -30,7 +30,7 @@ namespace Unigine
 class UNIGINE_API Console
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
 	enum LEVEL
 	{

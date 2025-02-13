@@ -137,17 +137,17 @@
 			<param name="p"> Point coordinates. </param> 
 			<returns>1 if the point is inside the decal; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Decal.setMaterialPath(char)">
+		<member name="M:Unigine.Decal.setMaterialFilePath(char)">
 			<summary>
-			Sets the material for the decal by path.
+			Sets the material for the decal by file path.
 			</summary> 
-			<param name="path"> Material path. </param> 
+			<param name="path"> Material file path. </param> 
 		</member>
-		<member name="M:Unigine.Decal.getMaterialPath const">
+		<member name="M:Unigine.Decal.getMaterialFilePath const">
 			<summary>
-			Returns the path to the material used for the decal.
+			Returns the path to the material file used for the decal.
 			</summary>  
-			<returns>Material path.</returns>
+			<returns>Material file path.</returns>
 		</member>
 		<member name="M:Unigine.Decal.setMaterialGUID(Unigine.UGUID)">
 			<summary>
@@ -161,6 +161,18 @@
 			</summary>  
 			<returns>Material GUID.</returns>
 		</member>
+		<member name="M:Unigine.Decal.setCastBakedGlobalIllumination(bool)">
+			<summary>
+			Sets a value indicating if the decal is to be ignored when baking Global Illumination (lightmaps and probes). When enabled, the decal behaves the same way as surfaces with the Dynamic Lighting Mode selected: they are invisible for Voxel Probes and Environment Probes and are not baked into lightmaps.
+			</summary> 
+			<param name="illumination"> true to ignore the decal when baking Global Illumination (lightmaps and probes); false to bake the decal to lightmaps and probes. </param> 
+		</member>
+		<member name="M:Unigine.Decal.isCastBakedGlobalIllumination const">
+			<summary>
+			Returns a value indicating if the decal is to be ignored when baking Global Illumination (lightmaps and probes). When enabled, the decal behaves the same way as surfaces with the Dynamic Lighting Mode selected: they are invisible for Voxel Probes and Environment Probes and are not baked into lightmaps.
+			</summary>  
+			<returns>true if the decal is to be ignored when baking Global Illumination (lightmaps and probes); otherwise, false.</returns>
+		</member>
 		<member name="M:Unigine.DecalMesh.#ctor">
 			<summary>
 			Constructor. Creates a new Mesh Decal.
@@ -168,9 +180,9 @@
 		</member>
 		<member name="M:Unigine.DecalMesh.#ctor(char)">
 			<summary>
-			DecalMesh constructor. Creates a Mesh Decal with a base mesh loaded from the specified file.
+			DecalMesh constructor. Creates a Mesh Decal with a source mesh loaded from the specified file.
 			</summary> 
-			<param name="path"> Path to the base mesh file. </param> 
+			<param name="path"> Path to the source mesh file. </param> 
 		</member>
 		<member name="M:Unigine.DecalMesh.setMeshPath(char)">
 			<summary>
@@ -180,7 +192,7 @@
 		</member>
 		<member name="M:Unigine.DecalMesh.getMeshPath const">
 			<summary>
-			Returns the path to the source .mesh-file currently used as a base for the decal.
+			Returns the path to the source .mesh-file currently used for the decal.
 			</summary>  
 			<returns>Path to the source .mesh-file.</returns>
 		</member>
@@ -190,35 +202,53 @@
 			</summary>  
 			<returns>Type identifier.</returns>
 		</member>
-		<member name="M:Unigine.DecalMesh.getMeshInfo">
+		<member name="M:Unigine.DecalMesh.getMeshCurrentRAM">
 			<summary>
-			Returns the base mesh that stores data on mesh bounds, surfaces, their number, names, and bounds, but doesn't contain any geometry.				It's highly recommended NOT to edit the returned mesh.
+			Returns the current source mesh used for the object and loaded to memory (RAM).
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A current source mesh used for the object.</returns>
 		</member>
-		<member name="M:Unigine.DecalMesh.getMeshForce">
+		<member name="M:Unigine.DecalMesh.getMeshCurrentVRAM">
 			<summary>
-			Returns the base mesh used for the object. The returned static mesh won't be loaded to VRAM.				It's highly recommended NOT to edit the returned mesh.
+			Returns the current render mesh used for the object and loaded to video memory (VRAM).
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A current render mesh used for the object.</returns>
 		</member>
-		<member name="M:Unigine.DecalMesh.getMeshAsync">
+		<member name="M:Unigine.DecalMesh.getMeshForceRAM">
 			<summary>
-			Returns the base mesh used for the object asynchronously. This function can be called if the mesh hasn't been loaded yet.				It's highly recommended NOT to edit the returned mesh.
+			Returns the source mesh used for the object and loads it to memory (RAM) immediately.
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A source mesh used for the object.</returns>
 		</member>
 		<member name="M:Unigine.DecalMesh.getMeshForceVRAM">
 			<summary>
-			Returns the base mesh used for the object and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			Returns the render mesh used for the object and loads it to video memory (VRAM) immediately. At that, the static mesh will also be loaded to memory (RAM).					Loading to VRAM must be performed in the main thread only.
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A render mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.getMeshAsyncRAM">
+			<summary>
+			Returns the source mesh used for the object and loads it to memory (RAM) asynchronously.
+			</summary>  
+			<returns>A source mesh used for the object.</returns>
 		</member>
 		<member name="M:Unigine.DecalMesh.getMeshAsyncVRAM">
 			<summary>
-			Returns the base mesh used for the object asynchronously and loads it to video memory (VRAM). At that, the static mesh will also be loaded to memory (RAM).				Loading to VRAM must be performed in the main thread only.
+			Returns the render mesh used for the object and loads it to video memory (VRAM) asynchronously. At that, the static mesh will also be loaded to memory (RAM).					Loading to VRAM must be performed in the main thread only.
 			</summary>  
-			<returns>A base static mesh used for the object.</returns>
+			<returns>A render mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.getMeshProceduralRAM">
+			<summary>
+			Returns the procedural source mesh used for the object and loads it to memory (RAM) using the specific streaming mode for procedural meshes. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode — they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
+			</summary>  
+			<returns>A procedural source mesh used for the object.</returns>
+		</member>
+		<member name="M:Unigine.DecalMesh.getMeshProceduralVRAM">
+			<summary>
+			Returns the procedural render mesh used for the object and loads it to video memory (VRAM) using the specific streaming mode for procedural meshes. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode — they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
+			</summary>  
+			<returns>A procedural render mesh used for the object.</returns>
 		</member>
 		<member name="M:Unigine.DecalMesh.loadAsyncVRAM">
 			<summary>
@@ -260,33 +290,33 @@
 		</member>
 		<member name="M:Unigine.DecalMesh.setMeshProceduralMode(bool)">
 			<summary>
-			Sets a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			Sets a value indicating if the source mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
 			</summary> 
-			<param name="meshproceduralmode"> true to switch the base mesh used for the object to procedural mode; otherwise, false - normal mode (the base mesh is streamed from a source file). </param> 
+			<param name="meshproceduralmode"> true to switch the source mesh used for the object to procedural mode; otherwise, false - normal mode (the source mesh is streamed from a source file). </param> 
 		</member>
 		<member name="M:Unigine.DecalMesh.isMeshProceduralMode const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the base static mesh is possible only if it is in the procedural mode.
+			Returns a value indicating if the source mesh used for the object is procedural. A procedural mesh is a mesh created via code, such meshes have a specific streaming mode - they are always kept in memory after creation and never unloaded until the object is destroyed via code or the mesh returns to its normal mode (streaming from a source file). Changing of the static mesh is possible only if it is in the procedural mode.
 			</summary>  
-			<returns>true if the base mesh used for the object is procedural; otherwise, false - normal mode (the base mesh is streamed from a source file).</returns>
+			<returns>true if the source mesh used for the object is procedural; otherwise, false - normal mode (the source mesh is streamed from a source file).</returns>
 		</member>
 		<member name="M:Unigine.DecalMesh.isMeshNull const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is null (does not exist, unassigned, not loaded, etc.).
+			Returns a value indicating if the source mesh used for the object is null (does not exist, unassigned, not loaded, etc.).
 			</summary>  
-			<returns>true if the base mesh used for the object is null; otherwise, false.</returns>
+			<returns>true if the source mesh used for the object is null; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.DecalMesh.isMeshLoadedRAM const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is loaded to memory (RAM).
+			Returns a value indicating if the source mesh used for the object is loaded to memory (RAM).
 			</summary>  
-			<returns>true if the base mesh used for the object is loaded to RAM; otherwise, false.</returns>
+			<returns>true if the source mesh used for the object is loaded to RAM; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.DecalMesh.isMeshLoadedVRAM const">
 			<summary>
-			Returns a value indicating if the base mesh used for the object is loaded to video memory (VRAM).
+			Returns a value indicating if the source mesh used for the object is loaded to video memory (VRAM).
 			</summary>  
-			<returns>true if the base mesh used for the object is loaded to VRAM; otherwise, false.</returns>
+			<returns>true if the source mesh used for the object is loaded to VRAM; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.DecalMesh.applyMeshProcedural(Unigine.Ptr{Unigine.Mesh})">
 			<summary>

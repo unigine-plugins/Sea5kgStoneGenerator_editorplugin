@@ -209,6 +209,10 @@ public:
 	/// <summary> Shows the specified tool window.</summary>
 	/// <param name="widget">Tool window to be shown.</param>
 	static void show(QWidget *widget);
+	/// <summary> Sets visibility for the specified tool window (similar to <see cref="show"/> / <see cref="hide"/>)</summary>
+	/// <param name="widget">Tool window to set visibility for.</param>
+	/// <param name="visible"><b>true</b> to show the specified tool window; <b>false</b> - to hide it.</param>
+	static void setVisible(QWidget *widget, bool visible);
 	/// <summary> Checks whether the specified tool window is visible.</summary>
 	/// <param name="widget">Tool window to be checked.</param>
 	static bool isVisible(QWidget *widget);
@@ -259,16 +263,21 @@ signals:
 	/// This signal is emitted when a tool window is shown,
 	/// with the tool window as an argument.
 	/// </summary>
-	void windowShown (QWidget *widget);
+	void windowShown(QWidget *widget);
 	/// <summary>
-	/// This signal is emitted when before a tool window is hidden,
+	/// This signal is emitted before a tool window is hidden,
 	/// with the tool window as an argument.
 	/// </summary>
-	void beforeHide (QWidget *widget);
+	void beforeHide(QWidget *widget);
 	/// <summary>
 	/// This signal is emitted when a tool window is hidden,
 	/// with the tool window as an argument.</summary>
-	void windowHidden (QWidget *widget);
+	void windowHidden(QWidget *widget);
+	/// <summary>
+	/// This signal is emitted when switching between tabs,
+	/// with the target tab as an argument.
+	/// </summary>
+	void tabSwitched(QWidget *widget);
 	/// <summary>
 	/// This signal is emitted when the state of the Tool Window Manager is restored.
 	/// </summary>

@@ -48,6 +48,9 @@ public:
 	// Prints a fatal error message to the log file and immediately quit the engine.
 	static UNIGINE_API void fatal(const char *format, ...) UNIGINE_PRINTF(1, 2);
 
+	static UNIGINE_API void setDialogFatalEnabled(bool enabled);
+	static UNIGINE_API bool isDialogFatalEnabled();
+
 	static UNIGINE_API LogEvent &getEventMessage();
 	static UNIGINE_API LogEvent &getEventWarning();
 	static UNIGINE_API LogEvent &getEventError();

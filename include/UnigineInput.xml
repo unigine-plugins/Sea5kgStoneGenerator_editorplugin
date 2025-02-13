@@ -4,60 +4,12 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.Input.getMousePosition const">
-			<summary>
-			Returns a vector containing the global coordinates of the mouse cursor. In case of a mouse button event, the cursor position at the moment of the processed event is returned. In case of no such event, the mouse position at the beginning of the frame is returned. To get the cursor position during another type of event, get this event (for example getKeyEvent()) and get the cursor position stored inside it.
-			</summary>  
-			<returns>Global coordinates of the cursor.</returns>
-		</member>
-		<member name="M:Unigine.Input.getMouseDeltaPosition const">
-			<summary>
-			Returns a vector containing screen position change of the mouse pointer along the X and Y axes — the difference between the values in the previous and the current frames.
-			</summary>  
-			<returns>Float mouse pointer position delta.</returns>
-		</member>
-		<member name="M:Unigine.Input.getMouseWheel const">
-			<summary>
-			Returns the current mouse scroll value. Negative values correspond to scrolling downwards; positive values correspond to scrolling upwards; the value is zero when the mouse wheel is not scrolled.
-			</summary>  
-			<returns>Mouse scroll value in the [-1;1] range.</returns>
-		</member>
-		<member name="M:Unigine.Input.getMouseWheelHorizontal const">
-			<summary>
-			Returns the current horizontal mouse scroll value.
-			</summary>  
-			<returns>Horizontal mouse scroll value in the [-1;1] range.</returns>
-		</member>
-		<member name="M:Unigine.Input.setMouseGrab(bool)">
-			<summary>
-			Sets the value indicating if the mouse pointer is bound to the application window.
-			</summary> 
-			<param name="grab"> 1 if the mouse cannot leave the application window; otherwise, 0. </param> 
-		</member>
-		<member name="M:Unigine.Input.isMouseGrab const">
-			<summary>
-			Returns the value indicating if the mouse pointer is bound to the application window.
-			</summary>  
-			<returns>true if the mouse cannot leave the application window; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Input.getNumGamePads const">
-			<summary>
-			Returns the total number of all gamepads.
-			</summary>  
-			<returns>Number of all gamepads.</returns>
-		</member>
 		<member name="M:Unigine.Input.getGamePad(int) const">
 			<summary>
 			Returns a gamepad of the given index.
 			</summary> 
 			<param name="num"> Gamepad index. </param> 
 			<returns>InputGamepad object.</returns>
-		</member>
-		<member name="M:Unigine.Input.getNumJoysticks const">
-			<summary>
-			Returns the total number of all joysticks.
-			</summary>  
-			<returns>Number of all joysticks.</returns>
 		</member>
 		<member name="M:Unigine.Input.getJoystick(int) const">
 			<summary>
@@ -107,18 +59,6 @@
 			</summary> 
 			<param name="button"> One of the preset MOUSE_BUTTON_ codes. </param> 
 			<returns>1 during the first frame when the mouse button was released; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Input.setMouseHandle(Input::MOUSE_HANDLE)">
-			<summary>
-			Sets the mouse behavior mode.
-			</summary> 
-			<param name="handle"> Mouse behavior mode, one of the MOUSE_HANDLE_* values. </param> 
-		</member>
-		<member name="M:Unigine.Input.getMouseHandle const">
-			<summary>
-			Returns the mouse behavior mode.
-			</summary>  
-			<returns>Mouse behavior mode, one of the MOUSE_HANDLE_* values.</returns>
 		</member>
 		<member name="M:Unigine.Input.isTouchPressed(int) const">
 			<summary>
@@ -259,66 +199,6 @@
 			<param name="unicode"> Unicode symbol. </param> 
 			<returns>One of the preset KEY_ codes.</returns>
 		</member>
-		<member name="M:Unigine.Input.getMouseDeltaRaw const">
-			<summary>
-			Returns the physical change in the absolute mouse position (not the screen cursor).
-			</summary>  
-			<returns>The change in the absolute mouse position, dots per inch.</returns>
-		</member>
-		<member name="M:Unigine.Input.isEmptyClipboard const">
-			<summary>
-			Returns a value indicating if the clipboard is empty.
-			</summary>  
-			<returns>true if the clipboard is empty; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Input.setClipboard(char)">
-			<summary>
-			Updates the contents of the system clipboard.
-			</summary> 
-			<param name="clipboard"> Contents to set. </param> 
-		</member>
-		<member name="M:Unigine.Input.getClipboard const">
-			<summary>
-			Retrieves the contents of the system clipboard.
-			</summary>  
-			<returns>Contents of the system clipboard.</returns>
-		</member>
-		<member name="M:Unigine.Input.setMouseCursorHide(bool)">
-			<summary>
-			Sets a value indicating if the mouse cursor should be hidden. Can be used, for example, to hide mouse cursor for a certain element.					This method hides the cursor only for one frame. So, you should call it each frame if a longer period is required.
-			</summary> 
-			<param name="hide"> true to hide the mouse cursor for a single frame, false - to show it. </param> 
-		</member>
-		<member name="M:Unigine.Input.isMouseCursorHide const">
-			<summary>
-			Returns a value indicating if the mouse cursor is hidden in the current frame.
-			</summary>  
-			<returns>true if mouse cursor is hidden in the current frame, false - to show it.</returns>
-		</member>
-		<member name="M:Unigine.Input.setMouseCursorSystem(bool)">
-			<summary>
-			Sets a value indicating if the OS mouse pointer should be displayed.
-			</summary> 
-			<param name="system"> true to display the OS mouse pointer; otherwise, false. </param> 
-		</member>
-		<member name="M:Unigine.Input.isMouseCursorSystem const">
-			<summary>
-			Returns a value indicating if the OS mouse pointer is displayed.
-			</summary>  
-			<returns>true if the OS mouse pointer is displayed; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Input.setMouseCursorNeedUpdate(bool)">
-			<summary>
-			Sets a value indicating that some changes were made to the cursor (e.g., it was shown, hidden, changed to system, etc.) and it has to be updated. Suppose the cursor was modified, for example, by the Interface plugin. After closing the plugin's window the cursor shall not return to its previous state because SDL doesn't even know about the changes. You can use this flag to signalize, that mouse cursor must be updated.
-			</summary> 
-			<param name="update"> true to signalize that the mouse cursor has to be updated; otherwise, false. </param> 
-		</member>
-		<member name="M:Unigine.Input.isMouseCursorNeedUpdate const">
-			<summary>
-			Returns a value indicating that changes were made to the cursor (e.g., it was shown, hidden, changed to system, etc.) and it has to be updated. Suppose the cursor was modified, for example, by the Interface plugin. After closing the plugin's window the cursor shall not return to its previous state because SDL doesn't even know about the changes. You can use this flag to signalize, that mouse cursor must be updated.
-			</summary>  
-			<returns>true if the mouse cursor has to be updated; otherwise, false.</returns>
-		</member>
 		<member name="M:Unigine.Input.setMouseCursorSkinCustom(Unigine.Ptr{Unigine.Image})">
 			<summary>
 			Sets a custom image to be used for the mouse cursor.
@@ -395,42 +275,12 @@
 			<param name="name"> Key name of the modifier. </param> 
 			<returns>Scancode of the modifier.</returns>
 		</member>
-		<member name="M:Unigine.Input.getNumVRDevices const">
-			<summary>
-			Returns the total number of all VR devices.
-			</summary>  
-			<returns>Number of all VR devices.</returns>
-		</member>
 		<member name="M:Unigine.Input.getVRDevice(int) const">
 			<summary>
 			Returns the VR device by its number.
 			</summary> 
 			<param name="num"> Number of the VR device. </param> 
 			<returns>VR device.</returns>
-		</member>
-		<member name="M:Unigine.Input.getVRHead const">
-			<summary>
-			Returns the currently connected VR head device.
-			</summary>  
-			<returns>VR head device.</returns>
-		</member>
-		<member name="M:Unigine.Input.getVRControllerLeft const">
-			<summary>
-			Returns the currently connected left-hand VR controller.
-			</summary>  
-			<returns>Left-hand VR controller.</returns>
-		</member>
-		<member name="M:Unigine.Input.getVRControllerRight const">
-			<summary>
-			Returns the currently connected right-hand VR controller.
-			</summary>  
-			<returns>Right-hand VR controller.</returns>
-		</member>
-		<member name="M:Unigine.Input.getVRControllerTreadmill const">
-			<summary>
-			Returns the currently connected treadmill VR controller.
-			</summary>  
-			<returns>Treadmill VR controller.</returns>
 		</member>
 		<member name="F:Unigine.Input.MOUSE_BUTTON_UNKNOWN">
 			<summary>
@@ -1487,24 +1337,64 @@
 			Total number of modifiers.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_SYSTEM_LEFT">
+		<member name="F:Unigine.Input.VR_BUTTON_SYSTEM">
 			<summary>
-			Left system button.
+			System button.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_SYSTEM_RIGHT">
+		<member name="F:Unigine.Input.VR_BUTTON_START">
 			<summary>
-			Right system button.
+			Start button.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_A">
+		<member name="F:Unigine.Input.VR_BUTTON_HOME">
 			<summary>
-			A button reserved for the controller.
+			Home button.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_B">
+		<member name="F:Unigine.Input.VR_BUTTON_END">
 			<summary>
-			B button reserved for the controller.
+			End button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_SELECT">
+			<summary>
+			Select button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_VOLUME_UP">
+			<summary>
+			Volume Up button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_VOLUME_DOWN">
+			<summary>
+			Volume Up button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_MUTE_MIC">
+			<summary>
+			Mute Microphone button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_PLAY_PAUSE">
+			<summary>
+			Play/Pause button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_MENU">
+			<summary>
+			Menu button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_VIEW">
+			<summary>
+			View button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_BACK">
+			<summary>
+			Back button.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.VR_BUTTON_X">
@@ -1517,64 +1407,94 @@
 			Y button reserved for the controller.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_GRIP_LEFT">
+		<member name="F:Unigine.Input.VR_BUTTON_SHOULDER">
 			<summary>
-			Left grip button.
+			Shoulder button reserved for the controller.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_AXIS_0_LEFT">
+		<member name="F:Unigine.Input.VR_BUTTON_GRIP">
 			<summary>
-			The axis reserved for the left controller.
+			Grip button reserved for the controller.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_AXIS_1_LEFT">
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_0">
 			<summary>
-			The axis reserved for the left controller.
+			The axis reserved for the controller.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_AXIS_2_LEFT">
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_1">
 			<summary>
-			The axis reserved for the left controller.
+			The axis reserved for the controller.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_AXIS_3_LEFT">
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_2">
 			<summary>
-			The axis reserved for the left controller.
+			The axis reserved for the controller.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_AXIS_4_LEFT">
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_3">
 			<summary>
-			The axis reserved for the left controller.
+			The axis reserved for the controller.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_GRIP_RIGHT">
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_4">
 			<summary>
-			Right grip button.
+			The axis reserved for the controller.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_AXIS_0_RIGHT">
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_5">
 			<summary>
-			The axis reserved for the right controller.
+			The axis reserved for the controller.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_AXIS_1_RIGHT">
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_6">
 			<summary>
-			The axis reserved for the right controller.
+			The axis reserved for the controller.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_AXIS_2_RIGHT">
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_7">
 			<summary>
-			The axis reserved for the right controller.
+			The axis reserved for the controller.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_AXIS_3_RIGHT">
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_8">
 			<summary>
-			The axis reserved for the right controller.
+			The axis reserved for the controller.
 		</summary>
 		</member>
-		<member name="F:Unigine.Input.VR_BUTTON_AXIS_4_RIGHT">
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_9">
 			<summary>
-			The axis reserved for the right controller.
+			The axis reserved for the controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_10">
+			<summary>
+			The axis reserved for the controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_11">
+			<summary>
+			The axis reserved for the controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_12">
+			<summary>
+			The axis reserved for the controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_13">
+			<summary>
+			The axis reserved for the controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_14">
+			<summary>
+			The axis reserved for the controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_AXIS_15">
+			<summary>
+			The axis reserved for the controller.
 		</summary>
 		</member>
 		<member name="F:Unigine.Input.VR_BUTTON_DPAD_UP">
@@ -1597,6 +1517,21 @@
 			Sensor panel right button.
 		</summary>
 		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_DPAD_CENTER">
+			<summary>
+			Sensor panel center button.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_THUMBREST">
+			<summary>
+			Thumb rest, a place for the user to rest their thumb.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.VR_BUTTON_THUMB_RESTING_SURFACES">
+			<summary>
+			Thumb resting surfaces — any surfaces that a thumb may naturally rest on. This may include, but is not limited to, face buttons, thumbstick, and thumbrest.
+		</summary>
+		</member>
 		<member name="F:Unigine.Input.VR_BUTTON_PROXIMITY_SENSOR">
 			<summary>
 			Proximity sensor.
@@ -1610,6 +1545,66 @@
 		<member name="F:Unigine.Input.NUM_VR_BUTTONS">
 			<summary>
 			Total number of VR buttons and axes.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.NUM_JOYSTICK_FORCE_FEEDBACKS">
+			<summary>
+			Total number of joystick force feedbacks.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_FORCE_FEEDBACK_INERTIA">
+			<summary>
+			Force increases in proportion to the acceleration of the axis.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_FORCE_FEEDBACK_DAMPER">
+			<summary>
+			Force increases in proportion to the velocity with which the user moves the axis.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_FORCE_FEEDBACK_FRICTION">
+			<summary>
+			Force is applied when the axis is moved and depends on the defined friction coefficient.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_FORCE_FEEDBACK_SPRING">
+			<summary>
+			Force increases in proportion to the distance of the axis from a defined neutral point.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_FORCE_FEEDBACK_SAWTOOTHDOWNWAVE">
+			<summary>
+			Force pulsates periodically according to the down (reverse) sawtooth wave pattern.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_FORCE_FEEDBACK_SAWTOOTHUPWAVE">
+			<summary>
+			Force pulsates periodically according to the up (regular) sawtooth wave pattern.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_FORCE_FEEDBACK_TRIANGLEWAVE">
+			<summary>
+			Force pulsates periodically according to the triangle wave pattern.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_FORCE_FEEDBACK_SQUAREWAVE">
+			<summary>
+			Force pulsates periodically according to the square wave pattern.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_FORCE_FEEDBACK_SINEWAVE">
+			<summary>
+			Force pulsates periodically according to the sinusoidal wave pattern.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_FORCE_FEEDBACK_RAMP">
+			<summary>
+			Force that steadily increases or decreases in magnitude.
+		</summary>
+		</member>
+		<member name="F:Unigine.Input.JOYSTICK_FORCE_FEEDBACK_CONSTANT">
+			<summary>
+			Steady force in a single direction.
 		</summary>
 		</member>
 		<member name="M:Unigine.InputEvent.getType const">
@@ -1652,6 +1647,7 @@
 			<summary>
 			Returns the engine frame during which the event has been sent from proxy to Input.
 			</summary>  
+			<returns>The engine frame during which the event has been sent from proxy to Input.</returns>
 		</member>
 		<member name="F:Unigine.InputEvent.INPUT_EVENT">
 			<summary>
@@ -1726,6 +1722,26 @@
 		<member name="F:Unigine.InputEvent.INPUT_EVENT_PAD_TOUCH_MOTION">
 			<summary>
 			Touch panel has been touched.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputEvent.INPUT_EVENT_VR_DEVICE">
+			<summary>
+			VR device has been connected or disconnected.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputEvent.INPUT_EVENT_VR_BUTTON">
+			<summary>
+			VR device button has been pressed.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputEvent.INPUT_EVENT_VR_BUTTON_TOUCH">
+			<summary>
+			VR device button has been touched.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputEvent.INPUT_EVENT_VR_AXIS_MOTION">
+			<summary>
+			VR device axis has been moved.
 		</summary>
 		</member>
 		<member name="F:Unigine.InputEvent.INPUT_EVENT_SYSTEM">
@@ -3208,7 +3224,7 @@
 			<summary>
 			Returns a value indicating if the joystick is available.
 			</summary>  
-			<returns>true if the joystick is available; otherwise, false. </returns>
+			<returns>true if the joystick is available; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.InputJoystick.getName const">
 			<summary>
@@ -3226,7 +3242,7 @@
 			<summary>
 			Returns a value indicating the type of the device (wheel, throttle, etc.).
 			</summary>  
-			<returns>Device type. One of the DEVICE_* values of the Input class.</returns>
+			<returns>Device type. One of the DEVICE_*values of the Input class.</returns>
 		</member>
 		<member name="M:Unigine.InputJoystick.setFilter(float)">
 			<summary>
@@ -3236,7 +3252,7 @@
 		</member>
 		<member name="M:Unigine.InputJoystick.getFilter const">
 			<summary>
-			Returns a filter value used to correct the current state of the joystick axis relative to the previous one:													Filter value of 0 means there is no interpolation and the current value is not corrected.							Filter value of 1 means the previous state is used instead of the current one.
+			Returns a filter value used to correct the current state of the joystick axis relative to the previous one:											Filter value of 0 means there is no interpolation and the current value is not corrected.						Filter value of 1 means the previous state is used instead of the current one.
 			</summary>  
 			<returns>Filter value for interpolation between axis states.</returns>
 		</member>
@@ -3373,6 +3389,100 @@
 			</summary>  
 			<returns>Version of the product established by the manufacturer of the device.</returns>
 		</member>
+		<member name="M:Unigine.InputJoystick.isForceFeedbackEffectSupported(Input::JOYSTICK_FORCE_FEEDBACK_EFFECT) const">
+			<summary>
+			Returns the value indicating of the specified force feedback effect is supported by the joystick.
+			</summary> 
+			<param name="effect"> Force feedback effect. </param> 
+			<returns>true if the specified force feedback effect is supported, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.InputJoystick.playForceFeedbackEffectConstant(float,float)">
+			<summary>
+			Applies the constant force-feedback effect with the specified parameters to the joystick. Force is applied at a constant level for the duration of the effect.
+			</summary> 
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param>
+			<param name="magnitude"> Modifier of force-feedback effect envelope (angular X direction). </param> 
+		</member>
+		<member name="M:Unigine.InputJoystick.playForceFeedbackEffectRamp(float,float,uint64_t)">
+			<summary>
+			Applies the ramp force-feedback effect with the specified parameters to the joystick. Force is applied gradually by being increased or decreased over the duration of the effect.
+			</summary> 
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param>
+			<param name="magnitude"> Modifier of force-feedback effect envelope (angular X direction). </param>
+			<param name="duration_us"> Force-feedback effect duration, in microseconds. </param> 
+		</member>
+		<member name="M:Unigine.InputJoystick.playForceFeedbackEffectSineWave(float,float)">
+			<summary>
+			Applies the sine-wave force-feedback effect with the specified parameters to the joystick. Force is applied in a sine-wave pattern.
+			</summary> 
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param>
+			<param name="frequency"> Frequency of the force-feedback period, in hertz. </param> 
+		</member>
+		<member name="M:Unigine.InputJoystick.playForceFeedbackEffectSquareWave(float,float)">
+			<summary>
+			Applies the square-wave force-feedback effect with the specified parameters to the joystick. Force is applied in a square-wave pattern.
+			</summary> 
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param>
+			<param name="frequency"> Frequency of the force-feedback period, in hertz. </param> 
+		</member>
+		<member name="M:Unigine.InputJoystick.playForceFeedbackEffectTriangleWave(float,float)">
+			<summary>
+			Applies the triangle-wave force-feedback effect with the specified parameters to the joystick. Force is applied in a triangle-wave pattern.
+			</summary> 
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param>
+			<param name="frequency"> Frequency of the force-feedback period, in hertz. </param> 
+		</member>
+		<member name="M:Unigine.InputJoystick.playForceFeedbackEffectSawtoothUpWave(float,float)">
+			<summary>
+			Applies the upward-sawtooth-wave force-feedback effect with the specified parameters to the joystick. Force is applied in a upward-sawtooth-wave pattern.
+			</summary> 
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param>
+			<param name="frequency"> Frequency of the force-feedback period, in hertz. </param> 
+		</member>
+		<member name="M:Unigine.InputJoystick.playForceFeedbackEffectSawtoothDownWave(float,float)">
+			<summary>
+			Applies the downward-sawtooth-wave force-feedback effect with the specified parameters to the joystick. Force is applied in a downward-sawtooth-wave pattern.
+			</summary> 
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param>
+			<param name="frequency"> Frequency of the force-feedback period, in hertz. </param> 
+		</member>
+		<member name="M:Unigine.InputJoystick.playForceFeedbackEffectSpring(float)">
+			<summary>
+			Applies the spring force-feedback effect with the specified force to the joystick. Force is applied in opposition to a set state.
+			</summary> 
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param> 
+		</member>
+		<member name="M:Unigine.InputJoystick.playForceFeedbackEffectFriction(float)">
+			<summary>
+			Applies the friction force-feedback effect with the specified force to the joystick. Force is applied to mimic friction.
+			</summary> 
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param> 
+		</member>
+		<member name="M:Unigine.InputJoystick.playForceFeedbackEffectDamper(float)">
+			<summary>
+			Applies the damper force-feedback effect with the specified force to the joystick. Force is applied to mimic a damper effect.
+			</summary> 
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param> 
+		</member>
+		<member name="M:Unigine.InputJoystick.playForceFeedbackEffectInertia(float)">
+			<summary>
+			Applies the inertia force-feedback effect with the specified force to the joystick. Force is applied to mimic an inertia effect.
+			</summary> 
+			<param name="force"> Amount of force being applied by a force-feedback effect. </param> 
+		</member>
+		<member name="M:Unigine.InputJoystick.stopForceFeedbackEffect(Input::JOYSTICK_FORCE_FEEDBACK_EFFECT)">
+			<summary>
+			Stops application of the specified type of force-feedback effect to the joystick.
+			</summary> 
+			<param name="effect"> Type of a force-feedback effect. </param> 
+		</member>
+		<member name="M:Unigine.InputJoystick.isForceFeedbackEffectPlaying(Input::JOYSTICK_FORCE_FEEDBACK_EFFECT) const">
+			<summary>
+			Returns the value indicating if the specified type of force-feedback effect is currently being applied.
+			</summary> 
+			<param name="effect"> Type of a force-feedback effect. </param> 
+			<returns>true if the specified type of force-feedback effect is currently being applied, otherwise false.</returns>
+		</member>
 		<member name="M:Unigine.InputVRBaseStation.getModelType const">
 			<summary>
 			Returns the model type of the VR base station.
@@ -3398,36 +3508,6 @@
 			<summary>
 			Total number of VR base station models.
 		</summary>
-		</member>
-		<member name="M:Unigine.InputVRController.getModelType const">
-			<summary>
-			Returns the model type of the VR controller.
-			</summary>  
-			<returns>Controller model type.</returns>
-		</member>
-		<member name="M:Unigine.InputVRController.setFilter(float)">
-			<summary>
-			Sets a filter value used to correct the current state of the analog axis relative to the previous one. Axis states are interpolated for thumbsticks and triggers.
-			</summary> 
-			<param name="filter"> Filter value for interpolation between axis states. The provided value is clamped to a range [0.0;1.0].Filter value of 0.0 means there is no interpolation and the current value is not corrected.Filter value of 1.0 means the previous state is used instead of the current one. </param> 
-		</member>
-		<member name="M:Unigine.InputVRController.getFilter const">
-			<summary>
-			Returns a filter value used to correct the current state of the analog axis (thumbsticks and triggers) relative to the previous one:													Filter value of 0.0 means there is no interpolation and the current value is not corrected.							Filter value of 1.0 means the previous state is used instead of the current one.
-			</summary>  
-			<returns>Filter value.</returns>
-		</member>
-		<member name="M:Unigine.InputVRController.getControllerType const">
-			<summary>
-			Returns the type of the VR controller.
-			</summary>  
-			<returns>Controller type.</returns>
-		</member>
-		<member name="M:Unigine.InputVRController.getNumAxes const">
-			<summary>
-			Returns the number of axes supported by the VR controller.
-			</summary>  
-			<returns>Number of axes.</returns>
 		</member>
 		<member name="M:Unigine.InputVRController.getAxisType(int) const">
 			<summary>
@@ -3522,11 +3602,32 @@
 			<param name="events"> Buffer with button touch events. </param> 
 			<returns>Number of input events for the specified VR controller touch button.</returns>
 		</member>
-		<member name="M:Unigine.InputVRController.setVibration(unsignedshort)">
+		<member name="M:Unigine.InputVRController.stopHaptic">
 			<summary>
-			Sets the vibration of the given duration for the VR controller.
+			Stops the vibration feedback.
+			</summary>  
+		</member>
+		<member name="M:Unigine.InputVRController.applyHaptic(float,double,float)">
+			<summary>
+			Applies the vibration feedback with the specified amplitude, duration and frequency parameters.
 			</summary> 
-			<param name="duration_ms"> Duration of the vibration. </param> 
+			<param name="amplitude"> Amplitude of vibration between 0.0 and 1.0. </param>
+			<param name="duration_ms"> Duration of the vibration, in milliseconds. </param>
+			<param name="frequency_hz"> Frequency of the vibration in Hz. </param> 
+		</member>
+		<member name="M:Unigine.InputVRController.getAxisByType(InputVRController::AXIS_TYPE) const">
+			<summary>
+			Returns a state value for the axis of the specified type. It includes position of the VR controller along the X and Y axes (a two-axis controller). The return value depends on the axis type.
+			</summary> 
+			<param name="axis_type"> Axis type. </param> 
+			<returns>Value in range [-1.0f;1.0f].</returns>
+		</member>
+		<member name="M:Unigine.InputVRController.findAxisByType(InputVRController::AXIS_TYPE) const">
+			<summary>
+			Returns the index of the axis by its type.
+			</summary> 
+			<param name="axis_type"> Axis type. </param> 
+			<returns>Axis index.</returns>
 		</member>
 		<member name="F:Unigine.InputVRController.MODEL_TYPE_UNKNOWN">
 			<summary>
@@ -3583,19 +3684,89 @@
 			Not specified
 		</summary>
 		</member>
-		<member name="F:Unigine.InputVRController.AXIS_TYPE_TRACK_PAD">
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_TRACKPAD_X">
 			<summary>
-			Trackpad
+			Trackpad X-axis. The axis range is [-1;1].
 		</summary>
 		</member>
-		<member name="F:Unigine.InputVRController.AXIS_TYPE_JOYSTICK">
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_TRACKPAD_Y">
 			<summary>
-			Joystick
+			Trackpad Y-axis. The axis range is [-1;1].
 		</summary>
 		</member>
-		<member name="F:Unigine.InputVRController.AXIS_TYPE_TRIGGER">
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_TRACKPAD_FORCE">
 			<summary>
-			Trigger
+			Trackpad axis that takes into account the force value of the finger pressure. The axis range is [0;1].
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_JOYSTICK_X">
+			<summary>
+			Joystick X-axis. The axis range is [-1;1].
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_JOYSTICK_Y">
+			<summary>
+			Joystick Y-axis. The axis range is [-1;1].
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_JOYSTICK_FORCE">
+			<summary>
+			Joystick axis that takes into account the force value of the finger pressure. The axis range is [0;1].
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_GRIP_VALUE">
+			<summary>
+			Grip axis taking the value from 0 to 1.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_GRIP_FORCE">
+			<summary>
+			Grip axis that takes into account the force value of the finger pressure exceeding 1.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_TRIGGER_VALUE">
+			<summary>
+			Trigger axis taking the value from 0 to 1.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_TRIGGER_FORCE">
+			<summary>
+			Trigger axis that takes into account the force value of the finger pressure exceeding 1.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_TRIGGER_CURL_VALUE">
+			<summary>
+			Trigger curl axis taking the value from 0 to 1.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_TRIGGER_CURL_FORCE">
+			<summary>
+			Trigger curl axis that takes into account the force value of the finger pressure exceeding 1.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_TRIGGER_SLIDE_VALUE">
+			<summary>
+			Trigger slide axis taking the value from 0 to 1.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_TRIGGER_SLIDE_FORCE">
+			<summary>
+			Trigger slide axis that takes into account the force value of the finger pressure exceeding 1.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_PINCH_VALUE">
+			<summary>
+			1D analog input component indicating the extent which the user is bringing their finger and thumb together to perform a pinch gesture (supported by WMR).
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_GRASP_VALUE">
+			<summary>
+			1D analog input component indicating that the user is making a fist (supported by WMR).
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRController.AXIS_TYPE_AIM_ACTIVATE_VALUE">
+			<summary>
+			1D analog input component indicating that the user activated the action on the target that the user is pointing at with the aim pose (supported by WMR).
 		</summary>
 		</member>
 		<member name="F:Unigine.InputVRController.NUM_AXIS_TYPES">
@@ -3603,53 +3774,11 @@
 			Total number of axis types.
 		</summary>
 		</member>
-		<member name="M:Unigine.InputVRDevice.isAvailable const">
-			<summary>
-			Returns a value indicating if the VR device is available.
-			</summary>  
-			<returns>true if the device is available; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.InputVRDevice.getNumber const">
-			<summary>
-			Returns the index of the VR device.
-			</summary>  
-			<returns>Device index.</returns>
-		</member>
-		<member name="M:Unigine.InputVRDevice.getName const">
-			<summary>
-			Returns the name of the VR device.
-			</summary>  
-			<returns>Device name.</returns>
-		</member>
-		<member name="M:Unigine.InputVRDevice.getDeviceType const">
-			<summary>
-			Returns the type of the input device (wheel, throttle, etc.).
-			</summary>  
-			<returns>Input device type.</returns>
-		</member>
-		<member name="M:Unigine.InputVRDevice.getType const">
-			<summary>
-			Returns the type of the VR device (HMD, controller, base station, etc.).
-			</summary>  
-			<returns>VR device type.</returns>
-		</member>
-		<member name="M:Unigine.InputVRDevice.getDeviceModelName const">
-			<summary>
-			Returns the name of the model of the VR device.
-			</summary>  
-			<returns>Model name.</returns>
-		</member>
 		<member name="M:Unigine.InputVRDevice.hasYawDrift const">
 			<summary>
 			Returns a value indicating if the VR device will drift in a specific direction.
 			</summary>  
 			<returns>true if the device has yaw drift; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.InputVRDevice.isCharging const">
-			<summary>
-			Returns a value indicating if the VR device is charging.
-			</summary>  
-			<returns>true if the device is charging; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.InputVRDevice.hasBattery const">
 			<summary>
@@ -3663,83 +3792,61 @@
 			</summary>  
 			<returns>true if the battery status is provided; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.InputVRDevice.getBatteryValue const">
+		<member name="M:Unigine.InputVRDevice.getWorldTransform(InputVRDevice::TRANSFORM_TYPE) const">
 			<summary>
-			Returns the current battery level.
-			</summary>  
-			<returns>Battery level, in percents.</returns>
-		</member>
-		<member name="M:Unigine.InputVRDevice.getModelNumber const">
-			<summary>
-			Returns the model number for the VR device.
-			</summary>  
-			<returns>Model number.</returns>
-		</member>
-		<member name="M:Unigine.InputVRDevice.getSerialNumber const">
-			<summary>
-			Returns the serial number of the VR device.
-			</summary>  
-			<returns>Seril number.</returns>
-		</member>
-		<member name="M:Unigine.InputVRDevice.getManufacturerName const">
-			<summary>
-			Returns the name of the VR device's vendor.
-			</summary>  
-			<returns>Vendor name.</returns>
-		</member>
-		<member name="M:Unigine.InputVRDevice.getHardwareRevision const">
-			<summary>
-			Returns the hardware revision of the VR device.
-			</summary>  
-			<returns>Hardware revision.</returns>
-		</member>
-		<member name="M:Unigine.InputVRDevice.getFirmwareVersion const">
-			<summary>
-			Returns the firmware version of the VR device.
-			</summary>  
-			<returns>Firmware version</returns>
-		</member>
-		<member name="M:Unigine.InputVRDevice.getWorldTransform const">
-			<summary>
-			Retuns the world transformation of the VR device.
-			</summary>  
+			Retuns the world transformation of the VR device for the specified transformation type.
+			</summary> 
+			<param name="type"> Transformation type. </param> 
 			<returns>World transformation matrix.</returns>
 		</member>
-		<member name="M:Unigine.InputVRDevice.getTransform const">
+		<member name="M:Unigine.InputVRDevice.getTransform(InputVRDevice::TRANSFORM_TYPE) const">
 			<summary>
-			Returns the local transformation of the VR device.
-			</summary>  
+			Returns the local transformation of the VR device for the specified transformation type.
+			</summary> 
+			<param name="type"> Transformation type. </param> 
 			<returns>Local transformation matrix.</returns>
 		</member>
-		<member name="M:Unigine.InputVRDevice.getLinearVelocity const">
+		<member name="M:Unigine.InputVRDevice.getLinearVelocity(InputVRDevice::TRANSFORM_TYPE) const">
 			<summary>
-			Returns the linear velocity of the VR device.
-			</summary>  
+			Returns the linear velocity of the VR device for the specified transformation type.
+			</summary> 
+			<param name="type"> Transformation type. </param> 
 			<returns>Linear velocity.</returns>
 		</member>
-		<member name="M:Unigine.InputVRDevice.getAngularVelocity const">
+		<member name="M:Unigine.InputVRDevice.getAngularVelocity(InputVRDevice::TRANSFORM_TYPE) const">
 			<summary>
-			Returns the angular velocity of the VR device.
-			</summary>  
+			Returns the angular velocity of the VR device for the specified transformation type.
+			</summary> 
+			<param name="type"> Transformation type. </param> 
 			<returns>Angular velocity.</returns>
 		</member>
-		<member name="M:Unigine.InputVRDevice.getAngularAcceleration const">
+		<member name="M:Unigine.InputVRDevice.getAngularAcceleration(InputVRDevice::TRANSFORM_TYPE) const">
 			<summary>
-			Returns the angular acceleration of the VR device.
-			</summary>  
+			Returns the angular acceleration of the VR device for the specified transformation type.
+			</summary> 
+			<param name="type"> Transformation type. </param> 
 			<returns>Angular acceleration.</returns>
 		</member>
-		<member name="M:Unigine.InputVRDevice.isTransformValid const">
+		<member name="M:Unigine.InputVRDevice.isTransformValid(InputVRDevice::TRANSFORM_TYPE) const">
 			<summary>
-			Returns a value indicating if transformation if the VR device is valid.
-			</summary>  
+			Returns a value indicating if transformation of the VR device for the specified transformation type is valid.
+			</summary> 
+			<param name="type"> Transformation type. </param> 
 			<returns>true if transformation is valid; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.InputVRDevice.getNumModels const">
+		<member name="M:Unigine.InputVRDevice.isVelocityValid(InputVRDevice::TRANSFORM_TYPE) const">
 			<summary>
-			Returns the number of VR device's models.
-			</summary>  
-			<returns>Number of models.</returns>
+			Returns a value indicating if the velocity of the VR device for the specified transformation type is valid.
+			</summary> 
+			<param name="type"> Transformation type. </param> 
+			<returns>true if velocity is valid; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRDevice.isTransformTypeSupported(InputVRDevice::TRANSFORM_TYPE) const">
+			<summary>
+			Returns a value indicating if the VR device supports the specified transformation type.
+			</summary> 
+			<param name="type"> Transformation type. </param> 
+			<returns>true if transformation type is supported; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.InputVRDevice.getModelTransform(int) const">
 			<summary>
@@ -3776,24 +3883,6 @@
 			<param name="num"> Model index. </param> 
 			<returns>Model name.</returns>
 		</member>
-		<member name="M:Unigine.InputVRDevice.getCombinedModelMesh const">
-			<summary>
-			Returns the entire mesh of the combined model of the VR device.						You cannot animate this mesh. However, if you get a mesh of each model individually, it will be automatically animated.
-			</summary>  
-			<returns>Mesh of the combined model.</returns>
-		</member>
-		<member name="M:Unigine.InputVRDevice.getCombinedModelTexture const">
-			<summary>
-			Returns the texture of the combined model of the VR device.
-			</summary>  
-			<returns>Texure of the combined model.</returns>
-		</member>
-		<member name="M:Unigine.InputVRDevice.getCombinedModelName const">
-			<summary>
-			Returns the name of the combined model of the VR device.
-			</summary>  
-			<returns>Name of the combined model.</returns>
-		</member>
 		<member name="F:Unigine.InputVRDevice.INPUT_VR_UNKNOWN">
 			<summary>
 			Unknown VR device.
@@ -3829,6 +3918,36 @@
 			Total number of types of the VR devices.
 		</summary>
 		</member>
+		<member name="F:Unigine.InputVRDevice.TRANSFORM_TYPE_AIM">
+			<summary>
+			(OpenXR only) A pose that allows applications to point in the world using the input source, according to the platform’s conventions for aiming with that kind of source. The aim pose is defined as follows:													For tracked hands: The ray that follows platform conventions for how the user aims at objects in the world with their entire hand, with +Y up, +X to the right, and -Z forward. The ray chosen will be runtime-dependent, often a ray emerging from the hand at a target pointed by moving the forearm.							For handheld motion controllers: The ray that follows platform conventions for how the user targets objects in the world with the motion controller, with +Y up, +X to the right, and -Z forward. This is usually for applications that are rendering a model matching the physical controller, as an application rendering a virtual object in the user’s hand likely prefers to point based on the geometry of that virtual object. The ray chosen will be runtime-dependent, although this will often emerge from the frontmost tip of a motion controller.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRDevice.TRANSFORM_TYPE_GRIP">
+			<summary>
+			A pose that allows applications to reliably render a virtual object held in the user’s hand, whether it is tracked directly or by a motion controller. The grip pose is defined as follows:																					The grip position:																	For tracked hands: The user’s palm centroid when closing the fist, at the surface of the palm.									For handheld motion controllers: A fixed position within the controller that generally lines up with the palm centroid when held by a hand in a neutral position. This position should be adjusted left or right to center the position within the controller’s grip.																						The grip orientation’s +X axis: When you completely open your hand to form a flat 5-finger pose, the ray that is normal to the user’s palm (away from the palm in the left hand, into the palm in the right hand).							The grip orientation’s -Z axis: When you close your hand partially (as if holding the controller), the ray that goes through the center of the tube formed by your non-thumb fingers, in the direction of little finger to thumb.							The grip orientation’s +Y axis: orthogonal to +Z and +X using the right-hand rule.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRDevice.TRANSFORM_TYPE_MESH">
+			<summary>
+			A pose (grip_surface) that allows applications to reliably anchor visual content relative to the user’s physical hand, whether the user’s hand is tracked directly or its position and orientation is inferred by a physical controller. The grip_surface pose is defined as follows:											The grip_surface position: The user’s physical palm centroid, at the surface of the palm. For the avoidance of doubt, the palm does not include fingers.						The grip_surface orientation’s +X axis: When a user is holding the controller and straightens their index fingers pointing forward, the ray that is normal (perpendicular) to the user’s palm (away from the palm in the left hand, into the palm in the right hand).						The grip_surface orientation’s -Z axis: When a user is holding the controller and straightens their index finger, the ray that is parallel to their finger’s pointing direction.						The grip_surface orientation’s +Y axis: orthogonal to +Z and +X using the right-hand rule.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRDevice.TRANSFORM_TYPE_PINCH">
+			<summary>
+			Pinch pose designed for interacting with a small object within arm’s reach using a finger and thumb with a "pinch" gesture. For example, turning a key to open a lock or moving the knob on a slider control are interactions suited to the "pinch" pose.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRDevice.TRANSFORM_TYPE_POKE">
+			<summary>
+			Poke pose designed for interactions using a fingertip to touch and push a small object. For example, pressing a push button with a fingertip, swiping to scroll a browser view, or typing on a virtual keyboard are interactions suited to the "poke" pose.
+		</summary>
+		</member>
+		<member name="F:Unigine.InputVRDevice.NUM_TRANSFORM_TYPES">
+			<summary>
+			Total number of transformation types.
+		</summary>
+		</member>
 		<member name="M:Unigine.InputVRHead.getModelType const">
 			<summary>
 			Returns the model type of the HMD.
@@ -3840,6 +3959,24 @@
 			Returns a value indicating if the HMD has buttons.
 			</summary>  
 			<returns>true if there are buttons; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.InputVRHead.getSupportedRefreshRates const">
+			<summary>
+			Returns an array of supported display refresh rates, in Hz, with at least one supported refresh rate.
+			</summary>  
+			<returns>The vector of supported display refresh rates, in Hz.</returns>
+		</member>
+		<member name="M:Unigine.InputVRHead.setRefreshRate(float)">
+			<summary>
+			Sets the display refresh rate, if supported.
+			</summary> 
+			<param name="rate"> The display refresh rate, in Hz. </param> 
+		</member>
+		<member name="M:Unigine.InputVRHead.getRefreshRate const">
+			<summary>
+			Returns the current display refresh rate, in Hz.
+			</summary>  
+			<returns>The display refresh rate, in Hz.</returns>
 		</member>
 		<member name="M:Unigine.InputVRHead.setTrackingPositionEnabled(bool)">
 			<summary>

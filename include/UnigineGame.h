@@ -36,7 +36,7 @@ typedef Ptr<GameIntersection> GameIntersectionPtr;
 class UNIGINE_API Game
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	static void setEnabled(bool enabled);
 	static bool isEnabled();
 	static void setData(const char *data);

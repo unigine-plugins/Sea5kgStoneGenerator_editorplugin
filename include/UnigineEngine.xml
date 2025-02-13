@@ -10,12 +10,6 @@
 			</summary>  
 			<returns>Pointer to the existing engine.</returns>
 		</member>
-		<member name="M:Unigine.Engine.getAppPath">
-			<summary>
-			Returns the path to a directory where binary executable file is stored.
-			</summary>  
-			<returns>Path to a directory where binary executable file is stored.</returns>
-		</member>
 		<member name="M:Unigine.Engine.getArg(int) const">
 			<summary>
 			Returns a command line argument by its index.
@@ -43,47 +37,11 @@
 			</summary>  
 			<returns>Current build configuration. One of the BUILD_CONFIG_ values.</returns>
 		</member>
-		<member name="M:Unigine.Engine.getCachePath">
-			<summary>
-			Returns a path to a directory where cached files will be stored.
-			</summary>  
-			<returns>Path to the directory with cached files.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getDataPath">
-			<summary>
-			Returns a path to the					-data_pathdirectory specified at the engine startup.
-			</summary>  
-			<returns>Path to the data directory.</returns>
-		</member>
 		<member name="M:Unigine.Engine.getLibraryModulePath">
 			<summary>
 			Returns a path to the Engine's dynamic library file.
 			</summary>  
 			<returns>Path to the Engine's dynamic library file.</returns>
-		</member>
-		<member name="M:Unigine.Engine.isActive const">
-			<summary>
-			Returns the active state of the Engine.
-			</summary>  
-			<returns>true if engine is active; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Engine.isFocus const">
-			<summary>
-			Returns a value indicating if the Engine window is focused at the moment.
-			</summary>  
-			<returns>true if the Engine window is focused; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Engine.isQuit const">
-			<summary>
-			Returns the quitting flag on engine quit.
-			</summary>  
-			<returns>true if engine is quitting; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getEditorCache const">
-			<summary>
-			Returns a path to the editor script cache file.
-			</summary>  
-			<returns>Path to the editor script cache.</returns>
 		</member>
 		<member name="M:Unigine.Engine.getEditorFunction(char,int) const">
 			<summary>
@@ -147,90 +105,12 @@
 			<param name="name"> Name of the editor script variable. </param> 
 			<returns>true if the editor script variable exists; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Engine.getError">
-			<summary>
-			Returns the system error message.
-			</summary>  
-			<returns>The system error message of the current frame, if there is one; otherwise an empty string.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getExternDefine const">
-			<summary>
-			Returns the external definitions specified on the application start-up.
-			</summary>  
-			<returns>The list of external definitions.</returns>
-		</member>
-		<member name="M:Unigine.Engine.setBackgroundUpdate(Engine::BACKGROUND_UPDATE)">
-			<summary>
-			Sets a value indicating the way application windows are updated when hidden or out of focus (rendering frames in background). By default your UNIGINE application stops rendering frames and updating its main window, when it window goes out of focus (e.g. user switches to another window). Changing the background update mode enables constant rendering regardless of whether the Engine window is focused or in the background.
-			</summary> 
-			<param name="update"> Engine window update mode. One of the BACKGROUND_UPDATE_ values. </param> 
-		</member>
-		<member name="M:Unigine.Engine.isBackgroundUpdate">
-			<summary>
-			Returns a value indicating the way application windows are updated when hidden or out of focus.
-			</summary>  
-			<returns>Engine window update mode. One of the BACKGROUND_UPDATE_ values.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getFeatures">
-			<summary>
-			Returns the list of features (like OpenGL, Direct3D, Microprofile, Geodetic, etc.).
-			</summary>  
-			<returns>The list of features (like OpenGL, Direct3D, Microprofile, Geodetic, etc.).</returns>
-		</member>
-		<member name="M:Unigine.Engine.getVersion">
-			<summary>
-			Returns the Engine version info.
-			</summary>  
-			<returns>Engine version info.</returns>
-		</member>
-		<member name="M:Unigine.Engine.isMainThread">
-			<summary>
-			Checks if the current thread is main.
-			</summary>  
-			<returns>true if the current thread is main; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getMainPlayer">
-			<summary>
-			Returns the current main player.
-			</summary>  
-			<returns>Current main player.</returns>
-		</member>
 		<member name="M:Unigine.Engine.getArg(int)">
 			<summary>
 			Returns the command-line argument by its index.
 			</summary> 
 			<param name="num"> Index of the argument. </param> 
 			<returns>Command-line argument</returns>
-		</member>
-		<member name="M:Unigine.Engine.getNumEditorLogics const">
-			<summary>
-			Returns the number of registered EditorLogic instances.
-			</summary>  
-			<returns>Number of EditorLogic instances.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getNumPluginPaths">
-			<summary>
-			Returns the number of paths to directories with plugins specified via					-plugin_pathcommand-line option.
-			</summary>  
-			<returns>Number of the specified paths to directories with plugins.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getNumPlugins const">
-			<summary>
-			Returns the number of loaded plugins.
-			</summary>  
-			<returns>Number of plugins.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getNumSystemLogics const">
-			<summary>
-			Returns the number of registered SystemLogic instances.
-			</summary>  
-			<returns>Number of SystemLogic instances.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getNumWorldLogics const">
-			<summary>
-			Returns the number of registered WorldLogic instances.
-			</summary>  
-			<returns>Number of WorldLogic instances.</returns>
 		</member>
 		<member name="M:Unigine.Engine.getPlugin(char)">
 			<summary>
@@ -274,42 +154,6 @@
 			<param name="num"> Plugin path number in the row of the specified plugin paths. </param> 
 			<returns>Path to a plugin directory.</returns>
 		</member>
-		<member name="M:Unigine.Engine.getPresentTime">
-			<summary>
-			Returns the total time spent on waiting for the GPU after all calculations on the CPU are completed. See the Profiler article for details.
-			</summary>  
-			<returns>Time value, in milliseconds.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getPrecision">
-			<summary>
-			Returns the Unigine Engine precision type.
-			</summary>  
-			<returns>Precision type.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getRenderTime">
-			<summary>
-			Returns the time value, required to prepare all data to be rendered in the current frame and feed rendering commands from the CPU to the GPU. See the Profiler article for details.
-			</summary>  
-			<returns>Rendering time value, milliseconds.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getSavePath">
-			<summary>
-			Returns a path to a directory where a default configuration file, saved files and screenshots will be stored.
-			</summary>  
-			<returns>Path to a directory with the default configuration file, saved files, etc.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getSoundApp const">
-			<summary>
-			Returns the current sound API.
-			</summary>  
-			<returns>Sound API used.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getSystemCache const">
-			<summary>
-			Returns a path to the system script cache.
-			</summary>  
-			<returns>Path to the system script cache.</returns>
-		</member>
 		<member name="M:Unigine.Engine.getSystemFunction(char,int) const">
 			<summary>
 			Returns the system function identifier.
@@ -345,12 +189,6 @@
 			<param name="num"> Number of the SystemLogic instance. </param> 
 			<returns>SystemLogic instance.</returns>
 		</member>
-		<member name="M:Unigine.Engine.getSystemScript">
-			<summary>
-			Returns a path to the system script.
-			</summary>  
-			<returns>Path to the system script.</returns>
-		</member>
 		<member name="M:Unigine.Engine.setSystemVariable(char,Unigine.Variable)">
 			<summary>
 			Sets a system script variable by a name.
@@ -371,30 +209,6 @@
 			</summary> 
 			<param name="name"> Name of the system script variable. </param> 
 			<returns>true if the system script variable exists; otherwise, false.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getTotalTime">
-			<summary>
-			Returns the total time that both rendering and calculating of the frame took (the duration of the main loop in the application execution sequence). Includes update, render, swap and wait GPU.
-			</summary>  
-			<returns>Total time value, milliseconds.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getTotalCPUTime">
-			<summary>
-			Returns the total CPU time taken to perform calculations for the frame (the duration of the main loop in the application execution sequence). Includes update, render and swap.
-			</summary>  
-			<returns>Total CPU time value, milliseconds.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getUpdateTime">
-			<summary>
-			Returns the duration of the update phase, during which the objects are prepared for their collision response to be calculated.
-			</summary>  
-			<returns>The update phase duration value, milliseconds.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getVideoApp">
-			<summary>
-			Returns a graphics API used for rendering.
-			</summary>  
-			<returns>Graphics API used for rendering.</returns>
 		</member>
 		<member name="M:Unigine.Engine.getWorldFunction(char,int) const">
 			<summary>
@@ -1192,12 +1006,6 @@
 			Engine iterate function (update, render, swap). This function must be called every frame.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Engine.isEvaluation const">
-			<summary>
-			Returns a value indicating if the current version of the Engine is for evaluation only.
-			</summary>  
-			<returns>true if the evaluation version of the Engine is used; otherwise, false.</returns>
-		</member>
 		<member name="M:Unigine.Engine.beginOutsideLoopRender">
 			<summary>
 			Starts a block of code where you can call Render class methods from outside the Engine's Loop. The end of this block should be marked with a call to the  method.
@@ -1218,47 +1026,11 @@
 			Stops the FPS counter. This function should be called if application window is hidden or some heavy non-rendering tasks are processing. All function calls are placed into a stack, so the number of calls to this function should correspond to the number of calls to the startFps() function.
 			</summary>  
 		</member>
-		<member name="M:Unigine.Engine.getFps">
-			<summary>
-			Returns the current value of the Engine FPS counter.
-			</summary>  
-			<returns>Value of the Engine FPS counter.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getIFps">
-			<summary>
-			Returns an inverse value of the Engine FPS counter.
-			</summary>  
-			<returns>Inverse value of the Engine FPS counter (1/FPS).</returns>
-		</member>
-		<member name="M:Unigine.Engine.getStatisticsFpsMin">
-			<summary>
-			Returns the minimum FPS counter value for the last 600 frames.
-			</summary>  
-			<returns>Minimum FPS counter value for the last 600 frames.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getStatisticsFpsAvg">
-			<summary>
-			Returns the average FPS counter value for the last 600 frames.
-			</summary>  
-			<returns>Average FPS counter value for the last 600 frames.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getStatisticsFpsMax">
-			<summary>
-			Returns the maximum FPS counter value for the last 600 frames.
-			</summary>  
-			<returns>Maximum FPS counter value for the last 600 frames.</returns>
-		</member>
 		<member name="M:Unigine.Engine.getVideoContextFlags">
 			<summary>
 			Returns the current video context flags.
 			</summary>  
 			<returns>A set of current video context flags as an integer value.</returns>
-		</member>
-		<member name="M:Unigine.Engine.getFrame">
-			<summary>
-			Returns the number of the current engine frame.
-			</summary>  
-			<returns>Engine frame number.</returns>
 		</member>
 		<member name="M:Unigine.Engine.init(int,char)">
 			<summary>

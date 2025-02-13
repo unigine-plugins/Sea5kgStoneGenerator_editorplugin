@@ -32,9 +32,9 @@ namespace UnigineEditor
 /// <summary>This class is used to represent a window widget to which an image
 /// can be rendered by the Engine with inputs handling by the Engine GUI. For
 /// example, to create a curve or a node graph editor of your own. By default
-/// EngineGuiWindow creates a Controls exclusive context to process mouse and
+/// EngineGuiWindow creates a Shortcuts exclusive context to process mouse and
 /// keyboard events for this window exclusively, without sending them to the
-/// common Editor's Controls handling system.
+/// common Editor's Shortcuts handling system.
 /// </summary>
 class UNIGINE_EDITOR_API EngineGuiWindow : public RenderWindow
 {
@@ -48,32 +48,32 @@ public:
 	/// <summary>Returns the current Engine GUI for the window. You can use it to manage UI and user inputs.</summary>
 	Unigine::GuiPtr getGui() const;
 
-	/// <summary>Returns the ID of the Controls exclusive context for the Engine
-	/// GUI window. By default EngineGuiWindow creates a Controls exclusive context
+	/// <summary>Returns the ID of the Shortcuts exclusive context for the Engine
+	/// GUI window. By default EngineGuiWindow creates a Shortcuts exclusive context
 	/// to process mouse and keyboard events for this window exclusively, without
-	/// sending them to the common Editor's Controls handling system.</summary>
-	const char *getControlsExclusiveContextId() const;
-	/// <summary>Creates a new Controls exclusive context for the Engine GUI window.
+	/// sending them to the common Editor's Shortcuts handling system.</summary>
+	const char *getShortcutsExclusiveContextId() const;
+	/// <summary>Creates a new Shortcuts exclusive context for the Engine GUI window.
 	/// This context is used to process mouse and keyboard events for this window
-	/// exclusively, without sending them to the common Editor's Controls handling
+	/// exclusively, without sending them to the common Editor's Shortcuts handling
 	/// system.
 	/// </summary>
 	/// <returns> <b>true</b> if the context is created successfully; otherwise, <b>false</b>.</returns>
-	bool createControlsExclusiveContext(const char *context_id);
-	/// <summary>Removes the Controls exclusive context from the window. This
+	bool createShortcutsExclusiveContext(const char *context_id);
+	/// <summary>Removes the Shortcuts exclusive context from the window. This
 	/// context is used to process mouse and keyboard events for this window
-	/// exclusively, without sending them to the common Editor's Controls
+	/// exclusively, without sending them to the common Editor's Shortcuts
 	/// handling system.
 	/// </summary>
 	/// <returns> <b>true</b> if the context is removed successfully; otherwise, <b>false</b>.</returns>
-	bool removeControlsExclusiveContext();
-	/// <summary>Returns a value indicating if the window has its own Controls
+	bool removeShortcutsExclusiveContext();
+	/// <summary>Returns a value indicating if the window has its own Shortcuts
 	/// exclusive context. This context is used to process mouse and keyboard
 	/// events for this window exclusively, without sending them to the common
-	/// Editor's Controls handling system.
+	/// Editor's Shortcuts handling system.
 	/// </summary>
-	/// <returns> <b>true</b> if the window has its own Controls exclusive context; otherwise, <b>false</b>.</returns>
-	bool hasControlsExclusiveContext() const;
+	/// <returns> <b>true</b> if the window has its own Shortcuts exclusive context; otherwise, <b>false</b>.</returns>
+	bool hasShortcutsExclusiveContext() const;
 
 protected:
 	/// <summary>You can inherit your class from EngineGuiWindow and override

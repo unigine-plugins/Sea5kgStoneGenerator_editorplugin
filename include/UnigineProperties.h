@@ -111,8 +111,8 @@ public:
 	void setName(const char *name);
 	const char *getName() const;
 	UGUID getGUID() const;
-	void setPath(const char *path);
-	const char *getPath() const;
+	void setFilePath(const char *path);
+	String getFilePath() const;
 	void setFileGUID(const UGUID &fileguid);
 	UGUID getFileGUID() const;
 	void setEditable(int editable);
@@ -124,11 +124,11 @@ public:
 	Ptr<Property> getChild(int num) const;
 	bool isParent(const char *name) const;
 	bool isParent(const UGUID &guid) const;
-	Ptr<Property> clone(const char *name, const char *path, const UGUID &guid);
+	Ptr<Property> clone(const char *name, const char *path, const UGUID &new_guid);
 	Ptr<Property> clone(const char *name, const char *path);
 	Ptr<Property> clone(const char *name);
 	Ptr<Property> clone();
-	Ptr<Property> inherit(const char *name, const char *path, const UGUID &guid);
+	Ptr<Property> inherit(const char *name, const char *path, const UGUID &new_guid);
 	Ptr<Property> inherit(const char *name, const char *path);
 	Ptr<Property> inherit(const char *name);
 	Ptr<Property> inherit();
@@ -145,8 +145,8 @@ public:
 	bool saveWorld(const Ptr<Xml> &xml, int force = 0) const;
 	bool saveState(const Ptr<Stream> &stream) const;
 	bool restoreState(const Ptr<Stream> &stream, int restore_mode = 0);
-	int parameterTypeByName(const char *param_type) const;
-	const char *parameterNameByType(int param_type) const;
+	static int parameterTypeByName(const char *param_type);
+	static const char *parameterNameByType(int param_type);
 	Ptr<Node> getNode() const;
 	Event<const Ptr<Property> &> &getEventReloaded();
 	Event<const Ptr<Property> &> &getEventMoved();
@@ -191,6 +191,7 @@ public:
 	bool isInherited() const;
 	bool isOverridden() const;
 	int getType() const;
+	const char *getTypeName() const;
 	const char *getName() const;
 	const char *getTitle() const;
 	const char *getTooltip() const;
@@ -333,7 +334,7 @@ typedef Ptr<PropertyParameter> PropertyParameterPtr;
 class UNIGINE_API Properties
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	static Ptr<Property> loadProperty(const char *path);
 	static int saveProperties();
 	static void reloadProperties();

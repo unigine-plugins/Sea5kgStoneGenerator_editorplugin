@@ -42,6 +42,13 @@
 			<param name="file_name"> Name of the output file containing the data to be exported. </param> 
 			<returns>Pointer to the exporter, if it was successfully created for the file with a given name; otherwise, nullptr.</returns>
 		</member>
+		<member name="M:Unigine.Export.isSupportedExporterType(char) const">
+			<summary>
+			Returns a value indicating whether the specified exporter type is supported by the exporter.
+			</summary> 
+			<param name="type_name"> Null-terminated string with the exporter type to be checked. </param> 
+			<returns>true if the specified exporter type is supported by the exporter; otherwise, false.</returns>
+		</member>
 		<member name="M:Unigine.Export.getExporterTypes const">
 			<summary>
 			Returns the list of all exporter types registered by the Export Manager.
@@ -71,6 +78,20 @@
 			<summary>
 			Returns the list of all supported file extensions and puts it to the given vector.
 			</summary> 
+			<param name="extensions"> Vector to put the list of all supported extensions to. </param> 
+		</member>
+		<member name="M:Unigine.Export.getSupportedExtensionsByType(char) const">
+			<summary>
+			Returns the list of all supported file extensions for the specified exporter type as a vector of strings.
+			</summary> 
+			<param name="type_name"> Exporter type name. </param> 
+			<returns>List of all supported extensions as a vector of strings.</returns>
+		</member>
+		<member name="M:Unigine.Export.getSupportedExtensionsByType(char,Unigine.Vector{String,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Returns the list of all supported file extensions for the specified exporter type and puts it to the given vector.
+			</summary> 
+			<param name="type_name"> Exporter type name. </param>
 			<param name="extensions"> Vector to put the list of all supported extensions to. </param> 
 		</member>
 		<member name="M:Unigine.Export.getExporterTypeByExtension(char) const">

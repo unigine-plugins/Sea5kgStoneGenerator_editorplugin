@@ -18,7 +18,7 @@
 namespace Unigine
 {
 
-template<typename Key, typename Allocator>
+template<typename Key>
 struct SetData
 {
 public:
@@ -71,9 +71,6 @@ public:
 
 	const Key key;
 
-	static UNIGINE_INLINE void *operator new(size_t size) { return Allocator::allocate(size); }
-	static UNIGINE_INLINE void operator delete(void *ptr) { Allocator::deallocate(ptr); }
-
 	~SetData()
 	{
 		delete left;
@@ -82,14 +79,14 @@ public:
 
 };
 
-template <typename Key, typename Allocator = TreeAllocator>
-class Set : public Tree<Key, SetData<Key, Allocator>, Allocator>
+template <typename Key>
+class Set : public Tree<Key, SetData<Key>>
 {
 public:
 
-	using Node = typename Unigine::SetData<Key, Allocator>;
-	using Data = Node;
-	using Parent = Tree<Key, Node, Allocator>;
+	using NodeType = typename Unigine::SetData<Key>;
+	using Data = NodeType;
+	using Parent = Tree<Key, NodeType>;
 	using Iterator = typename Parent::Iterator;
 	using ConstIterator = typename Parent::ConstIterator;
 
@@ -102,7 +99,7 @@ public:
 	{
 		Parent::length = 0;
 		Parent::root = nullptr;
-		Node *dest_parent = nullptr;
+		NodeType *dest_parent = nullptr;
 		Parent::copy_proc(Parent::root, dest_parent, o.root);
 	}
 
@@ -113,7 +110,7 @@ public:
 		Parent::length = 0;
 		delete Parent::root;
 		Parent::root = nullptr;
-		Node *dest_parent = nullptr;
+		NodeType *dest_parent = nullptr;
 		Parent::copy_proc(Parent::root, dest_parent, o.root);
 		return *this;
 	}

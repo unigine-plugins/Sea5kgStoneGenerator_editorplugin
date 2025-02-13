@@ -22,14 +22,22 @@ namespace Math
 
 struct hvec2
 {
+	/// <summary>Default constructor. Produces a zero vector.</summary>
 	UNIGINE_INLINE constexpr hvec2(): x(0), y(0) {}
+	/// <summary>Constructor. Initializes the vector using a given value: x=v, y=v.</summary>
 	UNIGINE_INLINE hvec2(const hvec2 &v) : x(v.x), y(v.y) {}
+	/// <summary>Constructor. Initializes the vector using the given values.</summary>
 	UNIGINE_INLINE constexpr hvec2(half x, half y) : x(x), y(y) {}
+	/// <summary>Constructor. Initializes the vector using a given value: x=v, y=v.</summary>
 	UNIGINE_INLINE constexpr explicit hvec2(half v): x(v), y(v) {}
+	/// <summary>Constructor. Initializes the vector using a given value: x=v, y=v.</summary>
 	UNIGINE_INLINE explicit hvec2(float v): x(v), y(v) {}
+	/// <summary>Constructor. Initializes the vector using a given source vector.</summary>
 	UNIGINE_INLINE explicit hvec2(const vec2 &v): x(v.x), y(v.y) {}
+	/// <summary>Constructor. Initializes the vector using a given source vector.</summary>
 	UNIGINE_INLINE explicit hvec2(const dvec2 &v): x(toFloat(v.x)), y(toFloat(v.y)) {}
 
+	/// <summary>Performs vector assignment. Destination vector = Source vector.</summary>
 	UNIGINE_INLINE hvec2 &operator=(const hvec2 &v)
 	{
 		x = v.x;
@@ -37,16 +45,22 @@ struct hvec2
 		return *this;
 	}
 
+	/// <summary>Performs type conversion to half *.</summary>
 	UNIGINE_INLINE operator half *() { return &x; }
+	/// <summary>Performs type conversion to const half *.</summary>
 	UNIGINE_INLINE operator const half *() const { return &x; }
+	/// <summary>Performs type conversion to void *.</summary>
 	UNIGINE_INLINE operator void *() { return &x; }
+	/// <summary>Performs type conversion to const void *.</summary>
 	UNIGINE_INLINE operator const void *() const { return &x; }
 
+	/// <summary>Performs array access to the vector item reference by using given item index.</summary>
 	UNIGINE_INLINE half &operator[](int i)
 	{
 		assert((unsigned int)i < 2 && "hvec2::operator[](): bad index");
 		return (&x)[i];
 	}
+	/// <summary>Performs array access to the vector item by using given item index.</summary>
 	UNIGINE_INLINE half operator[](int i) const
 	{
 		assert((unsigned int)i < 2 && "hvec2::operator[](): bad index");

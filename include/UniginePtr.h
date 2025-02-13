@@ -62,7 +62,7 @@ public:
 	T *getInterface() { return static_cast<T*>(getInterface()); }
 	bool hasInterface() const { return api_interface != nullptr; }
 
-	bool isDeletedLater() const { return deleted_later_id != -1; }
+	bool isDeletedLater() const { return AtomicGet(&deleted_later_id) != -1; }
 
 	void deleteLater();
 	void deleteForce();
@@ -81,7 +81,7 @@ protected:
 
 	APIInterface *volatile api_interface { nullptr };
 
-	volatile int deleted_later_id = -1;
+	int deleted_later_id = -1;
 
 	static ReentrantMutex global_mutex;
 	static DestroyObjectsVector deleted_later_objects;
@@ -113,15 +113,12 @@ public:
 		if (old_counter == 1)
 		{
 			if (isNull())
-			{
 				delete this;
-			}
 			else if (isOwner() && isValid())
-			{
 				obj->delete_safe();
-			}
 		}
 	}
+	int getAPIInterfaceCounter() const { return AtomicGet(&counter); }
 
 	void setOwner(bool owner_) { owner = owner_; }
 	bool isOwner() const { return owner; }

@@ -26,7 +26,7 @@ namespace Unigine
 class UNIGINE_API Config
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	static void setPath(const char *path);
 	static const char *getPath();
 	static void setAutosave(bool autosave);
@@ -54,7 +54,7 @@ public:
 class UNIGINE_API BootConfig
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	static void setPath(const char *path);
 	static const char *getPath();
 	static void setAutosave(bool autosave);
@@ -78,6 +78,16 @@ public:
 	static const char *getSystemCache();
 	static void setVideoApp(const char *app);
 	static const char *getVideoApp();
+	static void setVideoDebug(int debug);
+	static int getVideoDebug();
+	static void setVideoDebugShader(bool shader);
+	static bool isVideoDebugShader();
+	static void setVideoAdapter(int adapter);
+	static int getVideoAdapter();
+	static void setVideoOffscreen(bool offscreen);
+	static bool isVideoOffscreen();
+	static void setVideoQuadroSync(bool sync);
+	static bool isVideoQuadroSync();
 	static void setSoundApp(const char *app);
 	static const char *getSoundApp();
 	static void setExternDefine(const char *define);
@@ -122,8 +132,12 @@ public:
 	static const char *getScreenMessageFileSystemInit();
 	static void setScreenMessageMaterialsInit(const char *init);
 	static const char *getScreenMessageMaterialsInit();
+	static void setScreenMessageMaterialsPreloading(const char *preloading);
+	static const char *getScreenMessageMaterialsPreloading();
 	static void setScreenMessagePropertiesInit(const char *init);
 	static const char *getScreenMessagePropertiesInit();
+	static void setScreenMessageStaticMeshesInit(const char *init);
+	static const char *getScreenMessageStaticMeshesInit();
 	static void setScreenMessageShadersCompilation(const char *compilation);
 	static const char *getScreenMessageShadersCompilation();
 };
@@ -133,7 +147,7 @@ public:
 class UNIGINE_API UserConfig
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	static void setPath(const char *path);
 	static const char *getPath();
 	static void setAutosave(bool autosave);

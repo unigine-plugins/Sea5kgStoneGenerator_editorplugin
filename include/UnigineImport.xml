@@ -470,24 +470,32 @@
 			<param name="import_camera"> Instance of the ImportCamera class. </param> 
 			<returns>UNIGINE's player instance that stores the specified imported camera.</returns>
 		</member>
-		<member name="M:Unigine.Importer.importAnimation(Unigine.Ptr{ImportProcessor},Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{ImportAnimation})">
+		<member name="M:Unigine.Importer.importAnimation(Unigine.Ptr{ImportProcessor},Unigine.Ptr{MeshAnimation},Unigine.Ptr{ImportAnimation})">
 			<summary>
 			Imports the specified mesh animation and uses the specified processor to process and save the generated mesh animation to a corresponding file in the output directory specified in the  method.To customize actions to be performed on importing mesh animations, when implementing a custom importer, you can override the  method.
 			</summary> 
 			<param name="processor"> Import processor to be used for this import operation. </param>
-			<param name="animation"> Target UNIGINE's mesh instance to store the specified imported mesh animation. </param>
+			<param name="animation"> Target UNIGINE's mesh animation instance to store the specified imported mesh animation. </param>
 			<param name="import_animation"> Instance of the ImportAnimation class. </param> 
 			<returns>true if the specified animation was successfully imported; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Importer.importAnimation(Unigine.Ptr{ImportProcessor},Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{ImportMesh},Unigine.Ptr{ImportAnimation})">
+		<member name="M:Unigine.Importer.importAnimation(Unigine.Ptr{ImportProcessor},Unigine.Ptr{MeshAnimation},Unigine.Ptr{ImportMesh},Unigine.Ptr{ImportAnimation})">
 			<summary>
 			Imports the specified mesh animation and uses the specified processor to process and save the generated mesh animation to a corresponding file in the output directory specified in the  method.To customize actions to be performed on importing mesh animations, when implementing a custom importer, you can override the  method.
 			</summary> 
 			<param name="processor"> Import processor to be used for this import operation. </param>
-			<param name="animation"> Target UNIGINE's mesh instance to store the specified imported mesh animation. </param>
+			<param name="animation"> Target UNIGINE's mesh animation instance to store the specified imported mesh animation. </param>
 			<param name="import_mesh"> Instance of the ImportMesh class. </param>
 			<param name="import_animation"> Instance of the ImportAnimation class. </param> 
 			<returns>true if the specified animation was successfully imported; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Importer.checkSupportedAnimation(Unigine.Ptr{ImportMesh},Unigine.Ptr{ImportAnimation}) const">
+			<summary>
+			Returns a value indicating if importing of the specified animation of the specified imported mesh is supported.
+			</summary> 
+			<param name="import_mesh"> Instance of the ImportMesh class. </param>
+			<param name="import_animation"> Instance of the ImportAnimation class. </param> 
+			<returns>true if importing of the specified animation of the specified imported mesh is supported; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Importer.importNode(Unigine.Ptr{ImportProcessor},Unigine.Ptr{ImportNode})">
 			<summary>
@@ -606,24 +614,32 @@
 			<param name="import_node_child"> Instance of the ImportNode class for the child node. </param> 
 			<returns>true if the specified parent node and its child node animation were successfully imported; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Importer.onImportAnimation(Unigine.Ptr{ImportProcessor},Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{ImportAnimation})">
+		<member name="M:Unigine.Importer.onImportAnimation(Unigine.Ptr{ImportProcessor},Unigine.Ptr{MeshAnimation},Unigine.Ptr{ImportAnimation})">
 			<summary>
 			Animation import event handler function. This function is called each time when the  function is called. You can specify your custom actions to be performed on animation import.
 			</summary> 
 			<param name="processor"> Import processor used for this import operation. </param>
-			<param name="animation"> Target UNIGINE's mesh instance to store the specified imported mesh animation. </param>
-			<param name="import_animation"> ImportMesh structure pointer.The metadata for the animation that needs to be imported. </param> 
+			<param name="animation"> Target UNIGINE's mesh animation instance to store the specified imported mesh animation. </param>
+			<param name="import_animation"> ImportAnimation structure pointer. The metadata for the animation that needs to be imported. </param> 
 			<returns>true if the specified mesh animation was successfully imported; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Importer.onImportAnimation(Unigine.Ptr{ImportProcessor},Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{ImportMesh},Unigine.Ptr{ImportAnimation})">
+		<member name="M:Unigine.Importer.onImportAnimation(Unigine.Ptr{ImportProcessor},Unigine.Ptr{MeshAnimation},Unigine.Ptr{ImportMesh},Unigine.Ptr{ImportAnimation})">
 			<summary>
 			Animation import event handler function. This function is called each time when the  function is called. You can specify your custom actions to be performed on animation import.
 			</summary> 
 			<param name="processor"> Import processor used for this import operation. </param>
-			<param name="animation"> Target UNIGINE's mesh instance to store the specified imported mesh animation. </param>
-			<param name="import_mesh"> ImportMesh structure pointer.The metadata for the mesh that needs to be imported. </param>
-			<param name="import_animation"> ImportMesh structure pointer.The metadata for the animation that needs to be imported. </param> 
+			<param name="animation"> Target UNIGINE's mesh animation instance to store the specified imported mesh animation. </param>
+			<param name="import_mesh"> ImportMesh structure pointer. The metadata for the mesh that needs to be imported. </param>
+			<param name="import_animation"> ImportAnimation structure pointer. The metadata for the animation that needs to be imported. </param> 
 			<returns>true if the specified mesh animation was successfully imported; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Importer.onCheckSupportedAnimation(Unigine.Ptr{ImportMesh},Unigine.Ptr{ImportAnimation}) const">
+			<summary>
+			Animation import support check event handler function. This function is called each time when the  function is called. You can specify your custom actions to be performed on animation import.
+			</summary> 
+			<param name="import_mesh"> ImportMesh structure pointer. The metadata for the mesh that needs to be imported. </param>
+			<param name="import_animation"> ImportAnimation structure pointer. The metadata for the animation that needs to be imported. </param> 
+			<returns>true if importing of the specified mesh animation is supported; otherwise, false.</returns>
 		</member>
 		<member name="F:Unigine.Importer.IMPORT_LIGHTS">
 			<summary>
@@ -1021,19 +1037,19 @@
 			<param name="import_camera"> Instance of the ImportCamera class containing information about the imported camera. </param> 
 			<returns>true if the specified camera is successfully processed; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.ImportProcessor.processAnimation(Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{ImportAnimation})">
+		<member name="M:Unigine.ImportProcessor.processAnimation(Unigine.Ptr{MeshAnimation},Unigine.Ptr{ImportAnimation})">
 			<summary>
 			Performs mesh animation processing: saves the specified generated mesh animation to a corresponding file in the output directory.						To customize actions to be performed on mesh animation processing, when implementing a custom import processor, you can override the  method.
 			</summary> 
-			<param name="animation"> UNIGINE's mesh instance generated for the specified imported animation. </param>
+			<param name="animation"> UNIGINE's mesh animation instance generated for the specified imported animation. </param>
 			<param name="import_animation"> Instance of the ImportAnimation class containing information about the imported animation. </param> 
 			<returns>true if the specified animation is successfully processed; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.ImportProcessor.processAnimation(Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{ImportMesh},Unigine.Ptr{ImportAnimation})">
+		<member name="M:Unigine.ImportProcessor.processAnimation(Unigine.Ptr{MeshAnimation},Unigine.Ptr{ImportMesh},Unigine.Ptr{ImportAnimation})">
 			<summary>
 			Performs mesh animation processing: saves the specified generated mesh animation to a corresponding file in the output directory.						To customize actions to be performed on mesh animation processing, when implementing a custom import processor, you can override the  method.
 			</summary> 
-			<param name="animation"> UNIGINE's mesh instance generated for the specified imported animation. </param>
+			<param name="animation"> UNIGINE's mesh animation instance generated for the specified imported animation. </param>
 			<param name="import_mesh"> Instance of the ImportMesh class containing information about the imported mesh. </param>
 			<param name="import_animation"> Instance of the ImportAnimation class containing information about the imported animation. </param> 
 			<returns>true if the specified animation is successfully processed; otherwise, false.</returns>
@@ -1101,19 +1117,19 @@
 			<param name="import_camera"> Instance of the ImportCamera class containing information about the imported camera. </param> 
 			<returns>true if the specified camera is successfully processed; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.ImportProcessor.onProcessAnimation(Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{ImportAnimation})">
+		<member name="M:Unigine.ImportProcessor.onProcessAnimation(Unigine.Ptr{MeshAnimation},Unigine.Ptr{ImportAnimation})">
 			<summary>
 			Animation processing event handler function. This function is called each time when the  function is called. You can specify your custom actions to be performed on animation processing.
 			</summary> 
-			<param name="animation"> UNIGINE's mesh instance generated for the specified imported mesh animation. </param>
+			<param name="animation"> UNIGINE's mesh animation instance generated for the specified imported mesh animation. </param>
 			<param name="import_animation"> Instance of the ImportAnimation class containing information about the imported animation. </param> 
 			<returns>true if the specified animation is successfully processed; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.ImportProcessor.onProcessAnimation(Unigine.Ptr{Unigine.Mesh},Unigine.Ptr{ImportMesh},Unigine.Ptr{ImportAnimation})">
+		<member name="M:Unigine.ImportProcessor.onProcessAnimation(Unigine.Ptr{MeshAnimation},Unigine.Ptr{ImportMesh},Unigine.Ptr{ImportAnimation})">
 			<summary>
 			Animation processing event handler function. This function is called each time when the  function is called. You can specify your custom actions to be performed on animation processing.
 			</summary> 
-			<param name="animation"> UNIGINE's mesh instance generated for the specified imported mesh animation. </param>
+			<param name="animation"> UNIGINE's mesh animation instance generated for the specified imported mesh animation. </param>
 			<param name="import_mesh"> Instance of the ImportMesh class containing information about the imported mesh. </param>
 			<param name="import_animation"> Instance of the ImportAnimation class containing information about the imported animation. </param> 
 			<returns>true if the specified animation is successfully processed; otherwise, false.</returns>

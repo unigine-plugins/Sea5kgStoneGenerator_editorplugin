@@ -82,18 +82,6 @@
 			</summary>  
 			<returns>1 if the material is rendered in the deferred pass (non-transparent); otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.Material.setDepthMask(int)">
-			<summary>
-			Sets a value indicating if the material uses a depth mask.
-			</summary> 
-			<param name="mask"> 1 to use the depth mask, 0 not to use. </param> 
-		</member>
-		<member name="M:Unigine.Material.getDepthMask const">
-			<summary>
-			Returns a value indicating if the material uses a depth mask.
-			</summary>  
-			<returns>Positive number if the depth mask is used; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Material.setDepthTest(bool)">
 			<summary>
 			Enables or disables the depth testing option for the material. This option can be used to render certain objects, that are behind other ones.
@@ -583,28 +571,6 @@
 			<param name="guid"> Material GUID. </param> 
 			<returns>true if the material is the parent; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Material.checkShaderCache const">
-			<summary>
-			Returns a value indicating if shader combination for current material states and options is already in cache.
-			</summary>  
-			<returns>1 if shader combination for current material states and options is already in cache; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Material.checkShaderCache(Render::PASS,Node::TYPE) const">
-			<summary>
-			Returns a value indicating if shader combination for the given rendering pass and node type is already in cache.
-			</summary> 
-			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param>
-			<param name="node_type"> Node type. </param> 
-			<returns>1 if shader combination for the given rendering pass and node type is already in cache; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Material.compileShader(Render::PASS,Node::TYPE)">
-			<summary>
-			Compiles shader combination for the given rendering pass and node type.
-			</summary> 
-			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param>
-			<param name="node_type"> Node type. </param> 
-			<returns>1 if shader combination for the given rendering pass and node type was compiled successfully; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Material.isStateInternal(int) const">
 			<summary>
 			Returns a value indicating if a given state is internal.
@@ -1008,11 +974,17 @@
 			<param name="num"> Texture number. </param> 
 			<returns>A texture.</returns>
 		</member>
-		<member name="M:Unigine.Material.getPath const">
+		<member name="M:Unigine.Material.getFilePath const">
 			<summary>
-			Returns a path to the current material.
+			Returns a path to the current material file.
 			</summary>  
 			<returns>Path to the material.</returns>
+		</member>
+		<member name="M:Unigine.Material.getFileGUID const">
+			<summary>
+			Returns a GUID of the current material file.
+			</summary>  
+			<returns>GUID of the current material file.</returns>
 		</member>
 		<member name="M:Unigine.Material.resetParameter(int)">
 			<summary>
@@ -1287,13 +1259,13 @@
 			<param name="parent"> Material smart pointer. </param> 
 			<returns>true if the material is the parent, otherwise - false.</returns>
 		</member>
-		<member name="M:Unigine.Material.clone">
+		<member name="M:Unigine.Material.clone const">
 			<summary>
 			Clones the material. The cloned material will be empty: it will have a GUID but won't be displayed in the materials hierarchy.
 			</summary>  
 			<returns>Cloned material.</returns>
 		</member>
-		<member name="M:Unigine.Material.clone(Unigine.UGUID)">
+		<member name="M:Unigine.Material.clone(Unigine.UGUID) const">
 			<summary>
 			Clones the material and assigns the given GUID to it. A base material cannot be cloned.
 			</summary> 
@@ -1433,11 +1405,72 @@
 			<param name="pass"> Rendering pass name. One of the following:wireframevisualizer_soliddeferredauxiliaryemissionreflectionrefractiontransparent_blurambientlight_voxel_probelight_environment_probelight_omnilight_projlight_worldshadowdepth_pre_passpostobject_post </param> 
 			<returns>Shader for the specified rendering pass, if compiled successfully. Otherwise, nullptr.</returns>
 		</member>
-		<member name="M:Unigine.Material.compileShaders(bool)">
+		<member name="M:Unigine.Material.setTextureStreamingDensityMultiplier(int,float)">
+			<summary>
+			Sets a multiplier adjusting the distance at which the texture mipmaps are rendered.
+			</summary> 
+			<param name="num"> Number of the texture. </param>
+			<param name="streaming_density_multiplier"> Multiplier applied to the texture mipmaps rendering distance. </param> 
+		</member>
+		<member name="M:Unigine.Material.getTextureStreamingDensityMultiplier(int) const">
+			<summary>
+			Returns the current adjusting the distance at which the texture mipmaps are rendered.
+			</summary> 
+			<param name="num"> Number of the texture. </param> 
+			<returns>Multiplier applied to the texture mipmaps rendering distance.</returns>
+		</member>
+		<member name="M:Unigine.Material.needCreateShaderCache const">
+			<summary>
+			Returns a value indicating if shader cache needs to be created for current material states and options.
+			</summary>  
+			<returns>true if shader cache is required for current material states and options; or false, if shader combination for current material states and options is already in cache.</returns>
+		</member>
+		<member name="M:Unigine.Material.needCreateShaderCache(Render::PASS,Node::TYPE) const">
+			<summary>
+			Returns a value indicating if shader combination needs to be created for the given rendering pass and node type.
+			</summary> 
+			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param>
+			<param name="node_type"> Node type. </param> 
+			<returns>true if shader cache needs to be created for the given rendering pass and node type; or false, if shader combination for the given rendering pass and node type is already in cache.</returns>
+		</member>
+		<member name="M:Unigine.Material.shaderCacheExist(Render::PASS,Node::TYPE) const">
+			<summary>
+			Returns a value indicating if shader combination for the given rendering pass and node type is already in cache.
+			</summary> 
+			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param>
+			<param name="node_type"> Node type. </param> 
+			<returns>true if shader combination for the given rendering pass and node type is already in cache; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Material.createShaderForce(Render::PASS,Node::TYPE)">
+			<summary>
+			Compiles shader combination for the given rendering pass and node type. Shaders are compiled immediately, which may cause spikes, therefore this method is recommended only for critical cases, where  doesn't ensure a satisfying result.
+			</summary> 
+			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param>
+			<param name="node_type"> Node type. </param> 
+		</member>
+		<member name="M:Unigine.Material.createShaderAsync(Render::PASS,Node::TYPE)">
+			<summary>
+			Compiles shader combination for the given rendering pass and node type. Shaders are compiled asynchronously, which ensures smooth performance without spikes and is suitable for most cases. For the shaders that requre to be compiled immediately, use .
+			</summary> 
+			<param name="pass"> Rendering pass number in range [0;NUM_PASSES) (one of the PASS_* variables). </param>
+			<param name="node_type"> Node type. </param> 
+		</member>
+		<member name="M:Unigine.Material.createRenderMaterials">
+			<summary>
+			Creates render materials (internal materials required for rendering). For example, you can create all necessary render materials during initialization to avoid spikes that may occur later.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Material.createShaderCache(bool)">
 			<summary>
 			Compiles all shaders for the current material and its children (if any).
 			</summary> 
-			<param name="recursive"> true to compile shaders for child material; otherwise, false. </param> 
+			<param name="recursive"> true to compile shaders for child materials; otherwise, false. </param> 
+		</member>
+		<member name="M:Unigine.Material.createShadersFromCache(bool)">
+			<summary>
+			Compiles all shaders available in shader cache for the current material and its children (if any).
+			</summary> 
+			<param name="recursive"> true to compile shaders for child materials; otherwise, false. </param> 
 		</member>
 		<member name="F:Unigine.Material.WIDGET_EDIT_INT">
 			<summary>
@@ -1689,6 +1722,11 @@
 			This texture contains surfaces with the materials that have the Bevel state enabled.
 		</summary>
 		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_GBUFFER_LIGHTMAP">
+			<summary>
+			Texture of this type uses a G-buffer to store lightmap data.
+		</summary>
+		</member>
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_AUXILIARY">
 			<summary>
 			Auxiliary texture is used for different post effects (auxiliary pass).
@@ -1709,9 +1747,29 @@
 			a 1-channel R16F mask that stores intensity of blurring for transparent materials. The mask specifies where to blur the material.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_LIGHTS">
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_DIRECT_LIGHTS">
 			<summary>
-			A 2D array texture of the RG11B10F format that stores diffuse light in the first layer (RGB) and specular light in the second layer (RGB).
+			Texture of this type stores direct lights.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_INDIRECT_LIGHTS">
+			<summary>
+			Texture of this type stores indirect lights.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_LIGHTING_INFORMATION_LOST">
+			<summary>
+			Texture of this type stores pixels missing from the previous frame.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_INDIRECT_DIFFUSE_FINAL">
+			<summary>
+			Texture of this type stores indirect diffuse light.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_INDIRECT_SPECULAR_FINAL">
+			<summary>
+			Texture of this type stores indirect specular light.
 		</summary>
 		</member>
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_BENT_NORMAL">
@@ -1737,6 +1795,11 @@
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_CURVATURE">
 			<summary>
 			Texture used for the Screen-Space Dirt effect (SSDirt).
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_MIN_DISTANCE">
+			<summary>
+			Texture of this type stores data from the minimum distance buffer.
 		</summary>
 		</member>
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_DOF_MASK">
@@ -1787,6 +1850,11 @@
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_LINEAR_DEPTH">
 			<summary>
 			Texture of this type stores linear depth data.
+		</summary>
+		</member>
+		<member name="F:Unigine.Material.TEXTURE_SOURCE_OPACITY_DEPTH_REPROJECTION_BACK">
+			<summary>
+			Texture of this type stores depth data for opaque geometry reprojected from the previous frame.
 		</summary>
 		</member>
 		<member name="F:Unigine.Material.TEXTURE_SOURCE_LIGHT_IMAGE">
@@ -1979,11 +2047,6 @@
 			Blend function for the Dest image. Defines combination of an image with the background creating an appearance of partial or full transparency.
 		</summary>
 		</member>
-		<member name="F:Unigine.Material.OPTION_DEPTH_MASK">
-			<summary>
-			Option that allows writing in the depth buffer for the material. This option can be used for transparent objects to prevent them from obstructing the others. With this option enabled, the inner part of a transparent object won't be rendered if the outside surface was rendered first. The same can happen to a concave object.
-		</summary>
-		</member>
 		<member name="F:Unigine.Material.OPTION_DEPTH_TEST">
 			<summary>
 			Depth testing for the material. This can be used to make the object visible, when occluded by other objects (e.g. a character behind a wall).
@@ -2012,41 +2075,6 @@
 		<member name="F:Unigine.Material.OPTION_DEPTH_PRE_PASS">
 			<summary>
 			Depth pre-pass rendering, i.e. an additional depth buffer rendering pass is performed for the material in the beginning of the rendering sequence. Performed only for alpha test and complex materials.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_OPACITY_DEPTH_REPROJECTION_BACK">
-			<summary>
-			Texture of this type stores depth data for opaque geometry reprojected from the previous frame.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_MIN_DISTANCE">
-			<summary>
-			Texture of this type stores data from the minimum distance buffer.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_INDIRECT_SPECULAR">
-			<summary>
-			Texture of this type stores indirect specular light.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_INDIRECT_DIFFUSE">
-			<summary>
-			Texture of this type stores indirect diffuse light.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_LIGHTING_INFORMATION_LOST">
-			<summary>
-			Texture of this type stores pixels missing from the previous frame.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_INDIRECT_LIGHTS">
-			<summary>
-			Texture of this type stores indirect lights.
-		</summary>
-		</member>
-		<member name="F:Unigine.Material.TEXTURE_SOURCE_GBUFFER_LIGHTMAP">
-			<summary>
-			Texture of this type uses a G-buffer to store lightmap data.
 		</summary>
 		</member>
 	</members>

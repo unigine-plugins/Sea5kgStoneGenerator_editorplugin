@@ -6,7 +6,7 @@
 	<members>
 		<member name="M:Unigine.Geometry.getClosestPointOnLine(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
 			<summary>
-			Scans the specified line segment and searches for the point closest to the reference point. The found point will be put to the return vector.
+			Scans the specified line segment and searches for the point closest to the reference point. The found point is put in the return vector.
 			</summary> 
 			<param name="point"> Reference point. </param>
 			<param name="p0"> Line start point. </param>
@@ -15,7 +15,7 @@
 		</member>
 		<member name="M:Unigine.Geometry.getClosestPointOnLine(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
 			<summary>
-			Scans the specified line segment and searches for the point closest to the reference point. The found point will be put to the return vector.
+			Scans the specified line segment and searches for the point closest to the reference point. The found point is put in the return vector.
 			</summary> 
 			<param name="point"> Reference point. </param>
 			<param name="p0"> Line start point. </param>
@@ -24,29 +24,29 @@
 		</member>
 		<member name="M:Unigine.Geometry.getClosestPointOnTriangle(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
 			<summary>
-			Scans the specified triangle and searches for the point closest to the reference point. The found point will be put to the return vector.
+			Scans the specified triangle and searches for the point closest to the reference point. The found point is put in the return vector.
 			</summary> 
 			<param name="point"> Reference point. </param>
 			<param name="v0"> The first vertex of the triangle. </param>
 			<param name="v1"> The second vertex of the triangle. </param>
 			<param name="v2"> The third vertex of the triangle. </param>
 			<param name="ret"> Return vector. </param> 
-			<returns>1 if the point is inside the triangle; otherwise, 0</returns>
+			<returns>true if the point is inside the triangle; otherwise, false</returns>
 		</member>
 		<member name="M:Unigine.Geometry.getClosestPointOnTriangle(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
 			<summary>
-			Scans the specified triangle and searches for the point closest to the reference point. The found point will be put to the return vector.
+			Scans the specified triangle and searches for the point closest to the reference point. The found point is put in the return vector.
 			</summary> 
 			<param name="point"> Reference point. </param>
 			<param name="v0"> The first vertex of the triangle. </param>
 			<param name="v1"> The second vertex of the triangle. </param>
 			<param name="v2"> The third vertex of the triangle. </param>
 			<param name="ret"> Return vector. </param> 
-			<returns>1 if the point is inside the triangle; otherwise, 0</returns>
+			<returns>true if the point is inside the triangle; otherwise, false</returns>
 		</member>
 		<member name="M:Unigine.Geometry.getClosestPointsOnLines(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
 			<summary>
-			Scans the two specified lines and searches for the pair of closest points. The closest points of the first and the second lines will be put to the respective return vector.
+			Scans the two specified lines and searches for the pair of closest points. The closest points of the first and the second lines are put in the respective return vector.
 			</summary> 
 			<param name="p00"> Start point of the first line. </param>
 			<param name="p01"> End point of the first line. </param>
@@ -54,11 +54,11 @@
 			<param name="p11"> End point of the second line. </param>
 			<param name="ret_0"> First return vector. </param>
 			<param name="ret_1"> Second return vector. </param> 
-			<returns>1 if the lines cross; otherwise, 0</returns>
+			<returns>true if the lines cross; otherwise, false</returns>
 		</member>
 		<member name="M:Unigine.Geometry.getClosestPointsOnLines(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
 			<summary>
-			Scans the two specified lines and searches for the pair of closest points. The closest points of the first and the second lines will be put to the respective return vectors.
+			Scans the two specified lines and searches for the pair of closest points. The closest points of the first and the second lines are put in the respective return vectors.
 			</summary> 
 			<param name="p00"> Start point of the first line. </param>
 			<param name="p01"> End point of the first line. </param>
@@ -66,7 +66,7 @@
 			<param name="p11"> End point of the second line. </param>
 			<param name="ret_0"> First return vector. </param>
 			<param name="ret_1"> Second return vector. </param> 
-			<returns>1 if the lines cross; otherwise, 0</returns>
+			<returns>true if the lines cross; otherwise, false</returns>
 		</member>
 		<member name="M:Unigine.Geometry.irayBoundBoxIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
 			<summary>
@@ -76,7 +76,7 @@
 			<param name="idirection"> Inverse direction of the ray. </param>
 			<param name="min"> Min coordinates of the axis-aligned bounding box. </param>
 			<param name="max"> Max coordinates of the axis-aligned bounding box. </param> 
-			<returns>1 if the given ray intersects the given bounding box; otherwise, 0.</returns>
+			<returns>true if the given ray intersects the given bounding box; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.irayBoundBoxIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
 			<summary>
@@ -86,7 +86,7 @@
 			<param name="idirection"> Inverse direction of the ray. </param>
 			<param name="min"> Min coordinates of the axis-aligned bounding box. </param>
 			<param name="max"> Max coordinates of the axis-aligned bounding box. </param> 
-			<returns>1 if the given ray intersects the given bounding box; otherwise, 0.</returns>
+			<returns>true if the given ray intersects the given bounding box; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.linePlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec4)">
 			<summary>
@@ -95,39 +95,16 @@
 			<param name="p0"> Start point of the line. </param>
 			<param name="p1"> End point of the line. </param>
 			<param name="plane"> Plane. </param> 
-			<returns>1 if the given line intersects the given plane; otherwise, 0.</returns>
+			<returns>true if the given line intersects the given plane; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Geometry.linePlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
-			<summary>
-			Calculates the intersection of a line and a plane. If the function returns 1, the point of intersection will be put to the return vector.
-			</summary> 
-			<param name="p0"> Start point of the line. </param>
-			<param name="p1"> End point of the line. </param>
-			<param name="plane_point"> Point of the plane. </param>
-			<param name="plane_normal"> Normal to the plane. </param>
-			<param name="ret"> Return vector. </param> 
-			<returns>1 if the given line intersects the given plane; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Geometry.linePlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
+		<member name="M:Unigine.Geometry.linePlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec4)">
 			<summary>
 			Checks if there is an intersection between a line and a plane.
 			</summary> 
 			<param name="p0"> Start point of the line. </param>
-			<param name="p1"> Start point of the line. </param>
-			<param name="plane_point"> Point of the plane. </param>
-			<param name="plane_normal"> Normal to the plane. </param> 
-			<returns>1 if the given line intersects the given plane; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Geometry.linePlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
-			<summary>
-			Calculates the intersection of a line and a plane. If the function returns 1, the point of intersection will be put to the return vector.
-			</summary> 
-			<param name="p0"> Start point of the line. </param>
 			<param name="p1"> End point of the line. </param>
-			<param name="plane_point"> Point of the plane. </param>
-			<param name="plane_normal"> Normal to the plane. </param>
-			<param name="ret"> Return vector. </param> 
-			<returns>1 if the given line intersects the given plane; otherwise, 0.</returns>
+			<param name="plane"> Plane. </param> 
+			<returns>true if the given line intersects the given plane; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.linePlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
 			<summary>
@@ -137,47 +114,63 @@
 			<param name="p1"> End point of the line. </param>
 			<param name="plane_point"> Point of the plane. </param>
 			<param name="plane_normal"> Normal to the plane. </param> 
-			<returns>1 if the given line intersects the given plane; otherwise, 0.</returns>
+			<returns>true if the given line intersects the given plane; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Geometry.linePlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec4,Unigine.Math.dvec3)">
-			<summary>
-			Calculates the intersection of a line and a plane. If the function returns 1, the point of intersection will be put to the return vector.
-			</summary> 
-			<param name="p0"> Start point of the line. </param>
-			<param name="p1"> End point of the line. </param>
-			<param name="plane"> Plane. </param>
-			<param name="ret"> Return vector. </param> 
-			<returns>1 if the given line intersects the given plane; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Geometry.linePlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec4,Unigine.Math.vec3)">
-			<summary>
-			Calculates the intersection of a line and a plane. If the function returns 1, the point of intersection will be put to the return vector.
-			</summary> 
-			<param name="p0"> Start point of the line. </param>
-			<param name="p1"> End point of the line. </param>
-			<param name="plane"> Plane. </param>
-			<param name="ret"> Return vector. </param> 
-			<returns>1 if the given line intersects the given plane; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Geometry.linePlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec4)">
+		<member name="M:Unigine.Geometry.linePlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
 			<summary>
 			Checks if there is an intersection between a line and a plane.
 			</summary> 
 			<param name="p0"> Start point of the line. </param>
-			<param name="p1"> End point of the line. </param>
-			<param name="plane"> Plane. </param> 
-			<returns>1 if the given line intersects the given plane; otherwise, 0.</returns>
+			<param name="p1"> Start point of the line. </param>
+			<param name="plane_point"> Point of the plane. </param>
+			<param name="plane_normal"> Normal to the plane. </param> 
+			<returns>true if the given line intersects the given plane; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Geometry.normalizeAngle(float)">
+		<member name="M:Unigine.Geometry.linePlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec4,Unigine.Math.vec3)">
 			<summary>
-			Normalizes the angle in [-180, 180 ] range.
+			Calculates the intersection of a line and a plane. If the function returns true, the point of intersection is put in the return vector.
 			</summary> 
-			<param name="angle"> Input angle. </param> 
-			<returns>Normalized angle, in degrees.</returns>
+			<param name="p0"> Start point of the line. </param>
+			<param name="p1"> End point of the line. </param>
+			<param name="plane"> Plane. </param>
+			<param name="ret"> Return vector. </param> 
+			<returns>true if the given line intersects the given plane; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.linePlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec4,Unigine.Math.dvec3)">
+			<summary>
+			Calculates the intersection of a line and a plane. If the function returns true, the point of intersection is put in the return vector.
+			</summary> 
+			<param name="p0"> Start point of the line. </param>
+			<param name="p1"> End point of the line. </param>
+			<param name="plane"> Plane. </param>
+			<param name="ret"> Return vector. </param> 
+			<returns>true if the given line intersects the given plane; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.linePlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
+			<summary>
+			Calculates the intersection of a line and a plane. If the function returns true, the point of intersection is put in the return vector.
+			</summary> 
+			<param name="p0"> Start point of the line. </param>
+			<param name="p1"> End point of the line. </param>
+			<param name="plane_point"> Point of the plane. </param>
+			<param name="plane_normal"> Normal to the plane. </param>
+			<param name="ret"> Return vector. </param> 
+			<returns>true if the given line intersects the given plane; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.linePlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
+			<summary>
+			Calculates the intersection of a line and a plane. If the function returns true, the point of intersection is put in the return vector.
+			</summary> 
+			<param name="p0"> Start point of the line. </param>
+			<param name="p1"> End point of the line. </param>
+			<param name="plane_point"> Point of the plane. </param>
+			<param name="plane_normal"> Normal to the plane. </param>
+			<param name="ret"> Return vector. </param> 
+			<returns>true if the given line intersects the given plane; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.orthoBasis(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
 			<summary>
-			Creates an ortho transformation. Output tangent and binormal vectors will be put to corresponding return vector.
+			Creates an ortho transformation. Output tangent and binormal vectors are put in corresponding return vector.
 			</summary> 
 			<param name="v"> Input vector. </param>
 			<param name="tangent"> Return vector. </param>
@@ -185,7 +178,7 @@
 		</member>
 		<member name="M:Unigine.Geometry.orthoBasis(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
 			<summary>
-			Creates an ortho transformation. Output tangent and binormal vectors will be put to corresponding return vectors.
+			Creates an ortho transformation. Output tangent and binormal vectors are put in corresponding return vectors.
 			</summary> 
 			<param name="v"> Input vector. </param>
 			<param name="tangent"> Return vector. </param>
@@ -210,61 +203,120 @@
 		</member>
 		<member name="M:Unigine.Geometry.orthoTransform(Unigine.Math.dvec3,Unigine.Math.dmat4)">
 			<summary>
-			Creates an ortho transformation. The transformation will be put to the return matrix.
+			Creates an ortho transformation. The transformation is put in the return matrix.
 			</summary> 
 			<param name="v"> Input vector. </param>
 			<param name="transform"> Return matrix. </param> 
 		</member>
 		<member name="M:Unigine.Geometry.orthoTransform(Unigine.Math.vec3,Unigine.Math.mat4)">
 			<summary>
-			Creates an ortho transformation. The transformation will be put to the return matrix.
+			Creates an ortho transformation. The transformation is put in the return matrix.
 			</summary> 
 			<param name="v"> Input vector. </param>
 			<param name="transform"> Return matrix. </param> 
 		</member>
-		<member name="M:Unigine.Geometry.pointPolygonDistance(Unigine.Math.vec3,Unigine.Math.vec3,int[],Unigine.Math.vec4)">
+		<member name="M:Unigine.Geometry.pointPolygonDistance(Unigine.Math.vec3,Unigine.Math.vec3,int[],int,Unigine.Math.vec4)">
 			<summary>
 			Returns the distance from a point to a polygon.
 			</summary> 
 			<param name="point"> Point. </param>
 			<param name="vertex"> Pointer to vertex structure. </param>
 			<param name="indices"> Array of vertex indices. </param>
+			<param name="num_indices"> Total number of vertex indices. </param>
 			<param name="plane"> Polygon plane. </param> 
 			<returns>Distance.</returns>
 		</member>
-		<member name="M:Unigine.Geometry.pointPolygonDistance(Unigine.Math.dvec3,Unigine.Math.dvec3,int[],Unigine.Math.dvec4)">
+		<member name="M:Unigine.Geometry.pointPolygonDistance(Unigine.Math.dvec3,Unigine.Math.dvec3,int[],int,Unigine.Math.dvec4)">
 			<summary>
 			Returns the distance from a point to a polygon.
 			</summary> 
 			<param name="point"> Point. </param>
 			<param name="vertex"> Pointer to vertex structure. </param>
 			<param name="indices"> Array of vertex indices. </param>
+			<param name="num_indices"> Total number of vertex indices. </param>
 			<param name="plane"> Polygon plane. </param> 
 			<returns>Distance.</returns>
 		</member>
-		<member name="M:Unigine.Geometry.pointPolygonInside(Unigine.Math.vec3,Unigine.Math.vec3,int[],Unigine.Math.vec3)">
+		<member name="M:Unigine.Geometry.pointPolygonDistance(Unigine.Math.vec3,Unigine.Math.vec3,unsignedshort[],int,Unigine.Math.vec4)">
 			<summary>
-			Checks if a point is inside a polygon.
+			Returns the distance from a point to a polygon.
 			</summary> 
 			<param name="point"> Point. </param>
 			<param name="vertex"> Pointer to vertex structure. </param>
 			<param name="indices"> Array of vertex indices. </param>
-			<param name="normal"> Normal to the polygon plane. </param> 
-			<returns>1 if the point is inside the given polygon; otherwise, 0.</returns>
+			<param name="num_indices"> Total number of vertex indices. </param>
+			<param name="plane"> Polygon plane. </param> 
+			<returns>Distance.</returns>
 		</member>
-		<member name="M:Unigine.Geometry.pointPolygonInside(Unigine.Math.dvec3,Unigine.Math.dvec3,int[],Unigine.Math.dvec3)">
+		<member name="M:Unigine.Geometry.pointPolygonDistance(Unigine.Math.dvec3,Unigine.Math.dvec3,unsignedshort[],int,Unigine.Math.dvec4)">
+			<summary>
+			Returns the distance from a point to a polygon.
+			</summary> 
+			<param name="point"> Point. </param>
+			<param name="vertex"> Pointer to vertex structure. </param>
+			<param name="indices"> Array of vertex indices. </param>
+			<param name="num_indices"> Total number of vertex indices. </param>
+			<param name="plane"> Polygon plane. </param> 
+			<returns>Distance.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.pointPolygonInside(Unigine.Math.vec3,Unigine.Math.vec3,int[],int,Unigine.Math.vec3)">
 			<summary>
 			Checks if a point is inside a polygon.
 			</summary> 
 			<param name="point"> Point. </param>
 			<param name="vertex"> Pointer to vertex structure. </param>
 			<param name="indices"> Array of vertex indices. </param>
+			<param name="num_indices"> Total number of vertex indices. </param>
 			<param name="normal"> Normal to the polygon plane. </param> 
-			<returns>1 if the point is inside the given polygon; otherwise, 0.</returns>
+			<returns>true if the point is inside the given polygon; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.pointPolygonInside(Unigine.Math.dvec3,Unigine.Math.dvec3,int[],int,Unigine.Math.dvec3)">
+			<summary>
+			Checks if a point is inside a polygon.
+			</summary> 
+			<param name="point"> Point. </param>
+			<param name="vertex"> Pointer to vertex structure. </param>
+			<param name="indices"> Array of vertex indices. </param>
+			<param name="num_indices"> Total number of vertex indices. </param>
+			<param name="normal"> Normal to the polygon plane. </param> 
+			<returns>true if the point is inside the given polygon; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.pointPolygonInside(Unigine.Math.vec3,Unigine.Math.vec3,unsignedshort[],int,Unigine.Math.vec3)">
+			<summary>
+			Checks if a point is inside a polygon.
+			</summary> 
+			<param name="point"> Point. </param>
+			<param name="vertex"> Pointer to vertex structure. </param>
+			<param name="indices"> Array of vertex indices. </param>
+			<param name="num_indices"> Total number of vertex indices. </param>
+			<param name="normal"> Normal to the polygon plane. </param> 
+			<returns>true if the point is inside the given polygon; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.pointPolygonInside(Unigine.Math.dvec3,Unigine.Math.dvec3,unsignedshort[],int,Unigine.Math.dvec3)">
+			<summary>
+			Checks if a point is inside a polygon.
+			</summary> 
+			<param name="point"> Point. </param>
+			<param name="vertex"> Pointer to vertex structure. </param>
+			<param name="indices"> Array of vertex indices. </param>
+			<param name="num_indices"> Total number of vertex indices. </param>
+			<param name="normal"> Normal to the polygon plane. </param> 
+			<returns>true if the point is inside the given polygon; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.pointTriangleCoordinates(Unigine.Math.vec2,Unigine.Math.vec2,Unigine.Math.vec2,Unigine.Math.vec2,float,float)">
+			<summary>
+			Calculates barycentric triangle coordinates. The coordinates are put in corresponding return variables.
+			</summary> 
+			<param name="point"> Point. </param>
+			<param name="v0"> The first vertex of the triangle. </param>
+			<param name="v1"> The second vertex of the triangle. </param>
+			<param name="v2"> The third vertex of the triangle. </param>
+			<param name="a"> Return variable. </param>
+			<param name="b"> Return variable. </param> 
 		</member>
 		<member name="M:Unigine.Geometry.pointTriangleCoordinates(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,float,float)">
 			<summary>
-			Calculates barycentric triangle coordinates. The coordinates will be put to corresponding return variables.
+			Calculates barycentric triangle coordinates. The coordinates are put in corresponding return variables.
 			</summary> 
 			<param name="point"> Point. </param>
 			<param name="v0"> The first vertex of the triangle. </param>
@@ -275,7 +327,7 @@
 		</member>
 		<member name="M:Unigine.Geometry.pointTriangleCoordinates(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,double,double)">
 			<summary>
-			Calculates barycentric triangle coordinates. The coordinates will be put to corresponding return variables.
+			Calculates barycentric triangle coordinates. The coordinates are put in corresponding return variables.
 			</summary> 
 			<param name="point"> Point. </param>
 			<param name="v0"> The first vertex of the triangle. </param>
@@ -315,7 +367,7 @@
 			<param name="v1"> The second vertex of the triangle. </param>
 			<param name="v2"> The third vertex of the triangle. </param>
 			<param name="normal"> Normal to the triangle plane. </param> 
-			<returns>1 if the point is inside the given triangle; otherwise, 0.</returns>
+			<returns>true if the point is inside the given triangle; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.pointTriangleInside(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
 			<summary>
@@ -326,7 +378,7 @@
 			<param name="v1"> The second vertex of the triangle. </param>
 			<param name="v2"> The third vertex of the triangle. </param>
 			<param name="normal"> Normal to the triangle plane. </param> 
-			<returns>1 if the point is inside the given triangle; otherwise, 0.</returns>
+			<returns>true if the point is inside the given triangle; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.pointTriangleInside(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
 			<summary>
@@ -336,7 +388,7 @@
 			<param name="v0"> The first vertex of the triangle. </param>
 			<param name="v1"> The second vertex of the triangle. </param>
 			<param name="v2"> The third vertex of the triangle. </param> 
-			<returns>1 if the point is inside the given triangle; otherwise, 0.</returns>
+			<returns>true if the point is inside the given triangle; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.pointTriangleInside(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
 			<summary>
@@ -346,22 +398,42 @@
 			<param name="v0"> The first vertex of the triangle. </param>
 			<param name="v1"> The second vertex of the triangle. </param>
 			<param name="v2"> The third vertex of the triangle. </param> 
-			<returns>1 if the point is inside the given triangle; otherwise, 0.</returns>
+			<returns>true if the point is inside the given triangle; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Geometry.polygonPlane(Unigine.Math.vec3,int[])">
+		<member name="M:Unigine.Geometry.polygonPlane(Unigine.Math.vec3,int[],int)">
 			<summary>
 			Returns the polygon plane.
 			</summary> 
 			<param name="vertex"> Pointer to vertex structure. </param>
-			<param name="indices"> Array of vertex indices. </param> 
+			<param name="indices"> Array of vertex indices. </param>
+			<param name="num_indices"> Total number of vertex indices. </param> 
 			<returns>Polygon plane.</returns>
 		</member>
-		<member name="M:Unigine.Geometry.polygonPlane(Unigine.Math.dvec3,int[])">
+		<member name="M:Unigine.Geometry.polygonPlane(Unigine.Math.dvec3,int[],int)">
 			<summary>
 			Returns the polygon plane.
 			</summary> 
 			<param name="vertex"> Pointer to vertex structure. </param>
-			<param name="indices"> Array of vertex indices. </param> 
+			<param name="indices"> Array of vertex indices. </param>
+			<param name="num_indices"> Total number of vertex indices. </param> 
+			<returns>Polygon plane.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.polygonPlane(Unigine.Math.vec3,unsignedshort[],int)">
+			<summary>
+			Returns the polygon plane.
+			</summary> 
+			<param name="vertex"> Pointer to vertex structure. </param>
+			<param name="indices"> Array of vertex indices. </param>
+			<param name="num_indices"> Total number of vertex indices. </param> 
+			<returns>Polygon plane.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.polygonPlane(Unigine.Math.dvec3,unsignedshort[],int)">
+			<summary>
+			Returns the polygon plane.
+			</summary> 
+			<param name="vertex"> Pointer to vertex structure. </param>
+			<param name="indices"> Array of vertex indices. </param>
+			<param name="num_indices"> Total number of vertex indices. </param> 
 			<returns>Polygon plane.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.projectOntoPlane(Unigine.Math.vec3,Unigine.Math.vec3)">
@@ -388,7 +460,7 @@
 			<param name="direction"> Direction of the ray. </param>
 			<param name="min"> Min coordinates of the axis-aligned bounding box. </param>
 			<param name="max"> Max coordinates of the axis-aligned bounding box. </param> 
-			<returns>1 if the given ray intersects the given bounding box; otherwise, 0.</returns>
+			<returns>true if the given ray intersects the given bounding box; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.rayBoundBoxIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
 			<summary>
@@ -398,7 +470,7 @@
 			<param name="direction"> Direction of the ray. </param>
 			<param name="min"> Min coordinates of the axis-aligned bounding box. </param>
 			<param name="max"> Max coordinates of the axis-aligned bounding box. </param> 
-			<returns>1 if the given ray intersects the given bounding box; otherwise, 0.</returns>
+			<returns>true if the given ray intersects the given bounding box; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.rayPlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec4)">
 			<summary>
@@ -407,7 +479,16 @@
 			<param name="point"> Starting point of the ray. </param>
 			<param name="direction"> Direction of the ray. </param>
 			<param name="plane"> Plane. </param> 
-			<returns>1 if the given ray intersects the given plane; otherwise, 0.</returns>
+			<returns>true if the given ray intersects the given plane; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.rayPlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec4)">
+			<summary>
+			Checks if a ray intersects a plane.
+			</summary> 
+			<param name="point"> Starting point of the ray. </param>
+			<param name="direction"> Direction of the ray. </param>
+			<param name="plane"> Plane. </param> 
+			<returns>true if the given ray intersects the given plane; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.rayPlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
 			<summary>
@@ -417,38 +498,7 @@
 			<param name="direction"> Direction of the ray. </param>
 			<param name="plane_point"> Point on the plane. </param>
 			<param name="plane_normal"> Normal to the plane. </param> 
-			<returns>1 if the given ray intersects the given plane; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Geometry.rayPlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec4,Unigine.Math.dvec3)">
-			<summary>
-			Calculates the intersection of a ray and a plane. If the function returns 1, the point of intersection will be put to the return vector.
-			</summary> 
-			<param name="point"> Starting point of the ray. </param>
-			<param name="direction"> Direction of the ray. </param>
-			<param name="plane"> Plane. </param>
-			<param name="ret"> Return vector. </param> 
-			<returns>1 if the given ray intersects the given plane; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Geometry.rayPlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
-			<summary>
-			Calculates the intersection of a ray and a plane. If the function returns 1, the point of intersection will be put to the return vector.
-			</summary> 
-			<param name="point"> Starting point of the ray. </param>
-			<param name="direction"> Direction of the ray. </param>
-			<param name="plane_point"> Point on the plane. </param>
-			<param name="plane_normal"> Normal to the plane. </param>
-			<param name="ret"> Return vector. </param> 
-			<returns>1 if the given ray intersects the given plane; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Geometry.rayPlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec4,Unigine.Math.vec3)">
-			<summary>
-			Calculates the intersection of a ray and a plane. If the function returns 1, the point of intersection will be put to the return vector.
-			</summary> 
-			<param name="point"> Starting point of the ray. </param>
-			<param name="direction"> Direction of the ray. </param>
-			<param name="plane"> Plane. </param>
-			<param name="ret"> Return vector. </param> 
-			<returns>1 if the given ray intersects the given plane; otherwise, 0.</returns>
+			<returns>true if the given ray intersects the given plane; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.rayPlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
 			<summary>
@@ -458,27 +508,49 @@
 			<param name="direction"> Direction of the ray. </param>
 			<param name="plane_point"> Point on the plane. </param>
 			<param name="plane_normal"> Normal to the plane. </param> 
-			<returns>1 if the given ray intersects the given plane; otherwise, 0.</returns>
+			<returns>true if the given ray intersects the given plane; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Geometry.rayPlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
+		<member name="M:Unigine.Geometry.rayPlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec4,Unigine.Math.vec3)">
 			<summary>
-			Calculates the intersection of a ray and a plane. If the function returns 1, the point of intersection will be put to the return vector.
+			Calculates the intersection of a ray and a plane. If the function returns true, the point of intersection is put in the return vector.
+			</summary> 
+			<param name="point"> Starting point of the ray. </param>
+			<param name="direction"> Direction of the ray. </param>
+			<param name="plane"> Plane. </param>
+			<param name="ret"> Return vector. </param> 
+			<returns>true if the given ray intersects the given plane; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.rayPlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec4,Unigine.Math.dvec3)">
+			<summary>
+			Calculates the intersection of a ray and a plane. If the function returns 1, the point of intersection is put in the return vector.
+			</summary> 
+			<param name="point"> Starting point of the ray. </param>
+			<param name="direction"> Direction of the ray. </param>
+			<param name="plane"> Plane. </param>
+			<param name="ret"> Return vector. </param> 
+			<returns>true if the given ray intersects the given plane; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.rayPlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
+			<summary>
+			Calculates the intersection of a ray and a plane. If the function returns true, the point of intersection is put in the return vector.
 			</summary> 
 			<param name="point"> Starting point of the ray. </param>
 			<param name="direction"> Direction of the ray. </param>
 			<param name="plane_point"> Point on the plane. </param>
 			<param name="plane_normal"> Normal to the plane. </param>
 			<param name="ret"> Return vector. </param> 
-			<returns>1 if the given ray intersects the given plane; otherwise, 0.</returns>
+			<returns>true if the given ray intersects the given plane; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Geometry.rayPlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec4)">
+		<member name="M:Unigine.Geometry.rayPlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
 			<summary>
-			Checks if a ray intersects a plane.
+			Calculates the intersection of a ray and a plane. If the function returns 1, the point of intersection is put in the return vector.
 			</summary> 
 			<param name="point"> Starting point of the ray. </param>
 			<param name="direction"> Direction of the ray. </param>
-			<param name="plane"> Plane. </param> 
-			<returns>1 if the given ray intersects the given plane; otherwise, 0.</returns>
+			<param name="plane_point"> Point on the plane. </param>
+			<param name="plane_normal"> Normal to the plane. </param>
+			<param name="ret"> Return vector. </param> 
+			<returns>true if the given ray intersects the given plane; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.rayTriangleIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
 			<summary>
@@ -489,7 +561,7 @@
 			<param name="v0"> The first triangle vertex. </param>
 			<param name="v1"> The second triangle vertex. </param>
 			<param name="v2"> The third triangle vertex. </param> 
-			<returns>1 if the given ray intersects the given triangle; otherwise, 0.</returns>
+			<returns>true if the given ray intersects the given triangle; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.rayTriangleIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
 			<summary>
@@ -500,17 +572,25 @@
 			<param name="v0"> The first triangle vertex. </param>
 			<param name="v1"> The second triangle vertex. </param>
 			<param name="v2"> The third triangle vertex. </param> 
-			<returns>1 if the given ray intersects the given triangle; otherwise, 0.</returns>
+			<returns>true if the given ray intersects the given triangle; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Geometry.segmentPlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec4,Unigine.Math.vec3)">
+		<member name="M:Unigine.Geometry.segmentPlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec4)">
 			<summary>
-			Calculates the intersection of a segment and a plane. If the function returns 1, the point of intersection will be put to the return vector.
+			Checks if a segment intersects a plane.
 			</summary> 
 			<param name="p0"> Start point of the line segment. </param>
 			<param name="p1"> End point of the line segment. </param>
-			<param name="plane"> Plane. </param>
-			<param name="ret"> Return vector. </param> 
-			<returns>1 if the given ray intersects the given triangle; otherwise, 0.</returns>
+			<param name="plane"> Plane. </param> 
+			<returns>true if the given segment intersects the given plane; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.segmentPlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec4)">
+			<summary>
+			Checks if a segment intersects a plane.
+			</summary> 
+			<param name="p0"> Start point of the line segment. </param>
+			<param name="p1"> End point of the line segment. </param>
+			<param name="plane"> Plane. </param> 
+			<returns>true if the given segment intersects the given plane; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.segmentPlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
 			<summary>
@@ -520,36 +600,7 @@
 			<param name="p1"> End point of the line segment. </param>
 			<param name="plane_point"> Point on the plane. </param>
 			<param name="plane_normal"> Normal to the plane. </param> 
-			<returns>1 if the given segment intersects the given plane; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Geometry.segmentPlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec4)">
-			<summary>
-			Checks if a segment intersects a plane.
-			</summary> 
-			<param name="p0"> Start point of the line segment. </param>
-			<param name="p1"> End point of the line segment. </param>
-			<param name="plane"> Plane. </param> 
-			<returns>1 if the given segment intersects the given plane; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Geometry.segmentPlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
-			<summary>
-			Calculates the intersection of a line segment and a plane. If the function returns 1, the point of intersection will be put to the return vector.
-			</summary> 
-			<param name="p0"> Start point of the line segment. </param>
-			<param name="p1"> End point of the line segment. </param>
-			<param name="plane_point"> Point on the plane. </param>
-			<param name="plane_normal"> Normal to the plane. </param>
-			<param name="ret"> Return vector. </param> 
-			<returns>1 if the given segment intersects the given plane; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.Geometry.segmentPlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec4)">
-			<summary>
-			Checks if a segment intersects a plane.
-			</summary> 
-			<param name="p0"> Start point of the line segment. </param>
-			<param name="p1"> End point of the line segment. </param>
-			<param name="plane"> Plane. </param> 
-			<returns>1 if the given segment intersects the given plane; otherwise, 0.</returns>
+			<returns>true if the given segment intersects the given plane; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.segmentPlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
 			<summary>
@@ -559,28 +610,49 @@
 			<param name="p1"> End point of the line segment. </param>
 			<param name="plane_point"> Point on the plane. </param>
 			<param name="plane_normal"> Normal to the plane. </param> 
-			<returns>1 if the given segment intersects the given plane; otherwise, 0.</returns>
+			<returns>true if the given segment intersects the given plane; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Geometry.segmentPlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec4,Unigine.Math.dvec3)">
+		<member name="M:Unigine.Geometry.segmentPlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec4,Unigine.Math.vec3)">
 			<summary>
-			Calculates the intersection of a line segment and a plane. If the function returns 1, the point of intersection will be put to the return vector.
+			Calculates the intersection of a segment and a plane. If the function returns 1, the point of intersection is put in the return vector.
 			</summary> 
 			<param name="p0"> Start point of the line segment. </param>
 			<param name="p1"> End point of the line segment. </param>
 			<param name="plane"> Plane. </param>
 			<param name="ret"> Return vector. </param> 
-			<returns>1 if the given segment intersects the given plane; otherwise, 0.</returns>
+			<returns>true if the given segment intersects the given plane; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Geometry.segmentPlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
+		<member name="M:Unigine.Geometry.segmentPlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec4,Unigine.Math.dvec3)">
 			<summary>
-			Calculates the intersection of a line segment and a plane. If the function returns 1, the point of intersection will be put to the return vector.
+			Calculates the intersection of a line segment and a plane. If the function returns 1, the point of intersection is put in the return vector.
+			</summary> 
+			<param name="p0"> Start point of the line segment. </param>
+			<param name="p1"> End point of the line segment. </param>
+			<param name="plane"> Plane. </param>
+			<param name="ret"> Return vector. </param> 
+			<returns>true if the given segment intersects the given plane; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.segmentPlaneIntersection(Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3,Unigine.Math.vec3)">
+			<summary>
+			Calculates the intersection of a line segment and a plane. If the function returns 1, the point of intersection is put in the return vector.
 			</summary> 
 			<param name="p0"> Start point of the line segment. </param>
 			<param name="p1"> End point of the line segment. </param>
 			<param name="plane_point"> Point on the plane. </param>
 			<param name="plane_normal"> Normal to the plane. </param>
 			<param name="ret"> Return vector. </param> 
-			<returns>1 if the given segment intersects the given plane; otherwise, 0.</returns>
+			<returns>true if the given segment intersects the given plane; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.segmentPlaneIntersection(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
+			<summary>
+			Calculates the intersection of a line segment and a plane. If the function returns 1, the point of intersection is put in the return vector.
+			</summary> 
+			<param name="p0"> Start point of the line segment. </param>
+			<param name="p1"> End point of the line segment. </param>
+			<param name="plane_point"> Point on the plane. </param>
+			<param name="plane_normal"> Normal to the plane. </param>
+			<param name="ret"> Return vector. </param> 
+			<returns>true if the given segment intersects the given plane; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.Geometry.triangleArea(Unigine.Math.dvec3,Unigine.Math.dvec3,Unigine.Math.dvec3)">
 			<summary>
@@ -669,6 +741,17 @@
 			<param name="v1"> The second triangle vertex. </param>
 			<param name="v2"> The third triangle vertex. </param> 
 			<returns>Triangle tangent space vector.</returns>
+		</member>
+		<member name="M:Unigine.Geometry.TriangleRasterize(Vertex,int,int,int,int,Shader)">
+			<summary>
+			Positions the given triangle within the given screen coordinates, rasterizes it and applies the specified shader to each pixel.
+			</summary> 
+			<param name="vertex"> Pointer to vertex structure. </param>
+			<param name="x0"> The X coordinate of the top left corner of screen space. </param>
+			<param name="y0"> The Y coordinate of the top left corner of screen space. </param>
+			<param name="x1"> The X coordinate of the bottom right corner of screen space. </param>
+			<param name="y1"> The Y coordinate of the bottom right corner of screen space. </param>
+			<param name="shader"> Shader. </param> 
 		</member>
 	</members>
 </doc>

@@ -20,78 +20,6 @@
 			</summary> 
 			<param name="bounds"> Bounding box, defining the area, where world clutter cells will be regenerated. </param> 
 		</member>
-		<member name="M:Unigine.WorldClutter.setAngle(float)">
-			<summary>
-			Sets the angle cosine that defines the slope steepness appropriate for positioning nodes.
-			</summary> 
-			<param name="angle"> Slope angle cosine. The provided value will be saturated in range [0;1]. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getAngle const">
-			<summary>
-			Returns the current angle cosine that defines the slope steepness appropriate for positioning nodes.
-			</summary>  
-			<returns>Slope angle cosine.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setDensity(float)">
-			<summary>
-			Sets the density factor that defines the amount of reference nodes per square unit.
-			</summary> 
-			<param name="density"> Density factor. If a negative value is provided, 0 will be used instead. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getDensity const">
-			<summary>
-			Returns the current density factor that defines the number of reference nodes per square unit.
-			</summary>  
-			<returns>Density factor.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setFadeDistance(float)">
-			<summary>
-			Sets the distance up to which reference nodes will be fading out (that is, fewer nodes will be rendered instead of all). The distance is measured starting from the visible distance.					In order for a fade distance to be applied, visibility distance should not be infinite.
-			</summary> 
-			<param name="distance"> Distance in units. If a negative value is provided, 0 will be used instead. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getFadeDistance const">
-			<summary>
-			Returns the current distance up to which reference nodes are fading out (that is, fewer nodes will be rendered instead of all). The distance is measured starting from the visible distance.					In order for a fade distance to be applied, visibility distance should not be infinite.
-			</summary>  
-			<returns>Distance in units.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setIntersection(int)">
-			<summary>
-			Sets a value indicating whether reference nodes should be scattered upon the ground (along its relief): either the terrain or a mesh set as a parent node.
-			</summary> 
-			<param name="intersection"> Positive number to enable intersection; 0 to disable. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getIntersection const">
-			<summary>
-			Returns a value indicating whether reference nodes are scattered upon the ground (along its relief): either the terrain or a mesh set as a parent node.
-			</summary>  
-			<returns>1 if intersection is enabled; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setMaskFlipX(int)">
-			<summary>
-			Flip the mask by X axis.
-			</summary> 
-			<param name="maskflipx"> Positive value to flip the mask; otherwise, 0. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getMaskFlipX const">
-			<summary>
-			Returns a flag indicating if a mask is flipped by X axis.
-			</summary>  
-			<returns>Positive value if the mask is flipped; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setMaskFlipY(int)">
-			<summary>
-			Flip the mask by Y axis.
-			</summary> 
-			<param name="maskflipy"> Positive value to flip the mask; otherwise, 0. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getMaskFlipY const">
-			<summary>
-			Returns a flag indicating if a mask is flipped by Y axis.
-			</summary>  
-			<returns>Positive value if the mask is flipped; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.WorldClutter.setMaskImage(Unigine.Ptr{Unigine.Image},bool)">
 			<summary>
 			Sets an image (in R8 format) that defines the placement of meshes.
@@ -120,30 +48,6 @@
 			</summary>  
 			<returns>Name (path) of the mask image.</returns>
 		</member>
-		<member name="M:Unigine.WorldClutter.setMaskInverse(int)">
-			<summary>
-			Specifies if reference nodes should be rendered inside or outside the mask mesh contour.
-			</summary> 
-			<param name="inverse"> 0 to render reference nodes inside the mesh contour; 1 to render them outside. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getMaskInverse const">
-			<summary>
-			Returns a flag indicating if reference nodes are rendered inside or outside the mask mesh contour.
-			</summary>  
-			<returns>0 if reference nodes are rendered inside the mesh contour; 1 if outside.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setMaskMaxValue(int)">
-			<summary>
-			Sets the maximum mask value for the WorldClutter object.
-			</summary> 
-			<param name="value"> Maximum mask value. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getMaskMaxValue const">
-			<summary>
-			Returns the maximum mask value for the WorldClutter object.
-			</summary>  
-			<returns>Maximum mask value.</returns>
-		</member>
 		<member name="M:Unigine.WorldClutter.setMaskMesh(Unigine.Ptr{Unigine.Mesh},bool)">
 			<summary>
 			Sets a mesh to be used as a mask on-the-fly. Limitations:											Before the method is called, another mesh must be set via setMaskMeshName() first.						If the world is reloaded, the mesh set via setMaskMeshName() will be loaded.						If the memory limit is exceeded, the new mesh might be replaced with the mesh set via setMaskMeshName().
@@ -171,18 +75,6 @@
 			Returns the name (path) of the current mesh used as a mask for the world clutter. This mesh should be plane.
 			</summary>  
 			<returns>Path to the *.mesh file.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setMaskMinValue(int)">
-			<summary>
-			Sets the minimum mask value for the WorldClutter object.
-			</summary> 
-			<param name="value"> Minimum mask value. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getMaskMinValue const">
-			<summary>
-			Returns the minimum mask value for the WorldClutter object.
-			</summary>  
-			<returns>Minimum mask value.</returns>
 		</member>
 		<member name="M:Unigine.WorldClutter.setMaxScale(float,float)">
 			<summary>
@@ -241,12 +133,6 @@
 			</summary>  
 			<returns>Spread values of rotation angles in degrees.</returns>
 		</member>
-		<member name="M:Unigine.WorldClutter.getNumReferences const">
-			<summary>
-			Returns the total number of reference nodes contained in the world clutter.
-			</summary>  
-			<returns>The number of reference nodes.</returns>
-		</member>
 		<member name="M:Unigine.WorldClutter.setOffset(float,float)">
 			<summary>
 			Sets the vertical offset that determines the placement of reference nodes above or below the surface.
@@ -265,18 +151,6 @@
 			Returns the current spread value of the vertical offset that determines the placement of reference nodes above or below the surface.
 			</summary>  
 			<returns>Spread value of the offset in units.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setOrientation(int)">
-			<summary>
-			Sets a value indicating whether reference nodes should be oriented along the normals of the ground (either the terrain or a mesh set as a parent node).
-			</summary> 
-			<param name="orientation"> Positive number to enable orientation; 0 to disable. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getOrientation const">
-			<summary>
-			Returns a value indicating whether reference nodes are oriented along the normals of the ground (either the terrain or a mesh set as a parent node).
-			</summary>  
-			<returns>1 if orientation is enabled; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.WorldClutter.setReferenceName(int,char)">
 			<summary>
@@ -312,84 +186,6 @@
 			</summary> 
 			<param name="seed"> Number used to initialize a pseudo-random sequence. If a negative value is provided, 0 will be used instead. </param> 
 		</member>
-		<member name="M:Unigine.WorldClutter.getSeed const">
-			<summary>
-			Returns the seed used for pseudo-random positioning of reference nodes.
-			</summary>  
-			<returns>Number used to initialize a pseudo-random sequence.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setSizeX(float)">
-			<summary>
-			Sets the width of the world clutter along the X-coordinate.
-			</summary> 
-			<param name="sizex"> X-coordinate width in units. If a negative value is provided, 0 will be used instead. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getSizeX const">
-			<summary>
-			Returns the current width of the world clutter along the X-coordinate.
-			</summary>  
-			<returns>X-coordinate width in units.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setSizeY(float)">
-			<summary>
-			Sets the length of the world clutter along the Y-coordinate.
-			</summary> 
-			<param name="sizey"> Y-coordinate length in units. If a negative value is provided, 0 will be used instead. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getSizeY const">
-			<summary>
-			Returns the current length of the world clutter along the Y-coordinate.
-			</summary>  
-			<returns>Y-coordinate length in units.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setSpawnRate(int)">
-			<summary>
-			Determines how many cells (in which the world clutter is rendered) are updated each frame. High number of updated cells may lead to a performance spike.
-			</summary> 
-			<param name="rate"> Number of cells to be updated. If a non-positive value is provided, 1 will be used instead. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getSpawnRate const">
-			<summary>
-			Returns the number of cells updated each frame. High number of updated cells may lead to a performance spike.
-			</summary>  
-			<returns>Number of cells to be updated.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setStep(float)">
-			<summary>
-			Sets the step for cells used to render node references.
-			</summary> 
-			<param name="step"> Step for clutter cells in units. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getStep const">
-			<summary>
-			Returns the step for cells used to render node references contained in the world clutter.
-			</summary>  
-			<returns>Step for clutter cells in units.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setThreshold(float)">
-			<summary>
-			Sets the density threshold (for a mask) starting from which reference nodes are rendered if placed dense enough.
-			</summary> 
-			<param name="threshold"> Density threshold. The provided value will be saturated in range [0;1]. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getThreshold const">
-			<summary>
-			Returns the current density threshold (for a mask) starting from which reference nodes are rendered if placed dense enough.
-			</summary>  
-			<returns>Density threshold.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setVisibleDistance(float)">
-			<summary>
-			Sets the distance up to which all the reference nodes will be rendered. The distance is measured from the camera.
-			</summary> 
-			<param name="distance"> Distance in units. If a negative value is provided, 0 will be used instead. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getVisibleDistance const">
-			<summary>
-			Returns the current distance up to which all the reference nodes will be rendered. The distance is measured from the camera.
-			</summary>  
-			<returns>Distance in units.</returns>
-		</member>
 		<member name="M:Unigine.WorldClutter.addReference(char)">
 			<summary>
 			Adds a new reference node to the world clutter.
@@ -408,30 +204,6 @@
 			Returns the type of the node.
 			</summary>  
 			<returns>World type identifier.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setCutoutIntersectionMask(int)">
-			<summary>
-			Sets a new cutout intersection mask. This mask allows you to cut out clutter objects in the areas of intersection with other objects and decals (e.g. can be used to remove vegetation under houses or from the surface of roads projected using decals). Clutter objects will be cut out by objects and decals that have their intersection mask matching this one (one bit at least).					To set intersection masks the following methods can be used:													for decals use getIntersectionMask()							for objects use getIntersectionMask()
-			</summary> 
-			<param name="mask"> Integer, each bit of which is a mask. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getCutoutIntersectionMask const">
-			<summary>
-			Returns the current cutout intersection mask. This mask allows you to cut out clutter objects in the areas of intersection with other objects and decals (e.g. can be used to remove vegetation under houses or from the surface of roads projected using decals). Clutter objects will be cut out by objects and decals that have their intersection mask matching this one (one bit at least).					To set intersection masks the following methods can be used:													for decals use getIntersectionMask()							for objects use getIntersectionMask()
-			</summary>  
-			<returns>Integer, each bit of which is a mask.</returns>
-		</member>
-		<member name="M:Unigine.WorldClutter.setCutoutInverse(int)">
-			<summary>
-			Sets a value indicating whether the clutter objects should be rendered inside or outside the areas determined by the cutout intersection mask.
-			</summary> 
-			<param name="inverse"> 0 to render clutter objects outside the areas determined by the cutout intersection mask; 1 to render the clutter objects inside these areas. </param> 
-		</member>
-		<member name="M:Unigine.WorldClutter.getCutoutInverse const">
-			<summary>
-			Returns a value indicating if the clutter objects is rendered inside or outside the areas determined by the cutout intersection mask.
-			</summary>  
-			<returns>0 if clutter objects are rendered outside the areas determined by the cutout intersection mask; 1 if inside.</returns>
 		</member>
 		<member name="M:Unigine.WorldClutter.clearReferences">
 			<summary>
@@ -657,18 +429,6 @@
 			</summary> 
 			<param name="name"> World spline graph name. </param> 
 		</member>
-		<member name="M:Unigine.WorldSplineGraph.getNumSplinePoints const">
-			<summary>
-			Returns the total number of spline points in the world spline graph.
-			</summary>  
-			<returns>Number of spline points.</returns>
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.getNumSplineSegments const">
-			<summary>
-			Returns the total number of spline segments in the world spline graph.
-			</summary>  
-			<returns>Number of segments.</returns>
-		</member>
 		<member name="M:Unigine.WorldSplineGraph.setSplineGraphName(char,bool)">
 			<summary>
 			Sets the name of the world spline graph.
@@ -692,12 +452,6 @@
 			<summary>
 			Clears the world spline graph.
 			</summary>  
-		</member>
-		<member name="M:Unigine.WorldSplineGraph.isCurved const">
-			<summary>
-			Returns a value indicating if the world spline graph is curved.
-			</summary>  
-			<returns>true if the world spline graph is curved; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.WorldSplineGraph.makeCurved">
 			<summary>
@@ -1409,18 +1163,6 @@
 			</summary> 
 			<param name="size"> Dimensions of the new world trigger. If negative values are provided, 0 will be used instead of them.  </param> 
 		</member>
-		<member name="M:Unigine.WorldTrigger.setEnterCallbackName(char)">
-			<summary>
-			Sets a name of a handler function to be executed when nodes are entering the world trigger.
-			</summary> 
-			<param name="name"> World script function name. </param> 
-		</member>
-		<member name="M:Unigine.WorldTrigger.getEnterCallbackName const">
-			<summary>
-			Returns the name of handler function to be executed on entering the world trigger.
-			</summary>  
-			<returns>World script function name.</returns>
-		</member>
 		<member name="M:Unigine.WorldTrigger.setExcludeNodes(Unigine.Set{Unigine.Ptr{Unigine.Node}})">
 			<summary>
 			Sets a list of excluded nodes, on which the world trigger will not react.
@@ -1443,18 +1185,6 @@
 			Returns the current list of excluded node types, on which the world trigger does not react.
 			</summary>  
 		</member>
-		<member name="M:Unigine.WorldTrigger.setLeaveCallbackName(char)">
-			<summary>
-			Sets a handler function to be executed when nodes are leaving the world trigger.
-			</summary> 
-			<param name="name"> World script function name. </param> 
-		</member>
-		<member name="M:Unigine.WorldTrigger.getLeaveCallbackName const">
-			<summary>
-			Returns the name of the handler function name to be executed on leaving the world trigger.
-			</summary>  
-			<returns>World script function name.</returns>
-		</member>
 		<member name="M:Unigine.WorldTrigger.getNode(int) const">
 			<summary>
 			Returns a specified node contained in the world trigger.
@@ -1466,24 +1196,6 @@
 			<summary>
 			Gets nodes contained in the trigger.
 			</summary>  
-		</member>
-		<member name="M:Unigine.WorldTrigger.getNumNodes const">
-			<summary>
-			Returns the number of nodes contained in the world trigger.
-			</summary>  
-			<returns>Number of nodes contained in the trigger.</returns>
-		</member>
-		<member name="M:Unigine.WorldTrigger.setSize(Unigine.Math.vec3)">
-			<summary>
-			Updates the current dimensions of the world trigger. The minimum size is vec3(0,0,0).
-			</summary> 
-			<param name="size"> Dimensions of the world trigger. If negative values are provided, 0 will be used instead of them.  </param> 
-		</member>
-		<member name="M:Unigine.WorldTrigger.getSize const">
-			<summary>
-			Returns the current dimensions of the world trigger.
-			</summary>  
-			<returns>Current dimensions of the world trigger.</returns>
 		</member>
 		<member name="M:Unigine.WorldTrigger.setTargetNodes(Unigine.Set{Unigine.Ptr{Unigine.Node}})">
 			<summary>
@@ -1506,18 +1218,6 @@
 			<summary>
 			Returns the current list of target node types, which fire callbacks. If this list is empty, all nodes fire callbacks.
 			</summary>  
-		</member>
-		<member name="M:Unigine.WorldTrigger.setTouch(bool)">
-			<summary>
-			Sets a touch mode for the trigger. With this mode on, the trigger will react to the node by partial contact. When set to off, the trigger reacts only if the whole bounding sphere/box gets inside or outside of it. The default is 0.
-			</summary> 
-			<param name="touch"> Touch mode flag: true to enable the touch mode, false to disable it. </param> 
-		</member>
-		<member name="M:Unigine.WorldTrigger.isTouch const">
-			<summary>
-			Returns a value indicating if a touch mode is enabled for the trigger. With this mode on, the trigger will react to the node by partial contact. When set to off, the trigger reacts only if the whole bounding sphere/box gets inside or outside of it.
-			</summary>  
-			<returns>true if the touch mode is enabled; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.WorldTrigger.type">
 			<summary>

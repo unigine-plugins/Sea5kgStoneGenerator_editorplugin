@@ -27,12 +27,17 @@ namespace Math
 class Polygon
 {
 public:
+	/// <summary>Clears the data (vertices and indices) of the polygon.</summary>
 	UNIGINE_INLINE void clear()
 	{
 		vertex.clear();
 		indices.clear();
 	}
 
+	/// <summary>Creates the convex polygon.</summary>
+	/// <param name="v">Pointer to an array of vertices.</param>
+	/// <param name="num_vertex">Number of vertices (must be greater than or equal to 3).</param>
+	/// <param name="normal">Normal of the polygon.</param>
 	bool createConvex(const vec3 *v, int num_vertex, const vec3 &normal)
 	{
 		clear();
@@ -125,8 +130,15 @@ public:
 
 		return true;
 	}
+	/// <summary>Creates the convex polygon.</summary>
+	/// <param name="v">Vector of polygon vertices.</param>
+	/// <param name="normal">Normal of the polygon.</param>
 	UNIGINE_INLINE bool createConvex(const Vector<vec3> &v, const vec3 &normal) { return createConvex(v.get(), v.size(), normal); }
 
+	/// <summary>Creates the concave polygon.</summary>
+	/// <param name="v">Pointer to an array of vertices.</param>
+	/// <param name="num_vertex">Number of vertices (must be greater than or equal to 3).</param>
+	/// <param name="normal">Normal of the polygon.</param>
 	bool createConcave(const vec3 *v, int num_vertex, const vec3 &normal)
 	{
 		clear();
@@ -207,13 +219,21 @@ public:
 
 		return iterations > 0;
 	}
+	/// <summary>Creates the concave polygon.</summary>
+	/// <param name="v">Vector of polygon vertices.</param>
+	/// <param name="normal">Normal of the polygon.</param>
 	UNIGINE_INLINE bool createConcave(const Vector<vec3> &v, const vec3 &normal) { return createConcave(v.get(), v.size(), normal); }
 
+	/// <summary>Returns the number of vertices.</summary>
 	UNIGINE_INLINE int getNumVertex() const { return vertex.size(); }
+	/// <summary>Returns the vertex with the given number.</summary>
 	UNIGINE_INLINE const vec3 &getVertex(int num) const { return vertex[num].xyz; }
+	/// <summary>Returns the index of the vertex with the given number.</summary>
 	UNIGINE_INLINE int getVertexIndex(int num) const { return vertex[num].index; }
 
+	/// <summary>Returns the number of indices.</summary>
 	UNIGINE_INLINE int getNumIndices() const { return indices.size(); }
+	/// <summary>Returns the index with a given number.</summary>
 	UNIGINE_INLINE int getIndex(int num) const { return indices[num]; }
 
 private:
@@ -226,7 +246,7 @@ private:
 	struct Vertex
 	{
 		vec3 xyz;
-		int index;
+		int index{0};
 	};
 
 

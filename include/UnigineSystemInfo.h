@@ -24,26 +24,48 @@ namespace Unigine
 class UNIGINE_API SystemInfo
 {
 public:
-	static int isInitialized();
 
-	enum
+	enum GPU_VENDOR
 	{
-		GPU_UNKNOWN = 0,
-		GPU_AMD,
-		GPU_NVIDIA,
-		GPU_INTEL,
-		GPU_ARM,
-		GPU_APPLE,
-		GPU_IMGTEC,
-		GPU_QUALCOMM,
+		GPU_VENDOR_UNKNOWN = 0,
+		GPU_VENDOR_AMD,
+		GPU_VENDOR_NVIDIA,
+		GPU_VENDOR_INTEL,
+		GPU_VENDOR_ARM,
+		GPU_VENDOR_APPLE,
+		GPU_VENDOR_IMGTEC,
+		GPU_VENDOR_QUALCOMM,
+	};
+
+	enum GPU_TYPE
+	{
+		GPU_TYPE_DISCRETE = 0,
+		GPU_TYPE_INTEGRATED,
+		GPU_TYPE_OTHER,
+		GPU_TYPE_UNSUPPORTED,
+	};
+
+	enum PLATFORM_TYPE
+	{
+		PLATFORM_TYPE_WINDOWS,
+		PLATFORM_TYPE_LINUX,
+		PLATFORM_TYPE_XBOX_SERIES_S,
+		PLATFORM_TYPE_XBOX_SERIES_X,
+		PLATFORM_TYPE_PS5,
 	};
 	static const char *getBinaryInfo();
 	static const char *getRevisionInfo();
-	static const char *getSystemInfo();
+	static const char *getOSInfo();
 	static const char *getCPUInfo();
-	static int getSystemMemory();
+	static const char *getEngineInfo();
+	static long long getMemoryFree();
+	static long long getMemoryUsage();
+	static long long getMemoryTotal();
+	static long long getMemoryFreeCommitted();
+	static long long getMemoryUsageCommitted();
+	static long long getMemoryTotalCommitted();
 	static int getCPUFrequency();
-	static int getCPUCount();
+	static int getCPUCores();
 	static int getCPUThreads();
 	static bool hasMMX();
 	static bool hasSSE();
@@ -55,12 +77,22 @@ public:
 	static bool hasAVX2();
 	static bool hasNeon();
 	static bool hasHyperThreading();
+	static void logInfo();
 	static int getGPUCount();
-	static const char *getGPUInfo(int video_adapter_num = 0);
-	static int getGPUID(int video_adapter_num = 0);
-	static int getGPUMemory(int video_adapter_num = 0);
-	static int getGPUName(const char *str);
-	static int getGPUName(int video_adapter_num = 0);
+	static int getGPUActive();
+	static int findGPUByLuid(unsigned long long luid);
+	static int findGPUByDeviceID(unsigned int device_id);
+	static SystemInfo::GPU_TYPE getGPUType(int video_adapter_num = -1);
+	static SystemInfo::GPU_VENDOR getGPUVendor(int video_adapter_num = -1);
+	static int getGPUMemory(int video_adapter_num = -1);
+	static int getGPUID(int video_adapter_num = -1);
+	static unsigned int getGPUDeviceID(int video_adapter_num = -1);
+	static unsigned long long getGPULuid(int video_adapter_num = -1);
+	static const char *getGPUDescription(int video_adapter_num = -1);
+	static const char *getGPUVendorName(int video_adapter_num = -1);
+	static const char *getGPUDriver(int video_adapter_num = -1);
+	static long long getGPUMemoryFree();
+	static SystemInfo::PLATFORM_TYPE getPlatformType();
 };
 
 } // namespace Unigine

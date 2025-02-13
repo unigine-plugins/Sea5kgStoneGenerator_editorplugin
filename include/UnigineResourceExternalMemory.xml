@@ -1,0 +1,62 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.ResourceExternalMemory.getWin32Handle const">
+			<summary>
+			Returns the pointer to a variable that receives the NT HANDLE value to the resource to share. You can use this handle in calls to access the resource.
+			</summary>  
+			<returns>Win32 handle. If called under Linux, returns nullptr.</returns>
+		</member>
+		<member name="M:Unigine.ResourceExternalMemory.getFdHandle const">
+			<summary>
+			Returns the file descriptor referencing the payload of the device memory object.
+			</summary>  
+			<returns>Linux handle. If called under Windows, returns -1.</returns>
+		</member>
+		<member name="M:Unigine.ResourceExternalMemory.getType const">
+			<summary>
+			Returns the type of the object for which resource external memory is created.
+			</summary>  
+			<returns>The type of the object for which resource external memory is created.</returns>
+		</member>
+		<member name="M:Unigine.ResourceExternalMemory.getSize const">
+			<summary>
+			Returns the size of video memory occupied by the resource.
+			</summary>  
+			<returns>Size of video memory occupied by the resource, in bytes.</returns>
+		</member>
+		<member name="M:Unigine.ResourceExternalMemory.closeHandle">
+			<summary>
+			Closes the handle. To avoid memory leaks, use this method when you no longer need the resource handle (for example, as soon as you imported the object to another graphics API).
+			</summary>  
+		</member>
+		<member name="F:Unigine.ResourceExternalMemory.TYPE_UNKNOWN">
+			<summary>
+			The resource type is unknown.
+		</summary>
+		</member>
+		<member name="F:Unigine.ResourceExternalMemory.TYPE_TEXTURE">
+			<summary>
+			The resource type is texture.
+		</summary>
+		</member>
+		<member name="F:Unigine.ResourceExternalMemory.TYPE_STRUCTURED_BUFFER">
+			<summary>
+			The resource type is structured buffer.
+		</summary>
+		</member>
+		<member name="F:Unigine.ResourceExternalMemory.TYPE_MESH_DYNAMIC_VERTEX_BUFFER">
+			<summary>
+			The resource type is vertex buffer of mesh dynamic.
+		</summary>
+		</member>
+		<member name="F:Unigine.ResourceExternalMemory.TYPE_MESH_DYNAMIC_INDEX_BUFFER">
+			<summary>
+			The resource type is index buffer of mesh dynamic.
+		</summary>
+		</member>
+	</members>
+</doc>

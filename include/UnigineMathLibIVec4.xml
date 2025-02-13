@@ -409,7 +409,9 @@
 		</member>
 		<member name="M:Unigine.Math.ivec4.hash const">
 			<summary>
+			Returns a hash obtained by mixing the hash values of vector components.
 			</summary>  
+			<returns>32-bit hash value.</returns>
 		</member>
 		<member name="F:Unigine.Math.ivec4.ivec4_one">
 			<summary>

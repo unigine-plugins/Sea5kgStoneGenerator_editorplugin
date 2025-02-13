@@ -62,14 +62,6 @@
 			<param name="q"> Source quaternion. </param>
 			<param name="v"> Source vector. </param> 
 		</member>
-		<member name="M:Unigine.Math.mat4.set(int,int,float)">
-			<summary>
-			Sets a new value of the matrix element specified by row and column.
-			</summary> 
-			<param name="row"> Row. </param>
-			<param name="column"> Column. </param>
-			<param name="v"> The value to be set. </param> 
-		</member>
 		<member name="M:Unigine.Math.mat4.#ctor(mat2)">
 			<summary>
 			Constructor. Initializes the matrix using a given mat2 source matrix (2x2). The matrix elements are filled using corresponding elements of the source matrix.
@@ -209,6 +201,14 @@
 			Sets new matrix values using a given dmat4 source matrix (3x4). The matrix elements are filled using corresponding elements of the source matrix.
 			</summary> 
 			<param name="m"> Source matrix (3x4). </param> 
+		</member>
+		<member name="M:Unigine.Math.mat4.set(int,int,float)">
+			<summary>
+			Sets a new value of the matrix element specified by row and column.
+			</summary> 
+			<param name="row"> Row. </param>
+			<param name="column"> Column. </param>
+			<param name="v"> The value to be set. </param> 
 		</member>
 		<member name="M:Unigine.Math.mat4.get(int,int)">
 			<summary>

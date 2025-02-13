@@ -256,18 +256,6 @@
 			<param name="image"> Image instance to which the shoreline for the current water level is to be baked. </param> 
 			<returns>1 if the shoreline is baked successfully; otherwise, 0.</returns>
 		</member>
-		<member name="M:Unigine.FieldShoreline.setTexture(Unigine.Ptr{Unigine.Texture})">
-			<summary>
-			Sets the given texture from the Texture instance for the FieldShoreline.
-			</summary> 
-			<param name="texture"> Texture instance. </param> 
-		</member>
-		<member name="M:Unigine.FieldShoreline.getTexture const">
-			<summary>
-			Returns the shoreline texture (from GPU) and saves it into the given Texture instance.
-			</summary>  
-			<returns>Shoreline texture.</returns>
-		</member>
 		<member name="M:Unigine.FieldShoreline.setTextureImage(Unigine.Ptr{Unigine.Image})">
 			<summary>
 			Sets the given image as the shoreline texture of the FieldShoreline.
@@ -280,31 +268,6 @@
 			</summary> 
 			<param name="image"> Image instance into which the texture will be saved. </param> 
 			<returns>1 if the texture has been grabbed successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.FieldShoreline.setTexturePath(char)">
-			<summary>
-			Sets the path to the FieldShoreline's shoreline texture.
-			</summary> 
-			<param name="path"> Path to the shoreline texture. </param> 
-			<returns>1 if the path to the shoreline texture is set successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.FieldShoreline.getTexturePath const">
-			<summary>
-			Returns the path to the FieldShoreline's shoreline texture.
-			</summary>  
-			<returns>Path to the shoreline texture.</returns>
-		</member>
-		<member name="M:Unigine.FieldShoreline.setSize(Unigine.Math.vec3)">
-			<summary>
-			Sets the vec3 size vector of the FieldShoreline.					The default value is (512.0f, 512.0f, 512.0f).
-			</summary> 
-			<param name="size"> Size vector (x,y,z), where:x value is length of the FieldShoreline along X axis (in units),y value is length of the FieldShoreline along Y axis (in units),z value is length of the FieldShoreline along Z axis (in units). </param> 
-		</member>
-		<member name="M:Unigine.FieldShoreline.getSize const">
-			<summary>
-			Returns the vec3 size vector of the FieldShoreline.					The default value is (512.0f, 512.0f, 512.0f).
-			</summary>  
-			<returns>Size vector (x,y,z), where:x value is length of the FieldShoreline along X axis (in units),y value is length of the FieldShoreline along Y axis (in units),z value is length of the FieldShoreline along Z axis (in units).</returns>
 		</member>
 		<member name="M:Unigine.FieldShoreline.createShorelineDistanceField(Unigine.Ptr{Unigine.Texture},int,int,int)">
 			<summary>

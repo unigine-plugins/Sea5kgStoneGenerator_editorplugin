@@ -146,17 +146,11 @@
 			</summary>  
 			<returns>Squared length of the vector.</returns>
 		</member>
-		<member name="M:Unigine.Math.dvec2.normalize">
+		<member name="M:Unigine.Math.dvec2.iLength const">
 			<summary>
-			Returns normalized vector.
+			Returns the inverted length of the vector.
 			</summary>  
-			<returns>Normalized vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.dvec2.normalizeValid">
-			<summary>
-			Normalizes a vector, makes its magnitude equal to 1. When normalized, a vector keeps the same direction but its length is equal to 1. Check for the zero vector is performed: if the argument is a zero vector, then a zero vector is returned.
-			</summary>  
-			<returns>Normalized vector.</returns>
+			<returns>Inverted length.</returns>
 		</member>
 		<member name="M:Unigine.Math.dvec2.operator const double * const">
 			<summary>
@@ -199,6 +193,12 @@
 			<param name="v"> Vector. </param> 
 			<returns>Resulting vector.</returns>
 		</member>
+		<member name="M:Unigine.Math.dvec2.operator+=(double)">
+			<summary>
+			Performs addition of the specified value.
+			</summary> 
+			<param name="v"> Value. </param> 
+		</member>
 		<member name="M:Unigine.Math.dvec2.operator- const">
 			<summary>
 			Performs vector negation.
@@ -211,6 +211,12 @@
 			</summary> 
 			<param name="v"> Vector. </param> 
 			<returns>Resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dvec2.operator-=(double)">
+			<summary>
+			Subtracts each element of the specified value from the corresponding vector's element.
+			</summary> 
+			<param name="v"> Value. </param> 
 		</member>
 		<member name="M:Unigine.Math.dvec2.operator/=(double)">
 			<summary>
@@ -225,13 +231,6 @@
 			</summary> 
 			<param name="v"> Vector. </param> 
 			<returns>Resulting vector.</returns>
-		</member>
-		<member name="M:Unigine.Math.dvec2.operator=(__m128d)">
-			<summary>
-			Sets the vector using a given 128-bit variable as a source.					We do not recommend to use this method unless you have a clear understanding of SSE2.
-			</summary> 
-			<param name="val"> 128-bit variable. </param> 
-			<returns>Vector.</returns>
 		</member>
 		<member name="M:Unigine.Math.dvec2.operator=(Unigine.dvec2)">
 			<summary>
@@ -290,12 +289,6 @@
 			</summary> 
 			<param name="v"> Value. </param> 
 		</member>
-		<member name="M:Unigine.Math.dvec2.operator-=(double)">
-			<summary>
-			Subtracts each element of the specified value from the corresponding vector's element.
-			</summary> 
-			<param name="v"> Value. </param> 
-		</member>
 		<member name="M:Unigine.Math.dvec2.sum const">
 			<summary>
 			Returns the sum of vector components.
@@ -313,21 +306,9 @@
 			</summary> 
 			<param name="v"> Value. </param> 
 		</member>
-		<member name="M:Unigine.Math.dvec2.operator+=(double)">
-			<summary>
-			Performs addition of the specified value.
-			</summary> 
-			<param name="v"> Value. </param> 
-		</member>
-		<member name="M:Unigine.Math.dvec2.iLength const">
-			<summary>
-			Returns the inverted length of the vector.
-			</summary>  
-			<returns>Inverted length.</returns>
-		</member>
 		<member name="M:Unigine.Math.dvec2.max const">
 			<summary>
-			&gt;Returns the maximum value among all components.
+			Returns the maximum value among all components.
 			</summary>  
 			<returns>Maximum value.</returns>
 		</member>
@@ -357,7 +338,9 @@
 		</member>
 		<member name="M:Unigine.Math.dvec2.hash const">
 			<summary>
+			Returns a hash obtained by mixing the hash values of vector components.
 			</summary>  
+			<returns>32-bit hash value.</returns>
 		</member>
 		<member name="F:Unigine.Math.dvec2.dvec2_eps">
 			<summary>

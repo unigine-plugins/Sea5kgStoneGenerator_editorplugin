@@ -116,7 +116,7 @@ PROP_NAME(#CLASS_NAME);
 // property
 #define PROP_NAME(NAME) static const char *getPropertyName() { return NAME; }
 #define PROP_PARENT_NAME(PARENT_NAME) const char *getParentPropertyName() const override { return PARENT_NAME; }
-#define PROP_AUTOSAVE(VALUE) int isAutoSaveProperty() const override { return VALUE; }
+#define PROP_AUTOSAVE(VALUE) bool isAutoSaveProperty() const override { return VALUE; }
 
 // parameters
 #define PROP_PARAM(TYPE, NAME, ...) \
@@ -281,7 +281,7 @@ private:
 #pragma region System
 #endif
 
-class ComponentSystem : private WorldLogic
+class ComponentSystem : public WorldLogic
 {
 public:
 	// return pointer to singleton ComponentSystem
@@ -341,7 +341,7 @@ public:
 			for (int i = 0; i < count; i++)
 			{
 				C *c = dynamic_cast<C *>(it->data[i]);
-				if (c)
+				if (c && !c->shutdown_called && c->initialized && c->all_init_called)
 				{
 					c->call_shutdown();
 					delete c;
@@ -1131,7 +1131,7 @@ public:
 	UNIGINE_API PropertyPtr get() const;
 	UNIGINE_API Property *operator->();
 	UNIGINE_INLINE int isEmpty() const { return get().get() == nullptr; }
-	virtual String getValueAsString() const override { return value_guid.getString(); }
+	virtual String getValueAsString() const override { return value_guid.makeString(); }
 	virtual int nullCheck() const override { return isEmpty(); }
 
 protected:
@@ -1161,7 +1161,7 @@ public:
 	UNIGINE_API MaterialPtr get() const;
 	UNIGINE_API Material *operator->();
 	UNIGINE_INLINE int isEmpty() const { return get().get() == nullptr; }
-	virtual String getValueAsString() const override { return value_guid.getString(); }
+	virtual String getValueAsString() const override { return value_guid.makeString(); }
 	virtual int nullCheck() const override { return isEmpty(); }
 
 protected:
@@ -1251,7 +1251,7 @@ public:
 
 protected:
 	String struct_type;
-	ComponentStruct *value_base;
+	ComponentStruct *value_base = nullptr;
 };
 
 template <class C>
@@ -1293,13 +1293,12 @@ public:
 	ComponentVariableArray(PropertyWrapper *component, const char *name, const char *type_name,
 		const char *title = nullptr, const char *tooltip = nullptr, const char *group = nullptr, const char *args = nullptr)
 		: ComponentVariable(component, name, Property::PARAMETER_ARRAY, title, tooltip, group, args)
+		, value_type(type_name)
 		, struct_reference(nullptr)
+		, is_basic_type(is_type_name(type_name))
 	{
-		is_basic_type = is_type_name(type_name);
-
 		// all basic types ("int", "float") have lower characters instead of structs ("MyStruct")
 		// so, we modify the name if we got "Int" or "Float" string in type_name
-		value_type = type_name;
 		if (is_basic_type)
 			value_type.lower();
 
@@ -1363,9 +1362,9 @@ public:
 
 protected:
 	String value_type;
-	int is_basic_type;
+	bool is_basic_type = true;
 	Vector<C*> value;
-	C *struct_reference;
+	C *struct_reference = nullptr;
 
 private:
 	// refresh links from Property to Vector<C> value variable
@@ -1386,19 +1385,19 @@ private:
 
 struct UNIGINE_CS ComponentVariableArgumentTitle
 {
-	UNIGINE_API ComponentVariableArgumentTitle(const char *text) { value = text; }
+	UNIGINE_API ComponentVariableArgumentTitle(const char *text);
 	static const char *value;
 };
 
 struct UNIGINE_CS ComponentVariableArgumentTooltip
 {
-	UNIGINE_API ComponentVariableArgumentTooltip(const char *text) { value = text; }
+	UNIGINE_API ComponentVariableArgumentTooltip(const char *text);
 	static const char *value;
 };
 
 struct UNIGINE_CS ComponentVariableArgumentGroup
 {
-	UNIGINE_API ComponentVariableArgumentGroup(const char *text) { value = text; }
+	UNIGINE_API ComponentVariableArgumentGroup(const char *text);
 	static const char *value;
 };
 
@@ -1415,7 +1414,7 @@ struct UNIGINE_CS ComponentVariableArgumentGroup
 #endif
 
 // base class for the components
-class UNIGINE_CS ComponentBase: public PropertyWrapper
+class UNIGINE_CS ComponentBase: public PropertyWrapper, public Unigine::EventConnections
 {
 public:
 	UNIGINE_API ComponentBase(const NodePtr &node, int num);
@@ -1427,7 +1426,7 @@ public:
 	// property
 	UNIGINE_INLINE static const char *getPropertyName() { return "component_base"; }
 	virtual const char *getParentPropertyName() const { return "node_base"; }
-	virtual int isAutoSaveProperty() const { return 1; }
+	virtual bool isAutoSaveProperty() const { return true; }
 
 	// common functions
 	UNIGINE_INLINE const NodePtr &getNode() const { return node; }
@@ -1435,9 +1434,9 @@ public:
 	UNIGINE_INLINE const PropertyPtr &getProperty() const { return property; }
 
 	UNIGINE_INLINE void setEnabled(bool enable) { return node->setPropertyEnabled(property_num, enable); }
-	UNIGINE_INLINE int isEnabled() const { return enabled; }
+	UNIGINE_INLINE bool isEnabled() const { return enabled; }
 
-	UNIGINE_INLINE int isInitialized() const { return all_init_called; }
+	UNIGINE_INLINE bool isInitialized() const { return all_init_called; }
 	virtual bool isBase() const { return true; }
 
 	// callbacks
@@ -1522,7 +1521,7 @@ protected:
 
 	// variables
 	NodePtr node;
-	int property_num;
+	int property_num = -1;
 
 	//////////////////////////////////////////////////////////
 	// functions
@@ -1551,22 +1550,22 @@ private:
 
 	// id of the node when component was created
 	// (user can change id at runtime)
-	int node_id;
+	int node_id = -1;
 
 	// init() method was called flag
-	int initialized;
-	int init_calls_count;
-	int all_init_called;
+	bool initialized = false;
+	int init_calls_count = 0;
+	bool all_init_called = false;
 
 	// shutdown() method was called flag
-	int shutdown_called;
+	bool shutdown_called = false;
 
-	int enabled_self = 0;
-	int enabled = 0;
-	int invoke_disabled_all_init_methods = 0;
+	bool enabled_self = 0;
+	bool enabled = 0;
+	bool invoke_disabled_all_init_methods = false;
 
 	// callbacks
-	CallbackBase *destroy_callback;
+	CallbackBase *destroy_callback = nullptr;
 };
 
 // base class for the structs inside components

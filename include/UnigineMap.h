@@ -15,12 +15,13 @@
 
 #include <UnigineTree.h>
 #include <UniginePair.h>
+#include <UnigineMemory.h>
 
 namespace Unigine
 {
 
-template<typename Key, typename Type, typename Allocator>
-struct MapData
+template<typename Key, typename Type>
+struct MapData: InstancePool<MapData<Key, Type>>
 {
 public:
 	template<typename TypeKey, typename ... Args>
@@ -61,26 +62,22 @@ public:
 	const Key key;
 	Type data;
 
-	static UNIGINE_INLINE void *operator new(size_t size) { return Allocator::allocate(size); }
-	static UNIGINE_INLINE void operator delete(void *ptr) { Allocator::deallocate(ptr); }
-
 	~MapData()
 	{
 		delete left;
 		delete right;
 	}
-
 };
 
-template <typename Key, typename Type, typename Allocator = TreeAllocator>
-class Map : public Tree<Key, MapData<Key, Type, Allocator>, Allocator>
+template <typename Key, typename Type>
+class Map : public Tree<Key, MapData<Key, Type>>
 {
 
 public:
 
-	using Node = typename Unigine::MapData<Key, Type, Allocator>;
-	using Data = Node;
-	using Parent = Tree<Key, Node, Allocator>;
+	using NodeType = typename Unigine::MapData<Key, Type>;
+	using Data = NodeType;
+	using Parent = Tree<Key, NodeType>;
 	using Iterator = typename Parent::Iterator;
 	using ConstIterator = typename Parent::ConstIterator;
 
@@ -99,7 +96,7 @@ public:
 	{
 		Parent::length = 0;
 		Parent::root = nullptr;
-		Node *dest_parent = nullptr;
+		NodeType *dest_parent = nullptr;
 		Parent::copy_proc(Parent::root, dest_parent, o.root);
 	}
 
@@ -110,7 +107,7 @@ public:
 		Parent::length = 0;
 		delete Parent::root;
 		Parent::root = nullptr;
-		Node *dest_parent = nullptr;
+		NodeType *dest_parent = nullptr;
 		Parent::copy_proc(Parent::root, dest_parent, o.root);
 		return *this;
 	}
@@ -140,7 +137,7 @@ public:
 	template<typename T>
 	UNIGINE_INLINE bool contains(const T &key, const Type &value) const
 	{
-		Node *node = Parent::do_find(key);
+		NodeType *node = Parent::do_find(key);
 		return node != nullptr && node->data == value;
 	}
 
@@ -172,7 +169,7 @@ public:
 	UNIGINE_INLINE Type &get(const Key &key) { return Parent::do_append(key)->data; }
 	UNIGINE_INLINE const Type &get(const Key &key) const
 	{
-		Node *node = Parent::do_find(key);
+		NodeType *node = Parent::do_find(key);
 		assert(node != nullptr && "Map::operator[] bad key");
 		return node->data;
 	}
@@ -184,28 +181,28 @@ public:
 
 	UNIGINE_INLINE Iterator append(const Key &key, const Type &t)
 	{
-		Node *node = Parent::do_append(key);
+		NodeType *node = Parent::do_append(key);
 		node->data = t;
 		return Iterator(node);
 	}
 
 	UNIGINE_INLINE Iterator append(Key &&key, const Type &t)
 	{
-		Node *node = Parent::do_append(std::move(key));
+		NodeType *node = Parent::do_append(std::move(key));
 		node->data = t;
 		return Iterator(node);
 	}
 
 	UNIGINE_INLINE Iterator append(const Key &key, Type &&t)
 	{
-		Node *node = Parent::do_append(key);
+		NodeType *node = Parent::do_append(key);
 		node->data =  std::move(t);
 		return Iterator(node);
 	}
 
 	UNIGINE_INLINE Iterator append(Key &&key, Type &&t)
 	{
-		Node *node = Parent::do_append(std::move(key));
+		NodeType *node = Parent::do_append(std::move(key));
 		node->data = std::move(t);
 		return Iterator(node);
 	}
@@ -230,28 +227,28 @@ public:
 
 	UNIGINE_INLINE Iterator insert(const Key &key, const Type &t)
 	{
-		Node *node = Parent::do_append(key);
+		NodeType *node = Parent::do_append(key);
 		node->data = t;
 		return Iterator(node);
 	}
 
 	UNIGINE_INLINE Iterator insert(Key &&key, const Type &t)
 	{
-		Node *node = Parent::do_append(std::move(key));
+		NodeType *node = Parent::do_append(std::move(key));
 		node->data = t;
 		return Iterator(node);
 	}
 
 	UNIGINE_INLINE Iterator insert(const Key &key, Type &&t)
 	{
-		Node *node = Parent::do_append(key);
+		NodeType *node = Parent::do_append(key);
 		node->data =  std::move(t);
 		return Iterator(node);
 	}
 
 	UNIGINE_INLINE Iterator insert(Key &&key, Type &&t)
 	{
-		Node *node = Parent::do_append(std::move(key));
+		NodeType *node = Parent::do_append(std::move(key));
 		node->data = std::move(t);
 		return Iterator(node);
 	}
@@ -262,7 +259,7 @@ public:
 	template <typename ... Args>
 	UNIGINE_INLINE Type &emplace(const Key &key, Args && ... args)
 	{
-		Node *node = Parent::do_append(key);
+		NodeType *node = Parent::do_append(key);
 		node->data = Type(std::forward<Args>(args)...);
 		return node->data;
 	}
@@ -270,7 +267,7 @@ public:
 	template <typename ... Args>
 	UNIGINE_INLINE Type &emplace(Key &&key, Args && ... args)
 	{
-		Node *node = Parent::do_append(key);
+		NodeType *node = Parent::do_append(key);
 		node->data = Type(std::forward<Args>(args)...);
 		return node->data;
 	}
@@ -284,7 +281,7 @@ public:
 
 	UNIGINE_INLINE bool take(const Key &key, Type &ret)
 	{
-		Node *node = Parent::do_remove(key);
+		NodeType *node = Parent::do_remove(key);
 		if (node == nullptr)
 			return false;
 		ret = std::move(node->data);
@@ -294,18 +291,18 @@ public:
 
 	UNIGINE_INLINE Type value(const Key &key) const
 	{
-		Node *node = Parent::do_find(key);
+		NodeType *node = Parent::do_find(key);
 		return node == nullptr ? Type{} : node->data;
 	}
 
 	UNIGINE_INLINE Type value(const Key &key, const Type &def) const
 	{
-		Node *node = Parent::do_find(key);
+		NodeType *node = Parent::do_find(key);
 		return node == nullptr ? def : node->data;
 	}
 	UNIGINE_INLINE const Type &valueRef(const Key &key, const Type &def) const
 	{
-		Node *node = Parent::do_find(key);
+		NodeType *node = Parent::do_find(key);
 		return node == nullptr ? def : node->data;
 	}
 

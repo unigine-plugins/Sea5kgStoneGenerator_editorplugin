@@ -62,9 +62,9 @@ public:
 	};
 	struct Attribute
 	{
-	int offset;
-	int type;
-	int size;
+		int offset;
+		int type;
+		int size;
 	};
 	static Ptr<MeshDynamic> create(int flags);
 	void setFlags(int flags);

@@ -75,7 +75,6 @@ public:
 		VIDEO_CONTEXT_DEBUG = 1 << 0,
 		VIDEO_CONTEXT_BREAK_ON_ERROR = 1 << 1,
 		VIDEO_CONTEXT_GPU_SIDE_VALIDATION = 1 << 2,
-		VIDEO_CONTEXT_QUAD_BUFFER_CONTEXT = 1 << 3,
 	};
 
 	enum BACKGROUND_UPDATE
@@ -291,7 +290,7 @@ public:
 
 	/// Return the active state of engine
 	virtual bool isActive() const = 0;
-	
+
 	/// Return the focus state of engine
 	virtual bool isFocus() const = 0;
 
@@ -606,6 +605,8 @@ public:
 	/// Returns true if the function from the main Engine thread; otherwise, false.
 	virtual bool isMainThread() const = 0;
 
+	virtual bool isFastShutdown() const = 0;
+
 	/// Returns current main player. Either for the editor, or for the game
 	virtual PlayerPtr getMainPlayer() const = 0;
 
@@ -687,6 +688,8 @@ public:
 	virtual Event<> &getEventEndSwap() = 0;
 	virtual Event<> &getEventFocusGained() = 0;
 	virtual Event<> &getEventFocusLost() = 0;
+	virtual Event<const char *> &getEventPluginAdded() = 0;
+	virtual Event<const char *> &getEventPluginRemoved() = 0;
 
 protected:
 	virtual ~Engine() { }

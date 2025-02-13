@@ -25,7 +25,7 @@ namespace Unigine
 class UNIGINE_API Editor
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	static bool isLoaded();
 	static void setEnabled(bool enabled);
 	static bool isEnabled();
@@ -42,10 +42,10 @@ public:
 	static void addEditorPlayer(const Ptr<Player> &player);
 	static void removeEditorPlayer(const Ptr<Player> &player);
 	static bool isEditorPlayer(const Ptr<Player> &player);
-	static Ptr<Node> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, CallbackBase2<Ptr<Node>, bool *> *exclude_callback, bool use_handlers = true);
-	static Ptr<Node> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, CallbackBase2<Ptr<Node>, bool *> *exclude_callback, const Ptr<WorldIntersection> &intersection, bool use_handlers = true);
-	static Ptr<Node> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, CallbackBase2<Ptr<Node>, bool *> *exclude_callback, const Ptr<WorldIntersectionNormal> &intersection, bool use_handlers = true);
-	static Ptr<Node> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, CallbackBase2<Ptr<Node>, bool *> *exclude_callback, const Ptr<WorldIntersectionTexCoord> &intersection, bool use_handlers = true);
+	static Ptr<Node> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, CallbackBase2<Ptr<Node>, bool *> *node_filter, CallbackBase3<Ptr<Object>, int, bool *> *surface_filter, bool use_handlers = true);
+	static Ptr<Node> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, CallbackBase2<Ptr<Node>, bool *> *node_filter, CallbackBase3<Ptr<Object>, int, bool *> *surface_filter, const Ptr<WorldIntersection> &intersection, bool use_handlers = true);
+	static Ptr<Node> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, CallbackBase2<Ptr<Node>, bool *> *node_filter, CallbackBase3<Ptr<Object>, int, bool *> *surface_filter, const Ptr<WorldIntersectionNormal> &intersection, bool use_handlers = true);
+	static Ptr<Node> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, CallbackBase2<Ptr<Node>, bool *> *node_filter, CallbackBase3<Ptr<Object>, int, bool *> *surface_filter, const Ptr<WorldIntersectionTexCoord> &intersection, bool use_handlers = true);
 	static Ptr<Node> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, bool use_handlers = true);
 	static Ptr<Node> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, const Ptr<WorldIntersection> &intersection, bool use_handlers = true);
 	static Ptr<Node> getIntersection(const Math::Vec3 &p0, const Math::Vec3 &p1, const Ptr<WorldIntersectionNormal> &intersection, bool use_handlers = true);

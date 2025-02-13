@@ -408,7 +408,9 @@
 		</member>
 		<member name="M:Unigine.Math.dvec4.hash const">
 			<summary>
+			Returns a hash obtained by mixing the hash values of vector components.
 			</summary>  
+			<returns>32-bit hash value.</returns>
 		</member>
 		<member name="F:Unigine.Math.dvec4.dvec4_eps">
 			<summary>

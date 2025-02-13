@@ -21,9 +21,7 @@ namespace Unigine
 	namespace Math
 	{
 
-		// return the polygon's area in "square units".
-		// the value will be negative if the polygon is
-		// oriented clockwise
+		/// <summary>Returns the area of the given polygon in square units. The negative value means that the polygon is oriented clockwise.</summary>
 		UNIGINE_INLINE float getPolygonAreaSigned(const Vector<vec2> &points)
 		{
 			// get the area
@@ -46,31 +44,29 @@ namespace Unigine
 			return area;
 		}
 
-		// return true if the polygon is oriented clockwise
+		/// <summary>Returns a value indicating if a given polygon is oriented clockwise.</summary>
 		UNIGINE_INLINE int polygonIsOrientedClockwise(const Vector<vec2> &points)
 		{
 			return (getPolygonAreaSigned(points) < 0);
 		}
 
-		// find the area of a triangle. This function uses the 1/2 determinant
-		// method. Given three points (x1, y1), (x2, y2), (x3, y3):
-		//             | x1 y1 1 |
-		// Area = .5 * | x2 y2 1 |
-		//             | x3 y3 1 |
-		// From: http://mcraefamily.com/MathHelp/GeometryTriangleAreaDeterminant.htm
+		/// <summary>Returns the area of the given triangle in square units. This function uses the 1/2 determinant method (From: http://mcraefamily.com/MathHelp/GeometryTriangleAreaDeterminant.htm).</summary>
 		UNIGINE_INLINE float getTriangleArea(const vec2 &p1, const vec2 &p2, const vec2 &p3)
 		{
 			float det = (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
 			return (det / 2.0f);
 		}
 
-		// return on which side of the segment the point is
+		/// <summary>Returns a value indicating to which part of the segment the point belongs.</summary>
+		/// <param name="point">Coordinates of the point to be checked.</param>
+		/// <param name="segment_p1">Segment start point coordinates.</param>
+		/// <param name="segment_p2">Segment end point coordinates.</param>
 		UNIGINE_INLINE float sign(const vec2 &point, const vec2 &segment_p1, const vec2 &segment_p2)
 		{
 			return (point.x - segment_p2.x) * (segment_p1.y - segment_p2.y) - (segment_p1.x - segment_p2.x) * (point.y - segment_p2.y);
 		}
 
-		// return true if the point is inside triangle
+		/// <summary>Returns a value indicating if a given point is inside the specified triangle.</summary>
 		UNIGINE_INLINE int pointTriangleInside(const vec2 &point, const vec2 &v0, const vec2 &v1, const vec2 &v2)
 		{
 			int b1, b2, b3;
@@ -91,7 +87,7 @@ namespace Unigine
 			4) CCW or CW winding
 		*/
 
-		// sets polygon to counter-clockwise orientation
+		/// <summary>Sets the counter-clockwise orientation for the polygon.</summary>
 		UNIGINE_INLINE int setPolygonToCCW(Vector<vec2> &points)
 		{
 			if (points.size() < 3)
@@ -108,8 +104,10 @@ namespace Unigine
 			return 1;
 		}
 
-		// triangulation by ear clipping algorithm (complexity: O(n^2)/O(n))
-		// support concave polygons, for CCW orientation only
+		/// <summary>Performs triangulation by ear clipping algorithm (complexity: O(n^2)/O(n)). The method supports concave polygons. Is applicable for CCW orientation only.</summary>
+		/// <param name="points">Vector containing all points of the polygon.</param>
+		/// <param name="indices">Vector containing all points indices.</param>
+		/// <param name="append_to_result">Flag indicating if resulting points should be appended to the points of initial polygon - 0 (the default value), or replace them - 1.</param>
 		UNIGINE_INLINE void triangulatePolygon(const Vector<vec2> &points, Vector<unsigned short> &indices, int append_to_result = 0)
 		{
 			if (!append_to_result)
@@ -174,7 +172,16 @@ namespace Unigine
 			} while (new_triangle_created && p_ccw.size() > 2);
 		}
 
-		// find the point of intersection between the lines p1 --> p2 and p3 --> p4
+		/// <summary>Finds the point of intersection between the two lines specified by the pairs of points p1 - p2 and p3 - p4 and fills in the values of the other 5 arguments.</summary>
+		/// <param name="p1">Start point coordinates of the first line segment.</param>
+		/// <param name="p2">End point coordinates of the first line segment.</param>
+		/// <param name="p3">Start point coordinates of the second line segment.</param>
+		/// <param name="p4">End point coordinates of the second line segment.</param>
+		/// <param name="lines_intersect">1 if the lines to which the segments belong intersect; otherwise, 0.</param>
+		/// <param name="segments_intersect">1 if the segments intersect; otherwise, 0.</param>
+		/// <param name="intersection">Coordinates of the point of intersection between the two line segments.</param>
+		/// <param name="close_p1">Coordinates of the first of the two closest points belonging to the first segment.</param>
+		/// <param name="close_p2">Coordinates of the second of the two closest points belonging to the second segment.</param>
 		UNIGINE_INLINE void findIntersection(const vec2 &p1, const vec2 &p2, const vec2 &p3, const vec2 &p4,
 											 int &lines_intersect, int &segments_intersect, vec2 &intersection,
 											 vec2 &close_p1, vec2 &close_p2)
@@ -216,6 +223,12 @@ namespace Unigine
 			close_p1 = vec2(p1.x + dx12 * t1, p1.y + dy12 * t1);
 			close_p2 = vec2(p3.x + dx34 * t2, p3.y + dy34 * t2);
 		}
+		/// <summary>Finds the point of intersection between the two lines specified by the pairs of points p1 - p2 and p3 - p4 and saves the coordinates to the corresponding argument.</summary>
+		/// <param name="p1">Start point coordinates of the first line segment.</param>
+		/// <param name="p2">End point coordinates of the first line segment.</param>
+		/// <param name="p3">Start point coordinates of the second line segment.</param>
+		/// <param name="p4">End point coordinates of the second line segment.</param>
+		/// <param name="intersection">Coordinates of the point of intersection between the two line segments.</param>
 		UNIGINE_INLINE int findIntersection(const vec2 &p1, const vec2 &p2, const vec2 &p3, const vec2 &p4, vec2 &intersection)
 		{
 			int lines_intersects = 0;
@@ -225,7 +238,16 @@ namespace Unigine
 			return segments_intersects;
 		}
 
-		// find the point of intersection between the lines p1 --> p2 and p3 --> p4
+		/// <summary>Finds the point of intersection between the two lines specified by the pairs of points p1 - p2 and p3 - p4 and fills in the values of the other 5 arguments.</summary>
+		/// <param name="p1">Start point coordinates of the first line segment.</param>
+		/// <param name="p2">End point coordinates of the first line segment.</param>
+		/// <param name="p3">Start point coordinates of the second line segment.</param>
+		/// <param name="p4">End point coordinates of the second line segment.</param>
+		/// <param name="lines_intersect">1 if the lines to which the segments belong intersect; otherwise, 0.</param>
+		/// <param name="segments_intersect">1 if the segments intersect; otherwise, 0.</param>
+		/// <param name="intersection">Coordinates of the point of intersection between the two line segments.</param>
+		/// <param name="close_p1">Coordinates of the first of the two closest points belonging to the first segment.</param>
+		/// <param name="close_p2">Coordinates of the second of the two closest points belonging to the second segment.</param>
 		UNIGINE_INLINE void findIntersection(const dvec2 &p1, const dvec2 &p2, const dvec2 &p3, const dvec2 &p4,
 											 int &lines_intersect, int &segments_intersect, dvec2 &intersection,
 											 dvec2 &close_p1, dvec2 &close_p2)
@@ -268,6 +290,12 @@ namespace Unigine
 			close_p2 = dvec2(p3.x + dx34 * t2, p3.y + dy34 * t2);
 		}
 
+		/// <summary>Finds the point of intersection between the two lines specified by the pairs of points p1 - p2 and p3 - p4 and saves the coordinates to the corresponding argument.</summary>
+		/// <param name="p1">Start point coordinates of the first line segment.</param>
+		/// <param name="p2">End point coordinates of the first line segment.</param>
+		/// <param name="p3">Start point coordinates of the second line segment.</param>
+		/// <param name="p4">End point coordinates of the second line segment.</param>
+		/// <param name="intersection">Coordinates of the point of intersection between the two line segments.</param>
 		UNIGINE_INLINE int findIntersection(const dvec2 &p1, const dvec2 &p2, const dvec2 &p3, const dvec2 &p4, dvec2 &intersection)
 		{
 			int lines_intersects = 0;
@@ -277,8 +305,11 @@ namespace Unigine
 			return segments_intersects;
 		}
 
-		// return points representing an shrunk/enlarged polygon
-		// support concave polygons, CCW and CW orientations
+		/// <summary>Returns a set of points representing a resized polygon. The polygon is modified by moving its edges inward or outward by a specified offset. This is commonly referred to as "inflating" or "deflating" a polygon, depending on whether the offset is positive (expansion) or negative (contraction). Supports concave polygons, CCW and CW orientations.</summary>
+		/// <param name="points">Vector containing all points of the polygon.</param>
+		/// <param name="offset">The value to which each polygon point is moved outward (positive value) or inward (negative value).</param>
+		/// <param name="result_points">Vector containing all points of the deflated/inflated polygon.</param>
+		/// <param name="append_to_result">Flag indicating if resulting points should be appended to the points of initial polygon - 0 (the default value), or replace them - 1.</param>
 		UNIGINE_INLINE void resizePolygon(const Vector<vec2> &points, float offset, Vector<vec2> &result_points, int append_to_result = 0)
 		{
 			if (!append_to_result)
@@ -323,7 +354,7 @@ namespace Unigine
 			}
 		}
 
-		// return the polygon's area in "square units"
+		/// <summary>Returns the area of the given polygon in square units.</summary>
 		UNIGINE_INLINE float getPolygonArea(const Vector<vec2> &points)
 		{
 			return Math::abs(getPolygonAreaSigned(points));

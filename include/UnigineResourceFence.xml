@@ -1,0 +1,59 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.ResourceFence.#ctor">
+			<summary>
+			ResourceFence constructor. Resource fence is created as enabled by default. It is created in engine GPU thread and is to be manually imported to the external graphics API.
+			</summary>  
+		</member>
+		<member name="M:Unigine.ResourceFence.setEnabled(bool)">
+			<summary>
+			Toggles the resource fence on and off.
+			</summary> 
+			<param name="enabled"> true to enable the resource fence, false to disable it. </param> 
+		</member>
+		<member name="M:Unigine.ResourceFence.isEnabled const">
+			<summary>
+			Returns the value indicating if the resource fence is enabled.
+			</summary>  
+			<returns>true if the resource fence is enabled, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.ResourceFence.getWin32Handle const">
+			<summary>
+			Returns the pointer to a variable that receives the NT HANDLE value to the resource to share. You can use this handle in calls to access the resource.
+			</summary>  
+			<returns>Win32 handle. If called under Linux, returns nullptr.</returns>
+		</member>
+		<member name="M:Unigine.ResourceFence.getFdHandle const">
+			<summary>
+			Returns the file descriptor referencing the payload of the device memory object.
+			</summary>  
+			<returns>Linux handle. If called under Windows, returns -1.</returns>
+		</member>
+		<member name="M:Unigine.ResourceFence.getValue const">
+			<summary>
+			Returns the fence value (signal and wait value).
+			</summary>  
+			<returns>The fence value.</returns>
+		</member>
+		<member name="M:Unigine.ResourceFence.incrementValue">
+			<summary>
+			Increments the fence value (signal and wait value).
+			</summary>  
+			<returns>The fence value.</returns>
+		</member>
+		<member name="M:Unigine.ResourceFence.waitGPU">
+			<summary>
+			This method ensures that all processes in the engine GPU thread are completed.
+			</summary>  
+		</member>
+		<member name="M:Unigine.ResourceFence.closeHandle">
+			<summary>
+			Closes the handle. To avoid memory leaks, use this method when you no longer need the resource handle (for example, as soon as you imported the object to another graphics API).
+			</summary>  
+		</member>
+	</members>
+</doc>

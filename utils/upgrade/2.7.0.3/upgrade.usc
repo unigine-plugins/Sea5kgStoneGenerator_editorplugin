@@ -1,0 +1,657 @@
+#!/usr/bin/env usc
+
+/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
+*
+* This file is a part of the UNIGINE 2 SDK.
+*
+* Your use and / or redistribution of this software in source and / or
+* binary form, with or without modification, is subject to: (i) your
+* ongoing acceptance of and compliance with the terms and conditions of
+* the UNIGINE License Agreement; and (ii) your inclusion of this notice
+* in any version of this software that you use or redistribute.
+* A copy of the UNIGINE License Agreement is available by contacting
+* UNIGINE. at http://unigine.com/
+*/
+
+int skipFile(string file) {
+	return startsWith(file,"core/") || startsWith(file,"editor/") || startsWith(file,"editor2/") || (strrstr(file,".svn") != -1) || (strrstr(file,".thumbnails") != -1);
+}
+int skipFile(string path,string file) {
+	file = relname(path,file);
+	return skipFile(file);
+}
+
+string ENGINE_VERSION = "2.7.0.3";
+
+#include <utils.h>
+#include <log.h>
+#include <file_system.h>
+#include <asset.h>
+#include <material.h>
+#include <process.h>
+
+#include <worlds_nodes.h>
+#include <materials.h>
+#include <track.h>
+#include <config.h>
+
+void main() {
+	
+	string log_file = "";
+	string data_paths[0];
+	
+	for(int i = 1; i < getNumArgs(); i++) {
+		if(getArg(i) == "--log") {
+			i++;
+			if(i < getNumArgs())
+				log_file = getArg(i);
+		} else
+			data_paths.append(getAbsPath(getDirPath(getArg(i))));
+	}
+	
+	if(data_paths.size() == 0)
+		data_paths.append(currdir() + "/");
+	
+	// check version
+	foreach(string data_path; data_paths) {
+		string files[0] = ();
+		if(!findFilesByExt(files,data_path,".mat|.prop|.node|.world|.track|.render_settings|.settings"))
+			continue;
+		
+		foreach(string file; files) {
+			if(skipFile(data_path,file))
+				continue;
+			
+			Xml xml = new Xml();
+			if(!xml.load(file)) {
+				delete xml;
+				continue;
+			}
+			
+			if(versionLessOrEqual(ENGINE_VERSION, xml.getArg("version", "1.00"))) {
+				delete xml;
+				log.message("Skip migration to version \"%s\" File:\"%s\"\n", ENGINE_VERSION, file);
+				return;
+			}
+		}
+	}
+	
+	Log::init(log_file);
+	Log::setLevel(Log::WARN);
+	
+	log.message("\nStart migration to version \"%s\"\n", ENGINE_VERSION);
+	
+	// guids load
+	foreach(string data_path; data_paths) {
+		
+		string assets_path = data_path + "../assets/";
+		int use_assets = is_dir(assets_path);
+		
+		if(use_assets)
+			log.message("assets %s\n", assets_path);
+		
+		// FileSystem load files
+		log.message("FileSystem generate guid files\n");
+		
+		{
+			FileSystem::load(data_path);
+			string files[0] = ();
+			findFiles(files,data_path);
+			foreach(string file; files)
+				if(!skipFile(data_path,file))
+					FileSystem::addKnownFile(file);
+		}
+		
+		{
+			string path = data_path + "bake_lighting/";
+			if(is_dir(path)) {
+				string files[0] = ();
+				findFilesByExt(files, path,".dds");
+				
+				foreach(string file; files) {
+					string name = basename(file);
+					name = replace(name,".dds","");
+					
+					if(strlen(name) == 40) {
+						UGUID guid = new UGUID();
+						guid.setString(name);
+						FileSystem::setGUID(file, guid);
+					}
+				}
+			}
+		}
+		
+		// load assets guid
+		log.message("Load assets guid\n");
+		{
+			string path = pathname(replace(__FILE__,"\\","/")) + "assets.xml";
+			Xml xml = new Xml();
+			if(xml.load(path)) {
+				forloop(int i = 0; xml.getNumChildren()) {
+					Xml xml_asset = xml.getChild(i);
+					path = xml_asset.getArg("path");
+					
+					Xml runtime_xml = xml_asset.find("runtimes").getChild(0);
+					
+					UGUID guid = new UGUID();
+					guid.setString(runtime_xml.getArg("id"));
+					
+					FileSystem::setGUID(path, guid);
+				}
+			}
+			delete xml;
+			
+			if(use_assets) {
+				string files[0] = ();
+				findFiles(files,assets_path);
+				foreach(string file; files) {
+					
+					if(skipFile(assets_path,file))
+						continue;
+					
+					string asset_file = file + ".asset";
+					if(is_file(asset_file)) {
+						Asset asset = Asset::load(asset_file);
+						foreach(AssetRuntime runtime; asset.runtimes) {
+							UGUID guid = new UGUID();
+							guid.setString(runtime.getGUID());
+							
+							string path = runtime.getFile();
+							path = replace(path,"\\","/");
+							path = relname(assets_path, path);
+							FileSystem::setGUID(path, guid);
+						}
+					}
+				}
+			}
+		}
+		
+		log.message("FileSystem sort paths\n");
+		FileSystem::sortPathes();
+		FileSystem::save();
+		{
+			string paths[0];
+			paths = data_paths;
+			if(use_assets)
+				paths.append(assets_path);
+			
+			log.message("Materials migration\n");
+			Materials::processPaths(paths);
+			
+			log.message("Configs migration\n");
+			foreach(string data_path; paths) {
+				
+				string files[0] = ();
+				findFilesByExt(files, data_path,".cfg");
+				
+				foreach(string file; files)
+					if(!skipFile(data_path,file))
+						Config::processFile(file);
+			}
+			
+			log.message("Tracks migration\n");
+			foreach(string data_path; paths) {
+				
+				string files[0] = ();
+				findFilesByExt(files, data_path,".track");
+				
+				foreach(string file; files)
+					if(!skipFile(data_path,file))
+						Track::processFile(file);
+			}
+			
+			log.message("Nodes migration\n");
+			foreach(string data_path; paths) {
+				
+				string files[0] = ();
+				findFilesByExt(files, data_path,".node");
+				
+				foreach(string file; files)
+					if(!skipFile(data_path,file))
+						WorldsNodes::processFile(file);
+			}
+			
+			log.message("Worlds migration\n");
+			foreach(string data_path; paths) {
+				
+				string files[0] = ();
+				findFilesByExt(files, data_path,".world");
+				
+				foreach(string file; files)
+					if(!skipFile(data_path,file))
+						WorldsNodes::processFile(file);
+			}
+			
+			log.message("Settings migration\n");
+			foreach(string data_path; paths) {
+				
+				string files[0] = ();
+				findFilesByExt(files, data_path,".render_settings|.settings");
+				
+				foreach(string file; files)
+					if(!skipFile(data_path,file))
+						WorldsNodes::processFile(file);
+			}
+		}
+		
+		
+		if(use_assets) {
+			log.message("Move files to runtimes directory\n");
+			
+			string files[0] = ();
+			findFiles(files, assets_path);
+			foreach(string file; files) {
+				
+				if(skipFile(assets_path, file))
+					continue;
+				
+				string asset_file = file + ".asset";
+				if(!is_file(asset_file))
+					continue;
+				
+				Asset asset = Asset::load(asset_file);
+				if(asset.runtimes.size() == 0)
+					continue;
+				
+				string ext = lower(getExtension(file));
+				
+				if(asset.runtimes.size() == 1) {
+					AssetRuntime runtime = asset.runtimes[0];
+					string name = runtime.getName();
+					string ext_runtime = lower(getExtension(name));
+					if(ext == ext_runtime)
+						continue;
+				}
+				
+				file = replace(file,"\\","/");
+				file = relname(assets_path, file);
+				file = FileSystem::getAbsPath(file);
+				
+				foreach(AssetRuntime runtime; asset.runtimes)
+					runtime.setLink(LINK_AUXILIARY);
+				
+				AssetRuntime runtime = asset.runtimes[0];
+				runtime.setLink(LINK_PRIMARY);
+				
+				foreach(AssetRuntime runtime; asset.runtimes) {
+					string path = runtime.getFile();
+					path = replace(path,"\\","/");
+					path = relname(assets_path, path);
+					path = FileSystem::getAbsPath(path);
+					
+					string path_new = FileSystem::getRuntimesFile(path);
+					
+					Xml xml = runtime.xml;
+					if(ext == ".fbx" && xml.isChild("hash")) {
+						string value = xml.getChildData("hash","");
+						
+						Xml parameters;
+						int num = xml.findChild("parameters");
+						if(num != -1)
+							parameters = xml.getChild(num);
+						else
+							parameters = xml.addChild("parameters");
+						
+						Xml parameter = parameters.addChild("parameter");
+						parameter.setArg("type", "string");
+						parameter.setArg("name", "id");
+						parameter.setData(value);
+					}
+					
+					xmlDeleteChild(xml, "hash");
+					move_file(path, path_new);
+					FileSystem::renameKnownFile(path, path_new);
+					FileSystem::saveRuntimeMeta(file, path_new, basename(path), runtime.getLink() == LINK_PRIMARY);
+				}
+				
+				asset.addRuntime(file, LINK_SOURCE);
+				asset.save();
+				delete asset;
+			}
+		}
+		
+		if(use_assets) {
+			log.message("Migration assets\n");
+			
+			string files[0] = ();
+			findFiles(files, assets_path);
+			foreach(string file; files) {
+				
+				if(skipFile(assets_path, file))
+					continue;
+				
+				string asset_file = file + ".asset";
+				if(!is_file(asset_file))
+					continue;
+				
+				Asset asset = Asset::load(asset_file);
+				if(asset.runtimes.size() == 0) {
+					asset.addRuntime(file, LINK_SOURCE);
+					asset.save();
+					continue;
+				}
+				
+				if(asset.runtimes.size() != 1)
+					continue;
+				
+				AssetRuntime runtime = asset.runtimes[0];
+				string path = runtime.getFile();
+				
+				string ext = lower(getExtension(file));
+				if(ext != lower(getExtension(path)))
+					continue;
+				
+				path = replace(path,"\\","/");
+				path = relname(assets_path, path);
+				path = FileSystem::getAbsPath(path);
+				
+				string path_new = file;
+				path_new = replace(path_new,"\\","/");
+				path_new = relname(assets_path, path_new);
+				path_new = FileSystem::getAbsPath(path_new);
+				
+				if(path != path_new) {
+					move_file(path, path_new);
+					FileSystem::renameKnownFile(path, path_new);
+				}
+				
+				if(ext == ".dds" || ext == ".mesh")
+					asset.addParameter("bool", "unchanged", "1");
+				
+				runtime.setLink(LINK_SOURCE);
+				runtime.setName(path_new);
+				
+				asset.save();
+				delete asset;
+			}
+		}
+		
+		
+		if(use_assets) {
+			log.message("Move files from assets to data directory\n");
+			
+			string files[0] = ();
+			findFiles(files, assets_path);
+			foreach(string file; files) {
+				file = relname(assets_path,file);
+				if(strrstr(file,".svn/") != -1)
+					continue;
+				move_file(assets_path + file, data_path + file);
+			}
+		}
+		
+		if(use_assets) {
+			log.message("Remove assets directory\n");
+			remove_directory(assets_path);
+		}
+		
+		log.message("Update guid files\n");
+		{
+			string files[0] = ();
+			findFiles(files,data_path);
+			foreach(string file; files)
+				if(!skipFile(data_path,file))
+					FileSystem::addKnownFile(file);
+		}
+		
+		log.message("Migration uncompressed texture\n");
+		{
+			string files[0] = ();
+			findFilesByExt(files,data_path,".dds|.tif|.tga|.jpg|.png|.dds|.psd|.ppm|.pgm|.hdr|.sgi|.rgb|.rgba");
+			foreach(string file; files) {
+				
+				if(skipFile(data_path,file))
+					continue;
+				
+				int id = strrstr(file,"/uncompressed/");
+				if(id == -1)
+					continue;
+				
+				string asset_file = file + ".asset";
+				if(is_file(asset_file))
+					continue;
+				
+				string file_dds = extension(replace(file, "/uncompressed/", "/"), "dds");
+				string meta_file = extension(file, "meta");
+				if(!is_file(file_dds) && !is_file(meta_file))
+					continue;
+				
+				class TextureMeta
+				{
+					string type;
+					string format;
+					string mipmap = "box";
+					int invert_g = false;
+					string width = "Original";
+					string height = "Original";
+				};
+				
+				TextureMeta meta = new TextureMeta();
+				
+				Image image = new Image();
+				if(is_file(file_dds))
+					image.load(file_dds);
+				
+				if(!image.isLoaded())
+					image.load(file);
+				
+				if(image.isLoaded()) {
+					meta.type = image.getTypeName();
+					meta.format = image.getFormatName();
+				}
+				delete image;
+				
+				Xml xml = new Xml();
+				if(is_file(meta_file) && xml.load(meta_file)) {
+					
+					int id_options = xml.findChild("options");
+					if(id_options != -1)
+						meta.invert_g = xml.getChild(id_options).getBoolArg("invert_g", false);
+					
+					meta.format = upper(xml.getChildData("format", meta.format));
+					meta.mipmap = xml.getChildData("mipmap", meta.mipmap);
+					meta.width = xml.getChildData("width", meta.width);
+					meta.height = xml.getChildData("height", meta.height);
+					
+					FileSystem::remove(meta_file);
+					remove_file(meta_file);
+				}
+				delete xml;
+				
+				string file_dds_new = FileSystem::getRuntimesFile(file_dds);
+				
+				move_file(file_dds, file_dds_new);
+				
+				FileSystem::renameKnownFile(file_dds, file_dds_new);
+				
+				Asset asset = Asset::create(file + ".asset", "texture");
+				
+				asset.addParameter("string",	"image_type",	meta.type);
+				asset.addParameter("string",	"image_format",	meta.format);
+				asset.addParameter("string",	"mipmap_type",	meta.mipmap);
+				asset.addParameter("bool",		"invert_g",		meta.invert_g);
+				asset.addParameter("string",	"width",		meta.width);
+				asset.addParameter("string",	"height",		meta.height);
+				
+				asset.addRuntime(file, LINK_SOURCE);
+				asset.addRuntime(file_dds_new, LINK_PRIMARY);
+				
+				asset.runtimes[1].setName(basename(file_dds));
+				
+				asset.save();
+				
+				FileSystem::saveRuntimeMetaTexture(file, file_dds_new);
+				
+				delete asset;
+			}
+		}
+		
+		log.message("Validation assets\n");
+		{
+			UGUID guid_new = new UGUID();
+			string guids[];
+			guids.clear();
+			string files[0] = ();
+			findFiles(files, data_path);
+			foreach(string file; files) {
+				
+				if(skipFile(data_path, file))
+					continue;
+				
+				string asset_file = file + ".asset";
+				if(is_file(asset_file)) {
+					Asset asset = Asset::load(asset_file);
+					
+					foreach(AssetRuntime runtime; asset.runtimes) {
+						string guid = runtime.getGUID();
+						
+						if(!guids.check(guid)) 
+							guids.append(guid, asset_file);
+						else {
+							Log::error("Asset %s and %s collision runtime %s ", FileSystem::getLocalPath(asset_file), FileSystem::getLocalPath(guids[guid]), runtime.getName());
+							guid_new.generate();
+							runtime.setGUID(guid_new.getString());
+							asset.save();
+						}
+					}
+					
+					delete asset;
+				}
+			}
+		}
+		
+		log.message("Validation materials\n");
+		{
+			Xml xml = new Xml();
+			UGUID guid_new = new UGUID();
+			string guids[];
+			guids.clear();
+			
+			string files[0] = ();
+			findFilesByExt(files, data_path,".mat");
+			
+			foreach(string file; files) {
+				
+				if(skipFile(data_path, file))
+					continue;
+				
+				if(!xml.load(file) || !xml.isArg("guid"))
+					continue;
+				
+				string guid = xml.getArg("guid");
+				if(!guids.check(guid)) 
+					guids.append(guid, file);
+				else {
+					Log::error("Material %s and %s collision guid %s ", FileSystem::getLocalPath(file), FileSystem::getLocalPath(guids[guid]), guid);
+					guid_new.generate();
+					xml.setArg("guid",guid_new.getString());
+					xml.save(file);
+				}
+			}
+			delete xml;
+		}
+		
+		log.message("Validation properties\n");
+		{
+			Xml xml = new Xml();
+			UGUID guid_new = new UGUID();
+			string guids[];
+			guids.clear();
+			
+			string files[0] = ();
+			findFilesByExt(files, data_path,".prop");
+			
+			foreach(string file; files) {
+				
+				if(skipFile(data_path, file))
+					continue;
+				
+				if(!xml.load(file) || !xml.isArg("guid"))
+					continue;
+				
+				string guid = xml.getArg("guid");
+				if(!guids.check(guid)) 
+					guids.append(guid, file);
+				else {
+					Log::error("Property %s and %s collision guid %s ", FileSystem::getLocalPath(file), FileSystem::getLocalPath(guids[guid]), guid);
+					guid_new.generate();
+					xml.setArg("guid",guid_new.getString());
+					xml.save(file);
+				}
+			}
+			delete xml;
+		}
+		
+		log.message("Remove uncompressed *.meta\n");
+		{
+			string files[0] = ();
+			findFilesByExt(files,data_path,".meta");
+			foreach(string file; files) {
+				
+				if(skipFile(data_path,file))
+					continue;
+				
+				int id = strrstr(file,"/uncompressed/");
+				if(id == -1)
+					continue;
+				
+				remove_file(file);
+				FileSystem::remove(file);
+			}
+		}
+		
+		log.message("Rename *.settings to *.render, *.sound, *.physics\n");
+		{
+			Xml xml = new Xml();
+			string files[0] = ();
+			findFilesByExt(files,data_path,".settings|.render_settings|.physics_settings|.sound_settings");
+			foreach(string file; files) {
+				
+				if(skipFile(data_path,file))
+					continue;
+				
+				string file_new = file;
+				
+				
+				if(!xml.load(file))
+					continue;
+				
+				if(xml.isChild("render"))
+					file_new = setExtension(file, ".render");
+				if(xml.isChild("sound"))
+					file_new = setExtension(file, ".sound");
+				if(xml.isChild("physics"))
+					file_new = setExtension(file, ".physics");
+				
+				move_file(file, file_new);
+				FileSystem::renameKnownFile(file, file_new);
+				
+				string asset_file = file + ".asset";
+				if(is_file(asset_file)) {
+					remove_file(asset_file);
+					FileSystem::remove(asset_file);
+				}
+			}
+			delete xml;
+		}
+		
+		
+		log.message("Rename *.asset to *.meta\n");
+		{
+			string files[0] = ();
+			findFilesByExt(files,data_path,".asset");
+			foreach(string file; files) {
+				
+				if(skipFile(data_path,file))
+					continue;
+				
+				string file_new = setExtension(file, ".meta");
+				move_file(file, file_new);
+				FileSystem::renameKnownFile(file, file_new);
+			}
+		}
+		
+		FileSystem::save();
+	}
+	Log::shutdown();
+}

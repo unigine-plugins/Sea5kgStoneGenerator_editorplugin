@@ -18,12 +18,6 @@
 			<param name="guid"> A material GUID. </param> 
 			<returns>true if the material with the specified GUID exists; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Materials.getNumMaterials const">
-			<summary>
-			Returns the number of materials loaded for the current project.
-			</summary>  
-			<returns>The number of materials.</returns>
-		</member>
 		<member name="M:Unigine.Materials.getMaterial(int) const">
 			<summary>
 			Returns the material by its number.
@@ -101,23 +95,6 @@
 			</summary>  
 			<returns>true if materials are saved successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.Materials.compileShaders">
-			<summary>
-			Compiles shaders for all loaded materials.
-			</summary>  
-		</member>
-		<member name="M:Unigine.Materials.setPrecompileAllShaders(bool)">
-			<summary>
-			Enables or disables shader precompilation.
-			</summary> 
-			<param name="shaders"> 1 to enable shader precompilation, 0 - to disable it. </param> 
-		</member>
-		<member name="M:Unigine.Materials.isPrecompileAllShaders const">
-			<summary>
-			Returns a value indicating if shader precompilation is enabled.
-			</summary>  
-			<returns>1 if shader precompilation is enabled; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.Materials.reloadMaterials">
 			<summary>
 			Reloads all loaded materials.
@@ -141,6 +118,27 @@
 		<member name="M:Unigine.Materials.createRenderMaterials">
 			<summary>
 			Creates render materials (internal materials required for rendering). For example, you can create all necessary render materials during initialization to avoid spikes that may occur later.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Materials.createShaderCache">
+			<summary>
+			Creates shader cache for all loaded materials.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Materials.createShadersFromCache">
+			<summary>
+			Compiles the shaders available in the shader cache.
+			</summary>  
+		</member>
+		<member name="M:Unigine.Materials.isShadersCompiling const">
+			<summary>
+			Returns a value indicating if asynchronous compilation is being performed.
+			</summary>  
+			<returns>true if asynchronous compilation is being performed; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.Materials.flushShadersCompiling">
+			<summary>
+			Force-compiles all shaders that are queued for the asynchronous compilation.
 			</summary>  
 		</member>
 	</members>

@@ -296,7 +296,7 @@ UNIGINE_INLINE FunctionBase *MakeFunction(const Variable &name, int num)
 		case 8: return new Function8(name);
 		case 9: return new Function9(name);
 	}
-	UNIGINE_ASSERT(0 && "Unigine::MakeFunction(): bad number of argument");
+	UNIGINE_FATAL("Unigine::MakeFunction(): bad number of argument");
 	return 0;
 }
 

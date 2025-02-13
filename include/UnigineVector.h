@@ -33,6 +33,7 @@ namespace Unigine {
 struct VectorAllocator
 {
 	static char *allocate(size_t size) { return (char *)Memory::allocate(size); }
+	static bool tryReallocate(char *ptr, size_t size) { return Memory::tryReallocate(ptr, size); }
 	static void deallocate(char *ptr) { Memory::deallocate(ptr); }
 };
 
@@ -206,7 +207,7 @@ public:
 		append(o);
 	}
 
-	Vector(Vector &&o)
+	Vector(Vector &&o) noexcept
 	{
 		if (o.is_dynamic())
 		{
@@ -271,7 +272,7 @@ public:
 		return *this;
 	}
 
-	Vector &operator=(Vector &&v)
+	Vector &operator=(Vector &&v) noexcept
 	{
 		if (this == &v)
 			return *this;
@@ -447,7 +448,7 @@ public:
 		if (length + 1 > capacity)
 		{
 			capacity = grow_to(length + 1);
-			char *new_data = alloc(capacity * sizeof(Type));
+			char *new_data = allocate_for(capacity);
 			if (data)
 			{
 				construct(new_data, Counter(pos), v);
@@ -475,7 +476,7 @@ public:
 		if (length + v.length > capacity)
 		{
 			capacity = grow_to(length + v.length);
-			char *new_data = alloc(capacity * sizeof(Type));
+			char *new_data = allocate_for(capacity);
 			if (data)
 			{
 				move(reinterpret_cast<Type *>(new_data), reinterpret_cast<Type *>(data), Counter(pos));
@@ -526,7 +527,7 @@ public:
 		if (length + v.length > capacity)
 		{
 			capacity = grow_to(length + v.length);
-			char *new_data = alloc(capacity * sizeof(Type));
+			char *new_data = allocate_for(capacity);
 			if (data)
 			{
 				move(reinterpret_cast<Type *>(new_data), reinterpret_cast<Type *>(data), Counter(pos));
@@ -575,7 +576,7 @@ public:
 		if (length + 1 > capacity)
 		{
 			capacity = grow_to(length + 1);
-			char *new_data = alloc(capacity * sizeof(Type));
+			char *new_data = allocate_for(capacity);
 			if (data)
 			{
 				construct(new_data, Counter(pos), std::move(v));
@@ -625,7 +626,7 @@ public:
 		if (length + 1 > capacity)
 		{
 			capacity = grow_to(length + 1);
-			char *new_data = alloc(capacity * sizeof(Type));
+			char *new_data = allocate_for(capacity);
 			if (data)
 			{
 				construct_emplace(new_data, Counter(pos), std::forward<Args>(args)...);
@@ -714,7 +715,7 @@ public:
 		}
 		return false;
 	}
-	
+
 	UNIGINE_INLINE bool replaceOne(const Type &old_value, const Type &new_value)
 	{
 		for (Counter i = 0; i < length; ++i)
@@ -726,7 +727,7 @@ public:
 		}
 		return false;
 	}
-	
+
 	UNIGINE_INLINE void replace(const Type &old_value, const Type &new_value)
 	{
 		for (Counter i = 0; i < length; ++i)
@@ -831,7 +832,11 @@ public:
 		if (size <= size_t(capacity))
 			return;
 		capacity = Counter(size);
-		char *new_data = alloc(capacity * sizeof(Type));
+
+		if (try_reallocate_for(capacity))
+			return;
+
+		char *new_data = allocate_for(capacity);
 		if (data)
 		{
 			move(reinterpret_cast<Type *>(new_data), reinterpret_cast<Type *>(data), length);
@@ -847,7 +852,11 @@ public:
 		if (size <= size_t(capacity))
 			return;
 		capacity = grow_to(size);
-		char *new_data = alloc(capacity * sizeof(Type));
+
+		if (try_reallocate_for(capacity))
+			return;
+
+		char *new_data = allocate_for(capacity);
 		if (data)
 		{
 			move(reinterpret_cast<Type *>(new_data), reinterpret_cast<Type *>(data), length);
@@ -885,7 +894,11 @@ public:
 		if (length == capacity)
 			return;
 		capacity = length;
-		char *new_data = capacity > 0 ? alloc(capacity * sizeof(Type)) : nullptr;
+
+		if (capacity > 0 && try_reallocate_for(capacity))
+			return;
+
+		char *new_data = capacity > 0 ? allocate_for(capacity) : nullptr;
 		if (data)
 		{
 			move(reinterpret_cast<Type *>(new_data), reinterpret_cast<Type *>(data), length);
@@ -1154,15 +1167,15 @@ private:
 		T t3;
 	};
 
-	UNIGINE_INLINE bool is_dynamic() const {
-		std::ptrdiff_t diff = data - ((const char *)&data + sizeof(Vector));
-		return diff < 0 || diff > std::ptrdiff_t(sizeof(GetAlign<Type>) - 2 * sizeof(Type));
-	}
+	UNIGINE_INLINE bool is_dynamic() const;
 
 	void realloc()
 	{
 		capacity = grow_to(length + 1);
-		char *new_data = alloc(capacity * sizeof(Type));
+		if (try_reallocate_for(capacity))
+			return;
+
+		char *new_data = allocate_for(capacity);
 		if (data)
 		{
 			move(reinterpret_cast<Type *>(new_data), reinterpret_cast<Type *>(data), length);
@@ -1177,7 +1190,13 @@ private:
 	void realloc(T &&v)
 	{
 		capacity = grow_to(length + 1);
-		char *new_data = alloc(capacity * sizeof(Type));
+		if (try_reallocate_for(capacity))
+		{
+			construct(data, length++, std::forward<T>(v));
+			return;
+		}
+
+		char *new_data = allocate_for(capacity);
 		if (data)
 		{
 			construct(new_data, length, std::forward<T>(v));
@@ -1197,7 +1216,12 @@ private:
 	Type &realloc_emplace(Args && ... args)
 	{
 		capacity = grow_to(length + 1);
-		char *new_data = alloc(capacity * sizeof(Type));
+		if (try_reallocate_for(capacity))
+		{
+			return construct_emplace(data, length++, std::forward<Args>(args)...);
+		}
+
+		char *new_data = allocate_for(capacity);
 		if (data)
 		{
 			Type &ret = construct_emplace(new_data, length, std::forward<Args>(args)...);
@@ -1213,7 +1237,8 @@ private:
 		return construct_emplace(data, length++, std::forward<Args>(args)...);
 	}
 
-	UNIGINE_INLINE char *alloc(size_t size) { return (char *)Allocator::allocate(size); }
+	UNIGINE_INLINE char *allocate_for(size_t n) { return (char *)Allocator::allocate(n * sizeof(Type)); }
+	UNIGINE_INLINE bool try_reallocate_for(size_t n) { return is_dynamic() && Allocator::tryReallocate(data, n * sizeof(Type)); }
 	UNIGINE_INLINE void dealloc(char *ptr)
 	{
 		if (is_dynamic())
@@ -1438,7 +1463,7 @@ public:
 		Parent::append(o);
 	}
 
-	VectorStack(VectorStack &&o)
+	VectorStack(VectorStack &&o) noexcept
 	{
 		do_move_construct(std::move(o));
 	}
@@ -1631,6 +1656,8 @@ private:
 		return *this;
 	}
 
+	static size_t get_stack_data_offset() { return (size_t) & ((VectorStack *)0)->stack_data; }
+
 	template<typename T>
 	struct GetAlign
 	{
@@ -1667,6 +1694,13 @@ private:
 
 	Data<Type, Capacity, sizeof(GetAlign<Type>) - 2 * sizeof(Type)> stack_data;
 
+	friend class Vector<Type, Counter>;
 };
 
+template<typename Type, typename Counter, typename Allocator>
+UNIGINE_INLINE bool Vector<Type, Counter, Allocator>::is_dynamic() const
+{
+	const char *probably_stack_data = (const char *)this + VectorStack<Type, 1, Counter>::get_stack_data_offset();
+	return data != probably_stack_data;
+}
 }

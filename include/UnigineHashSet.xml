@@ -17,7 +17,7 @@
 		</member>
 		<member name="M:Unigine.HashSet.#ctor(HashSet)">
 			<summary>
-			Constructor. Creates a hash set by copying a source hash set.
+			Constructor. Creates a hash set by moving a source hash set.
 			</summary> 
 			<param name="o"> Hash set. </param> 
 		</member>
@@ -27,125 +27,87 @@
 			</summary> 
 			<param name="list"> List of keys. </param> 
 		</member>
-		<member name="M:Unigine.HashSet.operator=(HashSet)">
-			<summary>
-			Assignment operator for the hash set.
-			</summary> 
-			<param name="o"> Hash set. </param> 
-		</member>
-		<member name="M:Unigine.HashSet.operator=(HashSet)">
-			<summary>
-			Assignment operator for the hash set.
-			</summary> 
-			<param name="o"> Hash set. </param> 
-		</member>
 		<member name="M:Unigine.HashSet.append(Key)">
 			<summary>
-			Appends a key to the hash set.
+			Appends a key to the hash set by copying the argument.
 			</summary> 
 			<param name="key"> Key. </param> 
 		</member>
 		<member name="M:Unigine.HashSet.append(Key)">
 			<summary>
-			Appends a key to the hash set.
+			Appends a key to the hash set by moving the argument.
 			</summary> 
 			<param name="key"> Key. </param> 
 		</member>
 		<member name="M:Unigine.HashSet.append(HashSet)">
 			<summary>
-			Appends a given hash set to the current one.
+			Appends items with all available keys from the argument hash set to the current hash set.
 			</summary> 
-			<param name="o"> Hash set. </param> 
+			<param name="o"> Hash set to be appended. </param> 
 		</member>
 		<member name="M:Unigine.HashSet.append(HashSet)">
 			<summary>
-			Appends a given hash set to the current one.
+			Appends items with all available keys by moving the argument hash set to the current hash set.
 			</summary> 
-			<param name="o"> Hash set. </param> 
+			<param name="o"> Hash set to be appended. </param> 
 		</member>
-		<member name="M:Unigine.HashSet.remove(HashSet)">
+		<member name="M:Unigine.HashSet.append(Vector)">
 			<summary>
-			Removes all keys of a given hash set from the current one.
+			Appends items with all available keys from the argument vector to the current hash set.
 			</summary> 
-			<param name="o"> Hash set. </param> 
+			<param name="vector"> Vector containing the key (or keys) to be appended. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.append(Vector)">
+			<summary>
+			Appends items with all available keys by moving the argument vector to the current hash set.
+			</summary> 
+			<param name="vector"> Vector containing the key (or keys) to be appended. </param> 
 		</member>
 		<member name="M:Unigine.HashSet.insert(Key)">
 			<summary>
-			Inserts a key into the hash set.
+			Inserts a key into the hash set by copying the argument.
 			</summary> 
 			<param name="key"> Key. </param> 
 		</member>
 		<member name="M:Unigine.HashSet.insert(Key)">
 			<summary>
-			Inserts a key into the hash set.
+			Inserts a key into the hash set by moving the argument.
 			</summary> 
 			<param name="key"> Key. </param> 
-		</member>
-		<member name="M:Unigine.HashSet.insert(HashSet)">
-			<summary>
-			Inserts a given hash set into the current one.
-			</summary> 
-			<param name="o"> Hash set. </param> 
-		</member>
-		<member name="M:Unigine.HashSet.insert(HashSet)">
-			<summary>
-			Inserts a given hash set into the current one.
-			</summary> 
-			<param name="o"> Hash set. </param> 
-		</member>
-		<member name="M:Unigine.HashSet.subtract(HashSet)">
-			<summary>
-			Removes all keys of a given hash set from the current one.
-			</summary> 
-			<param name="o"> Hash set. </param> 
-		</member>
-		<member name="M:Unigine.HashSet.operator==(HashSet) const">
-			<summary>
-			Checks if two hash sets are equal. The hash sets are considered equal if their keys are the same.
-			</summary> 
-			<param name="o"> Hash set. </param> 
-			<returns>Returns 1 if sets are equal; otherwise, 0 is returned.</returns>
-		</member>
-		<member name="M:Unigine.HashSet.operator!=(HashSet) const">
-			<summary>
-			Checks if two hash sets are not equal. The hash sets are considered equal if their keys are the same.
-			</summary> 
-			<param name="o"> Hash set. </param> 
-			<returns>Returns 1 if sets are not equal; otherwise, 0 is returned.</returns>
 		</member>
 		<member name="M:Unigine.HashSet.operator+=(Key)">
 			<summary>
-			Inserts a given key into the hash set and returns the updated set.
+			Appends a given key to this hash set and returns this hash set.
 			</summary> 
-			<param name="key"> Key. </param> 
+			<param name="k"> Key. </param> 
 			<returns>Updated hash set.</returns>
 		</member>
 		<member name="M:Unigine.HashSet.operator+=(HashSet)">
 			<summary>
-			Inserts a given hash set into the current one and returns the updated set.
+			Appends a given hash set to this hash set and returns this hash set.
 			</summary> 
-			<param name="o"> Hash set. </param> 
+			<param name="o"> Hash set to be added. </param> 
 			<returns>Updated hash set.</returns>
 		</member>
 		<member name="M:Unigine.HashSet.operator-=(Key)">
 			<summary>
-			Removes a given key from the current hash set and returns the updated set.
+			Removes a given key from this hash set and returns this hash set.
 			</summary> 
-			<param name="key"> Key. </param> 
+			<param name="k"> Key. </param> 
 			<returns>Updated hash set.</returns>
 		</member>
 		<member name="M:Unigine.HashSet.operator-=(HashSet)">
 			<summary>
-			Removes a given hash set from the current one and returns the updated set.
+			Removes a given hash set from this hash set and returns this hash set.
 			</summary> 
-			<param name="o"> Hash set. </param> 
+			<param name="o"> Hash set to be removed. </param> 
 			<returns>Updated hash set.</returns>
 		</member>
 		<member name="M:Unigine.HashSet.fromKeys(Key,size_t)">
 			<summary>
 			Appends keys to the hash set and returns the updated set.
 			</summary> 
-			<param name="keys"> Keys pointer. </param>
+			<param name="keys"> Pointer to the keys. </param>
 			<param name="size"> Keys size. </param> 
 			<returns>Updated hash set.</returns>
 		</member>
@@ -162,6 +124,611 @@
 			</summary> 
 			<param name="keys"> Vector of keys. </param> 
 			<returns>Updated hash set.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.insert(HashSet)">
+			<summary>
+			Inserts items with all available keys by copying the argument hash to the current hash set.
+			</summary> 
+			<param name="o"> Hash set containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.insert(HashSet)">
+			<summary>
+			Inserts items with all available keys by moving the argument hash to the current hash set.
+			</summary> 
+			<param name="o"> Hash set containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.insert(Vector)">
+			<summary>
+			Inserts items with all available keys by copying the argument vector to the current hash set.
+			</summary> 
+			<param name="vector"> Vector containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.insert(Vector)">
+			<summary>
+			Inserts items with all available keys by moving the argument vector to the current hash set.
+			</summary> 
+			<param name="vector"> Vector containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.operator=(HashSet)">
+			<summary>
+			Assigns the specified hash set by copying it.
+			</summary> 
+			<param name="o"> Hash set. </param> 
+			<returns>Hash set.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.operator=(HashSet)">
+			<summary>
+			Assigns the specified hash set by moving it.
+			</summary> 
+			<param name="o"> Hash set. </param> 
+			<returns>Hash set.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.emplaceRange(InputIt,InputIt)">
+			<summary>
+			Inserts the range of values specified by the argument iterators into the hash set.
+			</summary> 
+			<param name="first"> Iterator that identifies the beginning of the range. </param>
+			<param name="last"> Iterator that identifies the end of the range. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.contains(Key) const">
+			<summary>
+			Checks if the given key is present in the hash set.
+			</summary> 
+			<param name="k"> Key to be checked. </param> 
+			<returns>true if the hash set contains the specified key; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.find(Key) const">
+			<summary>
+			Returns the iterator of the specified key.
+			</summary> 
+			<param name="k"> Key to be checked. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.find(Key) const">
+			<summary>
+			Returns the iterator of the specified key.
+			</summary> 
+			<param name="k"> Key to be checked. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.findFast(Key) const">
+			<summary>
+			Finds an element with a specified key.
+			</summary> 
+			<param name="key"> Key to look for. </param> 
+			<returns>Pointer to the hash set item.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.keys const">
+			<summary>
+			Returns a vector containing all keys in the hash set.
+			</summary>  
+			<returns>Vector of keys.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.getKeys(Unigine.Vector{Key,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Adds keys of the hash to the specified vector.
+			</summary> 
+			<param name="keys"> Vector to store the keys. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.getKey(size_t) const">
+			<summary>
+			Returns the key by its index.
+			</summary> 
+			<param name="index"> Index number of the key in the hash set. </param> 
+			<returns>Key.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.remove(Key)">
+			<summary>
+			Removes the specified key from the hash set.
+			</summary> 
+			<param name="k"> Key to be removed. </param> 
+			<returns>true if the key is removed successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.remove(Iterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash set.
+			</summary> 
+			<param name="it"> Iterator pointing to an element to be removed. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.remove(ConstIterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash set.
+			</summary> 
+			<param name="it"> Iterator pointing to an element to be removed. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.remove(HashSet)">
+			<summary>
+			Removes the specified hash set from the current hash set.
+			</summary> 
+			<param name="o"> Hash set. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.remove(Unigine.Vector{Key,int,Unigine.VectorAllocator})">
+			<summary>
+			Removes the specified keys from the hash set.
+			</summary> 
+			<param name="v"> Vector storing the keys. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.erase(ConstIterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash set.
+			</summary> 
+			<param name="it"> Iterator pointing to the element to be removed. </param> 
+			<returns>true on success, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.erase(Iterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash set.
+			</summary> 
+			<param name="it"> Iterator pointing to the element to be removed. </param> 
+			<returns>true on success, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.erase(Key)">
+			<summary>
+			Removes an element having the specified key from the hash set.
+			</summary> 
+			<param name="k"> Key of the element to be removed. </param> 
+			<returns>true on success, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.erase(HashSet)">
+			<summary>
+			Removes the specified hash set from the current hash set.
+			</summary> 
+			<param name="o"> Hash set to be removed. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.erase(Unigine.Vector{Key,int,Unigine.VectorAllocator})">
+			<summary>
+			Removes the specified keys from the hash set.
+			</summary> 
+			<param name="v"> Vector storing the keys. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.subtract(Unigine.Vector{Key,int,Unigine.VectorAllocator})">
+			<summary>
+			Removes the specified keys from the hash set.
+			</summary> 
+			<param name="vector"> Vector storing the keys. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.subtract(HashSet)">
+			<summary>
+			Removes the specified hash set from the current hash set.
+			</summary> 
+			<param name="o"> Hash set to be removed. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.clear">
+			<summary>
+			Removes all key-value pairs from the hash set.
+			</summary>  
+		</member>
+		<member name="M:Unigine.HashSet.destroy">
+			<summary>
+			Removes all key-value pairs from the hash set and releases the memory.
+			</summary>  
+		</member>
+		<member name="M:Unigine.HashSet.reserve(size_t)">
+			<summary>
+			Reserves storage to avoid repeated reallocation.
+			</summary> 
+			<param name="size"> Hash size to be reserved. </param> 
+		</member>
+		<member name="M:Unigine.HashSet.shrink">
+			<summary>
+			Removes unused capacity.
+			</summary>  
+		</member>
+		<member name="M:Unigine.HashSet.begin const">
+			<summary>
+			Returns an iterator that points to the first element in the hash set.
+			</summary>  
+			<returns>Iterator pointing to the first element.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.end const">
+			<summary>
+			Returns an iterator that points to the location succeeding the last element in the hash set.
+			</summary>  
+			<returns>Iterator pointing to the last element.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.cbegin const">
+			<summary>
+			Returns a const iterator that points to the first element in the hash set.
+			</summary>  
+			<returns>ConstIterator pointing to the first element.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.cend const">
+			<summary>
+			Returns a const iterator that points to the location succeeding the last element in the hash set.
+			</summary>  
+			<returns>ConstIterator pointing to the last element.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.size const">
+			<summary>
+			Returns the number of key-value pairs in the hash set.
+			</summary>  
+			<returns>Number of key-value pairs in the hash set.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.space const">
+			<summary>
+			Returns the current capacity (number of elements the hash can currently contain).
+			</summary>  
+			<returns>Number of elements the hash can currently contain.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.getMemoryUsage const">
+			<summary>
+			Shows the amount of memory used by the hash set in bytes.
+			</summary>  
+			<returns>Used memory in bytes.</returns>
+		</member>
+		<member name="M:Unigine.HashSet.empty const">
+			<summary>
+			Checks if the hash set is empty.
+			</summary>  
+			<returns>true if the hash set is empty, otherwise false</returns>
+		</member>
+		<member name="M:Unigine.HashSet.swap(HashSet)">
+			<summary>
+			Swaps this hash set with the hash set specified as the argument.
+			</summary> 
+			<param name="o"> Hash set. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.#ctor">
+			<summary>
+			Default constructor that produces an empty hash set.
+			</summary>  
+		</member>
+		<member name="M:Unigine.BucketHashSet.#ctor(BucketHashSet)">
+			<summary>
+			Constructor. Creates a hash set by copying a source hash set.
+			</summary> 
+			<param name="o"> Hash set. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.#ctor(BucketHashSet)">
+			<summary>
+			Constructor. Creates a hash set by moving a source hash set.
+			</summary> 
+			<param name="o"> Hash set. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.#ctor(std::initializer_list{Key})">
+			<summary>
+			Constructor. Creates a hash set from given list of keys.
+			</summary> 
+			<param name="list"> List of keys. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.append(Key)">
+			<summary>
+			Appends a key to the hash set by copying the argument.
+			</summary> 
+			<param name="key"> Key. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.append(Key)">
+			<summary>
+			Appends a key to the hash set by moving the argument.
+			</summary> 
+			<param name="key"> Key. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.append(BucketHashSet)">
+			<summary>
+			Appends items with all available keys from the argument hash set to the current hash set.
+			</summary> 
+			<param name="o"> Hash set to be appended. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.append(BucketHashSet)">
+			<summary>
+			Appends items with all available keys by moving the argument hash set to the current hash set.
+			</summary> 
+			<param name="o"> Hash set to be appended. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.append(Vector)">
+			<summary>
+			Appends items with all available keys from the argument vector to the current hash set.
+			</summary> 
+			<param name="vector"> Vector containing the key (or keys) to be appended. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.append(Vector)">
+			<summary>
+			Appends items with all available keys by moving the argument vector to the current hash set.
+			</summary> 
+			<param name="vector"> Vector containing the key (or keys) to be appended. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.insert(Key)">
+			<summary>
+			Inserts a key into the hash set by copying the argument.
+			</summary> 
+			<param name="key"> Key. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.insert(Key)">
+			<summary>
+			Inserts a key into the hash set by moving the argument.
+			</summary> 
+			<param name="key"> Key. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.operator+=(Key)">
+			<summary>
+			Appends a given key to this hash set and returns this hash set.
+			</summary> 
+			<param name="k"> Key. </param> 
+			<returns>Updated hash set.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.operator+=(BucketHashSet)">
+			<summary>
+			Appends a given hash set to this hash set and returns this hash set.
+			</summary>  
+			<returns>Updated hash set.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.operator-=(Key)">
+			<summary>
+			Removes a given key from this hash set and returns this hash set.
+			</summary> 
+			<param name="k"> Key. </param> 
+			<returns>Updated hash set.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.operator-=(BucketHashSet)">
+			<summary>
+			Removes a given hash set from this hash set and returns this hash set.
+			</summary>  
+			<returns>Updated hash set.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.fromKeys(Key,size_t)">
+			<summary>
+			Appends keys to the hash set and returns the updated set.
+			</summary> 
+			<param name="keys"> Pointer to the keys. </param>
+			<param name="size"> Keys size. </param> 
+			<returns>Updated hash set.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.fromKeys(Unigine.Vector{Key,int,Unigine.VectorAllocator})">
+			<summary>
+			Appends keys to the hash set and returns the updated set.
+			</summary> 
+			<param name="keys"> Vector of keys. </param> 
+			<returns>Updated hash set.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.fromKeys(Unigine.Vector{Key,int,Unigine.VectorAllocator})">
+			<summary>
+			Appends keys to the hash set and returns the updated set.
+			</summary> 
+			<param name="keys"> Vector of keys. </param> 
+			<returns>Updated hash set.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.insert(BucketHashSet)">
+			<summary>
+			Inserts items with all available keys by copying the argument hash to the current hash set.
+			</summary> 
+			<param name="o"> Hash set containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.insert(HashSet)">
+			<summary>
+			Inserts items with all available keys by moving the argument hash to the current hash set.
+			</summary> 
+			<param name="o"> Hash set containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.insert(Vector)">
+			<summary>
+			Inserts items with all available keys by copying the argument vector to the current hash set.
+			</summary> 
+			<param name="vector"> Vector containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.insert(Vector)">
+			<summary>
+			Inserts items with all available keys by moving the argument vector to the current hash set.
+			</summary> 
+			<param name="vector"> Vector containing the key (or keys) to be inserted. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.operator=(BucketHashSet)">
+			<summary>
+			Assigns the specified hash set by copying it.
+			</summary> 
+			<param name="o"> Hash set. </param> 
+			<returns>Hash set.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.operator=(HashSet)">
+			<summary>
+			Assigns the specified hash set by moving it.
+			</summary> 
+			<param name="o"> Hash set. </param> 
+			<returns>Hash set.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.emplaceRange(InputIt,InputIt)">
+			<summary>
+			Inserts the range of values specified by the argument iterators into the hash set.
+			</summary> 
+			<param name="first"> Iterator that identifies the beginning of the range. </param>
+			<param name="last"> Iterator that identifies the end of the range. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.contains(Key) const">
+			<summary>
+			Checks if the given key is present in the hash set.
+			</summary> 
+			<param name="k"> Key to be checked. </param> 
+			<returns>true if the hash set contains the specified key; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.find(Key) const">
+			<summary>
+			Returns the iterator of the specified key.
+			</summary> 
+			<param name="k"> Key to be checked. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.find(Key) const">
+			<summary>
+			Returns the iterator of the specified key.
+			</summary> 
+			<param name="k"> Key to be checked. </param> 
+			<returns>Item iterator.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.findFast(Key) const">
+			<summary>
+			Finds an element with a specified key.
+			</summary> 
+			<param name="key"> Key to look for. </param> 
+			<returns>Pointer to the hash set item.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.keys const">
+			<summary>
+			Returns a vector containing all keys in the hash set.
+			</summary>  
+			<returns>Vector of keys.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.getKeys(Unigine.Vector{Key,int,Unigine.VectorAllocator}) const">
+			<summary>
+			Adds keys of the hash to the specified vector.
+			</summary> 
+			<param name="keys"> Vector to store the keys. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.getKey(size_t) const">
+			<summary>
+			Returns the key by its index.
+			</summary> 
+			<param name="index"> Index number of the key in the hash set. </param> 
+			<returns>Key.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.remove(Key)">
+			<summary>
+			Removes the specified key from the hash set.
+			</summary> 
+			<param name="k"> Key to be removed. </param> 
+			<returns>true if the key is removed successfully; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.remove(Iterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash set.
+			</summary> 
+			<param name="it"> Iterator pointing to an element to be removed. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.remove(ConstIterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash set.
+			</summary> 
+			<param name="it"> Iterator pointing to an element to be removed. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.remove(BucketHashSet)">
+			<summary>
+			Removes the specified hash set from the current hash set.
+			</summary> 
+			<param name="o"> Hash set. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.remove(Unigine.Vector{Key,int,Unigine.VectorAllocator})">
+			<summary>
+			Removes the specified keys from the hash set.
+			</summary> 
+			<param name="v"> Vector storing the keys. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.erase(ConstIterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash set.
+			</summary> 
+			<param name="it"> Iterator pointing to the element to be removed. </param> 
+			<returns>true on success, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.erase(Iterator)">
+			<summary>
+			Removes an element currently pointed to by the iterator from the hash set.
+			</summary> 
+			<param name="it"> Iterator pointing to the element to be removed. </param> 
+			<returns>true on success, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.erase(Key)">
+			<summary>
+			Removes an element having the specified key from the hash set.
+			</summary> 
+			<param name="k"> Key of the element to be removed. </param> 
+			<returns>true on success, otherwise false.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.erase(BucketHashSet)">
+			<summary>
+			Removes the specified hash set from the current hash set.
+			</summary> 
+			<param name="o"> Hash set to be removed. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.erase(Unigine.Vector{Key,int,Unigine.VectorAllocator})">
+			<summary>
+			Removes the specified keys from the hash set.
+			</summary> 
+			<param name="v"> Vector storing the keys. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.subtract(Unigine.Vector{Key,int,Unigine.VectorAllocator})">
+			<summary>
+			Removes the specified keys from the hash set.
+			</summary> 
+			<param name="vector"> Vector storing the keys. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.subtract(BucketHashSet)">
+			<summary>
+			Removes the specified hash set from the current hash set.
+			</summary> 
+			<param name="o"> Hash set to be removed. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.clear">
+			<summary>
+			Removes all key-value pairs from the hash set.
+			</summary>  
+		</member>
+		<member name="M:Unigine.BucketHashSet.destroy">
+			<summary>
+			Removes all key-value pairs from the hash set and releases the memory.
+			</summary>  
+		</member>
+		<member name="M:Unigine.BucketHashSet.reserve(size_t)">
+			<summary>
+			Reserves storage to avoid repeated reallocation.
+			</summary> 
+			<param name="size"> Hash size to be reserved. </param> 
+		</member>
+		<member name="M:Unigine.BucketHashSet.shrink">
+			<summary>
+			Removes unused capacity.
+			</summary>  
+		</member>
+		<member name="M:Unigine.BucketHashSet.begin const">
+			<summary>
+			Returns an iterator that points to the first element in the hash set.
+			</summary>  
+			<returns>Iterator pointing to the first element.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.end const">
+			<summary>
+			Returns an iterator that points to the location succeeding the last element in the hash set.
+			</summary>  
+			<returns>Iterator pointing to the last element.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.cbegin const">
+			<summary>
+			Returns a const iterator that points to the first element in the hash set.
+			</summary>  
+			<returns>ConstIterator pointing to the first element.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.cend const">
+			<summary>
+			Returns a const iterator that points to the location succeeding the last element in the hash set.
+			</summary>  
+			<returns>ConstIterator pointing to the last element.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.size const">
+			<summary>
+			Returns the number of key-value pairs in the hash set.
+			</summary>  
+			<returns>Number of key-value pairs in the hash set.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.space const">
+			<summary>
+			Returns the current capacity (number of elements the hash can currently contain).
+			</summary>  
+			<returns>Number of elements the hash can currently contain.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.getMemoryUsage const">
+			<summary>
+			Shows the amount of memory used by the hash set in bytes.
+			</summary>  
+			<returns>Used memory in bytes.</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.empty const">
+			<summary>
+			Checks if the hash set is empty.
+			</summary>  
+			<returns>true if the hash set is empty, otherwise false</returns>
+		</member>
+		<member name="M:Unigine.BucketHashSet.swap(HashSet)">
+			<summary>
+			Swaps this hash set with the hash set specified as the argument.
+			</summary> 
+			<param name="o"> Hash set. </param> 
 		</member>
 	</members>
 </doc>

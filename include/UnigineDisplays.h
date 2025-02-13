@@ -26,7 +26,7 @@ namespace Unigine
 class UNIGINE_API Displays
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
 	enum ORIENTATION
 	{

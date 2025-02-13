@@ -90,18 +90,6 @@
 			<param name="num"> Body number. </param> 
 			<returns>Intersected body.</returns>
 		</member>
-		<member name="M:Unigine.PhysicalTrigger.setCollisionMask(int)">
-			<summary>
-			Sets the collision bit mask for the trigger:																		 the trigger will be activated if the entered body will have a matching							physical mask and at the same time its shape will have a matching collision mask.
-			</summary> 
-			<param name="mask"> Integer, each bit of which is a mask. </param> 
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.getCollisionMask const">
-			<summary>
-			Sets the collision bit mask for the trigger:																		 the trigger will be activated if the entered body will have a matching							physical mask and at the same time its shape will have a matching collision mask.
-			</summary>  
-			<returns>Integer, each bit of which is a mask.</returns>
-		</member>
 		<member name="M:Unigine.PhysicalTrigger.getContactDepth(int) const">
 			<summary>
 			Returns penetration depth by the given contact.
@@ -143,78 +131,6 @@
 			</summary> 
 			<param name="contact"> Contact number. </param> 
 			<returns>Surface number.</returns>
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.setEnterCallbackName(char)">
-			<summary>
-			Sets a callback function to be fired on entering the physical trigger.
-			</summary> 
-			<param name="name"> Name of the callback function. </param> 
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.getEnterCallbackName const">
-			<summary>
-			Returns the name of the callback function fired on entering the physical trigger. This callback function is set via setEnterCallbackName() .
-			</summary>  
-			<returns>Name of the callback function.</returns>
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.setExclusionMask(int)">
-			<summary>
-			Sets an bit mask to prevent detecting collisions with shapes and bodies. This mask is independent of the collision mask. To avoid detecting collisions by a physical trigger for bodies and shapes with matching collision masks, at least one bit in exclusion masks should match. 0 is to collide with all bodies and shapes with a matching collision mask.
-			</summary> 
-			<param name="mask"> Integer, each bit of which is a mask. </param> 
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.getExclusionMask const">
-			<summary>
-			Returns the bit mask that prevent detecting collisions with shapes and bodies. This mask is independent of the collision mask. To avoid detecting collisions by a physical trigger for bodies and shapes with matching collision masks, at least one bit in exclusion masks should match.
-			</summary>  
-			<returns>Integer, each bit of which is a mask.</returns>
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.setLeaveCallbackName(char)">
-			<summary>
-			Sets the name of a callback function to be fired on leaving the physical trigger.
-			</summary> 
-			<param name="name"> Name of the callback function. </param> 
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.getLeaveCallbackName const">
-			<summary>
-			Returns the name of the callback function fired on leaving the physical trigger. This callback function is set via setLeaveCallbackName() .
-			</summary>  
-			<returns>Name of the callback function.</returns>
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.getNumBodies const">
-			<summary>
-			Returns the total number of bodies intersecting with the physical trigger.
-			</summary>  
-			<returns>Number of bodies.</returns>
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.getNumContacts const">
-			<summary>
-			Returns the total number of contacts with bodies, shapes and colliding surfaces in which a physical trigger participated.
-			</summary>  
-			<returns>Number of contacts.</returns>
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.setShapeType(int)">
-			<summary>
-			Sets the shape type of the physical trigger.
-			</summary> 
-			<param name="type"> Shape type of the physical trigger:0 - Sphere1 - Capsule2 - Cylinder3 - Box  </param> 
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.getShapeType const">
-			<summary>
-			Returns the shape type of the physical trigger.
-			</summary>  
-			<returns>Shape type of the physical trigger:0 - Sphere1 - Capsule2 - Cylinder3 - Box </returns>
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.setSize(Unigine.Math.vec3)">
-			<summary>
-			Sets the size of the physical trigger.
-			</summary> 
-			<param name="size"> New size of the physical trigger:Radius, in case of a sphere (pass the radius in the first element of the vector).Radius and height, in case of a capsule or a cylinder (pass the radius as the first vector element and the height as the second element).Dimensions along the X, Y and Z axes, in case of the box. </param> 
-		</member>
-		<member name="M:Unigine.PhysicalTrigger.getSize const">
-			<summary>
-			Returns the current size of the physical trigger:											Radius, in case of a sphere (pass the radius in the first element of the vector).						Radius and height, in case of a capsule or a cylinder (pass the radius as the first vector element and the height as the second element).						Dimensions along the X, Y and Z axes, in case of the box.
-			</summary>  
-			<returns>Size of the physical trigger.</returns>
 		</member>
 		<member name="M:Unigine.PhysicalTrigger.type">
 			<summary>

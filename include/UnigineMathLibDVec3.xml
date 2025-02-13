@@ -236,6 +236,12 @@
 			<param name="v"> Vector. </param> 
 			<returns>Resulting vector.</returns>
 		</member>
+		<member name="M:Unigine.Math.dvec3.operator-=(double)">
+			<summary>
+			Subtracts each element of the specified value from the corresponding vector's element.
+			</summary> 
+			<param name="v"> Value. </param> 
+		</member>
 		<member name="M:Unigine.Math.dvec3.operator/=(Unigine.dvec3)">
 			<summary>
 			Performs componentwise division of vectors.
@@ -325,12 +331,6 @@
 			</summary> 
 			<param name="v"> Value. </param> 
 		</member>
-		<member name="M:Unigine.Math.dvec3.operator-=(double)">
-			<summary>
-			Subtracts each element of the specified value from the corresponding vector's element.
-			</summary> 
-			<param name="v"> Value. </param> 
-		</member>
 		<member name="M:Unigine.Math.dvec3.sum const">
 			<summary>
 			Returns the sum of vector components.
@@ -370,7 +370,9 @@
 		</member>
 		<member name="M:Unigine.Math.dvec3.hash const">
 			<summary>
+			Returns a hash obtained by mixing the hash values of vector components.
 			</summary>  
+			<returns>32-bit hash value.</returns>
 		</member>
 		<member name="F:Unigine.Math.dvec3.dvec3_back">
 			<summary>

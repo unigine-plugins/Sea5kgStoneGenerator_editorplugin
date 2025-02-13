@@ -4,6 +4,11 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
+		<member name="M:Unigine.Math.dmat4.#ctor">
+			<summary>
+			Default constructor. Produces an identity matrix.
+			</summary>  
+		</member>
 		<member name="M:Unigine.Math.dmat4.#ctor(Unigine.dvec3,Unigine.dvec3,Unigine.dvec3,Unigine.dvec3)">
 			<summary>
 			Constructor. Initializes the matrix using given three dvec3 vectors.
@@ -50,11 +55,6 @@
 			Constructor. Initializes the matrix by copying a given source matrix.
 			</summary> 
 			<param name="m"> Source matrix. </param> 
-		</member>
-		<member name="M:Unigine.Math.dmat4.#ctor">
-			<summary>
-			Default constructor. Produces an identity matrix.
-			</summary>  
 		</member>
 		<member name="M:Unigine.Math.dmat4.#ctor(Unigine.mat4)">
 			<summary>
@@ -575,7 +575,396 @@
 		</member>
 		<member name="M:Unigine.Math.dmat4.hash const">
 			<summary>
+			Returns a hash obtained by mixing the hash values of vector components.
 			</summary>  
+			<returns>32-bit hash value.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.dmat4,Unigine.dmat4,double)">
+			<summary>
+			Matrix multiplication.
+			</summary> 
+			<param name="ret"> The matrix to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the scalar. </param> 
+			<returns>The resulting matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.dmat4,Unigine.dmat4,Unigine.dmat4)">
+			<summary>
+			Matrix multiplication.
+			</summary> 
+			<param name="ret"> The matrix to store the result. </param>
+			<param name="m0"> The value of the first matrix. </param>
+			<param name="m1"> The value of the second matrix. </param> 
+			<returns>The resulting matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.vec2,Unigine.dmat4,Unigine.vec2)">
+			<summary>
+			Matrix by vector multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.vec2,Unigine.vec2,Unigine.dmat4)">
+			<summary>
+			Vector by matrix multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.vec3,Unigine.dmat4,Unigine.vec3)">
+			<summary>
+			Matrix by vector multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.vec3,Unigine.vec3,Unigine.dmat4)">
+			<summary>
+			Vector by matrix multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.vec4,Unigine.dmat4,Unigine.vec4)">
+			<summary>
+			Matrix by vector multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.vec4,Unigine.vec4,Unigine.dmat4)">
+			<summary>
+			Vector by matrix multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.vec2,Unigine.dmat4,Unigine.dvec2)">
+			<summary>
+			Matrix by vector multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.vec2,Unigine.dvec2,Unigine.dmat4)">
+			<summary>
+			Vector by matrix multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.vec3,Unigine.dmat4,Unigine.dvec3)">
+			<summary>
+			Matrix by vector multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.vec3,Unigine.dvec3,Unigine.dmat4)">
+			<summary>
+			Vector by matrix multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.vec4,Unigine.dmat4,Unigine.dvec4)">
+			<summary>
+			Matrix by vector multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.vec4,Unigine.dvec4,Unigine.dmat4)">
+			<summary>
+			Vector by matrix multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.dvec2,Unigine.dmat4,Unigine.dvec2)">
+			<summary>
+			Matrix by vector multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.dvec2,Unigine.dvec2,Unigine.dmat4)">
+			<summary>
+			Vector by matrix multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.dvec3,Unigine.dmat4,Unigine.dvec3)">
+			<summary>
+			Matrix by vector multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.dvec3,Unigine.dvec3,Unigine.dmat4)">
+			<summary>
+			Vector by matrix multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.dvec4,Unigine.dmat4,Unigine.dvec4)">
+			<summary>
+			Matrix by vector multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul(Unigine.dvec4,Unigine.dvec4,Unigine.dmat4)">
+			<summary>
+			Vector by matrix multiplication.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.vec2,Unigine.dmat4,Unigine.vec2)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.vec2,Unigine.vec2,Unigine.dmat4)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.vec3,Unigine.dmat4,Unigine.vec3)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.vec3,Unigine.vec3,Unigine.dmat4)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.vec4,Unigine.dmat4,Unigine.vec4)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.vec4,Unigine.vec4,Unigine.dmat4)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.vec2,Unigine.dmat4,Unigine.dvec2)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.vec2,Unigine.dvec2,Unigine.dmat4)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.vec3,Unigine.dmat4,Unigine.dvec3)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.vec3,Unigine.dvec3,Unigine.dmat4)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.vec4,Unigine.dmat4,Unigine.dvec4)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.vec4,Unigine.dvec4,Unigine.dmat4)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.dvec2,Unigine.dmat4,Unigine.dvec2)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.dvec2,Unigine.dvec2,Unigine.dmat4)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.dvec3,Unigine.dmat4,Unigine.dvec3)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.dvec3,Unigine.dvec3,Unigine.dmat4)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.dvec4,Unigine.dmat4,Unigine.dvec4)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.dvec4,Unigine.dvec4,Unigine.dmat4)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The vector to store the result. </param>
+			<param name="v"> The value of the vector. </param>
+			<param name="m"> The value of the matrix. </param> 
+			<returns>The resulting vector.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul3(Unigine.dmat4,Unigine.dmat4,Unigine.dmat4)">
+			<summary>
+			Returns the result of multiplication of three components of the specified arguments.
+			</summary> 
+			<param name="ret"> The matrix to store the result. </param>
+			<param name="m0"> The value of the first matrix. </param>
+			<param name="m1"> The value of the second matrix. </param> 
+			<returns>The resulting matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mul4(Unigine.dmat4,Unigine.dmat4,Unigine.dmat4)">
+			<summary>
+			Returns the result of multiplication of the specified arguments.
+			</summary> 
+			<param name="ret"> The matrix to store the result. </param>
+			<param name="m0"> The value of the first matrix. </param>
+			<param name="m1"> The value of the second matrix. </param> 
+			<returns>The resulting matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.mult(Unigine.dmat4,Unigine.dmat4,Unigine.dvec3)">
+			<summary>
+			Returns the matrix with the translation (the last column) multiplied by the specified vector.
+			</summary> 
+			<param name="ret"> The matrix to store the result. </param>
+			<param name="m"> The value of the matrix. </param>
+			<param name="v"> The value of the vector. </param> 
+			<returns>The resulting matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.add(Unigine.dmat4,Unigine.dmat4,Unigine.dmat4)">
+			<summary>
+			Performs addition with the specified arguments.
+			</summary> 
+			<param name="ret"> The matrix to store the result. </param>
+			<param name="m0"> The value of the first matrix. </param>
+			<param name="m1"> The value of the second matrix. </param> 
+			<returns>The resulting matrix.</returns>
+		</member>
+		<member name="M:Unigine.Math.dmat4.sub(Unigine.dmat4,Unigine.dmat4,Unigine.dmat4)">
+			<summary>
+			Subtracts each element in the second argument from its corresponding element in the first argument.
+			</summary> 
+			<param name="ret"> The matrix to store the result. </param>
+			<param name="m0"> The value of the first matrix. </param>
+			<param name="m1"> The value of the second matrix. </param> 
+			<returns>The resulting matrix.</returns>
 		</member>
 		<member name="F:Unigine.Math.dmat4.dmat4_identity">
 			<summary>

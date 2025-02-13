@@ -27,7 +27,7 @@ namespace Unigine
 
 // Unigine SystemLogic allow user to write application logic in C++ in the same manner as in UnigineScript.
 // Execution sequence and method names are the same as in system script.
-class SystemLogic
+class SystemLogic : public EventConnections
 {
 public:
 	virtual ~SystemLogic() {}
@@ -55,7 +55,7 @@ public:
 
 // Unigine WorldLogic allow user to write application logic in C++ in the same manner as in UnigineScript.
 // Execution sequence and method names are the same as in world script.
-class WorldLogic
+class WorldLogic : public EventConnections
 {
 public:
 	virtual ~WorldLogic() {}
@@ -117,7 +117,7 @@ public:
 
 // Unigine EditorLogic allow user to write application logic in C++ in the same manner as in UnigineScript.
 // Execution sequence and method names are the same as in editor script.
-class EditorLogic
+class EditorLogic : public EventConnections
 {
 public:
 	virtual ~EditorLogic() {}

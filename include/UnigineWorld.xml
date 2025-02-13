@@ -4,30 +4,6 @@
 		<name>Unigine</name>
 	</assembly>
 	<members>
-		<member name="M:Unigine.World.isAutoReloadNodeReferences const">
-			<summary>
-			Returns a value indicating if automatic reloading of NodeReferences is enabled. If enabled all NodeReference nodes will reload their *.node files, when the saveNode() method is called.					This option can be used if you modify and save reference nodes at runtime. Otherwise you'll have to manually update pointers for all NodeReferences referring to the changed node.
-			</summary>  
-			<returns>1 if automatic reloading of NodeReferences is enabled; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.World.setAutoReloadNodeReferences(bool)">
-			<summary>
-			Enables automatic reloading of NodeReferences. If enabled all NodeReference nodes will reload their *.node files, when the saveNode() method is called.					This option can be used if you modify and save reference nodes at runtime. Otherwise you'll have to manually update pointers for all NodeReferences referring to the changed node.
-			</summary> 
-			<param name="references"> 1 to enable automatic reloading of NodeReferences; 0 - to disable it. The default value is 0. </param> 
-		</member>
-		<member name="M:Unigine.World.setBudget(float)">
-			<summary>
-			Sets the world generation budget value for Grass and Clutter objects. New objects are not created when time is out of the budget.
-			</summary> 
-			<param name="budget"> The budget value in seconds. </param> 
-		</member>
-		<member name="M:Unigine.World.getBudget const">
-			<summary>
-			Returns the value of the world generation budget for Grass and Clutter objects. New objects are not created when time is out of the budget.
-			</summary>  
-			<returns>The budget value in seconds. The default value is 1/60.</returns>
-		</member>
 		<member name="M:Unigine.World.getCollision(Unigine.Math.WorldBoundBox,Unigine.Vector{Unigine.Ptr{Unigine.Object},int,Unigine.VectorAllocator})">
 			<summary>
 			Searches for all collider objects within a given bounding box.					As a new node becomes a part of the BSP tree only after the						updateSpatial()method is called (the engine calls the method automatically each frame after the world script						update()code is executed), all engine subsystems can process this node only in the next frame. If you need to get the node in the very first frame, call the						updateSpatial()method manually. The engine will call this method automatically after the						update() code is executed anyways.
@@ -75,17 +51,18 @@
 			<param name="name"> String containing a key identifying user data stored in the *.world file.The "editor_data" key is reserved for the UnigineEditor. </param> 
 			<returns>User string data.</returns>
 		</member>
-		<member name="M:Unigine.World.setDistance(float)">
+		<member name="M:Unigine.World.hasData(char) const">
 			<summary>
-			Updates the distance at which (and farther) nothing will be rendered or simulated.
+			Checks whether user string data associated with the world by the specified key is stored in the data tag of the *.world file.
 			</summary> 
-			<param name="distance"> New distance in units. </param> 
+			<param name="name"> String containing a key identifying user data stored in the *.world file.The "editor_data" key is reserved for the UnigineEditor. </param> 
+			<returns>true if user string data associated with the world by the specified key is stored in the data tag of the *.world file; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.World.getDistance const">
+		<member name="M:Unigine.World.removeData(char)">
 			<summary>
-			Returns a distance at which (and farther) nothing will be rendered or simulated.
-			</summary>  
-			<returns>Distance in units.</returns>
+			Removes user string data associated with the world by the specified key. This string is stored in the data tag of the *.world file with the specified key.
+			</summary> 
+			<param name="name"> String containing a key identifying user data stored in the *.world file.The "editor_data" key is reserved for the UnigineEditor. </param> 
 		</member>
 		<member name="M:Unigine.World.getIntersection(Unigine.Math.Vec3,Unigine.Math.Vec3,int)">
 			<summary>
@@ -305,12 +282,6 @@
 			<param name="partial_path"> true if the path to the world file is partial; or false if it is a full path. </param> 
 			<returns>true if the world is loaded successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.World.isLoaded const">
-			<summary>
-			Returns a value indicating if the current world is fully loaded.
-			</summary>  
-			<returns>1 if the world is loaded; otherwise, 0.</returns>
-		</member>
 		<member name="M:Unigine.World.saveWorld">
 			<summary>
 			Saves the World.
@@ -336,84 +307,12 @@
 			</summary>  
 			<returns>true, if the world has been quit successfully; otherwise false.</returns>
 		</member>
-		<member name="M:Unigine.World.isLoadWorldRequested const">
-			<summary>
-			Returns a value indicating if another world is going to be loaded in the next frame.
-			</summary>  
-			<returns>true, if another world is going to be loaded in the next frame.</returns>
-		</member>
-		<member name="M:Unigine.World.getLoadWorldRequestPath const">
-			<summary>
-			Returns the path to the world which is going to be loaded.
-			</summary>  
-			<returns>The path to the world to be loaded.</returns>
-		</member>
 		<member name="M:Unigine.World.addWorld(char)">
 			<summary>
 			Loads a world from a file and adds it to the current World.
 			</summary> 
 			<param name="name"> Name of the file describing the world. </param> 
 			<returns>1 if the world is loaded and added successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.World.setPath(char)">
-			<summary>
-			Sets the path to the *.world-file where the world is stored.
-			</summary> 
-			<param name="path"> Path to the *.world-file. </param> 
-		</member>
-		<member name="M:Unigine.World.getPath const">
-			<summary>
-								Returns the current path to the *.world-file where the world is stored.
-			</summary>  
-			<returns>Path to the *.world-file.</returns>
-		</member>
-		<member name="M:Unigine.World.setPhysicsSettings(char)">
-			<summary>
-								Sets the name of the *.physics file containing default physics settings to be used for the World.
-			</summary> 
-			<param name="settings"> Name of the default *.physics asset to be used for the World. </param> 
-		</member>
-		<member name="M:Unigine.World.getPhysicsSettings const">
-			<summary>
-								Returns the name of the *.physics file containing default physics settings currently used by the World.
-			</summary>  
-			<returns>Name of the default *.physics asset used for the World.</returns>
-		</member>
-		<member name="M:Unigine.World.setRenderSettings(char)">
-			<summary>
-								Sets the name of the *.render file containing default render settings to be used for the World.
-			</summary> 
-			<param name="settings"> Name of the default *.render asset to be used for the World. </param> 
-		</member>
-		<member name="M:Unigine.World.getRenderSettings const">
-			<summary>
-								Returns the name of the *.render file containing default render settings currently used by the World.
-			</summary>  
-			<returns>Name of the default *.render asset used for the World.</returns>
-		</member>
-		<member name="M:Unigine.World.setSoundSettings(char)">
-			<summary>
-								Sets the name of the *.sound file containing default sound settings to be used for the World.
-			</summary> 
-			<param name="settings"> Name of the default *.sound asset to be used for the World. </param> 
-		</member>
-		<member name="M:Unigine.World.getSoundSettings const">
-			<summary>
-								Returns the name of the *.sound file containing default sound settings currently used by the World.
-			</summary>  
-			<returns>Name of the default *.sound asset used for the World.</returns>
-		</member>
-		<member name="M:Unigine.World.setScriptName(char)">
-			<summary>
-								Sets the name of the world script file *.usc.
-			</summary> 
-			<param name="name"> Name of the world script file *.usc. </param> 
-		</member>
-		<member name="M:Unigine.World.getScriptName const">
-			<summary>
-								Returns the name of the world script file *.usc.
-			</summary>  
-			<returns>Name of the world script file *.usc.</returns>
 		</member>
 		<member name="M:Unigine.World.isNode(int) const">
 			<summary>
@@ -422,93 +321,52 @@
 			<param name="id"> Node ID. </param> 
 			<returns>true if the node with the given ID exists; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.World.getNodes(Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator}) const">
+		<member name="M:Unigine.World.getNodes(Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},bool,bool) const">
 			<summary>
-								Collects all instances of all nodes (either loaded from the *.world file or created dynamically at run time), including cache, Node Reference internals, etc. and puts them to the specified output list.					If you need only root nodes to be returned, use getRootNodes() instead
+								Collects all instances of all nodes (either loaded from the *.world file or created dynamically at run time), including cache, Node Reference internals, World Clutters contents (if the corresponding flags are set) and puts them to the specified output list.					If you need only root nodes to be returned, use getRootNodes() instead
 			</summary> 
-			<param name="nodes"> Array with node smart pointers. </param> 
+			<param name="nodes"> Array with node smart pointers. </param>
+			<param name="expand_node_reference"> true to get nodes contained in NodeReferences; otherwise, false. </param>
+			<param name="expand_world_clutter"> true to get nodes contained in WorldClutters; otherwise, false. </param> 
 		</member>
-		<member name="M:Unigine.World.clearNode(char) const">
+		<member name="M:Unigine.World.loadNode(char,bool)">
 			<summary>
-			Clears cached nodes of the given node file.					When the node is cached and you try to access it, take into account the following:													if the node was loaded by the name — the node gets stored in the cache by its name;							if the node was loaded from the parent node reference — the node is stored in the cache by its GUID.						Here is an example on how to clear cached nodes in both cases:
+			Loads a node (or a hierarchy of nodes) from a .node / .fbx file. If the node is loaded successfully, it is managed by the current world (its Lifetime is World). Cached nodes remain in the memory. If you don't intend to load more node references from a certain *.node asset, set the cache argument to 0 or you can delete cached nodes from the list of world nodes afterwards by using the destroyCacheNode() method.
 			</summary> 
-			<param name="name"> Path to the *.node file. </param> 
-			<returns>1 if the cache is cleared successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.World.loadNode(char,int)">
-			<summary>
-			Loads a node (or a hierarchy of nodes) from a .node / .fbx file. If the node is loaded successfully, it is managed by the current world (its Lifetime is World). Cached nodes remain in the memory. If you don't intend to load more node references from a certain .node asset, set the cache argument to 0 or you can delete cached nodes from the list of world nodes afterwards by using the clearNode() method.
-			</summary> 
-			<param name="name"> Path to the *.node file. </param>
-			<param name="cache"> 1 to use caching of nodes, 0 not to use. </param> 
+			<param name="file_path"> Path to the *.node file. </param>
+			<param name="cache"> true to use caching of nodes, false not to use. </param> 
 			<returns>Loaded node; NULL if the node cannot be loaded.</returns>
 		</member>
 		<member name="M:Unigine.World.loadNodes(char,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator}) const">
 			<summary>
 			Loads nodes from a file.
 			</summary> 
-			<param name="name"> Path to the *.node file. </param>
+			<param name="file_path"> Path to the *.node file. </param>
 			<param name="nodes"> Array of nodes' smart pointers to which the loaded nodes are appended. </param> 
-			<returns>1 if the nodes are loaded successfully; otherwise, 0.</returns>
+			<returns>true if the nodes are loaded successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.World.saveNode(char,Unigine.Ptr{Unigine.Node},int)">
+		<member name="M:Unigine.World.saveNode(char,Unigine.Ptr{Unigine.Node},bool)">
 			<summary>
 			Saves a given node to a file with due regard for its local transformation.
 			</summary> 
-			<param name="name"> Path to the *.node file. </param>
+			<param name="file_path"> Path to the *.node file. </param>
 			<param name="node"> Pointer to the node to save. </param>
-			<param name="binary"> If set to 1, the node is saved to the binary *.xml. This file cannot be read, but using it speeds up the saving of the node and requires less disk space. </param> 
-			<returns>1 if the node is saved successfully; otherwise, 0.</returns>
+			<param name="binary"> If set to true, the node is saved to the binary *.xml. This file cannot be read, but using it speeds up the saving of the node and requires less disk space. </param> 
+			<returns>true if the node is saved successfully; otherwise, false.</returns>
 		</member>
-		<member name="M:Unigine.World.saveNodes(char,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},int) const">
+		<member name="M:Unigine.World.saveNodes(char,Unigine.Vector{Unigine.Ptr{Unigine.Node},int,Unigine.VectorAllocator},bool) const">
 			<summary>
 			Saves nodes to a file.
 			</summary> 
-			<param name="name"> Path to the *.node file. </param>
+			<param name="file_path"> Path to the *.node file. </param>
 			<param name="nodes"> Array of nodes' smart pointers to be saved. </param>
-			<param name="binary"> If set to 1, the node is saved to the binary *.xml. This file cannot be read, but using it speeds up the saving of the node and requires less disk space. </param> 
-			<returns>1 if the nodes are saved successfully; otherwise, 0.</returns>
-		</member>
-		<member name="M:Unigine.World.setUnpackNodeReferences(bool)">
-			<summary>
-			Enables or disables automatic unpacking of node references at run time. This option can be used to simplify hierarchy management, as when it is enabled all nodes contained in node references will be present in the world hierarchy. When disabled you have to check the hierarchy of each node reference individually (e.g. to find the number of children or manage some of them). The content of NodeReference nodes is unpacked only at run time and does not affect your *.world and *.node files. So, you can use all advantages of node references when building worlds in the UnigineEditor and manage a clear and straightforward hierarchy at run time. This option is available only via code, can be enabled in the System Script and works for all worlds used in your project.					Auto-unpacking is disabled in C++ and UnigineScript only projects by default for backward compatibility.
-			</summary> 
-			<param name="references"> 1 - to enable automatic unpacking of node references at run time, 0 - to disable it. </param> 
-		</member>
-		<member name="M:Unigine.World.isUnpackNodeReferences const">
-			<summary>
-			Returns the value indicating if automatic unpacking of node references at run time is enabled. This option can be used to simplify hierarchy management, as when it is enabled all nodes contained in node references will be present in the world hierarchy. When disabled you have to check the hierarchy of each node reference individually (e.g. to find the number of children or manage some of them). The content of NodeReference nodes is unpacked only at run time and does not affect your *.world and *.node files. So, you can use all advantages of node references when building worlds in the UnigineEditor and manage a clear and straightforward hierarchy at run time. This option is available only via code, can be enabled in the System Script and works for all worlds used in your project.					Auto-unpacking is disabled in C++ and UnigineScript only projects by default for backward compatibility.
-			</summary>  
-			<returns>1 if automatic unpacking of node references at run time is enabled; otherwise, 0.</returns>
+			<param name="binary"> If set to true, the node is saved to the binary *.xml. This file cannot be read, but using it speeds up the saving of the node and requires less disk space. </param> 
+			<returns>true if the nodes are saved successfully; otherwise, false.</returns>
 		</member>
 		<member name="M:Unigine.World.updateSpatial">
 			<summary>
 								Updates the node BSP (binary space partitioning) tree.					The engine calls this method automatically each frame after the world script update() code is executed. As a new node becomes a part of the BSP tree only after this method is called, all engine subsystems (renderer, physics, sound, pathfinding, collisions, intersections, etc.) can process this node only in the next frame. If you need the subsystem to process the node in the very first frame, you can call the updateSpatial() method manually. The engine will call this method automatically after the update() code is executed anyways.
 			</summary>  
-		</member>
-		<member name="M:Unigine.World.setUpdateGridSize(float)">
-			<summary>
-			Sets the size of the grid to be used for spatial tree update. The default value is an average one, and can be adjusted when necessary depending on the scene.
-			</summary> 
-			<param name="size"> New grid size, in units. The default value is 1000 units. </param> 
-		</member>
-		<member name="M:Unigine.World.getUpdateGridSize const">
-			<summary>
-			Returns the current size of the grid to be used for spatial tree update. The default value is an average one, and can be adjusted when necessary depending on the scene.
-			</summary>  
-			<returns>Current grid size, in units. The default value is 1000 units.</returns>
-		</member>
-		<member name="M:Unigine.World.setScriptExecute(bool)">
-			<summary>
-			Sets a value indicating if a logic script associated with the world is to be loaded with it.
-			</summary> 
-			<param name="execute"> 1 - to load the world along with the associated logic script (if any), 0 - to ignore it. </param> 
-		</member>
-		<member name="M:Unigine.World.isScriptExecute const">
-			<summary>
-			Returns a value indicating if a logic script associated with the world is to be loaded with it.
-			</summary>  
-			<returns>1 if a logic script associated with the world is to be loaded with it; otherwise, 0.</returns>
 		</member>
 		<member name="M:Unigine.World.getNodeByID(int) const">
 			<summary>
@@ -577,18 +435,6 @@
 			<param name="node"> Root node, for which a new index is to be set. </param>
 			<param name="index"> New index to be set for the specified root node. </param> 
 		</member>
-		<member name="M:Unigine.World.setMovingImmovableNodeMode(World::MOVING_IMMOVABLE_NODES_MODE)">
-			<summary>
-								Sets a new mode of handling attempts to move nodes having the						Immovable flag enabled.										Please be aware that there are two cases when you may disable warnings and allow movement of						Immovable nodes:													At run-time for procedural generation of levels. This may cause some freezing but won't affect performance much. Upon completion of the generation process you should enable warnings again.							On world initialization, this will change world loading time but won't affect overall performance.
-			</summary> 
-			<param name="mode"> New handling mode for attempts to moveImmovable nodes to be set. </param> 
-		</member>
-		<member name="M:Unigine.World.getMovingImmovableNodeMode const">
-			<summary>
-								Returns the current mode of handling attempts to move nodes having the						Immovable flag enabled.										Please be aware that there are two cases when you may disable warnings and allow movement of						Immovable nodes:													At run-time for procedural generation of levels. This may cause some freezing but won't affect performance much. Upon completion of the generation process you should enable warnings again.							On world initialization, this will change world loading time but won't affect overall performance.
-			</summary>  
-			<returns>Current handling mode for attempts to moveImmovable nodes.</returns>
-		</member>
 		<member name="M:Unigine.World.setNodeIdSeed(unsignedint)">
 			<summary>
 			Sets a seed value for random generation of a node ID. This method is used for deterministic generation.
@@ -601,6 +447,52 @@
 			</summary> 
 			<param name="from"> Beginning of the range. </param>
 			<param name="to"> End of the range. </param> 
+		</member>
+		<member name="M:Unigine.World.findNodes(Unigine.CallbackBase2{Unigine.Ptr{Unigine.Node},bool}) const">
+			<summary>
+			</summary>  
+		</member>
+		<member name="M:Unigine.World.removeNodeFile(char)">
+			<summary>
+			Clears cached nodes for the given *.node file and removes all related Node References from the scene.					When trying to access cached nodes, keep in mind the following:													if the node was loaded by the name — the node gets stored in the cache by its name;							if the node was loaded from the parent Node Reference — the node is stored in the cache by its GUID.												Here is an example on how to clear cached nodes and reload them in both cases:
+			</summary> 
+			<param name="file_path"> Path to the *.node file. </param> 
+			<returns>true if nodes for the given *.node file were successfully removed from cache with related Node References removed from the scene; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.World.removeNodeFile(Unigine.UGUID)">
+			<summary>
+			Clears cached nodes for the given *.node file and removes all related Node References from the scene.					When trying to access cached nodes, keep in mind the following:													if the node was loaded by the name — the node gets stored in the cache by its name;							if the node was loaded from the parent Node Reference — the node is stored in the cache by its GUID.												Here is an example on how to clear cached nodes and reload them in both cases:
+			</summary> 
+			<param name="file_guid"> GUID of the *.node file. </param> 
+			<returns>true if nodes for the given *.node file were successfully removed from cache with related Node References removed from the scene; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.World.reloadNodeFile(char)">
+			<summary>
+			Clears cached nodes for the given *.node file and reloads all related Node References in the scene.					When trying to access cached nodes, keep in mind the following:													if the node was loaded by the name — the node gets stored in the cache by its name;							if the node was loaded from the parent Node Reference — the node is stored in the cache by its GUID.												Here is an example on how to clear cached nodes and reload them in both cases:
+			</summary> 
+			<param name="file_path"> Path to the *.node file. </param> 
+			<returns>true if nodes for the given *.node file were successfully removed from cache and reloaded from the source file; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.World.reloadNodeFile(Unigine.UGUID)">
+			<summary>
+			Clears cached nodes for the given *.node file and reloads all related Node References in the scene.					When trying to access cached nodes, keep in mind the following:													if the node was loaded by the name — the node gets stored in the cache by its name;							if the node was loaded from the parent Node Reference — the node is stored in the cache by its GUID.												Here is an example on how to clear cached nodes and reload them in both cases:
+			</summary> 
+			<param name="file_guid"> GUID of the *.node file. </param> 
+			<returns>true if nodes for the given *.node file were successfully removed from cache and reloaded from the source file; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.World.destroyCacheNode(char)">
+			<summary>
+			Clears cached nodes for the given *.node file.					When trying to access cached nodes, keep in mind the following:													if the node was loaded by the name — the node gets stored in the cache by its name;							if the node was loaded from the parent Node Reference — the node is stored in the cache by its GUID.												Here is an example on how to clear cached nodes in both cases:
+			</summary> 
+			<param name="file_path"> Path to the *.node file. </param> 
+			<returns>true if nodes for the given *.node file were successfully removed from cache; otherwise, false.</returns>
+		</member>
+		<member name="M:Unigine.World.destroyCacheNode(Unigine.UGUID)">
+			<summary>
+			Clears cached nodes for the given *.node file.					When trying to access cached nodes, keep in mind the following:													if the node was loaded by the name — the node gets stored in the cache by its name;							if the node was loaded from the parent Node Reference — the node is stored in the cache by its GUID.												Here is an example on how to clear cached nodes in both cases:
+			</summary> 
+			<param name="file_guid"> GUID of the *.node file. </param> 
+			<returns>true if nodes for a *.node file with the given GUID were successfully removed from cache; otherwise, false.</returns>
 		</member>
 		<member name="F:Unigine.World.MOVING_IMMOVABLE_NODES_MODE_BAN">
 			<summary>

@@ -24,7 +24,7 @@ namespace Unigine
 class UNIGINE_API Ffp
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 
 	enum
 	{

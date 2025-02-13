@@ -146,17 +146,15 @@ public:
 		SAMPLER_FLAGS = SAMPLER_WRAP_MASK | SAMPLER_FILTER_MASK | SAMPLER_ANISOTROPY_MASK | SAMPLER_SHADOW_MASK,
 	};
 	static Ptr<Texture> create();
-	bool create(const Ptr<Image> &image, int flags = 1<<22);
-	bool create2D(int width, int height, int format, int flags = 1<<22);
-	bool create3D(int width, int height, int depth, int format, int flags = 1<<22);
-	bool createCube(int width, int height, int format, int flags = 1<<22);
-	bool create2DArray(int width, int height, int num_layers, int format, int flags = 1<<22);
-	bool createCubeArray(int width, int height, int num_layers, int format, int flags = 1<<22);
-	int fromGLTexture2D(unsigned int tex_id, int width, int height, int format, int flags);
-	int fromGLTexture2D(unsigned int tex_id, int width, int height, int format, int internal_format, int flags);
+	bool create(const Ptr<Image> &image, int flags = Texture::SAMPLER_FILTER_LINEAR);
+	bool create2D(int width, int height, int format, int flags = Texture::SAMPLER_FILTER_LINEAR);
+	bool create3D(int width, int height, int depth, int format, int flags = Texture::SAMPLER_FILTER_LINEAR);
+	bool createCube(int width, int height, int format, int flags = Texture::SAMPLER_FILTER_LINEAR);
+	bool create2DArray(int width, int height, int num_layers, int format, int flags = Texture::SAMPLER_FILTER_LINEAR);
+	bool createCubeArray(int width, int height, int num_layers, int format, int flags = Texture::SAMPLER_FILTER_LINEAR);
 	int fromD3D11Texture2D(void *ptr, int width, int height, int format, int flags);
 	int fromD3D11Texture2D(void *ptr, int width, int height, int format, int internal_format, int flags);
-	bool load(const char *name, int flags = 1<<22);
+	bool load(const char *name, int flags = Texture::SAMPLER_FILTER_LINEAR);
 	bool setImage(const Ptr<Image> &image);
 	bool setImage2D(const Ptr<Image> &image, int offset_x, int offset_y, int texture_format = -1);
 	bool setImageLayer(const Ptr<Image> &image, int layer, int texture_format = -1);
@@ -211,7 +209,7 @@ public:
 	int getFormatFlags() const;
 	int getAllFlags() const;
 	bool isAnisotropy() const;
-	bool getMultisample() const;
+	int getMultisample() const;
 	bool createMipmaps();
 	void clearBuffer(const Math::vec4 &color);
 	void clearBuffer();
@@ -227,11 +225,6 @@ public:
 	void renderCubeArray(int face, int layer, float x0 = -1.0f, float y0 = -1.0f, float x1 = 1.0f, float y1 = 1.0f);
 	void setDebugName(const char *name);
 	const char *getDebugName() const;
-	int getGLTarget() const;
-	int getGLInternalFormat() const;
-	int getGLPixelFormat() const;
-	int getGLPixelType() const;
-	int getGLTextureID() const;
 	void * getD3D11Texture() const;
 	void * getD3D11ShaderResourceView() const;
 	void * getD3D11UnorderedAccessView(int r32_typeless) const;
@@ -258,7 +251,6 @@ public:
 	static Ptr<StructuredBuffer> create();
 	int create(int flags, const void *data, unsigned int structure_size, unsigned int num_elements);
 	int create(int flags, unsigned int structure_size, unsigned int num_elements);
-	int getData(void *data);
 	bool isUsageGPUResource() const;
 	bool isUsageImmutable() const;
 	bool isUsageCPUResource() const;
@@ -271,8 +263,8 @@ public:
 	int getNumElements() const;
 	void setDebugName(const char *name);
 	const char *getDebugName() const;
+	size_t getVideoMemoryUsage();
 	Ptr<ResourceExternalMemory> getResourceExternalMemory() const;
-	int getGLBufferID() const;
 	void * getD3D11ShaderResourceView() const;
 	void * getD3D11UnorderedAccessView() const;
 };

@@ -1,0 +1,120 @@
+<?xml version='1.0'?>
+<doc>
+	<assembly>
+		<name>Unigine</name>
+	</assembly>
+	<members>
+		<member name="M:Unigine.Color Space Functions.hueToRgb(float)">
+			<summary>
+			Converts Hue color value to RGB (Red, Green, Blue) color values.
+			</summary> 
+			<param name="hue"> Hue color value. </param> 
+			<returns>RGB (Red, Green, Blue) color values.</returns>
+		</member>
+		<member name="M:Unigine.Color Space Functions.rgbToHcv(Unigine.vec3)">
+			<summary>
+			Converts RGB (Red, Green, Blue) color values to HCV (Hue, Chroma, Value) color values.
+			</summary> 
+			<param name="rgb"> RGB (Red, Green, Blue) color values. </param> 
+			<returns>HCV (Hue, Chroma, Value) color values.</returns>
+		</member>
+		<member name="M:Unigine.Color Space Functions.rgbToHsv(Unigine.vec3)">
+			<summary>
+			Converts RGB (Red, Green, Blue) color values to HSV (Hue, Saturation, Value) color values.
+			</summary> 
+			<param name="rgb"> RGB (Red, Green, Blue) color values. </param> 
+			<returns>HSV (Hue, Saturation, Value).</returns>
+		</member>
+		<member name="M:Unigine.Color Space Functions.hsvToRgb(Unigine.vec3)">
+			<summary>
+			Converts HSV (Hue, Saturation, Value) color values to RGB (Red, Green, Blue) color values.
+			</summary> 
+			<param name="hsv"> HSV (Hue, Saturation, Value). </param> 
+			<returns>RGB (Red, Green, Blue) color values.</returns>
+		</member>
+		<member name="M:Unigine.Color Space Functions.rgbToHcy(Unigine.vec3)">
+			<summary>
+			Converts RGB (Red, Green, Blue) color values to HCY (Hue, Chroma, Luma) color values.
+			</summary> 
+			<param name="rgb"> RGB (Red, Green, Blue) color values. </param> 
+			<returns>HCY (Hue, Chroma, Luma) color values.</returns>
+		</member>
+		<member name="M:Unigine.Color Space Functions.hcyToRgb(Unigine.vec3)">
+			<summary>
+			Converts HCY (Hue, Chroma, Luma) to RGB (Red, Green, Blue) color values.
+			</summary> 
+			<param name="hcy"> HCY (Hue, Chroma, Luma) color values. </param> 
+			<returns>RGB (Red, Green, Blue) color values.</returns>
+		</member>
+		<member name="M:Unigine.Color Space Functions.rgbToHcl(Unigine.vec3)">
+			<summary>
+			Converts RGB (Red, Green, Blue) color values to HCL (Hue, Chroma, Luminance) color values.
+			</summary> 
+			<param name="rgb"> RGB (Red, Green, Blue) color values. </param> 
+			<returns>HCL (Hue, Chroma, Luminance) color values.</returns>
+		</member>
+		<member name="M:Unigine.Color Space Functions.hclToRgb(Unigine.vec3)">
+			<summary>
+			Converts HCL (Hue, Chroma, Luminance) to RGB (Red, Green, Blue) color values.
+			</summary> 
+			<param name="hcl"> HCL (Hue, Chroma, Luminance) color values. </param> 
+			<returns>RGB (Red, Green, Blue) color values.</returns>
+		</member>
+		<member name="M:Unigine.Color Space Functions.rgbToHsl(Unigine.vec3)">
+			<summary>
+			Converts RGB (Red, Green, Blue) color values to HSL (Hue, Saturation, Lightness) color values.
+			</summary> 
+			<param name="rgb"> RGB (Red, Green, Blue) color values. </param> 
+			<returns>HSL (Hue, Saturation, Lightness) color values.</returns>
+		</member>
+		<member name="M:Unigine.Color Space Functions.hslToRgb(Unigine.vec3)">
+			<summary>
+			Converts HSL (Hue, Saturation, Lightness) to RGB (Red, Green, Blue) color values.
+			</summary> 
+			<param name="hsl"> HSL (Hue, Saturation, Lightness) color values. </param> 
+			<returns>RGB (Red, Green, Blue) color values.</returns>
+		</member>
+		<member name="M:Unigine.Color Space Functions.rgbToYuv(Unigine.vec3)">
+			<summary>
+			Converts RGB (Red, Green, Blue) color values to YUV (Luminance, Delta Blue, Delta Red) color values.
+			</summary> 
+			<param name="rgb"> RGB (Red, Green, Blue) color values. </param> 
+			<returns>YUV (Luminance, Delta Blue, Delta Red) color values.</returns>
+		</member>
+		<member name="M:Unigine.Color Space Functions.yuvToRgb(Unigine.vec3)">
+			<summary>
+			Converts YUV (Luminance, Delta Blue, Delta Red) to RGB (Red, Green, Blue) color values.
+			</summary> 
+			<param name="yuv"> YUV (Luminance, Delta Blue, Delta Red) color values. </param> 
+			<returns>RGB (Red, Green, Blue) color values.</returns>
+		</member>
+		<member name="M:Unigine.Color Space Functions.rgbToYcbcr(Unigine.vec3)">
+			<summary>
+			Converts RGB (Red, Green, Blue) color values to YCbCr (Luma, Chrominance Blue, Chrominance Red) color values.
+			</summary> 
+			<param name="rgb"> RGB (Red, Green, Blue) color values. </param> 
+			<returns>YCbCr (Luma, Chrominance Blue, Chrominance Red) color values.</returns>
+		</member>
+		<member name="M:Unigine.Color Space Functions.ycbcrToRgb(Unigine.vec3)">
+			<summary>
+			Converts YCbCr (Luma, Chrominance Blue, Chrominance Red) to RGB (Red, Green, Blue) color values.
+			</summary> 
+			<param name="ycc"> YCbCr (Luma, Chrominance Blue, Chrominance Red) color values. </param> 
+			<returns>RGB (Red, Green, Blue) color values.</returns>
+		</member>
+		<member name="M:Unigine.Color Space Functions.rgbToYcgco(Unigine.vec3)">
+			<summary>
+			Converts RGB (Red, Green, Blue) color values to YCgCo (Luma, Chrominance Green, Chrominance Orange) color values.
+			</summary> 
+			<param name="rgb"> RGB (Red, Green, Blue) color values. </param> 
+			<returns>YCgCo (Luma, Chrominance Green, Chrominance Orange) color values.</returns>
+		</member>
+		<member name="M:Unigine.Color Space Functions.ycgcoToRgb(Unigine.vec3)">
+			<summary>
+			Converts YCgCo (Luma, Chrominance Green, Chrominance Orange) color values to RGB (Red, Green, Blue) color values.
+			</summary> 
+			<param name="ycc"> YCgCo (Luma, Chrominance Green, Chrominance Orange) color values. </param> 
+			<returns>RGB (Red, Green, Blue) color values.</returns>
+		</member>
+	</members>
+</doc>

@@ -18,22 +18,16 @@
 namespace Unigine
 {
 
-struct TreeAllocator
-{
-	static void *allocate(size_t size) { return Memory::allocate(size); }
-	static void deallocate(void *ptr) { Memory::deallocate(ptr); }
-};
-
-template <typename Key, typename Data, typename Allocator = TreeAllocator>
+template <typename Key, typename Data>
 class Tree
 {
 public:
-	using Node = Data;
+	using NodeType = Data;
 	template<typename IteratorType>
 	class IteratorTemplate
 	{
 	private:
-		friend class Tree<Key, Data, Allocator>;
+		friend class Tree<Key, Data>;
 	public:
 		using KeyType = Key;
 		using DataType = Data;
@@ -41,7 +35,7 @@ public:
 		UNIGINE_INLINE IteratorTemplate()
 			: node(nullptr)
 		{}
-		UNIGINE_INLINE IteratorTemplate(Node *node)
+		UNIGINE_INLINE IteratorTemplate(NodeType *node)
 			: node(node)
 		{}
 		UNIGINE_INLINE IteratorTemplate(const IteratorTemplate &it)
@@ -80,7 +74,7 @@ public:
 					node = node->left;
 			} else
 			{
-				Node *p = node->parent;
+				NodeType *p = node->parent;
 				while (p && node == p->right)
 				{
 					node = p;
@@ -99,7 +93,7 @@ public:
 					node = node->right;
 			} else
 			{
-				Node *p = node->parent;
+				NodeType *p = node->parent;
 				while (p && node == p->left)
 				{
 					node = p;
@@ -110,11 +104,11 @@ public:
 			}
 		}
 
-		Node *node;
+		NodeType *node;
 	};
 
-	using Iterator = IteratorTemplate<Node>;
-	using ConstIterator = IteratorTemplate<const Node>;
+	using Iterator = IteratorTemplate<NodeType>;
+	using ConstIterator = IteratorTemplate<const NodeType>;
 
 	using iterator = Iterator;
 	using const_iterator = ConstIterator;
@@ -136,7 +130,7 @@ public:
 		int i = length;
 		length = o.length;
 		o.length = i;
-		Node *n = root;
+		NodeType *n = root;
 		root = o.root;
 		o.root = n;
 	}
@@ -156,8 +150,8 @@ public:
 	{
 		size_t ret = 0;
 		ret += sizeof(length);
-		ret += sizeof(Node *);
-		ret += length * sizeof(Node);
+		ret += sizeof(NodeType *);
+		ret += length * sizeof(NodeType);
 		return ret;
 	}
 	UNIGINE_INLINE bool empty() const { return (length == 0); }
@@ -187,14 +181,14 @@ public:
 
 	UNIGINE_INLINE bool remove(const Key &key)
 	{
-		Node *node = do_remove(key);
+		NodeType *node = do_remove(key);
 		bool ret = node != nullptr;
 		delete node;
 		return ret;
 	}
 	template<typename IteratorType>
 	UNIGINE_INLINE bool remove(const IteratorTemplate<IteratorType> &it) {
-		Node *node = do_remove(it.node);
+		NodeType *node = do_remove(it.node);
 		bool ret = node != nullptr;
 		delete node;
 		return ret;
@@ -212,7 +206,7 @@ public:
 	template <class T>
 	UNIGINE_INLINE bool contains(const T &key) const
 	{
-		Node *node = root;
+		NodeType *node = root;
 		while (node && (node->key == key) == 0)
 			node = node->dirs[key < node->key];
 		return node != nullptr;
@@ -232,34 +226,34 @@ public:
 	}
 
 protected:
-	UNIGINE_INLINE Node *get_begin() const
+	UNIGINE_INLINE NodeType *get_begin() const
 	{
 		if (root)
 		{
-			Node *node = root;
+			NodeType *node = root;
 			while (node->left)
 				node = node->left;
 			return node;
 		}
 		return nullptr;
 	}
-	UNIGINE_INLINE Node *get_back() const
+	UNIGINE_INLINE NodeType *get_back() const
 	{
 		if (root)
 		{
-			Node *node = root;
+			NodeType *node = root;
 			while (node->right)
 				node = node->right;
 			return node;
 		}
 		return nullptr;
 	}
-	void copy_proc(Node *&dest_root, Node *&dest_parent, const Node *src_root)
+	void copy_proc(NodeType *&dest_root, NodeType *&dest_parent, const NodeType *src_root)
 	{
 		if (src_root == nullptr)
 			return;
 		length++;
-		dest_root = new Node(*src_root);
+		dest_root = new NodeType(*src_root);
 		dest_root->parent = dest_parent;
 		dest_root->balance = src_root->balance;
 
@@ -268,19 +262,19 @@ protected:
 	}
 
 	template<typename T>
-	UNIGINE_INLINE Node *do_find(const T &key) const
+	UNIGINE_INLINE NodeType *do_find(const T &key) const
 	{
-		Node *node = root;
+		NodeType *node = root;
 		while (node && (node->key == key) == 0)
 			node = node->dirs[key < node->key];
 		return node;
 	}
 
 	template<typename T>
-	UNIGINE_INLINE Node *do_lower_bound(const T &key) const
+	UNIGINE_INLINE NodeType *do_lower_bound(const T &key) const
 	{
-		Node *node = root;
-		Node *last_node = nullptr;
+		NodeType *node = root;
+		NodeType *last_node = nullptr;
 		while (node)
 		{
 			if (node->key < key)
@@ -297,10 +291,10 @@ protected:
 	}
 
 	template<typename T>
-	UNIGINE_INLINE Node *do_upper_bound(const T &key) const
+	UNIGINE_INLINE NodeType *do_upper_bound(const T &key) const
 	{
-		Node *node = root;
-		Node *last_node = nullptr;
+		NodeType *node = root;
+		NodeType *last_node = nullptr;
 		while (node)
 		{
 			if (key < node->key)
@@ -316,12 +310,12 @@ protected:
 		return last_node;
 	}
 
-	Node *&do_find_node(const Key &key, Node *&parent)
+	NodeType *&do_find_node(const Key &key, NodeType *&parent)
 	{
 		if (root == nullptr)
 			return root;
 
-		Node *node = root;
+		NodeType *node = root;
 		int dir = -1;
 		while (node && (node->key == key) == 0)
 		{
@@ -332,13 +326,13 @@ protected:
 	}
 
 	template<typename T>
-	Node *do_append(T &&key)
+	NodeType *do_append(T &&key)
 	{
-		Node *parent = nullptr;
-		Node *&finded_node = do_find_node(key, parent);
+		NodeType *parent = nullptr;
+		NodeType *&finded_node = do_find_node(key, parent);
 		if (finded_node == nullptr)
 		{
-			Node *new_node = new Node(std::forward<T>(key), parent);
+			NodeType *new_node = new NodeType(std::forward<T>(key), parent);
 			finded_node = new_node;
 			if (parent)
 				rebalance_insert(new_node);
@@ -348,10 +342,10 @@ protected:
 		return finded_node;
 	}
 
-	Node *do_append_node(Node *new_node)
+	NodeType *do_append_node(NodeType *new_node)
 	{
-		Node *parent = nullptr;
-		Node *&finded_node = do_find_node(new_node->key, parent);
+		NodeType *parent = nullptr;
+		NodeType *&finded_node = do_find_node(new_node->key, parent);
 		if (finded_node == nullptr)
 		{
 			new_node->parent = parent;
@@ -366,9 +360,9 @@ protected:
 		return nullptr;
 	}
 
-	Node *do_remove(const Key &key) { return root == nullptr ? nullptr : do_remove(do_find(key)); }
+	NodeType *do_remove(const Key &key) { return root == nullptr ? nullptr : do_remove(do_find(key)); }
 
-	Node *do_remove(Node *node)
+	NodeType *do_remove(NodeType *node)
 	{
 		if (root == nullptr)
 			return nullptr;
@@ -376,9 +370,9 @@ protected:
 			return nullptr;
 		length--;
 
-		Node *parent = node->parent;
-		Node *target = node->parent;
-		Node *child;
+		NodeType *parent = node->parent;
+		NodeType *target = node->parent;
+		NodeType *child;
 		bool left = false;
 		if (node->left == nullptr)
 			child = node->right;
@@ -396,7 +390,7 @@ protected:
 				root = target;
 
 			child = target->right;
-			Node *targe_parent = target->parent;
+			NodeType *targe_parent = target->parent;
 			target->parent = parent;
 			target->left = node->left;
 			node->left->parent = target;
@@ -435,10 +429,10 @@ protected:
 		return node;
 	}
 
-	UNIGINE_INLINE void rotate_left(Node *n)
+	UNIGINE_INLINE void rotate_left(NodeType *n)
 	{
-		Node *parent = n->parent;
-		Node *right = n->right;
+		NodeType *parent = n->parent;
+		NodeType *right = n->right;
 		n->right = right->left;
 		if (n->right)
 			n->right->parent = n;
@@ -454,10 +448,10 @@ protected:
 		parent->dirs[parent->left == n] = right;
 	}
 
-	UNIGINE_INLINE void rotate_right(Node *n)
+	UNIGINE_INLINE void rotate_right(NodeType *n)
 	{
-		Node *parent = n->parent;
-		Node *left = n->left;
+		NodeType *parent = n->parent;
+		NodeType *left = n->left;
 		n->left = left->right;
 		if (n->left)
 			n->left->parent = n;
@@ -473,21 +467,21 @@ protected:
 		parent->dirs[parent->left == n] = left;
 	}
 
-	UNIGINE_INLINE void rotate_left_right(Node *parent)
+	UNIGINE_INLINE void rotate_left_right(NodeType *parent)
 	{
 		rotate_left(parent->left);
 		rotate_right(parent);
 	}
 
-	UNIGINE_INLINE void rotate_right_left(Node *parent)
+	UNIGINE_INLINE void rotate_right_left(NodeType *parent)
 	{
 		rotate_right(parent->right);
 		rotate_left(parent);
 	}
 
-	void rebalance_insert(Node *node)
+	void rebalance_insert(NodeType *node)
 	{
-		Node *parent = node;
+		NodeType *parent = node;
 		do
 		{
 			node = parent;
@@ -507,7 +501,7 @@ protected:
 					return;
 				}
 
-				Node *child = node->right;
+				NodeType *child = node->right;
 				parent->balance = node->balance = 0;
 				if (child->balance == -1) parent->balance = 1;
 				else if (child->balance == 1) node->balance = -1;
@@ -530,7 +524,7 @@ protected:
 					return;
 				}
 
-				Node *child = node->left;
+				NodeType *child = node->left;
 				parent->balance = node->balance = 0;
 				if (child->balance == 1) parent->balance = -1;
 				else if (child->balance == -1) node->balance = 1;
@@ -542,9 +536,9 @@ protected:
 		} while (parent->parent);
 	}
 
-	void rebalance_remove(Node *node, bool left)
+	void rebalance_remove(NodeType *node, bool left)
 	{
-		for (Node *parent; node; node = parent)
+		for (NodeType *parent; node; node = parent)
 		{
 			parent = node->parent;
 			if (left)
@@ -557,7 +551,7 @@ protected:
 				if (node->balance == 0)
 					continue;
 
-				Node *child = node->right;
+				NodeType *child = node->right;
 
 				if (child->balance == 0)
 				{
@@ -573,7 +567,7 @@ protected:
 					continue;
 				}
 
-				Node *child_left = child->left;
+				NodeType *child_left = child->left;
 				node->balance = child->balance = 0;
 				if (child_left->balance == 1)
 					node->balance = -1;
@@ -593,7 +587,7 @@ protected:
 				if (node->balance == 0)
 					continue;
 
-				Node *child = node->left;
+				NodeType *child = node->left;
 				if (child->balance == 0)
 				{
 					node->balance = -1;
@@ -609,7 +603,7 @@ protected:
 					continue;
 				}
 
-				Node *child_right = child->right;
+				NodeType *child_right = child->right;
 				node->balance = child->balance = 0;
 				if (child_right->balance == -1)
 					node->balance = 1;
@@ -624,7 +618,7 @@ protected:
 	}
 
 	int length;
-	Node *root;
+	NodeType *root;
 };
 
 }

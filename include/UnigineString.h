@@ -17,6 +17,7 @@
 #include <UnigineVector.h>
 #include <UnigineHashMap.h>
 #include <UnigineHashSet.h>
+#include <UnigineThread.h>
 
 #ifdef __GNUC__
 	#pragma GCC diagnostic push
@@ -51,7 +52,7 @@ public:
 		data[0] = '\0';
 	}
 
-	UNIGINE_INLINE String(String &&s) : capacity(STACK_CAPACITY), dynamic(false), data(stack_data)
+	UNIGINE_INLINE String(String &&s) noexcept : capacity(STACK_CAPACITY), dynamic(false), data(stack_data)
 	{
 		if (s.dynamic)
 		{
@@ -91,7 +92,7 @@ public:
 		if (dynamic)
 			Memory::deallocate(data);
 	}
-	
+
 protected:
 	UNIGINE_INLINE static auto get_ncompare_func(bool case_sensitive)
 	{
@@ -128,7 +129,7 @@ public:
 		do_copy(s, s.length);
 		return *this;
 	}
-	UNIGINE_INLINE String &operator=(String &&s)
+	UNIGINE_INLINE String &operator=(String &&s) noexcept
 	{
 		if (data == s.data)
 			return *this;
@@ -221,6 +222,9 @@ public:
 			return;
 
 		capacity = size + 1;
+		if (data && dynamic && Memory::tryReallocate(data, capacity))
+			return;
+
 		char *new_data = (char *)Memory::allocate(capacity);
 		memcpy(new_data, data, length + 1);
 		if (dynamic)
@@ -236,6 +240,9 @@ public:
 			return;
 
 		capacity = grow_to(size);
+		if (data && dynamic && Memory::tryReallocate(data, capacity))
+			return;
+
 		char *new_data = (char *)Memory::allocate(capacity);
 		memcpy(new_data, data, length + 1);
 		if (dynamic)
@@ -400,7 +407,7 @@ public:
 	UNIGINE_INLINE bool contains(char c, bool case_sensitive = true) const { return find(c, case_sensitive) != -1; }
 	UNIGINE_INLINE bool contains(const char *s, bool case_sensitive = true) const { return find(s, case_sensitive) != -1; }
 	UNIGINE_INLINE bool contains(const String &s, bool case_sensitive = true) const { return find(s, case_sensitive) != -1; }
-	
+
 	UNIGINE_INLINE bool containsChar(const char *s) const
 	{
 		if (s == nullptr)
@@ -450,7 +457,7 @@ public:
 		unsigned int temp_capacity = capacity;
 		capacity = s.capacity;
 		s.capacity = temp_capacity;
-		
+
 		unsigned int temp_dynamic = dynamic;
 		dynamic = s.dynamic;
 		s.dynamic = temp_dynamic;
@@ -651,11 +658,11 @@ public:
 		if (!str0 || !str1)
 			return -1;
 
-		#ifdef _WIN32
-			return case_sensitive ? strcmp(str0, str1) : _stricmp(str0, str1);
-		#else
-			return case_sensitive ? strcmp(str0, str1) : strcasecmp(str0, str1);
-		#endif
+	#ifdef _WIN32
+		return case_sensitive ? strcmp(str0, str1) : _stricmp(str0, str1);
+	#else
+		return case_sensitive ? strcmp(str0, str1) : strcasecmp(str0, str1);
+	#endif
 	}
 	UNIGINE_INLINE static int ncompare(const char *str0, const char *str1, int size)
 	{
@@ -663,7 +670,7 @@ public:
 			return 0;
 		if (!str0 || !str1)
 			return -1;
-		
+
 		return strncmp(str0, str1, size);
 	}
 	UNIGINE_INLINE static int ncompare(const char *str0, const char *str1, int size, bool case_sensitive)
@@ -673,11 +680,11 @@ public:
 		if (!str0 || !str1)
 			return -1;
 
-		#ifdef _WIN32
-			return case_sensitive ? strncmp(str0, str1, size) : _strnicmp(str0, str1, size);
-		#else
-			return case_sensitive ? strncmp(str0, str1, size) : strncasecmp(str0, str1, size);
-		#endif
+	#ifdef _WIN32
+		return case_sensitive ? strncmp(str0, str1, size) : _strnicmp(str0, str1, size);
+	#else
+		return case_sensitive ? strncmp(str0, str1, size) : strncasecmp(str0, str1, size);
+	#endif
 	}
 
 	UNIGINE_INLINE static bool isspace(int code) { return code == ' ' || code == '\t'; }
@@ -1173,8 +1180,8 @@ public:
 	UNIGINE_INLINE static bool isEmpty(const char *str) { return str == nullptr || *str == 0; }
 
 	UNIGINE_INLINE static bool equal(const char *s0, const char *s1) { return compare(s0, s1) == 0; }
-	UNIGINE_INLINE static bool equal(const String &s0, const char *s1) { return equal(s0.get(), s1); }
-	UNIGINE_INLINE static bool equal(const char *s0, const String &s1) { return equal(s0, s1.get()); }
+	UNIGINE_INLINE static bool equal(const String &s0, const char *s1) { return (s0.empty() && s1 == nullptr) || equal(s0.get(), s1); }
+	UNIGINE_INLINE static bool equal(const char *s0, const String &s1) { return (s1.empty() && s0 == nullptr) || equal(s0, s1.get()); }
 	UNIGINE_INLINE static bool equal(const String &s0, const String &s1) { return s0.length == s1.length && equal(s0.get(), s1.get()); }
 
 	UNIGINE_INLINE static int utf8strlen(const char *str)
@@ -1336,13 +1343,20 @@ protected:
 		} else
 		{
 			capacity = grow_to(length + size);
-			char *new_data = (char *)Memory::allocate(capacity);
-			memcpy(new_data, data, length);
-			memcpy(new_data + length, s, size);
-			if (dynamic)
-				Memory::deallocate(data);
-			dynamic = true;
-			data = new_data;
+			if (dynamic && Memory::tryReallocate(data, capacity))
+			{
+				memcpy(data + length, s, size);
+			}
+			else
+			{
+				char *new_data = (char *)Memory::allocate(capacity);
+				memcpy(new_data, data, length);
+				memcpy(new_data + length, s, size);
+				if (dynamic)
+					Memory::deallocate(data);
+				dynamic = true;
+				data = new_data;
+			}
 		}
 
 		length += size;
@@ -1849,44 +1863,36 @@ class StringPoolPtr
 {
 public:
 	StringPoolPtr() = default;
-	StringPoolPtr(const String &str) { set(str); }
 	StringPoolPtr(const char *str) { set(str); }
+	StringPoolPtr(const String &str) { set(str); }
 
 	static unsigned long long calcHash(const char *str);
 	static unsigned long long calcHash(const String &str);
 
-	void set(const String &str);
 	void set(const char *str);
+	void set(const String &str);
 
+	const char *get() const
+	{
+		if (ptr)
+			return ptr->str.get();
+		return "";
+	}
 	const String &getString() const
 	{
 		if (ptr == nullptr)
 			return String::null;
-		return *ptr;
-	}
-	const char *get() const
-	{
-		if (ptr)
-			return ptr->get();
-		return "";
+		return ptr->str;
 	}
 
-	unsigned long long getHash() const { return hash; }
+	unsigned long long getHash() const { return ptr ? ptr->hash : 0; }
 	bool isEmpty() const { return ptr == nullptr; }
 	bool isValid() const { return ptr != nullptr; }
 
-	static size_t getPoolMemoryUsage()
-	{
-		ScopedLock lock(mutex);
-		size_t size = pool.getMemoryUsage();;
-		for (auto &it : pool)
-			size += it.data->getMemoryUsage();
-		return size;
-	}
+	static size_t getPoolMemoryUsage() { return memory + pool.getMemoryUsage(); }
 
 	void clear()
 	{
-		hash = 0;
 		ptr = nullptr;
 	}
 
@@ -1902,11 +1908,22 @@ public:
 	}
 
 private:
-	static HashMap<unsigned long long, String *> pool;
+	struct Data
+	{
+		Data(const String &str, unsigned long long hash): hash(hash), str(str) {}
+		Data(const char *str, unsigned long long hash): hash(hash), str(str) {}
+
+		unsigned long long hash;
+		String str;
+
+		size_t getMemoryUsage() const { return sizeof(Data) + str.getMemoryUsage(); }
+	};
+
+	static HashMap<unsigned long long, Data *> pool;
+	static size_t memory;
 	static Mutex mutex;
 
-	unsigned long long hash{0};
-	String *ptr{nullptr};
+	Data *ptr = nullptr;
 };
 
 UNIGINE_INLINE bool operator==(const StringPoolPtr &s0, const StringPoolPtr &s1) { return s0.getHash() == s1.getHash(); }
@@ -1934,20 +1951,24 @@ struct Hasher<String>
 	using HashType = unsigned int;
 	UNIGINE_INLINE static HashType create(const char *v) { return String::hash(v); }
 	UNIGINE_INLINE static HashType create(const String &v) { return String::hash(v.get(), v.size()); }
+	UNIGINE_INLINE static HashType create(const StringPoolPtr &v) { return create(v.getString()); }
 };
 
 template<int size>
 struct Hasher<StringStack<size>>
 {
 	using HashType = unsigned int;
-	UNIGINE_INLINE static HashType create(const char *v) { return String::hash(v); }
-	UNIGINE_INLINE static HashType create(const StringStack<size> &v) { return String::hash(v.get(), v.size()); }
+	UNIGINE_INLINE static HashType create(const char *v) { return Hasher<String>::create(v); }
+	UNIGINE_INLINE static HashType create(const String &v) { return Hasher<String>::create(v); }
+	UNIGINE_INLINE static HashType create(const StringPoolPtr &v) { return Hasher<String>::create(v); }
 };
 
 template<>
 struct Hasher<StringPoolPtr>
 {
 	using HashType = unsigned long long;
+	UNIGINE_INLINE static HashType create(const char *v) { return StringPoolPtr::calcHash(v); }
+	UNIGINE_INLINE static HashType create(const String &v) { return StringPoolPtr::calcHash(v); }
 	UNIGINE_INLINE static HashType create(const StringPoolPtr &v) { return v.getHash(); }
 };
 

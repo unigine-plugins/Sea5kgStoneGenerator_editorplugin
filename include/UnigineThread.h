@@ -42,9 +42,9 @@ UNIGINE_INLINE bool AtomicCAS(volatile char *ptr, char old_value, char new_value
 {
 	assert((((size_t)ptr) % (sizeof(char))) == 0 && "unaligned atomic!");
 	#ifdef _WIN32
-		return (_InterlockedCompareExchange8(ptr, new_value, old_value) == old_value);
+		return *ptr == old_value && (_InterlockedCompareExchange8(ptr, new_value, old_value) == old_value);
 	#elif _LINUX || UNIGINE_PS5
-		return (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
+		return *ptr == old_value && (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
 	#endif
 }
 
@@ -53,9 +53,9 @@ UNIGINE_INLINE bool AtomicCAS(volatile short *ptr, short old_value, short new_va
 {
 	assert((((size_t)ptr) % (sizeof(short))) == 0 && "unaligned atomic!");
 	#ifdef _WIN32
-		return (_InterlockedCompareExchange16(ptr, new_value, old_value) == old_value);
+		return *ptr == old_value && (_InterlockedCompareExchange16(ptr, new_value, old_value) == old_value);
 	#elif _LINUX || UNIGINE_PS5
-		return (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
+		return *ptr == old_value && (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
 	#endif
 }
 
@@ -64,9 +64,9 @@ UNIGINE_INLINE bool AtomicCAS(volatile int *ptr, int old_value, int new_value)
 {
 	assert((((size_t)ptr) % (sizeof(int))) == 0 && "unaligned atomic!");
 	#ifdef _WIN32
-		return (_InterlockedCompareExchange((volatile long *)ptr, new_value, old_value) == old_value);
+		return *ptr == old_value && (_InterlockedCompareExchange((volatile long *)ptr, new_value, old_value) == old_value);
 	#elif _LINUX || UNIGINE_PS5
-		return (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
+		return *ptr == old_value && (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
 	#endif
 }
 
@@ -75,9 +75,9 @@ UNIGINE_INLINE bool AtomicCAS(volatile long long *ptr, long long old_value, long
 {
 	assert((((size_t)ptr) % (sizeof(int))) == 0 && "unaligned atomic!");
 	#ifdef _WIN32
-		return (_InterlockedCompareExchange64(ptr, new_value, old_value) == old_value);
+		return *ptr == old_value && (_InterlockedCompareExchange64(ptr, new_value, old_value) == old_value);
 	#elif _LINUX || UNIGINE_PS5
-		return (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
+		return *ptr == old_value && (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
 	#endif
 }
 /// Atomic CAS (Compare-And-Swap), pointer.
@@ -85,9 +85,9 @@ UNIGINE_INLINE bool AtomicCAS(void *volatile * ptr, void *old_value, void *new_v
 {
 	assert((((size_t)ptr) % (sizeof(int))) == 0 && "unaligned atomic!");
 	#ifdef _WIN32
-		return (_InterlockedCompareExchangePointer(ptr, new_value, old_value) == old_value);
+		return *ptr == old_value && (_InterlockedCompareExchangePointer(ptr, new_value, old_value) == old_value);
 	#elif _LINUX || UNIGINE_PS5
-		return (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
+		return *ptr == old_value && (__sync_val_compare_and_swap(ptr, old_value, new_value) == old_value);
 	#endif
 }
 
@@ -141,92 +141,162 @@ UNIGINE_INLINE long long AtomicAdd(volatile long long *ptr, long long value)
 
 /// Atomic read, 8-bit.
 /// Because simply accessing the variable directly is actually unsafe!
-UNIGINE_INLINE char AtomicGet(volatile char *ptr)
+UNIGINE_INLINE char AtomicGet(const volatile char *ptr)
 {
-	return AtomicAdd(ptr, 0);
+#if defined(_WIN32)
+	char value = *ptr;
+	_ReadWriteBarrier();
+	return value;
+#elif defined(_LINUX) || defined(UNIGINE_PS5)
+	return __atomic_load_n(ptr, __ATOMIC_ACQUIRE);
+#endif
 }
 
 /// Atomic bool, 8-bit.
 /// Because simply accessing the variable directly is actually unsafe!
-UNIGINE_INLINE bool AtomicGet(volatile bool *ptr)
+UNIGINE_INLINE bool AtomicGet(const volatile bool *ptr)
 {
-	return AtomicAdd(reinterpret_cast<volatile char *>(ptr), 0) != 0;
+	return AtomicGet(reinterpret_cast<const volatile char *>(ptr)) != 0;
 }
 
 /// Atomic read, 16-bit.
 /// Because simply accessing the variable directly is actually unsafe!
-UNIGINE_INLINE short AtomicGet(volatile short *ptr)
+UNIGINE_INLINE short AtomicGet(const volatile short *ptr)
 {
-	return AtomicAdd(ptr, 0);
+#if defined(_WIN32)
+	short value = *ptr;
+	_ReadWriteBarrier();
+	return value;
+#elif defined(_LINUX) || defined(UNIGINE_PS5)
+	return __atomic_load_n(ptr, __ATOMIC_ACQUIRE);
+#endif
 }
 
 /// Atomic read, 32-bit.
 /// Because simply accessing the variable directly is actually unsafe!
-UNIGINE_INLINE int AtomicGet(volatile int *ptr)
+UNIGINE_INLINE int AtomicGet(const volatile int *ptr)
 {
-	return AtomicAdd(ptr, 0);
+#if defined(_WIN32)
+	int value = *ptr;
+	_ReadWriteBarrier();
+	return value;
+#elif defined(_LINUX) || defined(UNIGINE_PS5)
+	return __atomic_load_n(ptr, __ATOMIC_ACQUIRE);
+#endif
 }
 
 /// Atomic read, 64-bit.
 /// Because simply accessing the variable directly is actually unsafe!
-UNIGINE_INLINE long long AtomicGet(volatile long long *ptr)
+UNIGINE_INLINE long long AtomicGet(const volatile long long *ptr)
 {
-	return AtomicAdd(ptr, 0);
+#if defined(_WIN32)
+	long long value = *ptr;
+	_ReadWriteBarrier();
+	return value;
+#elif defined(_LINUX) || defined(UNIGINE_PS5)
+	return __atomic_load_n(ptr, __ATOMIC_ACQUIRE);
+#endif
 }
 
 /// Atomic set, 8-bit.
-/// Returns the previous value.
-UNIGINE_INLINE char AtomicSet(volatile char *ptr, char value)
+UNIGINE_INLINE void AtomicSet(volatile char *ptr, char value)
 {
-	for (;;)
-	{
-		char old = AtomicAdd(ptr, 0);
-		if (AtomicCAS(ptr, old, value))
-			return old;
-	}
+#if defined(_WIN32)
+	_ReadWriteBarrier();
+	*ptr = value;
+#elif defined(_LINUX) || defined(UNIGINE_PS5)
+	__atomic_store_n(ptr, value, __ATOMIC_RELEASE);
+#endif
 }
 
 /// Atomic set, 8-bit.
-/// Returns the previous value.
-UNIGINE_INLINE bool AtomicSet(volatile bool *ptr, bool value)
+UNIGINE_INLINE void AtomicSet(volatile bool *ptr, bool value)
 {
-	return AtomicSet(reinterpret_cast<volatile char *>(ptr), char(value)) != 0;
+	AtomicSet(reinterpret_cast<volatile char *>(ptr), char(value));
 }
 
 /// Atomic set, 16-bit.
-/// Returns the previous value.
-UNIGINE_INLINE short AtomicSet(volatile short *ptr, short value)
+UNIGINE_INLINE void AtomicSet(volatile short *ptr, short value)
 {
-	for (;;)
-	{
-		short old = AtomicAdd(ptr, 0);
-		if (AtomicCAS(ptr, old, value))
-			return old;
-	}
+#if defined(_WIN32)
+	_ReadWriteBarrier();
+	*ptr = value;
+#elif defined(_LINUX) || defined(UNIGINE_PS5)
+	__atomic_store_n(ptr, value, __ATOMIC_RELEASE);
+#endif
 }
 
 /// Atomic set, 32-bit.
-/// Returns the previous value.
-UNIGINE_INLINE int AtomicSet(volatile int *ptr, int value)
+UNIGINE_INLINE void AtomicSet(volatile int *ptr, int value)
 {
-	for (;;)
-	{
-		int old = AtomicAdd(ptr, 0);
-		if (AtomicCAS(ptr, old, value))
-			return old;
-	}
+#if defined(_WIN32)
+	_ReadWriteBarrier();
+	*ptr = value;
+#elif defined(_LINUX) || defined(UNIGINE_PS5)
+	__atomic_store_n(ptr, value, __ATOMIC_RELEASE);
+#endif
 }
 
 /// Atomic set, 64-bit.
-/// Returns the previous value.
-UNIGINE_INLINE long long AtomicSet(volatile long long *ptr, long long value)
+UNIGINE_INLINE void AtomicSet(volatile long long *ptr, long long value)
 {
-	for (;;)
-	{
-		long long old = AtomicAdd(ptr, 0);
-		if (AtomicCAS(ptr, old, value))
-			return old;
-	}
+#if defined(_WIN32)
+	_ReadWriteBarrier();
+	*ptr = value;
+#elif defined(_LINUX) || defined(UNIGINE_PS5)
+	__atomic_store_n(ptr, value, __ATOMIC_RELEASE);
+#endif
+}
+
+/// Atomic swap, 8-bit.
+/// Returns the previous value.
+UNIGINE_INLINE char AtomicSwap(volatile char *ptr, char value)
+{
+#if defined(_WIN32)
+	return _InterlockedExchange8(ptr, value);
+#elif defined(_LINUX) || defined(UNIGINE_PS5)
+	return __atomic_exchange_n(ptr, value, __ATOMIC_ACQ_REL);
+#endif
+}
+
+/// Atomic swap, 8-bit.
+/// Returns the previous value.
+UNIGINE_INLINE bool AtomicSwap(volatile bool *ptr, bool value)
+{
+	return AtomicSwap(reinterpret_cast<volatile char *>(ptr), char(value)) != 0;
+}
+
+/// Atomic swap, 16-bit.
+/// Returns the previous value.
+UNIGINE_INLINE short AtomicSwap(volatile short *ptr, short value)
+{
+#if defined(_WIN32)
+	return _InterlockedExchange16(ptr, value);
+#elif defined(_LINUX) || defined(UNIGINE_PS5)
+	return __atomic_exchange_n(ptr, value, __ATOMIC_ACQ_REL);
+#endif
+}
+
+/// Atomic swap, 32-bit.
+/// Returns the previous value.
+UNIGINE_INLINE int AtomicSwap(volatile int *ptr, int value)
+{
+#if defined(_WIN32)
+	return _InterlockedExchange(reinterpret_cast<volatile long *>(ptr), value);
+#elif defined(_LINUX) || defined(UNIGINE_PS5)
+	return __atomic_exchange_n(ptr, value, __ATOMIC_ACQ_REL);
+#endif
+}
+
+/// Atomic swap, 64-bit.
+/// Returns the previous value.
+UNIGINE_INLINE long long AtomicSwap(volatile long long *ptr, long long value)
+{
+#if defined(_WIN32)
+	return _InterlockedExchange64(ptr, value);
+#elif defined(_LINUX) || defined(UNIGINE_PS5)
+	return __atomic_exchange_n(ptr, value, __ATOMIC_ACQ_REL);
+#endif
 }
 
 /// Thread wrapper class.
@@ -239,18 +309,18 @@ public:
 	// Runs the thread.
 	// size argument accepts thread stack size in bytes.
 	// Returns 1 if the thread was successfully run; otherwise, 0 is returned.
-	virtual int run(size_t size = 0x100000);
+	virtual bool run(size_t size = 0x100000);
 
 	// Stops the thread.
 	// Returns 1 if the operation was a success; otherwise, 0 is returned.
-	int stop();
+	bool stop();
 
 	// Signals the thread to wake up.
 	void signal();
 
 	// Terminates the thread.
 	// Returns 1 if the operation was a success; otherwise, 0 is returned.
-	int terminate();
+	bool terminate();
 
 	// Checks if the thread is running.
 	// Returns 1 if the thread is running; otherwise, 0 is returned.
@@ -327,6 +397,7 @@ protected:
 	mutable int priority;
 	ID thread_id;
 	WaitVariable *wait_variable{nullptr};
+	volatile char run_mutex{0};
 };
 
 class BackoffSpinner
@@ -334,53 +405,43 @@ class BackoffSpinner
 public:
 	void spin()
 	{
-		if (backoff < 10)
-			_mm_pause();
-		else if (backoff < 20)
-			for (int i = 0; i < 50; ++i) _mm_pause();
-		else if (backoff < 22)
-			for (int i = 0; i < 100; ++i) _mm_pause();
-		else
+		if (backoff >= 22)
 		{
 			Thread::switchThread();
-			return;
+		} else
+		{
+			if (backoff < 10)
+				_mm_pause();
+			else if (backoff < 20)
+				for (int i = 0; i < 50; ++i) _mm_pause();
+			else
+				for (int i = 0; i < 100; ++i) _mm_pause();
+			++backoff;
 		}
-
-		++backoff;
 	}
 private:
-	int backoff{0};
+	unsigned char backoff{0};
 };
 
 /// Spinlock, based on atomic CAS.
 /// Now with unlocked dirty reads, proper waits, and exponential backoff.
 UNIGINE_INLINE void SpinLock(volatile int *ptr, int old_value, int new_value)
 {
-	const int TRIES = 3;
 	BackoffSpinner spinner;
-	while (true)
+	for (;;)
 	{
-		for (int i = 0; i < TRIES; i++)
-		{
-			if (*ptr == old_value && AtomicCAS(ptr, old_value, new_value))
-				return;
-			_mm_pause();
-		}
+		if (AtomicCAS(ptr, old_value, new_value))
+			return;
 		spinner.spin();
 	}
 }
 UNIGINE_INLINE void SpinLock(volatile char *ptr, char old_value, char new_value)
 {
-	const int TRIES = 3;
 	BackoffSpinner spinner;
-	while (true)
+	for (;;)
 	{
-		for (int i = 0; i < TRIES; i++)
-		{
-			if (*ptr == old_value && AtomicCAS(ptr, old_value, new_value))
-				return;
-			_mm_pause();
-		}
+		if (AtomicCAS(ptr, old_value, new_value))
+			return;
 		spinner.spin();
 	}
 }
@@ -388,33 +449,11 @@ UNIGINE_INLINE void SpinLock(volatile char *ptr, char old_value, char new_value)
 /// Waits for, but does not acquire the lock.
 UNIGINE_INLINE void WaitLock(volatile int *ptr, int value)
 {
-	const int TRIES = 3;
-	BackoffSpinner spinner;
-	while (true)
-	{
-		for (int i = 0; i < TRIES; i++)
-		{
-			if (*ptr == value && AtomicCAS(ptr, value, value))
-				return;
-			_mm_pause();
-		}
-		spinner.spin();
-	}
+	SpinLock(ptr, value, value);
 }
 UNIGINE_INLINE void WaitLock(volatile char *ptr, char value)
 {
-	const int TRIES = 3;
-	BackoffSpinner spinner;
-	while (true)
-	{
-		for (int i = 0; i < TRIES; i++)
-		{
-			if (*ptr == value && AtomicCAS(ptr, value, value))
-				return;
-			_mm_pause();
-		}
-		spinner.spin();
-	}
+	SpinLock(ptr, value, value);
 }
 
 /// Simple mutex, based on atomic CAS.
@@ -423,8 +462,10 @@ class UNIGINE_API Mutex
 public:
 	Mutex(): locked(0) {}
 	void lock() { SpinLock(&locked, 0, 1); }
+	bool tryLock() { return AtomicCAS(&locked, 0, 1); }
 	void unlock() { AtomicSet(&locked, 0); }
-	bool isLocked() const { return AtomicGet(&locked) != 0; }
+	bool isLocked() const { return locked != 0 && (locked == 1 || AtomicGet(&locked) != 0); }
+	bool isLockedFast() const { return locked != 0; }
 	void wait() { WaitLock(&locked, 0); }
 private:
 	mutable volatile char locked{0};
@@ -438,6 +479,14 @@ public:
 	~ScopedLock() { mutex.unlock(); }
 private:
 	Mutex &mutex;
+};
+class ScopedLockChar
+{
+public:
+	ScopedLockChar(volatile char &m) : mutex(m) { SpinLock(&mutex, 0, 1); }
+	~ScopedLockChar() { AtomicSet(&mutex, 0); }
+private:
+	volatile char &mutex;
 };
 
 /// Write-preferring readers-writer mutex.
@@ -466,7 +515,7 @@ public:
 		BackoffSpinner spinner;
 		while (true)
 		{
-			if (writer == 0 && AtomicCAS(&writer, 0, 1))
+			if (AtomicCAS(&writer, 0, 1))
 			{
 				while (readers || AtomicGet(&readers))
 					spinner.spin();
@@ -550,7 +599,7 @@ public:
 	void wait() { mutex.wait(); }
 
 private:
-	
+
 	volatile long long thread_id;
 	volatile int depth;
 	Mutex mutex;

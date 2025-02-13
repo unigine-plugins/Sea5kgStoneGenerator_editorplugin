@@ -26,7 +26,7 @@ namespace Unigine
 class UNIGINE_API Profiler
 {
 public:
-	static int isInitialized();
+	static bool isInitialized();
 	static void setEnabled(bool enabled);
 	static bool isEnabled();
 	static void begin(const char *name);
@@ -37,6 +37,15 @@ public:
 	static float getValue(const char *name);
 	static void setValue(const char *name, const char *units, int value, int max_value, float *arg5);
 	static void setValue(const char *name, const char *units, float value, float max_value, float *arg5);
+	static int getNumCounters();
+	static int findCounter(const char *name);
+	static const char *getCounterName(int num);
+	static const char *getCounterText(int num);
+	static Math::vec4 getCounterColor(int num);
+	static float getCounterValue(int num);
+	static long long getCounterFrame(int num);
+	static bool isCounterActive(int num);
+	static bool isCounterSeparator(int num);
 	static const char *getMicroprofileUrl();
 	static void setGui(const Ptr<Gui> &gui);
 	static Ptr<Gui> getGui();

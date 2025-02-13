@@ -30,7 +30,9 @@ namespace Math
 class Concave
 {
 public:
+	/// <summary>Constructor. Initializes the new concave shape by clearing data of the prevoius concave shape.</summary>
 	UNIGINE_INLINE Concave() { clear(); }
+	/// <summary>Constructor. Initializes the new concave shape using the given shape.</summary>
 	Concave(const Concave &concave)
 	{
 		clear();
@@ -46,6 +48,7 @@ public:
 	}
 	UNIGINE_INLINE ~Concave() { clear(); }
 
+	/// <summary>Sets the concave shape to be equal the given concave shape.</summary>
 	Concave &operator=(const Concave &concave)
 	{
 		if (this == &concave)
@@ -63,6 +66,7 @@ public:
 	}
 
 	// clear
+	/// <summary>Clears the data of the prevoius concave shape.</summary>
 	void clear()
 	{
 		error = 0.0f;
@@ -73,6 +77,12 @@ public:
 	}
 
 	// create concave
+	/// <summary>Creates the concave shape using the given vertices.</summary>
+	/// <param name="vertex_">Vector of vertices.</param>
+	/// <param name="num_vertex_">Number of vertices in the vector.</param>
+	/// <param name="depth_">Recursion depth.</param>
+	/// <param name="error_">Convex error.</param>
+	/// <param name="threshold_">Merge threshold.</param>
 	bool create(const vec3 *vertex_, int num_vertex_, int depth_ = 4, float error_ = 0.01f, float threshold_ = 0.01f)
 	{
 		clear();
@@ -100,11 +110,15 @@ public:
 	}
 
 	// parameters
+	/// <summary>Returns the convex error.</summary>
 	UNIGINE_INLINE float getError() const { return error; }
+	/// <summary>Returns the merge threshold.</summary>
 	UNIGINE_INLINE float getThreshold() const { return threshold; }
 
 	// convexes
+	/// <summary>Returns the number of convex hulls used to create this concave shape.</summary>
 	UNIGINE_INLINE int getNumConvexes() const { return convexes.size(); }
+	/// <summary>Returns the convex shape that is a part of this concave shape.</summary>
 	UNIGINE_INLINE const Convex *getConvex(int num) const { return convexes[num]; }
 
 private:
@@ -323,6 +337,7 @@ private:
 
 	struct ConcaveConvexCompare
 	{
+		/// <summary>Compares the volume of two convex shapes.</summary>
 		UNIGINE_INLINE int operator()(const Convex *c0, const Convex *c1)
 		{
 			return c0->getVolume() > c1->getVolume();
