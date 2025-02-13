@@ -13,6 +13,7 @@
 #include <UnigineFileSystem.h>
 #include <UnigineEditor.h>
 #include <UnigineWorld.h>
+#include <UnigineVersion.h>
 #include <QThreadPool>
 #include <QPixmap>
 
@@ -218,8 +219,14 @@ void DialogConfigurator::createNode() {
     m_pDynamicMesh = Unigine::ObjectMeshDynamic::create();
 
     // find position by a camera
+    #if defined(UNIGINE_SDK_VERSION_2_19_1)
+    UnigineEditor::ViewportWindowPtr pViewportWindow = UnigineEditor::ViewportManager::getActiveViewportWindow();
+    Unigine::PlayerPtr pPlayer = pViewportWindow->getPlayer();
+    #elif defined(UNIGINE_SDK_VERSION_2_18_1)
     auto nViewportWindowId = UnigineEditor::ViewportManager::getActiveViewportWindow();
     Unigine::PlayerPtr pPlayer = UnigineEditor::ViewportManager::getViewportWindowPlayer(nViewportWindowId);
+    #endif
+
     auto pos = pPlayer->getWorldPosition();
     auto rot = pPlayer->getWorldRotation();
     // m_pDynamicMesh->setWorldTransform(translate(Unigine::Math::Vec3(0.0f, 0.0f, 2.0f)));
