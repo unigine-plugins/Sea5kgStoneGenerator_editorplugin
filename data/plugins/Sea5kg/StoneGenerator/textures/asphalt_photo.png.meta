@@ -2,7 +2,7 @@
 <asset version="2.19.0.3">
 	<guid>6d292254cde8395c119bd450f9d2b7719b0379a6</guid>
 	<type>texture</type>
-	<hash>066b5d6e</hash>
+	<hash>cd1a413c</hash>
 	<runtimes>
 		<runtime id="6d292254cde8395c119bd450f9d2b7719b0379a6" name="asphalt_photo.png" link="0" type="6"/>
 		<runtime id="b0af8b5f272b46c57a8e36136f0742cb5f4a44cd" name="asphalt_photo.texture" link="1" type="6"/>

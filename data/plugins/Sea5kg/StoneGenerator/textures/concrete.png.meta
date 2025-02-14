@@ -2,7 +2,7 @@
 <asset version="2.19.0.3">
 	<guid>963a7ec0bc37854e19d9fafc9b01fcf759d65372</guid>
 	<type>texture</type>
-	<hash>f9601a15</hash>
+	<hash>5237181d</hash>
 	<runtimes>
 		<runtime id="963a7ec0bc37854e19d9fafc9b01fcf759d65372" name="concrete.png" link="0" type="6"/>
 		<runtime id="8ae7ab9b3da1f94f2a51090fe417fc4357b29c29" name="concrete.texture" link="1" type="6"/>

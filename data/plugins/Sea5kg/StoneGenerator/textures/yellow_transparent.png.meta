@@ -2,7 +2,7 @@
 <asset version="2.19.0.3">
 	<guid>4f206f17bc1cc1f540a5834bb133380726e0d2c5</guid>
 	<type>texture</type>
-	<hash>abafbfd7</hash>
+	<hash>98d7a23e</hash>
 	<runtimes>
 		<runtime id="4f206f17bc1cc1f540a5834bb133380726e0d2c5" name="yellow_transparent.png" link="0" type="6"/>
 		<runtime id="1f48ca7ed7324156739a795aff6dc7a55f112560" name="yellow_transparent.texture" link="1" type="6"/>

@@ -2,7 +2,7 @@
 <asset version="2.19.0.3">
 	<guid>163cd583286ca186aeb30b77881eaea6d36f9ad1</guid>
 	<type>texture</type>
-	<hash>acfeb797</hash>
+	<hash>e5f4fe31</hash>
 	<runtimes>
 		<runtime id="163cd583286ca186aeb30b77881eaea6d36f9ad1" name="multi1_transparent.png" link="0" type="6"/>
 		<runtime id="7fd38e3a41fd24fe37440e565d8a29cb8f3215fc" name="multi1_transparent.texture" link="1" type="6"/>

@@ -2,7 +2,7 @@
 <asset version="2.19.0.3">
 	<guid>0de614e938fdf7201e692abde72dc40861b1a1c7</guid>
 	<type>texture</type>
-	<hash>1e8761bf</hash>
+	<hash>bc11dd43</hash>
 	<runtimes>
 		<runtime id="0de614e938fdf7201e692abde72dc40861b1a1c7" name="chainmail.png" link="0" type="6"/>
 		<runtime id="7818c78800178b21e4d5cd44e12458fac558747a" name="chainmail.texture" link="1" type="6"/>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asset version="2.19.0.3">
+	<guid>28077dc83ed4f9c5c700ff9cdf91379ba2f758a5</guid>
+	<type>material</type>
+	<hash>dfc5cac3</hash>
+	<runtimes>
+		<runtime id="28077dc83ed4f9c5c700ff9cdf91379ba2f758a5" name="snow" link="0" type="5"/>
+	</runtimes>
+	<parameters>
+		<parameter type="bool" name="unchanged">1</parameter>
+	</parameters>
+</asset>

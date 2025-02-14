@@ -2,7 +2,7 @@
 <asset version="2.19.0.3">
 	<guid>70d53b3af84e6f44559cab56d03a609d6b3daafc</guid>
 	<type>texture</type>
-	<hash>dde94743</hash>
+	<hash>eb9c27de</hash>
 	<runtimes>
 		<runtime id="70d53b3af84e6f44559cab56d03a609d6b3daafc" name="gray_tree.png" link="0" type="6"/>
 		<runtime id="fdff516db94251aa4606b081769fa963f34d0a2b" name="gray_tree.texture" link="1" type="6"/>

@@ -2,7 +2,7 @@
 <asset version="2.19.0.3">
 	<guid>aa4584fb3c0de342a3b01a76365394420effc220</guid>
 	<type>texture</type>
-	<hash>9a28fbcb</hash>
+	<hash>8b9d7372</hash>
 	<runtimes>
 		<runtime id="aa4584fb3c0de342a3b01a76365394420effc220" name="blue_transparent.png" link="0" type="6"/>
 		<runtime id="892aba0db728a6624caf666e22f0dabfdbe48eff" name="blue_transparent.texture" link="1" type="6"/>

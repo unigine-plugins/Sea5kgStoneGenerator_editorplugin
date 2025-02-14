@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asset version="2.19.0.3">
+	<guid>2f6e828b5ffdca341dd8a747c8bf0c904a8abcd0</guid>
+	<type>material</type>
+	<hash>043ede95</hash>
+	<runtimes>
+		<runtime id="2f6e828b5ffdca341dd8a747c8bf0c904a8abcd0" name="tracks_in_the_snow" link="0" type="5"/>
+	</runtimes>
+	<parameters>
+		<parameter type="bool" name="unchanged">1</parameter>
+	</parameters>
+</asset>

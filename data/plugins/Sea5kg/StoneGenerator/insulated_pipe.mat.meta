@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asset version="2.19.0.3">
+	<guid>c0909213c7c75c5a96dc924f611f650f4c7878f8</guid>
+	<type>material</type>
+	<hash>6891be17</hash>
+	<runtimes>
+		<runtime id="c0909213c7c75c5a96dc924f611f650f4c7878f8" name="insulated_pipe" link="0" type="5"/>
+	</runtimes>
+	<parameters>
+		<parameter type="bool" name="unchanged">1</parameter>
+	</parameters>
+</asset>

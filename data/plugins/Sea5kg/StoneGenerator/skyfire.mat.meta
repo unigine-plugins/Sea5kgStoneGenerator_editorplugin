@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asset version="2.19.0.3">
+	<guid>8b823c05c5b47aa16a4b7a2106197b6699a53012</guid>
+	<type>material</type>
+	<hash>8cdf4f07</hash>
+	<runtimes>
+		<runtime id="8b823c05c5b47aa16a4b7a2106197b6699a53012" name="skyfire" link="0" type="5"/>
+	</runtimes>
+	<parameters>
+		<parameter type="bool" name="unchanged">1</parameter>
+	</parameters>
+</asset>

@@ -2,7 +2,7 @@
 <asset version="2.19.0.3">
 	<guid>f9f95a08c77a7ccce77317c4a316b0786754fafa</guid>
 	<type>texture</type>
-	<hash>23b9ed3c</hash>
+	<hash>003852b4</hash>
 	<runtimes>
 		<runtime id="f9f95a08c77a7ccce77317c4a316b0786754fafa" name="bark_of_tree.png" link="0" type="6"/>
 		<runtime id="c480f2c3e089b9f0628e4cb73d2713cdda294e11" name="bark_of_tree.texture" link="1" type="6"/>

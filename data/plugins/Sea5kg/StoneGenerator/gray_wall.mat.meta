@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asset version="2.19.0.3">
+	<guid>830461247b5f7d7130970eb80cb6a102eff81771</guid>
+	<type>material</type>
+	<hash>825093d2</hash>
+	<runtimes>
+		<runtime id="830461247b5f7d7130970eb80cb6a102eff81771" name="gray_wall" link="0" type="5"/>
+	</runtimes>
+	<parameters>
+		<parameter type="bool" name="unchanged">1</parameter>
+	</parameters>
+</asset>

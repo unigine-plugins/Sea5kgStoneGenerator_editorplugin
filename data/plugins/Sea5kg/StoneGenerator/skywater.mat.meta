@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asset version="2.19.0.3">
+	<guid>356c6994f90ab9843df2f628ccb48ccc913335a1</guid>
+	<type>material</type>
+	<hash>4fce8489</hash>
+	<runtimes>
+		<runtime id="356c6994f90ab9843df2f628ccb48ccc913335a1" name="skywater" link="0" type="5"/>
+	</runtimes>
+	<parameters>
+		<parameter type="bool" name="unchanged">1</parameter>
+	</parameters>
+</asset>
