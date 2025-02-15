@@ -12,9 +12,11 @@ is_linux = False
 is_windows = False
 if _platform.startswith("linux"):
     _platform = "linux"
+    print(" * Linux platform")
     is_linux = True
 elif _platform.startswith("windows"):
     _platform = "windows"
+    print(" * Windows platform")
     _cmake_gen = " -G \"Visual Studio 17 2022\" -A x64"
     is_windows = True
 else:
@@ -22,53 +24,69 @@ else:
 
 _junk_path = "../../../../junk/Sea5kgStoneGenerator_editorplugin"
 
+has_float = False
+has_double = False
 
-build_commands = [
-    # build float
-    {
-        "name": "cmake configure release (float)",
-        "command": "cmake -H. -B" + _junk_path + "_release_float_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-        -DCMAKE_INSTALL_PREFIX=../../../../bin",
-    },
-    {
-        "name": "cmake build release (float)",
-        "command": "cmake --build " + _junk_path + "_release_float_" + _platform + " --parallel 8 --config Release",
-    },
-    # {
-    #     "name": "cmake configure debug (float)",
-    #     "command": "cmake -H. -B" + _junk_path + "_debug_float_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    #     -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-    #     -DCMAKE_INSTALL_PREFIX=../../../../bin",
-    # },
-    # {
-    #     "name": "cmake build debug (float)",
-    #     "command": "cmake --build " + _junk_path + "_debug_float_" + _platform + " --parallel 8 --config RelWithDebInfo",
-    # },
-    # # build double
-    # {
-    #     "name": "cmake configure release (double)",
-    #     "command": "cmake -H. -B" + _junk_path + "_release_double_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=Release \
-    #     -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-    #     -DUNIGINE_DOUBLE=ON \
-    #     -DCMAKE_INSTALL_PREFIX=../../../../bin",
-    # },
-    # {
-    #     "name": "cmake build release (double)",
-    #     "command": "cmake --build " + _junk_path + "_release_double_" + _platform + " --parallel 8 --config Release",
-    # },
-    # {
-    #     "name": "cmake configure debug (double)",
-    #     "command": "cmake -H. -B" + _junk_path + "_debug_double_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    #     -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-    #     -DUNIGINE_DOUBLE=ON \
-    #     -DCMAKE_INSTALL_PREFIX=../bin",
-    # },
-    # {
-    #     "name": "cmake build debug (double)",
-    #     "command": "cmake --build " + _junk_path + "_debug_double_" + _platform + " --parallel 8 --config RelWithDebInfo",
-    # },
-]
+for _file in os.listdir("./bin"):
+    if _file == "libUnigine_x64.so":
+        print(" * Found engine (float)")
+        has_float = True
+    if _file == "libUnigine_double_x64.so":
+        print(" * Found double (engine)")
+        has_double = True
+
+build_commands = []
+
+if has_float:
+    build_commands.extend([
+        # build float
+        {
+            "name": "cmake configure release (float)",
+            "command": "cmake -H. -B" + _junk_path + "_release_float_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+            -DCMAKE_INSTALL_PREFIX=../../../../bin",
+        },
+        {
+            "name": "cmake build release (float)",
+            "command": "cmake --build " + _junk_path + "_release_float_" + _platform + " --parallel 8 --config Release",
+        },
+        {
+            "name": "cmake configure debug (float)",
+            "command": "cmake -H. -B" + _junk_path + "_debug_float_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+            -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+            -DCMAKE_INSTALL_PREFIX=../../../../bin",
+        },
+        {
+            "name": "cmake build debug (float)",
+            "command": "cmake --build " + _junk_path + "_debug_float_" + _platform + " --parallel 8 --config RelWithDebInfo",
+        },
+    ])
+
+if has_double:
+    build_commands.extend([
+        {
+            "name": "cmake configure release (double)",
+            "command": "cmake -H. -B" + _junk_path + "_release_double_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+            -DUNIGINE_DOUBLE=ON \
+            -DCMAKE_INSTALL_PREFIX=../../../../bin",
+        },
+        {
+            "name": "cmake build release (double)",
+            "command": "cmake --build " + _junk_path + "_release_double_" + _platform + " --parallel 8 --config Release",
+        },
+        {
+            "name": "cmake configure debug (double)",
+            "command": "cmake -H. -B" + _junk_path + "_debug_double_" + _platform + " " + _cmake_gen + " -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+            -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+            -DUNIGINE_DOUBLE=ON \
+            -DCMAKE_INSTALL_PREFIX=../bin",
+        },
+        {
+            "name": "cmake build debug (double)",
+            "command": "cmake --build " + _junk_path + "_debug_double_" + _platform + " --parallel 8 --config RelWithDebInfo",
+        },
+    ])
 
 os.chdir("source/plugins/Sea5kg/StoneGenerator_editorplugin")
 
