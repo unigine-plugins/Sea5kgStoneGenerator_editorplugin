@@ -17,6 +17,8 @@
 #include <QThreadPool>
 #include <QPixmap>
 
+#define UNIGINE_SDK_VERSION_2_19_1
+
 DialogConfigurator::DialogConfigurator(
     QWidget *parent
 ) : QDialog(parent) {
