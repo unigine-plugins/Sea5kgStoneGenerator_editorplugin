@@ -13,7 +13,7 @@
 		</member>
 		<member name="M:Unigine.Log.fatal(char,...)">
 			<summary>
-			Prints a fatal error message to the log file and quits the engine.
+			Prints a fatal error message to the log file and quits the engine.Available for Windows OS only.
 			</summary> 
 			<param name="format"> Fatal error message to print. </param>
 			<param name=""> Arguments, multiple allowed. </param> 

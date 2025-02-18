@@ -3271,8 +3271,10 @@
 		</member>
 		<member name="M:Unigine.InputJoystick.getAxisDelta(unsignedint) const">
 			<summary>
+			Returns a delta value (change since the previous frame) for the axis with the specified number.
 			</summary> 
 			<param name="axis"> Axis number. </param> 
+			<returns>Axis delta value.</returns>
 		</member>
 		<member name="M:Unigine.InputJoystick.getAxisName(unsignedint) const">
 			<summary>

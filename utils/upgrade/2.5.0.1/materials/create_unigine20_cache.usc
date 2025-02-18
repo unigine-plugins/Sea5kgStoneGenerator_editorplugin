@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
+/* Copyright (C) 2005-2025, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
@@ -244,7 +244,7 @@ void main() {
 	}
 	
 	// dumping code
-	CodeGenerator::writeLine("/* Copyright (C) 2005-2024, UNIGINE. All rights reserved.
+	CodeGenerator::writeLine("/* Copyright (C) 2005-2025, UNIGINE. All rights reserved.
 *
 * This file is a part of the UNIGINE 2 SDK.
 *
