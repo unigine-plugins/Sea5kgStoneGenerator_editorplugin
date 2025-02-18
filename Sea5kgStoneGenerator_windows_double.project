@@ -1,6 +1,6 @@
 {
     "edit_settings": {
-        "arguments": "",
+        "arguments": "-video_adapter 0",
         "debug": false,
         "microprofile_enabled": false
     },

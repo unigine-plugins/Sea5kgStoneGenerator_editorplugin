@@ -1,4 +1,9 @@
 {
+    "edit_settings": {
+        "arguments": "-video_adapter 0",
+        "debug": false,
+        "microprofile_enabled": true
+    },
     "project_settings": {
         "addons": [
         ],
