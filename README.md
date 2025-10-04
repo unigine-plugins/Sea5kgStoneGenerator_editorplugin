@@ -2,7 +2,7 @@
 
 UnigineEditor (2.19.1.2) Plugin for generation of meshes representing stones of various sizes and shapes.
 
-v0.0.6
+v0.0.7
 
 [![Unigine Version](https://img.shields.io/badge/Unigine-2.19.1.2-yellow.svg)](https://developer.unigine.com/en/docs/2.19.1.2/) [![Unigine ADD-ON STORE](https://img.shields.io/badge/Unigine-AddonStore-black.svg)](https://store.unigine.com/add-on/1ee2ef39-4458-6124-aefe-dbe1b97903ce/description) [![Unigine Version](https://img.shields.io/badge/Youtube-Playlist-red.svg)](https://youtube.com/playlist?list=PL-Ky59xTi1WRCFocly-FhrFLLKwdbqEkO&feature=shared) [![Telegram](https://img.shields.io/badge/Telegram-Sea5kgStoneGenerator-blue.svg)](https://t.me/sea5kg_stonegenerator)
 

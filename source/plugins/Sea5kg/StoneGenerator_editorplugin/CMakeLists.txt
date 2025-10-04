@@ -70,7 +70,7 @@ endif()
 
 # file (STRINGS "../../../../version" PrototypeStoneGenerator_VERSION)
 
-set(PrototypeStoneGenerator_VERSION "v2.19.1.1_v0.0.6")
+set(PrototypeStoneGenerator_VERSION "v2.19.1.2_v0.0.7")
 add_definitions(-DPrototypeStoneGenerator_VERSION="${PrototypeStoneGenerator_VERSION}")
 
 message(STATUS " PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}")
