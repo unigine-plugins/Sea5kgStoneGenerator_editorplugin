@@ -108,12 +108,15 @@ add_library(${current_target} SHARED
 	${PROJECT_SOURCE_DIR}/src/TextureStoneGenerator.cpp
 	)
 
+add_subdirectory(src/thirdparty/tiny-js)
+
 target_include_directories(${current_target} SYSTEM
 	PRIVATE
 	${PROJECT_SOURCE_DIR}/src/
 	${UNIGINE_INCLUDE_DIR}/
 	${CMAKE_CURRENT_BINARY_DIR}/
 	${CMAKE_CURRENT_SOURCE_DIR}/
+	${PROJECT_SOURCE_DIR}/src/thirdparty/tiny-js
 	)
 
 target_link_libraries(${current_target}
@@ -123,6 +126,7 @@ target_link_libraries(${current_target}
 	Qt5::Core
 	Qt5::Gui
 	Qt5::Widgets
+	tiny-js
 	)
 
 target_compile_definitions(${current_target}
