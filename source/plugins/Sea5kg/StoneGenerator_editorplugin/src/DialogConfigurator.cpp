@@ -31,6 +31,7 @@ Repository: https://github.com/unigine-plugins/Sea5kgStoneGenerator_editorplugin
 #include "StoneGeneratorBasicGeometryCube.h"
 #include "StoneGeneratorBasicGeometryPlane.h"
 #include "StoneGeneratorBasicGeometrySphere.h"
+#include "StoneGeneratorBasicGeometryJsScript.h"
 
 #include "DialogConfiguratorParameterSliderFloat.h"
 #include "DialogConfiguratorParameterSliderInt.h"
@@ -613,7 +614,30 @@ void DialogConfigurator::triangles_itemSelectionChanged() {
 }
 
 void DialogConfigurator::initListOfBasicGeometries() {
+    // TODO find scritps;
+    QString sPluginDir = QCoreApplication::applicationDirPath() + "/plugins/Sea5kg/StoneGenerator";
+    QString sModelsDir = QCoreApplication::applicationDirPath() + "/plugins/Sea5kg/StoneGenerator/basic_generators";
+    QDir dirWithModels(sModelsDir);
+    if (!dirWithModels.exists()) {
+        QDir dirWithPlugin(sPluginDir);
+        dirWithPlugin.mkdir("basic_generators");
+    }
+    // TODO extract basic files
+
+
     std::vector<StoneGeneratorBasicGeometry *> vBasicGeometries;
+
+    // get list of scritps for generate
+    QStringList nameFilters;
+    nameFilters << "*.js";
+    QStringList files = dirWithModels.entryList(nameFilters, QDir::Files);
+    foreach (const QString &filename, files) {
+        QString scriptPath = QDir::cleanPath(sModelsDir + QDir::separator() + filename);
+        auto p = new StoneGeneratorBasicJsScript(scriptPath.toStdString());
+    }
+
+    Unigine::Log::message("initListOfBasicGeometries\n");
+
     vBasicGeometries.push_back(new StoneGeneratorBasicSphere());
     vBasicGeometries.push_back(new StoneGeneratorBasicCube());
     vBasicGeometries.push_back(new StoneGeneratorBasicGeometryPlane());

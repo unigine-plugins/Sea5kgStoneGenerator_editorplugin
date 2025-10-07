@@ -29,18 +29,12 @@ Repository: https://github.com/unigine-plugins/Sea5kgStoneGenerator_editorplugin
 #include <string>
 #include <vector>
 
-#include "StoneGeneratorModel.h"
+#include <StoneGeneratorBasicGeometry.h>
 
-class StoneGeneratorBasicGeometry {
+class StoneGeneratorBasicJsScript : public StoneGeneratorBasicGeometry {
     public:
-        StoneGeneratorBasicGeometry(int nId, const std::string &sName);
-        int getId() const;
-        std::string getName() const;
-
-        // will be override in childs
-        virtual bool generate(StoneGeneratorModel *pModel, int nExpectedTriangles, float nRadius) = 0;
-
-    protected:
-        int m_nId;
-        std::string m_sName;
+        StoneGeneratorBasicJsScript(const std::string& scriptPath);
+        virtual bool generate(StoneGeneratorModel *pModel, int nExpectedTriangles, float nRadius) override;
+    private:
+        std::string m_scriptPath;
 };
