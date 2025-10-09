@@ -105,7 +105,7 @@ void scMathFloor(CScriptVar *c, void *userdata) {
     if ( scIsInt("a") ) {
       scReturnInt( floor( scGetInt("a") ) );
     } else if ( scIsDouble("a") ) {
-      scReturnDouble( floor( scGetDouble("a") ) );
+      scReturnInt( floor( scGetDouble("a") ) );
     }
 }
 
