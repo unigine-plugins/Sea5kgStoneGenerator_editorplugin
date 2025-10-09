@@ -634,12 +634,13 @@ void DialogConfigurator::initListOfBasicGeometries() {
     foreach (const QString &filename, files) {
         QString scriptPath = QDir::cleanPath(sModelsDir + QDir::separator() + filename);
         auto p = new StoneGeneratorBasicJsScript(scriptPath.toStdString());
+        vBasicGeometries.push_back(p);
     }
 
     Unigine::Log::message("initListOfBasicGeometries\n");
 
     vBasicGeometries.push_back(new StoneGeneratorBasicSphere());
-    vBasicGeometries.push_back(new StoneGeneratorBasicCube());
+    // vBasicGeometries.push_back(new StoneGeneratorBasicCube());
     vBasicGeometries.push_back(new StoneGeneratorBasicGeometryPlane());
     m_vBasicGeometries.clear();
     for (int i = 0; i < vBasicGeometries.size(); i++) {

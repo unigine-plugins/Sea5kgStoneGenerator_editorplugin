@@ -48,7 +48,7 @@ Repository: https://github.com/unigine-plugins/Sea5kgStoneGenerator_editorplugin
 // ---------------------------------------------------------------------
 // StoneGeneratorBasicJsScript
 
-StoneGeneratorBasicJsScript::StoneGeneratorBasicJsScript(const std::string& scriptPath)  : StoneGeneratorBasicGeometry(1, "Cube") {
+StoneGeneratorBasicJsScript::StoneGeneratorBasicJsScript(const std::string& scriptPath)  : StoneGeneratorBasicGeometry(1, "Some") {
     m_scriptPath = scriptPath;
 
     // read file
