@@ -95,7 +95,8 @@ void js_Model_addPoint(CScriptVar *c, void *userdata) {
     double y = c->getParameter("y")->getDouble();
     double z = c->getParameter("z")->getDouble();
 
-    CScriptVar *retVar = new CScriptVar();
+    // CScriptVar *retVar = new CScriptVar();
+    CScriptVar *retVar = new CScriptVar("Point", SCRIPTVAR_OBJECT);
     retVar->setUserCustomData((void *)model->addPoint(x,y,z));
     c->setReturnVar(retVar);
 }
@@ -143,6 +144,7 @@ bool StoneGeneratorBasicJsScript::generate(StoneGeneratorModel *pModel, int nExp
     try {
         js->execute(content);
     } catch (CScriptException *e) {
+        qDebug() << "ERROR: " << QString::fromStdString(e->text);
         printf("ERROR: %s\n", e->text.c_str());
         return false;
     }

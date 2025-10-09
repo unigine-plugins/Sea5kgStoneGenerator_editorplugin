@@ -29,12 +29,10 @@ function generate(expected_triangles, radius) {
         for (var j = 0; j <= baseSubdivisions; j++) {
             var x = j * step - radius;
             var z = i * step - radius;
-            // print("X = " + x);
             var point = Model.addPoint(x, -radius, z);
-            row[row.length] = point;
-            // print("X = " + x);
+            row.push(point);
         }
-        baseVertices[baseVertices.length] = row;
+        baseVertices.push(row);
     }
     print(baseVertices.length);
     

@@ -220,6 +220,14 @@ void scArrayJoin(CScriptVar *c, void *data) {
   c->getReturnVar()->setString(sstr.str());
 }
 
+void scArrayPush(CScriptVar *c, void *data) {
+  CScriptVar *obj = c->getParameter("obj");
+  CScriptVar *arr = c->getParameter("this");
+
+  int lenght = arr->getArrayLength();
+  arr->setArrayIndex(lenght, obj);
+}
+
 // ----------------------------------------------- Register Functions
 void registerFunctions(CTinyJS *tinyJS) {
     tinyJS->addNative("function exec(jsCode)", scExec, tinyJS); // execute the given code
@@ -243,5 +251,6 @@ void registerFunctions(CTinyJS *tinyJS) {
     tinyJS->addNative("function Array.contains(obj)", scArrayContains, 0);
     tinyJS->addNative("function Array.remove(obj)", scArrayRemove, 0);
     tinyJS->addNative("function Array.join(separator)", scArrayJoin, 0);
+    tinyJS->addNative("function Array.push(obj)", scArrayPush, 0);
 }
 

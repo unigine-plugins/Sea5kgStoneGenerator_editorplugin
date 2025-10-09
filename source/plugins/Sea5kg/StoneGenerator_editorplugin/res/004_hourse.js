@@ -31,6 +31,8 @@ function generate(expected_triangles, radius) {
     createTail(scale, subdivisions);
 }
 
+Math.PI = 3.141592653589793;
+
 function createBody(scale, subdivisions) {
     var bodyLength = scale * 2.0;
     var bodyHeight = scale * 0.8;

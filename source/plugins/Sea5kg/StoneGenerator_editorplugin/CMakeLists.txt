@@ -111,6 +111,8 @@ add_library(${current_target} SHARED
 
 add_subdirectory(src/thirdparty/tiny-js)
 
+# add_subdirectory(src/thirdparty/quickjs)
+
 target_include_directories(${current_target} SYSTEM
 	PRIVATE
 	${PROJECT_SOURCE_DIR}/src/
@@ -118,6 +120,7 @@ target_include_directories(${current_target} SYSTEM
 	${CMAKE_CURRENT_BINARY_DIR}/
 	${CMAKE_CURRENT_SOURCE_DIR}/
 	${PROJECT_SOURCE_DIR}/src/thirdparty/tiny-js
+#	${PROJECT_SOURCE_DIR}/src/thirdparty/quickjs
 	)
 
 target_link_libraries(${current_target}
