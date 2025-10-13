@@ -614,7 +614,11 @@ void DialogConfigurator::triangles_itemSelectionChanged() {
 }
 
 void DialogConfigurator::initListOfBasicGeometries() {
-    // TODO find scritps;
+
+    // 
+    // std::shared_ptr<MyClass> ptr1 = std::make_shared<MyClass>();
+
+    // find scritps
     QString sPluginDir = QCoreApplication::applicationDirPath() + "/plugins/Sea5kg/StoneGenerator";
     QString sModelsDir = QCoreApplication::applicationDirPath() + "/plugins/Sea5kg/StoneGenerator/basic_generators";
     QDir dirWithModels(sModelsDir);
@@ -622,10 +626,8 @@ void DialogConfigurator::initListOfBasicGeometries() {
         QDir dirWithPlugin(sPluginDir);
         dirWithPlugin.mkdir("basic_generators");
     }
-    // TODO extract basic files
 
-
-    std::vector<StoneGeneratorBasicGeometry *> vBasicGeometries;
+    std::vector<std::shared_ptr<StoneGeneratorBasicGeometry>> vBasicGeometries;
 
     // get list of scritps for generate
     QStringList nameFilters;
@@ -633,18 +635,18 @@ void DialogConfigurator::initListOfBasicGeometries() {
     QStringList files = dirWithModels.entryList(nameFilters, QDir::Files);
     foreach (const QString &filename, files) {
         QString scriptPath = QDir::cleanPath(sModelsDir + QDir::separator() + filename);
-        auto p = new StoneGeneratorBasicJsScript(scriptPath.toStdString());
+        auto p = std::make_shared<StoneGeneratorBasicJsScript>(scriptPath.toStdString());
         vBasicGeometries.push_back(p);
     }
 
     Unigine::Log::message("initListOfBasicGeometries\n");
 
-    vBasicGeometries.push_back(new StoneGeneratorBasicSphere());
+    vBasicGeometries.push_back(std::make_shared<StoneGeneratorBasicSphere>());
     // vBasicGeometries.push_back(new StoneGeneratorBasicCube());
-    vBasicGeometries.push_back(new StoneGeneratorBasicGeometryPlane());
+    vBasicGeometries.push_back(std::make_shared<StoneGeneratorBasicGeometryPlane>());
     m_vBasicGeometries.clear();
     for (int i = 0; i < vBasicGeometries.size(); i++) {
-        StoneGeneratorBasicGeometry *pBasicGeometry = vBasicGeometries[i];
+        auto pBasicGeometry = vBasicGeometries[i];
         bool bSkip = false;
         for (int i0 = 0; i0 < m_vBasicGeometries.size(); i0++) {
             if (pBasicGeometry->getName() == m_vBasicGeometries[i0]->getName()) {

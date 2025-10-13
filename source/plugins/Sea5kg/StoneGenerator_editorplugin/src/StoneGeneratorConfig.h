@@ -29,6 +29,7 @@ Repository: https://github.com/unigine-plugins/Sea5kgStoneGenerator_editorplugin
 #include <string>
 #include <map>
 #include <vector>
+#include <memory>
 
 #include "StoneGeneratorBasicGeometry.h"
 
@@ -66,14 +67,14 @@ class StoneGeneratorConfig {
         bool getRegenerateTexture() const;
 
 
-        void setBasicGeometry(StoneGeneratorBasicGeometry *pBasicGeometry);
-        StoneGeneratorBasicGeometry *getBasicGeometry() const;
+        void setBasicGeometry(std::shared_ptr<StoneGeneratorBasicGeometry> pBasicGeometry);
+        std::shared_ptr<StoneGeneratorBasicGeometry> getBasicGeometry() const;
 
         std::string toXmlString() const;
 
 
     private:
-        StoneGeneratorBasicGeometry *m_pBasicGeometry;
+        std::shared_ptr<StoneGeneratorBasicGeometry> m_pBasicGeometry;
         float m_nRadius;
         int m_nExpectedTriangles;
         unsigned int m_nSeedRandom;

@@ -52,6 +52,7 @@ Repository: https://github.com/unigine-plugins/Sea5kgStoneGenerator_editorplugin
 #include "DialogConfigurator.h"
 #include "AsyncRunGenerator.h"
 #include "StoneGenerator.h"
+#include <memory>
 
 #include "TextureStoneGenerator.h"
 #include "ISignalGun.h"
@@ -118,7 +119,7 @@ class DialogConfigurator : public QDialog, public ISignalGun, public IDialogConf
         QPushButton *m_pSaveMeshButton;
         QPushButton *m_pCloseButton;
 
-        std::vector<StoneGeneratorBasicGeometry *> m_vBasicGeometries;
+        std::vector<std::shared_ptr<StoneGeneratorBasicGeometry>> m_vBasicGeometries;
 
         QComboBox *m_pTextureResolution;
 

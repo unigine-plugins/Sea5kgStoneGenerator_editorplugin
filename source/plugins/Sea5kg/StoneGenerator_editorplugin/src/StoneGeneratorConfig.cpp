@@ -161,11 +161,11 @@ bool StoneGeneratorConfig::getRegenerateTexture() const {
     return m_bRegenerateTexture;
 }
 
-void StoneGeneratorConfig::setBasicGeometry(StoneGeneratorBasicGeometry *pBasicGeometry) {
+void StoneGeneratorConfig::setBasicGeometry(std::shared_ptr<StoneGeneratorBasicGeometry> pBasicGeometry) {
     m_pBasicGeometry = pBasicGeometry;
 }
 
-StoneGeneratorBasicGeometry *StoneGeneratorConfig::getBasicGeometry() const {
+std::shared_ptr<StoneGeneratorBasicGeometry> StoneGeneratorConfig::getBasicGeometry() const {
     return m_pBasicGeometry;
 }
 
