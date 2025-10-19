@@ -1,0 +1,14 @@
+tmp/*
+.vscode/*
+.logs/*
+.wsjcpp/*
+
+# Vim temp files
+*.swp
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+

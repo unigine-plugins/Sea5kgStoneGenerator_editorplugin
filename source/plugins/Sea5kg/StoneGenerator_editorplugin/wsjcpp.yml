@@ -1,0 +1,21 @@
+name: "StoneGenerator_editorplugin"
+version: "v0.0.7"
+cmake_minimum_required: "3.0"
+cmake_cxx_standard: "17"
+description: "Sea5kg_StoneGenerator_editorplugin"
+authors:
+  - name: "Evgenii Sopov"
+    email: "mrseakg@gmail.com"
+origins:
+  - address: "https://sea5kg.ru/wsjcpp-package-registry/"
+    type: "package-registry"
+keywords:
+  - "c++"
+dependencies:
+  - name: "wsjcpp-core"
+    version: "v0.2.3"
+    url: "https://github.com/wsjcpp/wsjcpp-core:master"
+    origin: "https://github.com/"
+    installation-dir: "./src.wsjcpp/wsjcpp_core"
+    installation-datetime: "Sun, 19 Oct 2025 14:52:47 GMT"
+
