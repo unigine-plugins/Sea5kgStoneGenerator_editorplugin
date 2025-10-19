@@ -1,5 +1,4 @@
 var generatorName = "Cube";
-var generatorId = 1;
 
 function generate(expected_triangles, radius) {
     print(expected_triangles);

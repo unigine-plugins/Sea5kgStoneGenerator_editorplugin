@@ -37,7 +37,7 @@ Repository: https://github.com/unigine-plugins/Sea5kgStoneGenerator_editorplugin
 // ---------------------------------------------------------------------
 // StoneGeneratorBasicGeometryPlane
 
-StoneGeneratorBasicGeometryPlane::StoneGeneratorBasicGeometryPlane() : StoneGeneratorBasicGeometry(2, "Plane") {
+StoneGeneratorBasicGeometryPlane::StoneGeneratorBasicGeometryPlane() : StoneGeneratorBasicGeometry("Plane") {
 
 }
 

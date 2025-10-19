@@ -162,7 +162,7 @@ bool StoneGeneratorConfig::getRegenerateTexture() const {
 }
 
 void StoneGeneratorConfig::setBasicGeometry(std::shared_ptr<StoneGeneratorBasicGeometry> pBasicGeometry) {
-    m_pBasicGeometry = pBasicGeometry;
+    m_pBasicGeometry = std::move(pBasicGeometry);
 }
 
 std::shared_ptr<StoneGeneratorBasicGeometry> StoneGeneratorConfig::getBasicGeometry() const {

@@ -37,7 +37,7 @@ Repository: https://github.com/unigine-plugins/Sea5kgStoneGenerator_editorplugin
 // ---------------------------------------------------------------------
 // StoneGeneratorBasicSphere
 
-StoneGeneratorBasicSphere::StoneGeneratorBasicSphere() : StoneGeneratorBasicGeometry(0, "Sphere") {
+StoneGeneratorBasicSphere::StoneGeneratorBasicSphere() : StoneGeneratorBasicGeometry("Sphere") {
 
 }
 

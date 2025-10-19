@@ -212,7 +212,8 @@ bool StoneGenerator::processResizeAndShift(const StoneGeneratorConfig &conf) {
     float fKY = nSizeY / (fMaxY - fMinY);
     float fKZ = nSizeZ / (fMaxZ - fMinZ);
 
-    if (conf.getBasicGeometry()->getId() == 2) { // if it's plane, TODO magic numbers
+    // TODO !!!!
+    if (conf.getBasicGeometry()->getName() == "Plane") { // if it's plane, TODO magic numbers
         fKZ = 1.0f;
     }
 

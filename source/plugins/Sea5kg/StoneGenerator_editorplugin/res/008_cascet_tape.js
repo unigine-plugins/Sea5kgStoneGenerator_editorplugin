@@ -1,5 +1,4 @@
 var generatorName = "CassetteTape";
-var generatorId = 8;
 
 function generate(expected_triangles, scale) {
     print("Generating Cassette Tape with " + expected_triangles + " triangles");

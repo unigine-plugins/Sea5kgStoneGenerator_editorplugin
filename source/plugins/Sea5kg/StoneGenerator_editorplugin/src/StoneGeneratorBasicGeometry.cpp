@@ -35,13 +35,8 @@ Repository: https://github.com/unigine-plugins/Sea5kgStoneGenerator_editorplugin
 // ---------------------------------------------------------------------
 // StoneGeneratorBasicGeometry
 
-StoneGeneratorBasicGeometry::StoneGeneratorBasicGeometry(int nId, const std::string &sName) {
-    m_nId = nId;
+StoneGeneratorBasicGeometry::StoneGeneratorBasicGeometry(const std::string &sName) {
     m_sName = sName;
-}
-
-int StoneGeneratorBasicGeometry::getId() const {
-    return m_nId;
 }
 
 std::string StoneGeneratorBasicGeometry::getName() const {

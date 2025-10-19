@@ -1,5 +1,4 @@
 var generatorName = "Hat";
-var generatorId = 7;
 
 function generate(expected_triangles, radius) {
     print(expected_triangles);

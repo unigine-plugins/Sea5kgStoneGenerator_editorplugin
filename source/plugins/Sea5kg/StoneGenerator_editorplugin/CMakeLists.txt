@@ -96,7 +96,6 @@ add_library(${current_target} SHARED
 	${PROJECT_SOURCE_DIR}/src/Sea5kgStoneGenerator_editorplugin.cpp
 	${PROJECT_SOURCE_DIR}/src/StoneGenerator.cpp
 	${PROJECT_SOURCE_DIR}/src/StoneGeneratorBasicGeometry.cpp
-	${PROJECT_SOURCE_DIR}/src/StoneGeneratorBasicGeometryCube.cpp
 	${PROJECT_SOURCE_DIR}/src/StoneGeneratorBasicGeometryJsScript.cpp
 	${PROJECT_SOURCE_DIR}/src/StoneGeneratorBasicGeometryPlane.cpp
 	${PROJECT_SOURCE_DIR}/src/StoneGeneratorBasicGeometrySphere.cpp

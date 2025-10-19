@@ -28,7 +28,6 @@ Repository: https://github.com/unigine-plugins/Sea5kgStoneGenerator_editorplugin
 #include <iostream>
 
 #include "DialogConfigurator.h"
-#include "StoneGeneratorBasicGeometryCube.h"
 #include "StoneGeneratorBasicGeometryPlane.h"
 #include "StoneGeneratorBasicGeometrySphere.h"
 #include "StoneGeneratorBasicGeometryJsScript.h"
@@ -651,10 +650,6 @@ void DialogConfigurator::initListOfBasicGeometries() {
         for (int i0 = 0; i0 < m_vBasicGeometries.size(); i0++) {
             if (pBasicGeometry->getName() == m_vBasicGeometries[i0]->getName()) {
                 Unigine::Log::error("SKIP: Name of Basic geometry already registered %s\n", pBasicGeometry->getName().c_str());
-                bSkip = true;
-            }
-            if (pBasicGeometry->getId() == m_vBasicGeometries[i0]->getId()) {
-                Unigine::Log::error("SKIP: ID of Basic geometry already registered %d\n", pBasicGeometry->getId());
                 bSkip = true;
             }
         }

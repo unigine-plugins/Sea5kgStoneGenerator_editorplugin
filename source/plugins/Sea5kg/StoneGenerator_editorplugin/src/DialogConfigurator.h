@@ -58,6 +58,13 @@ Repository: https://github.com/unigine-plugins/Sea5kgStoneGenerator_editorplugin
 #include "ISignalGun.h"
 #include "IDialogConfigurator.h"
 
+class DialogConfiguratorComboBox {
+    DialogConfiguratorComboBox() {
+
+    };
+
+};
+
 class DialogConfigurator : public QDialog, public ISignalGun, public IDialogConfigurator {
     Q_OBJECT
 
@@ -143,4 +150,3 @@ class DialogConfigurator : public QDialog, public ISignalGun, public IDialogConf
         bool m_bGenerateMesh;
         bool m_bGenerateMaterial;
 };
-
