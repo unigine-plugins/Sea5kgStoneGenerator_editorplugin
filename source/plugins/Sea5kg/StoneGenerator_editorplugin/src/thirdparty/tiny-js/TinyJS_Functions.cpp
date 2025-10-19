@@ -223,9 +223,8 @@ void scArrayJoin(CScriptVar *c, void *data) {
 void scArrayPush(CScriptVar *c, void *data) {
   CScriptVar *obj = c->getParameter("obj");
   CScriptVar *arr = c->getParameter("this");
-
-  int lenght = arr->getArrayLength();
-  arr->setArrayIndex(lenght, obj);
+  int length = arr->getArrayLength();
+  arr->setArrayIndex(length, obj);
 }
 
 // ----------------------------------------------- Register Functions

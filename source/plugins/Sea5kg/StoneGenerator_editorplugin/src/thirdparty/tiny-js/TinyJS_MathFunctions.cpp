@@ -257,8 +257,11 @@ void scMathSqrt(CScriptVar *c, void *userdata) {
 
 // ----------------------------------------------- Register Functions
 void registerMathFunctions(CTinyJS *tinyJS) {
-     
+
     // --- Math and Trigonometry functions ---
+    CScriptVar *var = tinyJS->getScriptVariable("Math");
+    var->getParameter("PI")->setDouble(3.141592653589793);
+
     tinyJS->addNative("function Math.abs(a)", scMathAbs, 0);
     tinyJS->addNative("function Math.round(a)", scMathRound, 0);
     tinyJS->addNative("function Math.floor(a)", scMathFloor, 0);
@@ -266,8 +269,7 @@ void registerMathFunctions(CTinyJS *tinyJS) {
     tinyJS->addNative("function Math.max(a,b)", scMathMax, 0);
     tinyJS->addNative("function Math.range(x,a,b)", scMathRange, 0);
     tinyJS->addNative("function Math.sign(a)", scMathSign, 0);
-    
-    tinyJS->addNative("function Math.PI()", scMathPI, 0);
+    // tinyJS->addNative("function Math.PI()", scMathPI, 0);
     tinyJS->addNative("function Math.toDegrees(a)", scMathToDegrees, 0);
     tinyJS->addNative("function Math.toRadians(a)", scMathToRadians, 0);
     tinyJS->addNative("function Math.sin(a)", scMathSin, 0);
