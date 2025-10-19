@@ -1,6 +1,5 @@
 var generatorName = "Hat";
 var generatorId = 7;
-Math.PI = 3.141592653589793;
 
 function generate(expected_triangles, radius) {
     print(expected_triangles);
