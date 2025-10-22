@@ -24,51 +24,24 @@
 
 # Repository: https://github.com/unigine-plugins/Sea5kgStoneGenerator_editorplugin
 
-""" Test calculation perpendicular """
+""" Config for a pm """
 
-import math
-
-
-def angle(va, vb):
-    """ calculate angle """
-    ab = va[0] * vb[0] + va[1] * vb[1] + va[2] * vb[2]
-    la = math.sqrt(va[0] * va[0] + va[1] * va[1] + va[2] * va[2])
-    lb = math.sqrt(vb[0] * vb[0] + vb[1] * vb[1] + vb[2] * vb[2])
-    cos_a = ab / (la * lb)
-    if cos_a >= 1:
-        return 0
-    if cos_a <= -1:
-        return 180
-    angle_rad = math.acos(cos_a)
-    return math.degrees(angle_rad)
+import re
 
 
-a = [1.1, 3, 4]
+class PmConfig:
+    """ Config """
 
-# -4, 0, 1
-# -3, 1, 0
+    def __init__(self, root_dir):
+        self.__root_dir = root_dir
+        self.__re_uuid = re.compile(
+            r'.*\"([0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12})\".*'
+        )
 
-# -3.5, 0.5, 0.5
+    def get_root_dir(self):
+        """ return root dir """
+        return self.__root_dir
 
-# b1 = [1.5 , -2.5, 1.5]
-# _angle = angle(a, b1)
-# print(b1, _angle)
-
-
-# sys.exit(0)
-
-possible_values = [0]
-for x in a:
-    possible_values.append(x)
-    possible_values.append(-x)
-
-for x in possible_values:
-    for y in possible_values:
-        for z in possible_values:
-            b = [x, y, z]
-            if b == [0.0, 0.0, 0.0]:
-                continue
-
-            _angle = angle(a, b)
-            if _angle == 90.0:
-                print(b, _angle)
+    def get_re_uuid(self):
+        """ return regular expression for a search uuid in string """
+        return self.__re_uuid
