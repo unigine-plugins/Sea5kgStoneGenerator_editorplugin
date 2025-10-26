@@ -22,6 +22,8 @@ linux_UnigineEditorPlugin_PrototypeStoneGenerator_*.zip
 windows_UnigineEditorPlugin_PrototypeStoneGenerator_*.zip
 /include/plugins/
 migration.log.html
+.vscode
+.wsjcpp
 
 # Prerequisites
 *.d
