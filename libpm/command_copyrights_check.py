@@ -18,7 +18,7 @@
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR pm_OTHERWISE, ARISING FROM,
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
@@ -57,6 +57,17 @@ class CommandCopyrightsCheck:
                 self.__config.get_root_dir(),
                 "source", "plugins", "Sea5kg", "StoneGenerator_editorplugin",
                 "src.wsjcpp"
+            ),
+            os.path.join(
+                self.__config.get_root_dir(),
+                "source", "plugins", "Unigine"
+            ),
+            os.path.join(
+                self.__config.get_root_dir(),
+                "source", "plugins", "Local"
+            ),
+            os.path.join(
+                self.__config.get_root_dir(), "junk"
             ),
         ]
         self.__log = logging.getLogger("CommandCopyrightsCheck")
