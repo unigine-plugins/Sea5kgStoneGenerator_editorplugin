@@ -25,3 +25,24 @@ Preview on Youtube:
 ```
 $ docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:latest ./build_plugin.py
 ```
+
+
+## Helper scripts PM
+
+```
+$ ./pm.py --help
+usage: txpm [--help] {py-check,copyrights-check} ...
+
+Project Manager for StoneGenerator
+
+options:
+  --help, -h            help
+
+subcommands:
+  {py-check,copyrights-check}
+
+Helper tools for work with current project
+
+  py-check           Search all py files and run pylint+pycodestyle for check it
+  copyrights-check   Check copyrights (now only for rc+h files)
+```
