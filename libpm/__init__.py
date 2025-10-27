@@ -31,4 +31,5 @@
 
 from .command_copyrights_check import CommandCopyrightsCheck
 from .command_py_check import CommandPyCheck
+from .command_update_binaries_sdk import CommandUpdateBinariesSdk
 from .pm_config import PmConfig

@@ -48,7 +48,7 @@ COMMANDS = [
     # libpm.CommandClangFormat(CONFIG),
     # libpm.CommandStats(CONFIG),
     libpm.CommandCopyrightsCheck(CONFIG),
-    # libpm.CommandCopyrightsUpdate(CONFIG),
+    libpm.CommandUpdateBinariesSdk(CONFIG),
 ]
 
 

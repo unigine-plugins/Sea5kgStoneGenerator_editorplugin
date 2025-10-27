@@ -24,13 +24,10 @@
 
 # Repository: https://github.com/unigine-plugins/Sea5kgStoneGenerator_editorplugin
 
-""" Comamnd for check copyrights """
+""" Comamnd for build plugin """
 
-import os
-import sys
 import logging
 from .pm_config import PmConfig
-from .utils_files import UtilsFiles
 
 logging.basicConfig()
 

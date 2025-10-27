@@ -24,6 +24,7 @@ windows_UnigineEditorPlugin_PrototypeStoneGenerator_*.zip
 migration.log.html
 .vscode
 .wsjcpp
+/sdk-bin
 
 # Prerequisites
 *.d
