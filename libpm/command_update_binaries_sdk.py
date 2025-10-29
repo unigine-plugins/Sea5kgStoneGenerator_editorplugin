@@ -115,15 +115,20 @@ class CommandUpdateBinariesSdk:
             return f"An error occurred: {err}"
 
     def __copy_file(self, src_dir, trg_dir, filename):
+        if not os.path.isdir(trg_dir):
+            os.makedirs(trg_dir, exist_ok=True)
         trg_file = os.path.join(trg_dir, filename)
+        trg_file_sha1 = ""
+        if os.path.isfile(trg_file):
+            trg_file_sha1 = self.__calculate_sha1_of_file(trg_file)
         src_file = os.path.join(src_dir, filename)
-        trg_file_sha1 = self.__calculate_sha1_of_file(trg_file)
         src_file_sha1 = self.__calculate_sha1_of_file(src_file)
         if trg_file_sha1 == src_file_sha1:
             self.__log.info("File OK: %s", src_file)
             return
-        if os.path.isfile(src_file):
+        if os.path.isfile(trg_file):
             os.remove(trg_file)
+        if os.path.isfile(src_file):
             try:
                 shutil.copyfile(src_file, trg_file)
                 self.__log.error("File '%s' copied to '%s' successfully.", src_file, trg_file)
@@ -137,12 +142,27 @@ class CommandUpdateBinariesSdk:
                 self.__log.error("An unexpected error occurred: %s", str(err))
 
     def __sync_files(self, _, sdk_bin_dir):
-        include_dir = os.path.join(sdk_bin_dir, "include")
         root_dir = self.__config.get_root_dir()
-        include_root_dir = os.path.join(root_dir, "include")
+        _copy_dirs = [{
+            "from": os.path.join(sdk_bin_dir, "include"),
+            "to": os.path.join(root_dir, "include")
+        }, {
+            "from": os.path.join(sdk_bin_dir, "bin"),
+            "to": os.path.join(root_dir, "bin")
+        }]
 
-        for _file in os.listdir(include_dir):
-            self.__copy_file(include_dir, include_root_dir, _file)
+        while len(_copy_dirs) > 0:
+            _dirs = _copy_dirs.pop()
+
+            for _file in os.listdir(_dirs["from"]):
+                _source_file = os.path.join(_dirs["from"], _file)
+                if os.path.isfile(_source_file):
+                    self.__copy_file(_dirs["from"], _dirs["to"], _file)
+                elif os.path.isdir(_source_file):
+                    _copy_dirs.append({
+                        "from": _source_file,
+                        "to": os.path.join(_dirs["to"], _file)
+                    })
 
     def run(self, args):
         """ run """
