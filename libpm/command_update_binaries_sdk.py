@@ -167,7 +167,6 @@ class CommandUpdateBinariesSdk:
     def run(self, args):
         """ run """
         self.__log.info("Start updating binaries...")
-        # root_dir = self.__config.get_root_dir()
         sdk_bin_dir = self.__get_sdk_path(args)
         sdk_ver = self.__detect_sdk_version(sdk_bin_dir)
         self.__sync_files(sdk_ver, sdk_bin_dir)

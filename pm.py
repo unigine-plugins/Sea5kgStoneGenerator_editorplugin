@@ -84,7 +84,7 @@ class CustomActionHelp(argparse._HelpAction):  # pylint: disable=protected-acces
 
 if __name__ == "__main__":
     MAIN_PARSER = argparse.ArgumentParser(
-        prog='txpm',
+        prog='pm',
         description='Project Manager for StoneGenerator',
         epilog='Helper tools for work with current project',
         add_help=False

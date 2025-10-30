@@ -31,7 +31,7 @@ $ docker run --rm -it -v `pwd`:/opt/sources sea5kg/unigine-editor-pluigns:latest
 
 ```
 $ ./pm.py --help
-usage: txpm [--help] {py-check,copyrights-check} ...
+usage: pm [--help] {py-check,copyrights-check} ...
 
 Project Manager for StoneGenerator
 
