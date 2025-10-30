@@ -46,7 +46,7 @@ class CommandBuild:
 
     def register(self, _subparsers):
         """ register """
-        _descr = 'Check copyrights (now only for rc+h files)'
+        _descr = 'Build project'
         build_parser = _subparsers.add_parser(
             name=self.__comamnd_name,
             description=_descr
@@ -62,6 +62,7 @@ class CommandBuild:
     def run(self, _):
         """ run """
         self.__log.info("OK: Start building...")
+        self.__log.info("Root directory: %s", self.__config.get_root_dir())
         # TODO check binaries and can by add to bin directory
         # TODO upgrade include/Unigine.h
         # TODO detect in docker or not

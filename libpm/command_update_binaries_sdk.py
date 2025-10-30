@@ -33,6 +33,7 @@ import hashlib
 import shutil
 from .pm_config import PmConfig
 from .utils_shell import UtilsShell
+from .utils_bin_sdk import UtilsBinSdk
 
 logging.basicConfig()
 
@@ -80,22 +81,6 @@ class CommandUpdateBinariesSdk:
             sys.exit(-1)
         self.__log.info("SDK-bin-dir: %s", sdk_bin_dir)
         return sdk_bin_dir
-
-    def __detect_sdk_version(self, sdk_bin_dir):
-        file_version = os.path.join(sdk_bin_dir, "include", "UnigineVersion.h")
-        ret = ""
-        with open(file_version, "rt", encoding="utf-8") as _file:
-            _lines = _file.readlines()
-            for _line in _lines:
-                _line = _line.strip()
-                if _line.startswith("#define UNIGINE_SDK_VERSION "):
-                    ret = _line.split(" ")[-1].strip()
-        if ret.endswith('"'):
-            ret = ret[:-1]
-        if ret.startswith('"'):
-            ret = ret[1:]
-        self.__log.info("Found SDK-version: %s", ret)
-        return ret
 
     def __calculate_sha1_of_file(self, filepath):
         chunk_size = 4096
@@ -168,7 +153,7 @@ class CommandUpdateBinariesSdk:
         """ run """
         self.__log.info("Start updating binaries...")
         sdk_bin_dir = self.__get_sdk_path(args)
-        sdk_ver = self.__detect_sdk_version(sdk_bin_dir)
+        sdk_ver = UtilsBinSdk.detect_sdk_version(sdk_bin_dir)
         self.__sync_files(sdk_ver, sdk_bin_dir)
 
         sys.exit(0)

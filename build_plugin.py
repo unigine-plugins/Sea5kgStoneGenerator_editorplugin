@@ -33,7 +33,7 @@ import platform
 
 
 _PLATFORM = platform.platform().lower()
-_CMAKE_GEN = ""
+CMAKE_GEN = ""
 IS_LINUX = False
 IS_WINDOWS = False
 if _PLATFORM.startswith("linux"):
@@ -43,7 +43,7 @@ if _PLATFORM.startswith("linux"):
 elif _PLATFORM.startswith("windows"):
     _PLATFORM = "windows"
     print(" * Windows platform")
-    _CMAKE_GEN = " -G \"Visual Studio 17 2022\" -A x64"
+    CMAKE_GEN = " -G \"Visual Studio 17 2022\" -A x64"
     IS_WINDOWS = True
 else:
     sys.exit("Unknown platform")
@@ -70,7 +70,7 @@ if HAS_FLOAT:
         # build float
         {
             "name": "cmake configure release (float)",
-            "command": "cmake -H. -B" + _junk_rel + " " + _CMAKE_GEN + " \
+            "command": "cmake -H. -B" + _junk_rel + " " + CMAKE_GEN + " \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
             -DCMAKE_INSTALL_PREFIX=../../../../bin",
@@ -81,7 +81,7 @@ if HAS_FLOAT:
         },
         {
             "name": "cmake configure debug (float)",
-            "command": "cmake -H. -B" + _junk_dbg + " " + _CMAKE_GEN + " \
+            "command": "cmake -H. -B" + _junk_dbg + " " + CMAKE_GEN + " \
             -DCMAKE_BUILD_TYPE=RelWithDebInfo \
             -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
             -DCMAKE_INSTALL_PREFIX=../../../../bin",
@@ -98,7 +98,7 @@ if HAS_DOUBLE:
     build_commands.extend([
         {
             "name": "cmake configure release (double)",
-            "command": "cmake -H. -B" + _junk_rel + " " + _CMAKE_GEN + " \
+            "command": "cmake -H. -B" + _junk_rel + " " + CMAKE_GEN + " \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
             -DUNIGINE_DOUBLE=ON \
@@ -110,7 +110,7 @@ if HAS_DOUBLE:
         },
         {
             "name": "cmake configure debug (double)",
-            "command": "cmake -H. -B" + _junk_dbg + " " + _CMAKE_GEN + " \
+            "command": "cmake -H. -B" + _junk_dbg + " " + CMAKE_GEN + " \
             -DCMAKE_BUILD_TYPE=RelWithDebInfo \
             -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
             -DUNIGINE_DOUBLE=ON \

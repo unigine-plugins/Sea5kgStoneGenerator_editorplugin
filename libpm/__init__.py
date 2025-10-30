@@ -29,7 +29,12 @@
     Library helper tool for manage plugin
 """
 
+from .command_build import CommandBuild
 from .command_copyrights_check import CommandCopyrightsCheck
+from .command_pack_plugin import CommandPackPlugin
 from .command_py_check import CommandPyCheck
 from .command_update_binaries_sdk import CommandUpdateBinariesSdk
 from .pm_config import PmConfig
+from .utils_bin_sdk import UtilsBinSdk
+from .utils_files import UtilsFiles
+from .utils_shell import UtilsShell

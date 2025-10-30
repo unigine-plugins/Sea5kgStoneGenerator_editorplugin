@@ -43,10 +43,9 @@ if len(_NEW_ROOT_DIR) > 3:  # not a "C:" and not a "/"
 CONFIG = libpm.PmConfig(ROOT_DIR)
 
 COMMANDS = [
-    # libpm.CommandCheckUtf8Encoding(CONFIG),
+    libpm.CommandBuild(CONFIG),
     libpm.CommandPyCheck(CONFIG),
-    # libpm.CommandClangFormat(CONFIG),
-    # libpm.CommandStats(CONFIG),
+    libpm.CommandPackPlugin(CONFIG),
     libpm.CommandCopyrightsCheck(CONFIG),
     libpm.CommandUpdateBinariesSdk(CONFIG),
 ]

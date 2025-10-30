@@ -68,10 +68,10 @@ endif()
 ## Target.
 ##==============================================================================
 
-# file (STRINGS "../../../../version" PrototypeStoneGenerator_VERSION)
+# file (STRINGS "../../../../version" CURRENT_PROJECT_VERSION)
 
-set(PrototypeStoneGenerator_VERSION "v2.19.1.2_v0.0.7")
-add_definitions(-DPrototypeStoneGenerator_VERSION="${PrototypeStoneGenerator_VERSION}")
+set(CURRENT_PROJECT_VERSION "v2.19.1.2_v0.0.7")
+add_definitions(-DCURRENT_PROJECT_VERSION="${CURRENT_PROJECT_VERSION}")
 
 message(STATUS " PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}")
 message(STATUS " CMAKE_CURRENT_BINARY_DIR = ${CMAKE_CURRENT_BINARY_DIR}")
@@ -80,8 +80,8 @@ if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${current_target}.json.in)
 	message(FATAL_ERROR "Required file is missed! - ${CMAKE_CURRENT_SOURCE_DIR}/${current_target}.json.in")
 endif()
 
-set(PLUGIN_VERSION ${PrototypeStoneGenerator_VERSION})
-set(PLUGIN_COMPAT_VERSION ${PrototypeStoneGenerator_VERSION})
+set(PLUGIN_VERSION ${CURRENT_PROJECT_VERSION})
+set(PLUGIN_COMPAT_VERSION ${CURRENT_PROJECT_VERSION})
 configure_file(
 	${CMAKE_CURRENT_SOURCE_DIR}/${current_target}.json.in
 	${CMAKE_CURRENT_BINARY_DIR}/${current_target}.json
